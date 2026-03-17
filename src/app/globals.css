@@ -1,19 +1,21 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-bg: #060606;
-  --color-bg-elevated: #0f0f0f;
-  --color-bg-card: #141414;
-  --color-surface: #1a1a1a;
-  --color-border: #222222;
+  --color-bg: #050505;
+  --color-bg-elevated: #0a0a0a;
+  --color-bg-card: #111111;
+  --color-surface: #181818;
+  --color-border: #1e1e1e;
   --color-border-light: #2a2a2a;
-  --color-text: #e8e4de;
-  --color-text-muted: #8a8580;
+  --color-text: #ece8e1;
+  --color-text-muted: #9a9590;
   --color-text-dim: #5a5550;
   --color-accent: #4a7c59;
   --color-accent-light: #5e9e6e;
-  --color-gold: #c4a265;
+  --color-gold: #c9a96e;
   --color-gold-dim: #8a7245;
+  --color-ember: #c87941;
+  --color-ember-dim: #8a5a32;
   --font-display: var(--font-cormorant);
   --font-body: var(--font-outfit);
 }
@@ -36,20 +38,20 @@ body {
 }
 
 ::selection {
-  background: var(--color-accent);
+  background: var(--color-ember);
   color: #fff;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 ::-webkit-scrollbar-track {
   background: var(--color-bg);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--color-border);
-  border-radius: 3px;
+  border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-text-dim);
@@ -63,7 +65,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 9999;
 }
@@ -72,6 +74,12 @@ body {
 .rule-accent {
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--color-gold-dim), transparent);
+}
+
+/* Ember rule accent */
+.rule-ember {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-ember-dim), transparent);
 }
 
 /* Image shimmer loading */
@@ -84,4 +92,23 @@ body {
   background: linear-gradient(90deg, var(--color-bg-card) 25%, var(--color-surface) 50%, var(--color-bg-card) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
+}
+
+/* Glassmorphism nav */
+.nav-glass {
+  background: rgba(5, 5, 5, 0.7);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* Decorative diagonal line texture */
+.texture-lines {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 4px,
+    rgba(201, 169, 110, 0.03) 4px,
+    rgba(201, 169, 110, 0.03) 5px
+  );
 }

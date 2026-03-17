@@ -1,15 +1,26 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { trips } from "@/lib/trips";
 import { motion, AnimatePresence } from "motion/react";
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handler = () => setScrolled(window.scrollY > 80);
+    window.addEventListener("scroll", handler, { passive: true });
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 mix-blend-difference">
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled ? "nav-glass" : ""
+      }`}
+    >
       <div className="flex items-center justify-between px-6 md:px-12 py-5">
         <Link
           href="/"
@@ -19,13 +30,15 @@ export default function Nav() {
         </Link>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-10">
           {trips.map((trip) => (
             <Link
               key={trip.year}
               href={`/trip/${trip.slug}`}
-              className={`font-body text-sm tracking-widest uppercase transition-opacity hover:opacity-100 ${
-                trip.upcoming ? "text-white opacity-100" : "text-white opacity-50"
+              className={`font-body text-[11px] tracking-[0.25em] uppercase transition-all hover:text-ember ${
+                trip.upcoming
+                  ? "text-white font-medium"
+                  : "text-white/40 hover:text-white/80"
               }`}
             >
               {trip.upcoming ? `${trip.year}` : `'${String(trip.year).slice(2)}`}
@@ -60,7 +73,7 @@ export default function Nav() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-black/95 z-50 flex flex-col items-center justify-center mix-blend-normal"
+            className="fixed inset-0 bg-black/97 z-50 flex flex-col items-center justify-center"
           >
             <button
               onClick={() => setOpen(false)}
@@ -74,7 +87,7 @@ export default function Nav() {
             <Link
               href="/"
               onClick={() => setOpen(false)}
-              className="font-display text-4xl text-white mb-12 tracking-wide"
+              className="font-display text-4xl text-white mb-16 tracking-wide"
             >
               Tour de Fore
             </Link>
@@ -83,17 +96,17 @@ export default function Nav() {
                 key={trip.year}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.05, duration: 0.3 }}
+                transition={{ delay: i * 0.06, duration: 0.4 }}
               >
                 <Link
                   href={`/trip/${trip.slug}`}
                   onClick={() => setOpen(false)}
-                  className="block py-3 text-center"
+                  className="block py-4 text-center group"
                 >
-                  <span className="font-display text-5xl text-white/90 hover:text-gold transition-colors">
+                  <span className="font-display text-6xl text-white/90 group-hover:text-ember transition-colors duration-300">
                     {trip.year}
                   </span>
-                  <span className="block text-sm text-white/40 tracking-widest uppercase mt-1">
+                  <span className="block text-[11px] text-white/30 tracking-[0.3em] uppercase mt-2 font-body">
                     {trip.location}, {trip.state}
                   </span>
                 </Link>

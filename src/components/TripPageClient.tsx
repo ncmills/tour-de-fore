@@ -20,44 +20,51 @@ function TripHero({ trip }: { trip: Trip }) {
     target: ref,
     offset: ["start start", "end start"],
   });
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "35%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
 
   return (
-    <section ref={ref} className="relative h-[85vh] md:h-screen overflow-hidden">
-      <motion.div className="absolute inset-0" style={{ y }}>
+    <section ref={ref} className="relative h-screen overflow-hidden">
+      <motion.div className="absolute inset-0" style={{ y, scale }}>
         <Image
           src={trip.heroImage}
           alt={`${trip.year} - ${trip.location}`}
           fill
           priority
           sizes="100vw"
-          className="object-cover scale-110"
+          className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-bg" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-bg" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20" />
       </motion.div>
+
+      {/* Year watermark */}
+      <div className="absolute bottom-0 right-0 translate-y-[15%] translate-x-[5%] font-display text-[18rem] md:text-[28rem] lg:text-[36rem] font-bold text-white/[0.03] leading-none select-none pointer-events-none">
+        {trip.year}
+      </div>
 
       <motion.div
         style={{ opacity }}
         className="relative z-10 h-full flex flex-col justify-end pb-16 md:pb-24 px-6 md:px-12 max-w-7xl mx-auto"
       >
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="flex items-center gap-3 mb-6"
+          transition={{ delay: 0.2, duration: 0.8 }}
+          className="flex items-center gap-3 mb-8"
         >
           {trip.upcoming ? (
             <>
               <div className="w-2 h-2 rounded-full bg-accent-light animate-pulse" />
-              <span className="text-xs tracking-[0.3em] uppercase text-accent-light font-body">
+              <span className="text-[10px] tracking-[0.4em] uppercase text-accent-light font-body font-medium">
                 Upcoming Trip
               </span>
             </>
           ) : (
             <>
-              <div className="w-2 h-2 rounded-full bg-gold-dim" />
-              <span className="text-xs tracking-[0.3em] uppercase text-gold-dim font-body">
+              <div className="w-1.5 h-1.5 rounded-full bg-ember-dim" />
+              <span className="text-[10px] tracking-[0.4em] uppercase text-ember-dim font-body font-medium">
                 Past Expedition
               </span>
             </>
@@ -65,12 +72,12 @@ function TripHero({ trip }: { trip: Trip }) {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          transition={{ duration: 1, delay: 0.3 }}
           className="mb-4"
         >
-          <span className="font-display text-8xl md:text-[12rem] lg:text-[14rem] font-bold text-white leading-[0.8] tracking-tight block">
+          <span className="font-display text-[7rem] md:text-[12rem] lg:text-[16rem] font-bold text-white leading-[0.78] tracking-tight block">
             {trip.year}
           </span>
         </motion.div>
@@ -80,7 +87,7 @@ function TripHero({ trip }: { trip: Trip }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
         >
-          <h1 className="font-display text-3xl md:text-5xl lg:text-6xl font-light text-white/90 italic mb-4">
+          <h1 className="font-display text-3xl md:text-5xl lg:text-7xl font-light text-white/90 italic mb-6">
             {trip.location}, {trip.state}
           </h1>
         </motion.div>
@@ -91,11 +98,11 @@ function TripHero({ trip }: { trip: Trip }) {
           transition={{ duration: 0.8, delay: 0.7 }}
           className="flex flex-wrap items-center gap-6"
         >
-          <span className="text-sm text-text-muted tracking-widest uppercase font-body">
+          <span className="text-[10px] text-white/40 tracking-[0.4em] uppercase font-body font-medium">
             {trip.dates}
           </span>
-          <div className="w-px h-4 bg-border hidden md:block" />
-          <span className="font-display text-text-muted italic">
+          <div className="w-6 h-px bg-ember/40 hidden md:block" />
+          <span className="font-display text-white/50 italic text-lg">
             &ldquo;{trip.tagline}&rdquo;
           </span>
         </motion.div>
@@ -113,51 +120,51 @@ function ScheduleSection({ trip }: { trip: Trip }) {
   };
 
   return (
-    <section className="py-24 md:py-32">
+    <section className="py-32 md:py-48">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <FadeIn>
-          <div className="flex items-center gap-4 mb-2">
-            <div className="w-8 h-px bg-gold-dim" />
-            <span className="text-xs tracking-[0.3em] uppercase text-text-dim font-body">
+          <div className="flex items-center gap-5 mb-4">
+            <div className="w-12 h-px bg-ember-dim" />
+            <span className="text-[10px] tracking-[0.4em] uppercase text-ember-dim font-body font-medium">
               {trip.upcoming ? "The Game Plan" : "How It Went Down"}
             </span>
           </div>
         </FadeIn>
         <FadeIn delay={0.1}>
-          <h2 className="font-display text-5xl md:text-7xl font-bold text-text mb-16 leading-[0.95]">
-            {trip.upcoming ? "The" : "The"}
+          <h2 className="font-display text-6xl md:text-8xl font-bold text-text mb-20 leading-[0.9]">
+            The
             <br />
-            <span className="italic font-light text-text-muted">
-              {trip.upcoming ? "Itinerary" : "Itinerary"}
-            </span>
+            <span className="italic font-light text-text-muted">Itinerary</span>
           </h2>
         </FadeIn>
 
         <div className="space-y-0">
           {trip.schedule.map((day, i) => (
             <FadeIn key={day.day} delay={0.15 + i * 0.08}>
-              <div className="border-t border-border py-8 md:py-10 grid grid-cols-1 md:grid-cols-[200px_1fr] gap-4 md:gap-12">
+              <div className="border-t border-border/60 py-10 md:py-14 grid grid-cols-1 md:grid-cols-[220px_1fr] gap-6 md:gap-16">
                 <div>
-                  <div className="font-display text-2xl text-text font-semibold">
+                  <div className="font-display text-3xl text-text font-semibold">
                     {day.day}
                   </div>
-                  <div className="text-sm text-text-dim font-body">{day.date}</div>
+                  <div className="text-[10px] text-text-dim font-body tracking-[0.3em] uppercase mt-1">
+                    {day.date}
+                  </div>
                 </div>
-                <div className="space-y-4">
+                <div className="space-y-5">
                   {day.items.map((item, j) => (
-                    <div key={j} className="flex items-start gap-4">
-                      <span className="text-lg mt-[-2px]">{typeIcons[item.type]}</span>
+                    <div key={j} className="flex items-start gap-5 group">
+                      <span className="text-xl mt-[-2px]">{typeIcons[item.type]}</span>
                       <div className="flex-1">
-                        <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                          <span className="text-xs text-gold-dim tracking-widest font-body uppercase">
+                        <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1">
+                          <span className="text-[10px] text-ember-dim tracking-[0.3em] font-body uppercase font-medium">
                             {item.time}
                           </span>
-                          <span className="font-display text-lg text-text">
+                          <span className="font-display text-xl text-text">
                             {item.activity}
                           </span>
                         </div>
                         {item.detail && (
-                          <p className="text-sm text-text-dim font-body mt-0.5">
+                          <p className="text-sm text-text-dim font-body mt-1 font-light">
                             {item.detail}
                           </p>
                         )}
@@ -168,7 +175,7 @@ function ScheduleSection({ trip }: { trip: Trip }) {
               </div>
             </FadeIn>
           ))}
-          <div className="border-t border-border" />
+          <div className="border-t border-border/60" />
         </div>
       </div>
     </section>
@@ -181,18 +188,18 @@ function PhotoSections({ trip }: { trip: Trip }) {
   return (
     <>
       {trip.photoSections.map((section) => (
-        <section key={section.label} className="py-24 md:py-32 bg-bg-elevated">
+        <section key={section.label} className="py-32 md:py-48 bg-bg-elevated">
           <div className="max-w-7xl mx-auto px-6 md:px-12">
             <FadeIn>
-              <div className="flex items-center gap-4 mb-2">
-                <div className="w-8 h-px bg-gold-dim" />
-                <span className="text-xs tracking-[0.3em] uppercase text-text-dim font-body">
+              <div className="flex items-center gap-5 mb-4">
+                <div className="w-12 h-px bg-ember-dim" />
+                <span className="text-[10px] tracking-[0.4em] uppercase text-ember-dim font-body font-medium">
                   {trip.upcoming ? "Where We\u2019re Staying" : "Where We Stayed"}
                 </span>
               </div>
             </FadeIn>
             <FadeIn delay={0.1}>
-              <h2 className="font-display text-5xl md:text-7xl font-bold text-text mb-4 leading-[0.95]">
+              <h2 className="font-display text-6xl md:text-8xl font-bold text-text mb-6 leading-[0.9]">
                 {section.label.split(" ")[0]}
                 <br />
                 <span className="italic font-light text-text-muted">
@@ -202,7 +209,7 @@ function PhotoSections({ trip }: { trip: Trip }) {
             </FadeIn>
             {trip.lodgingAddress && (
               <FadeIn delay={0.15}>
-                <p className="text-sm text-text-dim font-body mb-12 tracking-wide">
+                <p className="text-[10px] text-text-dim font-body mb-16 tracking-[0.3em] uppercase">
                   {trip.lodgingAddress}
                 </p>
               </FadeIn>
@@ -219,6 +226,7 @@ function PhotoSections({ trip }: { trip: Trip }) {
                       sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-700"
                     />
+                    <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors duration-500" />
                   </div>
                 </FadeIn>
               ))}
@@ -232,18 +240,18 @@ function PhotoSections({ trip }: { trip: Trip }) {
 
 function CoursesSection({ trip }: { trip: Trip }) {
   return (
-    <section className={`py-24 md:py-32 ${trip.photoSections.length === 0 ? "bg-bg-elevated" : ""}`}>
+    <section className={`py-32 md:py-48 ${trip.photoSections.length === 0 ? "bg-bg-elevated" : ""}`}>
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <FadeIn>
-          <div className="flex items-center gap-4 mb-2">
-            <div className="w-8 h-px bg-gold-dim" />
-            <span className="text-xs tracking-[0.3em] uppercase text-text-dim font-body">
-              {trip.upcoming ? "The Courses" : "The Courses"}
+          <div className="flex items-center gap-5 mb-4">
+            <div className="w-12 h-px bg-ember-dim" />
+            <span className="text-[10px] tracking-[0.4em] uppercase text-ember-dim font-body font-medium">
+              The Courses
             </span>
           </div>
         </FadeIn>
         <FadeIn delay={0.1}>
-          <h2 className="font-display text-5xl md:text-7xl font-bold text-text mb-16 leading-[0.95]">
+          <h2 className="font-display text-6xl md:text-8xl font-bold text-text mb-20 leading-[0.9]">
             {trip.upcoming ? "Where We\u2019ll" : "Where We"}
             <br />
             <span className="italic font-light text-text-muted">
@@ -255,11 +263,11 @@ function CoursesSection({ trip }: { trip: Trip }) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {trip.courses.map((course, i) => (
             <FadeIn key={course.name} delay={0.15 + i * 0.08}>
-              <div className="bg-bg-card border border-border rounded-sm p-8 hover:border-border-light transition-all group">
-                <div className="text-gold-dim text-xs tracking-[0.2em] uppercase mb-3 font-body">
+              <div className="bg-bg-card border border-border/50 rounded-sm p-10 hover:border-ember/20 transition-all duration-500 group">
+                <div className="text-ember-dim text-[10px] tracking-[0.3em] uppercase mb-4 font-body font-medium">
                   Course {String(i + 1).padStart(2, "0")}
                 </div>
-                <h3 className="font-display text-2xl text-text group-hover:text-gold transition-colors mb-4">
+                <h3 className="font-display text-2xl md:text-3xl text-text group-hover:text-ember transition-colors duration-300 mb-6">
                   {course.name}
                 </h3>
                 {course.url && (
@@ -267,11 +275,11 @@ function CoursesSection({ trip }: { trip: Trip }) {
                     href={course.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-xs text-text-dim hover:text-text-muted transition-colors tracking-widest uppercase font-body"
+                    className="inline-flex items-center gap-2 text-[10px] text-text-dim hover:text-ember transition-colors duration-300 tracking-[0.3em] uppercase font-body font-medium"
                   >
                     Visit Website
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
                   </a>
                 )}
@@ -288,18 +296,18 @@ function GallerySection({ trip }: { trip: Trip }) {
   if (trip.gallery.length === 0) return null;
 
   return (
-    <section className="py-24 md:py-32">
+    <section className="py-32 md:py-48">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <FadeIn>
-          <div className="flex items-center gap-4 mb-2">
-            <div className="w-8 h-px bg-gold-dim" />
-            <span className="text-xs tracking-[0.3em] uppercase text-text-dim font-body">
+          <div className="flex items-center gap-5 mb-4">
+            <div className="w-12 h-px bg-ember-dim" />
+            <span className="text-[10px] tracking-[0.4em] uppercase text-ember-dim font-body font-medium">
               The Evidence
             </span>
           </div>
         </FadeIn>
         <FadeIn delay={0.1}>
-          <h2 className="font-display text-5xl md:text-7xl font-bold text-text mb-16 leading-[0.95]">
+          <h2 className="font-display text-6xl md:text-8xl font-bold text-text mb-20 leading-[0.9]">
             Trip
             <br />
             <span className="italic font-light text-text-muted">Gallery</span>
@@ -314,52 +322,52 @@ function GallerySection({ trip }: { trip: Trip }) {
 
 function TripNav({ prevTrip, nextTrip }: { prevTrip: Trip | null; nextTrip: Trip | null }) {
   return (
-    <section className="border-t border-border">
+    <section className="border-t border-border/50">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-2 divide-x divide-border">
-          <div className="py-12 md:py-16 pr-6 md:pr-12">
+        <div className="grid grid-cols-2 divide-x divide-border/50">
+          <div className="py-16 md:py-24 pr-6 md:pr-12">
             {prevTrip ? (
               <Link href={`/trip/${prevTrip.slug}`} className="group block">
-                <span className="text-xs tracking-[0.2em] uppercase text-text-dim font-body block mb-2">
+                <span className="text-[10px] tracking-[0.3em] uppercase text-text-dim font-body font-medium block mb-3">
                   Previous
                 </span>
-                <span className="font-display text-2xl md:text-4xl text-text group-hover:text-gold transition-colors">
+                <span className="font-display text-4xl md:text-6xl text-text group-hover:text-ember transition-colors duration-300">
                   {prevTrip.year}
                 </span>
-                <span className="block text-sm text-text-muted font-body mt-1">
+                <span className="block text-sm text-text-muted font-body mt-2 font-light">
                   {prevTrip.location}, {prevTrip.state}
                 </span>
               </Link>
             ) : (
-              <div className="opacity-30">
-                <span className="text-xs tracking-[0.2em] uppercase text-text-dim font-body block mb-2">
+              <div className="opacity-20">
+                <span className="text-[10px] tracking-[0.3em] uppercase text-text-dim font-body block mb-3">
                   Previous
                 </span>
-                <span className="font-display text-2xl text-text-dim">
+                <span className="font-display text-3xl text-text-dim">
                   The Beginning
                 </span>
               </div>
             )}
           </div>
-          <div className="py-12 md:py-16 pl-6 md:pl-12 text-right">
+          <div className="py-16 md:py-24 pl-6 md:pl-12 text-right">
             {nextTrip ? (
               <Link href={`/trip/${nextTrip.slug}`} className="group block">
-                <span className="text-xs tracking-[0.2em] uppercase text-text-dim font-body block mb-2">
+                <span className="text-[10px] tracking-[0.3em] uppercase text-text-dim font-body font-medium block mb-3">
                   Next
                 </span>
-                <span className="font-display text-2xl md:text-4xl text-text group-hover:text-gold transition-colors">
+                <span className="font-display text-4xl md:text-6xl text-text group-hover:text-ember transition-colors duration-300">
                   {nextTrip.year}
                 </span>
-                <span className="block text-sm text-text-muted font-body mt-1">
+                <span className="block text-sm text-text-muted font-body mt-2 font-light">
                   {nextTrip.location}, {nextTrip.state}
                 </span>
               </Link>
             ) : (
-              <div className="opacity-30">
-                <span className="text-xs tracking-[0.2em] uppercase text-text-dim font-body block mb-2">
+              <div className="opacity-20">
+                <span className="text-[10px] tracking-[0.3em] uppercase text-text-dim font-body block mb-3">
                   Next
                 </span>
-                <span className="font-display text-2xl text-text-dim">
+                <span className="font-display text-3xl text-text-dim">
                   Stay Tuned
                 </span>
               </div>
