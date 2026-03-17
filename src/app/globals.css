@@ -76,7 +76,6 @@ body {
   background: linear-gradient(90deg, transparent, var(--color-gold-dim), transparent);
 }
 
-/* Ember rule accent */
 .rule-ember {
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--color-ember-dim), transparent);
@@ -96,13 +95,41 @@ body {
 
 /* Glassmorphism nav */
 .nav-glass {
-  background: rgba(5, 5, 5, 0.7);
-  backdrop-filter: blur(20px) saturate(1.4);
-  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  background: rgba(5, 5, 5, 0.8);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-/* Decorative diagonal line texture */
+/* Hero carousel crossfade */
+@keyframes heroFade {
+  0%, 20% { opacity: 1; }
+  25%, 95% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Subtle float animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Glow pulse for interactive elements */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(200, 121, 65, 0); }
+  50% { box-shadow: 0 0 20px 4px rgba(200, 121, 65, 0.15); }
+}
+
+/* Card tilt on hover - applied via JS */
+.card-hover {
+  transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.4s ease;
+}
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(200, 121, 65, 0.06);
+}
+
+/* Diagonal texture lines */
 .texture-lines {
   background-image: repeating-linear-gradient(
     -45deg,
