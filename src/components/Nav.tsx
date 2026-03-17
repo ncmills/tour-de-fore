@@ -93,7 +93,7 @@ export default function Nav() {
           href="/"
           className="flex items-center gap-3 group"
         >
-          <Logo className="w-8 h-8 text-ember group-hover:text-gold transition-colors duration-300" />
+          <Logo className="w-8 h-8" />
           <span className="font-display text-2xl md:text-3xl font-semibold text-white tracking-wide group-hover:opacity-80 transition-opacity">
             Tour de Fore
           </span>
@@ -215,7 +215,7 @@ export default function Nav() {
               <span className="w-6 h-px bg-white -rotate-45 -translate-y-[3.5px]" />
             </button>
 
-            <Logo className="w-12 h-12 text-ember mb-4" />
+            <Logo className="w-12 h-12 mb-4" />
             <Link
               href="/"
               onClick={() => setMobileOpen(false)}

@@ -13,7 +13,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <Logo className="w-7 h-7 text-ember" />
+              <Logo className="w-7 h-7" />
               <h3 className="font-display text-3xl font-semibold text-text">
                 Tour de Fore
               </h3>

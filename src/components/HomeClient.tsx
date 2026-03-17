@@ -6,7 +6,7 @@ import { motion, useScroll, useTransform, useInView, AnimatePresence } from "mot
 import { useRef, useState, useEffect, useMemo } from "react";
 import { trips } from "@/lib/trips";
 import FadeIn from "./FadeIn";
-import Logo from "./Logo";
+import Logo, { LogoFull } from "./Logo";
 import USMap from "./USMap";
 
 const SQ = "https://images.squarespace-cdn.com/content/v1/62cb87cca6b36f353a2575d5";
@@ -76,7 +76,7 @@ function HeroSection() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.2 }}
         >
-          <Logo className="w-16 h-16 md:w-20 md:h-20 text-ember mb-8 mx-auto" />
+          <LogoFull className="w-24 h-auto md:w-32 lg:w-40 mx-auto mb-8 drop-shadow-2xl" />
         </motion.div>
 
         <motion.h1
@@ -616,7 +616,7 @@ function MottoBanner() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1 }}
         >
-          <Logo className="w-10 h-10 text-ember/30 mx-auto mb-8" />
+          <LogoFull className="w-40 md:w-52 opacity-30 mx-auto mb-8" />
         </motion.div>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
