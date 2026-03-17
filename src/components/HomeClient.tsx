@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from "motion/react";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useMemo } from "react";
 import { trips } from "@/lib/trips";
 import FadeIn from "./FadeIn";
 import Logo from "./Logo";
@@ -50,36 +50,20 @@ function HeroSection() {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
-  const [currentImage, setCurrentImage] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % heroImages.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+  // Static hero — guy in foreground with sun behind (St. George 2021)
+  const heroImage = heroImages[3];
 
   return (
     <section ref={ref} className="relative h-screen overflow-hidden">
       <motion.div className="absolute inset-0" style={{ y }}>
-        {heroImages.map((src, i) => (
-          <motion.div
-            key={src}
-            className="absolute inset-0"
-            initial={false}
-            animate={{ opacity: i === currentImage ? 1 : 0 }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
-          >
-            <Image
-              src={src}
-              alt=""
-              fill
-              sizes="100vw"
-              className="object-cover scale-105"
-              priority={i === 0}
-            />
-          </motion.div>
-        ))}
+        <Image
+          src={heroImage}
+          alt="Tour de Fore"
+          fill
+          sizes="100vw"
+          className="object-cover scale-105"
+          priority
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-bg" />
       </motion.div>
 
@@ -122,22 +106,6 @@ function HeroSection() {
           Hell is empty, and all the devils are here.
         </motion.p>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-          className="flex gap-2 mt-12"
-        >
-          {heroImages.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrentImage(i)}
-              className={`h-1.5 rounded-full transition-all duration-500 ${
-                i === currentImage ? "bg-ember w-8" : "bg-white/20 w-1.5 hover:bg-white/40"
-              }`}
-            />
-          ))}
-        </motion.div>
       </motion.div>
 
       <motion.div

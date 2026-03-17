@@ -40,12 +40,32 @@ body {
 }
 
 p {
-  line-height: 2;
-  margin-bottom: 1em;
+  line-height: 2.1;
+  margin-bottom: 1.2em;
+}
+
+p:last-child {
+  margin-bottom: 0;
 }
 
 h1, h2, h3, h4 {
-  line-height: 1.1;
+  line-height: 1.15;
+  margin-bottom: 0.5em;
+}
+
+span {
+  line-height: 1.8;
+}
+
+/* Ensure all text elements have breathing room */
+.font-body {
+  letter-spacing: 0.015em;
+}
+
+/* Section label spacing */
+[class*="tracking-[0.4em]"],
+[class*="tracking-[0.3em]"] {
+  line-height: 1.6;
 }
 
 ::selection {

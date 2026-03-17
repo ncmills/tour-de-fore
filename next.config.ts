@@ -17,6 +17,10 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "cdn.greaterzion.com" },
       { protocol: "https", hostname: "sunriverres.wpenginepowered.com" },
       { protocol: "https", hostname: "bouldercanyongolf.com" },
+      { protocol: "https", hostname: "sundaygolf.com" },
+      { protocol: "https", hostname: "www.mammothheadwear.com" },
+      { protocol: "https", hostname: "glassandgrowlers.com" },
+      { protocol: "https", hostname: "fullmetalmarkers.com" },
     ],
   },
 };
