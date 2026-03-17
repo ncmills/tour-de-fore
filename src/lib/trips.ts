@@ -182,7 +182,6 @@ export const trips: Trip[] = [
     ],
     gallery: [
       `${SQ}/03de264c-9108-4366-8a98-daa0b63fa515/IMG_2259.jpeg`,
-      `${SQ}/781a6a3b-6cb4-4b79-b958-e3af20976225/EC5E9F54-04A6-4318-AAC3-ED50581CADB9.jpeg`,
       `${SQ}/3eba1084-f559-4627-ba67-0764b1858572/IMG_7541.jpeg`,
       `${SQ}/ca56fbd1-0812-44cd-a55e-ba9ee3bf5876/IMG_7539.jpeg`,
       `${SQ}/f52bff67-f402-4766-99e9-c50ebb3ae4ec/IMG_7512.jpeg`,
@@ -262,12 +261,6 @@ export const trips: Trip[] = [
       `${SQ}/40030cd0-2783-4cca-ab1b-ec4b3d674471/a.jpeg`,
       `${SQ}/a42a2f23-6374-421b-9710-b785184577c3/b.jpeg`,
       `${SQ}/03de264c-9108-4366-8a98-daa0b63fa515/IMG_2259.jpeg`,
-      `${SQ}/b5f3dce1-fc16-4c01-930d-15903326f1f6/Screenshot+2025-01-24+at+2.59.51%E2%80%AFPM.png`,
-      `${SQ}/a147e85d-417b-4e7a-8798-a72d8be64e1b/Screenshot+2025-01-24+at+3.20.55%E2%80%AFPM.png`,
-      `${SQ}/9defe4fb-a69a-46db-aa6b-46de60d51f5e/Screenshot+2025-01-24+at+3.00.07%E2%80%AFPM.png`,
-      `${SQ}/f6000322-0bd3-4367-abee-8ae259025027/Screenshot+2025-01-24+at+3.21.42%E2%80%AFPM.png`,
-      `${SQ}/68ba90f5-90dc-4b0d-9f3c-023a62439fd8/Screenshot+2025-01-24+at+3.21.57%E2%80%AFPM.png`,
-      `${SQ}/c1cf12c0-20d9-41ec-80b4-7771eaa049c1/Screenshot+2025-01-24+at+3.22.20%E2%80%AFPM.png`,
     ],
   },
   {
