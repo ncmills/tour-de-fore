@@ -249,7 +249,7 @@ function ManifestoSection() {
         </FadeIn>
 
         <FadeIn delay={0.25}>
-          <div className="space-y-8 text-text-muted text-lg md:text-xl leading-[1.9] font-body font-light max-w-3xl">
+          <div className="space-y-8 text-text-muted text-lg md:text-xl leading-[2.1] font-body font-light max-w-3xl">
             <p>
               Every summer we pick a town nobody&rsquo;s heard of, rent the biggest house we can find,
               and play <span className="text-ember font-medium">108 holes in three days</span>.
@@ -306,7 +306,7 @@ function AnimatedStat({ value, label, delay }: { value: string; label: string; d
 function StatsBar() {
   const stats = [
     { value: "6", label: "Years" },
-    { value: "108", label: "Holes Per Trip" },
+    { value: "648", label: "Holes Played" },
     { value: "18", label: "Courses" },
     { value: "6", label: "States" },
   ];

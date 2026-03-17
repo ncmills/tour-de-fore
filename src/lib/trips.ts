@@ -14,6 +14,7 @@ export interface DaySchedule {
 export interface Course {
   name: string;
   url?: string;
+  image?: string;
 }
 
 export interface PhotoSection {
@@ -51,11 +52,11 @@ export const trips: Trip[] = [
     lodgingAddress: "1489 Shoreline Dr, Kohler, WI",
     heroImage: `${SQ}/b6c09435-bdb9-495f-8c09-90dd2abbf79e/Screenshot+2025-07-05+at+7.21.00%E2%80%AFPM.png`,
     courses: [
-      { name: "Erin Hills", url: "https://erinhills.com" },
-      { name: "Whistling Straits", url: "https://kohlerwisconsin.com" },
-      { name: "Blackwolf Run", url: "https://kohlerwisconsin.com" },
-      { name: "Quit Qui Oc" },
-      { name: "The Bull at Pinehurst Farms", url: "https://golfthebull.com" },
+      { name: "Erin Hills", url: "https://erinhills.com", image: "https://erinhills.com/wp-content/smush-webp/2025/01/EH-Web-Images_Home-Golf-2-768x512.jpg.webp" },
+      { name: "Whistling Straits", url: "https://kohlerwisconsin.com", image: "https://s7d9.scene7.com/is/image/kohlerhospitality/aag07706_rgb?wid=1500" },
+      { name: "Blackwolf Run", url: "https://kohlerwisconsin.com", image: "https://s7d9.scene7.com/is/image/kohlerhospitality/aag07706_rgb?wid=1500" },
+      { name: "Quit Qui Oc", image: "https://golf-pass-brightspot.s3.amazonaws.com/80/9d/6542d1de0b2e9fe08f22713b5d4a/5836.jpg" },
+      { name: "The Bull at Pinehurst Farms", url: "https://golfthebull.com", image: "https://golfthebull.com/wp-content/uploads/hdr-golf-course-2025.jpg" },
     ],
     schedule: [
       {
@@ -120,9 +121,9 @@ export const trips: Trip[] = [
     dates: "June 24 \u2013 29, 2025",
     heroImage: `${SQ}/03de264c-9108-4366-8a98-daa0b63fa515/IMG_2259.jpeg`,
     courses: [
-      { name: "Boulder Canyon Golf Course" },
-      { name: "Elkhorn Ridge Resort" },
-      { name: "Spearfish Canyon Golf Course" },
+      { name: "Boulder Canyon Golf Course", image: "https://bouldercanyongolf.com/wp-content/uploads/2023/02/video-still.jpg" },
+      { name: "Elkhorn Ridge Resort", image: "https://golf-pass-brightspot.s3.amazonaws.com/b8/3a/2113ec00a01c967a20239afde369/110120.jpg" },
+      { name: "Spearfish Canyon Golf Course", image: "https://golf-pass-brightspot.s3.amazonaws.com/96/98/04e3f2cf8173d0ad41094946eb1f/44360.jpg" },
     ],
     schedule: [
       {
@@ -216,9 +217,9 @@ export const trips: Trip[] = [
     lodgingAddress: "16155 Skyliners Rd, Bend, OR 97701",
     heroImage: `${SQ}/40030cd0-2783-4cca-ab1b-ec4b3d674471/a.jpeg`,
     courses: [
-      { name: "Pronghorn", url: "https://juniperpreserve.com/golf/jack-nicklaus-signature-course/" },
-      { name: "Juniper", url: "https://playjuniper.com" },
-      { name: "Widgi", url: "https://widgi.com" },
+      { name: "Pronghorn", url: "https://juniperpreserve.com/golf/jack-nicklaus-signature-course/", image: "https://juniperpreserve.com/wp-content/uploads/2025/08/1-pronghorn-nickalus-at-juniper-ridge-2025-OAR.jpg" },
+      { name: "Juniper", url: "https://playjuniper.com", image: "https://playjuniper.com/images/slideshows/banner_1.jpg" },
+      { name: "Widgi", url: "https://widgi.com", image: "https://widgi.com/images/slideshows/gv100482e.jpg" },
       { name: "Tetherow", url: "https://tetherow.com" },
     ],
     schedule: [
@@ -273,8 +274,8 @@ export const trips: Trip[] = [
     heroImage: `${SQ}/d0910eb3-ce7f-4395-8e75-06414a70a916/DSC01441.JPG`,
     courses: [
       { name: "Kearney Hill Golf Course", url: "https://www.lexingtonky.gov/kearney-hill-golf-links" },
-      { name: "Cherry Blossom Golf Course", url: "https://www.cherryblossomgolf.com" },
-      { name: "University of Kentucky Club", url: "https://www.uclubkentucky.com" },
+      { name: "Cherry Blossom Golf Course", url: "https://www.cherryblossomgolf.com", image: "https://images.squarespace-cdn.com/content/v1/66841f33dfe3fa292718fb41/df733b4a-0a09-4111-8127-b9800c45b515/Clubhouse+Aug+2008+003.jpg" },
+      { name: "University of Kentucky Club", url: "https://www.uclubkentucky.com", image: "https://www.uclubkentucky.com/wp-content/uploads/sites/9762/2025/09/90_3.jpeg?w=1024" },
     ],
     schedule: [
       {
@@ -339,9 +340,9 @@ export const trips: Trip[] = [
     dates: "June 2 \u2013 23, 2022",
     heroImage: `${SQ}/ff8d47e6-8753-45f8-b511-812d49db7bcd/IMG_0729.jpeg`,
     courses: [
-      { name: "Falcon Crest Golf Club", url: "https://falconcrestgolf.com" },
-      { name: "Quail Hollow Golf Course", url: "https://quailhollowboise.com" },
-      { name: "Shadow Valley Golf Course" },
+      { name: "Falcon Crest Golf Club", url: "https://falconcrestgolf.com", image: "https://golfcoursegurus.com/photos/idaho/falconcrest/large/Falcon-Crest-18th-tee.jpg" },
+      { name: "Quail Hollow Golf Course", url: "https://quailhollowboise.com", image: "https://golf-pass-brightspot.s3.amazonaws.com/d9/56/c33878e5da4fc805683db81dc69c/90495.jpg" },
+      { name: "Shadow Valley Golf Course", image: "https://golf-pass-brightspot.s3.amazonaws.com/9a/c3/3c3439206aae6ec98a6887fabda9/93751.jpg" },
     ],
     schedule: [
       {
@@ -406,9 +407,9 @@ export const trips: Trip[] = [
     dates: "June 24 \u2013 26, 2021",
     heroImage: `${SQ}/668ee548-a6f4-4b37-9d7a-18d5fb6a54e3/IMG_0519.jpeg`,
     courses: [
-      { name: "Sunriver Golf Course" },
-      { name: "Sunbrooke Golf Course", url: "https://www.sunbrookgolf.com" },
-      { name: "Southgate Golf Club", url: "https://southgategc.com" },
+      { name: "Sunriver Golf Course", image: "https://sunriverres.wpenginepowered.com/wp-content/uploads/2024/06/SRR_Meadows-Golf_Fall-2022_Wicked_ARR_DJI_0014.jpg" },
+      { name: "Sunbrooke Golf Course", url: "https://www.sunbrookgolf.com", image: "https://cdn.greaterzion.com/wp-content/uploads/2019/04/22154748/golf-course-sunbrook1.jpg" },
+      { name: "Southgate Golf Club", url: "https://southgategc.com", image: "https://cdn.greaterzion.com/wp-content/uploads/2019/04/22153624/golf-course-southgate1.jpg" },
     ],
     schedule: [
       {

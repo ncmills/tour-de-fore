@@ -41,24 +41,30 @@ export default function Gallery({ images }: GalleryProps) {
   return (
     <>
       <div className="columns-2 md:columns-3 gap-3 md:gap-4 space-y-3 md:space-y-4">
-        {images.map((src, i) => (
-          <FadeIn key={i} delay={i * 0.05} className="break-inside-avoid">
-            <button
-              onClick={() => setSelected(i)}
-              className="relative w-full overflow-hidden rounded-sm group cursor-pointer block"
-            >
-              <div className="img-shimmer aspect-[4/3]" />
-              <Image
-                src={src}
-                alt={`Trip photo ${i + 1}`}
-                fill
-                sizes="(max-width: 768px) 50vw, 33vw"
-                className="object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
-            </button>
-          </FadeIn>
-        ))}
+        {images.map((src, i) => {
+          // Vary aspect ratios for a dynamic masonry look
+          const aspects = ["aspect-[4/3]", "aspect-[3/4]", "aspect-[1/1]", "aspect-[4/3]", "aspect-[3/2]", "aspect-[4/5]"];
+          const aspect = aspects[i % aspects.length];
+
+          return (
+            <FadeIn key={i} delay={Math.min(i * 0.03, 0.5)} className="break-inside-avoid">
+              <button
+                onClick={() => setSelected(i)}
+                className="relative w-full overflow-hidden rounded-sm group cursor-pointer block"
+              >
+                <div className={`img-shimmer ${aspect}`} />
+                <Image
+                  src={src}
+                  alt={`Trip photo ${i + 1}`}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                  className="object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
+              </button>
+            </FadeIn>
+          );
+        })}
       </div>
 
       {/* Lightbox */}

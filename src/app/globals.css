@@ -35,6 +35,17 @@ body {
   color: var(--color-text);
   font-family: var(--font-body), sans-serif;
   overflow-x: hidden;
+  line-height: 1.9;
+  letter-spacing: 0.01em;
+}
+
+p {
+  line-height: 2;
+  margin-bottom: 1em;
+}
+
+h1, h2, h3, h4 {
+  line-height: 1.1;
 }
 
 ::selection {
