@@ -22,8 +22,8 @@ export function LogoFull({ className = "w-64" }: { className?: string }) {
     <Image
       src="/logo-full.png"
       alt="Tour de Fore — Est. 2021"
-      width={660}
-      height={977}
+      width={4504}
+      height={3776}
       className={className}
       priority
     />

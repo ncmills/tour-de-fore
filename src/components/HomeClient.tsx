@@ -72,23 +72,12 @@ function HeroSection() {
         className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6"
       >
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.2 }}
+          transition={{ duration: 1.2, delay: 0.2 }}
         >
-          <LogoFull className="w-24 h-auto md:w-32 lg:w-40 mx-auto mb-8 drop-shadow-2xl" />
+          <LogoFull className="w-[280px] md:w-[420px] lg:w-[520px] mx-auto drop-shadow-2xl" />
         </motion.div>
-
-        <motion.h1
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.4 }}
-          className="font-display text-[4.5rem] md:text-[9rem] lg:text-[12rem] font-bold text-white leading-[0.82] tracking-tight"
-        >
-          Tour
-          <br />
-          <span className="italic font-light text-white/90">de Fore</span>
-        </motion.h1>
 
         <motion.div
           initial={{ scaleX: 0 }}
@@ -103,7 +92,7 @@ function HeroSection() {
           transition={{ duration: 1, delay: 1.1 }}
           className="font-display text-xl md:text-2xl lg:text-3xl italic text-white/60 max-w-2xl leading-relaxed font-light"
         >
-          Hell is empty, and all the devils are here.
+          hell is empty and all the devils are here
         </motion.p>
 
       </motion.div>
