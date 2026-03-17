@@ -12,8 +12,7 @@ const products = [
     price: "$35",
     tag: "Best Seller",
     colors: ["Matte Black", "Brushed Gold", "Ember"],
-    image: "https://glassandgrowlers.com/wp-content/uploads/2020/06/Stainless-Steel-Hip-Flask-8-oz-Matte-Black-01.jpg",
-    useAlt: true,
+    image: "https://www.syntin.com/cdn/shop/files/Stacked_Front_BLK_BLANK.jpg?v=1771532868&width=800",
   },
   {
     name: "The Oversized Straw Bucket",
@@ -29,7 +28,7 @@ const products = [
     price: "$28",
     tag: null,
     colors: ["Blackened Steel", "Antique Brass"],
-    image: "https://fullmetalmarkers.com/cdn/shop/files/FullSizeRender_585cb526-265a-403b-af0f-7fcb8914e2d7_300x300.jpg?v=1693576492",
+    image: "https://izzo.com/cdn/shop/products/fodlablemetaldivottoolblack-mainimageweb.jpg?v=1676920077",
   },
   {
     name: "\"Hell Is Empty\" Tee",
@@ -37,7 +36,7 @@ const products = [
     price: "$42",
     tag: "Dropping Soon",
     colors: ["Black", "Vintage White", "Forest"],
-    image: null,
+    image: "https://www.houseofblanks.com/cdn/shop/files/HeavyweightTshirt_Black_01_2.jpg?v=1726510061",
   },
   {
     name: "TDF Leather Headcover",
@@ -45,7 +44,7 @@ const products = [
     price: "$68",
     tag: null,
     colors: ["Black", "Saddle Tan"],
-    image: null,
+    image: "https://blackswing.golf/cdn/shop/products/headcover_driver_1946x.jpg?v=1642257649",
   },
   {
     name: "The Devil's Flask",
@@ -61,7 +60,7 @@ const products = [
     price: "$26",
     tag: null,
     colors: ["Black / Ember", "Black / Gold"],
-    image: null,
+    image: "https://playingitforward.shop/cdn/shop/files/Main2-black.jpg?v=1695910558",
   },
   {
     name: "Snapback Rope Hat",
