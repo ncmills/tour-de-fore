@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { ReactNode } from "react";
 
 interface FadeInProps {
@@ -18,6 +18,8 @@ export default function FadeIn({
   className = "",
   duration = 0.7,
 }: FadeInProps) {
+  const shouldReduce = useReducedMotion();
+
   const offsets = {
     up: { y: 40 },
     down: { y: -40 },
@@ -25,6 +27,10 @@ export default function FadeIn({
     right: { x: -40 },
     none: {},
   };
+
+  if (shouldReduce) {
+    return <div className={className}>{children}</div>;
+  }
 
   return (
     <motion.div

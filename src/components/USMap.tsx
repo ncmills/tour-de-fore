@@ -36,17 +36,17 @@ export default function USMap() {
         {/* Simplified US outline */}
         <path
           d="M 130 120 L 160 100 L 200 95 L 250 90 L 310 85 L 350 90 L 400 85 L 450 80 L 500 82 L 550 85 L 600 90 L 650 95 L 700 100 L 750 110 L 790 130 L 820 150 L 840 180 L 850 210 L 855 250 L 850 280 L 840 310 L 830 340 L 810 360 L 780 380 L 750 395 L 720 400 L 700 410 L 680 430 L 660 450 L 640 460 L 610 465 L 580 460 L 560 450 L 540 440 L 520 450 L 490 460 L 460 465 L 430 460 L 400 450 L 370 440 L 340 435 L 310 430 L 280 420 L 260 410 L 240 395 L 220 380 L 200 370 L 180 360 L 160 345 L 140 320 L 125 290 L 115 260 L 110 230 L 112 200 L 118 170 L 125 140 Z"
-          fill="none"
-          stroke="rgba(200, 121, 65, 0.12)"
+          fill="rgba(26, 50, 43, 0.03)"
+          stroke="rgba(26, 50, 43, 0.15)"
           strokeWidth="1.5"
         />
 
         {/* State boundary suggestion lines */}
-        <line x1="305" y1="85" x2="300" y2="440" stroke="rgba(200, 121, 65, 0.04)" strokeWidth="0.5" />
-        <line x1="450" y1="80" x2="450" y2="465" stroke="rgba(200, 121, 65, 0.04)" strokeWidth="0.5" />
-        <line x1="600" y1="90" x2="600" y2="465" stroke="rgba(200, 121, 65, 0.04)" strokeWidth="0.5" />
-        <line x1="115" y1="250" x2="855" y2="250" stroke="rgba(200, 121, 65, 0.04)" strokeWidth="0.5" />
-        <line x1="115" y1="350" x2="830" y2="350" stroke="rgba(200, 121, 65, 0.04)" strokeWidth="0.5" />
+        <line x1="305" y1="85" x2="300" y2="440" stroke="rgba(26, 50, 43, 0.06)" strokeWidth="0.5" />
+        <line x1="450" y1="80" x2="450" y2="465" stroke="rgba(26, 50, 43, 0.06)" strokeWidth="0.5" />
+        <line x1="600" y1="90" x2="600" y2="465" stroke="rgba(26, 50, 43, 0.06)" strokeWidth="0.5" />
+        <line x1="115" y1="250" x2="855" y2="250" stroke="rgba(26, 50, 43, 0.06)" strokeWidth="0.5" />
+        <line x1="115" y1="350" x2="830" y2="350" stroke="rgba(26, 50, 43, 0.06)" strokeWidth="0.5" />
 
         {/* Connection lines between trip locations (chronological path) */}
         {tripLocations.slice(0, -1).map((loc, i) => {
@@ -58,7 +58,7 @@ export default function USMap() {
               y1={loc.y}
               x2={next.x}
               y2={next.y}
-              stroke="rgba(200, 121, 65, 0.15)"
+              stroke="rgba(207, 128, 24, 0.25)"
               strokeWidth="1"
               strokeDasharray="4 4"
               initial={{ pathLength: 0 }}
@@ -79,7 +79,7 @@ export default function USMap() {
                 cy={loc.y}
                 r="20"
                 fill="none"
-                stroke="rgba(94, 158, 110, 0.3)"
+                stroke="rgba(26, 50, 43, 0.3)"
                 strokeWidth="1"
                 animate={{ r: [14, 24, 14], opacity: [0.5, 0, 0.5] }}
                 transition={{ duration: 2, repeat: Infinity }}
@@ -91,7 +91,7 @@ export default function USMap() {
               cx={loc.x}
               cy={loc.y}
               r="12"
-              fill={loc.upcoming ? "rgba(94, 158, 110, 0.08)" : "rgba(200, 121, 65, 0.08)"}
+              fill={loc.upcoming ? "rgba(26, 50, 43, 0.08)" : "rgba(207, 128, 24, 0.1)"}
               initial={{ scale: 0 }}
               whileInView={{ scale: 1 }}
               viewport={{ once: true }}
@@ -103,7 +103,7 @@ export default function USMap() {
               cx={loc.x}
               cy={loc.y}
               r={hovered === loc.year ? 8 : 5}
-              fill={loc.upcoming ? "#5e9e6e" : "#c87941"}
+              fill={loc.upcoming ? "#1a322b" : "#cf8018"}
               className="cursor-pointer"
               onMouseEnter={() => setHovered(loc.year)}
               onMouseLeave={() => setHovered(null)}
@@ -111,7 +111,7 @@ export default function USMap() {
               whileInView={{ scale: 1 }}
               viewport={{ once: true }}
               transition={{ type: "spring", stiffness: 300, delay: 0.3 + i * 0.15 }}
-              style={{ filter: hovered === loc.year ? "drop-shadow(0 0 8px rgba(200, 121, 65, 0.5))" : "none" }}
+              style={{ filter: hovered === loc.year ? "drop-shadow(0 0 8px rgba(207, 128, 24, 0.4))" : "none" }}
             />
 
             {/* Year label */}
@@ -119,7 +119,7 @@ export default function USMap() {
               x={loc.x}
               y={loc.y - 16}
               textAnchor="middle"
-              fill={hovered === loc.year ? "#c87941" : "rgba(236, 232, 225, 0.4)"}
+              fill={hovered === loc.year ? "#cf8018" : "rgba(90, 90, 90, 0.5)"}
               fontSize="11"
               fontFamily="var(--font-display)"
               fontWeight="600"
@@ -147,11 +147,11 @@ export default function USMap() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 5 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-4 left-1/2 -translate-x-1/2 bg-bg-card/95 backdrop-blur-xl border border-border-light/50 px-5 py-3 rounded-sm shadow-2xl z-10"
+              className="absolute top-4 left-1/2 -translate-x-1/2 bg-white border border-border px-5 py-3 rounded-xl shadow-lg z-10"
             >
               <Link href={`/trip/${loc.slug}`} className="group">
                 <div className="flex items-baseline gap-3">
-                  <span className="font-display text-2xl text-text group-hover:text-ember transition-colors">
+                  <span className="font-display text-2xl text-text group-hover:text-accent transition-colors">
                     {loc.year}
                   </span>
                   <span className="text-[10px] tracking-[0.3em] uppercase text-text-dim font-body">

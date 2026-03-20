@@ -64,7 +64,7 @@ function HeroSection() {
           className="object-cover scale-105"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-bg" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-transparent" />
       </motion.div>
 
       <motion.div
@@ -83,14 +83,14 @@ function HeroSection() {
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 1.4, delay: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
-          className="w-24 h-px bg-gradient-to-r from-transparent via-ember to-transparent mt-10 mb-8 origin-center"
+          className="w-24 h-px bg-gradient-to-r from-transparent via-[#cf8018] to-transparent mt-10 mb-8 origin-center"
         />
 
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 1.1 }}
-          className="font-display text-xl md:text-2xl lg:text-3xl italic text-white/60 max-w-2xl leading-relaxed font-light"
+          className="font-display text-xl md:text-2xl lg:text-3xl italic text-white/70 max-w-2xl leading-relaxed font-light"
         >
           hell is empty and all the devils are here
         </motion.p>
@@ -106,7 +106,7 @@ function HeroSection() {
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
-          className="w-px h-8 bg-gradient-to-b from-ember/40 to-transparent"
+          className="w-px h-8 bg-gradient-to-b from-white/40 to-transparent"
         />
       </motion.div>
     </section>
@@ -115,17 +115,17 @@ function HeroSection() {
 
 function PhotoStrip() {
   return (
-    <section className="py-10 overflow-hidden border-y border-border/20">
+    <section className="py-12 overflow-hidden bg-[#f8f6f2]">
       <div className="relative">
         <motion.div
-          className="flex gap-3"
-          animate={{ x: [0, -(photoStripImages.length * 276)] }}
+          className="flex gap-4"
+          animate={{ x: [0, -(photoStripImages.length * 280)] }}
           transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
         >
           {[...photoStripImages, ...photoStripImages].map((src, i) => (
             <div
               key={i}
-              className="relative w-[260px] h-[170px] flex-shrink-0 overflow-hidden rounded-sm group"
+              className="relative w-[260px] h-[170px] flex-shrink-0 overflow-hidden rounded-xl group"
             >
               <Image
                 src={src}
@@ -134,12 +134,80 @@ function PhotoStrip() {
                 sizes="260px"
                 className="object-cover group-hover:scale-110 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-500" />
+              <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors duration-500" />
             </div>
           ))}
         </motion.div>
-        <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-bg to-transparent pointer-events-none z-10" />
-        <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-bg to-transparent pointer-events-none z-10" />
+        <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-[#f8f6f2] to-transparent pointer-events-none z-10" />
+        <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-[#f8f6f2] to-transparent pointer-events-none z-10" />
+      </div>
+    </section>
+  );
+}
+
+function PlannerCTA() {
+  const features = [
+    { title: "Course Selection", desc: "AI picks courses that match your skill level, budget, and vibe" },
+    { title: "Lodging & Logistics", desc: "Rental houses, transport, and everything in between" },
+    { title: "Schedule & Pacing", desc: "Day-by-day itinerary with tee times, dining, and nightlife" },
+    { title: "Budget & Group Dynamics", desc: "Per-person breakdowns and group logistics for any crew size" },
+  ];
+
+  return (
+    <section className="py-24 md:py-40 bg-white relative overflow-hidden">
+      <div className="max-w-5xl mx-auto px-6 md:px-12 relative z-10">
+        <FadeIn>
+          <div className="flex items-center gap-5 mb-6">
+            <div className="w-12 h-px bg-[#cf8018]/40" />
+            <span className="text-[10px] tracking-[0.4em] uppercase text-[#cf8018] font-body font-medium">
+              New
+            </span>
+          </div>
+        </FadeIn>
+
+        <FadeIn delay={0.1}>
+          <h2 className="font-display text-5xl md:text-7xl font-bold text-[#212121] leading-tight mb-5">
+            Plan Your Own
+          </h2>
+          <h3 className="font-display text-4xl md:text-6xl italic font-light text-[#5a5a5a] leading-tight mb-16">
+            Epic Golf Trip
+          </h3>
+        </FadeIn>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          {features.map((f, i) => (
+            <FadeIn key={f.title} delay={0.2 + i * 0.08}>
+              <div className="flex items-start gap-5 group">
+                <div className="w-2 h-2 rounded-full bg-[#cf8018] mt-2.5 flex-shrink-0 group-hover:bg-[#cf8018]/70 transition-colors" />
+                <div>
+                  <h4 className="font-display text-lg text-[#212121] mb-2 group-hover:text-[#cf8018] transition-colors duration-300">
+                    {f.title}
+                  </h4>
+                  <p className="text-[#8a8a8a] font-body text-sm font-light leading-relaxed">
+                    {f.desc}
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
+          ))}
+        </div>
+
+        <FadeIn delay={0.5}>
+          <Link
+            href="/plan"
+            className="btn-primary inline-flex items-center gap-4 group"
+          >
+            Start Planning
+            <svg
+              className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </Link>
+        </FadeIn>
       </div>
     </section>
   );
@@ -147,27 +215,27 @@ function PhotoStrip() {
 
 function MapSection() {
   return (
-    <section className="py-28 md:py-40">
+    <section className="py-24 md:py-40 bg-white">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-16 items-center">
           <div>
             <FadeIn>
               <div className="flex items-center gap-5 mb-6">
-                <div className="w-12 h-px bg-ember-dim" />
-                <span className="text-[10px] tracking-[0.4em] uppercase text-ember-dim font-body font-medium">
+                <div className="w-12 h-px bg-[#cf8018]/40" />
+                <span className="text-[10px] tracking-[0.4em] uppercase text-[#cf8018] font-body font-medium">
                   The Trail
                 </span>
               </div>
             </FadeIn>
             <FadeIn delay={0.1}>
-              <h2 className="font-display text-5xl md:text-7xl font-bold text-text mb-8 leading-[0.9]">
+              <h2 className="font-display text-5xl md:text-7xl font-bold text-[#212121] mb-8 leading-tight">
                 Across
                 <br />
-                <span className="italic font-light text-text-muted">America</span>
+                <span className="italic font-light text-[#5a5a5a]">America</span>
               </h2>
             </FadeIn>
             <FadeIn delay={0.2}>
-              <p className="text-text-muted text-lg font-body font-light leading-relaxed">
+              <p className="text-[#5a5a5a] text-lg font-body font-light leading-relaxed">
                 Six states. Six small towns none of us had ever set foot in &mdash; and most
                 will never see us coming again. Hover the map to explore every stop.
               </p>
@@ -184,32 +252,32 @@ function MapSection() {
 
 function ManifestoSection() {
   return (
-    <section className="py-28 md:py-44">
+    <section className="py-24 md:py-40 bg-[#f8f6f2]">
       <div className="max-w-5xl mx-auto px-6 md:px-12">
         <FadeIn>
           <div className="flex items-center gap-5 mb-14">
-            <div className="w-12 h-px bg-ember-dim" />
-            <span className="text-[10px] tracking-[0.4em] uppercase text-ember-dim font-body font-medium">
+            <div className="w-12 h-px bg-[#cf8018]/40" />
+            <span className="text-[10px] tracking-[0.4em] uppercase text-[#cf8018] font-body font-medium">
               The Ethos
             </span>
           </div>
         </FadeIn>
 
         <FadeIn delay={0.15}>
-          <h2 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-text leading-[0.95] mb-14">
+          <h2 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-[#212121] leading-snug mb-16">
             One week a year,
             <br />
-            <span className="italic font-light text-text-muted">
+            <span className="italic font-light text-[#5a5a5a]">
               the group chat becomes real life.
             </span>
           </h2>
         </FadeIn>
 
         <FadeIn delay={0.25}>
-          <div className="space-y-8 text-text-muted text-lg md:text-xl leading-[2.1] font-body font-light max-w-3xl">
+          <div className="space-y-10 text-[#5a5a5a] text-lg md:text-xl leading-[2.2] font-body font-light max-w-3xl">
             <p>
               Every summer we pick a town nobody&rsquo;s heard of, rent the biggest house we can find,
-              and play <span className="text-ember font-medium">108 holes in three days</span>.
+              and play <span className="text-[#cf8018] font-medium">108 holes in three days</span>.
               Six rounds. Back to back to back. An absolutely unreasonable amount of golf.
             </p>
             <p>
@@ -221,8 +289,8 @@ function ManifestoSection() {
         </FadeIn>
 
         <FadeIn delay={0.35}>
-          <div className="mt-14 pl-6 md:pl-8 border-l-2 border-ember/40">
-            <p className="text-gold font-display text-2xl md:text-4xl italic leading-[1.3] font-light">
+          <div className="mt-14 pl-6 md:pl-8 border-l-2 border-[#cf8018]/40">
+            <p className="text-[#cf8018] font-display text-2xl md:text-4xl italic leading-[1.3] font-light">
               It&rsquo;s not about the handicap.
               <br />
               It&rsquo;s about who you&rsquo;re out there with.
@@ -247,13 +315,13 @@ function AnimatedStat({ value, label, delay }: { value: string; label: string; d
       className="text-center py-6 group"
     >
       <motion.span
-        className="font-display text-5xl md:text-7xl font-bold text-gold block leading-none group-hover:text-ember transition-colors duration-500"
+        className="font-display text-5xl md:text-7xl font-bold text-[#cf8018] block leading-none group-hover:text-[#cf8018]/80 transition-colors duration-500"
         whileHover={{ scale: 1.1 }}
         transition={{ type: "spring", stiffness: 300 }}
       >
         {value}
       </motion.span>
-      <span className="text-[10px] tracking-[0.35em] uppercase text-text-dim mt-4 block font-body font-medium">
+      <span className="text-[10px] tracking-[0.35em] uppercase text-white/60 mt-4 block font-body font-medium">
         {label}
       </span>
     </motion.div>
@@ -269,7 +337,7 @@ function StatsBar() {
   ];
 
   return (
-    <section className="border-y border-border/30 texture-lines">
+    <section className="bg-[#1a322b]">
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-20 md:py-24">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-8">
           {stats.map((stat, i) => (
@@ -295,16 +363,16 @@ function UpcomingPreview() {
   }, [photos.length]);
 
   return (
-    <section className="py-28 md:py-44 bg-bg-elevated relative overflow-hidden">
-      <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/4 font-display text-[16rem] md:text-[30rem] font-bold text-white/[0.012] leading-none select-none pointer-events-none">
+    <section className="py-24 md:py-40 bg-white relative overflow-hidden">
+      <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/4 font-display text-[16rem] md:text-[30rem] font-bold text-[#212121]/[0.03] leading-none select-none pointer-events-none">
         {trip.year}
       </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         <FadeIn>
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-2 h-2 rounded-full bg-accent-light animate-pulse" />
-            <span className="text-[10px] tracking-[0.4em] uppercase text-accent-light font-body font-medium">
+            <div className="w-2 h-2 rounded-full bg-[#cf8018] animate-pulse" />
+            <span className="text-[10px] tracking-[0.4em] uppercase text-[#cf8018] font-body font-medium">
               Next Expedition
             </span>
           </div>
@@ -313,22 +381,22 @@ function UpcomingPreview() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
           <div>
             <FadeIn delay={0.1}>
-              <h2 className="font-display text-7xl md:text-9xl font-bold text-text leading-[0.85] mb-4">
+              <h2 className="font-display text-7xl md:text-9xl font-bold text-[#212121] leading-tight mb-4">
                 {trip.year}
               </h2>
             </FadeIn>
             <FadeIn delay={0.15}>
-              <h3 className="font-display text-3xl md:text-4xl font-light text-text-muted italic mb-5">
+              <h3 className="font-display text-3xl md:text-4xl font-light text-[#5a5a5a] italic mb-5">
                 {trip.location}, {trip.state}
               </h3>
             </FadeIn>
             <FadeIn delay={0.2}>
-              <p className="text-[10px] text-text-dim tracking-[0.4em] uppercase font-body font-medium mb-8">
+              <p className="text-[10px] text-[#8a8a8a] tracking-[0.4em] uppercase font-body font-medium mb-8">
                 {trip.dates}
               </p>
             </FadeIn>
             <FadeIn delay={0.25}>
-              <p className="font-display text-xl text-text-muted italic mb-10 leading-relaxed">
+              <p className="font-display text-xl text-[#5a5a5a] italic mb-10 leading-relaxed">
                 &ldquo;{trip.tagline}&rdquo;
               </p>
             </FadeIn>
@@ -341,8 +409,8 @@ function UpcomingPreview() {
                     whileHover={{ x: 8 }}
                     transition={{ type: "spring", stiffness: 400, damping: 25 }}
                   >
-                    <div className="w-1.5 h-1.5 rounded-full bg-ember group-hover:bg-gold transition-colors" />
-                    <span className="text-text font-body text-sm font-light tracking-wide group-hover:text-ember transition-colors duration-300">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#cf8018] group-hover:bg-[#cf8018]/60 transition-colors" />
+                    <span className="text-[#212121] font-body text-sm font-light tracking-wide group-hover:text-[#cf8018] transition-colors duration-300">
                       {c.name}
                     </span>
                   </motion.div>
@@ -352,7 +420,7 @@ function UpcomingPreview() {
             <FadeIn delay={0.35}>
               <Link
                 href={`/trip/${trip.slug}`}
-                className="inline-flex items-center gap-4 text-[11px] tracking-[0.3em] uppercase font-body font-medium text-ember hover:text-gold transition-colors duration-300 group"
+                className="inline-flex items-center gap-4 text-[11px] tracking-[0.3em] uppercase font-body font-medium text-[#cf8018] hover:text-[#cf8018]/70 transition-colors duration-300 group"
               >
                 Full Details
                 <svg
@@ -368,7 +436,7 @@ function UpcomingPreview() {
           </div>
 
           <FadeIn delay={0.2} direction="right">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-sm">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-lg shadow-black/5">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activePhoto}
@@ -396,14 +464,14 @@ function UpcomingPreview() {
                     key={i}
                     onClick={() => setActivePhoto(i)}
                     className={`h-1 rounded-full transition-all duration-400 ${
-                      i === activePhoto ? "bg-ember w-5" : "bg-white/30 w-1.5"
+                      i === activePhoto ? "bg-[#cf8018] w-5" : "bg-white/40 w-1.5"
                     }`}
                   />
                 ))}
               </div>
             </div>
             {trip.lodgingAddress && (
-              <p className="text-[10px] text-text-dim tracking-[0.3em] uppercase font-body mt-4 text-center">
+              <p className="text-[10px] text-[#8a8a8a] tracking-[0.3em] uppercase font-body mt-4 text-center">
                 {trip.lodgingAddress}
               </p>
             )}
@@ -426,21 +494,21 @@ function DestinationList() {
   }));
 
   return (
-    <section className="py-28 md:py-44">
+    <section className="py-24 md:py-40 bg-[#f8f6f2]">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <FadeIn>
           <div className="flex items-center gap-5 mb-6">
-            <div className="w-12 h-px bg-ember-dim" />
-            <span className="text-[10px] tracking-[0.4em] uppercase text-ember-dim font-body font-medium">
+            <div className="w-12 h-px bg-[#cf8018]/40" />
+            <span className="text-[10px] tracking-[0.4em] uppercase text-[#cf8018] font-body font-medium">
               Every Year
             </span>
           </div>
         </FadeIn>
         <FadeIn delay={0.1}>
-          <h2 className="font-display text-5xl md:text-7xl font-bold text-text mb-20 leading-[0.9]">
+          <h2 className="font-display text-5xl md:text-7xl font-bold text-[#212121] mb-20 leading-tight">
             All
             <br />
-            <span className="italic font-light text-text-muted">Destinations</span>
+            <span className="italic font-light text-[#5a5a5a]">Destinations</span>
           </h2>
         </FadeIn>
 
@@ -450,32 +518,32 @@ function DestinationList() {
               <FadeIn key={loc.year} delay={0.15 + i * 0.06}>
                 <Link
                   href={`/trip/${loc.slug}`}
-                  className="group border-t border-border/40 last:border-b flex items-center justify-between py-7 md:py-9 transition-all duration-500 hover:bg-bg-elevated/60 -mx-4 px-4 md:-mx-6 md:px-6 rounded-sm"
+                  className="group border-t border-[#e0dbd3] last:border-b flex items-center justify-between py-7 md:py-9 transition-all duration-500 hover:bg-white/60 -mx-4 px-4 md:-mx-6 md:px-6 rounded-lg"
                   onMouseEnter={() => setHoveredYear(loc.year)}
                   onMouseLeave={() => setHoveredYear(null)}
                 >
                   <div className="flex items-baseline gap-5 md:gap-8">
-                    <span className="font-display text-4xl md:text-6xl font-bold text-text-dim group-hover:text-ember transition-colors duration-500 leading-none tabular-nums">
+                    <span className="font-display text-4xl md:text-6xl font-bold text-[#8a8a8a] group-hover:text-[#cf8018] transition-colors duration-500 leading-none tabular-nums">
                       {loc.year}
                     </span>
                     <div className="flex flex-col gap-0.5">
-                      <span className="font-display text-lg md:text-2xl text-text-muted group-hover:text-text transition-colors duration-500">
+                      <span className="font-display text-lg md:text-2xl text-[#5a5a5a] group-hover:text-[#212121] transition-colors duration-500">
                         {loc.city}
                       </span>
-                      <span className="text-[10px] tracking-[0.3em] uppercase text-text-dim font-body hidden md:block">
+                      <span className="text-[10px] tracking-[0.3em] uppercase text-[#8a8a8a] font-body hidden md:block">
                         {loc.state}
                       </span>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
                     {loc.upcoming && (
-                      <span className="hidden md:flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase text-accent-light font-body font-medium">
-                        <span className="w-1.5 h-1.5 rounded-full bg-accent-light animate-pulse" />
+                      <span className="hidden md:flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase text-[#cf8018] font-body font-medium">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#cf8018] animate-pulse" />
                         Next
                       </span>
                     )}
                     <svg
-                      className="w-5 h-5 text-text-dim/20 group-hover:text-ember group-hover:translate-x-2 transition-all duration-500"
+                      className="w-5 h-5 text-[#e0dbd3] group-hover:text-[#cf8018] group-hover:translate-x-2 transition-all duration-500"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -490,7 +558,7 @@ function DestinationList() {
 
           <div className="hidden lg:block relative">
             <div className="sticky top-32">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-sm bg-bg-card">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-white shadow-lg shadow-black/5">
                 <AnimatePresence mode="wait">
                   {hoveredYear && (
                     <motion.div
@@ -519,7 +587,7 @@ function DestinationList() {
                 </AnimatePresence>
                 {!hoveredYear && (
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <p className="text-text-dim text-sm font-body italic">Hover a destination</p>
+                    <p className="text-[#8a8a8a] text-sm font-body italic">Hover a destination</p>
                   </div>
                 )}
               </div>
@@ -535,21 +603,21 @@ function PastTripsGrid() {
   const pastTrips = trips.filter((t) => !t.upcoming);
 
   return (
-    <section className="py-28 md:py-44">
+    <section className="py-24 md:py-40 bg-white">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <FadeIn>
           <div className="flex items-center gap-5 mb-6">
-            <div className="w-12 h-px bg-ember-dim" />
-            <span className="text-[10px] tracking-[0.4em] uppercase text-ember-dim font-body font-medium">
+            <div className="w-12 h-px bg-[#cf8018]/40" />
+            <span className="text-[10px] tracking-[0.4em] uppercase text-[#cf8018] font-body font-medium">
               The Archives
             </span>
           </div>
         </FadeIn>
         <FadeIn delay={0.1}>
-          <h2 className="font-display text-5xl md:text-7xl font-bold text-text mb-20 leading-[0.9]">
+          <h2 className="font-display text-5xl md:text-7xl font-bold text-[#212121] mb-20 leading-tight">
             Previous
             <br />
-            <span className="italic font-light text-text-muted">Chapters</span>
+            <span className="italic font-light text-[#5a5a5a]">Chapters</span>
           </h2>
         </FadeIn>
 
@@ -558,7 +626,7 @@ function PastTripsGrid() {
             <FadeIn key={trip.year} delay={0.1 + i * 0.08}>
               <Link href={`/trip/${trip.slug}`} className="block group">
                 <motion.div
-                  className="relative overflow-hidden rounded-sm aspect-[3/2] mb-6"
+                  className="relative overflow-hidden rounded-2xl aspect-[3/2] mb-6 shadow-lg shadow-black/5"
                   whileHover={{ y: -4 }}
                   transition={{ type: "spring", stiffness: 300, damping: 25 }}
                 >
@@ -569,18 +637,18 @@ function PastTripsGrid() {
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover group-hover:scale-110 transition-transform duration-1000 ease-out"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover:from-black/60 transition-colors duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent group-hover:from-black/50 transition-colors duration-500" />
                   <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <span className="font-display text-6xl font-bold text-white/80 leading-none group-hover:text-ember transition-colors duration-500">
+                    <span className="font-display text-6xl font-bold text-white/80 leading-none group-hover:text-[#cf8018] transition-colors duration-500">
                       {trip.year}
                     </span>
                   </div>
-                  <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-[2px] bg-gradient-to-r from-ember to-gold transition-all duration-700" />
+                  <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-[2px] bg-gradient-to-r from-[#cf8018] to-[#cf8018]/50 transition-all duration-700" />
                 </motion.div>
-                <h3 className="font-display text-xl text-text group-hover:text-ember transition-colors duration-300">
+                <h3 className="font-display text-xl text-[#212121] group-hover:text-[#cf8018] transition-colors duration-300">
                   {trip.location}, {trip.state}
                 </h3>
-                <p className="text-text-dim text-[11px] font-body mt-2 tracking-[0.2em] uppercase">
+                <p className="text-[#8a8a8a] text-[11px] font-body mt-2 tracking-[0.2em] uppercase">
                   {trip.dates}
                 </p>
               </Link>
@@ -597,21 +665,20 @@ function MottoBanner() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="py-24 md:py-32 border-t border-border/20 relative overflow-hidden">
-      <div className="absolute inset-0 texture-lines" />
+    <section ref={ref} className="py-24 md:py-32 bg-[#f8f6f2] border-t border-[#ece8e1] relative overflow-hidden">
       <div className="max-w-5xl mx-auto px-6 md:px-12 text-center relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1 }}
         >
-          <LogoFull className="w-40 md:w-52 opacity-30 mx-auto mb-8" />
+          <LogoFull className="w-40 md:w-52 opacity-20 mx-auto mb-8" />
         </motion.div>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1, delay: 0.2 }}
-          className="font-display text-3xl md:text-5xl italic text-text-dim font-light leading-[1.3]"
+          className="font-display text-3xl md:text-5xl italic text-[#8a8a8a] font-light leading-[1.3]"
         >
           See you on the first tee.
         </motion.p>
@@ -625,6 +692,7 @@ export default function HomeClient() {
     <main>
       <HeroSection />
       <PhotoStrip />
+      <PlannerCTA />
       <MapSection />
       <ManifestoSection />
       <StatsBar />

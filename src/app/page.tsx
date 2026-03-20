@@ -6,7 +6,9 @@ export default function Home() {
   return (
     <>
       <Nav />
-      <HomeClient />
+      <div id="main-content">
+        <HomeClient />
+      </div>
       <Footer />
     </>
   );

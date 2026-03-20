@@ -7,6 +7,7 @@ import { useRef, useState, useEffect } from "react";
 import { Trip } from "@/lib/trips";
 import FadeIn from "./FadeIn";
 import Gallery from "./Gallery";
+import Breadcrumbs from "./Breadcrumbs";
 
 interface Props {
   trip: Trip;
@@ -35,7 +36,7 @@ function TripHero({ trip }: { trip: Trip }) {
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-bg" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20" />
       </motion.div>
 
@@ -48,6 +49,14 @@ function TripHero({ trip }: { trip: Trip }) {
         style={{ opacity }}
         className="relative z-10 h-full flex flex-col justify-end pb-14 md:pb-20 px-6 md:px-12 max-w-7xl mx-auto"
       >
+        <div className="mb-6">
+          <Breadcrumbs
+            crumbs={[
+              { label: trip.upcoming ? "Upcoming" : "Past Trips", href: "/#destinations" },
+              { label: `${trip.year} — ${trip.location}` },
+            ]}
+          />
+        </div>
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -56,15 +65,15 @@ function TripHero({ trip }: { trip: Trip }) {
         >
           {trip.upcoming ? (
             <>
-              <div className="w-2 h-2 rounded-full bg-accent-light animate-pulse" />
-              <span className="text-[10px] tracking-[0.4em] uppercase text-accent-light font-body font-medium">
+              <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+              <span className="text-[10px] tracking-[0.4em] uppercase text-accent font-body font-medium">
                 Upcoming Trip
               </span>
             </>
           ) : (
             <>
-              <div className="w-1.5 h-1.5 rounded-full bg-ember-dim" />
-              <span className="text-[10px] tracking-[0.4em] uppercase text-ember-dim font-body font-medium">
+              <div className="w-1.5 h-1.5 rounded-full bg-white/60" />
+              <span className="text-[10px] tracking-[0.4em] uppercase text-white/60 font-body font-medium">
                 Past Expedition
               </span>
             </>
@@ -77,7 +86,7 @@ function TripHero({ trip }: { trip: Trip }) {
           transition={{ duration: 1, delay: 0.3 }}
           className="mb-3"
         >
-          <span className="font-display text-[6rem] md:text-[11rem] lg:text-[15rem] font-bold text-white leading-[0.78] tracking-tight block">
+          <span className="font-display text-[6rem] md:text-[11rem] lg:text-[15rem] font-bold text-white leading-[0.88] tracking-tight block">
             {trip.year}
           </span>
         </motion.div>
@@ -101,7 +110,7 @@ function TripHero({ trip }: { trip: Trip }) {
           <span className="text-[10px] text-white/40 tracking-[0.4em] uppercase font-body font-medium">
             {trip.dates}
           </span>
-          <div className="w-5 h-px bg-ember/40 hidden md:block" />
+          <div className="w-5 h-px bg-white/30 hidden md:block" />
           <span className="font-display text-white/50 italic text-lg">
             &ldquo;{trip.tagline}&rdquo;
           </span>
@@ -120,18 +129,18 @@ function ScheduleSection({ trip }: { trip: Trip }) {
   };
 
   return (
-    <section className="py-24 md:py-36">
+    <section className="py-24 md:py-40 bg-white">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <FadeIn>
           <div className="flex items-center gap-5 mb-4">
-            <div className="w-12 h-px bg-ember-dim" />
-            <span className="text-[10px] tracking-[0.4em] uppercase text-ember-dim font-body font-medium">
+            <div className="w-12 h-px bg-accent" />
+            <span className="text-[11px] tracking-[0.15em] uppercase text-accent font-body font-medium">
               {trip.upcoming ? "The Game Plan" : "How It Went Down"}
             </span>
           </div>
         </FadeIn>
         <FadeIn delay={0.1}>
-          <h2 className="font-display text-5xl md:text-7xl font-bold text-text mb-16 leading-[0.9]">
+          <h2 className="font-display text-5xl md:text-7xl font-bold text-text mb-16 leading-tight">
             The
             <br />
             <span className="italic font-light text-text-muted">Itinerary</span>
@@ -142,8 +151,8 @@ function ScheduleSection({ trip }: { trip: Trip }) {
           {trip.schedule.map((day, i) => (
             <FadeIn key={day.day} delay={0.15 + i * 0.08}>
               <motion.div
-                className="border-t border-border/50 py-8 md:py-10 grid grid-cols-1 md:grid-cols-[200px_1fr] gap-4 md:gap-12"
-                whileHover={{ x: 4, backgroundColor: "rgba(255,255,255,0.01)" }}
+                className="border-t border-border py-10 md:py-12 grid grid-cols-1 md:grid-cols-[200px_1fr] gap-5 md:gap-14"
+                whileHover={{ x: 4 }}
                 transition={{ duration: 0.3 }}
               >
                 <div>
@@ -154,7 +163,7 @@ function ScheduleSection({ trip }: { trip: Trip }) {
                     {day.date}
                   </div>
                 </div>
-                <div className="space-y-4">
+                <div className="space-y-5">
                   {day.items.map((item, j) => (
                     <motion.div
                       key={j}
@@ -165,15 +174,15 @@ function ScheduleSection({ trip }: { trip: Trip }) {
                       <span className="text-lg mt-[-2px]">{typeIcons[item.type]}</span>
                       <div className="flex-1">
                         <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                          <span className="text-[10px] text-ember-dim tracking-[0.3em] font-body uppercase font-medium">
+                          <span className="text-[11px] text-accent tracking-[0.15em] font-body uppercase font-medium">
                             {item.time}
                           </span>
-                          <span className="font-display text-lg text-text group-hover:text-ember transition-colors duration-300">
+                          <span className="font-display text-lg text-text group-hover:text-accent transition-colors duration-300">
                             {item.activity}
                           </span>
                         </div>
                         {item.detail && (
-                          <p className="text-sm text-text-dim font-body mt-0.5 font-light">
+                          <p className="text-sm text-text-dim font-body mt-1.5 font-light">
                             {item.detail}
                           </p>
                         )}
@@ -184,7 +193,7 @@ function ScheduleSection({ trip }: { trip: Trip }) {
               </motion.div>
             </FadeIn>
           ))}
-          <div className="border-t border-border/50" />
+          <div className="border-t border-border" />
         </div>
       </div>
     </section>
@@ -197,18 +206,18 @@ function PhotoSections({ trip }: { trip: Trip }) {
   return (
     <>
       {trip.photoSections.map((section) => (
-        <section key={section.label} className="py-24 md:py-36 bg-bg-elevated">
+        <section key={section.label} className="py-24 md:py-40 bg-bg-warm">
           <div className="max-w-7xl mx-auto px-6 md:px-12">
             <FadeIn>
               <div className="flex items-center gap-5 mb-4">
-                <div className="w-12 h-px bg-ember-dim" />
-                <span className="text-[10px] tracking-[0.4em] uppercase text-ember-dim font-body font-medium">
+                <div className="w-12 h-px bg-accent" />
+                <span className="text-[11px] tracking-[0.15em] uppercase text-accent font-body font-medium">
                   {trip.upcoming ? "Where We\u2019re Staying" : "Where We Stayed"}
                 </span>
               </div>
             </FadeIn>
             <FadeIn delay={0.1}>
-              <h2 className="font-display text-5xl md:text-7xl font-bold text-text mb-4 leading-[0.9]">
+              <h2 className="font-display text-5xl md:text-7xl font-bold text-text mb-4 leading-tight">
                 {section.label.split(" ")[0]}
                 <br />
                 <span className="italic font-light text-text-muted">
@@ -228,7 +237,7 @@ function PhotoSections({ trip }: { trip: Trip }) {
               {section.images.map((src, i) => (
                 <FadeIn key={i} delay={0.15 + i * 0.05}>
                   <motion.div
-                    className="relative aspect-[4/3] overflow-hidden rounded-sm group"
+                    className="relative aspect-[4/3] overflow-hidden rounded-2xl group"
                     whileHover={{ y: -4 }}
                     transition={{ type: "spring", stiffness: 300, damping: 25 }}
                   >
@@ -253,18 +262,18 @@ function PhotoSections({ trip }: { trip: Trip }) {
 
 function CoursesSection({ trip }: { trip: Trip }) {
   return (
-    <section className={`py-28 md:py-44 ${trip.photoSections.length === 0 ? "bg-bg-elevated" : ""}`}>
+    <section className={`py-24 md:py-40 ${trip.photoSections.length === 0 ? "bg-bg-warm" : "bg-white"}`}>
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <FadeIn>
           <div className="flex items-center gap-5 mb-6">
-            <div className="w-12 h-px bg-ember-dim" />
-            <span className="text-[10px] tracking-[0.4em] uppercase text-ember-dim font-body font-medium">
+            <div className="w-12 h-px bg-accent" />
+            <span className="text-[11px] tracking-[0.15em] uppercase text-accent font-body font-medium">
               The Courses
             </span>
           </div>
         </FadeIn>
         <FadeIn delay={0.1}>
-          <h2 className="font-display text-5xl md:text-7xl font-bold text-text mb-20 leading-[0.9]">
+          <h2 className="font-display text-5xl md:text-7xl font-bold text-text mb-20 leading-tight">
             {trip.upcoming ? "Where We\u2019ll" : "Where We"}
             <br />
             <span className="italic font-light text-text-muted">
@@ -277,8 +286,8 @@ function CoursesSection({ trip }: { trip: Trip }) {
           {trip.courses.map((course, i) => (
             <FadeIn key={course.name} delay={0.15 + i * 0.08}>
               <motion.div
-                className="bg-bg-card border border-border/30 rounded-sm overflow-hidden group card-hover"
-                whileHover={{ borderColor: "rgba(200, 121, 65, 0.2)" }}
+                className="bg-white rounded-2xl shadow-lg shadow-black/5 border border-border overflow-hidden group"
+                whileHover={{ borderColor: "rgba(207, 128, 24, 0.3)" }}
               >
                 {/* Course image */}
                 {course.image && (
@@ -288,17 +297,16 @@ function CoursesSection({ trip }: { trip: Trip }) {
                       alt={course.name}
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                      className="object-cover rounded-t-2xl group-hover:scale-105 transition-transform duration-700"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-bg-card/80 to-transparent opacity-60" />
                   </div>
                 )}
 
-                <div className="p-7">
-                  <div className="text-ember-dim text-[10px] tracking-[0.3em] uppercase mb-3 font-body font-medium">
+                <div className="p-8">
+                  <div className="text-[11px] tracking-[0.15em] uppercase text-accent mb-3 font-body font-medium">
                     Course {String(i + 1).padStart(2, "0")}
                   </div>
-                  <h3 className="font-display text-2xl text-text group-hover:text-ember transition-colors duration-300 mb-5">
+                  <h3 className="font-display text-2xl text-text group-hover:text-accent transition-colors duration-300 mb-6">
                     {course.name}
                   </h3>
                   {course.url && (
@@ -306,7 +314,7 @@ function CoursesSection({ trip }: { trip: Trip }) {
                       href={course.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-3 text-[10px] text-ember/70 hover:text-ember transition-colors duration-300 tracking-[0.25em] uppercase font-body font-medium border border-ember/20 hover:border-ember/40 px-4 py-2.5 rounded-sm group/link"
+                      className="btn-outline inline-flex items-center gap-3 text-[10px] tracking-[0.25em] uppercase font-body font-medium group/link"
                     >
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101" />
@@ -332,18 +340,18 @@ function GallerySection({ trip }: { trip: Trip }) {
   if (trip.gallery.length === 0) return null;
 
   return (
-    <section className="py-24 md:py-36">
+    <section className="py-24 md:py-40 bg-bg-warm">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <FadeIn>
           <div className="flex items-center gap-5 mb-4">
-            <div className="w-12 h-px bg-ember-dim" />
-            <span className="text-[10px] tracking-[0.4em] uppercase text-ember-dim font-body font-medium">
+            <div className="w-12 h-px bg-accent" />
+            <span className="text-[11px] tracking-[0.15em] uppercase text-accent font-body font-medium">
               The Evidence
             </span>
           </div>
         </FadeIn>
         <FadeIn delay={0.1}>
-          <h2 className="font-display text-5xl md:text-7xl font-bold text-text mb-16 leading-[0.9]">
+          <h2 className="font-display text-5xl md:text-7xl font-bold text-text mb-16 leading-tight">
             Trip
             <br />
             <span className="italic font-light text-text-muted">Gallery</span>
@@ -358,9 +366,9 @@ function GallerySection({ trip }: { trip: Trip }) {
 
 function TripNav({ prevTrip, nextTrip }: { prevTrip: Trip | null; nextTrip: Trip | null }) {
   return (
-    <section className="border-t border-border/40">
+    <section className="bg-white border-t border-border">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-2 divide-x divide-border/40">
+        <div className="grid grid-cols-2 divide-x divide-border">
           <div className="py-14 md:py-20 pr-6 md:pr-12">
             {prevTrip ? (
               <Link href={`/trip/${prevTrip.slug}`} className="group block">
@@ -368,7 +376,7 @@ function TripNav({ prevTrip, nextTrip }: { prevTrip: Trip | null; nextTrip: Trip
                   Previous
                 </span>
                 <motion.span
-                  className="font-display text-3xl md:text-5xl text-text group-hover:text-ember transition-colors duration-300 block"
+                  className="font-display text-3xl md:text-5xl text-text group-hover:text-accent transition-colors duration-300 block"
                   whileHover={{ x: -4 }}
                 >
                   {prevTrip.year}
@@ -395,7 +403,7 @@ function TripNav({ prevTrip, nextTrip }: { prevTrip: Trip | null; nextTrip: Trip
                   Next
                 </span>
                 <motion.span
-                  className="font-display text-3xl md:text-5xl text-text group-hover:text-ember transition-colors duration-300 block"
+                  className="font-display text-3xl md:text-5xl text-text group-hover:text-accent transition-colors duration-300 block"
                   whileHover={{ x: 4 }}
                 >
                   {nextTrip.year}

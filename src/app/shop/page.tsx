@@ -11,7 +11,9 @@ export default function ShopPage() {
   return (
     <>
       <Nav />
-      <ShopClient />
+      <div id="main-content">
+        <ShopClient />
+      </div>
       <Footer />
     </>
   );

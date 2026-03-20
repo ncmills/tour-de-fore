@@ -33,10 +33,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Tour de Fore",
+              description: "An Annual Golf Odyssey — six years of fairways, friendships, and questionable handicaps.",
+              url: "https://tourdefore.com",
+              foundingDate: "2021",
+            }),
+          }}
+        />
+      </head>
       <body
-        className={`${cormorant.variable} ${outfit.variable} noise antialiased`}
+        className={`${cormorant.variable} ${outfit.variable} antialiased`}
       >
+        <a href="#main-content" className="skip-to-content">
+          Skip to content
+        </a>
         {children}
       </body>
     </html>

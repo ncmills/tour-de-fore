@@ -30,7 +30,9 @@ export default async function TripPage({ params }: { params: Promise<{ slug: str
   return (
     <>
       <Nav />
-      <TripPageClient trip={trip} prevTrip={prevTrip} nextTrip={nextTrip} />
+      <div id="main-content">
+        <TripPageClient trip={trip} prevTrip={prevTrip} nextTrip={nextTrip} />
+      </div>
       <Footer />
     </>
   );

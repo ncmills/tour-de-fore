@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import FadeIn from "./FadeIn";
+import Breadcrumbs from "./Breadcrumbs";
 
 // Inline product mockup SVGs with TDF branding
 function ZynTinMockup() {
@@ -333,19 +334,22 @@ const products = [
 
 export default function ShopClient() {
   return (
-    <main>
+    <main className="bg-white">
       <section className="pt-36 pb-20 md:pt-44 md:pb-28">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
+          <div className="mb-8">
+            <Breadcrumbs crumbs={[{ label: "Shop" }]} />
+          </div>
           <FadeIn>
             <div className="flex items-center gap-5 mb-6">
-              <div className="w-12 h-px bg-ember-dim" />
-              <span className="text-[10px] tracking-[0.4em] uppercase text-ember-dim font-body font-medium">
+              <div className="w-12 h-px bg-accent" />
+              <span className="text-[11px] tracking-[0.15em] uppercase text-accent font-body font-medium">
                 Official Gear
               </span>
             </div>
           </FadeIn>
           <FadeIn delay={0.1}>
-            <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-text leading-[0.9] mb-10">
+            <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-text leading-tight mb-10">
               Pro
               <br />
               <span className="italic font-light text-text-muted">Shop</span>
@@ -368,54 +372,53 @@ export default function ShopClient() {
               return (
                 <FadeIn key={product.name} delay={0.05 + i * 0.04}>
                   <motion.div
-                    className="bg-bg-card border border-border/30 rounded-sm overflow-hidden group card-hover"
-                    whileHover={{ borderColor: "rgba(200, 121, 65, 0.2)" }}
+                    className="bg-white rounded-2xl shadow-lg shadow-black/5 border border-border overflow-hidden group"
+                    whileHover={{ borderColor: "rgba(207, 128, 24, 0.3)" }}
                   >
-                    <div className="relative aspect-[4/3] bg-surface overflow-hidden flex items-center justify-center p-8">
+                    <div className="relative aspect-[4/3] bg-bg-warm overflow-hidden rounded-t-2xl flex items-center justify-center p-8">
                       <div className="w-full h-full group-hover:scale-105 transition-transform duration-500">
                         <Mockup />
                       </div>
 
                       {product.tag && (
                         <div className="absolute top-3 left-3">
-                          <span className="text-[9px] tracking-[0.25em] uppercase font-body font-medium bg-ember/90 text-white px-3 py-1.5 rounded-sm">
+                          <span className="text-[9px] tracking-[0.25em] uppercase font-body font-medium bg-accent text-white px-3 py-1 rounded-full">
                             {product.tag}
                           </span>
                         </div>
                       )}
                     </div>
 
-                    <div className="p-7">
-                      <div className="flex items-start justify-between gap-3 mb-4">
-                        <h3 className="font-display text-lg text-text group-hover:text-ember transition-colors duration-300 leading-snug">
+                    <div className="p-8">
+                      <div className="flex items-start justify-between gap-3 mb-5">
+                        <h3 className="font-display text-lg text-text group-hover:text-accent transition-colors duration-300 leading-snug">
                           {product.name}
                         </h3>
-                        <span className="font-display text-xl text-gold font-semibold whitespace-nowrap">
+                        <span className="font-display text-xl text-accent font-semibold whitespace-nowrap">
                           {product.price}
                         </span>
                       </div>
 
-                      <p className="text-text-dim text-sm font-body font-light leading-[1.8] mb-6">
+                      <p className="text-text-dim text-sm font-body font-light leading-[1.9] mb-7">
                         {product.description}
                       </p>
 
-                      <div className="flex flex-wrap gap-1.5 mb-7">
+                      <div className="flex flex-wrap gap-2 mb-8">
                         {product.colors.map((color) => (
                           <span
                             key={color}
-                            className="text-[9px] tracking-[0.15em] uppercase font-body text-text-dim border border-border/40 px-2.5 py-1 rounded-sm hover:border-ember/30 hover:text-text-muted transition-colors cursor-pointer"
+                            className="text-[9px] tracking-[0.15em] uppercase font-body text-text-dim border border-border rounded-full px-3 py-1 hover:border-accent/40 hover:text-text-muted transition-colors cursor-pointer"
                           >
                             {color}
                           </span>
                         ))}
                       </div>
 
-                      <motion.button
-                        className="w-full py-3.5 bg-surface border border-border/40 rounded-sm text-[10px] tracking-[0.3em] uppercase font-body font-medium text-text-muted hover:text-ember hover:border-ember/30 transition-all duration-300"
-                        whileTap={{ scale: 0.98 }}
+                      <div
+                        className="w-full py-3.5 bg-gray-100 border border-border rounded-full text-[10px] tracking-[0.3em] uppercase font-body font-medium text-text-dim text-center select-none"
                       >
                         Coming Soon
-                      </motion.button>
+                      </div>
                     </div>
                   </motion.div>
                 </FadeIn>
