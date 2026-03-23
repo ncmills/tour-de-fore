@@ -121,9 +121,9 @@ export default function ShopClient() {
       </section>
 
       {/* Product Concepts */}
-      <section className="pb-12 md:pb-20">
+      <section className="pb-16 md:pb-28">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {heroProducts.map((product, i) => (
               <FadeIn key={product.name} delay={0.05 + i * 0.06}>
                 <div className="bg-[#1f1f1f] rounded-lg border border-[#2a2a2a] overflow-hidden group hover:border-[#e85d26]/30 transition-colors duration-300">
@@ -132,8 +132,8 @@ export default function ShopClient() {
                       {product.svg}
                     </div>
                   </div>
-                  <div className="p-6">
-                    <h3 className="font-body text-lg text-text font-semibold mb-2">
+                  <div className="p-8">
+                    <h3 className="font-body text-lg text-text font-semibold mb-3">
                       {product.name}
                     </h3>
                     <p className="text-[#5a5550] text-sm font-body">
@@ -148,7 +148,7 @@ export default function ShopClient() {
       </section>
 
       {/* Email Capture */}
-      <section className="py-12 md:py-20 bg-[#1a1a1a]">
+      <section className="py-16 md:py-28 bg-[#1a1a1a]">
         <div className="max-w-xl mx-auto px-6 md:px-12 text-center">
           <FadeIn>
             <h2 className="font-display text-4xl md:text-5xl text-text mb-4">

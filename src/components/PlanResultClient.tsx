@@ -59,7 +59,7 @@ export default function PlanResultClient({ stored }: { stored: StoredPlan }) {
             <Breadcrumbs crumbs={[{ label: "Plan a Trip", href: "/plan" }, { label: plan.tripName }]} />
           </div>
           <FadeIn>
-            <div className="flex items-center gap-5 mb-6">
+            <div className="flex items-center gap-6 mb-6">
               <div className="w-12 h-px bg-[#e85d26]" />
               <span className="text-[11px] tracking-[0.15em] uppercase text-[#e85d26] font-body font-medium">
                 Your Trip Plan
@@ -107,10 +107,10 @@ export default function PlanResultClient({ stored }: { stored: StoredPlan }) {
       </section>
 
       {/* Lodging */}
-      <section className="py-12 md:py-20 bg-[#1a1a1a]">
+      <section className="py-16 md:py-28 bg-[#1a1a1a]">
         <div className="max-w-5xl mx-auto px-6 md:px-12">
           <FadeIn>
-            <h2 className="font-display text-4xl md:text-6xl text-text mb-10">
+            <h2 className="font-display text-4xl md:text-6xl text-text mb-14">
               THE LODGING
             </h2>
           </FadeIn>
@@ -154,15 +154,15 @@ export default function PlanResultClient({ stored }: { stored: StoredPlan }) {
       </section>
 
       {/* Courses */}
-      <section className="py-12 md:py-20 bg-[#0f0f0f]">
+      <section className="py-16 md:py-28 bg-[#0f0f0f]">
         <div className="max-w-5xl mx-auto px-6 md:px-12">
           <FadeIn>
-            <h2 className="font-display text-4xl md:text-6xl text-text mb-10">
+            <h2 className="font-display text-4xl md:text-6xl text-text mb-14">
               THE COURSES
             </h2>
           </FadeIn>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {plan.courses.map((course, i) => (
               <FadeIn key={course.name} delay={0.1 + i * 0.06}>
                 <motion.div
@@ -207,10 +207,10 @@ export default function PlanResultClient({ stored }: { stored: StoredPlan }) {
       </section>
 
       {/* Itinerary */}
-      <section className="py-12 md:py-20 bg-[#1a1a1a]">
+      <section className="py-16 md:py-28 bg-[#1a1a1a]">
         <div className="max-w-5xl mx-auto px-6 md:px-12">
           <FadeIn>
-            <h2 className="font-display text-4xl md:text-6xl text-text mb-10">
+            <h2 className="font-display text-4xl md:text-6xl text-text mb-14">
               THE ITINERARY
             </h2>
           </FadeIn>
@@ -218,7 +218,7 @@ export default function PlanResultClient({ stored }: { stored: StoredPlan }) {
           <div className="space-y-0">
             {plan.schedule.map((day, i) => (
               <FadeIn key={day.day} delay={0.1 + i * 0.06}>
-                <div className="border-t border-[#2a2a2a] py-6 md:py-8 grid grid-cols-1 md:grid-cols-[200px_1fr] gap-4 md:gap-12">
+                <div className="border-t border-[#2a2a2a] py-8 md:py-10 grid grid-cols-1 md:grid-cols-[200px_1fr] gap-4 md:gap-12">
                   <div>
                     <div className="font-body text-lg text-text font-semibold">
                       {day.label}
@@ -265,15 +265,15 @@ export default function PlanResultClient({ stored }: { stored: StoredPlan }) {
 
       {/* Dining & Nightlife */}
       {plan.dining.length > 0 && (
-        <section className="py-12 md:py-20 bg-[#0f0f0f]">
+        <section className="py-16 md:py-28 bg-[#0f0f0f]">
           <div className="max-w-5xl mx-auto px-6 md:px-12">
             <FadeIn>
-              <h2 className="font-display text-4xl md:text-6xl text-text mb-10">
+              <h2 className="font-display text-4xl md:text-6xl text-text mb-14">
                 DINING & NIGHTLIFE
               </h2>
             </FadeIn>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {plan.dining.map((spot, i) => (
                 <FadeIn key={spot.name} delay={0.1 + i * 0.06}>
                   <div className="bg-[#1f1f1f] rounded-lg border border-[#2a2a2a] p-6 group hover:border-[#e85d26]/30 transition-colors">
@@ -300,10 +300,10 @@ export default function PlanResultClient({ stored }: { stored: StoredPlan }) {
       )}
 
       {/* Budget Breakdown */}
-      <section className="py-12 md:py-20 bg-[#1a1a1a]">
+      <section className="py-16 md:py-28 bg-[#1a1a1a]">
         <div className="max-w-5xl mx-auto px-6 md:px-12">
           <FadeIn>
-            <h2 className="font-display text-4xl md:text-6xl text-text mb-10">
+            <h2 className="font-display text-4xl md:text-6xl text-text mb-14">
               BUDGET BREAKDOWN
             </h2>
           </FadeIn>
@@ -334,10 +334,10 @@ export default function PlanResultClient({ stored }: { stored: StoredPlan }) {
 
       {/* Pro Tips */}
       {plan.proTips.length > 0 && (
-        <section className="py-12 md:py-20 bg-[#0f0f0f]">
+        <section className="py-16 md:py-28 bg-[#0f0f0f]">
           <div className="max-w-5xl mx-auto px-6 md:px-12">
             <FadeIn>
-              <h2 className="font-display text-4xl md:text-6xl text-text mb-10">
+              <h2 className="font-display text-4xl md:text-6xl text-text mb-14">
                 PRO TIPS
               </h2>
             </FadeIn>
@@ -345,7 +345,7 @@ export default function PlanResultClient({ stored }: { stored: StoredPlan }) {
             <div className="space-y-6">
               {plan.proTips.map((tip, i) => (
                 <FadeIn key={i} delay={0.1 + i * 0.04}>
-                  <div className="flex items-start gap-5 border-l-2 border-[#e85d26] pl-6 py-2">
+                  <div className="flex items-start gap-6 border-l-2 border-[#e85d26] pl-6 py-2">
                     <span className="font-display text-2xl text-[#e85d26] leading-none mt-0.5">
                       {String(i + 1).padStart(2, "0")}
                     </span>
@@ -361,15 +361,15 @@ export default function PlanResultClient({ stored }: { stored: StoredPlan }) {
       )}
 
       {/* Group Logistics */}
-      <section className="py-12 md:py-20 bg-[#1a1a1a]">
+      <section className="py-16 md:py-28 bg-[#1a1a1a]">
         <div className="max-w-5xl mx-auto px-6 md:px-12">
           <FadeIn>
-            <h2 className="font-display text-4xl md:text-6xl text-text mb-10">
+            <h2 className="font-display text-4xl md:text-6xl text-text mb-14">
               GROUP LOGISTICS
             </h2>
           </FadeIn>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <FadeIn delay={0.1}>
               <div className="bg-[#1f1f1f] rounded-lg border border-[#2a2a2a] p-6">
                 <h3 className="font-body text-lg text-text font-semibold mb-4">Tee Time Strategy</h3>

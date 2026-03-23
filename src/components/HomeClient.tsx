@@ -97,7 +97,7 @@ function NextUpBanner() {
   const heroPhoto = photos[0] || trip.heroImage;
 
   return (
-    <section className="py-12 md:py-20 bg-[#1a1a1a]">
+    <section className="py-16 md:py-28 bg-[#1a1a1a]">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Left: Info */}
@@ -112,25 +112,25 @@ function NextUpBanner() {
             </FadeIn>
 
             <FadeIn delay={0.1}>
-              <h2 className="font-display text-[5rem] md:text-[8rem] lg:text-[10rem] text-[#c9a84c] leading-[0.9] mb-4">
+              <h2 className="font-display text-[5rem] md:text-[8rem] lg:text-[10rem] text-[#c9a84c] leading-[0.9] mb-6">
                 {trip.year}
               </h2>
             </FadeIn>
 
             <FadeIn delay={0.15}>
-              <h3 className="font-body text-xl md:text-2xl text-text font-medium mb-2">
+              <h3 className="font-body text-xl md:text-2xl text-text font-medium mb-3">
                 {trip.location}, {trip.state}
               </h3>
             </FadeIn>
 
             <FadeIn delay={0.2}>
-              <p className="text-[#8a8580] font-body text-sm mb-6">
+              <p className="text-[#8a8580] font-body text-sm mb-8">
                 {trip.dates}
               </p>
             </FadeIn>
 
             <FadeIn delay={0.25}>
-              <p className="text-[#5a5550] font-body text-sm mb-8">
+              <p className="text-[#5a5550] font-body text-sm mb-10">
                 {trip.courses.length} courses &middot; {trip.schedule.length} days &middot; 16 guys
               </p>
             </FadeIn>
@@ -177,16 +177,16 @@ function Timeline() {
   const allTrips = [...trips].reverse(); // chronological
 
   return (
-    <section id="destinations" className="py-12 md:py-20 bg-[#0f0f0f]">
+    <section id="destinations" className="py-16 md:py-28 bg-[#0f0f0f]">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <FadeIn>
-          <h2 className="font-display text-4xl md:text-6xl text-text mb-10">
+          <h2 className="font-display text-4xl md:text-6xl text-text mb-14">
             THE TIMELINE
           </h2>
         </FadeIn>
 
         {/* Desktop: horizontal scroll row */}
-        <div className="flex gap-5 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory md:grid md:grid-cols-3 lg:grid-cols-6 md:overflow-visible md:pb-0">
+        <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory md:grid md:grid-cols-3 lg:grid-cols-6 md:gap-5 md:overflow-visible md:pb-0">
           {allTrips.map((trip, i) => (
             <FadeIn key={trip.year} delay={0.05 + i * 0.05} className="snap-start">
               <Link href={`/trip/${trip.slug}`} className="block group flex-shrink-0 w-[220px] md:w-auto">
@@ -233,7 +233,7 @@ function ManifestoSection() {
   const bgImage = heroImages[0]; // group shot
 
   return (
-    <section className="relative py-12 md:py-20 overflow-hidden">
+    <section className="relative py-20 md:py-36 overflow-hidden">
       {/* Full-bleed background */}
       <div className="absolute inset-0">
         <Image
@@ -274,7 +274,7 @@ function ManifestoSection() {
 /* ── 5. Plan Your Own CTA ── */
 function PlanCTA() {
   return (
-    <section className="py-12 md:py-20 bg-[#1a1a1a]">
+    <section className="py-16 md:py-28 bg-[#1a1a1a]">
       <div className="max-w-4xl mx-auto px-6 md:px-12 text-center">
         <FadeIn>
           <h2 className="font-display text-4xl md:text-6xl lg:text-7xl text-text mb-4">
@@ -282,7 +282,7 @@ function PlanCTA() {
           </h2>
         </FadeIn>
         <FadeIn delay={0.1}>
-          <p className="text-[#8a8580] font-body text-base md:text-lg mb-8 max-w-lg mx-auto">
+          <p className="text-[#8a8580] font-body text-base md:text-lg mb-10 max-w-lg mx-auto">
             AI-powered itinerary for your crew. Courses, lodging, dining, budget — the whole game plan.
           </p>
         </FadeIn>

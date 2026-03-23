@@ -59,10 +59,9 @@ p {
 }
 
 h1, h2, h3, h4 {
-  line-height: 1.05;
+  line-height: 1.15;
   font-family: var(--font-display), sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
 }
 
 ::selection {

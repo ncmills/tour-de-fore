@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 
 export default function PlanUpsellSection({ planId }: { planId: string }) {
   return (
-    <section className="py-16 md:py-24 bg-[#1a1a1a] relative overflow-hidden">
+    <section className="py-16 md:py-28 bg-[#1a1a1a] relative overflow-hidden">
       <div className="max-w-3xl mx-auto px-6 md:px-12 text-center relative z-10">
         <div className="w-12 h-px bg-[#e85d26] mx-auto mb-6" />
         <span className="text-[11px] tracking-[0.15em] uppercase text-[#e85d26] font-body font-medium">

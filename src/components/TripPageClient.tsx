@@ -99,7 +99,7 @@ function TripHero({ trip }: { trip: Trip }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.7 }}
-          className="flex flex-wrap items-center gap-5"
+          className="flex flex-wrap items-center gap-6"
         >
           <span className="text-[11px] text-white/40 tracking-[0.15em] uppercase font-body font-medium">
             {trip.dates}
@@ -123,10 +123,10 @@ function ScheduleSection({ trip }: { trip: Trip }) {
   };
 
   return (
-    <section className="py-12 md:py-20 bg-[#0f0f0f]">
+    <section className="py-16 md:py-28 bg-[#0f0f0f]">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <FadeIn>
-          <h2 className="font-display text-4xl md:text-6xl text-text mb-10">
+          <h2 className="font-display text-4xl md:text-6xl text-text mb-14">
             {trip.upcoming ? "THE GAME PLAN" : "THE ITINERARY"}
           </h2>
         </FadeIn>
@@ -135,7 +135,7 @@ function ScheduleSection({ trip }: { trip: Trip }) {
           {trip.schedule.map((day, i) => (
             <FadeIn key={day.day} delay={0.1 + i * 0.06}>
               <motion.div
-                className="border-t border-[#2a2a2a] py-6 md:py-8 grid grid-cols-1 md:grid-cols-[200px_1fr] gap-4 md:gap-14"
+                className="border-t border-[#2a2a2a] py-8 md:py-10 grid grid-cols-1 md:grid-cols-[200px_1fr] gap-4 md:gap-14"
                 whileHover={{ x: 4 }}
                 transition={{ duration: 0.3 }}
               >
@@ -190,7 +190,7 @@ function PhotoSections({ trip }: { trip: Trip }) {
   return (
     <>
       {trip.photoSections.map((section) => (
-        <section key={section.label} className="py-12 md:py-20 bg-[#1a1a1a]">
+        <section key={section.label} className="py-16 md:py-28 bg-[#1a1a1a]">
           <div className="max-w-7xl mx-auto px-6 md:px-12">
             <FadeIn>
               <h2 className="font-display text-4xl md:text-6xl text-text mb-4">
@@ -234,7 +234,7 @@ function PhotoSections({ trip }: { trip: Trip }) {
 
 function CoursesSection({ trip }: { trip: Trip }) {
   return (
-    <section className="py-12 md:py-20 bg-[#0f0f0f]">
+    <section className="py-16 md:py-28 bg-[#0f0f0f]">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <FadeIn>
           <h2 className="font-display text-4xl md:text-6xl text-text mb-12">
@@ -242,7 +242,7 @@ function CoursesSection({ trip }: { trip: Trip }) {
           </h2>
         </FadeIn>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {trip.courses.map((course, i) => (
             <FadeIn key={course.name} delay={0.1 + i * 0.06}>
               <motion.div
@@ -292,10 +292,10 @@ function GallerySection({ trip }: { trip: Trip }) {
   if (trip.gallery.length === 0) return null;
 
   return (
-    <section className="py-12 md:py-20 bg-[#1a1a1a]">
+    <section className="py-16 md:py-28 bg-[#1a1a1a]">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <FadeIn>
-          <h2 className="font-display text-4xl md:text-6xl text-text mb-10">
+          <h2 className="font-display text-4xl md:text-6xl text-text mb-14">
             THE EVIDENCE
           </h2>
         </FadeIn>
