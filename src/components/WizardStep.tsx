@@ -20,9 +20,9 @@ export default function WizardStep({ title, subtitle, children }: WizardStepProp
     >
       <div className="mb-12">
         <div className="flex items-center gap-5 mb-5">
-          <div className="w-12 h-px bg-[#e85d26]" />
+          <div className="w-12 h-px bg-accent" />
           {subtitle && (
-            <span className="text-[11px] tracking-[0.15em] uppercase text-[#e85d26] font-body font-medium">
+            <span className="text-xs tracking-[0.15em] uppercase text-accent font-body font-medium">
               {subtitle}
             </span>
           )}

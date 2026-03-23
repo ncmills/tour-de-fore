@@ -34,17 +34,17 @@ export default function USMap({ compact }: { compact?: boolean }) {
         {/* Simplified US outline */}
         <path
           d="M 130 120 L 160 100 L 200 95 L 250 90 L 310 85 L 350 90 L 400 85 L 450 80 L 500 82 L 550 85 L 600 90 L 650 95 L 700 100 L 750 110 L 790 130 L 820 150 L 840 180 L 850 210 L 855 250 L 850 280 L 840 310 L 830 340 L 810 360 L 780 380 L 750 395 L 720 400 L 700 410 L 680 430 L 660 450 L 640 460 L 610 465 L 580 460 L 560 450 L 540 440 L 520 450 L 490 460 L 460 465 L 430 460 L 400 450 L 370 440 L 340 435 L 310 430 L 280 420 L 260 410 L 240 395 L 220 380 L 200 370 L 180 360 L 160 345 L 140 320 L 125 290 L 115 260 L 110 230 L 112 200 L 118 170 L 125 140 Z"
-          fill="rgba(232, 93, 38, 0.03)"
-          stroke="rgba(232, 93, 38, 0.15)"
+          fill="rgba(234, 88, 12, 0.03)"
+          stroke="rgba(234, 88, 12, 0.15)"
           strokeWidth="1.5"
         />
 
         {/* State boundary suggestion lines */}
-        <line x1="305" y1="85" x2="300" y2="440" stroke="rgba(232, 93, 38, 0.06)" strokeWidth="0.5" />
-        <line x1="450" y1="80" x2="450" y2="465" stroke="rgba(232, 93, 38, 0.06)" strokeWidth="0.5" />
-        <line x1="600" y1="90" x2="600" y2="465" stroke="rgba(232, 93, 38, 0.06)" strokeWidth="0.5" />
-        <line x1="115" y1="250" x2="855" y2="250" stroke="rgba(232, 93, 38, 0.06)" strokeWidth="0.5" />
-        <line x1="115" y1="350" x2="830" y2="350" stroke="rgba(232, 93, 38, 0.06)" strokeWidth="0.5" />
+        <line x1="305" y1="85" x2="300" y2="440" stroke="rgba(234, 88, 12, 0.06)" strokeWidth="0.5" />
+        <line x1="450" y1="80" x2="450" y2="465" stroke="rgba(234, 88, 12, 0.06)" strokeWidth="0.5" />
+        <line x1="600" y1="90" x2="600" y2="465" stroke="rgba(234, 88, 12, 0.06)" strokeWidth="0.5" />
+        <line x1="115" y1="250" x2="855" y2="250" stroke="rgba(234, 88, 12, 0.06)" strokeWidth="0.5" />
+        <line x1="115" y1="350" x2="830" y2="350" stroke="rgba(234, 88, 12, 0.06)" strokeWidth="0.5" />
 
         {/* Connection lines */}
         {tripLocations.slice(0, -1).map((loc, i) => {
@@ -56,7 +56,7 @@ export default function USMap({ compact }: { compact?: boolean }) {
               y1={loc.y}
               x2={next.x}
               y2={next.y}
-              stroke="rgba(232, 93, 38, 0.25)"
+              stroke="rgba(234, 88, 12, 0.25)"
               strokeWidth="1"
               strokeDasharray="4 4"
               initial={compact ? { pathLength: 1 } : { pathLength: 0 }}
@@ -76,7 +76,7 @@ export default function USMap({ compact }: { compact?: boolean }) {
                 cy={loc.y}
                 r="20"
                 fill="none"
-                stroke="rgba(232, 93, 38, 0.3)"
+                stroke="rgba(234, 88, 12, 0.3)"
                 strokeWidth="1"
                 animate={{ r: [14, 24, 14], opacity: [0.5, 0, 0.5] }}
                 transition={{ duration: 2, repeat: Infinity }}
@@ -87,7 +87,7 @@ export default function USMap({ compact }: { compact?: boolean }) {
               cx={loc.x}
               cy={loc.y}
               r="12"
-              fill={loc.upcoming ? "rgba(232, 93, 38, 0.08)" : "rgba(201, 168, 76, 0.1)"}
+              fill={loc.upcoming ? "rgba(234, 88, 12, 0.08)" : "rgba(212, 168, 67, 0.1)"}
               initial={compact ? { scale: 1 } : { scale: 0 }}
               whileInView={{ scale: 1 }}
               viewport={{ once: true }}
@@ -98,7 +98,7 @@ export default function USMap({ compact }: { compact?: boolean }) {
               cx={loc.x}
               cy={loc.y}
               r={!compact && hovered === loc.year ? 8 : 5}
-              fill={loc.upcoming ? "#e85d26" : "#c9a84c"}
+              fill={loc.upcoming ? "#EA580C" : "#D4A843"}
               className={compact ? "" : "cursor-pointer"}
               onMouseEnter={() => !compact && setHovered(loc.year)}
               onMouseLeave={() => !compact && setHovered(null)}
@@ -106,14 +106,14 @@ export default function USMap({ compact }: { compact?: boolean }) {
               whileInView={{ scale: 1 }}
               viewport={{ once: true }}
               transition={{ type: "spring", stiffness: 300, delay: 0.3 + i * 0.15 }}
-              style={{ filter: !compact && hovered === loc.year ? "drop-shadow(0 0 8px rgba(232, 93, 38, 0.4))" : "none" }}
+              style={{ filter: !compact && hovered === loc.year ? "drop-shadow(0 0 8px rgba(234, 88, 12, 0.4))" : "none" }}
             />
 
             <motion.text
               x={loc.x}
               y={loc.y - 16}
               textAnchor="middle"
-              fill={!compact && hovered === loc.year ? "#e85d26" : "rgba(138, 133, 128, 0.5)"}
+              fill={!compact && hovered === loc.year ? "#EA580C" : "rgba(161, 161, 170, 0.5)"}
               fontSize="11"
               fontFamily="var(--font-display)"
               fontWeight="400"
@@ -142,18 +142,18 @@ export default function USMap({ compact }: { compact?: boolean }) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 5 }}
                 transition={{ duration: 0.2 }}
-                className="absolute top-4 left-1/2 -translate-x-1/2 bg-[#1f1f1f] border border-[#2a2a2a] px-5 py-3 rounded-lg shadow-lg z-10"
+                className="absolute top-4 left-1/2 -translate-x-1/2 bg-bg-card border border-border px-5 py-3 rounded-lg shadow-lg z-10"
               >
                 <Link href={`/trip/${loc.slug}`} className="group">
                   <div className="flex items-baseline gap-3">
-                    <span className="font-display text-2xl text-[#c9a84c] group-hover:text-[#e85d26] transition-colors">
+                    <span className="font-display text-2xl text-gold group-hover:text-accent transition-colors">
                       {loc.year}
                     </span>
-                    <span className="text-[11px] tracking-[0.15em] uppercase text-[#5a5550] font-body">
+                    <span className="text-xs tracking-[0.15em] uppercase text-text-dim font-body">
                       {loc.city}, {loc.state}
                     </span>
                     {loc.upcoming && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#e85d26] animate-pulse" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
                     )}
                   </div>
                 </Link>

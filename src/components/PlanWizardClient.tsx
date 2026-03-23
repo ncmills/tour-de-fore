@@ -103,20 +103,20 @@ function Question({
   return (
     <section
       id={id}
-      className="min-h-screen flex flex-col justify-center py-20 md:py-28"
+      className="min-h-screen flex flex-col justify-center py-20 md:py-32"
     >
       <div className="max-w-2xl mx-auto w-full px-6 md:px-12">
         <div className="flex items-center gap-4 mb-8">
-          <span className="text-[11px] tracking-[0.15em] uppercase text-[#e85d26] font-body font-medium">
+          <span className="text-xs tracking-[0.15em] uppercase text-accent font-body font-medium">
             {String(number).padStart(2, "0")}
           </span>
-          <div className="w-8 h-px bg-[#e85d26]" />
-          <span className="text-[11px] tracking-[0.15em] uppercase text-[#5a5550] font-body">
+          <div className="w-8 h-px bg-accent" />
+          <span className="text-xs tracking-[0.15em] uppercase text-text-dim font-body">
             of {total}
           </span>
         </div>
         {subtitle && (
-          <p className="text-[11px] tracking-[0.15em] uppercase text-[#e85d26] font-body font-medium mb-4">
+          <p className="text-xs tracking-[0.15em] uppercase text-accent font-body font-medium mb-4">
             {subtitle}
           </p>
         )}
@@ -257,7 +257,7 @@ export default function PlanWizardClient() {
   // ── Loading Screen ──
   if (isGenerating) {
     return (
-      <div className="fixed inset-0 bg-[#0f0f0f] z-50 flex flex-col items-center justify-center">
+      <div className="fixed inset-0 bg-bg z-50 flex flex-col items-center justify-center">
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
@@ -272,14 +272,14 @@ export default function PlanWizardClient() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.4 }}
-            className="font-body text-xl md:text-2xl text-[#8a8580]"
+            className="font-body text-xl md:text-2xl text-text-muted"
           >
             {LOADING_MESSAGES[loadingMsg]}
           </motion.p>
         </AnimatePresence>
-        <div className="mt-10 w-48 h-px bg-[#2a2a2a] overflow-hidden">
+        <div className="mt-10 w-48 h-px bg-border overflow-hidden">
           <motion.div
-            className="h-full bg-gradient-to-r from-[#e85d26] to-[#c9a84c]"
+            className="h-full bg-gradient-to-r from-accent to-gold"
             animate={{ x: ["-100%", "100%"] }}
             transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
           />
@@ -291,9 +291,9 @@ export default function PlanWizardClient() {
   const progress = Math.min((revealedCount / totalQuestions) * 100, 100);
   let qIndex = 0;
 
-  const inputClass = "w-full bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg px-6 py-5 text-text font-body text-lg placeholder:text-[#5a5550]/50 focus:border-[#e85d26]/50 focus:outline-none transition-colors";
-  const selectClass = "bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg px-5 py-4 text-text font-body text-base focus:border-[#e85d26]/50 focus:outline-none transition-colors appearance-none";
-  const continueClass = "mt-6 text-[11px] tracking-[0.15em] uppercase font-body text-[#e85d26] hover:text-[#d14a18] transition-colors flex items-center gap-2";
+  const inputClass = "w-full bg-bg-alt border border-border rounded-lg px-6 py-5 text-text font-body text-lg placeholder:text-text-dim/50 focus:border-accent/50 focus:outline-none transition-colors";
+  const selectClass = "bg-bg-alt border border-border rounded-lg px-5 py-4 text-text font-body text-base focus:border-accent/50 focus:outline-none transition-colors appearance-none";
+  const continueClass = "mt-6 text-xs tracking-[0.15em] uppercase font-body text-accent hover:text-accent-hover transition-colors flex items-center gap-2";
   const continueArrow = (
     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
@@ -301,11 +301,11 @@ export default function PlanWizardClient() {
   );
 
   return (
-    <div id="main-content" className="bg-[#0f0f0f]">
+    <div id="main-content" className="bg-bg">
       {/* Fixed progress bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-[#2a2a2a]">
+      <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-border">
         <motion.div
-          className="h-full bg-gradient-to-r from-[#e85d26] to-[#c9a84c]"
+          className="h-full bg-gradient-to-r from-accent to-gold"
           animate={{ width: `${progress}%` }}
           transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
         />
@@ -313,14 +313,14 @@ export default function PlanWizardClient() {
 
       {/* Fixed header */}
       <div className="fixed top-1 left-0 right-0 z-40">
-        <div className="pt-6 pb-4 px-6 md:px-12 flex items-center justify-between max-w-5xl mx-auto bg-[#0f0f0f]/80 backdrop-blur-sm rounded-b-lg">
+        <div className="pt-6 pb-4 px-6 md:px-12 flex items-center justify-between max-w-5xl mx-auto bg-bg/80 backdrop-blur-sm rounded-b-lg">
           <Link href="/" className="flex items-center gap-3 group">
             <Logo className="w-7 h-7" />
             <span className="font-display text-xl text-text/60 group-hover:text-text transition-colors">
-              TOUR DE FORE
+              Tour de Fore
             </span>
           </Link>
-          <span className="text-[11px] tracking-[0.15em] uppercase text-[#5a5550] font-body">
+          <span className="text-xs tracking-[0.15em] uppercase text-text-dim font-body">
             {revealedCount} / {totalQuestions}
           </span>
         </div>
@@ -505,21 +505,21 @@ export default function PlanWizardClient() {
           <div className="flex items-center gap-6">
             <button
               onClick={() => set("groupSize", Math.max(4, state.groupSize - 1))}
-              className="w-14 h-14 rounded-lg border border-[#2a2a2a] bg-[#1a1a1a] text-text hover:border-[#e85d26]/30 transition-colors flex items-center justify-center text-2xl"
+              className="w-14 h-14 rounded-lg border border-border bg-bg-alt text-text hover:border-accent/30 transition-colors flex items-center justify-center text-2xl"
             >
               −
             </button>
-            <span className="font-display text-7xl text-[#e85d26] w-24 text-center">
+            <span className="font-display text-7xl text-accent w-24 text-center">
               {state.groupSize}
             </span>
             <button
               onClick={() => set("groupSize", Math.min(32, state.groupSize + 1))}
-              className="w-14 h-14 rounded-lg border border-[#2a2a2a] bg-[#1a1a1a] text-text hover:border-[#e85d26]/30 transition-colors flex items-center justify-center text-2xl"
+              className="w-14 h-14 rounded-lg border border-border bg-bg-alt text-text hover:border-accent/30 transition-colors flex items-center justify-center text-2xl"
             >
               +
             </button>
           </div>
-          <p className="text-[#5a5550] text-sm font-body mt-4">
+          <p className="text-text-dim text-sm font-body mt-4">
             12–16 is the sweet spot. Min 4, max 32.
           </p>
           <button onClick={() => advance(qIndex + 1)} className={`mt-8 ${continueClass}`}>
@@ -700,8 +700,8 @@ export default function PlanWizardClient() {
                 onClick={() => dispatch({ type: "TOGGLE_ACTIVITY", activity: a })}
                 className={`px-5 py-3 rounded-lg border text-sm font-body transition-all duration-300 ${
                   state.activities.includes(a)
-                    ? "bg-[#e85d26]/10 border-[#e85d26] text-[#e85d26]"
-                    : "bg-[#1f1f1f] border-[#2a2a2a] text-[#8a8580] hover:border-[#e85d26]/30"
+                    ? "bg-accent/10 border-accent text-accent"
+                    : "bg-bg-card border-border text-text-muted hover:border-accent/30"
                 }`}
               >
                 {a}
@@ -734,7 +734,7 @@ export default function PlanWizardClient() {
       {/* Q18: Budget priorities */}
       {(qIndex = 17, revealedCount > 17) && (
         <Question number={qIndex + 1} total={totalQuestions} title="Where should the money go?" id={questionIds[qIndex]}>
-          <p className="text-[#5a5550] text-sm font-body mb-6 -mt-6">Pick up to 2</p>
+          <p className="text-text-dim text-sm font-body mb-6 -mt-6">Pick up to 2</p>
           <div className="grid grid-cols-2 gap-4">
             {["Best courses", "Best lodging", "Best dining", "Keep balanced"].map((p) => (
               <SelectionCard
@@ -762,7 +762,7 @@ export default function PlanWizardClient() {
             value={state.specialRequests}
             onChange={(e) => set("specialRequests", e.target.value)}
             rows={4}
-            className="w-full bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg px-6 py-5 text-text font-body text-base placeholder:text-[#5a5550]/50 focus:border-[#e85d26]/50 focus:outline-none transition-colors resize-none"
+            className="w-full bg-bg-alt border border-border rounded-lg px-6 py-5 text-text font-body text-base placeholder:text-text-dim/50 focus:border-accent/50 focus:outline-none transition-colors resize-none"
           />
           <button onClick={() => advance(qIndex + 1)} className={continueClass}>
             {state.specialRequests ? "Continue" : "Skip"} {continueArrow}
@@ -772,22 +772,22 @@ export default function PlanWizardClient() {
 
       {/* Q20: Roster */}
       {(qIndex = 19, revealedCount > 19) && (
-        <section id={questionIds[qIndex]} className="min-h-screen flex flex-col justify-center py-20 md:py-28">
+        <section id={questionIds[qIndex]} className="min-h-screen flex flex-col justify-center py-20 md:py-32">
           <div className="max-w-2xl mx-auto w-full px-6 md:px-12">
             <div className="flex items-center gap-4 mb-8">
-              <span className="text-[11px] tracking-[0.15em] uppercase text-[#e85d26] font-body font-medium">
+              <span className="text-xs tracking-[0.15em] uppercase text-accent font-body font-medium">
                 {String(qIndex + 1).padStart(2, "0")}
               </span>
-              <div className="w-8 h-px bg-[#e85d26]" />
-              <span className="text-[11px] tracking-[0.15em] uppercase text-[#5a5550] font-body">
+              <div className="w-8 h-px bg-accent" />
+              <span className="text-xs tracking-[0.15em] uppercase text-text-dim font-body">
                 of {totalQuestions}
               </span>
             </div>
-            <p className="text-[11px] tracking-[0.15em] uppercase text-[#e85d26] font-body font-medium mb-4">
+            <p className="text-xs tracking-[0.15em] uppercase text-accent font-body font-medium mb-4">
               The Roster
             </p>
             <h2 className="font-display text-3xl md:text-5xl text-text leading-snug mb-12">
-              WHO&rsquo;S COMING?
+              Who&rsquo;s Coming?
             </h2>
 
             <div className="space-y-10">
@@ -808,9 +808,9 @@ export default function PlanWizardClient() {
                   type="checkbox"
                   checked={consent}
                   onChange={(e) => setConsent(e.target.checked)}
-                  className="mt-1 accent-[#e85d26]"
+                  className="mt-1 accent-[#EA580C]"
                 />
-                <span className="text-[#5a5550] text-sm font-body leading-relaxed">
+                <span className="text-text-dim text-sm font-body leading-relaxed">
                   I have permission to share these email addresses. Tour de Fore will only use them to send the generated trip plan.
                 </span>
               </label>
@@ -827,7 +827,7 @@ export default function PlanWizardClient() {
 
               <motion.button
                 onClick={handleGenerate}
-                className="btn-primary w-full py-5 font-body text-sm tracking-[0.15em] uppercase font-medium"
+                className="btn-primary w-full py-5 font-body text-sm font-medium"
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
               >

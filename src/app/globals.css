@@ -1,35 +1,35 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* ── Dark-first palette: "The Devil's Yearbook" ── */
-  --color-bg: #0f0f0f;
-  --color-bg-alt: #1a1a1a;
-  --color-bg-warm: #1a1a1a;
-  --color-bg-card: #1f1f1f;
+  /* ── Zinc-based dark palette: "Dark but Readable" ── */
+  --color-bg: #18181B;
+  --color-bg-alt: #1E1E22;
+  --color-bg-warm: #1E1E22;
+  --color-bg-card: #27272A;
   --color-surface: #f5f0e8;
-  --color-border: #2a2a2a;
-  --color-border-light: #333333;
+  --color-border: #3F3F46;
+  --color-border-light: #52525B;
 
-  --color-text: #f0ece4;
-  --color-text-muted: #8a8580;
-  --color-text-dim: #5a5550;
+  --color-text: #FAFAFA;
+  --color-text-muted: #A1A1AA;
+  --color-text-dim: #71717A;
 
-  --color-accent: #e85d26;       /* fire — primary CTA */
-  --color-accent-hover: #d14a18;
-  --color-accent-light: #f07040;
-  --color-fire: #e85d26;
-  --color-fire-hover: #d14a18;
+  --color-accent: #EA580C;
+  --color-accent-hover: #C2410C;
+  --color-accent-light: #F97316;
+  --color-fire: #EA580C;
+  --color-fire-hover: #C2410C;
 
-  --color-gold: #c9a84c;
-  --color-gold-dim: #a08838;
+  --color-gold: #D4A843;
+  --color-gold-dim: #B8922F;
 
-  --color-green: #2d5a3f;        /* course/nature references only */
+  --color-green: #2d5a3f;
   --color-green-light: #3a7050;
 
-  --color-ember: #e85d26;
-  --color-ember-dim: #c04a18;
+  --color-ember: #EA580C;
+  --color-ember-dim: #C2410C;
 
-  --font-display: var(--font-bebas);
+  --font-display: var(--font-space);
   --font-body: var(--font-inter);
   --font-accent: var(--font-instrument);
 }
@@ -49,19 +49,21 @@ body {
   color: var(--color-text);
   font-family: var(--font-body), sans-serif;
   overflow-x: hidden;
-  line-height: 1.7;
-  letter-spacing: 0.01em;
+  line-height: 1.6;
+  font-size: 16px;
 }
 
 p {
-  line-height: 1.85;
+  line-height: 1.6;
   margin-bottom: 1em;
 }
 
 h1, h2, h3, h4 {
-  line-height: 1.15;
+  line-height: 1.2;
   font-family: var(--font-display), sans-serif;
-  letter-spacing: 0.04em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  /* NO text-transform: uppercase */
 }
 
 ::selection {
@@ -74,19 +76,19 @@ h1, h2, h3, h4 {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0f0f0f;
+  background: #18181B;
 }
 ::-webkit-scrollbar-thumb {
-  background: #2a2a2a;
+  background: #3F3F46;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #444;
+  background: #52525B;
 }
 
 /* ── Nav styles ── */
 .nav-glass {
-  background: rgba(15, 15, 15, 0.92);
+  background: rgba(24, 24, 27, 0.92);
   backdrop-filter: blur(20px) saturate(1.3);
   -webkit-backdrop-filter: blur(20px) saturate(1.3);
 }
@@ -102,7 +104,7 @@ h1, h2, h3, h4 {
   background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
 }
 
-/* ── Pill button ── */
+/* ── Buttons ── */
 .btn-primary {
   display: inline-flex;
   align-items: center;
@@ -111,11 +113,11 @@ h1, h2, h3, h4 {
   background: var(--color-accent);
   color: #ffffff;
   font-family: var(--font-body), sans-serif;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  border-radius: 6px;
+  letter-spacing: 0;
+  text-transform: none;
+  border-radius: 10px;
   border: none;
   cursor: pointer;
   transition: background 0.3s ease, transform 0.2s ease;
@@ -133,11 +135,11 @@ h1, h2, h3, h4 {
   background: transparent;
   color: var(--color-accent);
   font-family: var(--font-body), sans-serif;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  border-radius: 6px;
+  letter-spacing: 0;
+  text-transform: none;
+  border-radius: 10px;
   border: 2px solid var(--color-accent);
   cursor: pointer;
   transition: all 0.3s ease;
@@ -148,14 +150,14 @@ h1, h2, h3, h4 {
   color: #ffffff;
 }
 
-/* ── Image loading shimmer (dark version) ── */
+/* ── Image loading shimmer (zinc version) ── */
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
 
 .img-shimmer {
-  background: linear-gradient(90deg, #1a1a1a 25%, #252525 50%, #1a1a1a 75%);
+  background: linear-gradient(90deg, #27272A 25%, #3F3F46 50%, #27272A 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }
@@ -177,7 +179,7 @@ h1, h2, h3, h4 {
 
 /* ── Custom select arrow ── */
 select.appearance-none {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238a8580' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23A1A1AA' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 12px center;
   padding-right: 36px;
@@ -204,9 +206,9 @@ select.appearance-none {
   color: white;
   font-family: var(--font-body), sans-serif;
   font-size: 14px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  border-radius: 6px;
+  letter-spacing: 0;
+  text-transform: none;
+  border-radius: 10px;
   text-decoration: none;
   transition: top 0.2s;
 }
@@ -221,6 +223,6 @@ body.menu-open {
 
 /* ── Glow pulse (kept for CTA emphasis) ── */
 @keyframes glowPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(232, 93, 38, 0); }
-  50% { box-shadow: 0 0 24px 6px rgba(232, 93, 38, 0.15); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0); }
+  50% { box-shadow: 0 0 24px 6px rgba(234, 88, 12, 0.15); }
 }

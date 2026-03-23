@@ -21,11 +21,11 @@ export default function SelectionCard({
     <motion.button
       onClick={onClick}
       className={`text-left rounded-lg border transition-all duration-300 ${
-        compact ? "px-4 py-3" : "px-6 py-5"
+        compact ? "px-5 py-4" : "px-7 py-6"
       } ${
         selected
-          ? "bg-[#e85d26]/10 border-[#e85d26] shadow-md"
-          : "bg-[#1f1f1f] border-[#2a2a2a] hover:border-[#e85d26]/30 hover:shadow-sm"
+          ? "bg-accent/10 border-accent shadow-md"
+          : "bg-bg-card border-border hover:border-accent/30 hover:shadow-sm"
       }`}
       whileHover={{ y: -2 }}
       whileTap={{ scale: 0.98 }}
@@ -33,13 +33,13 @@ export default function SelectionCard({
     >
       <span
         className={`font-body text-sm font-medium transition-colors duration-300 ${
-          selected ? "text-[#e85d26]" : "text-text"
+          selected ? "text-accent" : "text-text"
         }`}
       >
         {label}
       </span>
       {sublabel && (
-        <span className="block text-[11px] text-[#5a5550] font-body mt-1">
+        <span className="block text-xs text-text-dim font-body mt-1">
           {sublabel}
         </span>
       )}

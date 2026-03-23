@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Bebas_Neue, Inter, Instrument_Serif } from "next/font/google";
+import { Space_Grotesk, Inter, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 
-const bebasNeue = Bebas_Neue({
-  variable: "--font-bebas",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space",
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["500", "600", "700"],
   display: "swap",
 });
 
@@ -58,7 +58,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${bebasNeue.variable} ${inter.variable} ${instrumentSerif.variable} antialiased`}
+        className={`${spaceGrotesk.variable} ${inter.variable} ${instrumentSerif.variable} antialiased`}
       >
         <a href="#main-content" className="skip-to-content">
           Skip to content

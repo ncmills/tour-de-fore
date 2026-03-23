@@ -40,7 +40,7 @@ export default function Gallery({ images }: GalleryProps) {
 
   return (
     <>
-      <div className="columns-2 md:columns-3 gap-3 space-y-3">
+      <div className="columns-2 md:columns-3 gap-4 space-y-4">
         {images.map((src, i) => {
           const aspects = ["aspect-[4/3]", "aspect-[3/4]", "aspect-[1/1]", "aspect-[4/3]", "aspect-[3/2]", "aspect-[4/5]"];
           const aspect = aspects[i % aspects.length];
@@ -49,9 +49,9 @@ export default function Gallery({ images }: GalleryProps) {
             <FadeIn key={i} delay={Math.min(i * 0.03, 0.5)} className="break-inside-avoid">
               <button
                 onClick={() => setSelected(i)}
-                className="relative w-full overflow-hidden rounded-lg group cursor-pointer block"
+                className="relative w-full overflow-hidden rounded-2xl group cursor-pointer block"
               >
-                <div className={`bg-[#1a1a1a] animate-pulse ${aspect}`} />
+                <div className={`bg-bg-alt animate-pulse ${aspect}`} />
                 <Image
                   src={src}
                   alt={`Trip photo ${i + 1}`}
@@ -126,7 +126,7 @@ export default function Gallery({ images }: GalleryProps) {
               />
             </motion.div>
 
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/50 text-sm tracking-widest font-body">
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/50 text-sm tracking-wide font-body">
               {selected + 1} / {images.length}
             </div>
           </motion.div>
