@@ -21,10 +21,10 @@ export default function FadeIn({
   const shouldReduce = useReducedMotion();
 
   const offsets = {
-    up: { y: 40 },
-    down: { y: -40 },
-    left: { x: 40 },
-    right: { x: -40 },
+    up: { y: 20 },
+    down: { y: -20 },
+    left: { x: 20 },
+    right: { x: -20 },
     none: {},
   };
 

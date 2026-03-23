@@ -40,9 +40,8 @@ export default function Gallery({ images }: GalleryProps) {
 
   return (
     <>
-      <div className="columns-2 md:columns-3 gap-3 md:gap-4 space-y-3 md:space-y-4">
+      <div className="columns-2 md:columns-3 gap-3 space-y-3">
         {images.map((src, i) => {
-          // Vary aspect ratios for a dynamic masonry look
           const aspects = ["aspect-[4/3]", "aspect-[3/4]", "aspect-[1/1]", "aspect-[4/3]", "aspect-[3/2]", "aspect-[4/5]"];
           const aspect = aspects[i % aspects.length];
 
@@ -50,9 +49,9 @@ export default function Gallery({ images }: GalleryProps) {
             <FadeIn key={i} delay={Math.min(i * 0.03, 0.5)} className="break-inside-avoid">
               <button
                 onClick={() => setSelected(i)}
-                className="relative w-full overflow-hidden rounded-2xl group cursor-pointer block shadow-sm hover:shadow-md transition-shadow duration-300"
+                className="relative w-full overflow-hidden rounded-lg group cursor-pointer block"
               >
-                <div className={`bg-bg-warm animate-pulse ${aspect}`} />
+                <div className={`bg-[#1a1a1a] animate-pulse ${aspect}`} />
                 <Image
                   src={src}
                   alt={`Trip photo ${i + 1}`}
@@ -60,7 +59,7 @@ export default function Gallery({ images }: GalleryProps) {
                   sizes="(max-width: 768px) 50vw, 33vw"
                   className="object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
               </button>
             </FadeIn>
           );
@@ -75,13 +74,12 @@ export default function Gallery({ images }: GalleryProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
+            className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
             onClick={close}
           >
-            {/* Close button */}
             <button
               onClick={close}
-              className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors z-10"
+              className="absolute top-6 right-6 text-white/60 hover:text-white transition-colors z-10"
               aria-label="Close"
             >
               <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -89,13 +87,9 @@ export default function Gallery({ images }: GalleryProps) {
               </svg>
             </button>
 
-            {/* Prev */}
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                prev();
-              }}
-              className="absolute left-4 md:left-8 text-white/50 hover:text-white transition-colors z-10"
+              onClick={(e) => { e.stopPropagation(); prev(); }}
+              className="absolute left-4 md:left-8 text-white/40 hover:text-white transition-colors z-10"
               aria-label="Previous"
             >
               <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -103,13 +97,9 @@ export default function Gallery({ images }: GalleryProps) {
               </svg>
             </button>
 
-            {/* Next */}
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                next();
-              }}
-              className="absolute right-4 md:right-8 text-white/50 hover:text-white transition-colors z-10"
+              onClick={(e) => { e.stopPropagation(); next(); }}
+              className="absolute right-4 md:right-8 text-white/40 hover:text-white transition-colors z-10"
               aria-label="Next"
             >
               <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -117,7 +107,6 @@ export default function Gallery({ images }: GalleryProps) {
               </svg>
             </button>
 
-            {/* Image */}
             <motion.div
               key={selected}
               initial={{ opacity: 0, scale: 0.95 }}
@@ -137,8 +126,7 @@ export default function Gallery({ images }: GalleryProps) {
               />
             </motion.div>
 
-            {/* Counter */}
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/60 text-sm tracking-widest font-body">
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/50 text-sm tracking-widest font-body">
               {selected + 1} / {images.length}
             </div>
           </motion.div>

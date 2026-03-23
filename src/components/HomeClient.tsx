@@ -2,45 +2,24 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useScroll, useTransform, useInView, AnimatePresence } from "motion/react";
-import { useRef, useState, useEffect, useMemo } from "react";
+import { motion, useScroll, useTransform } from "motion/react";
+import { useRef } from "react";
 import { trips } from "@/lib/trips";
 import FadeIn from "./FadeIn";
-import Logo, { LogoFull } from "./Logo";
-import USMap from "./USMap";
+import { LogoFull } from "./Logo";
 
 const SQ = "https://images.squarespace-cdn.com/content/v1/62cb87cca6b36f353a2575d5";
 
-// Curated hero images — best landscape/group/golf shots
 const heroImages = [
-  `${SQ}/d0910eb3-ce7f-4395-8e75-06414a70a916/DSC01441.JPG`,     // 2023 - group shot
-  `${SQ}/ff8d47e6-8753-45f8-b511-812d49db7bcd/IMG_0729.jpeg`,    // 2022 - course vista
-  `${SQ}/40030cd0-2783-4cca-ab1b-ec4b3d674471/a.jpeg`,           // 2024 - Bend landscape
-  `${SQ}/668ee548-a6f4-4b37-9d7a-18d5fb6a54e3/IMG_0519.jpeg`,    // 2021 - St George red rock
-  `${SQ}/0fba83c5-18c2-4f97-9767-cc2571e783cf/IMG_1750.jpeg`,    // 2022 - crew on course
-  `${SQ}/3eba1084-f559-4627-ba67-0764b1858572/IMG_7541.jpeg`,    // 2025 - golf action
+  `${SQ}/d0910eb3-ce7f-4395-8e75-06414a70a916/DSC01441.JPG`,
+  `${SQ}/ff8d47e6-8753-45f8-b511-812d49db7bcd/IMG_0729.jpeg`,
+  `${SQ}/40030cd0-2783-4cca-ab1b-ec4b3d674471/a.jpeg`,
+  `${SQ}/668ee548-a6f4-4b37-9d7a-18d5fb6a54e3/IMG_0519.jpeg`,
+  `${SQ}/0fba83c5-18c2-4f97-9767-cc2571e783cf/IMG_1750.jpeg`,
+  `${SQ}/3eba1084-f559-4627-ba67-0764b1858572/IMG_7541.jpeg`,
 ];
 
-// Scrolling photo strip — all action/people shots, no lodging screenshots
-const photoStripImages = [
-  `${SQ}/382ad51c-10e2-4785-95eb-30449cb51ec7/IMG_2614.jpeg`,    // 2023
-  `${SQ}/c64adefd-fb38-4a79-bb9e-5b62c158af92/IMG_7841.jpeg`,    // 2023
-  `${SQ}/0fba83c5-18c2-4f97-9767-cc2571e783cf/IMG_1750.jpeg`,    // 2022
-  `${SQ}/69047b6b-5c54-4eac-8b67-736cf758c345/IMG_1736.jpeg`,    // 2022
-  `${SQ}/a560dd9a-d1e6-495c-87f9-a5892e234d21/IMG_2202.jpeg`,    // 2021
-  `${SQ}/3eba1084-f559-4627-ba67-0764b1858572/IMG_7541.jpeg`,    // 2025
-  `${SQ}/20b19d4c-0746-4f50-8c25-91c795c87e6f/IMG_1716.jpeg`,    // 2022
-  `${SQ}/d47ad341-f26b-4642-b8ea-2992d589a9bb/IMG_0507.jpeg`,    // 2021
-  `${SQ}/4bb37462-115b-46fb-934d-eb09882f3abd/IMG_1605.jpeg`,    // 2022
-  `${SQ}/8e2f1d09-48e3-401a-b1a1-e65627c37fe3/IMG_3459.jpeg`,    // 2021
-  `${SQ}/5b43f12a-0419-457d-a408-872f4fd26e8f/IMG_2621.jpeg`,    // 2023
-  `${SQ}/3ace7ab5-b502-48ac-9dff-5223b62dca4f/IMG_1597.jpeg`,    // 2022
-  `${SQ}/9a8233a5-d8e7-4898-acf3-2f22c09f4197/IMG_0807.JPG`,     // 2021
-  `${SQ}/02f1892e-2200-4caa-905d-ae4ebe3f2380/IMG_1695.jpeg`,    // 2022
-  `${SQ}/aafbcb8a-2e77-4f53-9944-6a45e267788a/IMG_3492.jpeg`,    // 2021
-  `${SQ}/ca56fbd1-0812-44cd-a55e-ba9ee3bf5876/IMG_7539.jpeg`,    // 2025
-];
-
+/* ── 1. Hero ── */
 function HeroSection() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -50,7 +29,6 @@ function HeroSection() {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
-  // Static hero — guy in foreground with sun behind (St. George 2021)
   const heroImage = heroImages[3];
 
   return (
@@ -64,7 +42,7 @@ function HeroSection() {
           className="object-cover scale-105"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-[#0f0f0f]" />
       </motion.div>
 
       <motion.div
@@ -83,18 +61,17 @@ function HeroSection() {
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 1.4, delay: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
-          className="w-24 h-px bg-gradient-to-r from-transparent via-[#cf8018] to-transparent mt-10 mb-8 origin-center"
+          className="w-24 h-px bg-gradient-to-r from-transparent via-[#e85d26] to-transparent mt-10 mb-8 origin-center"
         />
 
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 1.1 }}
-          className="font-display text-xl md:text-2xl lg:text-3xl italic text-white/70 max-w-2xl leading-relaxed font-light"
+          className="font-accent text-xl md:text-2xl lg:text-3xl italic text-white/60 max-w-2xl leading-relaxed"
         >
           hell is empty and all the devils are here
         </motion.p>
-
       </motion.div>
 
       <motion.div
@@ -113,91 +90,208 @@ function HeroSection() {
   );
 }
 
-function PhotoStrip() {
+/* ── 2. Next Up Banner ── */
+function NextUpBanner() {
+  const trip = trips[0];
+  const photos = trip.photoSections[0]?.images || [];
+  const heroPhoto = photos[0] || trip.heroImage;
+
   return (
-    <section className="py-12 overflow-hidden bg-[#f8f6f2]">
-      <div className="relative">
-        <motion.div
-          className="flex gap-4"
-          animate={{ x: [0, -(photoStripImages.length * 280)] }}
-          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-        >
-          {[...photoStripImages, ...photoStripImages].map((src, i) => (
-            <div
-              key={i}
-              className="relative w-[260px] h-[170px] flex-shrink-0 overflow-hidden rounded-xl group"
-            >
+    <section className="py-12 md:py-20 bg-[#1a1a1a]">
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          {/* Left: Info */}
+          <div>
+            <FadeIn>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="w-2 h-2 rounded-full bg-[#e85d26] animate-pulse" />
+                <span className="text-[11px] tracking-[0.15em] uppercase text-[#e85d26] font-body font-medium">
+                  Next Up
+                </span>
+              </div>
+            </FadeIn>
+
+            <FadeIn delay={0.1}>
+              <h2 className="font-display text-[5rem] md:text-[8rem] lg:text-[10rem] text-[#c9a84c] leading-[0.9] mb-4">
+                {trip.year}
+              </h2>
+            </FadeIn>
+
+            <FadeIn delay={0.15}>
+              <h3 className="font-body text-xl md:text-2xl text-text font-medium mb-2">
+                {trip.location}, {trip.state}
+              </h3>
+            </FadeIn>
+
+            <FadeIn delay={0.2}>
+              <p className="text-[#8a8580] font-body text-sm mb-6">
+                {trip.dates}
+              </p>
+            </FadeIn>
+
+            <FadeIn delay={0.25}>
+              <p className="text-[#5a5550] font-body text-sm mb-8">
+                {trip.courses.length} courses &middot; {trip.schedule.length} days &middot; 16 guys
+              </p>
+            </FadeIn>
+
+            <FadeIn delay={0.3}>
+              <Link
+                href={`/trip/${trip.slug}`}
+                className="btn-primary inline-flex items-center gap-3 group"
+              >
+                GET THE DETAILS
+                <svg
+                  className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </FadeIn>
+          </div>
+
+          {/* Right: Photo */}
+          <FadeIn delay={0.2} direction="right">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
               <Image
-                src={src}
-                alt=""
+                src={heroPhoto}
+                alt={`${trip.year} - ${trip.location}`}
                 fill
-                sizes="260px"
-                className="object-cover group-hover:scale-110 transition-transform duration-700"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
               />
-              <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
             </div>
-          ))}
-        </motion.div>
-        <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-[#f8f6f2] to-transparent pointer-events-none z-10" />
-        <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-[#f8f6f2] to-transparent pointer-events-none z-10" />
+          </FadeIn>
+        </div>
       </div>
     </section>
   );
 }
 
-function PlannerCTA() {
-  const features = [
-    { title: "Course Selection", desc: "AI picks courses that match your skill level, budget, and vibe" },
-    { title: "Lodging & Logistics", desc: "Rental houses, transport, and everything in between" },
-    { title: "Schedule & Pacing", desc: "Day-by-day itinerary with tee times, dining, and nightlife" },
-    { title: "Budget & Group Dynamics", desc: "Per-person breakdowns and group logistics for any crew size" },
-  ];
+/* ── 3. The Timeline ── */
+function Timeline() {
+  const allTrips = [...trips].reverse(); // chronological
 
   return (
-    <section className="py-24 md:py-40 bg-white relative overflow-hidden">
-      <div className="max-w-5xl mx-auto px-6 md:px-12 relative z-10">
+    <section id="destinations" className="py-12 md:py-20 bg-[#0f0f0f]">
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
         <FadeIn>
-          <div className="flex items-center gap-5 mb-6">
-            <div className="w-12 h-px bg-[#cf8018]/40" />
-            <span className="text-[10px] tracking-[0.4em] uppercase text-[#cf8018] font-body font-medium">
-              New
-            </span>
-          </div>
-        </FadeIn>
-
-        <FadeIn delay={0.1}>
-          <h2 className="font-display text-5xl md:text-7xl font-bold text-[#212121] leading-tight mb-5">
-            Plan Your Own
+          <h2 className="font-display text-4xl md:text-6xl text-text mb-10">
+            THE TIMELINE
           </h2>
-          <h3 className="font-display text-4xl md:text-6xl italic font-light text-[#5a5a5a] leading-tight mb-16">
-            Epic Golf Trip
-          </h3>
         </FadeIn>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-          {features.map((f, i) => (
-            <FadeIn key={f.title} delay={0.2 + i * 0.08}>
-              <div className="flex items-start gap-5 group">
-                <div className="w-2 h-2 rounded-full bg-[#cf8018] mt-2.5 flex-shrink-0 group-hover:bg-[#cf8018]/70 transition-colors" />
-                <div>
-                  <h4 className="font-display text-lg text-[#212121] mb-2 group-hover:text-[#cf8018] transition-colors duration-300">
-                    {f.title}
-                  </h4>
-                  <p className="text-[#8a8a8a] font-body text-sm font-light leading-relaxed">
-                    {f.desc}
-                  </p>
+        {/* Desktop: horizontal scroll row */}
+        <div className="flex gap-5 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory md:grid md:grid-cols-3 lg:grid-cols-6 md:overflow-visible md:pb-0">
+          {allTrips.map((trip, i) => (
+            <FadeIn key={trip.year} delay={0.05 + i * 0.05} className="snap-start">
+              <Link href={`/trip/${trip.slug}`} className="block group flex-shrink-0 w-[220px] md:w-auto">
+                <div
+                  className={`relative aspect-[3/4] overflow-hidden rounded-lg ${
+                    trip.upcoming
+                      ? "ring-2 ring-[#e85d26] ring-offset-2 ring-offset-[#0f0f0f]"
+                      : ""
+                  }`}
+                >
+                  <Image
+                    src={trip.heroImage}
+                    alt={`${trip.year} - ${trip.location}`}
+                    fill
+                    sizes="(max-width: 768px) 220px, (max-width: 1024px) 33vw, 16vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <span className="font-display text-4xl md:text-5xl text-[#c9a84c] leading-none block group-hover:text-[#e85d26] transition-colors duration-300">
+                      {trip.year}
+                    </span>
+                    <span className="text-[11px] text-white/60 font-body mt-1 block">
+                      {trip.location}
+                    </span>
+                  </div>
+                  {trip.upcoming && (
+                    <div className="absolute top-3 right-3">
+                      <span className="w-2 h-2 rounded-full bg-[#e85d26] animate-pulse block" />
+                    </div>
+                  )}
                 </div>
-              </div>
+              </Link>
             </FadeIn>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
 
-        <FadeIn delay={0.5}>
+/* ── 4. The Manifesto ── */
+function ManifestoSection() {
+  const bgImage = heroImages[0]; // group shot
+
+  return (
+    <section className="relative py-12 md:py-20 overflow-hidden">
+      {/* Full-bleed background */}
+      <div className="absolute inset-0">
+        <Image
+          src={bgImage}
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-black/80" />
+      </div>
+
+      <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-12">
+        <FadeIn>
+          <div className="text-text text-base md:text-lg leading-[2] font-body font-light max-w-3xl">
+            <p>
+              Every summer we pick a town nobody&rsquo;s heard of, rent the biggest house we can find,
+              and play <span className="text-[#e85d26] font-medium">108 holes in three days</span>.
+              Six rounds. Back to back to back. An absolutely unreasonable amount of golf.
+            </p>
+          </div>
+        </FadeIn>
+
+        <FadeIn delay={0.15}>
+          <div className="mt-10 pl-6 md:pl-8 border-l-2 border-[#e85d26]/40">
+            <p className="font-accent text-2xl md:text-4xl italic text-white/70 leading-[1.3]">
+              It&rsquo;s not about the handicap.
+              <br />
+              It&rsquo;s about who you&rsquo;re out there with.
+            </p>
+          </div>
+        </FadeIn>
+      </div>
+    </section>
+  );
+}
+
+/* ── 5. Plan Your Own CTA ── */
+function PlanCTA() {
+  return (
+    <section className="py-12 md:py-20 bg-[#1a1a1a]">
+      <div className="max-w-4xl mx-auto px-6 md:px-12 text-center">
+        <FadeIn>
+          <h2 className="font-display text-4xl md:text-6xl lg:text-7xl text-text mb-4">
+            PLAN YOUR OWN TRIP
+          </h2>
+        </FadeIn>
+        <FadeIn delay={0.1}>
+          <p className="text-[#8a8580] font-body text-base md:text-lg mb-8 max-w-lg mx-auto">
+            AI-powered itinerary for your crew. Courses, lodging, dining, budget — the whole game plan.
+          </p>
+        </FadeIn>
+        <FadeIn delay={0.2}>
           <Link
             href="/plan"
-            className="btn-primary inline-flex items-center gap-4 group"
+            className="btn-primary inline-flex items-center gap-3 group px-10 py-4"
           >
-            Start Planning
+            START PLANNING
             <svg
               className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300"
               fill="none"
@@ -213,493 +307,14 @@ function PlannerCTA() {
   );
 }
 
-function MapSection() {
-  return (
-    <section className="py-24 md:py-40 bg-white">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-16 items-center">
-          <div>
-            <FadeIn>
-              <div className="flex items-center gap-5 mb-6">
-                <div className="w-12 h-px bg-[#cf8018]/40" />
-                <span className="text-[10px] tracking-[0.4em] uppercase text-[#cf8018] font-body font-medium">
-                  The Trail
-                </span>
-              </div>
-            </FadeIn>
-            <FadeIn delay={0.1}>
-              <h2 className="font-display text-5xl md:text-7xl font-bold text-[#212121] mb-8 leading-tight">
-                Across
-                <br />
-                <span className="italic font-light text-[#5a5a5a]">America</span>
-              </h2>
-            </FadeIn>
-            <FadeIn delay={0.2}>
-              <p className="text-[#5a5a5a] text-lg font-body font-light leading-relaxed">
-                Six states. Six small towns none of us had ever set foot in &mdash; and most
-                will never see us coming again. Hover the map to explore every stop.
-              </p>
-            </FadeIn>
-          </div>
-          <FadeIn delay={0.2}>
-            <USMap />
-          </FadeIn>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ManifestoSection() {
-  return (
-    <section className="py-24 md:py-40 bg-[#f8f6f2]">
-      <div className="max-w-5xl mx-auto px-6 md:px-12">
-        <FadeIn>
-          <div className="flex items-center gap-5 mb-14">
-            <div className="w-12 h-px bg-[#cf8018]/40" />
-            <span className="text-[10px] tracking-[0.4em] uppercase text-[#cf8018] font-body font-medium">
-              The Ethos
-            </span>
-          </div>
-        </FadeIn>
-
-        <FadeIn delay={0.15}>
-          <h2 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-[#212121] leading-snug mb-16">
-            One week a year,
-            <br />
-            <span className="italic font-light text-[#5a5a5a]">
-              the group chat becomes real life.
-            </span>
-          </h2>
-        </FadeIn>
-
-        <FadeIn delay={0.25}>
-          <div className="space-y-10 text-[#5a5a5a] text-lg md:text-xl leading-[2.2] font-body font-light max-w-3xl">
-            <p>
-              Every summer we pick a town nobody&rsquo;s heard of, rent the biggest house we can find,
-              and play <span className="text-[#cf8018] font-medium">108 holes in three days</span>.
-              Six rounds. Back to back to back. An absolutely unreasonable amount of golf.
-            </p>
-            <p>
-              By the time we leave, every bartender knows our names, every starter has a story,
-              and the local economy has been single-handedly stimulated by 16 guys who tip too
-              much and putt too little.
-            </p>
-          </div>
-        </FadeIn>
-
-        <FadeIn delay={0.35}>
-          <div className="mt-14 pl-6 md:pl-8 border-l-2 border-[#cf8018]/40">
-            <p className="text-[#cf8018] font-display text-2xl md:text-4xl italic leading-[1.3] font-light">
-              It&rsquo;s not about the handicap.
-              <br />
-              It&rsquo;s about who you&rsquo;re out there with.
-            </p>
-          </div>
-        </FadeIn>
-      </div>
-    </section>
-  );
-}
-
-function AnimatedStat({ value, label, delay }: { value: string; label: string; delay: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, delay, ease: [0.25, 0.1, 0.25, 1] }}
-      className="text-center py-6 group"
-    >
-      <motion.span
-        className="font-display text-5xl md:text-7xl font-bold text-[#cf8018] block leading-none group-hover:text-[#cf8018]/80 transition-colors duration-500"
-        whileHover={{ scale: 1.1 }}
-        transition={{ type: "spring", stiffness: 300 }}
-      >
-        {value}
-      </motion.span>
-      <span className="text-[10px] tracking-[0.35em] uppercase text-white/60 mt-4 block font-body font-medium">
-        {label}
-      </span>
-    </motion.div>
-  );
-}
-
-function StatsBar() {
-  const stats = [
-    { value: "6", label: "Years" },
-    { value: "648", label: "Holes Played" },
-    { value: "18", label: "Courses" },
-    { value: "6", label: "States" },
-  ];
-
-  return (
-    <section className="bg-[#1a322b]">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-20 md:py-24">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-8">
-          {stats.map((stat, i) => (
-            <AnimatedStat key={stat.label} {...stat} delay={i * 0.12} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function UpcomingPreview() {
-  const trip = trips[0];
-  const [activePhoto, setActivePhoto] = useState(0);
-  const photos = trip.photoSections[0]?.images || [];
-
-  useEffect(() => {
-    if (photos.length === 0) return;
-    const interval = setInterval(() => {
-      setActivePhoto((prev) => (prev + 1) % photos.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [photos.length]);
-
-  return (
-    <section className="py-24 md:py-40 bg-white relative overflow-hidden">
-      <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/4 font-display text-[16rem] md:text-[30rem] font-bold text-[#212121]/[0.03] leading-none select-none pointer-events-none">
-        {trip.year}
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-        <FadeIn>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-2 h-2 rounded-full bg-[#cf8018] animate-pulse" />
-            <span className="text-[10px] tracking-[0.4em] uppercase text-[#cf8018] font-body font-medium">
-              Next Expedition
-            </span>
-          </div>
-        </FadeIn>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
-          <div>
-            <FadeIn delay={0.1}>
-              <h2 className="font-display text-7xl md:text-9xl font-bold text-[#212121] leading-tight mb-4">
-                {trip.year}
-              </h2>
-            </FadeIn>
-            <FadeIn delay={0.15}>
-              <h3 className="font-display text-3xl md:text-4xl font-light text-[#5a5a5a] italic mb-5">
-                {trip.location}, {trip.state}
-              </h3>
-            </FadeIn>
-            <FadeIn delay={0.2}>
-              <p className="text-[10px] text-[#8a8a8a] tracking-[0.4em] uppercase font-body font-medium mb-8">
-                {trip.dates}
-              </p>
-            </FadeIn>
-            <FadeIn delay={0.25}>
-              <p className="font-display text-xl text-[#5a5a5a] italic mb-10 leading-relaxed">
-                &ldquo;{trip.tagline}&rdquo;
-              </p>
-            </FadeIn>
-            <FadeIn delay={0.3}>
-              <div className="space-y-4 mb-12">
-                {trip.courses.map((c) => (
-                  <motion.div
-                    key={c.name}
-                    className="flex items-center gap-4 group cursor-default"
-                    whileHover={{ x: 8 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                  >
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#cf8018] group-hover:bg-[#cf8018]/60 transition-colors" />
-                    <span className="text-[#212121] font-body text-sm font-light tracking-wide group-hover:text-[#cf8018] transition-colors duration-300">
-                      {c.name}
-                    </span>
-                  </motion.div>
-                ))}
-              </div>
-            </FadeIn>
-            <FadeIn delay={0.35}>
-              <Link
-                href={`/trip/${trip.slug}`}
-                className="inline-flex items-center gap-4 text-[11px] tracking-[0.3em] uppercase font-body font-medium text-[#cf8018] hover:text-[#cf8018]/70 transition-colors duration-300 group"
-              >
-                Full Details
-                <svg
-                  className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-            </FadeIn>
-          </div>
-
-          <FadeIn delay={0.2} direction="right">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-lg shadow-black/5">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activePhoto}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.8 }}
-                  className="absolute inset-0"
-                >
-                  {photos[activePhoto] && (
-                    <Image
-                      src={photos[activePhoto]}
-                      alt="Lodge preview"
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 50vw"
-                      className="object-cover"
-                    />
-                  )}
-                </motion.div>
-              </AnimatePresence>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
-                {photos.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setActivePhoto(i)}
-                    className={`h-1 rounded-full transition-all duration-400 ${
-                      i === activePhoto ? "bg-[#cf8018] w-5" : "bg-white/40 w-1.5"
-                    }`}
-                  />
-                ))}
-              </div>
-            </div>
-            {trip.lodgingAddress && (
-              <p className="text-[10px] text-[#8a8a8a] tracking-[0.3em] uppercase font-body mt-4 text-center">
-                {trip.lodgingAddress}
-              </p>
-            )}
-          </FadeIn>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function DestinationList() {
-  const [hoveredYear, setHoveredYear] = useState<number | null>(null);
-  const locations = trips.map((t) => ({
-    year: t.year,
-    city: t.location,
-    state: t.state,
-    slug: t.slug,
-    upcoming: t.upcoming,
-    heroImage: t.heroImage,
-  }));
-
-  return (
-    <section className="py-24 md:py-40 bg-[#f8f6f2]">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <FadeIn>
-          <div className="flex items-center gap-5 mb-6">
-            <div className="w-12 h-px bg-[#cf8018]/40" />
-            <span className="text-[10px] tracking-[0.4em] uppercase text-[#cf8018] font-body font-medium">
-              Every Year
-            </span>
-          </div>
-        </FadeIn>
-        <FadeIn delay={0.1}>
-          <h2 className="font-display text-5xl md:text-7xl font-bold text-[#212121] mb-20 leading-tight">
-            All
-            <br />
-            <span className="italic font-light text-[#5a5a5a]">Destinations</span>
-          </h2>
-        </FadeIn>
-
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-10">
-          <div className="space-y-0">
-            {locations.map((loc, i) => (
-              <FadeIn key={loc.year} delay={0.15 + i * 0.06}>
-                <Link
-                  href={`/trip/${loc.slug}`}
-                  className="group border-t border-[#e0dbd3] last:border-b flex items-center justify-between py-7 md:py-9 transition-all duration-500 hover:bg-white/60 -mx-4 px-4 md:-mx-6 md:px-6 rounded-lg"
-                  onMouseEnter={() => setHoveredYear(loc.year)}
-                  onMouseLeave={() => setHoveredYear(null)}
-                >
-                  <div className="flex items-baseline gap-5 md:gap-8">
-                    <span className="font-display text-4xl md:text-6xl font-bold text-[#8a8a8a] group-hover:text-[#cf8018] transition-colors duration-500 leading-none tabular-nums">
-                      {loc.year}
-                    </span>
-                    <div className="flex flex-col gap-0.5">
-                      <span className="font-display text-lg md:text-2xl text-[#5a5a5a] group-hover:text-[#212121] transition-colors duration-500">
-                        {loc.city}
-                      </span>
-                      <span className="text-[10px] tracking-[0.3em] uppercase text-[#8a8a8a] font-body hidden md:block">
-                        {loc.state}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    {loc.upcoming && (
-                      <span className="hidden md:flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase text-[#cf8018] font-body font-medium">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#cf8018] animate-pulse" />
-                        Next
-                      </span>
-                    )}
-                    <svg
-                      className="w-5 h-5 text-[#e0dbd3] group-hover:text-[#cf8018] group-hover:translate-x-2 transition-all duration-500"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </div>
-                </Link>
-              </FadeIn>
-            ))}
-          </div>
-
-          <div className="hidden lg:block relative">
-            <div className="sticky top-32">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-white shadow-lg shadow-black/5">
-                <AnimatePresence mode="wait">
-                  {hoveredYear && (
-                    <motion.div
-                      key={hoveredYear}
-                      initial={{ opacity: 0, scale: 1.05 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.98 }}
-                      transition={{ duration: 0.4 }}
-                      className="absolute inset-0"
-                    >
-                      <Image
-                        src={locations.find((l) => l.year === hoveredYear)?.heroImage || ""}
-                        alt=""
-                        fill
-                        sizes="400px"
-                        className="object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                      <div className="absolute bottom-4 left-4">
-                        <span className="font-display text-4xl font-bold text-white">
-                          {hoveredYear}
-                        </span>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-                {!hoveredYear && (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <p className="text-[#8a8a8a] text-sm font-body italic">Hover a destination</p>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function PastTripsGrid() {
-  const pastTrips = trips.filter((t) => !t.upcoming);
-
-  return (
-    <section className="py-24 md:py-40 bg-white">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <FadeIn>
-          <div className="flex items-center gap-5 mb-6">
-            <div className="w-12 h-px bg-[#cf8018]/40" />
-            <span className="text-[10px] tracking-[0.4em] uppercase text-[#cf8018] font-body font-medium">
-              The Archives
-            </span>
-          </div>
-        </FadeIn>
-        <FadeIn delay={0.1}>
-          <h2 className="font-display text-5xl md:text-7xl font-bold text-[#212121] mb-20 leading-tight">
-            Previous
-            <br />
-            <span className="italic font-light text-[#5a5a5a]">Chapters</span>
-          </h2>
-        </FadeIn>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {pastTrips.map((trip, i) => (
-            <FadeIn key={trip.year} delay={0.1 + i * 0.08}>
-              <Link href={`/trip/${trip.slug}`} className="block group">
-                <motion.div
-                  className="relative overflow-hidden rounded-2xl aspect-[3/2] mb-6 shadow-lg shadow-black/5"
-                  whileHover={{ y: -4 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                >
-                  <Image
-                    src={trip.heroImage}
-                    alt={`${trip.year} - ${trip.location}`}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover group-hover:scale-110 transition-transform duration-1000 ease-out"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent group-hover:from-black/50 transition-colors duration-500" />
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <span className="font-display text-6xl font-bold text-white/80 leading-none group-hover:text-[#cf8018] transition-colors duration-500">
-                      {trip.year}
-                    </span>
-                  </div>
-                  <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-[2px] bg-gradient-to-r from-[#cf8018] to-[#cf8018]/50 transition-all duration-700" />
-                </motion.div>
-                <h3 className="font-display text-xl text-[#212121] group-hover:text-[#cf8018] transition-colors duration-300">
-                  {trip.location}, {trip.state}
-                </h3>
-                <p className="text-[#8a8a8a] text-[11px] font-body mt-2 tracking-[0.2em] uppercase">
-                  {trip.dates}
-                </p>
-              </Link>
-            </FadeIn>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function MottoBanner() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  return (
-    <section ref={ref} className="py-24 md:py-32 bg-[#f8f6f2] border-t border-[#ece8e1] relative overflow-hidden">
-      <div className="max-w-5xl mx-auto px-6 md:px-12 text-center relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1 }}
-        >
-          <LogoFull className="w-40 md:w-52 opacity-20 mx-auto mb-8" />
-        </motion.div>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="font-display text-3xl md:text-5xl italic text-[#8a8a8a] font-light leading-[1.3]"
-        >
-          See you on the first tee.
-        </motion.p>
-      </div>
-    </section>
-  );
-}
-
 export default function HomeClient() {
   return (
     <main>
       <HeroSection />
-      <PhotoStrip />
-      <PlannerCTA />
-      <MapSection />
+      <NextUpBanner />
+      <Timeline />
       <ManifestoSection />
-      <StatsBar />
-      <UpcomingPreview />
-      <DestinationList />
-      <PastTripsGrid />
-      <MottoBanner />
+      <PlanCTA />
     </main>
   );
 }

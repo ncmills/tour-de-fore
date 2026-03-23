@@ -1,31 +1,37 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* ── Light resort palette inspired by Bandon Dunes ── */
-  --color-bg: #ffffff;
-  --color-bg-warm: #f8f6f2;
-  --color-bg-card: #ffffff;
-  --color-surface: #f1ede7;
-  --color-border: #e0dbd3;
-  --color-border-light: #ece8e1;
+  /* ── Dark-first palette: "The Devil's Yearbook" ── */
+  --color-bg: #0f0f0f;
+  --color-bg-alt: #1a1a1a;
+  --color-bg-warm: #1a1a1a;
+  --color-bg-card: #1f1f1f;
+  --color-surface: #f5f0e8;
+  --color-border: #2a2a2a;
+  --color-border-light: #333333;
 
-  --color-text: #212121;
-  --color-text-muted: #5a5a5a;
-  --color-text-dim: #8a8a8a;
+  --color-text: #f0ece4;
+  --color-text-muted: #8a8580;
+  --color-text-dim: #5a5550;
 
-  --color-accent: #cf8018;        /* burnt orange — primary CTA */
-  --color-accent-hover: #ba7112;
-  --color-accent-light: #e8a94f;
-  --color-green: #1a322b;         /* deep forest green — secondary */
-  --color-green-light: #2a4a3f;
+  --color-accent: #e85d26;       /* fire — primary CTA */
+  --color-accent-hover: #d14a18;
+  --color-accent-light: #f07040;
+  --color-fire: #e85d26;
+  --color-fire-hover: #d14a18;
 
-  --color-gold: #cf8018;
-  --color-gold-dim: #a06614;
-  --color-ember: #cf8018;
-  --color-ember-dim: #a06614;
+  --color-gold: #c9a84c;
+  --color-gold-dim: #a08838;
 
-  --font-display: var(--font-cormorant);
-  --font-body: var(--font-outfit);
+  --color-green: #2d5a3f;        /* course/nature references only */
+  --color-green-light: #3a7050;
+
+  --color-ember: #e85d26;
+  --color-ember-dim: #c04a18;
+
+  --font-display: var(--font-bebas);
+  --font-body: var(--font-inter);
+  --font-accent: var(--font-instrument);
 }
 
 * {
@@ -53,8 +59,10 @@ p {
 }
 
 h1, h2, h3, h4 {
-  line-height: 1.1;
-  font-family: var(--font-display), serif;
+  line-height: 1.05;
+  font-family: var(--font-display), sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
 ::selection {
@@ -67,19 +75,19 @@ h1, h2, h3, h4 {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-bg-warm);
+  background: #0f0f0f;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border);
+  background: #2a2a2a;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-dim);
+  background: #444;
 }
 
 /* ── Nav styles ── */
 .nav-glass {
-  background: rgba(67, 73, 73, 0.88);
+  background: rgba(15, 15, 15, 0.92);
   backdrop-filter: blur(20px) saturate(1.3);
   -webkit-backdrop-filter: blur(20px) saturate(1.3);
 }
@@ -105,10 +113,10 @@ h1, h2, h3, h4 {
   color: #ffffff;
   font-family: var(--font-body), sans-serif;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  border-radius: 25px;
+  border-radius: 6px;
   border: none;
   cursor: pointer;
   transition: background 0.3s ease, transform 0.2s ease;
@@ -127,10 +135,10 @@ h1, h2, h3, h4 {
   color: var(--color-accent);
   font-family: var(--font-body), sans-serif;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  border-radius: 25px;
+  border-radius: 6px;
   border: 2px solid var(--color-accent);
   cursor: pointer;
   transition: all 0.3s ease;
@@ -141,35 +149,16 @@ h1, h2, h3, h4 {
   color: #ffffff;
 }
 
-/* ── Image loading shimmer (light version) ── */
+/* ── Image loading shimmer (dark version) ── */
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
 
 .img-shimmer {
-  background: linear-gradient(90deg, #f1ede7 25%, #e8e4de 50%, #f1ede7 75%);
+  background: linear-gradient(90deg, #1a1a1a 25%, #252525 50%, #1a1a1a 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
-}
-
-/* ── Organic section divider (torn-paper effect) ── */
-.section-divider {
-  position: relative;
-  overflow: hidden;
-}
-.section-divider::after {
-  content: "";
-  position: absolute;
-  bottom: -2px;
-  left: -5%;
-  width: 110%;
-  height: 40px;
-  background: var(--color-bg);
-  border-radius: 100% 100% 0 0 / 100% 100% 0 0;
-}
-.section-divider-warm::after {
-  background: var(--color-bg-warm);
 }
 
 /* ── Card hover ── */
@@ -177,8 +166,8 @@ h1, h2, h3, h4 {
   transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.4s ease;
 }
 .card-hover:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.04);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 /* ── Focus-visible ── */
@@ -189,7 +178,7 @@ h1, h2, h3, h4 {
 
 /* ── Custom select arrow ── */
 select.appearance-none {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235a5a5a' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238a8580' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 12px center;
   padding-right: 36px;
@@ -218,7 +207,7 @@ select.appearance-none {
   font-size: 14px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  border-radius: 25px;
+  border-radius: 6px;
   text-decoration: none;
   transition: top 0.2s;
 }
@@ -233,6 +222,6 @@ body.menu-open {
 
 /* ── Glow pulse (kept for CTA emphasis) ── */
 @keyframes glowPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(207, 128, 24, 0); }
-  50% { box-shadow: 0 0 24px 6px rgba(207, 128, 24, 0.15); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(232, 93, 38, 0); }
+  50% { box-shadow: 0 0 24px 6px rgba(232, 93, 38, 0.15); }
 }

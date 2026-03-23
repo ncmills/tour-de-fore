@@ -34,7 +34,7 @@ function NavDropdown({
     <div ref={ref} className="relative">
       <button
         onClick={onToggle}
-        className="font-body text-[12px] tracking-[0.15em] uppercase text-white/70 hover:text-white transition-colors duration-300 flex items-center gap-1.5"
+        className="font-body text-[12px] tracking-[0.15em] uppercase text-white/60 hover:text-white transition-colors duration-300 flex items-center gap-1.5"
       >
         {label}
         <svg
@@ -54,7 +54,7 @@ function NavDropdown({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.96 }}
             transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-            className="absolute top-full right-0 mt-4 min-w-[260px] bg-white rounded-xl shadow-lg shadow-black/8 border border-[#e0dbd3] overflow-hidden"
+            className="absolute top-full right-0 mt-4 min-w-[260px] bg-[#1a1a1a] rounded-lg shadow-lg shadow-black/30 border border-[#2a2a2a] overflow-hidden"
           >
             {children}
           </motion.div>
@@ -73,7 +73,6 @@ export default function Nav() {
   const upcomingTrips = trips.filter((t) => t.upcoming);
   const pastTrips = trips.filter((t) => !t.upcoming);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (mobileOpen) {
       document.body.classList.add("menu-open");
@@ -90,9 +89,6 @@ export default function Nav() {
   }, []);
 
   const isActive = (href: string) => pathname === href;
-  const isTripActive = (upcoming: boolean) =>
-    pathname.startsWith("/trip/") &&
-    trips.some((t) => t.upcoming === upcoming && pathname === `/trip/${t.slug}`);
 
   const toggleDropdown = (name: string) => {
     setActiveDropdown(activeDropdown === name ? null : name);
@@ -105,18 +101,16 @@ export default function Nav() {
       }`}
     >
       <div className="flex items-center justify-between px-6 md:px-12 py-5">
-        {/* Logo + Brand */}
         <Link
           href="/"
           className="flex items-center gap-3 group"
         >
           <Logo className="w-8 h-8" />
-          <span className="font-display text-2xl md:text-3xl font-semibold text-white tracking-wide group-hover:opacity-80 transition-opacity">
-            Tour de Fore
+          <span className="font-display text-2xl md:text-3xl text-white tracking-wide group-hover:opacity-80 transition-opacity">
+            TOUR DE FORE
           </span>
         </Link>
 
-        {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-10">
           <NavDropdown
             label="Upcoming"
@@ -129,23 +123,23 @@ export default function Nav() {
                   key={trip.year}
                   href={`/trip/${trip.slug}`}
                   onClick={() => setActiveDropdown(null)}
-                  className="flex items-center justify-between px-4 py-3 rounded-lg hover:bg-[#f8f6f2] transition-colors group"
+                  className="flex items-center justify-between px-4 py-3 rounded-lg hover:bg-[#252525] transition-colors group"
                 >
                   <div>
-                    <span className="font-display text-2xl text-[#212121] group-hover:text-[#cf8018] transition-colors">
+                    <span className="font-display text-2xl text-[#c9a84c] group-hover:text-[#e85d26] transition-colors">
                       {trip.year}
                     </span>
-                    <span className="block text-[10px] text-[#8a8a8a] tracking-[0.2em] uppercase font-body mt-0.5">
+                    <span className="block text-[11px] text-[#8a8580] tracking-[0.1em] uppercase font-body mt-0.5">
                       {trip.location}, {trip.state}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#cf8018] animate-pulse" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#e85d26] animate-pulse" />
                   </div>
                 </Link>
               ))}
               {upcomingTrips.length === 0 && (
-                <div className="px-4 py-3 text-[#8a8a8a] text-sm font-body">
+                <div className="px-4 py-3 text-[#5a5550] text-sm font-body">
                   No upcoming trips
                 </div>
               )}
@@ -163,18 +157,18 @@ export default function Nav() {
                   key={trip.year}
                   href={`/trip/${trip.slug}`}
                   onClick={() => setActiveDropdown(null)}
-                  className="flex items-center justify-between px-4 py-3 rounded-lg hover:bg-[#f8f6f2] transition-colors group"
+                  className="flex items-center justify-between px-4 py-3 rounded-lg hover:bg-[#252525] transition-colors group"
                 >
                   <div>
-                    <span className="font-display text-2xl text-[#212121] group-hover:text-[#cf8018] transition-colors">
+                    <span className="font-display text-2xl text-[#c9a84c] group-hover:text-[#e85d26] transition-colors">
                       {trip.year}
                     </span>
-                    <span className="block text-[10px] text-[#8a8a8a] tracking-[0.2em] uppercase font-body mt-0.5">
+                    <span className="block text-[11px] text-[#8a8580] tracking-[0.1em] uppercase font-body mt-0.5">
                       {trip.location}, {trip.state}
                     </span>
                   </div>
                   <svg
-                    className="w-4 h-4 text-[#e0dbd3] group-hover:text-[#cf8018] group-hover:translate-x-1 transition-all"
+                    className="w-4 h-4 text-[#2a2a2a] group-hover:text-[#e85d26] group-hover:translate-x-1 transition-all"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -189,7 +183,7 @@ export default function Nav() {
           <Link
             href="/shop"
             className={`font-body text-[12px] tracking-[0.15em] uppercase transition-colors duration-300 ${
-              isActive("/shop") ? "text-[#cf8018]" : "text-white/70 hover:text-white"
+              isActive("/shop") ? "text-[#e85d26]" : "text-white/60 hover:text-white"
             }`}
           >
             Shop
@@ -197,17 +191,16 @@ export default function Nav() {
 
           <Link
             href="/plan"
-            className={`font-body text-[12px] tracking-[0.15em] uppercase px-6 py-2.5 rounded-full transition-all duration-300 ${
+            className={`font-body text-[12px] tracking-[0.15em] uppercase px-6 py-2.5 rounded-md transition-all duration-300 ${
               isActive("/plan")
-                ? "bg-[#cf8018] text-white shadow-md"
-                : "bg-[#cf8018] text-white hover:bg-[#b8710f] shadow-md hover:shadow-lg"
+                ? "bg-[#e85d26] text-white shadow-md"
+                : "bg-[#e85d26] text-white hover:bg-[#d14a18] shadow-md hover:shadow-lg"
             }`}
           >
             Plan a Trip
           </Link>
         </div>
 
-        {/* Mobile menu toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="md:hidden text-white z-[60] relative w-8 h-8 flex flex-col justify-center items-center gap-1.5"
@@ -215,18 +208,17 @@ export default function Nav() {
         >
           <span
             className={`w-6 h-px bg-white transition-all duration-300 ${
-              mobileOpen ? "rotate-45 translate-y-[3.5px] !bg-[#212121]" : ""
+              mobileOpen ? "rotate-45 translate-y-[3.5px]" : ""
             }`}
           />
           <span
             className={`w-6 h-px bg-white transition-all duration-300 ${
-              mobileOpen ? "-rotate-45 -translate-y-[3.5px] !bg-[#212121]" : ""
+              mobileOpen ? "-rotate-45 -translate-y-[3.5px]" : ""
             }`}
           />
         </button>
       </div>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -234,26 +226,26 @@ export default function Nav() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center overflow-y-auto py-20"
+            className="fixed inset-0 bg-[#0f0f0f] z-50 flex flex-col items-center justify-center overflow-y-auto py-20"
           >
             <button
               onClick={() => setMobileOpen(false)}
-              className="absolute top-5 right-6 text-[#212121] w-8 h-8 flex flex-col justify-center items-center gap-1.5"
+              className="absolute top-5 right-6 text-white w-8 h-8 flex flex-col justify-center items-center gap-1.5"
               aria-label="Close menu"
             >
-              <span className="w-6 h-px bg-[#212121] rotate-45 translate-y-[3.5px]" />
-              <span className="w-6 h-px bg-[#212121] -rotate-45 -translate-y-[3.5px]" />
+              <span className="w-6 h-px bg-white rotate-45 translate-y-[3.5px]" />
+              <span className="w-6 h-px bg-white -rotate-45 -translate-y-[3.5px]" />
             </button>
 
             <Logo className="w-12 h-12 mb-4" />
             <Link
               href="/"
               onClick={() => setMobileOpen(false)}
-              className="font-display text-3xl text-[#212121] mb-2 tracking-wide"
+              className="font-display text-3xl text-white mb-2 tracking-wide"
             >
-              Tour de Fore
+              TOUR DE FORE
             </Link>
-            <p className="text-[10px] text-[#8a8a8a] tracking-[0.3em] uppercase font-body mb-12 italic">
+            <p className="font-accent text-base text-[#8a8580] italic mb-12">
               Hell is empty, and all the devils are here
             </p>
 
@@ -266,14 +258,13 @@ export default function Nav() {
               <Link
                 href="/plan"
                 onClick={() => setMobileOpen(false)}
-                className="inline-block font-body text-[12px] tracking-[0.15em] uppercase text-white bg-[#cf8018] hover:bg-[#b8710f] px-8 py-3 rounded-full transition-all duration-300 shadow-md"
+                className="inline-block font-body text-[12px] tracking-[0.15em] uppercase text-white bg-[#e85d26] hover:bg-[#d14a18] px-8 py-3 rounded-md transition-all duration-300 shadow-md"
               >
                 Plan a Trip
               </Link>
             </motion.div>
 
-            {/* Upcoming */}
-            <div className="text-[10px] tracking-[0.4em] uppercase text-[#cf8018] font-body mb-4">
+            <div className="text-[11px] tracking-[0.2em] uppercase text-[#e85d26] font-body font-medium mb-4">
               Upcoming
             </div>
             {upcomingTrips.map((trip, i) => (
@@ -288,20 +279,19 @@ export default function Nav() {
                   onClick={() => setMobileOpen(false)}
                   className="block py-3 text-center group"
                 >
-                  <span className="font-display text-5xl text-[#212121] group-hover:text-[#cf8018] transition-colors duration-300">
+                  <span className="font-display text-5xl text-[#c9a84c] group-hover:text-[#e85d26] transition-colors duration-300">
                     {trip.year}
                   </span>
-                  <span className="block text-[11px] text-[#8a8a8a] tracking-[0.3em] uppercase mt-1 font-body">
+                  <span className="block text-[11px] text-[#8a8580] tracking-[0.2em] uppercase mt-1 font-body">
                     {trip.location}, {trip.state}
                   </span>
                 </Link>
               </motion.div>
             ))}
 
-            <div className="w-12 h-px bg-[#cf8018]/30 my-6" />
+            <div className="w-12 h-px bg-[#e85d26]/30 my-6" />
 
-            {/* Past */}
-            <div className="text-[10px] tracking-[0.4em] uppercase text-[#8a8a8a] font-body mb-4">
+            <div className="text-[11px] tracking-[0.2em] uppercase text-[#8a8580] font-body font-medium mb-4">
               Past Trips
             </div>
             {pastTrips.map((trip, i) => (
@@ -316,17 +306,17 @@ export default function Nav() {
                   onClick={() => setMobileOpen(false)}
                   className="block py-3 text-center group"
                 >
-                  <span className="font-display text-4xl text-[#5a5a5a] group-hover:text-[#cf8018] transition-colors duration-300">
+                  <span className="font-display text-4xl text-[#5a5550] group-hover:text-[#e85d26] transition-colors duration-300">
                     {trip.year}
                   </span>
-                  <span className="block text-[11px] text-[#8a8a8a] tracking-[0.3em] uppercase mt-1 font-body">
+                  <span className="block text-[11px] text-[#5a5550] tracking-[0.2em] uppercase mt-1 font-body">
                     {trip.location}, {trip.state}
                   </span>
                 </Link>
               </motion.div>
             ))}
 
-            <div className="w-12 h-px bg-[#cf8018]/30 my-6" />
+            <div className="w-12 h-px bg-[#e85d26]/30 my-6" />
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -336,7 +326,7 @@ export default function Nav() {
               <Link
                 href="/shop"
                 onClick={() => setMobileOpen(false)}
-                className="font-body text-[12px] tracking-[0.15em] uppercase text-[#cf8018] hover:text-[#b8710f] transition-colors"
+                className="font-body text-[12px] tracking-[0.15em] uppercase text-[#e85d26] hover:text-[#d14a18] transition-colors"
               >
                 Shop
               </Link>

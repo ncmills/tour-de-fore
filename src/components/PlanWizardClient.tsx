@@ -85,8 +85,6 @@ const LOADING_MESSAGES = [
   "Finalizing the game plan...",
 ];
 
-// ── Question component: one question per full screen ──
-
 function Question({
   number,
   total,
@@ -109,20 +107,20 @@ function Question({
     >
       <div className="max-w-2xl mx-auto w-full px-6 md:px-12">
         <div className="flex items-center gap-4 mb-8">
-          <span className="text-[11px] tracking-[0.15em] uppercase text-accent font-body font-medium">
+          <span className="text-[11px] tracking-[0.15em] uppercase text-[#e85d26] font-body font-medium">
             {String(number).padStart(2, "0")}
           </span>
-          <div className="w-8 h-px bg-accent" />
-          <span className="text-[10px] tracking-[0.3em] uppercase text-text-dim font-body">
+          <div className="w-8 h-px bg-[#e85d26]" />
+          <span className="text-[11px] tracking-[0.15em] uppercase text-[#5a5550] font-body">
             of {total}
           </span>
         </div>
         {subtitle && (
-          <p className="text-[11px] tracking-[0.15em] uppercase text-accent font-body font-medium mb-4">
+          <p className="text-[11px] tracking-[0.15em] uppercase text-[#e85d26] font-body font-medium mb-4">
             {subtitle}
           </p>
         )}
-        <h2 className="font-display text-3xl md:text-5xl font-bold text-text leading-snug mb-12">
+        <h2 className="font-display text-3xl md:text-5xl text-text leading-snug mb-12">
           {title}
         </h2>
         {children}
@@ -144,7 +142,6 @@ export default function PlanWizardClient() {
   const set = (field: keyof WizardState, value: unknown) =>
     dispatch({ type: "SET_FIELD", field, value });
 
-  // Question IDs in order
   const questionIds = [
     "q-destination-type",
     state.destinationType === "specific" ? "q-destination" : "q-region",
@@ -185,20 +182,17 @@ export default function PlanWizardClient() {
   const advance = useCallback((toIndex: number) => {
     if (toIndex + 1 > revealedCount) {
       setRevealedCount(toIndex + 1);
-      // Small delay so the DOM renders before scrolling
       setTimeout(() => scrollToQuestion(toIndex), 100);
     } else {
       scrollToQuestion(toIndex);
     }
   }, [revealedCount, scrollToQuestion]);
 
-  // Auto-advance helpers for single-select questions
   const setAndAdvance = (field: keyof WizardState, value: unknown, qIndex: number) => {
     set(field, value);
     setTimeout(() => advance(qIndex + 1), 350);
   };
 
-  // Keyboard: Enter scrolls to next revealed question
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (isGenerating) return;
@@ -206,7 +200,6 @@ export default function PlanWizardClient() {
       const isInput = target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.tagName === "SELECT";
       if (e.key === "Enter" && !isInput) {
         e.preventDefault();
-        // Find which question is most visible and go to next
         const nextIndex = Math.min(revealedCount, totalQuestions - 1);
         advance(nextIndex);
       }
@@ -264,13 +257,13 @@ export default function PlanWizardClient() {
   // ── Loading Screen ──
   if (isGenerating) {
     return (
-      <div className="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center">
+      <div className="fixed inset-0 bg-[#0f0f0f] z-50 flex flex-col items-center justify-center">
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
           className="mb-10"
         >
-          <Logo className="w-16 h-16 text-accent opacity-60" />
+          <Logo className="w-16 h-16 opacity-60" />
         </motion.div>
         <AnimatePresence mode="wait">
           <motion.p
@@ -279,14 +272,14 @@ export default function PlanWizardClient() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.4 }}
-            className="font-display text-xl md:text-2xl italic text-text-muted"
+            className="font-body text-xl md:text-2xl text-[#8a8580]"
           >
             {LOADING_MESSAGES[loadingMsg]}
           </motion.p>
         </AnimatePresence>
-        <div className="mt-10 w-48 h-px bg-border overflow-hidden">
+        <div className="mt-10 w-48 h-px bg-[#2a2a2a] overflow-hidden">
           <motion.div
-            className="h-full bg-gradient-to-r from-accent to-[#d4a84b]"
+            className="h-full bg-gradient-to-r from-[#e85d26] to-[#c9a84c]"
             animate={{ x: ["-100%", "100%"] }}
             transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
           />
@@ -295,16 +288,24 @@ export default function PlanWizardClient() {
     );
   }
 
-  // Track which question index we're on for the progress bar
   const progress = Math.min((revealedCount / totalQuestions) * 100, 100);
   let qIndex = 0;
 
+  const inputClass = "w-full bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg px-6 py-5 text-text font-body text-lg placeholder:text-[#5a5550]/50 focus:border-[#e85d26]/50 focus:outline-none transition-colors";
+  const selectClass = "bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg px-5 py-4 text-text font-body text-base focus:border-[#e85d26]/50 focus:outline-none transition-colors appearance-none";
+  const continueClass = "mt-6 text-[11px] tracking-[0.15em] uppercase font-body text-[#e85d26] hover:text-[#d14a18] transition-colors flex items-center gap-2";
+  const continueArrow = (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+    </svg>
+  );
+
   return (
-    <div id="main-content" className="bg-white">
+    <div id="main-content" className="bg-[#0f0f0f]">
       {/* Fixed progress bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-border">
+      <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-[#2a2a2a]">
         <motion.div
-          className="h-full bg-gradient-to-r from-accent to-[#d4a84b]"
+          className="h-full bg-gradient-to-r from-[#e85d26] to-[#c9a84c]"
           animate={{ width: `${progress}%` }}
           transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
         />
@@ -312,22 +313,20 @@ export default function PlanWizardClient() {
 
       {/* Fixed header */}
       <div className="fixed top-1 left-0 right-0 z-40">
-        <div className="pt-6 pb-4 px-6 md:px-12 flex items-center justify-between max-w-5xl mx-auto bg-white/80 backdrop-blur-sm rounded-b-xl">
+        <div className="pt-6 pb-4 px-6 md:px-12 flex items-center justify-between max-w-5xl mx-auto bg-[#0f0f0f]/80 backdrop-blur-sm rounded-b-lg">
           <Link href="/" className="flex items-center gap-3 group">
             <Logo className="w-7 h-7" />
-            <span className="font-display text-xl font-semibold text-text/60 group-hover:text-text transition-colors">
-              Tour de Fore
+            <span className="font-display text-xl text-text/60 group-hover:text-text transition-colors">
+              TOUR DE FORE
             </span>
           </Link>
-          <span className="text-[10px] tracking-[0.3em] uppercase text-text-dim font-body">
+          <span className="text-[11px] tracking-[0.15em] uppercase text-[#5a5550] font-body">
             {revealedCount} / {totalQuestions}
           </span>
         </div>
       </div>
 
-      {/* ═══════════════════════════════════════ */}
       {/* Q1: Destination Type */}
-      {/* ═══════════════════════════════════════ */}
       <Question
         number={qIndex + 1}
         total={totalQuestions}
@@ -351,9 +350,7 @@ export default function PlanWizardClient() {
         </div>
       </Question>
 
-      {/* ═══════════════════════════════════════ */}
-      {/* Q2: Destination / Region (conditional) */}
-      {/* ═══════════════════════════════════════ */}
+      {/* Q2: Destination / Region */}
       {(qIndex = 1, revealedCount > 1) && (
         state.destinationType === "specific" ? (
           <Question
@@ -371,17 +368,11 @@ export default function PlanWizardClient() {
                 if (e.key === "Enter" && state.destination) advance(qIndex + 1);
               }}
               autoFocus
-              className="w-full bg-bg-warm border border-border rounded-xl px-6 py-5 text-text font-body text-lg placeholder:text-text-dim/50 focus:border-accent/50 focus:outline-none transition-colors"
+              className={inputClass}
             />
             {state.destination && (
-              <button
-                onClick={() => advance(qIndex + 1)}
-                className="mt-6 text-[11px] tracking-[0.2em] uppercase font-body text-accent hover:text-accent/70 transition-colors flex items-center gap-2"
-              >
-                Continue
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                </svg>
+              <button onClick={() => advance(qIndex + 1)} className={continueClass}>
+                Continue {continueArrow}
               </button>
             )}
           </Question>
@@ -407,9 +398,7 @@ export default function PlanWizardClient() {
         )
       )}
 
-      {/* ═══════════════════════════════════════ */}
-      {/* Q3: When - flexible or specific */}
-      {/* ═══════════════════════════════════════ */}
+      {/* Q3: When */}
       {(qIndex = 2, revealedCount > 2) && (
         <Question
           number={qIndex + 1}
@@ -435,9 +424,7 @@ export default function PlanWizardClient() {
         </Question>
       )}
 
-      {/* ═══════════════════════════════════════ */}
-      {/* Q4: Season or Month/Year (conditional) */}
-      {/* ═══════════════════════════════════════ */}
+      {/* Q4: Season or Month/Year */}
       {(qIndex = 3, revealedCount > 3) && (
         state.flexible ? (
           <Question
@@ -468,7 +455,7 @@ export default function PlanWizardClient() {
               <select
                 value={state.tripMonth}
                 onChange={(e) => set("tripMonth", e.target.value)}
-                className="bg-bg-warm border border-border rounded-xl px-5 py-4 text-text font-body text-base focus:border-accent/50 focus:outline-none transition-colors appearance-none"
+                className={selectClass}
               >
                 <option value="">Month</option>
                 {MONTHS.map((m) => (
@@ -478,7 +465,7 @@ export default function PlanWizardClient() {
               <select
                 value={state.tripYear}
                 onChange={(e) => set("tripYear", e.target.value)}
-                className="bg-bg-warm border border-border rounded-xl px-5 py-4 text-text font-body text-base focus:border-accent/50 focus:outline-none transition-colors appearance-none"
+                className={selectClass}
               >
                 <option value="">Year</option>
                 <option value="2026">2026</option>
@@ -487,14 +474,8 @@ export default function PlanWizardClient() {
               </select>
             </div>
             {state.tripMonth && state.tripYear && (
-              <button
-                onClick={() => advance(qIndex + 1)}
-                className="mt-6 text-[11px] tracking-[0.2em] uppercase font-body text-accent hover:text-accent/70 transition-colors flex items-center gap-2"
-              >
-                Continue
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                </svg>
+              <button onClick={() => advance(qIndex + 1)} className={continueClass}>
+                Continue {continueArrow}
               </button>
             )}
           </Question>
@@ -524,31 +505,25 @@ export default function PlanWizardClient() {
           <div className="flex items-center gap-6">
             <button
               onClick={() => set("groupSize", Math.max(4, state.groupSize - 1))}
-              className="w-14 h-14 rounded-xl border border-border bg-bg-warm text-text hover:border-accent/30 transition-colors flex items-center justify-center text-2xl"
+              className="w-14 h-14 rounded-lg border border-[#2a2a2a] bg-[#1a1a1a] text-text hover:border-[#e85d26]/30 transition-colors flex items-center justify-center text-2xl"
             >
               −
             </button>
-            <span className="font-display text-7xl font-bold text-accent w-24 text-center">
+            <span className="font-display text-7xl text-[#e85d26] w-24 text-center">
               {state.groupSize}
             </span>
             <button
               onClick={() => set("groupSize", Math.min(32, state.groupSize + 1))}
-              className="w-14 h-14 rounded-xl border border-border bg-bg-warm text-text hover:border-accent/30 transition-colors flex items-center justify-center text-2xl"
+              className="w-14 h-14 rounded-lg border border-[#2a2a2a] bg-[#1a1a1a] text-text hover:border-[#e85d26]/30 transition-colors flex items-center justify-center text-2xl"
             >
               +
             </button>
           </div>
-          <p className="text-text-dim text-sm font-body mt-4 font-light">
+          <p className="text-[#5a5550] text-sm font-body mt-4">
             12–16 is the sweet spot. Min 4, max 32.
           </p>
-          <button
-            onClick={() => advance(qIndex + 1)}
-            className="mt-8 text-[11px] tracking-[0.2em] uppercase font-body text-accent hover:text-accent/70 transition-colors flex items-center gap-2"
-          >
-            Continue
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
+          <button onClick={() => advance(qIndex + 1)} className={`mt-8 ${continueClass}`}>
+            Continue {continueArrow}
           </button>
         </Question>
       )}
@@ -642,7 +617,7 @@ export default function PlanWizardClient() {
         </Question>
       )}
 
-      {/* Q12: Must-play courses (optional) */}
+      {/* Q12: Must-play courses */}
       {(qIndex = 11, revealedCount > 11) && (
         <Question number={qIndex + 1} total={totalQuestions} title="Any must-play courses?" id={questionIds[qIndex]}>
           <input
@@ -651,16 +626,10 @@ export default function PlanWizardClient() {
             value={state.mustPlayCourses}
             onChange={(e) => set("mustPlayCourses", e.target.value)}
             onKeyDown={(e) => { if (e.key === "Enter") advance(qIndex + 1); }}
-            className="w-full bg-bg-warm border border-border rounded-xl px-6 py-5 text-text font-body text-lg placeholder:text-text-dim/50 focus:border-accent/50 focus:outline-none transition-colors"
+            className={inputClass}
           />
-          <button
-            onClick={() => advance(qIndex + 1)}
-            className="mt-6 text-[11px] tracking-[0.2em] uppercase font-body text-accent hover:text-accent/70 transition-colors flex items-center gap-2"
-          >
-            {state.mustPlayCourses ? "Continue" : "Skip"}
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
+          <button onClick={() => advance(qIndex + 1)} className={continueClass}>
+            {state.mustPlayCourses ? "Continue" : "Skip"} {continueArrow}
           </button>
         </Question>
       )}
@@ -729,24 +698,18 @@ export default function PlanWizardClient() {
               <button
                 key={a}
                 onClick={() => dispatch({ type: "TOGGLE_ACTIVITY", activity: a })}
-                className={`px-5 py-3 rounded-xl border text-sm font-body transition-all duration-300 ${
+                className={`px-5 py-3 rounded-lg border text-sm font-body transition-all duration-300 ${
                   state.activities.includes(a)
-                    ? "bg-bg-warm border-accent text-accent"
-                    : "bg-white border-border text-text-muted hover:border-accent/30"
+                    ? "bg-[#e85d26]/10 border-[#e85d26] text-[#e85d26]"
+                    : "bg-[#1f1f1f] border-[#2a2a2a] text-[#8a8580] hover:border-[#e85d26]/30"
                 }`}
               >
                 {a}
               </button>
             ))}
           </div>
-          <button
-            onClick={() => advance(qIndex + 1)}
-            className="mt-8 text-[11px] tracking-[0.2em] uppercase font-body text-accent hover:text-accent/70 transition-colors flex items-center gap-2"
-          >
-            Continue
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
+          <button onClick={() => advance(qIndex + 1)} className={`mt-8 ${continueClass}`}>
+            Continue {continueArrow}
           </button>
         </Question>
       )}
@@ -771,7 +734,7 @@ export default function PlanWizardClient() {
       {/* Q18: Budget priorities */}
       {(qIndex = 17, revealedCount > 17) && (
         <Question number={qIndex + 1} total={totalQuestions} title="Where should the money go?" id={questionIds[qIndex]}>
-          <p className="text-text-dim text-sm font-body font-light mb-6 -mt-6">Pick up to 2</p>
+          <p className="text-[#5a5550] text-sm font-body mb-6 -mt-6">Pick up to 2</p>
           <div className="grid grid-cols-2 gap-4">
             {["Best courses", "Best lodging", "Best dining", "Keep balanced"].map((p) => (
               <SelectionCard
@@ -784,20 +747,14 @@ export default function PlanWizardClient() {
             ))}
           </div>
           {state.budgetPriorities.length > 0 && (
-            <button
-              onClick={() => advance(qIndex + 1)}
-              className="mt-8 text-[11px] tracking-[0.2em] uppercase font-body text-accent hover:text-accent/70 transition-colors flex items-center gap-2"
-            >
-              Continue
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-              </svg>
+            <button onClick={() => advance(qIndex + 1)} className={`mt-8 ${continueClass}`}>
+              Continue {continueArrow}
             </button>
           )}
         </Question>
       )}
 
-      {/* Q19: Special requests (optional) */}
+      {/* Q19: Special requests */}
       {(qIndex = 18, revealedCount > 18) && (
         <Question number={qIndex + 1} total={totalQuestions} title="Anything else we should know?" id={questionIds[qIndex]}>
           <textarea
@@ -805,16 +762,10 @@ export default function PlanWizardClient() {
             value={state.specialRequests}
             onChange={(e) => set("specialRequests", e.target.value)}
             rows={4}
-            className="w-full bg-bg-warm border border-border rounded-xl px-6 py-5 text-text font-body text-base placeholder:text-text-dim/50 focus:border-accent/50 focus:outline-none transition-colors resize-none"
+            className="w-full bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg px-6 py-5 text-text font-body text-base placeholder:text-[#5a5550]/50 focus:border-[#e85d26]/50 focus:outline-none transition-colors resize-none"
           />
-          <button
-            onClick={() => advance(qIndex + 1)}
-            className="mt-6 text-[11px] tracking-[0.2em] uppercase font-body text-accent hover:text-accent/70 transition-colors flex items-center gap-2"
-          >
-            {state.specialRequests ? "Continue" : "Skip"}
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
+          <button onClick={() => advance(qIndex + 1)} className={continueClass}>
+            {state.specialRequests ? "Continue" : "Skip"} {continueArrow}
           </button>
         </Question>
       )}
@@ -824,19 +775,19 @@ export default function PlanWizardClient() {
         <section id={questionIds[qIndex]} className="min-h-screen flex flex-col justify-center py-20 md:py-28">
           <div className="max-w-2xl mx-auto w-full px-6 md:px-12">
             <div className="flex items-center gap-4 mb-8">
-              <span className="text-[11px] tracking-[0.15em] uppercase text-accent font-body font-medium">
+              <span className="text-[11px] tracking-[0.15em] uppercase text-[#e85d26] font-body font-medium">
                 {String(qIndex + 1).padStart(2, "0")}
               </span>
-              <div className="w-8 h-px bg-accent" />
-              <span className="text-[10px] tracking-[0.3em] uppercase text-text-dim font-body">
+              <div className="w-8 h-px bg-[#e85d26]" />
+              <span className="text-[11px] tracking-[0.15em] uppercase text-[#5a5550] font-body">
                 of {totalQuestions}
               </span>
             </div>
-            <p className="text-[11px] tracking-[0.15em] uppercase text-accent font-body font-medium mb-4">
+            <p className="text-[11px] tracking-[0.15em] uppercase text-[#e85d26] font-body font-medium mb-4">
               The Roster
             </p>
-            <h2 className="font-display text-3xl md:text-5xl font-bold text-text leading-snug mb-12">
-              Who&rsquo;s coming?
+            <h2 className="font-display text-3xl md:text-5xl text-text leading-snug mb-12">
+              WHO&rsquo;S COMING?
             </h2>
 
             <div className="space-y-10">
@@ -857,9 +808,9 @@ export default function PlanWizardClient() {
                   type="checkbox"
                   checked={consent}
                   onChange={(e) => setConsent(e.target.checked)}
-                  className="mt-1 accent-[#cf8018]"
+                  className="mt-1 accent-[#e85d26]"
                 />
-                <span className="text-text-dim text-sm font-body font-light leading-relaxed">
+                <span className="text-[#5a5550] text-sm font-body leading-relaxed">
                   I have permission to share these email addresses. Tour de Fore will only use them to send the generated trip plan.
                 </span>
               </label>
@@ -868,7 +819,7 @@ export default function PlanWizardClient() {
                 <motion.p
                   initial={{ opacity: 0, y: -5 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-red-500 text-sm font-body"
+                  className="text-red-400 text-sm font-body"
                 >
                   {error}
                 </motion.p>
@@ -876,7 +827,7 @@ export default function PlanWizardClient() {
 
               <motion.button
                 onClick={handleGenerate}
-                className="btn-primary w-full py-5 font-body text-sm tracking-[0.2em] uppercase font-medium"
+                className="btn-primary w-full py-5 font-body text-sm tracking-[0.15em] uppercase font-medium"
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
               >
@@ -887,7 +838,7 @@ export default function PlanWizardClient() {
         </section>
       )}
 
-      {/* Bottom spacer so last question can center */}
+      {/* Bottom spacer */}
       <div className="h-[20vh]" />
     </div>
   );
