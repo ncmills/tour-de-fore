@@ -177,7 +177,7 @@ function Timeline() {
   const allTrips = [...trips].reverse(); // chronological
 
   return (
-    <section id="destinations" className="py-20 md:py-32 bg-bg">
+    <section id="destinations" className="py-28 md:py-44 bg-bg">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <FadeIn>
           <h2 className="font-display text-4xl md:text-6xl text-text mb-14">
@@ -233,7 +233,7 @@ function ManifestoSection() {
   const bgImage = heroImages[0]; // group shot
 
   return (
-    <section className="relative py-24 md:py-40 overflow-hidden">
+    <section className="relative py-32 md:py-48 overflow-hidden">
       {/* Full-bleed background */}
       <div className="absolute inset-0">
         <Image
@@ -280,7 +280,7 @@ function ManifestoSection() {
 /* ── 5. Plan Your Own CTA ── */
 function PlanCTA() {
   return (
-    <section className="py-24 md:py-36 bg-bg-alt">
+    <section className="py-32 md:py-48 bg-bg-alt">
       <div className="max-w-4xl mx-auto px-6 md:px-12 text-center">
         <FadeIn>
           <h2 className="font-display text-4xl md:text-6xl lg:text-7xl text-text mb-4">
