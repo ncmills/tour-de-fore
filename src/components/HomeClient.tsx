@@ -8,8 +8,7 @@ import { useSearchParams } from "next/navigation";
 import TubeTv from "./TubeTv";
 
 const VIDEO_HD = "/bg.mp4";
-const HYPE_VIDEO_SILENT = "/hype.mp4";
-const HYPE_VIDEO_AUDIO = "/hype-audio.mp4";
+const HYPE_VIDEO = "/hype-audio.mp4";
 
 const textStyle: React.CSSProperties = {
   fontFamily: "var(--font-script), cursive",
@@ -32,7 +31,6 @@ export default function HomeClient() {
   const [logoVisible, setLogoVisible] = useState(skip);
   const [logoUninverted, setLogoUninverted] = useState(skip);
   const [isMobile, setIsMobile] = useState(false);
-  const [isIOS, setIsIOS] = useState(true); // default true (safe/silent) until client detects
   const bgVideoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -60,10 +58,6 @@ export default function HomeClient() {
     const check = () => setIsMobile(window.innerWidth <= 640);
     check();
     window.addEventListener("resize", check);
-    // Detect iOS — use silent video on iOS, audio version on desktop
-    const ios = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-    setIsIOS(ios);
     return () => window.removeEventListener("resize", check);
   }, []);
 
@@ -126,8 +120,7 @@ export default function HomeClient() {
               style={{ position: "absolute" }}
             >
               <TubeTv
-                videoSrc={isIOS ? HYPE_VIDEO_SILENT : HYPE_VIDEO_AUDIO}
-                muted={isIOS}
+                videoSrc={HYPE_VIDEO}
                 onExplodeStart={handleExplodeStart}
                 onComplete={handleTvDone}
               />

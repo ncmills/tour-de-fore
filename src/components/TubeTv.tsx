@@ -5,14 +5,16 @@ import { useRef, useState, useCallback, useEffect } from "react";
 
 interface TubeTvProps {
   videoSrc: string;
-  muted?: boolean;
   onExplodeStart: () => void;
   onComplete: () => void;
 }
 
 type TvPhase = "playing" | "ejecting" | "exploding";
 
-export default function TubeTv({ videoSrc, muted = true, onExplodeStart, onComplete }: TubeTvProps) {
+export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvProps) {
+  const isIOS = typeof navigator !== "undefined" &&
+    (/iPad|iPhone|iPod/.test(navigator.userAgent) ||
+     (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1));
   const screenRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [tvPhase, setTvPhase] = useState<TvPhase>("playing");
@@ -43,8 +45,7 @@ export default function TubeTv({ videoSrc, muted = true, onExplodeStart, onCompl
     if (!container) return;
 
     const v = document.createElement("video");
-    // Must start muted for autoplay to work in all browsers,
-    // then unmute immediately after play() resolves (desktop only)
+    // Always start muted so autoplay is allowed, then unmute on desktop
     v.muted = true;
     v.setAttribute("muted", "");
     v.setAttribute("autoplay", "");
@@ -60,7 +61,7 @@ export default function TubeTv({ videoSrc, muted = true, onExplodeStart, onCompl
     videoRef.current = v;
     container.appendChild(v);
     v.play().then(() => {
-      if (!muted) v.muted = false; // unmute once playing on desktop
+      if (!isIOS) v.muted = false; // unmute after autoplay confirmed on desktop
     }).catch(() => {});
 
     return () => {
