@@ -36,7 +36,13 @@ export default function HomeClient() {
   useEffect(() => {
     const v = bgVideoRef.current;
     if (!v) return;
+    // iOS requires muted set BEFORE src is loaded
     v.muted = true;
+    v.setAttribute("muted", "");
+    v.setAttribute("playsinline", "");
+    v.setAttribute("loop", "");
+    v.src = VIDEO_HD;
+    v.load();
     v.play().catch(() => {});
   }, []);
 
@@ -79,16 +85,12 @@ export default function HomeClient() {
         transition={{ duration: 1.8, delay: phase === "done" ? 0.4 : 0 }}
         style={{ position: "absolute", inset: 0 }}
       >
+        {/* src set in useEffect so muted is forced before load (iOS fix) */}
         <video
-          ref={(el) => {
-            (bgVideoRef as React.MutableRefObject<HTMLVideoElement | null>).current = el;
-            if (el) { el.setAttribute("muted", ""); el.muted = true; }
-          }}
+          ref={bgVideoRef}
           autoPlay muted loop playsInline
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
-        >
-          <source src={VIDEO_HD} type="video/mp4" />
-        </video>
+        />
         <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.45)" }} />
       </motion.div>
 

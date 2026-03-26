@@ -19,9 +19,14 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
+    // iOS requires muted set BEFORE src is loaded
     v.muted = true;
+    v.setAttribute("muted", "");
+    v.setAttribute("playsinline", "");
+    v.src = videoSrc;
+    v.load();
     v.play().catch(() => {});
-  }, []);
+  }, [videoSrc]);
 
   const trigger = useCallback(() => {
     if (triggered.current) return;
@@ -102,13 +107,9 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
                 "inset 0 0 40px rgba(0,0,0,0.4)",
               ].join(", "),
             }}>
-              {/* Video */}
+              {/* Video — src set in useEffect so muted is forced before load (iOS fix) */}
               <video
-                ref={(el) => {
-                  (videoRef as React.MutableRefObject<HTMLVideoElement | null>).current = el;
-                  if (el) { el.setAttribute("muted", ""); el.muted = true; }
-                }}
-                src={videoSrc}
+                ref={videoRef}
                 autoPlay
                 muted
                 playsInline
