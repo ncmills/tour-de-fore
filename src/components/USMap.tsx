@@ -21,8 +21,9 @@ const tripLocations: {
   { year: 2026, city: "Kohler", state: "Wisconsin", slug: "2026", upcoming: true, x: 560, y: 195 },
 ];
 
-export default function USMap({ compact }: { compact?: boolean }) {
+export default function USMap({ compact, singleTrip }: { compact?: boolean; singleTrip?: number }) {
   const [hovered, setHovered] = useState<number | null>(null);
+  const highlightedTrip = singleTrip ? tripLocations.find((l) => l.year === singleTrip) : null;
 
   return (
     <div className="relative w-full max-w-3xl mx-auto">
@@ -46,8 +47,42 @@ export default function USMap({ compact }: { compact?: boolean }) {
         <line x1="115" y1="250" x2="855" y2="250" stroke="rgba(234, 88, 12, 0.06)" strokeWidth="0.5" />
         <line x1="115" y1="350" x2="830" y2="350" stroke="rgba(234, 88, 12, 0.06)" strokeWidth="0.5" />
 
+        {/* Single-trip highlight — large red glow */}
+        {highlightedTrip && (
+          <>
+            <motion.circle
+              cx={highlightedTrip.x}
+              cy={highlightedTrip.y}
+              r="60"
+              fill="rgba(220,38,38,0.12)"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+            />
+            <motion.circle
+              cx={highlightedTrip.x}
+              cy={highlightedTrip.y}
+              r="35"
+              fill="rgba(220,38,38,0.2)"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            />
+            <motion.circle
+              cx={highlightedTrip.x}
+              cy={highlightedTrip.y}
+              r="45"
+              fill="none"
+              stroke="rgba(220,38,38,0.4)"
+              strokeWidth="1.5"
+              animate={{ r: [35, 55, 35], opacity: [0.6, 0, 0.6] }}
+              transition={{ duration: 3, repeat: Infinity }}
+            />
+          </>
+        )}
+
         {/* Connection lines */}
-        {tripLocations.slice(0, -1).map((loc, i) => {
+        {!singleTrip && tripLocations.slice(0, -1).map((loc, i) => {
           const next = tripLocations[i + 1];
           return (
             <motion.line
@@ -68,7 +103,7 @@ export default function USMap({ compact }: { compact?: boolean }) {
         })}
 
         {/* Trip location markers */}
-        {tripLocations.map((loc, i) => (
+        {(singleTrip ? tripLocations.filter((l) => l.year === singleTrip) : tripLocations).map((loc, i) => (
           <g key={loc.year}>
             {loc.upcoming && !compact && (
               <motion.circle
@@ -97,8 +132,8 @@ export default function USMap({ compact }: { compact?: boolean }) {
             <motion.circle
               cx={loc.x}
               cy={loc.y}
-              r={!compact && hovered === loc.year ? 8 : 5}
-              fill={loc.upcoming ? "#EA580C" : "#D4A843"}
+              r={singleTrip ? 10 : (!compact && hovered === loc.year ? 8 : 5)}
+              fill={singleTrip ? "#DC2626" : loc.upcoming ? "#EA580C" : "#D4A843"}
               className={compact ? "" : "cursor-pointer"}
               onMouseEnter={() => !compact && setHovered(loc.year)}
               onMouseLeave={() => !compact && setHovered(null)}

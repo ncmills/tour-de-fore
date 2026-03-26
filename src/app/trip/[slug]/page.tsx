@@ -1,8 +1,10 @@
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { trips, getTripBySlug } from "@/lib/trips";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import TripPageClient from "@/components/TripPageClient";
+import PastTripDetailClient from "@/components/PastTripDetailClient";
 
 export function generateStaticParams() {
   return trips.map((trip) => ({ slug: trip.slug }));
@@ -22,6 +24,15 @@ export default async function TripPage({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const trip = getTripBySlug(slug);
   if (!trip) notFound();
+
+  // 2026 (Live Trip) uses the new devil-themed layout
+  if (trip.upcoming) {
+    return (
+      <Suspense>
+        <PastTripDetailClient trip={trip} isLive />
+      </Suspense>
+    );
+  }
 
   const currentIndex = trips.findIndex((t) => t.slug === slug);
   const prevTrip = currentIndex < trips.length - 1 ? trips[currentIndex + 1] : null;

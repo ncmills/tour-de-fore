@@ -102,10 +102,20 @@ export default function HomeClient() {
   const handleExplodeStart = useCallback(() => {}, []);
 
   const handleTvDone = useCallback(() => {
-    setLogoVisible(true);
     setPhase("done");
-    setTimeout(() => setShowLinks(true), 2500);
   }, []);
+
+  // Show logo only after text exit animation completes (triggered by onExitComplete)
+  const handleTextExitComplete = useCallback(() => {
+    setLogoVisible(true);
+  }, []);
+
+  // Show links after logo becomes visible
+  useEffect(() => {
+    if (!logoVisible) return;
+    const t = setTimeout(() => setShowLinks(true), 2500);
+    return () => clearTimeout(t);
+  }, [logoVisible]);
 
   return (
     <main style={{ height: "100vh", overflow: "hidden", position: "relative", background: "#000" }}>
@@ -154,7 +164,7 @@ export default function HomeClient() {
         </AnimatePresence>
 
         {/* Text lines — shown during text + tv phases */}
-        <AnimatePresence>
+        <AnimatePresence onExitComplete={handleTextExitComplete}>
           {!showLinks && phase !== "done" && (
             <motion.div
               key="text"
@@ -230,7 +240,7 @@ export default function HomeClient() {
             width={4504}
             height={3776}
             priority
-            style={{ width: "clamp(200px, 22vw, 340px)", height: "auto", filter: "brightness(0)" }}
+            style={{ width: isMobile ? "clamp(150px, 45vw, 220px)" : "clamp(200px, 22vw, 340px)", height: "auto", filter: "brightness(0)" }}
           />
         </motion.div>
       </div>
@@ -248,11 +258,12 @@ export default function HomeClient() {
               inset: 0,
               zIndex: 20,
               display: "flex",
-              flexWrap: "wrap",
+              flexDirection: isMobile ? "column" : "row",
+              flexWrap: isMobile ? "nowrap" : "wrap",
               alignItems: "center",
               justifyContent: "center",
-              gap: "1rem 2.5rem",
-              paddingTop: "clamp(300px, 42vh, 400px)",
+              gap: isMobile ? "0.8rem" : "1rem 2.5rem",
+              paddingTop: isMobile ? "clamp(240px, 50vh, 360px)" : "clamp(300px, 42vh, 400px)",
               paddingLeft: "1.5rem",
               paddingRight: "1.5rem",
             }}
@@ -268,7 +279,7 @@ export default function HomeClient() {
                 href={href}
                 style={{
                   fontFamily: "var(--font-script), cursive",
-                  fontSize: "clamp(1.8rem, 3.5vw, 3.5rem)",
+                  fontSize: isMobile ? "clamp(1.4rem, 6vw, 2rem)" : "clamp(1.8rem, 3.5vw, 3.5rem)",
                   color: "rgba(255,255,255,0.7)",
                   textDecoration: "none",
                   transition: "color 0.2s",

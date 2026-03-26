@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useCallback, useRef, useEffect } from "react";
 import { trips } from "@/lib/trips";
+import FireBackground from "./FireBackground";
 
 const PAST_TRIPS_VIDEO = "/past-trips-hype.mp4";
 
@@ -19,8 +20,16 @@ const YEAR_HERO: Record<number, string> = {
 export default function PastTripsClient() {
   const past = trips.filter((t) => !t.upcoming).sort((a, b) => b.year - a.year);
   const [isMuted, setIsMuted] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const screenRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 640);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   const toggleMute = useCallback(() => {
     const v = videoRef.current;
@@ -58,6 +67,8 @@ export default function PastTripsClient() {
         fontFamily: "var(--font-space-grotesk), sans-serif",
       }}
     >
+      <FireBackground />
+
       {/* Back link */}
       <div style={{ position: "fixed", top: "1.2rem", left: "clamp(1.5rem, 6vw, 6rem)", zIndex: 500 }}>
         <Link
@@ -177,8 +188,8 @@ export default function PastTripsClient() {
               paddingTop: "3rem",
               paddingBottom: "3rem",
               display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "clamp(2rem, 5vw, 5rem)",
+              gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+              gap: isMobile ? "1.5rem" : "clamp(2rem, 5vw, 5rem)",
               alignItems: "center",
             }}
           >
@@ -191,7 +202,7 @@ export default function PastTripsClient() {
                 position: "relative",
                 borderRadius: "4px",
                 overflow: "hidden",
-                order: i % 2 === 0 ? 0 : 1,
+                order: isMobile ? 0 : (i % 2 === 0 ? 0 : 1),
                 cursor: "pointer",
               }}
             >
@@ -206,7 +217,7 @@ export default function PastTripsClient() {
               />
             </Link>
 
-            <div className="trip-text" style={{ order: i % 2 === 0 ? 1 : 0 }}>
+            <div className="trip-text" style={{ order: isMobile ? 1 : (i % 2 === 0 ? 1 : 0) }}>
               <p style={{ fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: "0.8rem" }}>
                 {trip.dates}
               </p>
