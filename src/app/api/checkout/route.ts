@@ -3,7 +3,7 @@ import Stripe from "stripe";
 
 // TODO: Add STRIPE_SECRET_KEY to your .env.local file
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "sk_test_placeholder", {
-  apiVersion: "2025-01-27.acacia",
+  apiVersion: "2026-02-25.clover",
 });
 
 export interface CartItem {
