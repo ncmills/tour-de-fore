@@ -240,10 +240,15 @@ export default function HomeClient() {
               paddingTop: "2in",
             }}
           >
-            {["Shop", "Past Trips", "Plan a Trip"].map((label) => (
+            {[
+              { label: "Shop", href: "/shop" },
+              { label: "Past Trips", href: "/past-trips" },
+              { label: "Live Trip", href: "/trip/2026" },
+              { label: "Plan a Trip", href: "/plan-a-trip" },
+            ].map(({ label, href }) => (
               <Link
                 key={label}
-                href={`/${label.toLowerCase().replace(/ /g, "-")}`}
+                href={href}
                 style={{
                   fontFamily: "var(--font-script), cursive",
                   fontSize: "clamp(1.8rem, 3.5vw, 3.5rem)",
