@@ -8,7 +8,7 @@ import { useSearchParams } from "next/navigation";
 import TubeTv from "./TubeTv";
 
 const VIDEO_HD = "/bg.mp4";
-const HYPE_VIDEO = "/hype-silent.mov";
+const HYPE_VIDEO = "/hype.mp4";
 
 const textStyle: React.CSSProperties = {
   fontFamily: "var(--font-script), cursive",
@@ -79,7 +79,12 @@ export default function HomeClient() {
         transition={{ duration: 1.8, delay: phase === "done" ? 0.4 : 0 }}
         style={{ position: "absolute", inset: 0 }}
       >
-        <video ref={bgVideoRef} autoPlay muted loop playsInline
+        <video
+          ref={(el) => {
+            (bgVideoRef as React.MutableRefObject<HTMLVideoElement | null>).current = el;
+            if (el) { el.setAttribute("muted", ""); el.muted = true; }
+          }}
+          autoPlay muted loop playsInline
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
         >
           <source src={VIDEO_HD} type="video/mp4" />

@@ -104,7 +104,10 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
             }}>
               {/* Video */}
               <video
-                ref={videoRef}
+                ref={(el) => {
+                  (videoRef as React.MutableRefObject<HTMLVideoElement | null>).current = el;
+                  if (el) { el.setAttribute("muted", ""); el.muted = true; }
+                }}
                 src={videoSrc}
                 autoPlay
                 muted
