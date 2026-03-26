@@ -22,34 +22,79 @@ const textStyle: React.CSSProperties = {
 
 type Phase = "text" | "tv" | "done";
 
-function scheduleChirp(ctx: AudioContext) {
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
-  const baseFreq = 2200 + Math.random() * 1800;
-  osc.type = "sine";
-  osc.frequency.setValueAtTime(baseFreq, ctx.currentTime);
-  osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.6, ctx.currentTime + 0.07);
-  osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.85, ctx.currentTime + 0.18);
-  gain.gain.setValueAtTime(0, ctx.currentTime);
-  gain.gain.linearRampToValueAtTime(0.045, ctx.currentTime + 0.02);
-  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.22);
-  osc.connect(gain);
-  gain.connect(ctx.destination);
-  osc.start();
-  osc.stop(ctx.currentTime + 0.25);
-  const next = 3500 + Math.random() * 9000;
-  setTimeout(() => { if (ctx.state !== "closed") scheduleChirp(ctx); }, next);
+// FM chirp presets — different "species"
+const CHIRP_PRESETS = [
+  { carrier: 3200, fmFreq: 35, fmDepth: 400, attack: 0.02, decay: 0.12, vol: 0.28 },
+  { carrier: 4400, fmFreq: 55, fmDepth: 600, attack: 0.01, decay: 0.08, vol: 0.22 },
+  { carrier: 2800, fmFreq: 25, fmDepth: 300, attack: 0.03, decay: 0.18, vol: 0.32 },
+  { carrier: 5100, fmFreq: 70, fmDepth: 700, attack: 0.01, decay: 0.06, vol: 0.18 },
+  { carrier: 3800, fmFreq: 42, fmDepth: 500, attack: 0.02, decay: 0.14, vol: 0.26 },
+];
+
+function triggerChirp(ctx: AudioContext, masterGain: GainNode) {
+  const t = ctx.currentTime;
+  const p = CHIRP_PRESETS[Math.floor(Math.random() * CHIRP_PRESETS.length)];
+  const pitch = 0.85 + Math.random() * 0.3;
+
+  const modulator = ctx.createOscillator();
+  modulator.type = "sine";
+  modulator.frequency.value = p.fmFreq * (0.9 + Math.random() * 0.2);
+  const modGain = ctx.createGain();
+  modGain.gain.value = p.fmDepth;
+
+  const carrier = ctx.createOscillator();
+  carrier.type = "sine";
+  carrier.frequency.value = p.carrier * pitch;
+
+  const ampEnv = ctx.createGain();
+  ampEnv.gain.setValueAtTime(0, t);
+  ampEnv.gain.linearRampToValueAtTime(p.vol, t + p.attack);
+  ampEnv.gain.exponentialRampToValueAtTime(0.0001, t + p.attack + p.decay);
+
+  modulator.connect(modGain);
+  modGain.connect(carrier.frequency);
+  carrier.connect(ampEnv);
+  ampEnv.connect(masterGain);
+
+  const dur = p.attack + p.decay + 0.05;
+  modulator.start(t); modulator.stop(t + dur);
+  carrier.start(t); carrier.stop(t + dur);
 }
 
-function initAmbientAudio(): AudioContext {
-  const ctx = new AudioContext();
+function scheduleBirds(ctx: AudioContext, masterGain: GainNode, stop: { stopped: boolean }) {
+  function next() {
+    if (stop.stopped || ctx.state === "closed") return;
+    const delay = 2500 + Math.random() * 6000;
+    setTimeout(() => {
+      if (stop.stopped || ctx.state === "closed") return;
+      triggerChirp(ctx, masterGain);
+      // 25% chance of a quick double-chirp
+      if (Math.random() < 0.25) {
+        setTimeout(() => {
+          if (!stop.stopped && ctx.state !== "closed") triggerChirp(ctx, masterGain);
+        }, 150 + Math.random() * 100);
+      }
+      next();
+    }, delay);
+  }
+  setTimeout(next, 1500 + Math.random() * 2000);
+}
 
-  // Brown noise (wind) — random buffer filtered low
-  const bufferSize = 2 * ctx.sampleRate;
-  const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+function initAmbientAudio(): { ctx: AudioContext; stop: { stopped: boolean } } {
+  // webkitAudioContext fallback for older Safari
+  const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+  const ctx = new AudioCtx();
+
+  const masterGain = ctx.createGain();
+  masterGain.gain.value = 0.8;
+  masterGain.connect(ctx.destination);
+
+  // Brown noise buffer (2 seconds, looped)
+  const bufSize = ctx.sampleRate * 2;
+  const buffer = ctx.createBuffer(1, bufSize, ctx.sampleRate);
   const data = buffer.getChannelData(0);
   let lastOut = 0;
-  for (let i = 0; i < bufferSize; i++) {
+  for (let i = 0; i < bufSize; i++) {
     const white = Math.random() * 2 - 1;
     data[i] = (lastOut + 0.02 * white) / 1.02;
     lastOut = data[i];
@@ -58,20 +103,34 @@ function initAmbientAudio(): AudioContext {
   const windSrc = ctx.createBufferSource();
   windSrc.buffer = buffer;
   windSrc.loop = true;
-  const lpf = ctx.createBiquadFilter();
-  lpf.type = "lowpass";
-  lpf.frequency.value = 350;
+
+  // Bandpass filter shaped like wind, modulated by slow LFO for gusting
+  const bpf = ctx.createBiquadFilter();
+  bpf.type = "bandpass";
+  bpf.frequency.value = 400;
+  bpf.Q.value = 0.8;
+
+  const lfo = ctx.createOscillator();
+  lfo.type = "sine";
+  lfo.frequency.value = 0.08; // one gust cycle ~12 seconds
+  const lfoGain = ctx.createGain();
+  lfoGain.gain.value = 180; // sweeps filter ±180 Hz
+  lfo.connect(lfoGain);
+  lfoGain.connect(bpf.frequency);
+  lfo.start();
+
   const windGain = ctx.createGain();
-  windGain.gain.value = 0.18;
-  windSrc.connect(lpf);
-  lpf.connect(windGain);
-  windGain.connect(ctx.destination);
+  windGain.gain.value = 0.22;
+  windSrc.connect(bpf);
+  bpf.connect(windGain);
+  windGain.connect(masterGain);
   windSrc.start();
 
-  // Bird chirps
-  setTimeout(() => { if (ctx.state !== "closed") scheduleChirp(ctx); }, 1500 + Math.random() * 2500);
+  // Birds
+  const stop = { stopped: false };
+  scheduleBirds(ctx, masterGain, stop);
 
-  return ctx;
+  return { ctx, stop };
 }
 
 export default function HomeClient() {
@@ -86,6 +145,7 @@ export default function HomeClient() {
   const [ambientOn, setAmbientOn] = useState(false);
   const bgVideoRef = useRef<HTMLVideoElement>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
+  const stopBirdsRef = useRef<{ stopped: boolean }>({ stopped: true });
 
   useEffect(() => {
     const container = bgVideoRef.current as unknown as HTMLDivElement;
@@ -129,23 +189,32 @@ export default function HomeClient() {
     return () => clearTimeout(t);
   }, [logoVisible, logoUninverted]);
 
-  const toggleAmbient = useCallback(() => {
+  const toggleAmbient = useCallback(async () => {
     if (!ambientOn) {
       if (!audioCtxRef.current) {
-        audioCtxRef.current = initAmbientAudio();
-      } else {
-        audioCtxRef.current.resume();
+        const { ctx, stop } = initAmbientAudio();
+        audioCtxRef.current = ctx;
+        stopBirdsRef.current = stop;
       }
+      // Chrome may create AudioContext in suspended state — must resume inside user gesture
+      if (audioCtxRef.current.state === "suspended") {
+        await audioCtxRef.current.resume();
+      }
+      stopBirdsRef.current.stopped = false;
       setAmbientOn(true);
     } else {
-      audioCtxRef.current?.suspend();
+      await audioCtxRef.current?.suspend();
+      stopBirdsRef.current.stopped = true;
       setAmbientOn(false);
     }
   }, [ambientOn]);
 
   // Cleanup audio on unmount
   useEffect(() => {
-    return () => { audioCtxRef.current?.close(); };
+    return () => {
+      stopBirdsRef.current.stopped = true;
+      audioCtxRef.current?.close();
+    };
   }, []);
 
   const handleExplodeStart = useCallback(() => {}, []);
@@ -311,7 +380,7 @@ export default function HomeClient() {
         )}
       </AnimatePresence>
 
-      {/* ── Ambient sound toggle (fixed top-left, always in DOM when done) ── */}
+      {/* ── Ambient sound toggle — always in DOM, visible only when done ── */}
       <button
         onClick={toggleAmbient}
         title={ambientOn ? "Mute ambient sound" : "Play ambient sound"}
@@ -325,12 +394,15 @@ export default function HomeClient() {
           borderRadius: "50%",
           width: 48,
           height: 48,
-          display: phase === "done" ? "flex" : "none",
+          display: "flex",
           alignItems: "center",
           justifyContent: "center",
           cursor: "pointer",
           color: "#fff",
           backdropFilter: "blur(8px)",
+          opacity: phase === "done" ? 1 : 0,
+          pointerEvents: phase === "done" ? "auto" : "none",
+          transition: "opacity 1s ease",
         }}
       >
         {ambientOn ? (
