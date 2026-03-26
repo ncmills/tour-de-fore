@@ -43,11 +43,10 @@ export default function TubeTv({ videoSrc, muted = true, onExplodeStart, onCompl
     if (!container) return;
 
     const v = document.createElement("video");
-    // On iOS muted must be set BEFORE src; on desktop we allow audio
-    if (muted) {
-      v.muted = true;
-      v.setAttribute("muted", "");
-    }
+    // Must start muted for autoplay to work in all browsers,
+    // then unmute immediately after play() resolves (desktop only)
+    v.muted = true;
+    v.setAttribute("muted", "");
     v.setAttribute("autoplay", "");
     v.setAttribute("playsinline", "");
     v.autoplay = true;
@@ -60,7 +59,9 @@ export default function TubeTv({ videoSrc, muted = true, onExplodeStart, onCompl
 
     videoRef.current = v;
     container.appendChild(v);
-    v.play().catch(() => {});
+    v.play().then(() => {
+      if (!muted) v.muted = false; // unmute once playing on desktop
+    }).catch(() => {});
 
     return () => {
       v.removeEventListener("ended", trigger);
