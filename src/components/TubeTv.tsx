@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "motion/react";
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 
 interface TubeTvProps {
   videoSrc: string;
@@ -15,6 +15,13 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
   const videoRef = useRef<HTMLVideoElement>(null);
   const [tvPhase, setTvPhase] = useState<TvPhase>("playing");
   const triggered = useRef(false);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = true;
+    v.play().catch(() => {});
+  }, []);
 
   const trigger = useCallback(() => {
     if (triggered.current) return;
