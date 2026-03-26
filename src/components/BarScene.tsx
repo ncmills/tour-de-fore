@@ -6,15 +6,20 @@ import { motion, AnimatePresence } from "motion/react";
 interface Props {
   onShop: () => void;
   onDrink: () => void;
+  isDrunk?: boolean;
 }
 
-export default function BarScene({ onShop, onDrink }: Props) {
-  const [phase, setPhase] = useState<"arrive" | "bubbles" | "drinking" | "drunk" | "shopping">("arrive");
+export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
+  // If already drunk (coming back from shop), skip straight to drunk phase with shop bubble
+  const [phase, setPhase] = useState<"arrive" | "bubbles" | "drinking" | "drunk" | "shopping">(
+    isDrunk ? "drunk" : "arrive"
+  );
 
   useEffect(() => {
+    if (isDrunk) return; // skip intro if already drunk
     const t = setTimeout(() => setPhase("bubbles"), 1600);
     return () => clearTimeout(t);
-  }, []);
+  }, [isDrunk]);
 
   const handleDrink = () => {
     setPhase("drinking");
