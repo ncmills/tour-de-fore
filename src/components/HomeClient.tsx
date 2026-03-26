@@ -7,9 +7,8 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import TubeTv from "./TubeTv";
 
-const VIDEO_HD =
-  "https://videos.pexels.com/video-files/4784177/4784177-hd_1920_1080_30fps.mp4";
-const HYPE_VIDEO = "/hype.mov";
+const VIDEO_HD = "/bg.mp4";
+const HYPE_VIDEO = "/hype-silent.mov";
 
 const textStyle: React.CSSProperties = {
   fontFamily: "var(--font-script), cursive",
