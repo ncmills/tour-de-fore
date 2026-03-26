@@ -240,9 +240,9 @@ export default function PlanWizardClient() {
         throw new Error(data.error || "Failed to generate plan");
       }
 
-      await res.json();
+      const data = await res.json();
       setConfirmed(true);
-      setTimeout(() => { window.location.href = "/?skip=1"; }, 3000);
+      setTimeout(() => { window.location.href = `/plan/result/${data.planId}`; }, 3000);
     } catch (err) {
       // Show error inside the overlay — never drop back to the wizard
       setOverlayError(err instanceof Error ? err.message : "Something went wrong. Try again.");
