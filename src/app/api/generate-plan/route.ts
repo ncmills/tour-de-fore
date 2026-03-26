@@ -8,17 +8,9 @@ export async function POST(req: NextRequest) {
   try {
     const state: WizardState = await req.json();
 
-    // Validate minimum attendees
-    const filledAttendees = state.attendees.filter(
-      (a) => a.name && a.email
-    );
-    const totalFilled =
-      (state.organizerName && state.organizerEmail ? 1 : 0) +
-      filledAttendees.length;
-
-    if (totalFilled < 8) {
+    if (!state.organizerName || !state.organizerEmail) {
       return NextResponse.json(
-        { error: "Minimum 8 attendees required" },
+        { error: "Organizer name and email are required" },
         { status: 400 }
       );
     }
@@ -61,12 +53,8 @@ export async function POST(req: NextRequest) {
 
     await storePlan(storedPlan);
 
-    // Store attendees separately
-    const allAttendees = [
-      { name: state.organizerName, email: state.organizerEmail },
-      ...filledAttendees,
-    ];
-    await storeAttendees(planId, allAttendees);
+    // Store organizer
+    await storeAttendees(planId, [{ name: state.organizerName, email: state.organizerEmail }]);
 
     return NextResponse.json({ planId, plan });
   } catch (err) {
