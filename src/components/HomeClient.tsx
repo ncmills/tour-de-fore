@@ -22,6 +22,58 @@ const textStyle: React.CSSProperties = {
 
 type Phase = "text" | "tv" | "done";
 
+function scheduleChirp(ctx: AudioContext) {
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  const baseFreq = 2200 + Math.random() * 1800;
+  osc.type = "sine";
+  osc.frequency.setValueAtTime(baseFreq, ctx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.6, ctx.currentTime + 0.07);
+  osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.85, ctx.currentTime + 0.18);
+  gain.gain.setValueAtTime(0, ctx.currentTime);
+  gain.gain.linearRampToValueAtTime(0.045, ctx.currentTime + 0.02);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.22);
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.start();
+  osc.stop(ctx.currentTime + 0.25);
+  const next = 3500 + Math.random() * 9000;
+  setTimeout(() => { if (ctx.state !== "closed") scheduleChirp(ctx); }, next);
+}
+
+function initAmbientAudio(): AudioContext {
+  const ctx = new AudioContext();
+
+  // Brown noise (wind) — random buffer filtered low
+  const bufferSize = 2 * ctx.sampleRate;
+  const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+  const data = buffer.getChannelData(0);
+  let lastOut = 0;
+  for (let i = 0; i < bufferSize; i++) {
+    const white = Math.random() * 2 - 1;
+    data[i] = (lastOut + 0.02 * white) / 1.02;
+    lastOut = data[i];
+    data[i] *= 3.5;
+  }
+  const windSrc = ctx.createBufferSource();
+  windSrc.buffer = buffer;
+  windSrc.loop = true;
+  const lpf = ctx.createBiquadFilter();
+  lpf.type = "lowpass";
+  lpf.frequency.value = 350;
+  const windGain = ctx.createGain();
+  windGain.gain.value = 0.18;
+  windSrc.connect(lpf);
+  lpf.connect(windGain);
+  windGain.connect(ctx.destination);
+  windSrc.start();
+
+  // Bird chirps
+  setTimeout(() => { if (ctx.state !== "closed") scheduleChirp(ctx); }, 1500 + Math.random() * 2500);
+
+  return ctx;
+}
+
 export default function HomeClient() {
   const params = useSearchParams();
   const skip = params.get("skip") === "1";
@@ -31,7 +83,9 @@ export default function HomeClient() {
   const [logoVisible, setLogoVisible] = useState(skip);
   const [logoUninverted, setLogoUninverted] = useState(skip);
   const [isMobile, setIsMobile] = useState(false);
+  const [ambientOn, setAmbientOn] = useState(false);
   const bgVideoRef = useRef<HTMLVideoElement>(null);
+  const audioCtxRef = useRef<AudioContext | null>(null);
 
   useEffect(() => {
     const container = bgVideoRef.current as unknown as HTMLDivElement;
@@ -74,6 +128,25 @@ export default function HomeClient() {
     const t = setTimeout(() => setLogoUninverted(true), 600);
     return () => clearTimeout(t);
   }, [logoVisible, logoUninverted]);
+
+  const toggleAmbient = useCallback(() => {
+    if (!ambientOn) {
+      if (!audioCtxRef.current) {
+        audioCtxRef.current = initAmbientAudio();
+      } else {
+        audioCtxRef.current.resume();
+      }
+      setAmbientOn(true);
+    } else {
+      audioCtxRef.current?.suspend();
+      setAmbientOn(false);
+    }
+  }, [ambientOn]);
+
+  // Cleanup audio on unmount
+  useEffect(() => {
+    return () => { audioCtxRef.current?.close(); };
+  }, []);
 
   const handleExplodeStart = useCallback(() => {}, []);
 
@@ -235,6 +308,63 @@ export default function HomeClient() {
               </Link>
             ))}
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── Ambient sound toggle (bottom-right, appears when done) ── */}
+      <AnimatePresence>
+        {phase === "done" && (
+          <motion.button
+            key="ambient"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8 }}
+            onClick={toggleAmbient}
+            title={ambientOn ? "Mute ambient sound" : "Play ambient sound"}
+            style={{
+              position: "absolute",
+              top: "1.2rem",
+              left: "1.4rem",
+              zIndex: 30,
+              background: "rgba(255,255,255,0.2)",
+              border: "1px solid rgba(255,255,255,0.5)",
+              borderRadius: "50%",
+              width: 44,
+              height: 44,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              color: "rgba(255,255,255,0.9)",
+              backdropFilter: "blur(6px)",
+              transition: "background 0.2s, color 0.2s",
+            }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.35)";
+              (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,1)";
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.2)";
+              (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.9)";
+            }}
+          >
+            {ambientOn ? (
+              // Speaker with waves
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+              </svg>
+            ) : (
+              // Speaker muted (X)
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                <line x1="23" y1="9" x2="17" y2="15"/>
+                <line x1="17" y1="9" x2="23" y2="15"/>
+              </svg>
+            )}
+          </motion.button>
         )}
       </AnimatePresence>
 
