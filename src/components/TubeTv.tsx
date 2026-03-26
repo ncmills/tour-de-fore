@@ -5,13 +5,14 @@ import { useRef, useState, useCallback, useEffect } from "react";
 
 interface TubeTvProps {
   videoSrc: string;
+  muted?: boolean;
   onExplodeStart: () => void;
   onComplete: () => void;
 }
 
 type TvPhase = "playing" | "ejecting" | "exploding";
 
-export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvProps) {
+export default function TubeTv({ videoSrc, muted = true, onExplodeStart, onComplete }: TubeTvProps) {
   const screenRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [tvPhase, setTvPhase] = useState<TvPhase>("playing");
@@ -42,9 +43,11 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
     if (!container) return;
 
     const v = document.createElement("video");
-    // CRITICAL: set muted BEFORE assigning src
-    v.muted = true;
-    v.setAttribute("muted", "");
+    // On iOS muted must be set BEFORE src; on desktop we allow audio
+    if (muted) {
+      v.muted = true;
+      v.setAttribute("muted", "");
+    }
     v.setAttribute("autoplay", "");
     v.setAttribute("playsinline", "");
     v.autoplay = true;
