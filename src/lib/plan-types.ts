@@ -72,9 +72,22 @@ export const initialWizardState: WizardState = {
   attendees: Array.from({ length: 7 }, () => ({ name: "", email: "" })),
 };
 
+// ── Tier Types ──
+
+export type TripTier = "imp" | "devil" | "demon-king";
+
 // ── Generated Plan Types ──
 
+export interface SectionAlternative {
+  name: string;
+  description: string;
+  costDelta: string; // e.g. "+$75/person" or "-$50/person"
+  direction: "upgrade" | "downgrade";
+}
+
 export interface GeneratedPlan {
+  tierName: string; // "The Imp", "The Devil", "The Demon King"
+  tierTagline: string;
   tripName: string;
   tagline: string;
   destination: string;
@@ -85,23 +98,30 @@ export interface GeneratedPlan {
     perPerson: string;
     breakdown: BudgetItem[];
   };
-  lodging: {
-    name: string;
-    type: string;
-    address: string;
-    costPerNight: string;
-    rationale: string;
-    url?: string;
-  };
+  lodging: PlanLodging;
+  lodgingAlternatives?: SectionAlternative[];
   courses: PlanCourse[];
+  courseAlternatives?: SectionAlternative[];
   schedule: PlanDay[];
   dining: PlanDining[];
+  diningAlternatives?: SectionAlternative[];
+  bars: PlanBar[];
   proTips: string[];
   groupLogistics: {
     teeTimeStrategy: string;
     transport: string;
     packingList: string[];
   };
+}
+
+export interface PlanLodging {
+  name: string;
+  type: string;
+  address: string;
+  costPerNight: string;
+  rationale: string;
+  url?: string;
+  imageSearch?: string; // search term for finding an image
 }
 
 export interface BudgetItem {
@@ -116,6 +136,7 @@ export interface PlanCourse {
   greenFee: string;
   whyThisCourse: string;
   url?: string;
+  imageSearch?: string;
 }
 
 export interface PlanDay {
@@ -138,13 +159,29 @@ export interface PlanDining {
   description: string;
   priceRange: string;
   url?: string;
+  imageSearch?: string;
+}
+
+export interface PlanBar {
+  name: string;
+  vibe: string;
+  description: string;
+  url?: string;
+}
+
+// ── Three-Tier Result ──
+
+export interface ThreePlanResult {
+  imp: GeneratedPlan;
+  devil: GeneratedPlan;
+  demonKing: GeneratedPlan;
 }
 
 // ── Storage Types ──
 
 export interface StoredPlan {
   id: string;
-  plan: GeneratedPlan;
+  plans: ThreePlanResult;
   inputs: WizardState;
   createdAt: string;
   emailsSent: boolean;

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
-import { WizardState, GeneratedPlan, StoredPlan } from "@/lib/plan-types";
+import { WizardState, ThreePlanResult, StoredPlan } from "@/lib/plan-types";
 import { storePlan, storeAttendees } from "@/lib/kv";
 import { buildSystemPrompt, buildUserMessage, getDestinationContext } from "@/lib/planner-prompt";
 
@@ -18,11 +18,11 @@ export async function POST(req: NextRequest) {
     // Build destination context from database
     const destinationContext = getDestinationContext(state);
 
-    // Call Claude with real destination data
+    // Call Claude with real destination data — generates 3 tier plans
     const client = new Anthropic();
     const message = await client.messages.create({
       model: "claude-sonnet-4-20250514",
-      max_tokens: 8192,
+      max_tokens: 16384,
       system: buildSystemPrompt(destinationContext),
       messages: [{ role: "user", content: buildUserMessage(state) }],
     });
@@ -39,13 +39,13 @@ export async function POST(req: NextRequest) {
       jsonStr = jsonStr.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "");
     }
 
-    const plan: GeneratedPlan = JSON.parse(jsonStr);
+    const plans: ThreePlanResult = JSON.parse(jsonStr);
 
-    // Store plan
+    // Store plans
     const planId = crypto.randomUUID();
     const storedPlan: StoredPlan = {
       id: planId,
-      plan,
+      plans,
       inputs: state,
       createdAt: new Date().toISOString(),
       emailsSent: false,
@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
     // Store organizer
     await storeAttendees(planId, [{ name: state.organizerName, email: state.organizerEmail }]);
 
-    return NextResponse.json({ planId, plan });
+    return NextResponse.json({ planId, plans });
   } catch (err) {
     console.error("Plan generation error:", err);
     return NextResponse.json(

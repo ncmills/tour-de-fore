@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Inter, Instrument_Serif, Caveat } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import DrunkMode from "@/components/DrunkMode";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -87,6 +88,7 @@ export default function RootLayout({
           Skip to content
         </a>
         {children}
+        <DrunkMode />
         <Analytics />
         <SpeedInsights />
       </body>

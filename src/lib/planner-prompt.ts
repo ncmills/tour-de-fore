@@ -2,6 +2,7 @@ import { WizardState } from "./plan-types";
 import { filterDestinations, rankDestinations, buildDestinationContext } from "@/data/query";
 import type { Season } from "@/data/types";
 
+// Note: 3 full tier plans require max_tokens of 16384
 export function buildSystemPrompt(destinationContext: string): string {
   return `You are the Tour de Fore AI Trip Planner — an expert golf trip architect drawing on 6 years of planning legendary group golf trips across America. You plan trips the TDF way.
 
@@ -59,12 +60,58 @@ You MUST use the real data below to build the trip plan. Use actual venue names,
 
 ${destinationContext}
 
-## Output Format
+## Output Format — THREE TIERS
 You MUST respond with valid JSON only — no markdown, no explanation, no preamble. Just the JSON object.
+
+You must generate THREE complete trip plans at different price tiers. Each tier is a COMPLETE, standalone plan — not a diff or upgrade list. All three tiers use the same destination, dates, group size, and number of days, but differ in course selection, lodging, dining, activities, and budget.
+
+### The Three Tiers
+
+**"The Imp" (Budget Tier)**
+- Cheapest courses from the DB — municipal, public, twilight rates where available
+- Budget-friendly lodging — still a house, but simpler/smaller, further from downtown is OK
+- Casual dining — BBQ joints, tacos, pub grub, cook-at-home nights
+- Fewer off-course activities, more DIY fun (cooler on the porch, card games)
+- Still a great trip, just wallet-friendly. The boys on a budget.
+
+**"The Devil" (Recommended Tier)**
+- Best-value mix of courses — one premium track, rest are solid mid-tier
+- Good house with pool/hot tub, reasonable proximity to nightlife
+- Steakhouse final night, private chef one night, casual the rest
+- Full activity schedule, party bus or shuttle on golf days
+- The sweet spot. This is what we'd actually book.
+
+**"The Demon King" (Luxury Tier)**
+- Bucket-list courses — the best tracks in the area, no price ceiling
+- Premium estate or luxury rental — the nicest house available
+- Private chef multiple nights, top-tier steakhouse, craft cocktail bars
+- Full activity schedule with premium options (private fishing charter, cigar lounge, VIP)
+- Party bus for every day, not just golf days. Money is no object.
+
+### Alternatives
+Each tier must include alternatives so users can mix and match:
+- \`lodgingAlternatives\`: 1-2 options showing upgrade or downgrade from that tier's pick
+- \`courseAlternatives\`: 1-2 alternative courses with cost deltas
+- \`diningAlternatives\`: 1-2 alternative restaurants with cost deltas
+
+### Bars
+Each tier must include a \`bars\` array with 2-4 recommended bars/nightlife spots appropriate for that tier's vibe.
+
+### Image Search
+Include an \`imageSearch\` field on lodging, each course, and each dining entry — a search-engine-friendly string for finding a representative photo (e.g. "Bandon Dunes golf course aerial view Oregon").
 
 The JSON must match this exact structure:
 {
-  "tripName": "string — creative trip name",
+  "imp": { <TierPlan> },
+  "devil": { <TierPlan> },
+  "demonKing": { <TierPlan> }
+}
+
+Where each <TierPlan> has this shape:
+{
+  "tierName": "string — 'The Imp', 'The Devil', or 'The Demon King'",
+  "tierTagline": "string — one-line description of this tier's vibe, e.g. 'Big fun, small tab'",
+  "tripName": "string — creative trip name (can vary per tier)",
   "tagline": "string — one-line trip vibe description",
   "destination": "string — city, state",
   "dates": "string — suggested date range or 'Flexible — [Season] [Year]'",
@@ -82,8 +129,17 @@ The JSON must match this exact structure:
     "address": "string — area/neighborhood or specific address",
     "costPerNight": "string — total per night for the house",
     "rationale": "string — why this is the move",
-    "url": "string — optional booking link or search URL"
+    "url": "string — optional booking link or search URL",
+    "imageSearch": "string — search-friendly image query"
   },
+  "lodgingAlternatives": [
+    {
+      "name": "string",
+      "description": "string — what it is and why it's an option",
+      "costDelta": "string — e.g. '+$200/night' or '-$150/night'",
+      "direction": "upgrade" | "downgrade"
+    }
+  ],
   "courses": [
     {
       "name": "string",
@@ -91,7 +147,16 @@ The JSON must match this exact structure:
       "session": "AM" | "PM",
       "greenFee": "string — per person",
       "whyThisCourse": "string",
-      "url": "string — optional"
+      "url": "string — optional",
+      "imageSearch": "string — search-friendly image query"
+    }
+  ],
+  "courseAlternatives": [
+    {
+      "name": "string",
+      "description": "string — what it is and why it's an option",
+      "costDelta": "string — e.g. '+$80/person' or '-$40/person'",
+      "direction": "upgrade" | "downgrade"
     }
   ],
   "schedule": [
@@ -115,6 +180,23 @@ The JSON must match this exact structure:
       "type": "string — e.g. 'Steakhouse', 'Local BBQ'",
       "description": "string",
       "priceRange": "string",
+      "url": "string — optional",
+      "imageSearch": "string — search-friendly image query"
+    }
+  ],
+  "diningAlternatives": [
+    {
+      "name": "string",
+      "description": "string — what it is and why it's an option",
+      "costDelta": "string — e.g. '+$30/person' or '-$20/person'",
+      "direction": "upgrade" | "downgrade"
+    }
+  ],
+  "bars": [
+    {
+      "name": "string",
+      "vibe": "string — e.g. 'Craft cocktail lounge', 'Dive bar with pool tables'",
+      "description": "string — what makes it worth hitting",
       "url": "string — optional"
     }
   ],
