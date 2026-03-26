@@ -8,7 +8,7 @@ import { useSearchParams } from "next/navigation";
 import TubeTv from "./TubeTv";
 
 const VIDEO_HD = "/bg.mp4";
-const HYPE_VIDEO = "/hype-audio.mp4"; // has audio; TubeTv starts muted, user can unmute
+const HYPE_VIDEO = "/hype-audio.mp4";
 
 const textStyle: React.CSSProperties = {
   fontFamily: "var(--font-script), cursive",
@@ -31,9 +31,7 @@ export default function HomeClient() {
   const [logoVisible, setLogoVisible] = useState(skip);
   const [logoUninverted, setLogoUninverted] = useState(skip);
   const [isMobile, setIsMobile] = useState(false);
-  const [ambientOn, setAmbientOn] = useState(false);
   const bgVideoRef = useRef<HTMLVideoElement>(null);
-  const ambientAudioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     const container = bgVideoRef.current as unknown as HTMLDivElement;
@@ -76,27 +74,6 @@ export default function HomeClient() {
     const t = setTimeout(() => setLogoUninverted(true), 600);
     return () => clearTimeout(t);
   }, [logoVisible, logoUninverted]);
-
-  const toggleAmbient = useCallback(() => {
-    if (!ambientAudioRef.current) {
-      const audio = new Audio("/ambient.mp3");
-      audio.loop = true;
-      audio.volume = 0.5;
-      ambientAudioRef.current = audio;
-    }
-    if (!ambientOn) {
-      ambientAudioRef.current.play().catch(() => {});
-      setAmbientOn(true);
-    } else {
-      ambientAudioRef.current.pause();
-      setAmbientOn(false);
-    }
-  }, [ambientOn]);
-
-  // Cleanup audio on unmount
-  useEffect(() => {
-    return () => { ambientAudioRef.current?.pause(); };
-  }, []);
 
   const handleExplodeStart = useCallback(() => {}, []);
 
@@ -260,46 +237,6 @@ export default function HomeClient() {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* ── Ambient sound toggle — always in DOM, visible only when done ── */}
-      <button
-        onClick={toggleAmbient}
-        title={ambientOn ? "Mute ambient sound" : "Play ambient sound"}
-        style={{
-          position: "fixed",
-          top: "1.2rem",
-          left: "1.4rem",
-          zIndex: 9999,
-          background: "rgba(255,255,255,0.22)",
-          border: "2px solid rgba(255,255,255,0.6)",
-          borderRadius: "50%",
-          width: 48,
-          height: 48,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          cursor: "pointer",
-          color: "#fff",
-          backdropFilter: "blur(8px)",
-          opacity: phase === "done" ? 1 : 0,
-          pointerEvents: phase === "done" ? "auto" : "none",
-          transition: "opacity 1s ease",
-        }}
-      >
-        {ambientOn ? (
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
-            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
-          </svg>
-        ) : (
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-            <line x1="23" y1="9" x2="17" y2="15"/>
-            <line x1="17" y1="9" x2="23" y2="15"/>
-          </svg>
-        )}
-      </button>
 
     </main>
   );
