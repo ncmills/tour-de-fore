@@ -39,6 +39,18 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
   const hasRestaurants = trip.restaurants && trip.restaurants.length > 0;
   const restaurants = trip.restaurants;
 
+  // Calculate total holes played per course from schedule data
+  const holesPerCourse: Record<string, number> = {};
+  for (const day of trip.schedule) {
+    for (const item of day.items) {
+      if (item.type === "golf") {
+        const holes = item.detail?.match(/(\d+)\s*holes/i);
+        const count = holes ? parseInt(holes[1]) : 18;
+        holesPerCourse[item.activity] = (holesPerCourse[item.activity] || 0) + count;
+      }
+    }
+  }
+
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff", position: "relative" }}>
       <FireBackground />
@@ -77,20 +89,6 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
           style={{ fontSize: "clamp(1rem, 2.5vw, 1.4rem)", color: "rgba(255,255,255,0.6)", marginTop: "0.5rem" }}
         >
           {trip.location}, {trip.state}
-        </motion.p>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.6 }}
-          style={{
-            fontFamily: "var(--font-script), cursive",
-            fontSize: "clamp(1rem, 2vw, 1.3rem)",
-            color: "rgba(255,255,255,0.35)",
-            fontStyle: "italic",
-            marginTop: "0.5rem",
-          }}
-        >
-          &ldquo;{trip.tagline}&rdquo;
         </motion.p>
       </div>
 
@@ -207,7 +205,7 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
         </motion.section>
       )}
 
-      {/* Section 3: Devils on the Green — Courses */}
+      {/* Section 3: 108 Chances to Bogey — Courses */}
       {trip.courses.length > 0 && (
         <motion.section
           initial={{ opacity: 0, y: 30 }}
@@ -217,7 +215,7 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
           style={{ position: "relative", zIndex: 1, padding: "3rem clamp(1.5rem, 6vw, 6rem)" }}
         >
           <h2 style={sectionHeadingStyle}>
-            {isLive ? "Devils on the Green" : "Devils on the Green"}
+            {isLive ? "108 Chances to Bogey" : "108 Chances to Bogey"}
           </h2>
           <div style={{
             display: "grid",
@@ -238,14 +236,14 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
                 {course.image && (
                   <div style={{ position: "relative", aspectRatio: "16/10", overflow: "hidden" }}>
                     <Image src={course.image} alt={course.name} fill style={{ objectFit: "cover" }} sizes="(max-width: 768px) 90vw, 33vw" />
-                    {course.holes && (
+                    {(holesPerCourse[course.name] || course.holes) && (
                       <div style={{
                         position: "absolute", top: "0.75rem", right: "0.75rem",
                         background: "rgba(0,0,0,0.7)", borderRadius: "4px",
                         padding: "2px 8px", fontFamily: "monospace", fontSize: "0.7rem",
                         color: "rgba(255,255,255,0.7)",
                       }}>
-                        {course.holes} holes
+                        {holesPerCourse[course.name] || course.holes} holes
                       </div>
                     )}
                   </div>
@@ -290,7 +288,7 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
           transition={{ duration: 0.8 }}
           style={{ position: "relative", zIndex: 1, padding: "3rem clamp(1.5rem, 6vw, 6rem)" }}
         >
-          <h2 style={sectionHeadingStyle}>Devils&apos; Lodging</h2>
+          <h2 style={sectionHeadingStyle}>Home is Where Hell is</h2>
 
           {/* Hero lodging image */}
           <div style={{ position: "relative", aspectRatio: "16/9", borderRadius: "8px", overflow: "hidden", marginBottom: "1.5rem" }}>
@@ -387,7 +385,7 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
         </motion.section>
       )}
 
-      {/* Section 6: Devils on Tour — Photo Slideshow */}
+      {/* Section 6: Lads on Tour — Photo Slideshow */}
       {trip.gallery.length > 0 && (
         <motion.section
           initial={{ opacity: 0, y: 30 }}
@@ -396,7 +394,7 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
           transition={{ duration: 0.8 }}
           style={{ position: "relative", zIndex: 1, padding: "3rem clamp(1.5rem, 6vw, 6rem) 6rem" }}
         >
-          <h2 style={sectionHeadingStyle}>Devils on Tour</h2>
+          <h2 style={sectionHeadingStyle}>Lads on Tour</h2>
           <PhotoSlideshow images={trip.gallery} />
         </motion.section>
       )}

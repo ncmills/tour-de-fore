@@ -35,49 +35,76 @@ export default function USMap({ compact, singleTrip }: { compact?: boolean; sing
         {/* Simplified US outline */}
         <path
           d="M 130 120 L 160 100 L 200 95 L 250 90 L 310 85 L 350 90 L 400 85 L 450 80 L 500 82 L 550 85 L 600 90 L 650 95 L 700 100 L 750 110 L 790 130 L 820 150 L 840 180 L 850 210 L 855 250 L 850 280 L 840 310 L 830 340 L 810 360 L 780 380 L 750 395 L 720 400 L 700 410 L 680 430 L 660 450 L 640 460 L 610 465 L 580 460 L 560 450 L 540 440 L 520 450 L 490 460 L 460 465 L 430 460 L 400 450 L 370 440 L 340 435 L 310 430 L 280 420 L 260 410 L 240 395 L 220 380 L 200 370 L 180 360 L 160 345 L 140 320 L 125 290 L 115 260 L 110 230 L 112 200 L 118 170 L 125 140 Z"
-          fill="rgba(234, 88, 12, 0.03)"
-          stroke="rgba(234, 88, 12, 0.15)"
-          strokeWidth="1.5"
+          fill={singleTrip ? "rgba(255, 255, 255, 0.04)" : "rgba(234, 88, 12, 0.03)"}
+          stroke={singleTrip ? "rgba(255, 255, 255, 0.35)" : "rgba(234, 88, 12, 0.15)"}
+          strokeWidth={singleTrip ? "2" : "1.5"}
         />
 
         {/* State boundary suggestion lines */}
-        <line x1="305" y1="85" x2="300" y2="440" stroke="rgba(234, 88, 12, 0.06)" strokeWidth="0.5" />
-        <line x1="450" y1="80" x2="450" y2="465" stroke="rgba(234, 88, 12, 0.06)" strokeWidth="0.5" />
-        <line x1="600" y1="90" x2="600" y2="465" stroke="rgba(234, 88, 12, 0.06)" strokeWidth="0.5" />
-        <line x1="115" y1="250" x2="855" y2="250" stroke="rgba(234, 88, 12, 0.06)" strokeWidth="0.5" />
-        <line x1="115" y1="350" x2="830" y2="350" stroke="rgba(234, 88, 12, 0.06)" strokeWidth="0.5" />
+        <line x1="305" y1="85" x2="300" y2="440" stroke={singleTrip ? "rgba(255,255,255,0.1)" : "rgba(234, 88, 12, 0.06)"} strokeWidth="0.5" />
+        <line x1="450" y1="80" x2="450" y2="465" stroke={singleTrip ? "rgba(255,255,255,0.1)" : "rgba(234, 88, 12, 0.06)"} strokeWidth="0.5" />
+        <line x1="600" y1="90" x2="600" y2="465" stroke={singleTrip ? "rgba(255,255,255,0.1)" : "rgba(234, 88, 12, 0.06)"} strokeWidth="0.5" />
+        <line x1="115" y1="250" x2="855" y2="250" stroke={singleTrip ? "rgba(255,255,255,0.1)" : "rgba(234, 88, 12, 0.06)"} strokeWidth="0.5" />
+        <line x1="115" y1="350" x2="830" y2="350" stroke={singleTrip ? "rgba(255,255,255,0.1)" : "rgba(234, 88, 12, 0.06)"} strokeWidth="0.5" />
 
-        {/* Single-trip highlight — large red glow */}
+        {/* Single-trip highlight — radar ping + UAV sweep */}
         {highlightedTrip && (
           <>
-            <motion.circle
-              cx={highlightedTrip.x}
-              cy={highlightedTrip.y}
-              r="60"
-              fill="rgba(220,38,38,0.12)"
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 1, ease: "easeOut" }}
+            {/* UAV radar sweep — rotating line from the dot */}
+            <motion.line
+              x1={highlightedTrip.x}
+              y1={highlightedTrip.y}
+              x2={highlightedTrip.x + 120}
+              y2={highlightedTrip.y}
+              stroke="rgba(220,38,38,0.3)"
+              strokeWidth="1"
+              style={{ transformOrigin: `${highlightedTrip.x}px ${highlightedTrip.y}px` }}
+              animate={{ rotate: [0, 360] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
             />
-            <motion.circle
-              cx={highlightedTrip.x}
-              cy={highlightedTrip.y}
-              r="35"
-              fill="rgba(220,38,38,0.2)"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+
+            {/* UAV sweep cone — fading trail behind the line */}
+            <motion.path
+              d={`M ${highlightedTrip.x} ${highlightedTrip.y} L ${highlightedTrip.x + 120} ${highlightedTrip.y - 20} A 120 120 0 0 1 ${highlightedTrip.x + 120} ${highlightedTrip.y + 20} Z`}
+              fill="rgba(220,38,38,0.06)"
+              style={{ transformOrigin: `${highlightedTrip.x}px ${highlightedTrip.y}px` }}
+              animate={{ rotate: [0, 360] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
             />
+
+            {/* Radar ring 1 — expanding ping */}
             <motion.circle
               cx={highlightedTrip.x}
               cy={highlightedTrip.y}
-              r="45"
+              r="15"
+              fill="none"
+              stroke="rgba(220,38,38,0.5)"
+              strokeWidth="1.5"
+              animate={{ r: [15, 60], opacity: [0.6, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
+            />
+
+            {/* Radar ring 2 — offset ping */}
+            <motion.circle
+              cx={highlightedTrip.x}
+              cy={highlightedTrip.y}
+              r="15"
               fill="none"
               stroke="rgba(220,38,38,0.4)"
-              strokeWidth="1.5"
-              animate={{ r: [35, 55, 35], opacity: [0.6, 0, 0.6] }}
-              transition={{ duration: 3, repeat: Infinity }}
+              strokeWidth="1"
+              animate={{ r: [15, 50], opacity: [0.5, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeOut", delay: 1 }}
             />
+
+            {/* Radar range circles — static */}
+            <circle cx={highlightedTrip.x} cy={highlightedTrip.y} r="40" fill="none" stroke="rgba(220,38,38,0.08)" strokeWidth="0.5" strokeDasharray="3 3" />
+            <circle cx={highlightedTrip.x} cy={highlightedTrip.y} r="80" fill="none" stroke="rgba(220,38,38,0.05)" strokeWidth="0.5" strokeDasharray="3 3" />
+
+            {/* Crosshair lines */}
+            <line x1={highlightedTrip.x - 20} y1={highlightedTrip.y} x2={highlightedTrip.x - 8} y2={highlightedTrip.y} stroke="rgba(220,38,38,0.4)" strokeWidth="1" />
+            <line x1={highlightedTrip.x + 8} y1={highlightedTrip.y} x2={highlightedTrip.x + 20} y2={highlightedTrip.y} stroke="rgba(220,38,38,0.4)" strokeWidth="1" />
+            <line x1={highlightedTrip.x} y1={highlightedTrip.y - 20} x2={highlightedTrip.x} y2={highlightedTrip.y - 8} stroke="rgba(220,38,38,0.4)" strokeWidth="1" />
+            <line x1={highlightedTrip.x} y1={highlightedTrip.y + 8} x2={highlightedTrip.x} y2={highlightedTrip.y + 20} stroke="rgba(220,38,38,0.4)" strokeWidth="1" />
           </>
         )}
 
@@ -132,8 +159,9 @@ export default function USMap({ compact, singleTrip }: { compact?: boolean; sing
             <motion.circle
               cx={loc.x}
               cy={loc.y}
-              r={singleTrip ? 10 : (!compact && hovered === loc.year ? 8 : 5)}
+              r={singleTrip ? 6 : (!compact && hovered === loc.year ? 8 : 5)}
               fill={singleTrip ? "#DC2626" : loc.upcoming ? "#EA580C" : "#D4A843"}
+              {...(singleTrip ? { animate: { opacity: [1, 0.3, 1] }, transition: { duration: 1.5, repeat: Infinity, ease: "easeInOut" } } : {})}
               className={compact ? "" : "cursor-pointer"}
               onMouseEnter={() => !compact && setHovered(loc.year)}
               onMouseLeave={() => !compact && setHovered(null)}

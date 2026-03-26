@@ -71,10 +71,10 @@ export default function HomeClient() {
     return () => clearTimeout(t);
   }, [skip]);
 
-  // Uninvert logo shortly after it appears
+  // After logo is visible as white for a moment, start bg + uninversion concurrently
   useEffect(() => {
     if (!logoVisible || logoUninverted) return;
-    const t = setTimeout(() => setLogoUninverted(true), 600);
+    const t = setTimeout(() => setLogoUninverted(true), 1000);
     return () => clearTimeout(t);
   }, [logoVisible, logoUninverted]);
 
@@ -120,11 +120,11 @@ export default function HomeClient() {
   return (
     <main style={{ height: "100vh", overflow: "hidden", position: "relative", background: "#000" }}>
 
-      {/* Background video */}
+      {/* Background video — fades in concurrently with logo going to black */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: phase === "done" ? 1 : 0 }}
-        transition={{ duration: 1.8, delay: phase === "done" ? 0.4 : 0 }}
+        animate={{ opacity: logoUninverted ? 1 : 0 }}
+        transition={{ duration: 1.8 }}
         style={{ position: "absolute", inset: 0 }}
       >
         {/* Video injected imperatively (iOS autoplay fix — muted must be set before src) */}
@@ -144,54 +144,51 @@ export default function HomeClient() {
         gap: "clamp(12px, 2vh, 24px)",
         padding: "3vh 1.5rem",
       }}>
-        {/* TV */}
-        <AnimatePresence>
-          {phase === "tv" && (
-            <motion.div
-              key="tv"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0, transition: { duration: 0 } }}
-              transition={{ duration: 0.4 }}
-            >
-              <TubeTv
-                videoSrc={HYPE_VIDEO}
-                onExplodeStart={handleExplodeStart}
-                onComplete={handleTvDone}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Text lines — shown during text + tv phases */}
+        {/* TV + Text — fade out together as one unit */}
         <AnimatePresence onExitComplete={handleTextExitComplete}>
-          {!showLinks && phase !== "done" && (
+          {phase !== "done" && (
             <motion.div
-              key="text"
-              className="home-text"
+              key="tv-and-text"
               exit={{ opacity: 0 }}
               transition={{ duration: 0.7 }}
               style={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                gap: 0,
+                gap: "clamp(12px, 2vh, 24px)",
               }}
             >
-              <motion.p
-                style={{ ...textStyle, clipPath: "inset(0 105% 0 -5px)" }}
-                animate={{ clipPath: "inset(0 -5px 0 -5px)" }}
-                transition={{ duration: 1.4, delay: 0.3, ease: [0.25, 0.0, 0.35, 1.0] }}
-              >
-                hell is empty
-              </motion.p>
-              <motion.p
-                style={{ ...textStyle, clipPath: "inset(0 105% 0 -5px)" }}
-                animate={{ clipPath: "inset(0 -5px 0 -5px)" }}
-                transition={{ duration: 1.6, delay: 1.2, ease: [0.25, 0.0, 0.35, 1.0] }}
-              >
-                all the devils are here
-              </motion.p>
+              {/* TV — only during tv phase */}
+              {phase === "tv" && (
+                <TubeTv
+                  videoSrc={HYPE_VIDEO}
+                  onExplodeStart={handleExplodeStart}
+                  onComplete={handleTvDone}
+                />
+              )}
+
+              {/* Text lines */}
+              <div style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 0,
+              }}>
+                <motion.p
+                  style={{ ...textStyle, clipPath: "inset(0 105% 0 -5px)" }}
+                  animate={{ clipPath: "inset(0 -5px 0 -5px)" }}
+                  transition={{ duration: 1.4, delay: 0.3, ease: [0.25, 0.0, 0.35, 1.0] }}
+                >
+                  hell is empty
+                </motion.p>
+                <motion.p
+                  style={{ ...textStyle, clipPath: "inset(0 105% 0 -5px)" }}
+                  animate={{ clipPath: "inset(0 -5px 0 -5px)" }}
+                  transition={{ duration: 1.6, delay: 1.2, ease: [0.25, 0.0, 0.35, 1.0] }}
+                >
+                  all the devils are here
+                </motion.p>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

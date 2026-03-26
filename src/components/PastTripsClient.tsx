@@ -227,9 +227,6 @@ export default function PastTripsClient() {
               <p style={{ fontSize: "clamp(1rem, 2vw, 1.4rem)", fontWeight: 600, color: "rgba(255,255,255,0.85)", marginBottom: "0.5rem" }}>
                 {trip.location}, {trip.state}
               </p>
-              <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.4)", fontStyle: "italic", lineHeight: 1.5, marginBottom: trip.courses.length > 0 ? "1rem" : "0" }}>
-                &ldquo;{trip.tagline}&rdquo;
-              </p>
               {trip.courses.length > 0 && (
                 <p style={{ fontSize: "0.75rem", letterSpacing: "0.06em", color: "rgba(255,255,255,0.25)", lineHeight: 1.8 }}>
                   {trip.courses.map((c) => c.name).join("  ·  ")}
