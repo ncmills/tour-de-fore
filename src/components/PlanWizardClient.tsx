@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import { WizardState, initialWizardState } from "@/lib/plan-types";
 import SelectionCard from "./SelectionCard";
-import AttendeeForm from "./AttendeeForm";
 import Logo from "./Logo";
 import Link from "next/link";
 
@@ -142,7 +141,6 @@ export default function PlanWizardClient() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [loadingMsg, setLoadingMsg] = useState(0);
   const [error, setError] = useState("");
-  const [consent, setConsent] = useState(false);
   const isScrolling = useRef(false);
 
   const set = (field: keyof WizardState, value: unknown) =>
@@ -215,18 +213,8 @@ export default function PlanWizardClient() {
   }, [isGenerating, revealedCount, totalQuestions, advance]);
 
   const handleGenerate = async () => {
-    const filledAttendees = state.attendees.filter((a) => a.name && a.email);
-    const totalFilled = (state.organizerName && state.organizerEmail ? 1 : 0) + filledAttendees.length;
-    if (totalFilled < 8) {
-      setError("You need at least 8 people total (including yourself).");
-      return;
-    }
     if (!state.organizerName || !state.organizerEmail) {
       setError("Please fill in your name and email.");
-      return;
-    }
-    if (!consent) {
-      setError("Please agree to share attendee emails.");
       return;
     }
 
@@ -808,33 +796,26 @@ export default function PlanWizardClient() {
               </span>
             </div>
             <h2 style={{ fontFamily: "var(--font-space), sans-serif", fontSize: "clamp(1.9rem, 4.5vw, 3.2rem)", fontWeight: 700, color: "#fff", lineHeight: 1.1, letterSpacing: "-0.025em", marginBottom: "3rem" }}>
-              Who&rsquo;s Coming?
+              Who&rsquo;s organizing?
             </h2>
 
             <div className="space-y-10">
-              <AttendeeForm
-                organizerName={state.organizerName}
-                organizerEmail={state.organizerEmail}
-                attendees={state.attendees}
-                onOrganizerChange={(field, value) => set(field, value)}
-                onAttendeeChange={(index, field, value) =>
-                  dispatch({ type: "SET_ATTENDEE", index, field, value })
-                }
-                onAddAttendee={() => dispatch({ type: "ADD_ATTENDEE" })}
-                onRemoveAttendee={(index) => dispatch({ type: "REMOVE_ATTENDEE", index })}
-              />
-
-              <label style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", cursor: "pointer", textAlign: "left" }}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <input
-                  type="checkbox"
-                  checked={consent}
-                  onChange={(e) => setConsent(e.target.checked)}
-                  style={{ marginTop: 3, accentColor: "#fff", flexShrink: 0 }}
+                  type="text"
+                  placeholder="Your name"
+                  value={state.organizerName}
+                  onChange={(e) => set("organizerName", e.target.value)}
+                  className="bg-bg-alt border border-border rounded-lg px-5 py-3.5 text-text font-body text-sm placeholder:text-text-dim focus:border-accent focus:outline-none transition-colors"
                 />
-                <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.8rem", lineHeight: 1.6, fontFamily: "var(--font-inter), sans-serif" }}>
-                  I have permission to share these email addresses. Tour de Fore will only use them to send the generated trip plan.
-                </span>
-              </label>
+                <input
+                  type="email"
+                  placeholder="Your email"
+                  value={state.organizerEmail}
+                  onChange={(e) => set("organizerEmail", e.target.value)}
+                  className="bg-bg-alt border border-border rounded-lg px-5 py-3.5 text-text font-body text-sm placeholder:text-text-dim focus:border-accent focus:outline-none transition-colors"
+                />
+              </div>
 
               {error && (
                 <motion.p
