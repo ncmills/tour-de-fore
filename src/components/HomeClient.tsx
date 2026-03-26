@@ -64,7 +64,7 @@ export default function HomeClient() {
   // After text animations finish, show TV
   useEffect(() => {
     if (skip) return;
-    const t = setTimeout(() => setPhase("tv"), 4500);
+    const t = setTimeout(() => setPhase("tv"), 3500);
     return () => clearTimeout(t);
   }, [skip]);
 
@@ -190,7 +190,7 @@ export default function HomeClient() {
             <motion.p
               style={{ ...textStyle, clipPath: "inset(0 105% 0 -5px)" }}
               animate={{ clipPath: "inset(0 -5px 0 -5px)" }}
-              transition={{ duration: 1.6, delay: 2.2, ease: [0.25, 0.0, 0.35, 1.0] }}
+              transition={{ duration: 1.6, delay: 1.2, ease: [0.25, 0.0, 0.35, 1.0] }}
             >
               all the devils are here
             </motion.p>
