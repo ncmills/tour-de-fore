@@ -2,20 +2,11 @@
 
 import { useEffect, useState } from "react";
 
-/**
- * Drunk mode: page gets a subtle blur/sway and the real cursor
- * moves with heavy CSS transition delay so it feels sluggish.
- * No fake cursor dot — just the normal arrow, but laggy.
- * Activated via sessionStorage("tdf-drunk"), cleared on tab refresh.
- */
 export default function DrunkMode() {
   const [drunk, setDrunk] = useState(false);
 
   useEffect(() => {
-    const check = () => {
-      if (sessionStorage.getItem("tdf-drunk") === "1") setDrunk(true);
-    };
-    check();
+    const check = () => setDrunk(true);
     window.addEventListener("tdf-drunk", check);
     return () => window.removeEventListener("tdf-drunk", check);
   }, []);
@@ -23,81 +14,74 @@ export default function DrunkMode() {
   useEffect(() => {
     if (!drunk) return;
 
+    // Create a fixed overlay that applies blur + sway via backdrop-filter
+    // This doesn't break position:fixed on anything underneath
+    const overlay = document.createElement("div");
+    overlay.id = "tdf-drunk-overlay";
+    document.body.appendChild(overlay);
+
     const style = document.createElement("style");
     style.id = "tdf-drunk-style";
     style.textContent = `
-      /* Fuzzy page — gentle blur + slow sway */
-      @keyframes tdf-sway {
-        0%   { filter: blur(1.2px) brightness(0.98); transform: translateX(0px) rotate(0deg); }
-        20%  { filter: blur(1.8px) brightness(0.97); transform: translateX(1.5px) rotate(0.15deg); }
-        40%  { filter: blur(1.4px) brightness(0.98); transform: translateX(-1px) rotate(-0.1deg); }
-        60%  { filter: blur(2px) brightness(0.96); transform: translateX(2px) rotate(0.2deg); }
-        80%  { filter: blur(1.5px) brightness(0.97); transform: translateX(-0.5px) rotate(-0.15deg); }
-        100% { filter: blur(1.2px) brightness(0.98); transform: translateX(0px) rotate(0deg); }
+      @keyframes tdf-wobble {
+        0%   { backdrop-filter: blur(1.5px); transform: translateX(0px) rotate(0deg) scale(1); }
+        20%  { backdrop-filter: blur(2.5px); transform: translateX(3px) rotate(0.3deg) scale(1.002); }
+        40%  { backdrop-filter: blur(1.8px); transform: translateX(-2px) rotate(-0.2deg) scale(0.999); }
+        60%  { backdrop-filter: blur(3px); transform: translateX(3px) rotate(0.35deg) scale(1.003); }
+        80%  { backdrop-filter: blur(2px); transform: translateX(-1.5px) rotate(-0.25deg) scale(1.001); }
+        100% { backdrop-filter: blur(1.5px); transform: translateX(0px) rotate(0deg) scale(1); }
       }
-      html {
-        animation: tdf-sway 6s ease-in-out infinite !important;
+      #tdf-drunk-overlay {
+        position: fixed;
+        inset: -20px;
+        z-index: 999998;
+        pointer-events: none;
+        animation: tdf-wobble 5s ease-in-out infinite;
+        backdrop-filter: blur(1.5px);
+        -webkit-backdrop-filter: blur(1.5px);
       }
-
-      /* Sluggish cursor via a full-screen overlay that tracks mouse with heavy delay */
-      body {
-        cursor: none !important;
-      }
-      * {
-        cursor: none !important;
-      }
-      #tdf-drunk-cursor-layer {
-        position: fixed !important;
-        inset: 0 !important;
-        z-index: 999999 !important;
-        pointer-events: none !important;
-        overflow: hidden !important;
-      }
-      #tdf-drunk-fake-cursor {
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 20px !important;
-        height: 28px !important;
-        pointer-events: none !important;
-        z-index: 999999 !important;
-        filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5)) !important;
-        transition: none !important;
-      }
+      body { cursor: none !important; }
+      * { cursor: none !important; }
     `;
     document.head.appendChild(style);
 
-    // Create cursor layer + fake arrow cursor
+    // Fake arrow cursor — appended to documentElement so overlay doesn't blur it
     const layer = document.createElement("div");
     layer.id = "tdf-drunk-cursor-layer";
+    Object.assign(layer.style, {
+      position: "fixed",
+      inset: "0",
+      zIndex: "9999999",
+      pointerEvents: "none",
+      overflow: "hidden",
+    });
 
-    const cursor = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    cursor.id = "tdf-drunk-fake-cursor";
-    cursor.setAttribute("viewBox", "0 0 20 28");
-    cursor.setAttribute("fill", "none");
-    cursor.innerHTML = `
-      <path d="M1 1 L1 21 L5.5 16.5 L9.5 25 L12.5 23.5 L8.5 14.5 L14.5 14.5 Z"
-            fill="white" stroke="black" stroke-width="1.2" stroke-linejoin="round"/>
-    `;
-    layer.appendChild(cursor);
-    document.body.appendChild(layer);
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 20 28");
+    svg.setAttribute("fill", "none");
+    Object.assign(svg.style, {
+      position: "absolute",
+      top: "0",
+      left: "0",
+      width: "20px",
+      height: "28px",
+      pointerEvents: "none",
+      filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.5))",
+    });
+    svg.innerHTML = `<path d="M1 1 L1 21 L5.5 16.5 L9.5 25 L12.5 23.5 L8.5 14.5 L14.5 14.5 Z" fill="white" stroke="black" stroke-width="1.2" stroke-linejoin="round"/>`;
+    layer.appendChild(svg);
+    document.documentElement.appendChild(layer);
 
-    // Track real mouse, move fake cursor with heavy lerp
     let realX = 0, realY = 0;
     let fakeX = 0, fakeY = 0;
-    const LERP = 0.045; // very sluggish
-
-    const onMove = (e: MouseEvent) => {
-      realX = e.clientX;
-      realY = e.clientY;
-    };
+    const onMove = (e: MouseEvent) => { realX = e.clientX; realY = e.clientY; };
     window.addEventListener("mousemove", onMove);
 
     let raf = 0;
     const tick = () => {
-      fakeX += (realX - fakeX) * LERP;
-      fakeY += (realY - fakeY) * LERP;
-      cursor.style.transform = `translate(${fakeX}px, ${fakeY}px)`;
+      fakeX += (realX - fakeX) * 0.04;
+      fakeY += (realY - fakeY) * 0.04;
+      svg.style.transform = `translate(${fakeX}px, ${fakeY}px)`;
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
@@ -106,9 +90,10 @@ export default function DrunkMode() {
       cancelAnimationFrame(raf);
       window.removeEventListener("mousemove", onMove);
       document.getElementById("tdf-drunk-style")?.remove();
+      document.getElementById("tdf-drunk-overlay")?.remove();
       document.getElementById("tdf-drunk-cursor-layer")?.remove();
     };
   }, [drunk]);
 
-  return null; // no React DOM — everything injected imperatively
+  return null;
 }

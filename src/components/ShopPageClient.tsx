@@ -144,7 +144,7 @@ const PRODUCTS = [
 
 type CartItem = { id: string; name: string; price: number; quantity: number };
 
-export default function ShopPageClient() {
+export default function ShopPageClient({ onBack }: { onBack?: () => void }) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -269,32 +269,26 @@ export default function ShopPageClient() {
         </button>
       </div>
 
-      {/* Back link */}
+      {/* Back link — goes to bar scene if onBack provided */}
       <div style={{ position: "fixed", top: "1.2rem", left: "clamp(1.5rem, 6vw, 4rem)", zIndex: 100 }}>
-        <a href="/?skip=1" style={{ fontFamily: "var(--font-script), cursive", fontSize: "1.1rem", color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>
+        <button
+          onClick={() => onBack ? onBack() : (window.location.href = "/?skip=1")}
+          style={{ background: "none", border: "none", fontFamily: "var(--font-script), cursive", fontSize: "1.1rem", color: "rgba(255,255,255,0.4)", cursor: "pointer", padding: 0 }}
+        >
           ← back
-        </a>
+        </button>
       </div>
 
       {/* === PRODUCT DISPLAY === */}
       <div style={{ position: "relative", zIndex: 1, maxWidth: "1100px", margin: "0 auto", padding: "5rem 1.5rem 4rem" }}>
 
-        {/* Shop title */}
+        {/* Subtitle only — "PRO SHOP" is on the wall sign in the background */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           style={{ textAlign: "center", marginBottom: "3rem" }}
         >
-          <h1 style={{
-            fontFamily: "var(--font-script), cursive",
-            fontSize: "clamp(2.5rem, 6vw, 5rem)",
-            color: "#D4A843",
-            marginBottom: "0.5rem",
-            textShadow: "0 2px 20px rgba(212,168,67,0.15)",
-          }}>
-            Pro Shop
-          </h1>
           <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.9rem", fontStyle: "italic" }}>
             Gear for the kind of golfer who plays 36 a day and tips like they won the tournament.
           </p>
