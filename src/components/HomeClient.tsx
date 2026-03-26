@@ -311,62 +311,42 @@ export default function HomeClient() {
         )}
       </AnimatePresence>
 
-      {/* ── Ambient sound toggle (bottom-right, appears when done) ── */}
-      <AnimatePresence>
-        {phase === "done" && (
-          <motion.button
-            key="ambient"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.8 }}
-            onClick={toggleAmbient}
-            title={ambientOn ? "Mute ambient sound" : "Play ambient sound"}
-            style={{
-              position: "absolute",
-              top: "1.2rem",
-              left: "1.4rem",
-              zIndex: 30,
-              background: "rgba(255,255,255,0.2)",
-              border: "1px solid rgba(255,255,255,0.5)",
-              borderRadius: "50%",
-              width: 44,
-              height: 44,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: "pointer",
-              color: "rgba(255,255,255,0.9)",
-              backdropFilter: "blur(6px)",
-              transition: "background 0.2s, color 0.2s",
-            }}
-            onMouseEnter={e => {
-              (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.35)";
-              (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,1)";
-            }}
-            onMouseLeave={e => {
-              (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.2)";
-              (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.9)";
-            }}
-          >
-            {ambientOn ? (
-              // Speaker with waves
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
-                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
-              </svg>
-            ) : (
-              // Speaker muted (X)
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-                <line x1="23" y1="9" x2="17" y2="15"/>
-                <line x1="17" y1="9" x2="23" y2="15"/>
-              </svg>
-            )}
-          </motion.button>
+      {/* ── Ambient sound toggle (fixed top-left, always in DOM when done) ── */}
+      <button
+        onClick={toggleAmbient}
+        title={ambientOn ? "Mute ambient sound" : "Play ambient sound"}
+        style={{
+          position: "fixed",
+          top: "1.2rem",
+          left: "1.4rem",
+          zIndex: 9999,
+          background: "rgba(255,255,255,0.22)",
+          border: "2px solid rgba(255,255,255,0.6)",
+          borderRadius: "50%",
+          width: 48,
+          height: 48,
+          display: phase === "done" ? "flex" : "none",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "pointer",
+          color: "#fff",
+          backdropFilter: "blur(8px)",
+        }}
+      >
+        {ambientOn ? (
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+          </svg>
+        ) : (
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <line x1="23" y1="9" x2="17" y2="15"/>
+            <line x1="17" y1="9" x2="23" y2="15"/>
+          </svg>
         )}
-      </AnimatePresence>
+      </button>
 
     </main>
   );
