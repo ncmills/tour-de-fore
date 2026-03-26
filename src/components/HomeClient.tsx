@@ -22,117 +22,6 @@ const textStyle: React.CSSProperties = {
 
 type Phase = "text" | "tv" | "done";
 
-// FM chirp presets — different "species"
-const CHIRP_PRESETS = [
-  { carrier: 3200, fmFreq: 35, fmDepth: 400, attack: 0.02, decay: 0.12, vol: 0.28 },
-  { carrier: 4400, fmFreq: 55, fmDepth: 600, attack: 0.01, decay: 0.08, vol: 0.22 },
-  { carrier: 2800, fmFreq: 25, fmDepth: 300, attack: 0.03, decay: 0.18, vol: 0.32 },
-  { carrier: 5100, fmFreq: 70, fmDepth: 700, attack: 0.01, decay: 0.06, vol: 0.18 },
-  { carrier: 3800, fmFreq: 42, fmDepth: 500, attack: 0.02, decay: 0.14, vol: 0.26 },
-];
-
-function triggerChirp(ctx: AudioContext, masterGain: GainNode) {
-  const t = ctx.currentTime;
-  const p = CHIRP_PRESETS[Math.floor(Math.random() * CHIRP_PRESETS.length)];
-  const pitch = 0.85 + Math.random() * 0.3;
-
-  const modulator = ctx.createOscillator();
-  modulator.type = "sine";
-  modulator.frequency.value = p.fmFreq * (0.9 + Math.random() * 0.2);
-  const modGain = ctx.createGain();
-  modGain.gain.value = p.fmDepth;
-
-  const carrier = ctx.createOscillator();
-  carrier.type = "sine";
-  carrier.frequency.value = p.carrier * pitch;
-
-  const ampEnv = ctx.createGain();
-  ampEnv.gain.setValueAtTime(0, t);
-  ampEnv.gain.linearRampToValueAtTime(p.vol, t + p.attack);
-  ampEnv.gain.exponentialRampToValueAtTime(0.0001, t + p.attack + p.decay);
-
-  modulator.connect(modGain);
-  modGain.connect(carrier.frequency);
-  carrier.connect(ampEnv);
-  ampEnv.connect(masterGain);
-
-  const dur = p.attack + p.decay + 0.05;
-  modulator.start(t); modulator.stop(t + dur);
-  carrier.start(t); carrier.stop(t + dur);
-}
-
-function scheduleBirds(ctx: AudioContext, masterGain: GainNode, stop: { stopped: boolean }) {
-  function next() {
-    if (stop.stopped || ctx.state === "closed") return;
-    const delay = 2500 + Math.random() * 6000;
-    setTimeout(() => {
-      if (stop.stopped || ctx.state === "closed") return;
-      triggerChirp(ctx, masterGain);
-      // 25% chance of a quick double-chirp
-      if (Math.random() < 0.25) {
-        setTimeout(() => {
-          if (!stop.stopped && ctx.state !== "closed") triggerChirp(ctx, masterGain);
-        }, 150 + Math.random() * 100);
-      }
-      next();
-    }, delay);
-  }
-  setTimeout(next, 1500 + Math.random() * 2000);
-}
-
-function initAmbientAudio(): { ctx: AudioContext; stop: { stopped: boolean } } {
-  // webkitAudioContext fallback for older Safari
-  const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-  const ctx = new AudioCtx();
-
-  const masterGain = ctx.createGain();
-  masterGain.gain.value = 0.8;
-  masterGain.connect(ctx.destination);
-
-  // Brown noise buffer (2 seconds, looped)
-  const bufSize = ctx.sampleRate * 2;
-  const buffer = ctx.createBuffer(1, bufSize, ctx.sampleRate);
-  const data = buffer.getChannelData(0);
-  let lastOut = 0;
-  for (let i = 0; i < bufSize; i++) {
-    const white = Math.random() * 2 - 1;
-    data[i] = (lastOut + 0.02 * white) / 1.02;
-    lastOut = data[i];
-    data[i] *= 3.5;
-  }
-  const windSrc = ctx.createBufferSource();
-  windSrc.buffer = buffer;
-  windSrc.loop = true;
-
-  // Bandpass filter shaped like wind, modulated by slow LFO for gusting
-  const bpf = ctx.createBiquadFilter();
-  bpf.type = "bandpass";
-  bpf.frequency.value = 400;
-  bpf.Q.value = 0.8;
-
-  const lfo = ctx.createOscillator();
-  lfo.type = "sine";
-  lfo.frequency.value = 0.08; // one gust cycle ~12 seconds
-  const lfoGain = ctx.createGain();
-  lfoGain.gain.value = 180; // sweeps filter ±180 Hz
-  lfo.connect(lfoGain);
-  lfoGain.connect(bpf.frequency);
-  lfo.start();
-
-  const windGain = ctx.createGain();
-  windGain.gain.value = 0.22;
-  windSrc.connect(bpf);
-  bpf.connect(windGain);
-  windGain.connect(masterGain);
-  windSrc.start();
-
-  // Birds
-  const stop = { stopped: false };
-  scheduleBirds(ctx, masterGain, stop);
-
-  return { ctx, stop };
-}
-
 export default function HomeClient() {
   const params = useSearchParams();
   const skip = params.get("skip") === "1";
@@ -144,8 +33,7 @@ export default function HomeClient() {
   const [isMobile, setIsMobile] = useState(false);
   const [ambientOn, setAmbientOn] = useState(false);
   const bgVideoRef = useRef<HTMLVideoElement>(null);
-  const audioCtxRef = useRef<AudioContext | null>(null);
-  const stopBirdsRef = useRef<{ stopped: boolean }>({ stopped: true });
+  const ambientAudioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     const container = bgVideoRef.current as unknown as HTMLDivElement;
@@ -189,32 +77,25 @@ export default function HomeClient() {
     return () => clearTimeout(t);
   }, [logoVisible, logoUninverted]);
 
-  const toggleAmbient = useCallback(async () => {
+  const toggleAmbient = useCallback(() => {
+    if (!ambientAudioRef.current) {
+      const audio = new Audio("/ambient.mp3");
+      audio.loop = true;
+      audio.volume = 0.5;
+      ambientAudioRef.current = audio;
+    }
     if (!ambientOn) {
-      if (!audioCtxRef.current) {
-        const { ctx, stop } = initAmbientAudio();
-        audioCtxRef.current = ctx;
-        stopBirdsRef.current = stop;
-      }
-      // Chrome may create AudioContext in suspended state — must resume inside user gesture
-      if (audioCtxRef.current.state === "suspended") {
-        await audioCtxRef.current.resume();
-      }
-      stopBirdsRef.current.stopped = false;
+      ambientAudioRef.current.play().catch(() => {});
       setAmbientOn(true);
     } else {
-      await audioCtxRef.current?.suspend();
-      stopBirdsRef.current.stopped = true;
+      ambientAudioRef.current.pause();
       setAmbientOn(false);
     }
   }, [ambientOn]);
 
   // Cleanup audio on unmount
   useEffect(() => {
-    return () => {
-      stopBirdsRef.current.stopped = true;
-      audioCtxRef.current?.close();
-    };
+    return () => { ambientAudioRef.current?.pause(); };
   }, []);
 
   const handleExplodeStart = useCallback(() => {}, []);
