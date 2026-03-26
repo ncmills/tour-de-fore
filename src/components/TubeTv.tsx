@@ -132,7 +132,7 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
               position: "relative",
               borderRadius: "clamp(6px, 0.9vw, 12px)",
               overflow: "hidden",
-              aspectRatio: "4/3",
+              aspectRatio: "9/16",
               background: "#000",
               boxShadow: [
                 "inset 0 0 0 2px rgba(0,0,0,0.9)",
