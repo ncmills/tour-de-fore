@@ -140,6 +140,7 @@ export default function PlanWizardClient() {
   const [revealedCount, setRevealedCount] = useState(1);
   const [isGenerating, setIsGenerating] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
+  const [overlayError, setOverlayError] = useState("");
   const [loadingMsg, setLoadingMsg] = useState(0);
   const [error, setError] = useState("");
   const isScrolling = useRef(false);
@@ -243,19 +244,38 @@ export default function PlanWizardClient() {
       setConfirmed(true);
       setTimeout(() => { window.location.href = "/?skip=1"; }, 3000);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong. Try again.");
-      setIsGenerating(false);
+      // Show error inside the overlay — never drop back to the wizard
+      setOverlayError(err instanceof Error ? err.message : "Something went wrong. Try again.");
     } finally {
       clearInterval(interval);
     }
   };
 
-  // ── Loading / Confirmation overlay ──
-  if (isGenerating || confirmed) {
+  // ── Loading / Confirmation / Error overlay ──
+  if (isGenerating || confirmed || overlayError) {
     return (
       <div className="fixed inset-0 z-50 flex flex-col items-center justify-center text-center px-6" style={{ background: "#000" }}>
         <AnimatePresence mode="wait">
-          {confirmed ? (
+          {overlayError ? (
+            <motion.div key="error" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center gap-6">
+              <Logo className="w-12 h-12 opacity-40" />
+              <p className="font-body text-red-400 text-base max-w-sm">{overlayError}</p>
+              <div className="flex gap-4">
+                <button
+                  onClick={() => { setOverlayError(""); setIsGenerating(false); }}
+                  className="font-body text-sm text-text-muted underline"
+                >
+                  Try again
+                </button>
+                <button
+                  onClick={() => { window.location.href = "/?skip=1"; }}
+                  className="font-body text-sm text-text-muted underline"
+                >
+                  Go home
+                </button>
+              </div>
+            </motion.div>
+          ) : confirmed ? (
             <motion.div
               key="confirmed"
               initial={{ opacity: 0, scale: 0.9 }}
@@ -272,6 +292,12 @@ export default function PlanWizardClient() {
                   We&rsquo;ll be in touch soon. Taking you home&hellip;
                 </p>
               </div>
+              <button
+                onClick={() => { window.location.href = "/?skip=1"; }}
+                className="font-body text-xs text-text-dim underline mt-2"
+              >
+                take me home now
+              </button>
             </motion.div>
           ) : (
             <motion.div key="loading" className="flex flex-col items-center">
