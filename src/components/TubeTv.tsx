@@ -12,22 +12,18 @@ interface TubeTvProps {
 type TvPhase = "playing" | "ejecting" | "exploding";
 
 export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvProps) {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const screenRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const [tvPhase, setTvPhase] = useState<TvPhase>("playing");
   const triggered = useRef(false);
 
-  useEffect(() => {
-    const v = videoRef.current;
-    if (!v) return;
-    // iOS requires muted set BEFORE src is loaded
-    v.muted = true;
-    v.setAttribute("muted", "");
-    v.setAttribute("playsinline", "");
-    v.src = videoSrc;
-    v.load();
-    v.play().catch(() => {});
-  }, [videoSrc]);
+  // Keep stable refs to callbacks so trigger() doesn't need to re-register
+  const onCompleteRef = useRef(onComplete);
+  const onExplodeStartRef = useRef(onExplodeStart);
+  useEffect(() => { onCompleteRef.current = onComplete; }, [onComplete]);
+  useEffect(() => { onExplodeStartRef.current = onExplodeStart; }, [onExplodeStart]);
 
+  // Stable trigger — reads everything from refs, no deps needed
   const trigger = useCallback(() => {
     if (triggered.current) return;
     triggered.current = true;
@@ -35,10 +31,41 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
     setTvPhase("ejecting");
     setTimeout(() => {
       setTvPhase("exploding");
-      onExplodeStart();
-      setTimeout(onComplete, 900);
+      onExplodeStartRef.current();
+      setTimeout(() => onCompleteRef.current(), 900);
     }, 1300);
-  }, [onExplodeStart, onComplete]);
+  }, []);
+
+  // Imperative video creation — the only reliable way to set muted before src on iOS Safari
+  useEffect(() => {
+    const container = screenRef.current;
+    if (!container) return;
+
+    const v = document.createElement("video");
+    // CRITICAL: set muted BEFORE assigning src
+    v.muted = true;
+    v.setAttribute("muted", "");
+    v.setAttribute("autoplay", "");
+    v.setAttribute("playsinline", "");
+    v.autoplay = true;
+    v.playsInline = true;
+    v.loop = false;
+    v.style.cssText = "width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;";
+    v.src = videoSrc;
+    v.load();
+    v.addEventListener("ended", trigger);
+
+    videoRef.current = v;
+    container.appendChild(v);
+    v.play().catch(() => {});
+
+    return () => {
+      v.removeEventListener("ended", trigger);
+      v.pause();
+      if (container.contains(v)) container.removeChild(v);
+      videoRef.current = null;
+    };
+  }, [videoSrc, trigger]);
 
   return (
     <motion.div
@@ -99,7 +126,6 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
               overflow: "hidden",
               aspectRatio: "4/3",
               background: "#000",
-              /* Convex CRT tube simulation via inset shadow */
               boxShadow: [
                 "inset 0 0 0 2px rgba(0,0,0,0.9)",
                 "inset 8px 8px 20px rgba(0,0,0,0.7)",
@@ -107,15 +133,8 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
                 "inset 0 0 40px rgba(0,0,0,0.4)",
               ].join(", "),
             }}>
-              {/* Video — src set in useEffect so muted is forced before load (iOS fix) */}
-              <video
-                ref={videoRef}
-                autoPlay
-                muted
-                playsInline
-                onEnded={trigger}
-                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-              />
+              {/* Video injected imperatively into this div (iOS autoplay fix) */}
+              <div ref={screenRef} style={{ position: "absolute", inset: 0 }} />
 
               {/* Scanlines */}
               <div style={{
@@ -187,7 +206,6 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
                 boxShadow: "0 3px 6px rgba(0,0,0,0.95), inset 0 1px 0 rgba(255,255,255,0.07)",
                 position: "relative",
               }}>
-                {/* Knob indicator line */}
                 <div style={{
                   position: "absolute",
                   top: "50%", left: "50%",
@@ -255,14 +273,12 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
                       zIndex: 30,
                     }}
                   >
-                    {/* Cassette body */}
                     <div style={{
                       background: "linear-gradient(150deg, #333, #111)",
                       borderRadius: "clamp(3px, 0.4vw, 5px) clamp(3px, 0.4vw, 5px) 2px 2px",
                       padding: "clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 14px) clamp(4px, 0.5vw, 7px)",
                       boxShadow: "0 -6px 20px rgba(0,0,0,0.8), 0 2px 8px rgba(0,0,0,0.5)",
                     }}>
-                      {/* Label */}
                       <div style={{
                         width: "100%",
                         height: "clamp(10px, 1.1vw, 14px)",
@@ -280,7 +296,6 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
                           letterSpacing: "0.15em",
                         }}>HYPE REEL</span>
                       </div>
-                      {/* Reels */}
                       <div style={{
                         background: "#080808",
                         borderRadius: "3px",

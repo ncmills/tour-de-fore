@@ -34,16 +34,24 @@ export default function HomeClient() {
   const bgVideoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    const v = bgVideoRef.current;
-    if (!v) return;
-    // iOS requires muted set BEFORE src is loaded
+    const container = bgVideoRef.current as unknown as HTMLDivElement;
+    if (!container) return;
+    const v = document.createElement("video");
+    // CRITICAL: set muted BEFORE src — iOS Safari requirement
     v.muted = true;
     v.setAttribute("muted", "");
+    v.setAttribute("autoplay", "");
     v.setAttribute("playsinline", "");
     v.setAttribute("loop", "");
+    v.autoplay = true;
+    v.playsInline = true;
+    v.loop = true;
+    v.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;";
     v.src = VIDEO_HD;
     v.load();
+    container.appendChild(v);
     v.play().catch(() => {});
+    return () => { v.pause(); if (container.contains(v)) container.removeChild(v); };
   }, []);
 
   useEffect(() => {
@@ -85,12 +93,8 @@ export default function HomeClient() {
         transition={{ duration: 1.8, delay: phase === "done" ? 0.4 : 0 }}
         style={{ position: "absolute", inset: 0 }}
       >
-        {/* src set in useEffect so muted is forced before load (iOS fix) */}
-        <video
-          ref={bgVideoRef}
-          autoPlay muted loop playsInline
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
-        />
+        {/* Video injected imperatively (iOS autoplay fix — muted must be set before src) */}
+        <div ref={bgVideoRef as unknown as React.RefObject<HTMLDivElement>} style={{ position: "absolute", inset: 0 }} />
         <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.45)" }} />
       </motion.div>
 
