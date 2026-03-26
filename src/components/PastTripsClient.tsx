@@ -66,6 +66,7 @@ export default function PastTripsClient() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.8 + i * 0.12 }}
+            className="trip-card"
             style={{
               borderTop: "1px solid rgba(255,255,255,0.08)",
               paddingTop: "3rem",
@@ -78,6 +79,7 @@ export default function PastTripsClient() {
           >
             <Link
               href={`/past-trips/${trip.year}`}
+              className="trip-img"
               style={{
                 display: "block",
                 aspectRatio: "4/3",
@@ -99,7 +101,7 @@ export default function PastTripsClient() {
               />
             </Link>
 
-            <div style={{ order: i % 2 === 0 ? 1 : 0 }}>
+            <div className="trip-text" style={{ order: i % 2 === 0 ? 1 : 0 }}>
               <p style={{ fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: "0.8rem" }}>
                 {trip.dates}
               </p>

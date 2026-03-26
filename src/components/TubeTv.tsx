@@ -51,7 +51,7 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
             ? { duration: 0.45, delay: 0.8 }
             : {}
         }
-        style={{ position: "relative", width: "clamp(280px, 38vw, 500px)" }}
+        style={{ position: "relative", width: "clamp(240px, 85vw, 500px)" }}
       >
         {/* ── MAIN TV HOUSING ── */}
         <div style={{
