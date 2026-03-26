@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import { WizardState, initialWizardState } from "@/lib/plan-types";
 import SelectionCard from "./SelectionCard";
-import AttendeeForm from "./AttendeeForm";
 import Logo from "./Logo";
 import Link from "next/link";
 
@@ -101,31 +100,37 @@ function Question({
   id: string;
 }) {
   return (
-    <section
+    <motion.section
       id={id}
-      className="min-h-screen flex flex-col justify-center py-20 md:py-32"
+      initial={{ opacity: 0, y: 48 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+      style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", padding: "6rem 2rem", textAlign: "center" }}
     >
-      <div className="max-w-2xl mx-auto w-full px-6 md:px-12">
-        <div className="flex items-center gap-4 mb-8">
-          <span className="text-xs tracking-[0.15em] uppercase text-accent font-body font-medium">
-            {String(number).padStart(2, "0")}
+      <div style={{ maxWidth: 560, margin: "0 auto", width: "100%" }}>
+        {/* Counter + category */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", marginBottom: "2rem" }}>
+          <span style={{ fontSize: "0.6rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.2)", fontFamily: "var(--font-inter), sans-serif" }}>
+            {String(number).padStart(2, "0")} / {String(total).padStart(2, "0")}
           </span>
-          <div className="w-8 h-px bg-accent" />
-          <span className="text-xs tracking-[0.15em] uppercase text-text-dim font-body">
-            of {total}
-          </span>
+          {subtitle && (
+            <>
+              <span style={{ width: 20, height: 1, background: "rgba(255,255,255,0.12)", display: "inline-block" }} />
+              <span style={{ fontSize: "0.6rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(234,88,12,0.8)", fontFamily: "var(--font-inter), sans-serif" }}>
+                {subtitle}
+              </span>
+            </>
+          )}
         </div>
-        {subtitle && (
-          <p className="text-xs tracking-[0.15em] uppercase text-accent font-body font-medium mb-4">
-            {subtitle}
-          </p>
-        )}
-        <h2 className="font-display text-3xl md:text-5xl text-text leading-snug mb-12">
+
+        {/* Title */}
+        <h2 style={{ fontFamily: "var(--font-space), sans-serif", fontSize: "clamp(1.9rem, 4.5vw, 3.2rem)", fontWeight: 700, color: "#fff", lineHeight: 1.1, letterSpacing: "-0.025em", marginBottom: "3rem" }}>
           {title}
         </h2>
+
         {children}
       </div>
-    </section>
+    </motion.section>
   );
 }
 
@@ -134,9 +139,10 @@ export default function PlanWizardClient() {
   const [state, dispatch] = useReducer(reducer, initialWizardState);
   const [revealedCount, setRevealedCount] = useState(1);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [confirmed, setConfirmed] = useState(false);
+  const [overlayError, setOverlayError] = useState("");
   const [loadingMsg, setLoadingMsg] = useState(0);
   const [error, setError] = useState("");
-  const [consent, setConsent] = useState(false);
   const isScrolling = useRef(false);
 
   const set = (field: keyof WizardState, value: unknown) =>
@@ -188,9 +194,9 @@ export default function PlanWizardClient() {
     }
   }, [revealedCount, scrollToQuestion]);
 
-  const setAndAdvance = (field: keyof WizardState, value: unknown, qIndex: number) => {
+  const setAndAdvance = (field: keyof WizardState, value: unknown) => {
     set(field, value);
-    setTimeout(() => advance(qIndex + 1), 350);
+    setTimeout(() => advance(revealedCount), 350);
   };
 
   useEffect(() => {
@@ -209,18 +215,8 @@ export default function PlanWizardClient() {
   }, [isGenerating, revealedCount, totalQuestions, advance]);
 
   const handleGenerate = async () => {
-    const filledAttendees = state.attendees.filter((a) => a.name && a.email);
-    const totalFilled = (state.organizerName && state.organizerEmail ? 1 : 0) + filledAttendees.length;
-    if (totalFilled < 8) {
-      setError("You need at least 8 people total (including yourself).");
-      return;
-    }
     if (!state.organizerName || !state.organizerEmail) {
       setError("Please fill in your name and email.");
-      return;
-    }
-    if (!consent) {
-      setError("Please agree to share attendee emails.");
       return;
     }
 
@@ -244,46 +240,96 @@ export default function PlanWizardClient() {
         throw new Error(data.error || "Failed to generate plan");
       }
 
-      const { planId } = await res.json();
-      router.push(`/plan/result/${planId}`);
+      await res.json();
+      setConfirmed(true);
+      setTimeout(() => { window.location.href = "/?skip=1"; }, 3000);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong. Try again.");
-      setIsGenerating(false);
+      // Show error inside the overlay — never drop back to the wizard
+      setOverlayError(err instanceof Error ? err.message : "Something went wrong. Try again.");
     } finally {
       clearInterval(interval);
     }
   };
 
-  // ── Loading Screen ──
-  if (isGenerating) {
+  // ── Loading / Confirmation / Error overlay ──
+  if (isGenerating || confirmed || overlayError) {
     return (
-      <div className="fixed inset-0 bg-bg z-50 flex flex-col items-center justify-center">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
-          className="mb-10"
-        >
-          <Logo className="w-16 h-16 opacity-60" />
-        </motion.div>
+      <div className="fixed inset-0 z-50 flex flex-col items-center justify-center text-center px-6" style={{ background: "#000" }}>
         <AnimatePresence mode="wait">
-          <motion.p
-            key={loadingMsg}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.4 }}
-            className="font-body text-xl md:text-2xl text-text-muted"
-          >
-            {LOADING_MESSAGES[loadingMsg]}
-          </motion.p>
+          {overlayError ? (
+            <motion.div key="error" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center gap-6">
+              <Logo className="w-12 h-12 opacity-40" />
+              <p className="font-body text-red-400 text-base max-w-sm">{overlayError}</p>
+              <div className="flex gap-4">
+                <button
+                  onClick={() => { setOverlayError(""); setIsGenerating(false); }}
+                  className="font-body text-sm text-text-muted underline"
+                >
+                  Try again
+                </button>
+                <button
+                  onClick={() => { window.location.href = "/?skip=1"; }}
+                  className="font-body text-sm text-text-muted underline"
+                >
+                  Go home
+                </button>
+              </div>
+            </motion.div>
+          ) : confirmed ? (
+            <motion.div
+              key="confirmed"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col items-center gap-8"
+            >
+              <Logo className="w-16 h-16 opacity-80" />
+              <div>
+                <p style={{ fontFamily: "var(--font-script), cursive", fontSize: "clamp(1.6rem, 4vw, 2.8rem)", color: "rgba(255,255,255,0.9)", marginBottom: "1rem" }}>
+                  We&rsquo;ve got your plan.
+                </p>
+                <p className="font-body text-text-muted text-base">
+                  We&rsquo;ll be in touch soon. Taking you home&hellip;
+                </p>
+              </div>
+              <button
+                onClick={() => { window.location.href = "/?skip=1"; }}
+                className="font-body text-xs text-text-dim underline mt-2"
+              >
+                take me home now
+              </button>
+            </motion.div>
+          ) : (
+            <motion.div key="loading" className="flex flex-col items-center">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
+                className="mb-10"
+              >
+                <Logo className="w-16 h-16 opacity-60" />
+              </motion.div>
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={loadingMsg}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.4 }}
+                  className="font-body text-xl md:text-2xl text-text-muted"
+                >
+                  {LOADING_MESSAGES[loadingMsg]}
+                </motion.p>
+              </AnimatePresence>
+              <div className="mt-10 w-48 h-px bg-border overflow-hidden">
+                <motion.div
+                  className="h-full bg-gradient-to-r from-accent to-gold"
+                  animate={{ x: ["-100%", "100%"] }}
+                  transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+                />
+              </div>
+            </motion.div>
+          )}
         </AnimatePresence>
-        <div className="mt-10 w-48 h-px bg-border overflow-hidden">
-          <motion.div
-            className="h-full bg-gradient-to-r from-accent to-gold"
-            animate={{ x: ["-100%", "100%"] }}
-            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-          />
-        </div>
       </div>
     );
   }
@@ -291,39 +337,59 @@ export default function PlanWizardClient() {
   const progress = Math.min((revealedCount / totalQuestions) * 100, 100);
   let qIndex = 0;
 
-  const inputClass = "w-full bg-bg-alt border border-border rounded-lg px-6 py-5 text-text font-body text-lg placeholder:text-text-dim/50 focus:border-accent/50 focus:outline-none transition-colors";
-  const selectClass = "bg-bg-alt border border-border rounded-lg px-5 py-4 text-text font-body text-base focus:border-accent/50 focus:outline-none transition-colors appearance-none";
-  const continueClass = "mt-6 text-xs tracking-[0.15em] uppercase font-body text-accent hover:text-accent-hover transition-colors flex items-center gap-2";
-  const continueArrow = (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-    </svg>
+  const inputClass = "w-full bg-transparent border-b border-white/20 px-0 py-4 text-white font-body text-xl placeholder:text-white/25 focus:border-white/60 focus:outline-none transition-colors text-center";
+  const selectClass = "bg-transparent border-b border-white/20 px-0 py-4 text-white font-body text-base focus:border-white/60 focus:outline-none transition-colors appearance-none text-center w-full";
+
+  const ContinueBtn = ({ onClick, label = "Continue" }: { onClick: () => void; label?: string }) => (
+    <button
+      onClick={onClick}
+      style={{
+        marginTop: "3rem",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "0.5rem",
+        width: "100%",
+        background: "none",
+        border: "none",
+        cursor: "pointer",
+        color: "rgba(255,255,255,0.5)",
+        fontSize: "0.72rem",
+        letterSpacing: "0.2em",
+        textTransform: "uppercase",
+        fontFamily: "var(--font-inter), sans-serif",
+        padding: "0.5rem 0",
+        transition: "color 0.2s",
+      }}
+      onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.9)"; }}
+      onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.5)"; }}
+    >
+      {label}
+      <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg>
+    </button>
   );
 
   return (
-    <div id="main-content" className="bg-bg">
-      {/* Fixed progress bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-border">
+    <div id="main-content" style={{ background: "#000" }}>
+      {/* Fixed progress bar — thin white line */}
+      <div style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 50, height: 2, background: "rgba(255,255,255,0.08)" }}>
         <motion.div
-          className="h-full bg-gradient-to-r from-accent to-gold"
+          style={{ height: "100%", background: "#fff", transformOrigin: "left" }}
           animate={{ width: `${progress}%` }}
           transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
         />
       </div>
 
-      {/* Fixed header */}
-      <div className="fixed top-1 left-0 right-0 z-40">
-        <div className="pt-6 pb-4 px-6 md:px-12 flex items-center justify-between max-w-5xl mx-auto bg-bg/80 backdrop-blur-sm rounded-b-lg">
-          <Link href="/" className="flex items-center gap-3 group">
-            <Logo className="w-7 h-7" />
-            <span className="font-display text-xl text-text/60 group-hover:text-text transition-colors">
-              Tour de Fore
-            </span>
-          </Link>
-          <span className="text-xs tracking-[0.15em] uppercase text-text-dim font-body">
-            {revealedCount} / {totalQuestions}
-          </span>
-        </div>
+      {/* Back link — fixed top-left, matching other pages */}
+      <div style={{ position: "fixed", top: "1.2rem", left: "clamp(1.5rem, 6vw, 6rem)", zIndex: 100 }}>
+        <Link
+          href="/?skip=1"
+          style={{ fontFamily: "var(--font-script), cursive", fontSize: "1.1rem", color: "rgba(255,255,255,0.35)", textDecoration: "none" }}
+        >
+          ← back
+        </Link>
       </div>
 
       {/* Q1: Destination Type */}
@@ -339,13 +405,13 @@ export default function PlanWizardClient() {
             label="Specific place"
             sublabel="I know where we're going"
             selected={state.destinationType === "specific"}
-            onClick={() => setAndAdvance("destinationType", "specific", qIndex)}
+            onClick={() => setAndAdvance("destinationType", "specific")}
           />
           <SelectionCard
             label="Pick a region"
             sublabel="Let AI suggest a spot"
             selected={state.destinationType === "region"}
-            onClick={() => setAndAdvance("destinationType", "region", qIndex)}
+            onClick={() => setAndAdvance("destinationType", "region")}
           />
         </div>
       </Question>
@@ -365,16 +431,12 @@ export default function PlanWizardClient() {
               value={state.destination}
               onChange={(e) => set("destination", e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter" && state.destination) advance(qIndex + 1);
+                if (e.key === "Enter" && state.destination) advance(revealedCount);
               }}
               autoFocus
               className={inputClass}
             />
-            {state.destination && (
-              <button onClick={() => advance(qIndex + 1)} className={continueClass}>
-                Continue {continueArrow}
-              </button>
-            )}
+            {state.destination && <ContinueBtn onClick={() => advance(revealedCount)} />}
           </Question>
         ) : (
           <Question
@@ -390,7 +452,7 @@ export default function PlanWizardClient() {
                   label={r.label}
                   sublabel={r.sublabel}
                   selected={state.region === r.label}
-                  onClick={() => setAndAdvance("region", r.label, qIndex)}
+                  onClick={() => setAndAdvance("region", r.label)}
                 />
               ))}
             </div>
@@ -412,13 +474,13 @@ export default function PlanWizardClient() {
               label="Specific month"
               sublabel="I know when"
               selected={!state.flexible}
-              onClick={() => setAndAdvance("flexible", false, qIndex)}
+              onClick={() => setAndAdvance("flexible", false)}
             />
             <SelectionCard
               label="Flexible"
               sublabel="Pick a season"
               selected={state.flexible}
-              onClick={() => setAndAdvance("flexible", true, qIndex)}
+              onClick={() => setAndAdvance("flexible", true)}
             />
           </div>
         </Question>
@@ -439,7 +501,7 @@ export default function PlanWizardClient() {
                   key={s}
                   label={s}
                   selected={state.preferredSeason === s}
-                  onClick={() => setAndAdvance("preferredSeason", s, qIndex)}
+                  onClick={() => setAndAdvance("preferredSeason", s)}
                 />
               ))}
             </div>
@@ -474,9 +536,7 @@ export default function PlanWizardClient() {
               </select>
             </div>
             {state.tripMonth && state.tripYear && (
-              <button onClick={() => advance(qIndex + 1)} className={continueClass}>
-                Continue {continueArrow}
-              </button>
+              <ContinueBtn onClick={() => advance(revealedCount)} />
             )}
           </Question>
         )
@@ -492,7 +552,7 @@ export default function PlanWizardClient() {
                 label={`${d} days`}
                 sublabel={d === 3 ? "The TDF standard" : undefined}
                 selected={state.numberOfDays === d}
-                onClick={() => setAndAdvance("numberOfDays", d, qIndex)}
+                onClick={() => setAndAdvance("numberOfDays", d)}
               />
             ))}
           </div>
@@ -502,29 +562,27 @@ export default function PlanWizardClient() {
       {/* Q6: Group size */}
       {(qIndex = 5, revealedCount > 5) && (
         <Question number={qIndex + 1} total={totalQuestions} title="How many devils are coming?" subtitle="The Crew" id={questionIds[qIndex]}>
-          <div className="flex items-center gap-6">
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "2rem" }}>
             <button
               onClick={() => set("groupSize", Math.max(4, state.groupSize - 1))}
-              className="w-14 h-14 rounded-lg border border-border bg-bg-alt text-text hover:border-accent/30 transition-colors flex items-center justify-center text-2xl"
+              style={{ width: 52, height: 52, borderRadius: "50%", border: "1px solid rgba(255,255,255,0.15)", background: "transparent", color: "#fff", fontSize: "1.5rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "border-color 0.2s" }}
             >
               −
             </button>
-            <span className="font-display text-7xl text-accent w-24 text-center">
+            <span style={{ fontFamily: "var(--font-space), sans-serif", fontSize: "6rem", fontWeight: 700, color: "#fff", lineHeight: 1, minWidth: "5rem", textAlign: "center" }}>
               {state.groupSize}
             </span>
             <button
               onClick={() => set("groupSize", Math.min(32, state.groupSize + 1))}
-              className="w-14 h-14 rounded-lg border border-border bg-bg-alt text-text hover:border-accent/30 transition-colors flex items-center justify-center text-2xl"
+              style={{ width: 52, height: 52, borderRadius: "50%", border: "1px solid rgba(255,255,255,0.15)", background: "transparent", color: "#fff", fontSize: "1.5rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "border-color 0.2s" }}
             >
               +
             </button>
           </div>
-          <p className="text-text-dim text-sm font-body mt-4">
+          <p style={{ color: "rgba(255,255,255,0.25)", fontSize: "0.8rem", marginTop: "1rem", letterSpacing: "0.05em" }}>
             12–16 is the sweet spot. Min 4, max 32.
           </p>
-          <button onClick={() => advance(qIndex + 1)} className={`mt-8 ${continueClass}`}>
-            Continue {continueArrow}
-          </button>
+          <ContinueBtn onClick={() => advance(revealedCount)} />
         </Question>
       )}
 
@@ -537,7 +595,7 @@ export default function PlanWizardClient() {
                 key={s}
                 label={s}
                 selected={state.skillMix === s}
-                onClick={() => setAndAdvance("skillMix", s, qIndex)}
+                onClick={() => setAndAdvance("skillMix", s)}
                 compact
               />
             ))}
@@ -554,7 +612,7 @@ export default function PlanWizardClient() {
                 key={a}
                 label={a}
                 selected={state.ageRange === a}
-                onClick={() => setAndAdvance("ageRange", a, qIndex)}
+                onClick={() => setAndAdvance("ageRange", a)}
                 compact
               />
             ))}
@@ -576,7 +634,7 @@ export default function PlanWizardClient() {
                 label={r.label}
                 sublabel={r.sublabel}
                 selected={state.roundsPerDay === r.label}
-                onClick={() => setAndAdvance("roundsPerDay", r.label, qIndex)}
+                onClick={() => setAndAdvance("roundsPerDay", r.label)}
               />
             ))}
           </div>
@@ -592,7 +650,7 @@ export default function PlanWizardClient() {
                 key={q}
                 label={q}
                 selected={state.courseQuality === q}
-                onClick={() => setAndAdvance("courseQuality", q, qIndex)}
+                onClick={() => setAndAdvance("courseQuality", q)}
                 compact
               />
             ))}
@@ -609,7 +667,7 @@ export default function PlanWizardClient() {
                 key={w}
                 label={w}
                 selected={state.walkingOrRiding === w}
-                onClick={() => setAndAdvance("walkingOrRiding", w, qIndex)}
+                onClick={() => setAndAdvance("walkingOrRiding", w)}
                 compact
               />
             ))}
@@ -625,12 +683,10 @@ export default function PlanWizardClient() {
             placeholder="e.g. Bandon Dunes, Pebble Beach (or leave blank)"
             value={state.mustPlayCourses}
             onChange={(e) => set("mustPlayCourses", e.target.value)}
-            onKeyDown={(e) => { if (e.key === "Enter") advance(qIndex + 1); }}
+            onKeyDown={(e) => { if (e.key === "Enter") advance(revealedCount); }}
             className={inputClass}
           />
-          <button onClick={() => advance(qIndex + 1)} className={continueClass}>
-            {state.mustPlayCourses ? "Continue" : "Skip"} {continueArrow}
-          </button>
+          <ContinueBtn onClick={() => advance(revealedCount)} label={state.mustPlayCourses ? "Continue" : "Skip"} />
         </Question>
       )}
 
@@ -649,7 +705,7 @@ export default function PlanWizardClient() {
                 label={l.label}
                 sublabel={l.sublabel}
                 selected={state.lodging === l.label}
-                onClick={() => setAndAdvance("lodging", l.label, qIndex)}
+                onClick={() => setAndAdvance("lodging", l.label)}
               />
             ))}
           </div>
@@ -665,7 +721,7 @@ export default function PlanWizardClient() {
                 key={d}
                 label={d}
                 selected={state.dining === d}
-                onClick={() => setAndAdvance("dining", d, qIndex)}
+                onClick={() => setAndAdvance("dining", d)}
                 compact
               />
             ))}
@@ -682,7 +738,7 @@ export default function PlanWizardClient() {
                 key={n}
                 label={n}
                 selected={state.nightlife === n}
-                onClick={() => setAndAdvance("nightlife", n, qIndex)}
+                onClick={() => setAndAdvance("nightlife", n)}
                 compact
               />
             ))}
@@ -693,24 +749,29 @@ export default function PlanWizardClient() {
       {/* Q16: Activities */}
       {(qIndex = 15, revealedCount > 15) && (
         <Question number={qIndex + 1} total={totalQuestions} title="Any off-course activities?" id={questionIds[qIndex]}>
-          <div className="flex flex-wrap gap-3">
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", justifyContent: "center" }}>
             {ACTIVITIES.map((a) => (
               <button
                 key={a}
                 onClick={() => dispatch({ type: "TOGGLE_ACTIVITY", activity: a })}
-                className={`px-5 py-3 rounded-lg border text-sm font-body transition-all duration-300 ${
-                  state.activities.includes(a)
-                    ? "bg-accent/10 border-accent text-accent"
-                    : "bg-bg-card border-border text-text-muted hover:border-accent/30"
-                }`}
+                style={{
+                  padding: "0.6rem 1.4rem",
+                  borderRadius: 4,
+                  border: state.activities.includes(a) ? "1px solid #fff" : "1px solid rgba(255,255,255,0.15)",
+                  background: state.activities.includes(a) ? "#fff" : "transparent",
+                  color: state.activities.includes(a) ? "#000" : "rgba(255,255,255,0.6)",
+                  fontSize: "0.8rem",
+                  letterSpacing: "0.06em",
+                  cursor: "pointer",
+                  transition: "all 0.2s",
+                  fontFamily: "var(--font-inter), sans-serif",
+                }}
               >
                 {a}
               </button>
             ))}
           </div>
-          <button onClick={() => advance(qIndex + 1)} className={`mt-8 ${continueClass}`}>
-            Continue {continueArrow}
-          </button>
+          <ContinueBtn onClick={() => advance(revealedCount)} />
         </Question>
       )}
 
@@ -723,7 +784,7 @@ export default function PlanWizardClient() {
                 key={b}
                 label={b}
                 selected={state.budget === b}
-                onClick={() => setAndAdvance("budget", b, qIndex)}
+                onClick={() => setAndAdvance("budget", b)}
                 compact
               />
             ))}
@@ -734,7 +795,7 @@ export default function PlanWizardClient() {
       {/* Q18: Budget priorities */}
       {(qIndex = 17, revealedCount > 17) && (
         <Question number={qIndex + 1} total={totalQuestions} title="Where should the money go?" id={questionIds[qIndex]}>
-          <p className="text-text-dim text-sm font-body mb-6 -mt-6">Pick up to 2</p>
+          <p style={{ color: "rgba(255,255,255,0.25)", fontSize: "0.75rem", letterSpacing: "0.08em", marginBottom: "2rem", marginTop: "-1.5rem" }}>Pick up to 2</p>
           <div className="grid grid-cols-2 gap-4">
             {["Best courses", "Best lodging", "Best dining", "Keep balanced"].map((p) => (
               <SelectionCard
@@ -747,9 +808,7 @@ export default function PlanWizardClient() {
             ))}
           </div>
           {state.budgetPriorities.length > 0 && (
-            <button onClick={() => advance(qIndex + 1)} className={`mt-8 ${continueClass}`}>
-              Continue {continueArrow}
-            </button>
+            <ContinueBtn onClick={() => advance(revealedCount)} />
           )}
         </Question>
       )}
@@ -762,64 +821,59 @@ export default function PlanWizardClient() {
             value={state.specialRequests}
             onChange={(e) => set("specialRequests", e.target.value)}
             rows={4}
-            className="w-full bg-bg-alt border border-border rounded-lg px-6 py-5 text-text font-body text-base placeholder:text-text-dim/50 focus:border-accent/50 focus:outline-none transition-colors resize-none"
+            style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "1rem 0", color: "#fff", fontFamily: "var(--font-inter), sans-serif", fontSize: "1rem", resize: "none", outline: "none", textAlign: "center" }}
+            className="placeholder:text-white/25"
           />
-          <button onClick={() => advance(qIndex + 1)} className={continueClass}>
-            {state.specialRequests ? "Continue" : "Skip"} {continueArrow}
-          </button>
+          <ContinueBtn onClick={() => advance(revealedCount)} label={state.specialRequests ? "Continue" : "Skip"} />
         </Question>
       )}
 
       {/* Q20: Roster */}
       {(qIndex = 19, revealedCount > 19) && (
-        <section id={questionIds[qIndex]} className="min-h-screen flex flex-col justify-center py-20 md:py-32">
-          <div className="max-w-2xl mx-auto w-full px-6 md:px-12">
-            <div className="flex items-center gap-4 mb-8">
-              <span className="text-xs tracking-[0.15em] uppercase text-accent font-body font-medium">
-                {String(qIndex + 1).padStart(2, "0")}
+        <motion.section
+          id={questionIds[qIndex]}
+          initial={{ opacity: 0, y: 48 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+          style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", padding: "6rem 2rem", textAlign: "center" }}
+        >
+          <div style={{ maxWidth: 560, margin: "0 auto", width: "100%" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", marginBottom: "2rem" }}>
+              <span style={{ fontSize: "0.6rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.2)", fontFamily: "var(--font-inter), sans-serif" }}>
+                {String(qIndex + 1).padStart(2, "0")} / {String(totalQuestions).padStart(2, "0")}
               </span>
-              <div className="w-8 h-px bg-accent" />
-              <span className="text-xs tracking-[0.15em] uppercase text-text-dim font-body">
-                of {totalQuestions}
+              <span style={{ width: 20, height: 1, background: "rgba(255,255,255,0.12)", display: "inline-block" }} />
+              <span style={{ fontSize: "0.6rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(234,88,12,0.8)", fontFamily: "var(--font-inter), sans-serif" }}>
+                The Roster
               </span>
             </div>
-            <p className="text-xs tracking-[0.15em] uppercase text-accent font-body font-medium mb-4">
-              The Roster
-            </p>
-            <h2 className="font-display text-3xl md:text-5xl text-text leading-snug mb-12">
-              Who&rsquo;s Coming?
+            <h2 style={{ fontFamily: "var(--font-space), sans-serif", fontSize: "clamp(1.9rem, 4.5vw, 3.2rem)", fontWeight: 700, color: "#fff", lineHeight: 1.1, letterSpacing: "-0.025em", marginBottom: "3rem" }}>
+              Who&rsquo;s organizing?
             </h2>
 
             <div className="space-y-10">
-              <AttendeeForm
-                organizerName={state.organizerName}
-                organizerEmail={state.organizerEmail}
-                attendees={state.attendees}
-                onOrganizerChange={(field, value) => set(field, value)}
-                onAttendeeChange={(index, field, value) =>
-                  dispatch({ type: "SET_ATTENDEE", index, field, value })
-                }
-                onAddAttendee={() => dispatch({ type: "ADD_ATTENDEE" })}
-                onRemoveAttendee={(index) => dispatch({ type: "REMOVE_ATTENDEE", index })}
-              />
-
-              <label className="flex items-start gap-3 cursor-pointer group">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <input
-                  type="checkbox"
-                  checked={consent}
-                  onChange={(e) => setConsent(e.target.checked)}
-                  className="mt-1 accent-[#EA580C]"
+                  type="text"
+                  placeholder="Your name"
+                  value={state.organizerName}
+                  onChange={(e) => set("organizerName", e.target.value)}
+                  className="bg-bg-alt border border-border rounded-lg px-5 py-3.5 text-text font-body text-sm placeholder:text-text-dim focus:border-accent focus:outline-none transition-colors"
                 />
-                <span className="text-text-dim text-sm font-body leading-relaxed">
-                  I have permission to share these email addresses. Tour de Fore will only use them to send the generated trip plan.
-                </span>
-              </label>
+                <input
+                  type="email"
+                  placeholder="Your email"
+                  value={state.organizerEmail}
+                  onChange={(e) => set("organizerEmail", e.target.value)}
+                  className="bg-bg-alt border border-border rounded-lg px-5 py-3.5 text-text font-body text-sm placeholder:text-text-dim focus:border-accent focus:outline-none transition-colors"
+                />
+              </div>
 
               {error && (
                 <motion.p
                   initial={{ opacity: 0, y: -5 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-red-400 text-sm font-body"
+                  style={{ color: "#f87171", fontSize: "0.8rem", fontFamily: "var(--font-inter), sans-serif" }}
                 >
                   {error}
                 </motion.p>
@@ -827,19 +881,19 @@ export default function PlanWizardClient() {
 
               <motion.button
                 onClick={handleGenerate}
-                className="btn-primary w-full py-5 font-body text-sm font-medium"
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
+                style={{ width: "100%", padding: "1.1rem", background: "#fff", color: "#000", border: "none", borderRadius: 4, fontSize: "0.85rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", fontFamily: "var(--font-inter), sans-serif" }}
               >
                 Generate My Trip Plan
               </motion.button>
             </div>
           </div>
-        </section>
+        </motion.section>
       )}
 
       {/* Bottom spacer */}
-      <div className="h-[20vh]" />
+      <div style={{ height: "20vh" }} />
     </div>
   );
 }

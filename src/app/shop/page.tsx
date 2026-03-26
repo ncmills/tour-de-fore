@@ -1,20 +1,13 @@
-import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
-import ShopClient from "@/components/ShopClient";
-
-export const metadata = {
-  title: "Shop | Tour de Fore",
-  description: "Official Tour de Fore gear and swag.",
-};
+import { Suspense } from "react";
+import ExplosionGate from "@/components/ExplosionGate";
+import ShopPageClient from "@/components/ShopPageClient";
 
 export default function ShopPage() {
   return (
-    <>
-      <Nav />
-      <div id="main-content">
-        <ShopClient />
-      </div>
-      <Footer />
-    </>
+    <Suspense>
+      <ExplosionGate pageKey="shop">
+        <ShopPageClient />
+      </ExplosionGate>
+    </Suspense>
   );
 }

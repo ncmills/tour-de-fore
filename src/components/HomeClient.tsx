@@ -2,325 +2,305 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
-import { trips } from "@/lib/trips";
-import FadeIn from "./FadeIn";
-import { LogoFull } from "./Logo";
+import { motion, AnimatePresence } from "motion/react";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { useSearchParams } from "next/navigation";
+import TubeTv from "./TubeTv";
 
-const SQ = "https://images.squarespace-cdn.com/content/v1/62cb87cca6b36f353a2575d5";
+const VIDEO_HD = "/bg.mp4";
+const HYPE_VIDEO = "/hype-audio.mp4"; // has audio; TubeTv starts muted, user can unmute
 
-const heroImages = [
-  `${SQ}/d0910eb3-ce7f-4395-8e75-06414a70a916/DSC01441.JPG`,
-  `${SQ}/ff8d47e6-8753-45f8-b511-812d49db7bcd/IMG_0729.jpeg`,
-  `${SQ}/40030cd0-2783-4cca-ab1b-ec4b3d674471/a.jpeg`,
-  `${SQ}/668ee548-a6f4-4b37-9d7a-18d5fb6a54e3/IMG_0519.jpeg`,
-  `${SQ}/0fba83c5-18c2-4f97-9767-cc2571e783cf/IMG_1750.jpeg`,
-  `${SQ}/3eba1084-f559-4627-ba67-0764b1858572/IMG_7541.jpeg`,
-];
+const textStyle: React.CSSProperties = {
+  fontFamily: "var(--font-script), cursive",
+  fontSize: "clamp(1.3rem, 3.5vw, 3.5rem)",
+  color: "rgba(255,255,255,0.9)",
+  lineHeight: 1,
+  margin: 0,
+  padding: 0,
+  textAlign: "center",
+};
 
-/* ── 1. Hero ── */
-function HeroSection() {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-
-  const heroImage = heroImages[3];
-
-  return (
-    <section ref={ref} className="relative h-screen overflow-hidden">
-      <motion.div className="absolute inset-0" style={{ y }}>
-        <Image
-          src={heroImage}
-          alt="Tour de Fore"
-          fill
-          sizes="100vw"
-          className="object-cover scale-105"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-[#18181B]" />
-      </motion.div>
-
-      <motion.div
-        style={{ opacity }}
-        className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6"
-      >
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, delay: 0.2 }}
-        >
-          <LogoFull className="w-[280px] md:w-[420px] lg:w-[520px] mx-auto drop-shadow-2xl" />
-        </motion.div>
-
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 1.4, delay: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
-          className="w-24 h-px bg-gradient-to-r from-transparent via-accent to-transparent mt-10 mb-8 origin-center"
-        />
-
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1.1 }}
-          className="font-accent text-xl md:text-2xl lg:text-3xl italic text-white/70 max-w-2xl leading-relaxed"
-        >
-          hell is empty and all the devils are here
-        </motion.p>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
-      >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
-          className="w-px h-8 bg-gradient-to-b from-white/40 to-transparent"
-        />
-      </motion.div>
-    </section>
-  );
-}
-
-/* ── 2. Next Up Banner ── */
-function NextUpBanner() {
-  const trip = trips[0];
-  const photos = trip.photoSections[0]?.images || [];
-  const heroPhoto = photos[0] || trip.heroImage;
-
-  return (
-    <section className="py-20 md:py-32 bg-bg-alt">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
-          {/* Left: Info */}
-          <div>
-            <FadeIn>
-              <div className="flex items-center gap-3 mb-4">
-                <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                <span className="text-xs tracking-[0.15em] uppercase text-accent font-body font-medium">
-                  Next Up
-                </span>
-              </div>
-            </FadeIn>
-
-            <FadeIn delay={0.1}>
-              <h2 className="font-display text-[5rem] md:text-[8rem] lg:text-[10rem] text-gold leading-[0.9] mb-6">
-                {trip.year}
-              </h2>
-            </FadeIn>
-
-            <FadeIn delay={0.15}>
-              <h3 className="font-body text-xl md:text-2xl text-text font-medium mb-3">
-                {trip.location}, {trip.state}
-              </h3>
-            </FadeIn>
-
-            <FadeIn delay={0.2}>
-              <p className="text-text-muted font-body text-sm mb-8">
-                {trip.dates}
-              </p>
-            </FadeIn>
-
-            <FadeIn delay={0.25}>
-              <p className="text-text-dim font-body text-sm mb-10">
-                {trip.courses.length} courses &middot; {trip.schedule.length} days &middot; 16 guys
-              </p>
-            </FadeIn>
-
-            <FadeIn delay={0.3}>
-              <Link
-                href={`/trip/${trip.slug}`}
-                className="btn-primary inline-flex items-center gap-3 group"
-              >
-                Get the Details
-                <svg
-                  className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-            </FadeIn>
-          </div>
-
-          {/* Right: Photo */}
-          <FadeIn delay={0.2} direction="right">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-              <Image
-                src={heroPhoto}
-                alt={`${trip.year} - ${trip.location}`}
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-            </div>
-          </FadeIn>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ── 3. The Timeline ── */
-function Timeline() {
-  const allTrips = [...trips].reverse(); // chronological
-
-  return (
-    <section id="destinations" className="py-28 md:py-44 bg-bg">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <FadeIn>
-          <h2 className="font-display text-4xl md:text-6xl text-text mb-14">
-            The Timeline
-          </h2>
-        </FadeIn>
-
-        {/* Desktop: horizontal scroll row */}
-        <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory md:grid md:grid-cols-3 lg:grid-cols-6 md:gap-6 md:overflow-visible md:pb-0">
-          {allTrips.map((trip, i) => (
-            <FadeIn key={trip.year} delay={0.05 + i * 0.05} className="snap-start">
-              <Link href={`/trip/${trip.slug}`} className="block group flex-shrink-0 w-[220px] md:w-auto">
-                <div
-                  className={`relative aspect-[3/4] overflow-hidden rounded-2xl ${
-                    trip.upcoming
-                      ? "ring-2 ring-accent ring-offset-2 ring-offset-bg"
-                      : ""
-                  }`}
-                >
-                  <Image
-                    src={trip.heroImage}
-                    alt={`${trip.year} - ${trip.location}`}
-                    fill
-                    sizes="(max-width: 768px) 220px, (max-width: 1024px) 33vw, 16vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <span className="font-display text-4xl md:text-5xl text-gold leading-none block group-hover:text-accent transition-colors duration-300">
-                      {trip.year}
-                    </span>
-                    <span className="text-xs text-white/60 font-body mt-1 block">
-                      {trip.location}
-                    </span>
-                  </div>
-                  {trip.upcoming && (
-                    <div className="absolute top-3 right-3">
-                      <span className="w-2 h-2 rounded-full bg-accent animate-pulse block" />
-                    </div>
-                  )}
-                </div>
-              </Link>
-            </FadeIn>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ── 4. The Manifesto ── */
-function ManifestoSection() {
-  const bgImage = heroImages[0]; // group shot
-
-  return (
-    <section className="relative py-32 md:py-48 overflow-hidden">
-      {/* Full-bleed background */}
-      <div className="absolute inset-0">
-        <Image
-          src={bgImage}
-          alt=""
-          fill
-          sizes="100vw"
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-black/75" />
-      </div>
-
-      <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-12">
-        <FadeIn>
-          <div className="text-text text-lg md:text-xl leading-[2] font-body font-light max-w-3xl">
-            <p>
-              Every summer we pick a town nobody&rsquo;s heard of, rent the biggest house we can find,
-              and play <span className="text-accent font-medium">108 holes in three days</span>.
-              Six rounds. Back to back to back. An absolutely unreasonable amount of golf.
-            </p>
-          </div>
-        </FadeIn>
-
-        <FadeIn delay={0.15}>
-          <div className="mt-10 pl-6 md:pl-8 border-l-2 border-accent/40">
-            <p className="font-accent text-3xl md:text-5xl italic text-white/70 leading-[1.3]">
-              It&rsquo;s not about the handicap.
-              <br />
-              It&rsquo;s about who you&rsquo;re out there with.
-            </p>
-          </div>
-        </FadeIn>
-
-        <FadeIn delay={0.25}>
-          <p className="text-text-muted font-body text-base tracking-wide mt-12">
-            6 years &middot; 36 rounds &middot; 108 holes
-          </p>
-        </FadeIn>
-      </div>
-    </section>
-  );
-}
-
-/* ── 5. Plan Your Own CTA ── */
-function PlanCTA() {
-  return (
-    <section className="py-32 md:py-48 bg-bg-alt">
-      <div className="max-w-4xl mx-auto px-6 md:px-12 text-center">
-        <FadeIn>
-          <h2 className="font-display text-4xl md:text-6xl lg:text-7xl text-text mb-4">
-            Plan Your Own Trip
-          </h2>
-        </FadeIn>
-        <FadeIn delay={0.1}>
-          <p className="text-text-muted font-body text-lg md:text-xl mb-10 max-w-2xl mx-auto">
-            AI-powered itinerary for your crew. Courses, lodging, dining, budget — the whole game plan.
-          </p>
-        </FadeIn>
-        <FadeIn delay={0.2}>
-          <Link
-            href="/plan"
-            className="btn-primary inline-flex items-center gap-3 group px-10 py-4"
-          >
-            Start Planning
-            <svg
-              className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </Link>
-        </FadeIn>
-      </div>
-    </section>
-  );
-}
+type Phase = "text" | "tv" | "done";
 
 export default function HomeClient() {
+  const params = useSearchParams();
+  const skip = params.get("skip") === "1";
+
+  const [phase, setPhase] = useState<Phase>(skip ? "done" : "text");
+  const [showLinks, setShowLinks] = useState(skip);
+  const [logoVisible, setLogoVisible] = useState(skip);
+  const [logoUninverted, setLogoUninverted] = useState(skip);
+  const [isMobile, setIsMobile] = useState(false);
+  const [ambientOn, setAmbientOn] = useState(false);
+  const bgVideoRef = useRef<HTMLVideoElement>(null);
+  const ambientAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    const container = bgVideoRef.current as unknown as HTMLDivElement;
+    if (!container) return;
+    const v = document.createElement("video");
+    // CRITICAL: set muted BEFORE src — iOS Safari requirement
+    v.muted = true;
+    v.setAttribute("muted", "");
+    v.setAttribute("autoplay", "");
+    v.setAttribute("playsinline", "");
+    v.setAttribute("loop", "");
+    v.autoplay = true;
+    v.playsInline = true;
+    v.loop = true;
+    v.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;";
+    v.src = VIDEO_HD;
+    v.load();
+    container.appendChild(v);
+    v.play().catch(() => {});
+    return () => { v.pause(); if (container.contains(v)) container.removeChild(v); };
+  }, []);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 640);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  // After text animations finish, show TV
+  useEffect(() => {
+    if (skip) return;
+    const t = setTimeout(() => setPhase("tv"), 3500);
+    return () => clearTimeout(t);
+  }, [skip]);
+
+  // Uninvert logo shortly after it appears
+  useEffect(() => {
+    if (!logoVisible || logoUninverted) return;
+    const t = setTimeout(() => setLogoUninverted(true), 600);
+    return () => clearTimeout(t);
+  }, [logoVisible, logoUninverted]);
+
+  const toggleAmbient = useCallback(() => {
+    if (!ambientAudioRef.current) {
+      const audio = new Audio("/ambient.mp3");
+      audio.loop = true;
+      audio.volume = 0.5;
+      ambientAudioRef.current = audio;
+    }
+    if (!ambientOn) {
+      ambientAudioRef.current.play().catch(() => {});
+      setAmbientOn(true);
+    } else {
+      ambientAudioRef.current.pause();
+      setAmbientOn(false);
+    }
+  }, [ambientOn]);
+
+  // Cleanup audio on unmount
+  useEffect(() => {
+    return () => { ambientAudioRef.current?.pause(); };
+  }, []);
+
+  const handleExplodeStart = useCallback(() => {}, []);
+
+  const handleTvDone = useCallback(() => {
+    setLogoVisible(true);
+    setPhase("done");
+    setTimeout(() => setShowLinks(true), 2500);
+  }, []);
+
   return (
-    <main>
-      <HeroSection />
-      <NextUpBanner />
-      <Timeline />
-      <ManifestoSection />
-      <PlanCTA />
+    <main style={{ height: "100vh", overflow: "hidden", position: "relative", background: "#000" }}>
+
+      {/* Background video */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: phase === "done" ? 1 : 0 }}
+        transition={{ duration: 1.8, delay: phase === "done" ? 0.4 : 0 }}
+        style={{ position: "absolute", inset: 0 }}
+      >
+        {/* Video injected imperatively (iOS autoplay fix — muted must be set before src) */}
+        <div ref={bgVideoRef as unknown as React.RefObject<HTMLDivElement>} style={{ position: "absolute", inset: 0 }} />
+        <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.45)" }} />
+      </motion.div>
+
+      {/* ── CENTER: TV or Logo ── */}
+      <div style={{
+        position: "absolute",
+        inset: 0,
+        zIndex: 10,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        paddingBottom: "18vh", // leave room for text at bottom
+      }}>
+        {/* TV */}
+        <AnimatePresence>
+          {phase === "tv" && (
+            <motion.div
+              key="tv"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, transition: { duration: 0 } }}
+              transition={{ duration: 0.4 }}
+              style={{ position: "absolute" }}
+            >
+              <TubeTv
+                videoSrc={HYPE_VIDEO}
+                onExplodeStart={handleExplodeStart}
+                onComplete={handleTvDone}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Logo */}
+        <motion.div
+          style={{ position: "absolute" }}
+          initial={skip
+            ? { opacity: 1, scale: 1, filter: "invert(0)" }
+            : { opacity: 0, scale: 1.1, filter: "invert(1)" }
+          }
+          animate={
+            skip ? {}
+            : logoUninverted ? { opacity: 1, scale: 1, filter: "invert(0)" }
+            : logoVisible ? { opacity: 1, scale: 1, filter: "invert(1)" }
+            : { opacity: 0, scale: 1.1, filter: "invert(1)" }
+          }
+          transition={
+            logoUninverted
+              ? { duration: 1.8 }
+              : logoVisible
+              ? { duration: 0.5, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }
+              : {}
+          }
+        >
+          <Image
+            src="/logo-full.png"
+            alt="Tour de Fore"
+            width={4504}
+            height={3776}
+            priority
+            style={{ width: "clamp(200px, 22vw, 340px)", height: "auto", filter: "brightness(0)" }}
+          />
+        </motion.div>
+      </div>
+
+      {/* ── BOTTOM: text lines ── */}
+      <AnimatePresence>
+        {!showLinks && phase !== "done" && (
+          <motion.div
+            key="text"
+            className="home-text"
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.7 }}
+            style={{
+              position: "absolute",
+              bottom: isMobile ? "calc(50vh - 1.5in)" : "8vh",
+              left: 0, right: 0,
+              zIndex: 20,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 0,
+              padding: "0 1.5rem",
+            }}
+          >
+            <motion.p
+              style={{ ...textStyle, clipPath: "inset(0 105% 0 -5px)" }}
+              animate={{ clipPath: "inset(0 -5px 0 -5px)" }}
+              transition={{ duration: 1.4, delay: 0.3, ease: [0.25, 0.0, 0.35, 1.0] }}
+            >
+              hell is empty
+            </motion.p>
+            <motion.p
+              style={{ ...textStyle, clipPath: "inset(0 105% 0 -5px)" }}
+              animate={{ clipPath: "inset(0 -5px 0 -5px)" }}
+              transition={{ duration: 1.6, delay: 1.2, ease: [0.25, 0.0, 0.35, 1.0] }}
+            >
+              all the devils are here
+            </motion.p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── CENTER: links (same position as original) ── */}
+      <AnimatePresence>
+        {showLinks && (
+          <motion.div
+            key="links"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.0 }}
+            style={{
+              position: "absolute",
+              inset: 0,
+              zIndex: 20,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "2.5rem",
+              paddingTop: "2in",
+            }}
+          >
+            {["Shop", "Past Trips", "Plan a Trip"].map((label) => (
+              <Link
+                key={label}
+                href={`/${label.toLowerCase().replace(/ /g, "-")}`}
+                style={{
+                  fontFamily: "var(--font-script), cursive",
+                  fontSize: "clamp(1.8rem, 3.5vw, 3.5rem)",
+                  color: "rgba(255,255,255,0.7)",
+                  textDecoration: "none",
+                  transition: "color 0.2s",
+                }}
+                onMouseEnter={e => (e.currentTarget.style.color = "rgba(255,255,255,1)")}
+                onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.7)")}
+              >
+                {label}
+              </Link>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── Ambient sound toggle — always in DOM, visible only when done ── */}
+      <button
+        onClick={toggleAmbient}
+        title={ambientOn ? "Mute ambient sound" : "Play ambient sound"}
+        style={{
+          position: "fixed",
+          top: "1.2rem",
+          left: "1.4rem",
+          zIndex: 9999,
+          background: "rgba(255,255,255,0.22)",
+          border: "2px solid rgba(255,255,255,0.6)",
+          borderRadius: "50%",
+          width: 48,
+          height: 48,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "pointer",
+          color: "#fff",
+          backdropFilter: "blur(8px)",
+          opacity: phase === "done" ? 1 : 0,
+          pointerEvents: phase === "done" ? "auto" : "none",
+          transition: "opacity 1s ease",
+        }}
+      >
+        {ambientOn ? (
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+          </svg>
+        ) : (
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <line x1="23" y1="9" x2="17" y2="15"/>
+            <line x1="17" y1="9" x2="23" y2="15"/>
+          </svg>
+        )}
+      </button>
+
     </main>
   );
 }

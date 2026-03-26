@@ -185,6 +185,30 @@ select.appearance-none {
   padding-right: 36px;
 }
 
+/* ── Homepage text mobile ── */
+@media (max-width: 640px) {
+  .home-text {
+    bottom: 28vh !important;
+  }
+}
+
+/* ── Past Trips mobile ── */
+@media (max-width: 640px) {
+  .trip-card {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+  .trip-img {
+    order: 0 !important;
+    aspect-ratio: 16/9 !important;
+  }
+  .trip-text {
+    order: 1 !important;
+  }
+}
+
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
