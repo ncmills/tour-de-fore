@@ -240,9 +240,8 @@ export default function PlanWizardClient() {
       }
 
       await res.json();
-      setIsGenerating(false);
       setConfirmed(true);
-      setTimeout(() => router.push("/?skip=1"), 3500);
+      setTimeout(() => { window.location.href = "/?skip=1"; }, 3000);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong. Try again.");
       setIsGenerating(false);
@@ -251,60 +250,60 @@ export default function PlanWizardClient() {
     }
   };
 
-  // ── Loading Screen ──
-  if (isGenerating) {
-    return (
-      <div className="fixed inset-0 z-50 flex flex-col items-center justify-center" style={{ background: "#000" }}>
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
-          className="mb-10"
-        >
-          <Logo className="w-16 h-16 opacity-60" />
-        </motion.div>
-        <AnimatePresence mode="wait">
-          <motion.p
-            key={loadingMsg}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.4 }}
-            className="font-body text-xl md:text-2xl text-text-muted"
-          >
-            {LOADING_MESSAGES[loadingMsg]}
-          </motion.p>
-        </AnimatePresence>
-        <div className="mt-10 w-48 h-px bg-border overflow-hidden">
-          <motion.div
-            className="h-full bg-gradient-to-r from-accent to-gold"
-            animate={{ x: ["-100%", "100%"] }}
-            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-          />
-        </div>
-      </div>
-    );
-  }
-
-  // ── Confirmation Screen ──
-  if (confirmed) {
+  // ── Loading / Confirmation overlay ──
+  if (isGenerating || confirmed) {
     return (
       <div className="fixed inset-0 z-50 flex flex-col items-center justify-center text-center px-6" style={{ background: "#000" }}>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col items-center gap-8"
-        >
-          <Logo className="w-16 h-16 opacity-80" />
-          <div>
-            <p style={{ fontFamily: "var(--font-script), cursive", fontSize: "clamp(1.6rem, 4vw, 2.8rem)", color: "rgba(255,255,255,0.9)", marginBottom: "1rem" }}>
-              We&rsquo;ve got your plan.
-            </p>
-            <p className="font-body text-text-muted text-base">
-              We&rsquo;ll be in touch soon. Taking you home&hellip;
-            </p>
-          </div>
-        </motion.div>
+        <AnimatePresence mode="wait">
+          {confirmed ? (
+            <motion.div
+              key="confirmed"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col items-center gap-8"
+            >
+              <Logo className="w-16 h-16 opacity-80" />
+              <div>
+                <p style={{ fontFamily: "var(--font-script), cursive", fontSize: "clamp(1.6rem, 4vw, 2.8rem)", color: "rgba(255,255,255,0.9)", marginBottom: "1rem" }}>
+                  We&rsquo;ve got your plan.
+                </p>
+                <p className="font-body text-text-muted text-base">
+                  We&rsquo;ll be in touch soon. Taking you home&hellip;
+                </p>
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div key="loading" className="flex flex-col items-center">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
+                className="mb-10"
+              >
+                <Logo className="w-16 h-16 opacity-60" />
+              </motion.div>
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={loadingMsg}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.4 }}
+                  className="font-body text-xl md:text-2xl text-text-muted"
+                >
+                  {LOADING_MESSAGES[loadingMsg]}
+                </motion.p>
+              </AnimatePresence>
+              <div className="mt-10 w-48 h-px bg-border overflow-hidden">
+                <motion.div
+                  className="h-full bg-gradient-to-r from-accent to-gold"
+                  animate={{ x: ["-100%", "100%"] }}
+                  transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     );
   }
