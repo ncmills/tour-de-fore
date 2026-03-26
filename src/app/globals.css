@@ -185,6 +185,13 @@ select.appearance-none {
   padding-right: 36px;
 }
 
+/* ── Homepage text mobile ── */
+@media (max-width: 640px) {
+  .home-text {
+    bottom: 28vh !important;
+  }
+}
+
 /* ── Past Trips mobile ── */
 @media (max-width: 640px) {
   .trip-card {

@@ -13,7 +13,7 @@ const HYPE_VIDEO = "/hype.mov";
 
 const textStyle: React.CSSProperties = {
   fontFamily: "var(--font-script), cursive",
-  fontSize: "clamp(1.8rem, 3.5vw, 3.5rem)",
+  fontSize: "clamp(1.3rem, 3.5vw, 3.5rem)",
   color: "rgba(255,255,255,0.9)",
   lineHeight: 1,
   margin: 0,
@@ -31,6 +31,14 @@ export default function HomeClient() {
   const [showLinks, setShowLinks] = useState(skip);
   const [logoVisible, setLogoVisible] = useState(skip);
   const [logoUninverted, setLogoUninverted] = useState(skip);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 640);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   // After text animations finish, show TV
   useEffect(() => {
@@ -139,17 +147,19 @@ export default function HomeClient() {
         {!showLinks && phase !== "done" && (
           <motion.div
             key="text"
+            className="home-text"
             exit={{ opacity: 0 }}
             transition={{ duration: 0.7 }}
             style={{
               position: "absolute",
-              bottom: "8vh",
+              bottom: isMobile ? "calc(50vh - 1.5in)" : "8vh",
               left: 0, right: 0,
               zIndex: 20,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               gap: 0,
+              padding: "0 1.5rem",
             }}
           >
             <motion.p
