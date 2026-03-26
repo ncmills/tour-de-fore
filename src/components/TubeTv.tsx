@@ -80,7 +80,7 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
       initial={{ opacity: 0, scale: 0.9, y: 20 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+      style={{ display: "flex", flexDirection: "column", alignItems: "center", maxHeight: "60vh" }}
     >
       {/* TV + VCR combo unit */}
       <motion.div
@@ -98,7 +98,7 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
             ? { duration: 0.45, delay: 0.8 }
             : {}
         }
-        style={{ position: "relative", width: "clamp(240px, 85vw, 500px)" }}
+        style={{ position: "relative", width: "min(clamp(220px, 38vh, 380px), 85vw)" }}
       >
         {/* ── MAIN TV HOUSING ── */}
         <div style={{
@@ -132,7 +132,7 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
               position: "relative",
               borderRadius: "clamp(6px, 0.9vw, 12px)",
               overflow: "hidden",
-              aspectRatio: "9/16",
+              aspectRatio: "1/1",
               background: "#000",
               boxShadow: [
                 "inset 0 0 0 2px rgba(0,0,0,0.9)",
@@ -167,6 +167,43 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
                 position: "absolute", inset: 0, pointerEvents: "none",
                 background: "linear-gradient(135deg, rgba(255,255,255,0.07) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.02) 100%)",
               }} />
+
+              {/* Unmute button overlay on screen */}
+              {isMuted && tvPhase === "playing" && (
+                <button
+                  onClick={toggleMute}
+                  style={{
+                    position: "absolute",
+                    bottom: "clamp(8px, 2vh, 16px)",
+                    right: "clamp(8px, 2vw, 16px)",
+                    zIndex: 20,
+                    background: "rgba(0,0,0,0.7)",
+                    border: "1px solid rgba(255,255,255,0.4)",
+                    borderRadius: "6px",
+                    padding: "6px 12px",
+                    cursor: "pointer",
+                    color: "#fff",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    backdropFilter: "blur(4px)",
+                    transition: "background 0.2s, border-color 0.2s",
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(0,0,0,0.9)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.7)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = "rgba(0,0,0,0.7)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.4)"; }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                    <line x1="23" y1="9" x2="17" y2="15" /><line x1="17" y1="9" x2="23" y2="15" />
+                  </svg>
+                  <span style={{
+                    fontFamily: "monospace",
+                    fontSize: "clamp(9px, 1.2vw, 12px)",
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                  }}>Unmute</span>
+                </button>
+              )}
             </div>
           </div>
 
@@ -380,8 +417,7 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
             exit={{ opacity: 0, transition: { duration: 0.15 } }}
             transition={{ delay: 1.0, duration: 0.4 }}
             style={{
-              marginTop: "clamp(14px, 2vw, 24px)",
-              transform: "translateY(-0.25in)",
+              marginTop: "clamp(10px, 1.5vw, 18px)",
               display: "flex",
               alignItems: "center",
               gap: "0.75rem",
@@ -408,35 +444,6 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
               skip hype video
             </button>
 
-            <button
-              onClick={toggleMute}
-              title={isMuted ? "Unmute" : "Mute"}
-              style={{
-                background: "none",
-                border: "1px solid rgba(255,255,255,0.1)",
-                borderRadius: "3px",
-                padding: "clamp(5px, 0.55vw, 7px) clamp(8px, 0.9vw, 12px)",
-                cursor: "pointer",
-                color: "rgba(255,255,255,0.3)",
-                display: "flex",
-                alignItems: "center",
-                transition: "color 0.2s, border-color 0.2s",
-              }}
-              onMouseEnter={e => { e.currentTarget.style.color = "rgba(255,255,255,0.6)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.28)"; }}
-              onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.3)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }}
-            >
-              {isMuted ? (
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                  <line x1="23" y1="9" x2="17" y2="15" /><line x1="17" y1="9" x2="23" y2="15" />
-                </svg>
-              ) : (
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07" /><path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
-                </svg>
-              )}
-            </button>
           </motion.div>
         )}
       </AnimatePresence>

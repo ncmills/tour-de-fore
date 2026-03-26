@@ -31,6 +31,7 @@ export default function HomeClient() {
   const [logoVisible, setLogoVisible] = useState(skip);
   const [logoUninverted, setLogoUninverted] = useState(skip);
   const [isMobile, setIsMobile] = useState(false);
+  const [hoveredSubtitle, setHoveredSubtitle] = useState<string | null>(null);
   const [ambientOn, setAmbientOn] = useState(false);
   const bgVideoRef = useRef<HTMLVideoElement>(null);
   const ambientAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -121,15 +122,17 @@ export default function HomeClient() {
         <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.45)" }} />
       </motion.div>
 
-      {/* ── CENTER: TV or Logo ── */}
+      {/* ── FULL-HEIGHT FLEX: TV + text in one column ── */}
       <div style={{
         position: "absolute",
         inset: 0,
         zIndex: 10,
         display: "flex",
+        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        paddingBottom: "18vh", // leave room for text at bottom
+        gap: "clamp(12px, 2vh, 24px)",
+        padding: "3vh 1.5rem",
       }}>
         {/* TV */}
         <AnimatePresence>
@@ -140,7 +143,6 @@ export default function HomeClient() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0, transition: { duration: 0 } }}
               transition={{ duration: 0.4 }}
-              style={{ position: "absolute" }}
             >
               <TubeTv
                 videoSrc={HYPE_VIDEO}
@@ -151,9 +153,42 @@ export default function HomeClient() {
           )}
         </AnimatePresence>
 
-        {/* Logo */}
+        {/* Text lines — shown during text + tv phases */}
+        <AnimatePresence>
+          {!showLinks && phase !== "done" && (
+            <motion.div
+              key="text"
+              className="home-text"
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.7 }}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 0,
+              }}
+            >
+              <motion.p
+                style={{ ...textStyle, clipPath: "inset(0 105% 0 -5px)" }}
+                animate={{ clipPath: "inset(0 -5px 0 -5px)" }}
+                transition={{ duration: 1.4, delay: 0.3, ease: [0.25, 0.0, 0.35, 1.0] }}
+              >
+                hell is empty
+              </motion.p>
+              <motion.p
+                style={{ ...textStyle, clipPath: "inset(0 105% 0 -5px)" }}
+                animate={{ clipPath: "inset(0 -5px 0 -5px)" }}
+                transition={{ duration: 1.6, delay: 1.2, ease: [0.25, 0.0, 0.35, 1.0] }}
+              >
+                all the devils are here
+              </motion.p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Logo + subtitle above it — always in DOM, visibility controlled by animation */}
         <motion.div
-          style={{ position: "absolute" }}
+          style={{ position: "absolute", display: "flex", flexDirection: "column", alignItems: "center" }}
           initial={skip
             ? { opacity: 1, scale: 1, filter: "invert(0)" }
             : { opacity: 0, scale: 1.1, filter: "invert(1)" }
@@ -172,6 +207,23 @@ export default function HomeClient() {
               : {}
           }
         >
+          {/* Hovered subtitle above logo */}
+          <span
+            style={{
+              fontFamily: "var(--font-script), cursive",
+              fontSize: "clamp(1.4rem, 2.4vw, 2rem)",
+              color: "rgba(220,38,38,0.85)",
+              fontStyle: "italic",
+              fontWeight: 700,
+              opacity: hoveredSubtitle ? 1 : 0,
+              transition: "opacity 0.25s",
+              whiteSpace: "nowrap",
+              marginBottom: "0.5rem",
+              minHeight: "2rem",
+            }}
+          >
+            {hoveredSubtitle || "\u00A0"}
+          </span>
           <Image
             src="/logo-full.png"
             alt="Tour de Fore"
@@ -182,44 +234,6 @@ export default function HomeClient() {
           />
         </motion.div>
       </div>
-
-      {/* ── BOTTOM: text lines ── */}
-      <AnimatePresence>
-        {!showLinks && phase !== "done" && (
-          <motion.div
-            key="text"
-            className="home-text"
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.7 }}
-            style={{
-              position: "absolute",
-              bottom: isMobile ? "calc(50vh - 1.5in)" : "8vh",
-              left: 0, right: 0,
-              zIndex: 20,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 0,
-              padding: "0 1.5rem",
-            }}
-          >
-            <motion.p
-              style={{ ...textStyle, clipPath: "inset(0 105% 0 -5px)" }}
-              animate={{ clipPath: "inset(0 -5px 0 -5px)" }}
-              transition={{ duration: 1.4, delay: 0.3, ease: [0.25, 0.0, 0.35, 1.0] }}
-            >
-              hell is empty
-            </motion.p>
-            <motion.p
-              style={{ ...textStyle, clipPath: "inset(0 105% 0 -5px)" }}
-              animate={{ clipPath: "inset(0 -5px 0 -5px)" }}
-              transition={{ duration: 1.6, delay: 1.2, ease: [0.25, 0.0, 0.35, 1.0] }}
-            >
-              all the devils are here
-            </motion.p>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* ── CENTER: links (same position as original) ── */}
       <AnimatePresence>
@@ -234,18 +248,21 @@ export default function HomeClient() {
               inset: 0,
               zIndex: 20,
               display: "flex",
+              flexWrap: "wrap",
               alignItems: "center",
               justifyContent: "center",
-              gap: "2.5rem",
-              paddingTop: "2in",
+              gap: "1rem 2.5rem",
+              paddingTop: "clamp(300px, 42vh, 400px)",
+              paddingLeft: "1.5rem",
+              paddingRight: "1.5rem",
             }}
           >
             {[
-              { label: "Shop", href: "/shop" },
-              { label: "Past Trips", href: "/past-trips" },
-              { label: "Live Trip", href: "/trip/2026" },
-              { label: "Plan a Trip", href: "/plan-a-trip" },
-            ].map(({ label, href }) => (
+              { label: "Shop", href: "/shop", subtitle: "devils gotta eat" },
+              { label: "Past Trips", href: "/past-trips", subtitle: "devils were here" },
+              { label: "Live Trip", href: "/trip/2026", subtitle: "devils are here" },
+              { label: "Plan a Trip", href: "/plan-a-trip", subtitle: "so you wanna be a devil?" },
+            ].map(({ label, href, subtitle }) => (
               <Link
                 key={label}
                 href={href}
@@ -256,8 +273,14 @@ export default function HomeClient() {
                   textDecoration: "none",
                   transition: "color 0.2s",
                 }}
-                onMouseEnter={e => (e.currentTarget.style.color = "rgba(255,255,255,1)")}
-                onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.7)")}
+                onMouseEnter={e => {
+                  e.currentTarget.style.color = "rgba(255,255,255,1)";
+                  setHoveredSubtitle(subtitle);
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.color = "rgba(255,255,255,0.7)";
+                  setHoveredSubtitle(null);
+                }}
               >
                 {label}
               </Link>
