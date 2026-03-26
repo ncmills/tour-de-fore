@@ -8,7 +8,7 @@ import { useSearchParams } from "next/navigation";
 import TubeTv from "./TubeTv";
 
 const VIDEO_HD = "/bg.mp4";
-const HYPE_VIDEO = "/hype-audio.mp4";
+const HYPE_VIDEO = "/hype-audio.mp4"; // has audio; TubeTv starts muted, user can unmute
 
 const textStyle: React.CSSProperties = {
   fontFamily: "var(--font-script), cursive",

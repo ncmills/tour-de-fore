@@ -12,12 +12,10 @@ interface TubeTvProps {
 type TvPhase = "playing" | "ejecting" | "exploding";
 
 export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvProps) {
-  const isIOS = typeof navigator !== "undefined" &&
-    (/iPad|iPhone|iPod/.test(navigator.userAgent) ||
-     (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1));
   const screenRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [tvPhase, setTvPhase] = useState<TvPhase>("playing");
+  const [isMuted, setIsMuted] = useState(true);
   const triggered = useRef(false);
 
   // Keep stable refs to callbacks so trigger() doesn't need to re-register
@@ -37,6 +35,13 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
       onExplodeStartRef.current();
       setTimeout(() => onCompleteRef.current(), 900);
     }, 1300);
+  }, []);
+
+  const toggleMute = useCallback(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = !v.muted;
+    setIsMuted(v.muted);
   }, []);
 
   // Imperative video creation — the only reliable way to set muted before src on iOS Safari
@@ -60,9 +65,7 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
 
     videoRef.current = v;
     container.appendChild(v);
-    v.play().then(() => {
-      if (!isIOS) v.muted = false; // unmute after autoplay confirmed on desktop
-    }).catch(() => {});
+    v.play().catch(() => {});
 
     return () => {
       v.removeEventListener("ended", trigger);
@@ -367,36 +370,74 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
         </div>
       </motion.div>
 
-      {/* ── SKIP BUTTON ── */}
+      {/* ── SKIP + MUTE BUTTONS ── */}
       <AnimatePresence>
         {tvPhase === "playing" && (
-          <motion.button
-            key="skip"
+          <motion.div
+            key="controls"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.15 } }}
             transition={{ delay: 1.0, duration: 0.4 }}
-            onClick={trigger}
             style={{
               marginTop: "clamp(14px, 2vw, 24px)",
               transform: "translateY(-0.25in)",
-              fontFamily: "monospace",
-              fontSize: "clamp(9px, 0.9vw, 11px)",
-              letterSpacing: "0.22em",
-              textTransform: "uppercase",
-              color: "rgba(255,255,255,0.3)",
-              background: "none",
-              border: "1px solid rgba(255,255,255,0.1)",
-              padding: "clamp(5px, 0.55vw, 7px) clamp(12px, 1.4vw, 18px)",
-              borderRadius: "3px",
-              cursor: "pointer",
-              transition: "color 0.2s, border-color 0.2s",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.75rem",
             }}
-            onMouseEnter={e => { e.currentTarget.style.color = "rgba(255,255,255,0.6)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.28)"; }}
-            onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.3)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }}
           >
-            skip hype video
-          </motion.button>
+            <button
+              onClick={trigger}
+              style={{
+                fontFamily: "monospace",
+                fontSize: "clamp(9px, 0.9vw, 11px)",
+                letterSpacing: "0.22em",
+                textTransform: "uppercase",
+                color: "rgba(255,255,255,0.3)",
+                background: "none",
+                border: "1px solid rgba(255,255,255,0.1)",
+                padding: "clamp(5px, 0.55vw, 7px) clamp(12px, 1.4vw, 18px)",
+                borderRadius: "3px",
+                cursor: "pointer",
+                transition: "color 0.2s, border-color 0.2s",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.color = "rgba(255,255,255,0.6)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.28)"; }}
+              onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.3)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }}
+            >
+              skip hype video
+            </button>
+
+            <button
+              onClick={toggleMute}
+              title={isMuted ? "Unmute" : "Mute"}
+              style={{
+                background: "none",
+                border: "1px solid rgba(255,255,255,0.1)",
+                borderRadius: "3px",
+                padding: "clamp(5px, 0.55vw, 7px) clamp(8px, 0.9vw, 12px)",
+                cursor: "pointer",
+                color: "rgba(255,255,255,0.3)",
+                display: "flex",
+                alignItems: "center",
+                transition: "color 0.2s, border-color 0.2s",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.color = "rgba(255,255,255,0.6)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.28)"; }}
+              onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.3)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }}
+            >
+              {isMuted ? (
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  <line x1="23" y1="9" x2="17" y2="15" /><line x1="17" y1="9" x2="23" y2="15" />
+                </svg>
+              ) : (
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07" /><path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                </svg>
+              )}
+            </button>
+          </motion.div>
         )}
       </AnimatePresence>
     </motion.div>
