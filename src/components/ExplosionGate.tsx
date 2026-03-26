@@ -72,7 +72,7 @@ function buildSwatches(vw: number, vh: number): { swatches: Swatch[]; keyframes:
     swatches.push({
       color,
       animName,
-      delay: `${(r(10) * 3.4).toFixed(2)}s`,
+      delay: `${(r(10) * 2.4).toFixed(2)}s`,
       duration: `${(0.6 + r(11) * 0.8).toFixed(2)}s`,
       style: {
         position: "absolute",
@@ -145,7 +145,7 @@ export default function ExplosionGate({ pageKey: _pageKey, children }: Props) {
     const timer = setTimeout(() => {
       setPhase("content");
       styleRef.current?.remove();
-    }, 5000);
+    }, 4000);
 
     return () => {
       clearTimeout(timer);
@@ -166,7 +166,7 @@ export default function ExplosionGate({ pageKey: _pageKey, children }: Props) {
               inset: 0,
               overflow: "hidden",
               zIndex: 200,
-              animation: "bgflash 5.0s ease-in-out forwards",
+              animation: "bgflash 4.0s ease-in-out forwards",
             }}
           >
             {swatchData.swatches.map((s, i) => (
@@ -191,7 +191,7 @@ export default function ExplosionGate({ pageKey: _pageKey, children }: Props) {
                 pointerEvents: "none",
                 mixBlendMode: "difference",
                 userSelect: "none",
-                animation: "tdfpulse 5.0s ease-in-out forwards",
+                animation: "tdfpulse 4.0s ease-in-out forwards",
                 opacity: 0,
               }}
             >
