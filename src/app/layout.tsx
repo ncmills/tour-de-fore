@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter, Instrument_Serif, Caveat, Permanent_Marker } from "next/font/google";
+import { Space_Grotesk, Inter, Instrument_Serif, Caveat, Permanent_Marker, Lilita_One, Bebas_Neue, Pacifico, Rye, Lobster } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import DrunkMode from "@/components/DrunkMode";
@@ -36,6 +36,41 @@ const instrumentSerif = Instrument_Serif({
 
 const permanentMarker = Permanent_Marker({
   variable: "--font-scrawl",
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+});
+
+const lilitaOne = Lilita_One({
+  variable: "--font-plan-groovy",
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+});
+
+const bebasNeue = Bebas_Neue({
+  variable: "--font-plan-block",
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+});
+
+const pacifico = Pacifico({
+  variable: "--font-plan-script",
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+});
+
+const rye = Rye({
+  variable: "--font-shop-circus",
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+});
+
+const lobster = Lobster({
+  variable: "--font-shop-script",
   subsets: ["latin"],
   weight: ["400"],
   display: "swap",
@@ -89,7 +124,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${spaceGrotesk.variable} ${inter.variable} ${instrumentSerif.variable} ${caveat.variable} ${permanentMarker.variable} antialiased`}
+        className={`${spaceGrotesk.variable} ${inter.variable} ${instrumentSerif.variable} ${caveat.variable} ${permanentMarker.variable} ${lilitaOne.variable} ${bebasNeue.variable} ${pacifico.variable} ${rye.variable} ${lobster.variable} antialiased`}
       >
         <a href="#main-content" className="skip-to-content">
           Skip to content

@@ -426,22 +426,24 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
             <button
               onClick={trigger}
               style={{
-                fontFamily: "monospace",
-                fontSize: "clamp(9px, 0.9vw, 11px)",
-                letterSpacing: "0.22em",
+                fontFamily: "var(--font-script), cursive",
+                fontSize: "clamp(12px, 1.4vw, 16px)",
+                fontWeight: 900,
+                letterSpacing: "0.08em",
                 textTransform: "uppercase",
-                color: "#cc0000",
-                background: "none",
-                border: "1px solid rgba(255,50,50,0.3)",
-                padding: "clamp(5px, 0.55vw, 7px) clamp(12px, 1.4vw, 18px)",
-                borderRadius: "3px",
+                color: "#DC2626",
+                background: "rgba(220,38,38,0.1)",
+                border: "2px solid rgba(220,38,38,0.5)",
+                padding: "clamp(6px, 0.7vw, 10px) clamp(16px, 2vw, 24px)",
+                borderRadius: "4px",
                 cursor: "pointer",
-                transition: "color 0.2s, border-color 0.2s",
+                transition: "all 0.2s",
+                textShadow: "0 0 8px rgba(220,38,38,0.3)",
               }}
-              onMouseEnter={e => { e.currentTarget.style.color = "#ff3333"; e.currentTarget.style.borderColor = "rgba(255,50,50,0.5)"; }}
-              onMouseLeave={e => { e.currentTarget.style.color = "#cc0000"; e.currentTarget.style.borderColor = "rgba(255,50,50,0.3)"; }}
+              onMouseEnter={e => { e.currentTarget.style.background = "rgba(220,38,38,0.25)"; e.currentTarget.style.borderColor = "rgba(220,38,38,0.8)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "rgba(220,38,38,0.1)"; e.currentTarget.style.borderColor = "rgba(220,38,38,0.5)"; }}
             >
-              <strong style={{ color: "#cc0000" }}>teleport me now</strong>
+              Teleport Me Now
             </button>
 
           </motion.div>

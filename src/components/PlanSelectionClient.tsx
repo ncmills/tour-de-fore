@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import Link from "next/link";
 import { ThreePlanResult, TripTier } from "@/lib/plan-types";
+import MulliganButton from "./MulliganButton";
 
 const tiers: { key: TripTier; planKey: keyof ThreePlanResult; icon: string; badge?: string }[] = [
   { key: "imp", planKey: "imp", icon: "👿" },
@@ -13,13 +14,15 @@ const tiers: { key: TripTier; planKey: keyof ThreePlanResult; icon: string; badg
 export default function PlanSelectionClient({ planId, plans }: { planId: string; plans: ThreePlanResult }) {
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff", padding: "clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 3rem)" }}>
+      <MulliganButton />
+
       {/* Header */}
       <div style={{ textAlign: "center", marginBottom: "clamp(2rem, 5vw, 4rem)" }}>
         <motion.p
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          style={{ fontSize: "0.75rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: "0.75rem" }}
+          style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "0.85rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: "0.75rem" }}
         >
           Your Trip Plans Are Ready
         </motion.p>
@@ -28,7 +31,7 @@ export default function PlanSelectionClient({ planId, plans }: { planId: string;
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
           style={{
-            fontFamily: "var(--font-script), cursive",
+            fontFamily: "var(--font-plan-groovy), cursive",
             fontSize: "clamp(2.5rem, 7vw, 5rem)",
             color: "#fff",
             marginBottom: "0.5rem",
@@ -109,18 +112,13 @@ export default function PlanSelectionClient({ planId, plans }: { planId: string;
 
                   {/* Tier Name */}
                   <h2 style={{
-                    fontFamily: "var(--font-script), cursive",
+                    fontFamily: "var(--font-plan-script), cursive",
                     fontSize: "clamp(1.8rem, 4vw, 2.5rem)",
                     color: "#fff",
                     marginBottom: "0.25rem",
                   }}>
                     {plan.tierName}
                   </h2>
-
-                  {/* Tier Tagline */}
-                  <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.45)", fontStyle: "italic", marginBottom: "1.5rem", lineHeight: 1.4 }}>
-                    {plan.tierTagline}
-                  </p>
 
                   {/* Price */}
                   <div style={{

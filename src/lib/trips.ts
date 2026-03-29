@@ -274,7 +274,7 @@ export const trips: Trip[] = [
       { name: "Pronghorn", url: "https://juniperpreserve.com/golf/jack-nicklaus-signature-course/", image: "https://juniperpreserve.com/wp-content/uploads/2025/08/1-pronghorn-nickalus-at-juniper-ridge-2025-OAR.jpg", description: "Jack Nicklaus signature course set in the high desert with views of the Cascade Range.", holes: 18 },
       { name: "Juniper", url: "https://playjuniper.com", image: "https://playjuniper.com/images/slideshows/banner_1.jpg", description: "A classic Pacific Northwest layout with mature juniper trees and mountain views.", holes: 18 },
       { name: "Widgi", url: "https://widgi.com", image: "https://widgi.com/images/slideshows/gv100482e.jpg", description: "A playable resort course in the Deschutes National Forest with pine-lined fairways.", holes: 18 },
-      { name: "Tetherow", url: "https://tetherow.com", description: "A links-style David McLay Kidd design with fescue and volcanic rock features.", holes: 18 },
+      { name: "Tetherow", url: "https://tetherow.com", image: "https://oregoncourses.com/wp-content/uploads/2018/09/DSCN2442-2000x1200.jpg", description: "A links-style David McLay Kidd design with fescue and volcanic rock features.", holes: 18 },
     ],
     restaurants: [],
     schedule: [
@@ -351,7 +351,7 @@ export const trips: Trip[] = [
     dates: "June 29 \u2013 July 1, 2023",
     heroImage: `${SQ}/d0910eb3-ce7f-4395-8e75-06414a70a916/DSC01441.JPG`,
     courses: [
-      { name: "Kearney Hill Golf Course", url: "https://www.lexingtonky.gov/kearney-hill-golf-links", description: "A well-maintained public course with bluegrass-country charm and rolling terrain.", holes: 18 },
+      { name: "Kearney Hill Golf Course", url: "https://www.lexingtonky.gov/kearney-hill-golf-links", image: "https://www.kygolf.org/images/uploads/photos/KH_1.JPG", description: "A well-maintained public course with bluegrass-country charm and rolling terrain.", holes: 18 },
       { name: "Cherry Blossom Golf Course", url: "https://www.cherryblossomgolf.com", image: "https://images.squarespace-cdn.com/content/v1/66841f33dfe3fa292718fb41/df733b4a-0a09-4111-8127-b9800c45b515/Clubhouse+Aug+2008+003.jpg", description: "A beautiful public course winding through mature hardwoods in the heart of horse country.", holes: 18 },
       { name: "University of Kentucky Club", url: "https://www.uclubkentucky.com", image: "https://www.uclubkentucky.com/wp-content/uploads/sites/9762/2025/09/90_3.jpeg?w=1024", description: "An exclusive course with immaculate conditions and the prestige of UK athletics.", holes: 18 },
     ],

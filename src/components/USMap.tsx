@@ -141,7 +141,7 @@ export default function USMap({ compact, singleTrip }: { compact?: boolean; sing
                 stroke="rgba(234, 88, 12, 0.3)"
                 strokeWidth="1"
                 animate={{ r: [14, 24, 14], opacity: [0.5, 0, 0.5] }}
-                transition={{ duration: 2, repeat: Infinity }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
               />
             )}
 
@@ -161,14 +161,14 @@ export default function USMap({ compact, singleTrip }: { compact?: boolean; sing
               cy={loc.y}
               r={singleTrip ? 6 : (!compact && hovered === loc.year ? 8 : 5)}
               fill={singleTrip ? "#DC2626" : loc.upcoming ? "#EA580C" : "#D4A843"}
-              {...(singleTrip ? { animate: { opacity: [1, 0.3, 1] }, transition: { duration: 1.5, repeat: Infinity, ease: "easeInOut" } } : {})}
+              {...(singleTrip ? { animate: { opacity: [1, 0.3, 1] }, transition: { duration: 1.5, repeat: Infinity, ease: "linear" } } : {})}
               className={compact ? "" : "cursor-pointer"}
               onMouseEnter={() => !compact && setHovered(loc.year)}
               onMouseLeave={() => !compact && setHovered(null)}
               initial={compact ? { scale: 1 } : { scale: 0 }}
               whileInView={{ scale: 1 }}
               viewport={{ once: true }}
-              transition={{ type: "spring", stiffness: 300, delay: 0.3 + i * 0.15 }}
+              transition={singleTrip ? { duration: 1.5, repeat: Infinity, ease: "linear" } : { type: "spring", stiffness: 300, delay: 0.3 + i * 0.15 }}
               style={{ filter: !compact && hovered === loc.year ? "drop-shadow(0 0 8px rgba(234, 88, 12, 0.4))" : "none" }}
             />
 

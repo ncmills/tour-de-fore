@@ -245,6 +245,38 @@ body.menu-open {
   overflow: hidden;
 }
 
+/* ── Beer can draw animation for MulliganButton ── */
+@keyframes beerCanDraw {
+  from { stroke-dashoffset: 280; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* ── Mobile-specific fixes ── */
+@media (max-width: 640px) {
+  /* Smaller mulligan beer can on mobile */
+  .mulligan-wrap svg {
+    width: 90px !important;
+    height: 42px !important;
+  }
+  .mulligan-wrap span {
+    font-size: 1rem !important;
+    padding: 0.3em 0.7em !important;
+  }
+
+  /* Plan result header — stack vertically */
+  .plan-header-row {
+    flex-direction: column !important;
+    gap: 0.25rem !important;
+    text-align: center !important;
+  }
+
+  /* Concierge CTA smaller on mobile */
+  .concierge-cta {
+    font-size: 11px !important;
+    padding: 4px 12px !important;
+  }
+}
+
 /* ── Glow pulse (kept for CTA emphasis) ── */
 @keyframes glowPulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0); }

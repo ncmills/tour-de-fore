@@ -26,6 +26,8 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "www.houseofblanks.com" },
       { protocol: "https", hostname: "blackswing.golf" },
       { protocol: "https", hostname: "playingitforward.shop" },
+      { protocol: "https", hostname: "oregoncourses.com" },
+      { protocol: "https", hostname: "www.kygolf.org" },
     ],
   },
 };

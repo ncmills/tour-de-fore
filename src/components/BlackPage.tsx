@@ -1,23 +1,13 @@
 "use client";
 
 import { motion } from "motion/react";
-import Link from "next/link";
+import MulliganButton from "./MulliganButton";
 
 export default function BlackPage({ children, heading }: { children: React.ReactNode; heading: string }) {
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff", padding: "0 clamp(1.5rem, 6vw, 6rem)" }}>
 
-      {/* Back link — fixed top-left */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3, duration: 0.6 }}
-        style={{ position: "fixed", top: "1.2rem", left: "clamp(1.5rem, 6vw, 6rem)", zIndex: 100 }}
-      >
-        <Link href="/?skip=1" style={{ fontFamily: "var(--font-script), cursive", fontSize: "1.1rem", color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>
-          ← back
-        </Link>
-      </motion.div>
+      <MulliganButton />
 
       {/* Section heading writes in — padded below the fixed back button */}
       <div style={{ overflow: "hidden", paddingTop: "4rem" }}>

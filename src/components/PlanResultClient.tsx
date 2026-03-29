@@ -11,6 +11,7 @@ import {
   PlanDining,
   PlanBar,
 } from "@/lib/plan-types";
+import MulliganButton from "./MulliganButton";
 
 /* ── helpers ── */
 
@@ -36,11 +37,11 @@ const tierColors: Record<TripTier, string> = {
 };
 
 const sectionPadding: React.CSSProperties = {
-  padding: "5rem clamp(1.5rem, 6vw, 6rem)",
+  padding: "3.5rem clamp(1.5rem, 6vw, 6rem)",
 };
 
 const headingFont: React.CSSProperties = {
-  fontFamily: "var(--font-script), cursive",
+  fontFamily: "var(--font-plan-script), cursive",
 };
 
 const cardStyle: React.CSSProperties = {
@@ -224,71 +225,67 @@ export default function PlanResultClient({ plan, planId, tier }: PlanResultClien
 
   return (
     <div style={{ background: "#000", color: "#fff", minHeight: "100vh" }}>
-      {/* ─── 1. Summary Bar ─── */}
+      {/* ─── Header ─── */}
       <div
         style={{
           position: "sticky",
           top: 0,
           zIndex: 50,
-          background: "rgba(0,0,0,0.85)",
+          background: "rgba(0,0,0,0.9)",
           backdropFilter: "blur(12px)",
           borderBottom: "1px solid #222",
-          padding: "0.75rem clamp(1rem, 4vw, 3rem)",
         }}
       >
-        <div
-          style={{
-            maxWidth: 1100,
-            margin: "0 auto",
-            display: "flex",
-            flexWrap: "wrap",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "0.75rem",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
-            <Link
-              href={`/plan/result/${planId}`}
-              style={{
-                color: "#888",
-                fontSize: 13,
-                textDecoration: "none",
-                transition: "color 0.2s",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "#888")}
-            >
-              &larr; All Tiers
-            </Link>
-            <span
-              style={{
-                display: "inline-block",
-                padding: "3px 12px",
-                borderRadius: 999,
-                fontSize: 12,
-                fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: "0.08em",
-                background: tierColors[tier],
-                color: "#000",
-              }}
-            >
-              {tierLabels[tier]}
-            </span>
-            <span style={{ color: "#ccc", fontSize: 14 }}>{plan.destination}</span>
-            <span style={{ color: "#666", fontSize: 13 }}>{plan.dates}</span>
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-            <span style={{ color: "#888", fontSize: 13 }}>
-              {plan.groupSize} golfers
-            </span>
-            <span style={{ color: "#fff", fontWeight: 700, fontSize: 15 }}>
-              {plan.estimatedBudget.perPerson}/pp
-            </span>
-          </div>
+        {/* Summary row */}
+        <div className="plan-header-row" style={{
+          maxWidth: 1100,
+          margin: "0 auto",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "0.5rem clamp(1rem, 4vw, 3rem)",
+          gap: "0.75rem",
+          flexWrap: "wrap",
+        }}>
+          <span style={{ display: "inline-block", padding: "2px 10px", borderRadius: 999, fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", background: tierColors[tier], color: "#000" }}>
+            {tierLabels[tier]}
+          </span>
+          <span style={{ color: "#ccc", fontSize: 13 }}>{plan.destination}</span>
+          <span style={{ color: "#555", fontSize: 12 }}>{plan.estimatedBudget.perPerson}/pp</span>
+        </div>
+
+        {/* Concierge CTA */}
+        <div style={{
+          textAlign: "center",
+          padding: "0.35rem 1rem 0.5rem",
+          borderTop: "1px solid rgba(255,255,255,0.05)",
+        }}>
+          <Link
+            className="concierge-cta"
+            href={`/concierge?planId=${planId}&tier=${tier}`}
+            style={{
+              display: "inline-block",
+              background: "rgba(220,38,38,0.85)",
+              borderRadius: "6px",
+              padding: "5px 16px",
+              color: "#fff",
+              fontSize: 12,
+              fontWeight: 700,
+              letterSpacing: "0.04em",
+              textDecoration: "none",
+              transition: "all 0.2s",
+              whiteSpace: "nowrap",
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(220,38,38,1)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(220,38,38,0.85)"; }}
+          >
+            Just have us plan your trip →
+          </Link>
         </div>
       </div>
+
+      {/* Mulligan — below header */}
+      <MulliganButton top="5.5rem" href={`/plan/result/${planId}`} />
 
       {/* ─── 2. City Overview ─── */}
       <motion.section
@@ -314,18 +311,7 @@ export default function PlanResultClient({ plan, planId, tier }: PlanResultClien
         >
           {plan.destination}
         </h1>
-        <p style={{ color: "#999", fontSize: 18, margin: "0 0 0.5rem" }}>{plan.dates}</p>
-        <p
-          style={{
-            ...headingFont,
-            color: "#bbb",
-            fontSize: "clamp(1.1rem, 2.5vw, 1.5rem)",
-            fontStyle: "italic",
-            marginTop: "1rem",
-          }}
-        >
-          &ldquo;{plan.tagline}&rdquo;
-        </p>
+        <p style={{ color: "#999", fontSize: 18, margin: 0 }}>{plan.dates}</p>
       </motion.section>
 
       {/* ─── 3. Lodging ─── */}
@@ -385,7 +371,7 @@ export default function PlanResultClient({ plan, planId, tier }: PlanResultClien
         </HoverCard>
 
         <AlternativeCards items={plan.lodgingAlternatives} />
-        <ConciergeCTA planId={planId} tier={tier} />
+
       </motion.section>
 
       {/* ─── 4. Golf Courses ─── */}
@@ -457,7 +443,7 @@ export default function PlanResultClient({ plan, planId, tier }: PlanResultClien
         </div>
 
         <AlternativeCards items={plan.courseAlternatives} />
-        <ConciergeCTA planId={planId} tier={tier} />
+
       </motion.section>
 
       {/* ─── 5. Bars & Nightlife ─── */}
@@ -518,7 +504,7 @@ export default function PlanResultClient({ plan, planId, tier }: PlanResultClien
               </motion.div>
             ))}
           </div>
-          <ConciergeCTA planId={planId} tier={tier} />
+  
         </motion.section>
       )}
 
@@ -590,7 +576,7 @@ export default function PlanResultClient({ plan, planId, tier }: PlanResultClien
           </div>
 
           <AlternativeCards items={plan.diningAlternatives} />
-          <ConciergeCTA planId={planId} tier={tier} />
+  
         </motion.section>
       )}
 
@@ -681,7 +667,7 @@ export default function PlanResultClient({ plan, planId, tier }: PlanResultClien
           ))}
           <div style={{ borderTop: "1px solid #222" }} />
         </div>
-        <ConciergeCTA planId={planId} tier={tier} />
+
       </motion.section>
 
       {/* ─── 8. Budget Breakdown ─── */}
@@ -735,7 +721,7 @@ export default function PlanResultClient({ plan, planId, tier }: PlanResultClien
             </div>
           ))}
         </div>
-        <ConciergeCTA planId={planId} tier={tier} />
+
       </motion.section>
 
       {/* ─── 9. Pro Tips ─── */}
@@ -791,7 +777,7 @@ export default function PlanResultClient({ plan, planId, tier }: PlanResultClien
               </motion.div>
             ))}
           </div>
-          <ConciergeCTA planId={planId} tier={tier} />
+  
         </motion.section>
       )}
 
@@ -869,7 +855,7 @@ export default function PlanResultClient({ plan, planId, tier }: PlanResultClien
           </HoverCard>
         </motion.div>
 
-        <ConciergeCTA planId={planId} tier={tier} />
+
       </motion.section>
 
       {/* ─── Share Bar ─── */}

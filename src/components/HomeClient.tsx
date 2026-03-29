@@ -32,6 +32,7 @@ export default function HomeClient() {
   const [logoUninverted, setLogoUninverted] = useState(skip);
   const [isMobile, setIsMobile] = useState(false);
   const [hoveredSubtitle, setHoveredSubtitle] = useState<string | null>(null);
+  const [typedText, setTypedText] = useState("");
   const [ambientOn, setAmbientOn] = useState(false);
   const bgVideoRef = useRef<HTMLVideoElement>(null);
   const ambientAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -98,6 +99,19 @@ export default function HomeClient() {
   useEffect(() => {
     return () => { ambientAudioRef.current?.pause(); };
   }, []);
+
+  // Typewriter effect for hovered subtitle
+  useEffect(() => {
+    if (!hoveredSubtitle) { setTypedText(""); return; }
+    setTypedText("");
+    let i = 0;
+    const id = setInterval(() => {
+      i++;
+      setTypedText(hoveredSubtitle.slice(0, i));
+      if (i >= hoveredSubtitle.length) clearInterval(id);
+    }, 45);
+    return () => clearInterval(id);
+  }, [hoveredSubtitle]);
 
   const handleExplodeStart = useCallback(() => {}, []);
 
@@ -214,22 +228,26 @@ export default function HomeClient() {
               : {}
           }
         >
-          {/* Hovered subtitle above logo */}
+          {/* Hovered subtitle — typewriter in sandtrap */}
           <span
             style={{
-              fontFamily: "var(--font-script), cursive",
+              fontFamily: "var(--font-scrawl), cursive",
               fontSize: "clamp(1.4rem, 2.4vw, 2rem)",
-              color: "rgba(220,38,38,0.85)",
-              fontStyle: "italic",
-              fontWeight: 700,
+              color: "#d4a843",
+              fontWeight: 400,
+              letterSpacing: "0.06em",
               opacity: hoveredSubtitle ? 1 : 0,
               transition: "opacity 0.25s",
               whiteSpace: "nowrap",
               marginBottom: "0.5rem",
               minHeight: "2rem",
+              padding: "0.2em 0.8em",
+              background: hoveredSubtitle ? "rgba(194,160,80,0.15)" : "transparent",
+              borderRadius: "6px",
+              textShadow: "0 0 12px rgba(212,168,67,0.4)",
             }}
           >
-            {hoveredSubtitle || "\u00A0"}
+            {typedText || "\u00A0"}
           </span>
           <Image
             src="/logo-full.png"
@@ -266,27 +284,34 @@ export default function HomeClient() {
             }}
           >
             {[
-              { label: "Shop", href: "/shop", subtitle: "devils gotta eat" },
-              { label: "Past Trips", href: "/past-trips", subtitle: "devils were here" },
-              { label: "Live Trip", href: "/trip/2026", subtitle: "devils are here" },
-              { label: "Plan a Trip", href: "/plan-a-trip", subtitle: "so you wanna be a devil?" },
-            ].map(({ label, href, subtitle }) => (
+              { label: "Shop", href: "/shop", subtitle: "devils gotta eat", blood: false },
+              { label: "Then", href: "/past-trips", subtitle: "devils were here", blood: false },
+              { label: "Now", href: "/trip/2026", subtitle: "devils are here", blood: false },
+              { label: "Plan a Trip", href: "/plan-a-trip", subtitle: "so you wanna be a devil?", blood: true },
+            ].map(({ label, href, subtitle, blood }) => (
               <Link
                 key={label}
                 href={href}
+                onClick={() => { try { sessionStorage.setItem("tdf-explode", "1"); } catch {} }}
                 style={{
                   fontFamily: "var(--font-script), cursive",
                   fontSize: isMobile ? "clamp(1.4rem, 6vw, 2rem)" : "clamp(1.8rem, 3.5vw, 3.5rem)",
-                  color: "rgba(255,255,255,0.7)",
+                  color: blood ? "#fff" : "rgba(255,255,255,0.7)",
                   textDecoration: "none",
-                  transition: "color 0.2s",
+                  transition: "color 0.2s, background 0.3s",
+                  ...(blood ? {
+                    background: "radial-gradient(ellipse at 50% 60%, rgba(139,0,0,0.7) 0%, rgba(180,20,20,0.45) 40%, rgba(120,0,0,0.2) 70%, transparent 100%)",
+                    padding: "0.3em 1em",
+                    borderRadius: "50% / 40%",
+                    textShadow: "0 0 20px rgba(200,0,0,0.5), 0 2px 4px rgba(0,0,0,0.5)",
+                  } : {}),
                 }}
                 onMouseEnter={e => {
                   e.currentTarget.style.color = "rgba(255,255,255,1)";
                   setHoveredSubtitle(subtitle);
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.color = "rgba(255,255,255,0.7)";
+                  e.currentTarget.style.color = blood ? "#fff" : "rgba(255,255,255,0.7)";
                   setHoveredSubtitle(null);
                 }}
               >

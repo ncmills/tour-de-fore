@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import MulliganButton from "./MulliganButton";
 
 const services = [
   { icon: "⛳", title: "Tee Time Bookings", desc: "Every round reserved, confirmed, and managed. Staggered times for your group size." },
@@ -23,15 +24,7 @@ export default function ConciergeClient() {
 
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff" }}>
-      {/* Back link */}
-      <div style={{ position: "fixed", top: "1.2rem", left: "clamp(1.5rem, 6vw, 6rem)", zIndex: 500 }}>
-        <Link
-          href={planId ? `/plan/result/${planId}?tier=${tier}` : "/?skip=1"}
-          style={{ fontFamily: "var(--font-script), cursive", fontSize: "1.1rem", color: "rgba(255,255,255,0.35)", textDecoration: "none" }}
-        >
-          ← back to plan
-        </Link>
-      </div>
+      <MulliganButton href={planId ? `/plan/result/${planId}?tier=${tier}` : "/?skip=1"} />
 
       {/* Hero */}
       <motion.section

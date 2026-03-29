@@ -8,6 +8,7 @@ import type { Trip } from "@/lib/trips";
 import USMap from "./USMap";
 import PhotoSlideshow from "./PhotoSlideshow";
 import FireBackground from "./FireBackground";
+import MulliganButton from "./MulliganButton";
 
 const sectionHeadingStyle: React.CSSProperties = {
   fontFamily: "var(--font-scrawl), cursive",
@@ -56,15 +57,7 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff", position: "relative" }}>
       <FireBackground />
 
-      {/* Back link */}
-      <div style={{ position: "fixed", top: "1.2rem", left: "clamp(1.5rem, 6vw, 6rem)", zIndex: 500 }}>
-        <Link
-          href={isLive ? "/?skip=1" : "/past-trips"}
-          style={{ fontFamily: "var(--font-script), cursive", fontSize: "1.1rem", color: "rgba(255,255,255,0.35)", textDecoration: "none" }}
-        >
-          ← back
-        </Link>
-      </div>
+      <MulliganButton href={isLive ? "/?skip=1" : "/past-trips"} top="3.5rem" />
 
       {/* Page header */}
       <div style={{ position: "relative", zIndex: 1, padding: "clamp(3rem, 8vw, 5rem) clamp(1.5rem, 6vw, 6rem) 0", textAlign: "center" }}>
@@ -121,7 +114,7 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
           {/* Day pills */}
           <div style={{
             display: "flex",
-            flexWrap: "wrap",
+            flexWrap: "nowrap",
             gap: "0.5rem",
             marginBottom: "2rem",
             position: "sticky",
@@ -130,6 +123,8 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
             background: "rgba(0,0,0,0.8)",
             backdropFilter: "blur(8px)",
             padding: "0.75rem 0",
+            overflowX: "auto",
+            WebkitOverflowScrolling: "touch",
           }}>
             {trip.schedule.map((day, i) => (
               <button
@@ -150,6 +145,8 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
                   color: activeDay === i ? "#fff" : "rgba(255,255,255,0.5)",
                   cursor: "pointer",
                   transition: "all 0.2s",
+                  flexShrink: 0,
+                  whiteSpace: "nowrap",
                 }}
               >
                 {day.day}

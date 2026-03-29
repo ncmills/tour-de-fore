@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useState, useCallback, useRef, useEffect } from "react";
 import { trips } from "@/lib/trips";
 import FireBackground from "./FireBackground";
+import MulliganButton from "./MulliganButton";
 
 const PAST_TRIPS_VIDEO = "/past-trips-hype.mp4";
 
@@ -64,20 +65,12 @@ export default function PastTripsClient() {
         minHeight: "100vh",
         background: "#000",
         color: "#fff",
-        fontFamily: "var(--font-space-grotesk), sans-serif",
+        fontFamily: "var(--font-body), sans-serif",
       }}
     >
       <FireBackground />
 
-      {/* Back link */}
-      <div style={{ position: "fixed", top: "1.2rem", left: "clamp(1.5rem, 6vw, 6rem)", zIndex: 500 }}>
-        <Link
-          href="/?skip=1"
-          style={{ fontFamily: "var(--font-script), cursive", fontSize: "1.1rem", color: "rgba(255,255,255,0.35)", textDecoration: "none" }}
-        >
-          ← back
-        </Link>
-      </div>
+      <MulliganButton right="clamp(1.5rem, 6vw, 4rem)" />
 
       {/* TV Video — sticky at top */}
       <div style={{
@@ -177,78 +170,82 @@ export default function PastTripsClient() {
         style={{ padding: "1.5rem clamp(1.5rem, 6vw, 6rem) 6rem" }}
       >
         {past.map((trip, i) => (
-          <motion.div
+          <Link
             key={trip.slug}
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 + i * 0.12 }}
-            className="trip-card"
-            style={{
-              borderTop: "1px solid rgba(255,255,255,0.08)",
-              paddingTop: "3rem",
-              paddingBottom: "3rem",
-              display: "grid",
-              gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-              gap: isMobile ? "1.5rem" : "clamp(2rem, 5vw, 5rem)",
-              alignItems: "center",
-            }}
+            href={`/past-trips/${trip.year}`}
+            style={{ textDecoration: "none", color: "inherit", display: "block" }}
           >
-            <Link
-              href={`/past-trips/${trip.year}`}
-              className="trip-img"
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.8 + i * 0.12 }}
+              className="trip-card"
               style={{
-                display: "block",
-                aspectRatio: "4/3",
-                position: "relative",
-                borderRadius: "4px",
-                overflow: "hidden",
-                order: isMobile ? 0 : (i % 2 === 0 ? 0 : 1),
+                borderTop: "1px solid rgba(255,255,255,0.08)",
+                paddingTop: "3rem",
+                paddingBottom: "3rem",
+                display: "grid",
+                gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+                gap: isMobile ? "1.5rem" : "clamp(2rem, 5vw, 5rem)",
+                alignItems: "center",
                 cursor: "pointer",
               }}
             >
-              <Image
-                src={YEAR_HERO[trip.year] ?? ""}
-                alt={`${trip.year} — ${trip.location}`}
-                fill
-                style={{ objectFit: "cover", transition: "transform 0.4s ease" }}
-                sizes="(max-width: 768px) 90vw, 45vw"
-                onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.04)"; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
-              />
-            </Link>
+              <div
+                className="trip-img"
+                style={{
+                  display: "block",
+                  aspectRatio: "4/3",
+                  position: "relative",
+                  borderRadius: "4px",
+                  overflow: "hidden",
+                  order: isMobile ? 0 : (i % 2 === 0 ? 0 : 1),
+                }}
+              >
+                <Image
+                  src={YEAR_HERO[trip.year] ?? ""}
+                  alt={`${trip.year} — ${trip.location}`}
+                  fill
+                  style={{ objectFit: "cover", transition: "transform 0.4s ease" }}
+                  sizes="(max-width: 768px) 90vw, 45vw"
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.04)"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
+                />
+              </div>
 
-            <div className="trip-text" style={{ order: isMobile ? 1 : (i % 2 === 0 ? 1 : 0) }}>
-              <p style={{ fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: "0.8rem", fontFamily: "monospace" }}>
-                {trip.dates}
-              </p>
-              <h2 style={{
-                fontFamily: "var(--font-scrawl), cursive",
-                fontSize: "clamp(2.5rem, 6vw, 5rem)",
-                fontWeight: 400,
-                lineHeight: 0.95,
-                letterSpacing: "0.02em",
-                marginBottom: "0.6rem",
-                color: "#fff",
-                textShadow: "0 0 7px rgba(255,60,20,0.6), 0 0 20px rgba(255,60,20,0.3), 0 0 40px rgba(255,30,10,0.15)",
-              }}>
-                {trip.year}
-              </h2>
-              <p style={{
-                fontFamily: "var(--font-scrawl), cursive",
-                fontSize: "clamp(1rem, 2vw, 1.4rem)",
-                fontWeight: 400,
-                color: "rgba(255,255,255,0.85)",
-                marginBottom: "0.5rem",
-              }}>
-                {trip.location}, {trip.state}
-              </p>
-              {trip.courses.length > 0 && (
-                <p style={{ fontSize: "0.75rem", letterSpacing: "0.06em", color: "rgba(255,255,255,0.25)", lineHeight: 1.8, fontFamily: "monospace" }}>
-                  {trip.courses.map((c) => c.name).join("  ·  ")}
+              <div className="trip-text" style={{ order: isMobile ? 1 : (i % 2 === 0 ? 1 : 0) }}>
+                <p style={{ fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: "0.8rem", fontFamily: "monospace" }}>
+                  {trip.dates}
                 </p>
-              )}
-            </div>
-          </motion.div>
+                <h2 style={{
+                  fontFamily: "var(--font-scrawl), cursive",
+                  fontSize: "clamp(2.5rem, 6vw, 5rem)",
+                  fontWeight: 400,
+                  lineHeight: 0.95,
+                  letterSpacing: "0.02em",
+                  marginBottom: "0.6rem",
+                  color: "#fff",
+                  textShadow: "0 0 7px rgba(255,60,20,0.6), 0 0 20px rgba(255,60,20,0.3), 0 0 40px rgba(255,30,10,0.15)",
+                }}>
+                  {trip.year}
+                </h2>
+                <p style={{
+                  fontFamily: "var(--font-scrawl), cursive",
+                  fontSize: "clamp(1rem, 2vw, 1.4rem)",
+                  fontWeight: 400,
+                  color: "rgba(255,255,255,0.85)",
+                  marginBottom: "0.5rem",
+                }}>
+                  {trip.location}, {trip.state}
+                </p>
+                {trip.courses.length > 0 && (
+                  <p style={{ fontSize: "0.75rem", letterSpacing: "0.06em", color: "rgba(255,255,255,0.25)", lineHeight: 1.8, fontFamily: "monospace" }}>
+                    {trip.courses.map((c) => c.name).join("  ·  ")}
+                  </p>
+                )}
+              </div>
+            </motion.div>
+          </Link>
         ))}
       </motion.div>
     </main>

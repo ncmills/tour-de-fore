@@ -126,7 +126,18 @@ interface Props {
 
 export default function ExplosionGate({ pageKey: _pageKey, children }: Props) {
   const params = useSearchParams();
-  const skip = params.get("skip") === "1";
+  const skipParam = params.get("skip") === "1";
+  // Only show explosion when navigating from homepage (flag set by homepage links)
+  const [skip] = useState(() => {
+    if (skipParam) return true;
+    if (typeof window === "undefined") return true;
+    const flag = sessionStorage.getItem("tdf-explode");
+    if (flag === "1") {
+      sessionStorage.removeItem("tdf-explode");
+      return false; // show the explosion
+    }
+    return true; // skip by default (mulligan, direct nav, sub-sub nav)
+  });
   const [phase, setPhase] = useState<"explosion" | "content">(skip ? "content" : "explosion");
   const [swatchData, setSwatchData] = useState<{ swatches: Swatch[]; keyframes: string } | null>(null);
   const styleRef = useRef<HTMLStyleElement | null>(null);
