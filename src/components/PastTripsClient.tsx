@@ -218,17 +218,32 @@ export default function PastTripsClient() {
             </Link>
 
             <div className="trip-text" style={{ order: isMobile ? 1 : (i % 2 === 0 ? 1 : 0) }}>
-              <p style={{ fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: "0.8rem" }}>
+              <p style={{ fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: "0.8rem", fontFamily: "monospace" }}>
                 {trip.dates}
               </p>
-              <h2 style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)", fontWeight: 800, lineHeight: 0.95, letterSpacing: "-0.02em", marginBottom: "0.6rem" }}>
+              <h2 style={{
+                fontFamily: "var(--font-scrawl), cursive",
+                fontSize: "clamp(2.5rem, 6vw, 5rem)",
+                fontWeight: 400,
+                lineHeight: 0.95,
+                letterSpacing: "0.02em",
+                marginBottom: "0.6rem",
+                color: "#fff",
+                textShadow: "0 0 7px rgba(255,60,20,0.6), 0 0 20px rgba(255,60,20,0.3), 0 0 40px rgba(255,30,10,0.15)",
+              }}>
                 {trip.year}
               </h2>
-              <p style={{ fontSize: "clamp(1rem, 2vw, 1.4rem)", fontWeight: 600, color: "rgba(255,255,255,0.85)", marginBottom: "0.5rem" }}>
+              <p style={{
+                fontFamily: "var(--font-scrawl), cursive",
+                fontSize: "clamp(1rem, 2vw, 1.4rem)",
+                fontWeight: 400,
+                color: "rgba(255,255,255,0.85)",
+                marginBottom: "0.5rem",
+              }}>
                 {trip.location}, {trip.state}
               </p>
               {trip.courses.length > 0 && (
-                <p style={{ fontSize: "0.75rem", letterSpacing: "0.06em", color: "rgba(255,255,255,0.25)", lineHeight: 1.8 }}>
+                <p style={{ fontSize: "0.75rem", letterSpacing: "0.06em", color: "rgba(255,255,255,0.25)", lineHeight: 1.8, fontFamily: "monospace" }}>
                   {trip.courses.map((c) => c.name).join("  ·  ")}
                 </p>
               )}

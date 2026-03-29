@@ -80,7 +80,11 @@ function TripHero({ trip }: { trip: Trip }) {
           transition={{ duration: 1, delay: 0.3 }}
           className="mb-3"
         >
-          <span className="font-display text-[6rem] md:text-[11rem] lg:text-[15rem] text-gold leading-[0.88] tracking-tight block">
+          <span className="text-[6rem] md:text-[11rem] lg:text-[15rem] text-gold leading-[0.88] block" style={{
+            fontFamily: "var(--font-scrawl), cursive",
+            letterSpacing: "0.02em",
+            textShadow: "0 0 10px rgba(255,80,20,0.8), 0 0 30px rgba(255,60,10,0.5), 0 0 60px rgba(255,40,0,0.3), 0 0 100px rgba(255,30,0,0.15)",
+          }}>
             {trip.year}
           </span>
         </motion.div>
@@ -90,7 +94,7 @@ function TripHero({ trip }: { trip: Trip }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
         >
-          <h1 className="font-body text-2xl md:text-4xl lg:text-5xl font-medium text-white/90 mb-4">
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-medium text-white/90 mb-4" style={{ fontFamily: "var(--font-scrawl), cursive" }}>
             {trip.location}, {trip.state}
           </h1>
         </motion.div>
@@ -126,7 +130,10 @@ function ScheduleSection({ trip }: { trip: Trip }) {
     <section className="py-20 md:py-32 bg-bg">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <FadeIn>
-          <h2 className="font-display text-4xl md:text-6xl text-text mb-14">
+          <h2 className="text-4xl md:text-6xl text-text mb-14" style={{
+            fontFamily: "var(--font-scrawl), cursive",
+            textShadow: "0 0 7px rgba(255,60,20,0.5), 0 0 20px rgba(255,60,20,0.25)",
+          }}>
             {trip.upcoming ? "The Game Plan" : "The Itinerary"}
           </h2>
         </FadeIn>
@@ -193,7 +200,10 @@ function PhotoSections({ trip }: { trip: Trip }) {
         <section key={section.label} className="py-20 md:py-32 bg-bg-alt">
           <div className="max-w-7xl mx-auto px-6 md:px-12">
             <FadeIn>
-              <h2 className="font-display text-4xl md:text-6xl text-text mb-4">
+              <h2 className="text-4xl md:text-6xl text-text mb-4" style={{
+                fontFamily: "var(--font-scrawl), cursive",
+                textShadow: "0 0 7px rgba(255,60,20,0.5), 0 0 20px rgba(255,60,20,0.25)",
+              }}>
                 {trip.upcoming ? "Where We're Staying" : "Where We Stayed"}
               </h2>
             </FadeIn>
@@ -237,7 +247,10 @@ function CoursesSection({ trip }: { trip: Trip }) {
     <section className="py-20 md:py-32 bg-bg">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <FadeIn>
-          <h2 className="font-display text-4xl md:text-6xl text-text mb-12">
+          <h2 className="text-4xl md:text-6xl text-text mb-12" style={{
+            fontFamily: "var(--font-scrawl), cursive",
+            textShadow: "0 0 7px rgba(255,60,20,0.5), 0 0 20px rgba(255,60,20,0.25)",
+          }}>
             {trip.upcoming ? "Where We'll Play" : "Where We Played"}
           </h2>
         </FadeIn>
@@ -295,7 +308,10 @@ function GallerySection({ trip }: { trip: Trip }) {
     <section className="py-20 md:py-32 bg-bg-alt">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <FadeIn>
-          <h2 className="font-display text-4xl md:text-6xl text-text mb-14">
+          <h2 className="text-4xl md:text-6xl text-text mb-14" style={{
+            fontFamily: "var(--font-scrawl), cursive",
+            textShadow: "0 0 7px rgba(255,60,20,0.5), 0 0 20px rgba(255,60,20,0.25)",
+          }}>
             The Evidence
           </h2>
         </FadeIn>
@@ -318,7 +334,7 @@ function TripNav({ prevTrip, nextTrip }: { prevTrip: Trip | null; nextTrip: Trip
                   Previous
                 </span>
                 <motion.span
-                  className="font-display text-3xl md:text-5xl text-text group-hover:text-accent transition-colors duration-300 block"
+                  className="text-3xl md:text-5xl text-text group-hover:text-accent transition-colors duration-300 block" style={{ fontFamily: "var(--font-scrawl), cursive" }}
                   whileHover={{ x: -4 }}
                 >
                   {prevTrip.year}
@@ -345,7 +361,7 @@ function TripNav({ prevTrip, nextTrip }: { prevTrip: Trip | null; nextTrip: Trip
                   Next
                 </span>
                 <motion.span
-                  className="font-display text-3xl md:text-5xl text-text group-hover:text-accent transition-colors duration-300 block"
+                  className="text-3xl md:text-5xl text-text group-hover:text-accent transition-colors duration-300 block" style={{ fontFamily: "var(--font-scrawl), cursive" }}
                   whileHover={{ x: 4 }}
                 >
                   {nextTrip.year}

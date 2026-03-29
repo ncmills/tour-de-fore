@@ -10,10 +10,11 @@ import PhotoSlideshow from "./PhotoSlideshow";
 import FireBackground from "./FireBackground";
 
 const sectionHeadingStyle: React.CSSProperties = {
-  fontFamily: "var(--font-script), cursive",
+  fontFamily: "var(--font-scrawl), cursive",
   fontSize: "clamp(2rem, 5vw, 3.5rem)",
-  color: "rgba(255,255,255,0.9)",
+  color: "#fff",
   marginBottom: "2rem",
+  textShadow: "0 0 7px rgba(255,60,20,0.5), 0 0 20px rgba(255,60,20,0.25), 0 0 40px rgba(255,30,10,0.1)",
 };
 
 const cardStyle: React.CSSProperties = {
@@ -72,12 +73,13 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           style={{
-            fontFamily: "var(--font-space), sans-serif",
+            fontFamily: "var(--font-scrawl), cursive",
             fontSize: "clamp(4rem, 12vw, 8rem)",
-            fontWeight: 800,
+            fontWeight: 400,
             lineHeight: 0.9,
-            letterSpacing: "-0.03em",
+            letterSpacing: "0.02em",
             color: "#fff",
+            textShadow: "0 0 10px rgba(255,80,20,0.8), 0 0 30px rgba(255,60,10,0.5), 0 0 60px rgba(255,40,0,0.3), 0 0 100px rgba(255,30,0,0.15)",
           }}
         >
           {trip.year}
@@ -86,7 +88,7 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          style={{ fontSize: "clamp(1rem, 2.5vw, 1.4rem)", color: "rgba(255,255,255,0.6)", marginTop: "0.5rem" }}
+          style={{ fontFamily: "var(--font-scrawl), cursive", fontSize: "clamp(1rem, 2.5vw, 1.4rem)", color: "rgba(255,255,255,0.6)", marginTop: "0.5rem" }}
         >
           {trip.location}, {trip.state}
         </motion.p>
@@ -159,11 +161,12 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
           {trip.schedule.map((day, i) => (
             <div key={i} id={`day-${i}`} style={{ marginBottom: "2.5rem", scrollMarginTop: "80px" }}>
               <h3 style={{
-                fontFamily: "var(--font-space), sans-serif",
+                fontFamily: "var(--font-scrawl), cursive",
                 fontSize: "1.3rem",
-                fontWeight: 700,
+                fontWeight: 400,
                 color: "#fff",
                 marginBottom: "0.5rem",
+                textShadow: "0 0 5px rgba(255,60,20,0.3)",
               }}>
                 {day.day} — {day.date}
               </h3>

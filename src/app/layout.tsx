@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter, Instrument_Serif, Caveat } from "next/font/google";
+import { Space_Grotesk, Inter, Instrument_Serif, Caveat, Permanent_Marker } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import DrunkMode from "@/components/DrunkMode";
@@ -31,6 +31,13 @@ const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: ["400"],
   style: ["normal", "italic"],
+  display: "swap",
+});
+
+const permanentMarker = Permanent_Marker({
+  variable: "--font-scrawl",
+  subsets: ["latin"],
+  weight: ["400"],
   display: "swap",
 });
 
@@ -82,7 +89,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${spaceGrotesk.variable} ${inter.variable} ${instrumentSerif.variable} ${caveat.variable} antialiased`}
+        className={`${spaceGrotesk.variable} ${inter.variable} ${instrumentSerif.variable} ${caveat.variable} ${permanentMarker.variable} antialiased`}
       >
         <a href="#main-content" className="skip-to-content">
           Skip to content
