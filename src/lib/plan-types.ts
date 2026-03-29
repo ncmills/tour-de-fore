@@ -177,11 +177,32 @@ export interface ThreePlanResult {
   demonKing: GeneratedPlan;
 }
 
+// ── Three-Destination Result ──
+
+export type PriceLevel = "budget" | "mid" | "premium";
+
+export interface DestinationRecommendation {
+  destinationId: string; // matches Destination.id
+  city: string;
+  state: string;
+  tagline: string;
+  priceLevel: PriceLevel;
+  plans: ThreePlanResult;
+}
+
+export interface ThreeDestinationResult {
+  budget: DestinationRecommendation;
+  mid: DestinationRecommendation;
+  premium: DestinationRecommendation;
+}
+
 // ── Storage Types ──
 
 export interface StoredPlan {
   id: string;
-  plans: ThreePlanResult;
+  destinations: ThreeDestinationResult;
+  /** @deprecated kept for backwards compat with old single-destination plans */
+  plans?: ThreePlanResult;
   inputs: WizardState;
   createdAt: string;
   emailsSent: boolean;

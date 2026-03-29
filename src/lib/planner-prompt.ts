@@ -1,5 +1,6 @@
 import { WizardState } from "./plan-types";
-import { filterDestinations, rankDestinations, buildDestinationContext } from "@/data/query";
+import { pickThreeDestinations, buildDestinationContext } from "@/data/query";
+import type { PickedDestination } from "@/data/query";
 import type { Season } from "@/data/types";
 
 // Note: 3 full tier plans require max_tokens of 16384
@@ -63,7 +64,7 @@ ${destinationContext}
 ## Output Format — THREE TIERS
 You MUST respond with valid JSON only — no markdown, no explanation, no preamble. Just the JSON object.
 
-You must generate THREE complete trip plans at different price tiers. Each tier is a COMPLETE, standalone plan — not a diff or upgrade list. All three tiers use the same destination, dates, group size, and number of days, but differ in course selection, lodging, dining, activities, and budget.
+You must generate THREE complete trip plans at different price tiers for this SINGLE destination. Each tier is a COMPLETE, standalone plan — not a diff or upgrade list. All three tiers use the same destination, dates, group size, and number of days, but differ in course selection, lodging, dining, activities, and budget.
 
 ### The Three Tiers
 
@@ -270,8 +271,8 @@ function seasonFromWizardState(state: WizardState): Season | undefined {
   return undefined;
 }
 
-export function getDestinationContext(state: WizardState): string {
-  const filtered = filterDestinations({
+export function getThreeDestinations(state: WizardState): PickedDestination[] {
+  return pickThreeDestinations({
     region: state.destinationType === "region" ? state.region : undefined,
     specificCity: state.destinationType === "specific" ? state.destination : undefined,
     season: seasonFromWizardState(state),
@@ -280,17 +281,11 @@ export function getDestinationContext(state: WizardState): string {
     courseQuality: state.courseQuality,
     activities: state.activities,
   });
+}
 
-  const ranked = rankDestinations(filtered, {
-    region: state.destinationType === "region" ? state.region : undefined,
-    budget: state.budget,
-    courseQuality: state.courseQuality,
-    activities: state.activities,
-    groupSize: state.groupSize,
-  });
-
-  // For specific destination, send top 1-2 matches
-  // For region, send top 3-5 for Claude to pick from
-  const maxResults = state.destinationType === "specific" ? 2 : 5;
-  return buildDestinationContext(ranked, maxResults);
+/** @deprecated Use getThreeDestinations instead */
+export function getDestinationContext(state: WizardState): string {
+  const picks = getThreeDestinations(state);
+  if (picks.length === 0) return "";
+  return buildDestinationContext(picks[0].destination);
 }

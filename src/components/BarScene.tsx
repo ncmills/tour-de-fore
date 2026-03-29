@@ -75,10 +75,10 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               pointerEvents: "none",
             }}
           >
-            {/* 🥃 button over the whiskey shot (left hand) */}
+            {/* 🥃 Shot = drink feature (left hand) */}
             <motion.button
               initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
+              animate={{ opacity: 1, scale: [1, 1.06, 1] }}
               exit={{ opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
               whileHover={{ scale: 1.15 }}
@@ -90,29 +90,32 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
                 top: "58%",
                 left: "30%",
                 transform: "translate(-50%, -50%)",
-                background: "rgba(0,0,0,0.6)",
+                background: "rgba(0,0,0,0.5)",
                 backdropFilter: "blur(4px)",
-                border: "2px solid rgba(255,255,255,0.3)",
+                border: "3px solid rgba(245,200,66,0.7)",
                 borderRadius: "50%",
-                width: "clamp(60px, 10vw, 90px)",
-                height: "clamp(60px, 10vw, 90px)",
+                width: "clamp(65px, 11vw, 95px)",
+                height: "clamp(65px, 11vw, 95px)",
                 display: "flex",
+                flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
+                gap: "2px",
                 cursor: "pointer",
-                boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
+                boxShadow: "0 0 20px rgba(245,200,66,0.3), 0 4px 20px rgba(0,0,0,0.5)",
                 userSelect: "none",
-                fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
+                fontSize: "clamp(1.6rem, 3vw, 2.4rem)",
                 lineHeight: 1,
               }}
             >
               🥃
+              <span style={{ fontSize: "clamp(0.5rem, 1vw, 0.65rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>drink</span>
             </motion.button>
 
-            {/* 🍺 button over the beer (right hand) */}
+            {/* 🍺 Beer = shop feature (right hand) */}
             <motion.button
               initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
+              animate={{ opacity: 1, scale: [1, 1.06, 1] }}
               exit={{ opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
               whileHover={{ scale: 1.15 }}
@@ -124,23 +127,26 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
                 top: "55%",
                 left: "72%",
                 transform: "translate(-50%, -50%)",
-                background: "rgba(0,0,0,0.6)",
+                background: "rgba(0,0,0,0.5)",
                 backdropFilter: "blur(4px)",
-                border: "2px solid rgba(255,255,255,0.3)",
+                border: "3px solid rgba(234,88,12,0.7)",
                 borderRadius: "50%",
-                width: "clamp(60px, 10vw, 90px)",
-                height: "clamp(60px, 10vw, 90px)",
+                width: "clamp(65px, 11vw, 95px)",
+                height: "clamp(65px, 11vw, 95px)",
                 display: "flex",
+                flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
+                gap: "2px",
                 cursor: "pointer",
-                boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
+                boxShadow: "0 0 20px rgba(234,88,12,0.3), 0 4px 20px rgba(0,0,0,0.5)",
                 userSelect: "none",
-                fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
+                fontSize: "clamp(1.6rem, 3vw, 2.4rem)",
                 lineHeight: 1,
               }}
             >
               🍺
+              <span style={{ fontSize: "clamp(0.5rem, 1vw, 0.65rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>shop</span>
             </motion.button>
           </motion.div>
         )}
@@ -162,7 +168,7 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
           >
             <motion.button
               initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
+              animate={{ opacity: 1, scale: [1, 1.06, 1] }}
               exit={{ opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
               whileHover={{ scale: 1.15 }}
@@ -174,23 +180,26 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
                 top: "55%",
                 left: "72%",
                 transform: "translate(-50%, -50%)",
-                background: "rgba(0,0,0,0.6)",
+                background: "rgba(0,0,0,0.5)",
                 backdropFilter: "blur(4px)",
-                border: "2px solid rgba(255,255,255,0.3)",
+                border: "3px solid rgba(234,88,12,0.7)",
                 borderRadius: "50%",
-                width: "clamp(60px, 10vw, 90px)",
-                height: "clamp(60px, 10vw, 90px)",
+                width: "clamp(65px, 11vw, 95px)",
+                height: "clamp(65px, 11vw, 95px)",
                 display: "flex",
+                flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
+                gap: "2px",
                 cursor: "pointer",
-                boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
+                boxShadow: "0 0 20px rgba(234,88,12,0.3), 0 4px 20px rgba(0,0,0,0.5)",
                 userSelect: "none",
-                fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
+                fontSize: "clamp(1.6rem, 3vw, 2.4rem)",
                 lineHeight: 1,
               }}
             >
               🍺
+              <span style={{ fontSize: "clamp(0.5rem, 1vw, 0.65rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>shop</span>
             </motion.button>
           </motion.div>
         )}

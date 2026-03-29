@@ -3,11 +3,18 @@ import { notFound } from "next/navigation";
 import { getPlan } from "@/lib/kv";
 import PlanResultClient from "@/components/PlanResultClient";
 import PlanSelectionClient from "@/components/PlanSelectionClient";
-import type { TripTier, ThreePlanResult, GeneratedPlan } from "@/lib/plan-types";
+import TierSelectionClient from "@/components/TierSelectionClient";
+import type {
+  TripTier,
+  ThreePlanResult,
+  GeneratedPlan,
+  PriceLevel,
+  DestinationRecommendation,
+} from "@/lib/plan-types";
 
 interface Props {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ tier?: string }>;
+  searchParams: Promise<{ dest?: string; tier?: string }>;
 }
 
 function getTierPlan(plans: ThreePlanResult, tier: string): GeneratedPlan | null {
@@ -19,17 +26,44 @@ function getTierPlan(plans: ThreePlanResult, tier: string): GeneratedPlan | null
   }
 }
 
+function getDestination(
+  stored: { destinations?: { budget: DestinationRecommendation; mid: DestinationRecommendation; premium: DestinationRecommendation }; plans?: ThreePlanResult },
+  dest: string
+): DestinationRecommendation | null {
+  if (stored.destinations) {
+    const level = dest as PriceLevel;
+    if (level === "budget" || level === "mid" || level === "premium") {
+      return stored.destinations[level];
+    }
+  }
+  // Legacy support: old plans without destinations
+  if (stored.plans) {
+    return {
+      destinationId: "legacy",
+      city: stored.plans.devil.destination.split(",")[0]?.trim() || "Unknown",
+      state: stored.plans.devil.destination.split(",")[1]?.trim() || "",
+      tagline: stored.plans.devil.tagline,
+      priceLevel: "mid",
+      plans: stored.plans,
+    };
+  }
+  return null;
+}
+
 export async function generateMetadata({ params, searchParams }: Props) {
   const { id } = await params;
-  const { tier } = await searchParams;
+  const { dest, tier } = await searchParams;
   const stored = await getPlan(id);
 
   if (!stored) {
     return { title: "Plan Not Found | Tour de Fore" };
   }
 
-  // Use devil tier for metadata by default
-  const plan = tier ? getTierPlan(stored.plans, tier) : stored.plans.devil;
+  const rec = stored.destinations?.mid;
+  const plan = rec
+    ? (tier ? getTierPlan(rec.plans, tier) : rec.plans.devil)
+    : stored.plans?.devil;
+
   const name = plan?.tripName || "Your Trip Plan";
   const desc = plan?.tagline || "";
 
@@ -45,27 +79,58 @@ export async function generateMetadata({ params, searchParams }: Props) {
 
 export default async function PlanResultPage({ params, searchParams }: Props) {
   const { id } = await params;
-  const { tier } = await searchParams;
+  const { dest, tier } = await searchParams;
   const stored = await getPlan(id);
 
   if (!stored) {
     notFound();
   }
 
-  // If no tier selected, show the 3-card selection grid
+  // ── No dest param: show destination picker (3 city cards) ──
+  if (!dest) {
+    if (stored.destinations) {
+      return (
+        <Suspense>
+          <PlanSelectionClient planId={id} destinations={stored.destinations} />
+        </Suspense>
+      );
+    }
+    // Legacy: old single-destination plans — show as tier picker
+    if (stored.plans) {
+      const legacyRec: DestinationRecommendation = {
+        destinationId: "legacy",
+        city: stored.plans.devil.destination.split(",")[0]?.trim() || "Unknown",
+        state: stored.plans.devil.destination.split(",")[1]?.trim() || "",
+        tagline: stored.plans.devil.tagline,
+        priceLevel: "mid",
+        plans: stored.plans,
+      };
+      return (
+        <Suspense>
+          <TierSelectionClient planId={id} dest="mid" recommendation={legacyRec} />
+        </Suspense>
+      );
+    }
+    notFound();
+  }
+
+  // ── Has dest but no tier: show tier picker ──
   if (!tier) {
+    const rec = getDestination(stored, dest);
+    if (!rec) notFound();
     return (
       <Suspense>
-        <PlanSelectionClient planId={id} plans={stored.plans} />
+        <TierSelectionClient planId={id} dest={dest as PriceLevel} recommendation={rec} />
       </Suspense>
     );
   }
 
-  // Show the selected tier's full plan
-  const plan = getTierPlan(stored.plans, tier);
-  if (!plan) {
-    notFound();
-  }
+  // ── Has both dest and tier: show full plan ──
+  const rec = getDestination(stored, dest);
+  if (!rec) notFound();
+
+  const plan = getTierPlan(rec.plans, tier);
+  if (!plan) notFound();
 
   return (
     <Suspense>
