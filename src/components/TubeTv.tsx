@@ -430,18 +430,18 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
                 fontSize: "clamp(9px, 0.9vw, 11px)",
                 letterSpacing: "0.22em",
                 textTransform: "uppercase",
-                color: "rgba(255,255,255,0.3)",
+                color: "#cc0000",
                 background: "none",
-                border: "1px solid rgba(255,255,255,0.1)",
+                border: "1px solid rgba(255,50,50,0.3)",
                 padding: "clamp(5px, 0.55vw, 7px) clamp(12px, 1.4vw, 18px)",
                 borderRadius: "3px",
                 cursor: "pointer",
                 transition: "color 0.2s, border-color 0.2s",
               }}
-              onMouseEnter={e => { e.currentTarget.style.color = "rgba(255,255,255,0.6)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.28)"; }}
-              onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.3)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }}
+              onMouseEnter={e => { e.currentTarget.style.color = "#ff3333"; e.currentTarget.style.borderColor = "rgba(255,50,50,0.5)"; }}
+              onMouseLeave={e => { e.currentTarget.style.color = "#cc0000"; e.currentTarget.style.borderColor = "rgba(255,50,50,0.3)"; }}
             >
-              skip hype video
+              <strong style={{ color: "#cc0000" }}>teleport me now</strong>
             </button>
 
           </motion.div>

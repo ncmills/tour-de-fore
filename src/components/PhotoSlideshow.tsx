@@ -1,8 +1,12 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
+
+function isVideo(src: string) {
+  return /\.(mp4|mov|webm)$/i.test(src);
+}
 
 interface PhotoSlideshowProps {
   images: string[];
@@ -12,6 +16,7 @@ interface PhotoSlideshowProps {
 export default function PhotoSlideshow({ images, interval = 4500 }: PhotoSlideshowProps) {
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const next = useCallback(() => {
     setCurrent((c) => (c + 1) % images.length);
@@ -22,12 +27,21 @@ export default function PhotoSlideshow({ images, interval = 4500 }: PhotoSlidesh
   }, [images.length]);
 
   useEffect(() => {
+    // For videos, don't auto-advance — let the video play through
     if (paused || images.length <= 1) return;
+    if (isVideo(images[current])) return;
     const t = setInterval(next, interval);
     return () => clearInterval(t);
-  }, [paused, next, interval, images.length]);
+  }, [paused, next, interval, images.length, current, images]);
+
+  // Auto-advance when a video ends
+  const handleVideoEnded = useCallback(() => {
+    next();
+  }, [next]);
 
   if (images.length === 0) return null;
+
+  const src = images[current];
 
   return (
     <div
@@ -44,14 +58,26 @@ export default function PhotoSlideshow({ images, interval = 4500 }: PhotoSlidesh
           transition={{ duration: 0.8 }}
           style={{ position: "absolute", inset: 0 }}
         >
-          <Image
-            src={images[current]}
-            alt={`Photo ${current + 1} of ${images.length}`}
-            fill
-            style={{ objectFit: "cover" }}
-            sizes="(max-width: 768px) 95vw, 80vw"
-            priority={current === 0}
-          />
+          {isVideo(src) ? (
+            <video
+              ref={videoRef}
+              src={src}
+              autoPlay
+              muted
+              playsInline
+              onEnded={handleVideoEnded}
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            />
+          ) : (
+            <Image
+              src={src}
+              alt={`Photo ${current + 1} of ${images.length}`}
+              fill
+              style={{ objectFit: "cover" }}
+              sizes="(max-width: 768px) 95vw, 80vw"
+              priority={current === 0}
+            />
+          )}
         </motion.div>
       </AnimatePresence>
 
