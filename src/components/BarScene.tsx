@@ -75,62 +75,72 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               pointerEvents: "none",
             }}
           >
-            {/* Beer bubble — LEFT of bartender's mouth, tail points right toward mouth */}
+            {/* 🥃 button over the whiskey shot (left hand) */}
             <motion.button
-              initial={{ opacity: 0, x: -15, scale: 0.5 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, x: -10 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              whileHover={{ scale: 1.12 }}
-              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              whileHover={{ scale: 1.15 }}
+              whileTap={{ scale: 0.9 }}
               onClick={handleDrink}
               style={{
                 pointerEvents: "auto",
                 position: "absolute",
-                top: "30%",
-                left: "calc(50% - clamp(70px, 10vw, 120px))",
-                transform: "translate(-100%, -50%)",
-                background: "#fff",
-                padding: "clamp(12px, 2vw, 22px)",
-                borderRadius: "20px 20px 4px 20px",
-                border: "none",
+                top: "58%",
+                left: "30%",
+                transform: "translate(-50%, -50%)",
+                background: "rgba(0,0,0,0.6)",
+                backdropFilter: "blur(4px)",
+                border: "2px solid rgba(255,255,255,0.3)",
+                borderRadius: "50%",
+                width: "clamp(60px, 10vw, 90px)",
+                height: "clamp(60px, 10vw, 90px)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
                 cursor: "pointer",
-                boxShadow: "0 8px 40px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3)",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
                 userSelect: "none",
-                fontSize: "clamp(2.2rem, 4.5vw, 3.5rem)",
+                fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
                 lineHeight: 1,
               }}
             >
-              🍺
+              🥃
             </motion.button>
 
-            {/* Money bubble — RIGHT of bartender's mouth, tail points left toward mouth */}
+            {/* 🍺 button over the beer (right hand) */}
             <motion.button
-              initial={{ opacity: 0, x: 15, scale: 0.5 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, x: 10 }}
-              transition={{ duration: 0.5, delay: 0.15, ease: "easeOut" }}
-              whileHover={{ scale: 1.12 }}
-              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
+              whileHover={{ scale: 1.15 }}
+              whileTap={{ scale: 0.9 }}
               onClick={handleShop}
               style={{
                 pointerEvents: "auto",
                 position: "absolute",
-                top: "30%",
-                left: "calc(50% + clamp(70px, 10vw, 120px))",
-                transform: "translateY(-50%)",
-                background: "#fff",
-                padding: "clamp(12px, 2vw, 22px)",
-                borderRadius: "20px 20px 20px 4px",
-                border: "none",
+                top: "55%",
+                left: "72%",
+                transform: "translate(-50%, -50%)",
+                background: "rgba(0,0,0,0.6)",
+                backdropFilter: "blur(4px)",
+                border: "2px solid rgba(255,255,255,0.3)",
+                borderRadius: "50%",
+                width: "clamp(60px, 10vw, 90px)",
+                height: "clamp(60px, 10vw, 90px)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
                 cursor: "pointer",
-                boxShadow: "0 8px 40px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3)",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
                 userSelect: "none",
-                fontSize: "clamp(2.2rem, 4.5vw, 3.5rem)",
+                fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
                 lineHeight: 1,
               }}
             >
-              💰
+              🍺
             </motion.button>
           </motion.div>
         )}
@@ -151,31 +161,36 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
             }}
           >
             <motion.button
-              initial={{ opacity: 0, x: 15, scale: 0.5 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, x: 10 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              whileHover={{ scale: 1.12 }}
-              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              whileHover={{ scale: 1.15 }}
+              whileTap={{ scale: 0.9 }}
               onClick={handleShop}
               style={{
                 pointerEvents: "auto",
                 position: "absolute",
-                top: "30%",
-                left: "calc(50% + clamp(70px, 10vw, 120px))",
-                transform: "translateY(-50%)",
-                background: "#fff",
-                padding: "clamp(12px, 2vw, 22px)",
-                borderRadius: "20px 20px 20px 4px",
-                border: "none",
+                top: "55%",
+                left: "72%",
+                transform: "translate(-50%, -50%)",
+                background: "rgba(0,0,0,0.6)",
+                backdropFilter: "blur(4px)",
+                border: "2px solid rgba(255,255,255,0.3)",
+                borderRadius: "50%",
+                width: "clamp(60px, 10vw, 90px)",
+                height: "clamp(60px, 10vw, 90px)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
                 cursor: "pointer",
-                boxShadow: "0 8px 40px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3)",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
                 userSelect: "none",
-                fontSize: "clamp(2.2rem, 4.5vw, 3.5rem)",
+                fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
                 lineHeight: 1,
               }}
             >
-              💰
+              🍺
             </motion.button>
           </motion.div>
         )}
