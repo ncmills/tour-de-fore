@@ -426,22 +426,23 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
             <button
               onClick={trigger}
               style={{
-                fontFamily: "var(--font-script), cursive",
-                fontSize: "clamp(12px, 1.4vw, 16px)",
+                fontFamily: "var(--font-scrawl), cursive",
+                fontSize: "clamp(14px, 1.8vw, 20px)",
                 fontWeight: 900,
-                letterSpacing: "0.08em",
+                letterSpacing: "0.1em",
                 textTransform: "uppercase",
-                color: "#DC2626",
-                background: "rgba(220,38,38,0.1)",
-                border: "2px solid rgba(220,38,38,0.5)",
-                padding: "clamp(6px, 0.7vw, 10px) clamp(16px, 2vw, 24px)",
-                borderRadius: "4px",
+                color: "#fff",
+                background: "rgba(220,38,38,0.7)",
+                border: "3px solid rgba(220,38,38,0.9)",
+                padding: "clamp(8px, 1vw, 14px) clamp(20px, 2.5vw, 32px)",
+                borderRadius: "6px",
                 cursor: "pointer",
                 transition: "all 0.2s",
-                textShadow: "0 0 8px rgba(220,38,38,0.3)",
+                textShadow: "0 0 12px rgba(220,38,38,0.5), 0 2px 4px rgba(0,0,0,0.5)",
+                boxShadow: "0 4px 20px rgba(220,38,38,0.4)",
               }}
-              onMouseEnter={e => { e.currentTarget.style.background = "rgba(220,38,38,0.25)"; e.currentTarget.style.borderColor = "rgba(220,38,38,0.8)"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "rgba(220,38,38,0.1)"; e.currentTarget.style.borderColor = "rgba(220,38,38,0.5)"; }}
+              onMouseEnter={e => { e.currentTarget.style.background = "rgba(220,38,38,0.9)"; e.currentTarget.style.boxShadow = "0 6px 30px rgba(220,38,38,0.6)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "rgba(220,38,38,0.7)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(220,38,38,0.4)"; }}
             >
               Teleport Me Now
             </button>

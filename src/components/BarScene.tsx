@@ -75,9 +75,9 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               pointerEvents: "none",
             }}
           >
-            {/* Beer bubble — LEFT side of bartender's head, tail points right */}
+            {/* Beer bubble — LEFT of bartender's mouth, tail points right toward mouth */}
             <motion.button
-              initial={{ opacity: 0, x: -20, scale: 0.5 }}
+              initial={{ opacity: 0, x: -15, scale: 0.5 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: -10 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
@@ -87,26 +87,26 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               style={{
                 pointerEvents: "auto",
                 position: "absolute",
-                top: "28%",
-                left: "clamp(4%, 8vw, 12%)",
-                transform: "translateY(-50%)",
+                top: "30%",
+                left: "calc(50% - clamp(70px, 10vw, 120px))",
+                transform: "translate(-100%, -50%)",
                 background: "#fff",
-                padding: "clamp(14px, 2.5vw, 26px)",
-                borderRadius: "24px 6px 24px 24px",
+                padding: "clamp(12px, 2vw, 22px)",
+                borderRadius: "20px 20px 4px 20px",
                 border: "none",
                 cursor: "pointer",
                 boxShadow: "0 8px 40px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3)",
                 userSelect: "none",
-                fontSize: "clamp(2.5rem, 5vw, 4rem)",
+                fontSize: "clamp(2.2rem, 4.5vw, 3.5rem)",
                 lineHeight: 1,
               }}
             >
               🍺
             </motion.button>
 
-            {/* Money bubble — RIGHT side of bartender's head, tail points left */}
+            {/* Money bubble — RIGHT of bartender's mouth, tail points left toward mouth */}
             <motion.button
-              initial={{ opacity: 0, x: 20, scale: 0.5 }}
+              initial={{ opacity: 0, x: 15, scale: 0.5 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 10 }}
               transition={{ duration: 0.5, delay: 0.15, ease: "easeOut" }}
@@ -116,17 +116,17 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               style={{
                 pointerEvents: "auto",
                 position: "absolute",
-                top: "28%",
-                right: "clamp(4%, 8vw, 12%)",
+                top: "30%",
+                left: "calc(50% + clamp(70px, 10vw, 120px))",
                 transform: "translateY(-50%)",
                 background: "#fff",
-                padding: "clamp(14px, 2.5vw, 26px)",
-                borderRadius: "6px 24px 24px 24px",
+                padding: "clamp(12px, 2vw, 22px)",
+                borderRadius: "20px 20px 20px 4px",
                 border: "none",
                 cursor: "pointer",
                 boxShadow: "0 8px 40px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3)",
                 userSelect: "none",
-                fontSize: "clamp(2.5rem, 5vw, 4rem)",
+                fontSize: "clamp(2.2rem, 4.5vw, 3.5rem)",
                 lineHeight: 1,
               }}
             >
@@ -151,7 +151,7 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
             }}
           >
             <motion.button
-              initial={{ opacity: 0, x: 20, scale: 0.5 }}
+              initial={{ opacity: 0, x: 15, scale: 0.5 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 10 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
@@ -161,17 +161,17 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               style={{
                 pointerEvents: "auto",
                 position: "absolute",
-                top: "28%",
-                right: "clamp(4%, 8vw, 12%)",
+                top: "30%",
+                left: "calc(50% + clamp(70px, 10vw, 120px))",
                 transform: "translateY(-50%)",
                 background: "#fff",
-                padding: "clamp(14px, 2.5vw, 26px)",
-                borderRadius: "6px 24px 24px 24px",
+                padding: "clamp(12px, 2vw, 22px)",
+                borderRadius: "20px 20px 20px 4px",
                 border: "none",
                 cursor: "pointer",
                 boxShadow: "0 8px 40px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3)",
                 userSelect: "none",
-                fontSize: "clamp(2.5rem, 5vw, 4rem)",
+                fontSize: "clamp(2.2rem, 4.5vw, 3.5rem)",
                 lineHeight: 1,
               }}
             >
