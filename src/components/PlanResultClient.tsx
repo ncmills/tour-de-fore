@@ -63,11 +63,11 @@ const fadeVariants = {
 
 /* ── sub-components ── */
 
-function ConciergeCTA({ planId, tier }: { planId: string; tier: TripTier }) {
+function ConciergeCTA({ planId, tier, dest }: { planId: string; tier: TripTier; dest?: string }) {
   return (
     <div style={{ marginTop: "2.5rem", textAlign: "center" }}>
       <Link
-        href={`/concierge?planId=${planId}&tier=${tier}`}
+        href={`/concierge?planId=${planId}&tier=${tier}${dest ? `&dest=${dest}` : ""}`}
         style={{
           color: "#ccc",
           fontSize: 14,
@@ -208,9 +208,10 @@ interface PlanResultClientProps {
   plan: GeneratedPlan;
   planId: string;
   tier: TripTier;
+  dest?: string;
 }
 
-export default function PlanResultClient({ plan, planId, tier }: PlanResultClientProps) {
+export default function PlanResultClient({ plan, planId, tier, dest }: PlanResultClientProps) {
   const [copied, setCopied] = useState(false);
 
   const copyLink = () => {
@@ -262,7 +263,7 @@ export default function PlanResultClient({ plan, planId, tier }: PlanResultClien
         }}>
           <Link
             className="concierge-cta"
-            href={`/concierge?planId=${planId}&tier=${tier}`}
+            href={`/concierge?planId=${planId}&tier=${tier}${dest ? `&dest=${dest}` : ""}`}
             style={{
               display: "inline-block",
               background: "rgba(220,38,38,0.85)",

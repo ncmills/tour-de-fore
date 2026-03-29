@@ -134,7 +134,7 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
 
   return (
     <Suspense>
-      <PlanResultClient plan={plan} planId={id} tier={tier as TripTier} />
+      <PlanResultClient plan={plan} planId={id} tier={tier as TripTier} dest={dest} />
     </Suspense>
   );
 }

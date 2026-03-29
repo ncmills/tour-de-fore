@@ -21,10 +21,11 @@ export default function ConciergeClient() {
   const params = useSearchParams();
   const planId = params.get("planId") || "";
   const tier = params.get("tier") || "";
+  const dest = params.get("dest") || "";
 
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff" }}>
-      <MulliganButton href={planId ? `/plan/result/${planId}?tier=${tier}` : "/?skip=1"} />
+      <MulliganButton href={planId ? `/plan/result/${planId}?dest=${dest}&tier=${tier}` : "/?skip=1"} />
 
       {/* Hero */}
       <motion.section
@@ -117,6 +118,7 @@ export default function ConciergeClient() {
           <form action="/api/concierge-checkout" method="POST">
             <input type="hidden" name="planId" value={planId} />
             <input type="hidden" name="tier" value={tier} />
+            <input type="hidden" name="dest" value={dest} />
             <button
               type="submit"
               style={{

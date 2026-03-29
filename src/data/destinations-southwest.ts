@@ -1743,4 +1743,1841 @@ export const southwestDestinations: Destination[] = [
       },
     ],
   },
+
+  // ─── Las Vegas, NV ──────────────────────────────────────────────────
+  {
+    id: "las-vegas-nv",
+    city: "Las Vegas",
+    state: "NV",
+    region: "Southwest",
+    tagline: "The ultimate boys-trip city with world-class desert golf",
+    description:
+      "Vegas needs no introduction for a group trip. Stack it with bucket-list golf at Shadow Creek or TPC Las Vegas, endless dining, and a nightlife scene that never stops. LAS is the airport, everything is close, and the Airbnb mansion game is elite.",
+    population: "medium",
+    nearestAirport: {
+      code: "LAS",
+      name: "Harry Reid International Airport",
+      driveMinutes: 10,
+    },
+    bestSeasons: ["spring", "fall"],
+    courses: [
+      {
+        name: "Shadow Creek",
+        tier: "bucket-list",
+        greenFeeRange: [500, 600],
+        holes: 18,
+        par: 72,
+        yardage: 7560,
+        slope: 140,
+        rating: 75.2,
+        walkable: false,
+        style: "parkland",
+        driveMinutes: 20,
+        url: "https://www.shadowcreek.com",
+        highlight:
+          "Tom Fazio masterpiece built from flat desert into a lush Carolina-style paradise — limo ride included",
+      },
+      {
+        name: "TPC Las Vegas (Canyon Course)",
+        tier: "premium",
+        greenFeeRange: [150, 250],
+        holes: 18,
+        par: 71,
+        yardage: 7104,
+        slope: 135,
+        rating: 73.6,
+        walkable: false,
+        style: "desert",
+        driveMinutes: 25,
+        url: "https://www.tpc.com/las-vegas",
+        highlight:
+          "Former PGA Tour stop in the Summerlin foothills with dramatic canyon views on the back nine",
+      },
+      {
+        name: "Paiute Golf Resort (Wolf Course)",
+        tier: "premium",
+        greenFeeRange: [100, 200],
+        holes: 18,
+        par: 72,
+        yardage: 7604,
+        slope: 136,
+        rating: 75.2,
+        walkable: false,
+        style: "desert",
+        driveMinutes: 30,
+        url: "https://www.lvpaiutegolf.com",
+        highlight:
+          "Pete Dye design with 45 holes on site — Wolf is the beast, Snow Mountain and Sun Mountain round out the trio",
+      },
+      {
+        name: "Bali Hai Golf Club",
+        tier: "premium",
+        greenFeeRange: [150, 300],
+        holes: 18,
+        par: 71,
+        yardage: 7002,
+        slope: 130,
+        rating: 73.0,
+        walkable: false,
+        style: "resort",
+        driveMinutes: 5,
+        url: "https://www.balihaigolfclub.com",
+        highlight:
+          "Tropical-themed course steps from the Strip — palm trees, white sand, and convenience you can not beat",
+      },
+      {
+        name: "Cascata Golf Club",
+        tier: "bucket-list",
+        greenFeeRange: [250, 450],
+        holes: 18,
+        par: 72,
+        yardage: 7137,
+        slope: 143,
+        rating: 74.6,
+        walkable: false,
+        style: "desert",
+        driveMinutes: 35,
+        url: "https://www.cascatagolf.com",
+        highlight:
+          "Rees Jones design in Boulder City with a 418-foot waterfall behind the clubhouse — pure spectacle",
+      },
+    ],
+    lodging: [
+      {
+        type: "house",
+        sleeps: [12, 20],
+        nightlyRange: [800, 3000],
+        amenities: [
+          "private pool",
+          "hot tub",
+          "game room",
+          "home theater",
+          "putting green",
+          "BBQ grill",
+        ],
+        areaDescription:
+          "Summerlin, Henderson, or Southwest Las Vegas — luxury vacation rental mansions with pools",
+        searchUrl:
+          "https://www.vrbo.com/search?destination=Las+Vegas%2C+NV&groupSize=16",
+        notes:
+          "Vegas mansion rentals are the move for 12-20 guys. Summerlin is closest to the golf. Many come with private pools, poker tables, and home theaters.",
+      },
+      {
+        type: "resort-house",
+        sleeps: [8, 16],
+        nightlyRange: [600, 2000],
+        amenities: [
+          "Strip access",
+          "pool",
+          "concierge",
+          "valet parking",
+        ],
+        areaDescription:
+          "The Strip or Downtown — hotel villa suites or multi-bedroom party suites",
+        notes:
+          "Cosmopolitan, Encore, and Aria offer connected suites that sleep groups. More expensive per night but you are on the Strip with zero Uber logistics.",
+      },
+    ],
+    dining: [
+      {
+        name: "STK Las Vegas",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "High-energy steakhouse inside the Cosmopolitan with DJ and lounge vibes — perfect group dinner",
+        reservationNeeded: true,
+      },
+      {
+        name: "Herbs & Rye",
+        style: "upscale",
+        priceRange: "$$$",
+        capacity: "medium",
+        highlight:
+          "Off-Strip speakeasy with half-price steaks during happy hour and world-class cocktails",
+        reservationNeeded: false,
+      },
+      {
+        name: "Tacos El Gordo",
+        style: "mexican",
+        priceRange: "$",
+        capacity: "large-group",
+        highlight:
+          "Tijuana-style street tacos on the Strip — the 3 AM move after the clubs",
+        reservationNeeded: false,
+      },
+      {
+        name: "AYCE Buffet (Palms)",
+        style: "casual",
+        priceRange: "$$",
+        capacity: "large-group",
+        highlight:
+          "All-you-can-eat spread with carving stations and seafood — classic Vegas fuel",
+        reservationNeeded: false,
+      },
+      {
+        name: "Bavette's Park MGM",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Moody, dimly-lit Chicago-style steakhouse with incredible bone marrow and live jazz",
+        reservationNeeded: true,
+      },
+    ],
+    bars: [
+      {
+        name: "The Chandelier (Cosmopolitan)",
+        vibe: "cocktail",
+        highlight:
+          "Three-story cocktail bar in the center of the Cosmo — order the verbena cocktail that numbs your tongue",
+        lateNight: true,
+        walkableFromDowntown: false,
+      },
+      {
+        name: "Atomic Liquors",
+        vibe: "dive",
+        highlight:
+          "The oldest freestanding bar in Vegas, now a craft cocktail spot in the Fremont East district",
+        lateNight: true,
+        walkableFromDowntown: true,
+      },
+      {
+        name: "Skyfall Lounge (Delano)",
+        vibe: "rooftop",
+        highlight:
+          "64th-floor views of the entire Strip — expensive but the panoramic sunset is unbeatable",
+        lateNight: true,
+        walkableFromDowntown: false,
+      },
+      {
+        name: "Gold Spike",
+        vibe: "dive",
+        highlight:
+          "Downtown social club with giant Jenga, beer pong, and a backyard patio — zero pretense",
+        lateNight: true,
+        walkableFromDowntown: true,
+      },
+    ],
+    activities: [
+      {
+        name: "Topgolf Las Vegas",
+        type: "go-karts",
+        duration: "2-3 hours",
+        pricePerPerson: [35, 65],
+        groupFriendly: true,
+        highlight:
+          "Four-story Topgolf right off the Strip with a pool and concert stage — the ultimate group warm-up",
+        bestFor: "arrival day",
+        provider: "Topgolf",
+      },
+      {
+        name: "Battlefield Vegas",
+        type: "shooting",
+        duration: "1-2 hours",
+        pricePerPerson: [100, 500],
+        groupFriendly: true,
+        highlight:
+          "Shoot machine guns, miniguns, and grenade launchers — the most Vegas activity imaginable",
+        bestFor: "rest day",
+        provider: "Battlefield Vegas",
+      },
+      {
+        name: "Vegas Casino Crawl",
+        type: "casino",
+        duration: "4-8 hours",
+        pricePerPerson: [0, 500],
+        groupFriendly: true,
+        highlight:
+          "Hit the tables at Bellagio, Wynn, and Aria — poker, blackjack, and craps with the crew",
+        bestFor: "arrival day",
+      },
+      {
+        name: "SpeedVegas",
+        type: "go-karts",
+        duration: "1-2 hours",
+        pricePerPerson: [200, 700],
+        groupFriendly: true,
+        highlight:
+          "Drive Lamborghinis and Ferraris on a real track at 150 mph — bachelor-party energy",
+        bestFor: "rest day",
+        provider: "SpeedVegas",
+      },
+      {
+        name: "Red Rock Canyon Hiking",
+        type: "hiking",
+        duration: "2-4 hours",
+        pricePerPerson: [0, 15],
+        groupFriendly: true,
+        highlight:
+          "Stunning red sandstone formations 20 minutes from the Strip — Calico Tanks trail for the group photo",
+        bestFor: "morning before golf",
+      },
+      {
+        name: "Vegas Strip Helicopter Tour",
+        type: "zipline",
+        duration: "30-60 minutes",
+        pricePerPerson: [100, 250],
+        groupFriendly: true,
+        highlight:
+          "Night flight over the Strip in a helicopter — absolutely electric for a group",
+        bestFor: "arrival day",
+        provider: "Maverick Helicopters",
+      },
+    ],
+    partyBuses: [
+      {
+        type: "party-bus",
+        capacity: [12, 40],
+        hourlyRate: [200, 500],
+        providers: ["Vegas Party Bus", "Presidential Limousine", "Tux Limo"],
+        notes:
+          "Vegas party buses are an industry. LED lights, sound systems, and Strip loops are standard. Book early for weekends.",
+      },
+      {
+        type: "limo",
+        capacity: [8, 16],
+        hourlyRate: [150, 400],
+        providers: ["AWG Ambassador", "Presidential Limousine"],
+        notes:
+          "Stretch limos and Hummer limos are classic Vegas. Great for a dinner-to-club transfer.",
+      },
+    ],
+    privateChefs: [
+      {
+        pricePerPerson: [75, 175],
+        providers: ["Take a Chef", "Cozymeal", "Vegas Private Chefs"],
+        mealTypes: ["steak dinner", "BBQ cookout", "brunch", "sushi night"],
+        notes:
+          "Deep chef pool in Vegas. A private chef at the mansion with wagyu and whiskey is the ultimate night-in move.",
+      },
+    ],
+  },
+
+  // ─── Reno, NV ───────────────────────────────────────────────────────
+  {
+    id: "reno-nv",
+    city: "Reno",
+    state: "NV",
+    region: "Southwest",
+    tagline: "Mountain golf, casinos, and craft beer in the Biggest Little City",
+    description:
+      "Reno punches way above its weight for a golf trip. Mountain courses with Sierra views, a revitalized Midtown bar scene, and casino nightlife without the Vegas price tag. Fly direct into RNO and you are 10 minutes from everything.",
+    population: "medium",
+    nearestAirport: {
+      code: "RNO",
+      name: "Reno-Tahoe International Airport",
+      driveMinutes: 10,
+    },
+    bestSeasons: ["summer", "fall"],
+    courses: [
+      {
+        name: "Wolf Run Golf Club",
+        tier: "premium",
+        greenFeeRange: [75, 140],
+        holes: 18,
+        par: 71,
+        yardage: 6907,
+        slope: 135,
+        rating: 72.6,
+        walkable: true,
+        style: "mountain",
+        driveMinutes: 15,
+        url: "https://www.wolfrungolfclub.com",
+        highlight:
+          "Challenging mountain layout with Sierra Nevada views and some of the best conditioning in northern Nevada",
+      },
+      {
+        name: "ArrowCreek Golf Club (Legend Course)",
+        tier: "premium",
+        greenFeeRange: [80, 150],
+        holes: 18,
+        par: 72,
+        yardage: 7100,
+        slope: 138,
+        rating: 73.4,
+        walkable: false,
+        style: "mountain",
+        driveMinutes: 20,
+        url: "https://www.arrowcreek.com",
+        highlight:
+          "Arnold Palmer design perched above the city with panoramic views of Reno and the Truckee Meadows",
+      },
+      {
+        name: "Lakeridge Golf Course",
+        tier: "solid",
+        greenFeeRange: [50, 95],
+        holes: 18,
+        par: 71,
+        yardage: 6717,
+        slope: 131,
+        rating: 71.3,
+        walkable: true,
+        style: "parkland",
+        driveMinutes: 10,
+        url: "https://www.lakeridgegolf.com",
+        highlight:
+          "Robert Trent Jones II design with an island green par-3 — best value in the Reno area",
+      },
+      {
+        name: "Montreux Golf & Country Club",
+        tier: "bucket-list",
+        greenFeeRange: [175, 300],
+        holes: 18,
+        par: 72,
+        yardage: 7472,
+        slope: 142,
+        rating: 75.4,
+        walkable: false,
+        style: "mountain",
+        driveMinutes: 25,
+        url: "https://www.montreuxgolf.com",
+        highlight:
+          "Jack Nicklaus design that hosted the PGA Tour Barracuda Championship — private but resort access available",
+      },
+    ],
+    lodging: [
+      {
+        type: "house",
+        sleeps: [10, 16],
+        nightlyRange: [400, 1200],
+        amenities: [
+          "hot tub",
+          "mountain views",
+          "game room",
+          "BBQ grill",
+          "fire pit",
+        ],
+        areaDescription:
+          "South Reno or Galena Forest — mountain-adjacent homes near ArrowCreek and Montreux",
+        searchUrl:
+          "https://www.vrbo.com/search?destination=Reno%2C+NV&groupSize=16",
+        notes:
+          "South Reno has the best large home inventory near the golf. Alternatively, Midtown condos put you walking distance from bars.",
+      },
+      {
+        type: "lodge",
+        sleeps: [8, 14],
+        nightlyRange: [300, 900],
+        amenities: [
+          "pool",
+          "casino access",
+          "restaurant",
+          "valet parking",
+        ],
+        areaDescription:
+          "Downtown Reno — casino hotel suites at Grand Sierra, Peppermill, or Atlantis",
+        notes:
+          "Casino resorts offer connected suites and group rates. The Peppermill is the standout with its retro-chic vibe.",
+      },
+    ],
+    dining: [
+      {
+        name: "Brasserie Saint James",
+        style: "upscale",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "Elevated French-American cuisine in a beautifully restored Midtown building — great group energy",
+        reservationNeeded: true,
+      },
+      {
+        name: "Louis' Basque Corner",
+        style: "casual",
+        priceRange: "$$",
+        capacity: "large-group",
+        highlight:
+          "Family-style Basque dinner with picon punch, lamb, and communal tables — a Reno institution since 1967",
+        reservationNeeded: true,
+      },
+      {
+        name: "The Depot Craft Brewery Distillery",
+        style: "brewpub",
+        priceRange: "$$",
+        capacity: "large-group",
+        highlight:
+          "House-brewed beers and spirits in a converted railroad depot — great food menu too",
+        reservationNeeded: false,
+      },
+      {
+        name: "Sterling's Seafood Steakhouse",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Classic high-end steakhouse inside Silver Legacy with big-group private dining",
+        reservationNeeded: true,
+      },
+    ],
+    bars: [
+      {
+        name: "Death & Taxes",
+        vibe: "cocktail",
+        highlight:
+          "Speakeasy-style craft cocktail bar in Midtown — dark, moody, and excellent drinks",
+        lateNight: true,
+        walkableFromDowntown: false,
+      },
+      {
+        name: "The Emerson",
+        vibe: "patio",
+        highlight:
+          "Midtown hangout with a big patio, fire pits, and strong cocktails — the group pre-game spot",
+        lateNight: true,
+        walkableFromDowntown: false,
+      },
+      {
+        name: "Peppermill Fireside Lounge",
+        vibe: "cocktail",
+        highlight:
+          "Iconic 70s lounge with fire pits, neon, and scorpion bowls — a must-visit Reno landmark",
+        lateNight: true,
+        walkableFromDowntown: true,
+      },
+    ],
+    activities: [
+      {
+        name: "Grand Sierra Resort Casino",
+        type: "casino",
+        duration: "3-6 hours",
+        pricePerPerson: [0, 300],
+        groupFriendly: true,
+        highlight:
+          "Massive casino resort with bowling, movie theater, and driving range on site",
+        bestFor: "arrival day",
+        provider: "Grand Sierra Resort",
+      },
+      {
+        name: "Truckee River Whitewater Rafting",
+        type: "rafting",
+        duration: "2-3 hours",
+        pricePerPerson: [40, 80],
+        groupFriendly: true,
+        highlight:
+          "Class 2-3 rapids right through downtown Reno — a surprisingly fun half-day add",
+        bestFor: "rest day",
+        provider: "Truckee River Raft Company",
+      },
+      {
+        name: "Reno Brewing District Tour",
+        type: "brewery",
+        duration: "3-4 hours",
+        pricePerPerson: [0, 50],
+        groupFriendly: true,
+        highlight:
+          "Walk between IMBIB, Lead Dog, and Pigeon Head in Midtown — the craft beer scene is legit",
+        bestFor: "rest day",
+      },
+      {
+        name: "Sage Street Clay Sports",
+        type: "shooting",
+        duration: "2-3 hours",
+        pricePerPerson: [40, 100],
+        groupFriendly: true,
+        highlight:
+          "Sporting clays and trap shooting with mountain backdrop — great group competition",
+        bestFor: "morning before golf",
+        provider: "Sage Street Clay Sports",
+      },
+      {
+        name: "Lake Tahoe Day Trip",
+        type: "hiking",
+        duration: "full day",
+        pricePerPerson: [0, 30],
+        groupFriendly: true,
+        highlight:
+          "45 minutes to the most beautiful lake in America — Sand Harbor beach or Emerald Bay hike",
+        bestFor: "rest day",
+      },
+    ],
+    partyBuses: [
+      {
+        type: "party-bus",
+        capacity: [12, 24],
+        hourlyRate: [175, 400],
+        providers: ["Reno Tahoe Limousine", "Sierra West Limousine"],
+        notes:
+          "Party buses for Midtown bar crawls or Reno-to-Tahoe transfers. Book early in summer.",
+      },
+    ],
+    privateChefs: [
+      {
+        pricePerPerson: [60, 140],
+        providers: ["Take a Chef", "Cozymeal"],
+        mealTypes: ["steak dinner", "BBQ cookout", "brunch"],
+        notes:
+          "Solid chef pool thanks to Reno-Tahoe's food scene. A mountain-house cookout with local craft beer is the play.",
+      },
+    ],
+  },
+
+  // ─── Phoenix / Mesa, AZ ─────────────────────────────────────────────
+  {
+    id: "phoenix-mesa-az",
+    city: "Phoenix / Mesa",
+    state: "AZ",
+    region: "Southwest",
+    tagline: "Massive metro, massive course list, zero pretense",
+    description:
+      "Phoenix is Scottsdale's blue-collar neighbor with just as much great golf at half the price. Papago is a municipal legend, We-Ko-Pa is 30 minutes east, and the East Valley (Mesa, Gilbert, Chandler) has dozens of playable tracks. The nightlife skews more sports-bar than bottle-service, which is exactly what most groups want.",
+    population: "medium",
+    nearestAirport: {
+      code: "PHX",
+      name: "Phoenix Sky Harbor International Airport",
+      driveMinutes: 10,
+    },
+    bestSeasons: ["spring", "fall"],
+    courses: [
+      {
+        name: "Papago Golf Course",
+        tier: "solid",
+        greenFeeRange: [45, 80],
+        holes: 18,
+        par: 72,
+        yardage: 7068,
+        slope: 131,
+        rating: 73.0,
+        walkable: true,
+        style: "desert",
+        driveMinutes: 10,
+        url: "https://www.papagogolfcourse.net",
+        highlight:
+          "Iconic Phoenix muni nestled between the Papago Buttes — where the locals play and the views punch way above the green fee",
+      },
+      {
+        name: "ASU Karsten Golf Course",
+        tier: "solid",
+        greenFeeRange: [40, 75],
+        holes: 18,
+        par: 72,
+        yardage: 7002,
+        slope: 131,
+        rating: 72.9,
+        walkable: true,
+        style: "desert",
+        driveMinutes: 15,
+        url: "https://www.asukarsten.com",
+        highlight:
+          "Pete Dye design for ASU — sneaky tough college course with great conditioning for the price",
+      },
+      {
+        name: "Longbow Golf Club",
+        tier: "solid",
+        greenFeeRange: [50, 95],
+        holes: 18,
+        par: 71,
+        yardage: 6750,
+        slope: 128,
+        rating: 71.5,
+        walkable: false,
+        style: "desert",
+        driveMinutes: 25,
+        url: "https://www.longbowgolf.com",
+        highlight:
+          "Ken Kavanaugh design in Mesa with water on 13 holes and mountain backdrops — great value",
+      },
+      {
+        name: "We-Ko-Pa Golf Club (Cholla Course)",
+        tier: "premium",
+        greenFeeRange: [130, 240],
+        holes: 18,
+        par: 72,
+        yardage: 7225,
+        slope: 145,
+        rating: 74.5,
+        walkable: false,
+        style: "desert",
+        driveMinutes: 35,
+        url: "https://www.wekopa.com",
+        highlight:
+          "Scott Miller design on Fort McDowell Yavapai land — wide fairways framed by untouched Sonoran Desert",
+      },
+      {
+        name: "Aguila Golf Course",
+        tier: "budget",
+        greenFeeRange: [25, 50],
+        holes: 18,
+        par: 72,
+        yardage: 6701,
+        slope: 119,
+        rating: 70.6,
+        walkable: true,
+        style: "parkland",
+        driveMinutes: 15,
+        highlight:
+          "No-frills Phoenix muni that is perfect for a warm-up round or a hangover special",
+      },
+    ],
+    lodging: [
+      {
+        type: "house",
+        sleeps: [12, 20],
+        nightlyRange: [500, 1800],
+        amenities: [
+          "private pool",
+          "hot tub",
+          "game room",
+          "BBQ grill",
+          "fire pit",
+        ],
+        areaDescription:
+          "East Valley (Mesa, Gilbert, Chandler) for course proximity, or Central Phoenix/Tempe for nightlife access",
+        searchUrl:
+          "https://www.vrbo.com/search?destination=Phoenix%2C+AZ&groupSize=16",
+        notes:
+          "Massive rental inventory keeps prices 30-50% below equivalent Scottsdale homes. East Valley homes are closer to courses; Tempe Mill Ave area is better for nightlife.",
+      },
+      {
+        type: "house",
+        sleeps: [8, 14],
+        nightlyRange: [300, 1000],
+        amenities: [
+          "private pool",
+          "putting green",
+          "outdoor kitchen",
+          "mountain views",
+        ],
+        areaDescription:
+          "Mesa near Longbow or Superstition Springs — newer communities with golf course homes",
+        notes:
+          "Mesa has great golf community homes with pools and putting greens at budget-friendly prices.",
+      },
+    ],
+    dining: [
+      {
+        name: "Steak 44",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "One of the Valley's best steakhouses with tableside prep and a buzzing bar scene",
+        reservationNeeded: true,
+      },
+      {
+        name: "Rustler's Rooste",
+        style: "bbq",
+        priceRange: "$$",
+        capacity: "large-group",
+        highlight:
+          "Mountaintop BBQ spot with rattlesnake appetizers, a slide entrance, and panoramic city views",
+        reservationNeeded: true,
+      },
+      {
+        name: "Los Dos Molinos",
+        style: "mexican",
+        priceRange: "$$",
+        capacity: "medium",
+        highlight:
+          "New Mexican-style heat that will humble your spice-tough buddy — the green chile is legendary",
+        reservationNeeded: false,
+      },
+      {
+        name: "Pizzeria Bianco",
+        style: "italian",
+        priceRange: "$$",
+        capacity: "medium",
+        highlight:
+          "James Beard Award-winning pizza in Heritage Square — worth the wait",
+        reservationNeeded: true,
+      },
+    ],
+    bars: [
+      {
+        name: "Casey Moore's Oyster House",
+        vibe: "patio",
+        highlight:
+          "Legendary Tempe patio bar in a haunted 1910 house — cheap pitchers and big energy",
+        lateNight: true,
+        walkableFromDowntown: false,
+      },
+      {
+        name: "Bitter & Twisted Cocktail Parlour",
+        vibe: "cocktail",
+        highlight:
+          "Award-winning cocktail bar in a former Prohibition headquarters — creative drinks in a speakeasy vibe",
+        lateNight: true,
+        walkableFromDowntown: true,
+      },
+      {
+        name: "The Whining Pig",
+        vibe: "sports-bar",
+        highlight:
+          "Self-pour beer wall with 40 taps and big screens — the group picks their own pours",
+        lateNight: true,
+        walkableFromDowntown: false,
+      },
+    ],
+    activities: [
+      {
+        name: "Salt River Tubing",
+        type: "water-sports",
+        duration: "3-4 hours",
+        pricePerPerson: [20, 25],
+        groupFriendly: true,
+        highlight:
+          "Float the Salt River with coolers of beer on a hot Arizona day — peak rest-day activity",
+        bestFor: "rest day",
+        provider: "Salt River Tubing & Recreation",
+      },
+      {
+        name: "Topgolf Scottsdale",
+        type: "go-karts",
+        duration: "2-3 hours",
+        pricePerPerson: [30, 60],
+        groupFriendly: true,
+        highlight:
+          "Climate-controlled driving range bays with food and drinks — great for arrival day",
+        bestFor: "arrival day",
+        provider: "Topgolf",
+      },
+      {
+        name: "Arizona Hiking — Camelback Mountain",
+        type: "hiking",
+        duration: "2-3 hours",
+        pricePerPerson: [0, 0],
+        groupFriendly: true,
+        highlight:
+          "Iconic Phoenix summit hike with 360-degree Valley views — bring water and start early",
+        bestFor: "morning before golf",
+      },
+      {
+        name: "Octane Raceway",
+        type: "go-karts",
+        duration: "1-2 hours",
+        pricePerPerson: [25, 50],
+        groupFriendly: true,
+        highlight:
+          "Indoor electric kart racing in Scottsdale — competitive and air-conditioned",
+        bestFor: "arrival day",
+        provider: "Octane Raceway",
+      },
+      {
+        name: "Ben Avery Shooting Facility",
+        type: "shooting",
+        duration: "2-3 hours",
+        pricePerPerson: [30, 80],
+        groupFriendly: true,
+        highlight:
+          "World-class public shooting facility with trap, skeet, and rifle ranges",
+        bestFor: "rest day",
+      },
+    ],
+    partyBuses: [
+      {
+        type: "party-bus",
+        capacity: [12, 30],
+        hourlyRate: [175, 400],
+        providers: ["AZ Limo", "Phoenix Party Bus", "Mirage Limousines"],
+        notes:
+          "The Valley is spread out — a party bus or sprinter van keeps the group together and avoids 30-minute Ubers between courses and nightlife.",
+      },
+    ],
+    privateChefs: [
+      {
+        pricePerPerson: [55, 130],
+        providers: ["Take a Chef", "Cozymeal", "Hire a Chef Phoenix"],
+        mealTypes: ["steak dinner", "BBQ cookout", "southwest brunch"],
+        notes:
+          "Deep chef pool in the Phoenix metro. A private poolside cookout at your rental is the move.",
+      },
+    ],
+  },
+
+  // ─── Albuquerque, NM ────────────────────────────────────────────────
+  {
+    id: "albuquerque-nm",
+    city: "Albuquerque",
+    state: "NM",
+    region: "Southwest",
+    tagline: "High desert golf with craft beer and green chile on everything",
+    description:
+      "Albuquerque sits at 5,000 feet with year-round sunshine and a quietly excellent golf scene. UNM Championship is a top-tier college course, Paako Ridge is a hidden gem in the Sandia foothills, and the food scene revolves around Hatch green chile on literally everything. Nonstop flights from most hubs and prices well below Arizona.",
+    population: "medium",
+    nearestAirport: {
+      code: "ABQ",
+      name: "Albuquerque International Sunport",
+      driveMinutes: 10,
+    },
+    bestSeasons: ["spring", "fall"],
+    courses: [
+      {
+        name: "UNM Championship Golf Course",
+        tier: "premium",
+        greenFeeRange: [50, 95],
+        holes: 18,
+        par: 72,
+        yardage: 7248,
+        slope: 136,
+        rating: 74.5,
+        walkable: true,
+        style: "desert",
+        driveMinutes: 10,
+        url: "https://unmgolf.com",
+        highlight:
+          "Red Ryder designed this monster for the Lobos — long, demanding, and one of the best college courses in the West",
+      },
+      {
+        name: "Paako Ridge Golf Club",
+        tier: "premium",
+        greenFeeRange: [80, 150],
+        holes: 27,
+        par: 72,
+        yardage: 7562,
+        slope: 140,
+        rating: 74.8,
+        walkable: false,
+        style: "mountain",
+        driveMinutes: 35,
+        url: "https://www.paakoridge.com",
+        highlight:
+          "Ken Dye design carved through juniper-studded foothills east of ABQ — 27 holes of pure high-desert beauty",
+      },
+      {
+        name: "Sandia Golf Club",
+        tier: "premium",
+        greenFeeRange: [60, 120],
+        holes: 18,
+        par: 72,
+        yardage: 7752,
+        slope: 137,
+        rating: 76.1,
+        walkable: false,
+        style: "desert",
+        driveMinutes: 15,
+        url: "https://www.sandiagolf.com",
+        highlight:
+          "Scott Miller design at Sandia Resort with Sandia Mountain views and a casino next door",
+      },
+      {
+        name: "Twin Warriors Golf Club",
+        tier: "premium",
+        greenFeeRange: [60, 110],
+        holes: 18,
+        par: 72,
+        yardage: 7036,
+        slope: 132,
+        rating: 73.5,
+        walkable: false,
+        style: "desert",
+        driveMinutes: 20,
+        url: "https://www.twinwarriorsgolf.com",
+        highlight:
+          "Gary Panks design at Hyatt Regency Tamaya on Santa Ana Pueblo land — dramatic mesa and mountain backdrops",
+      },
+    ],
+    lodging: [
+      {
+        type: "house",
+        sleeps: [10, 18],
+        nightlyRange: [300, 1200],
+        amenities: [
+          "hot tub",
+          "mountain views",
+          "fire pit",
+          "game room",
+          "BBQ grill",
+        ],
+        areaDescription:
+          "Northeast Heights or Sandia foothills — views of the Sandias and close to courses",
+        searchUrl:
+          "https://www.vrbo.com/search?destination=Albuquerque%2C+NM&groupSize=16",
+        notes:
+          "ABQ is affordable. Large homes in the foothills with mountain views run well under Scottsdale prices. North Valley adobe homes add local character.",
+      },
+      {
+        type: "resort-house",
+        sleeps: [8, 16],
+        nightlyRange: [400, 1500],
+        amenities: [
+          "casino access",
+          "spa",
+          "pool",
+          "on-site dining",
+        ],
+        areaDescription:
+          "Sandia Resort & Casino or Hyatt Regency Tamaya — resort base with golf attached",
+        notes:
+          "Splitting resort rooms works well here since both Sandia and Tamaya have courses on-site. Casino perks sweeten the deal.",
+      },
+    ],
+    dining: [
+      {
+        name: "Vernon's Speakeasy",
+        style: "steakhouse",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "Hidden steakhouse behind a bookcase door in a strip mall — excellent cuts and old-school cocktails",
+        reservationNeeded: true,
+      },
+      {
+        name: "El Pinto Restaurant",
+        style: "mexican",
+        priceRange: "$$",
+        capacity: "large-group",
+        highlight:
+          "Sprawling hacienda with patios, fire pits, and New Mexican food that is as authentic as it gets",
+        reservationNeeded: true,
+      },
+      {
+        name: "Frontier Restaurant",
+        style: "casual",
+        priceRange: "$",
+        capacity: "large-group",
+        highlight:
+          "UNM institution since 1971 — giant breakfast burritos smothered in green chile for $8",
+        reservationNeeded: false,
+      },
+      {
+        name: "Seasons Rotisserie & Grill",
+        style: "upscale",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "Old Town fine dining with rooftop patio views and a rotating seasonal menu",
+        reservationNeeded: true,
+      },
+    ],
+    bars: [
+      {
+        name: "Marble Brewery",
+        vibe: "brewpub",
+        highlight:
+          "ABQ's flagship craft brewery with a huge outdoor patio and rotating local food trucks",
+        lateNight: false,
+        walkableFromDowntown: true,
+      },
+      {
+        name: "Anodyne",
+        vibe: "cocktail",
+        highlight:
+          "Pool tables, craft cocktails, and a chill neighborhood vibe in Nob Hill",
+        lateNight: true,
+        walkableFromDowntown: false,
+      },
+      {
+        name: "Sister Bar",
+        vibe: "dive",
+        highlight:
+          "Downtown dive with live music, cheap drinks, and genuine local character",
+        lateNight: true,
+        walkableFromDowntown: true,
+      },
+    ],
+    activities: [
+      {
+        name: "Sandia Peak Tramway",
+        type: "hiking",
+        duration: "2-3 hours",
+        pricePerPerson: [25, 35],
+        groupFriendly: true,
+        highlight:
+          "Longest aerial tram in the Americas — ride to 10,378 feet for panoramic views of the Rio Grande Valley",
+        bestFor: "rest day",
+        provider: "Sandia Peak Tramway",
+      },
+      {
+        name: "Sandia Resort Casino",
+        type: "casino",
+        duration: "2-4 hours",
+        pricePerPerson: [0, 300],
+        groupFriendly: true,
+        highlight:
+          "Full casino floor with poker, table games, and sports betting right next to the golf course",
+        bestFor: "arrival day",
+        provider: "Sandia Resort & Casino",
+      },
+      {
+        name: "Rio Grande Brewing & Distillery Tour",
+        type: "brewery",
+        duration: "2-3 hours",
+        pricePerPerson: [15, 40],
+        groupFriendly: true,
+        highlight:
+          "Hit Marble, La Cumbre, and Bow & Arrow on a self-guided brewery crawl through downtown ABQ",
+        bestFor: "rest day",
+      },
+      {
+        name: "Petroglyph National Monument",
+        type: "hiking",
+        duration: "2-3 hours",
+        pricePerPerson: [0, 0],
+        groupFriendly: true,
+        highlight:
+          "Volcanic escarpment with 24,000+ ancient petroglyphs and easy mesa-top trails",
+        bestFor: "morning before golf",
+      },
+      {
+        name: "ABQ BioPark & Botanic Garden",
+        type: "hiking",
+        duration: "2-3 hours",
+        pricePerPerson: [15, 15],
+        groupFriendly: true,
+        highlight:
+          "Zoo, aquarium, and botanic garden along the Rio Grande — relaxed rest-day option",
+        bestFor: "rest day",
+      },
+    ],
+    partyBuses: [
+      {
+        type: "sprinter-van",
+        capacity: [10, 16],
+        hourlyRate: [125, 275],
+        providers: ["ABQ Trolley Co.", "Duke City Limousine"],
+        notes:
+          "ABQ is spread out but courses are mostly north/northeast. A sprinter keeps the group together for brewery crawls and course transfers.",
+      },
+    ],
+    privateChefs: [
+      {
+        pricePerPerson: [50, 115],
+        providers: ["Take a Chef", "Cozymeal"],
+        mealTypes: ["green chile steak dinner", "BBQ cookout", "New Mexican brunch"],
+        notes:
+          "Request a chef who does New Mexican cuisine — a Hatch green chile-themed dinner at your rental is the play.",
+      },
+    ],
+  },
+
+  // ─── Lake Havasu City, AZ ───────────────────────────────────────────
+  {
+    id: "lake-havasu-city-az",
+    city: "Lake Havasu City",
+    state: "AZ",
+    region: "Southwest",
+    tagline: "Spring break energy meets desert golf on the Colorado River",
+    description:
+      "Lake Havasu City is famous for its relocated London Bridge and party-friendly lake scene. The golf is solid budget desert fare, and the real draw is combining morning rounds with afternoon lake activities — boats, jet skis, and sandbar hangouts. Fly into Vegas and drive two hours south.",
+    population: "small",
+    nearestAirport: {
+      code: "LAS",
+      name: "Harry Reid International Airport (Las Vegas)",
+      driveMinutes: 150,
+    },
+    bestSeasons: ["spring", "fall"],
+    courses: [
+      {
+        name: "London Bridge Golf Club (East Course)",
+        tier: "solid",
+        greenFeeRange: [35, 70],
+        holes: 18,
+        par: 71,
+        yardage: 6616,
+        slope: 123,
+        rating: 70.6,
+        walkable: true,
+        style: "desert",
+        driveMinutes: 5,
+        highlight:
+          "Well-maintained desert muni with mountain views — the best value in town",
+      },
+      {
+        name: "London Bridge Golf Club (West Course)",
+        tier: "solid",
+        greenFeeRange: [30, 60],
+        holes: 18,
+        par: 71,
+        yardage: 6438,
+        slope: 117,
+        rating: 69.3,
+        walkable: true,
+        style: "desert",
+        driveMinutes: 5,
+        highlight:
+          "Shorter sister course — wide open, forgiving, and perfect for a warm-up or hangover round",
+      },
+      {
+        name: "Havasu Island Golf Course",
+        tier: "budget",
+        greenFeeRange: [25, 50],
+        holes: 9,
+        par: 36,
+        yardage: 3200,
+        slope: 113,
+        rating: 35.5,
+        walkable: true,
+        style: "desert",
+        driveMinutes: 10,
+        highlight:
+          "Quick 9-hole loop that leaves the afternoon free for lake activities",
+      },
+      {
+        name: "Emerald Canyon Golf Course",
+        tier: "premium",
+        greenFeeRange: [45, 90],
+        holes: 18,
+        par: 72,
+        yardage: 6643,
+        slope: 130,
+        rating: 71.3,
+        walkable: false,
+        style: "desert",
+        driveMinutes: 40,
+        url: "https://www.emeraldcanyongolf.com",
+        highlight:
+          "Stunning canyon course in Parker with 300-foot elevation drops to the Colorado River — worth the 40-minute drive",
+      },
+    ],
+    lodging: [
+      {
+        type: "house",
+        sleeps: [10, 16],
+        nightlyRange: [400, 1500],
+        amenities: [
+          "private pool",
+          "boat dock",
+          "lake views",
+          "BBQ grill",
+          "hot tub",
+        ],
+        areaDescription:
+          "Lake-access homes on the channel or near London Bridge — walk to restaurants and bars",
+        searchUrl:
+          "https://www.vrbo.com/search?destination=Lake+Havasu+City%2C+AZ&groupSize=16",
+        notes:
+          "Waterfront homes with private docks are the play — rent a boat and tie up at your house. Spring is peak season so book early.",
+      },
+      {
+        type: "house",
+        sleeps: [8, 14],
+        nightlyRange: [250, 900],
+        amenities: [
+          "private pool",
+          "game room",
+          "mountain views",
+          "fire pit",
+        ],
+        areaDescription:
+          "Off-water homes in residential areas — cheaper and still 10 minutes from everything",
+        notes:
+          "Non-waterfront homes are significantly cheaper. Everything in Havasu is a short drive.",
+      },
+    ],
+    dining: [
+      {
+        name: "Shugrue's Restaurant",
+        style: "seafood",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "Waterfront dining with views of London Bridge — the best sit-down dinner in Havasu",
+        reservationNeeded: true,
+      },
+      {
+        name: "College Street Brewhouse & Pub",
+        style: "brewpub",
+        priceRange: "$$",
+        capacity: "large-group",
+        highlight:
+          "Local craft brewery with pub food and a solid tap list — chill group dinner spot",
+        reservationNeeded: false,
+      },
+      {
+        name: "Juicy's River Cafe",
+        style: "casual",
+        priceRange: "$$",
+        capacity: "large-group",
+        highlight:
+          "Massive portions of burgers and comfort food — the locals' breakfast and lunch favorite",
+        reservationNeeded: false,
+      },
+      {
+        name: "Angelina's Italian Kitchen",
+        style: "italian",
+        priceRange: "$$",
+        capacity: "medium",
+        highlight:
+          "Family-run Italian with generous portions and a loyal local following",
+        reservationNeeded: true,
+      },
+    ],
+    bars: [
+      {
+        name: "Kokomo Havasu",
+        vibe: "patio",
+        highlight:
+          "Open-air tiki-style bar on the channel with live music, boat parking, and spring-break energy",
+        lateNight: true,
+        walkableFromDowntown: true,
+      },
+      {
+        name: "Sandbar & Grill",
+        vibe: "sports-bar",
+        highlight:
+          "Casual waterside sports bar with cheap drinks and TVs — the late-night default",
+        lateNight: true,
+        walkableFromDowntown: true,
+      },
+      {
+        name: "Heat Hotel Rooftop Bar",
+        vibe: "rooftop",
+        highlight:
+          "Rooftop pool bar overlooking the Bridgewater Channel — day-drinking with a view",
+        lateNight: false,
+        walkableFromDowntown: true,
+      },
+    ],
+    activities: [
+      {
+        name: "Jet Ski Rental on Lake Havasu",
+        type: "water-sports",
+        duration: "2-4 hours",
+        pricePerPerson: [75, 150],
+        groupFriendly: true,
+        highlight:
+          "Rip around the lake and hit the sandbars — peak rest-day activity",
+        bestFor: "rest day",
+        provider: "Havasu Jet Ski Rentals",
+      },
+      {
+        name: "Pontoon Boat Rental",
+        type: "boat-rental",
+        duration: "half day",
+        pricePerPerson: [40, 80],
+        groupFriendly: true,
+        highlight:
+          "Rent a pontoon, load the cooler, and cruise to Copper Canyon or the sandbar",
+        bestFor: "rest day",
+        provider: "Lake Havasu Boat Rentals",
+      },
+      {
+        name: "London Bridge Walking Tour",
+        type: "hiking",
+        duration: "1-2 hours",
+        pricePerPerson: [0, 0],
+        groupFriendly: true,
+        highlight:
+          "Walk across the actual 1830s London Bridge relocated from England — weird and cool",
+        bestFor: "arrival day",
+      },
+      {
+        name: "Desert Hills Shooting Range",
+        type: "shooting",
+        duration: "2-3 hours",
+        pricePerPerson: [30, 75],
+        groupFriendly: true,
+        highlight:
+          "Outdoor desert shooting range with rifle, pistol, and shotgun options",
+        bestFor: "rest day",
+      },
+      {
+        name: "Topock Gorge Kayaking",
+        type: "kayaking",
+        duration: "half day",
+        pricePerPerson: [50, 90],
+        groupFriendly: true,
+        highlight:
+          "Paddle through scenic Topock Gorge on the Colorado River — calm water and canyon walls",
+        bestFor: "rest day",
+        provider: "Western Arizona Canoe & Kayak",
+      },
+    ],
+    partyBuses: [
+      {
+        type: "shuttle",
+        capacity: [10, 16],
+        hourlyRate: [100, 200],
+        providers: ["Havasu Party Bus", "Lake Havasu Shuttle"],
+        notes:
+          "Havasu is small — most things are 10 minutes apart. A rented 15-passenger van works for most groups. Party buses available for bar crawls along the channel.",
+      },
+    ],
+    privateChefs: [
+      {
+        pricePerPerson: [55, 125],
+        providers: ["Take a Chef", "Cozymeal"],
+        mealTypes: ["steak dinner", "BBQ cookout", "lakeside brunch"],
+        notes:
+          "Limited local chef pool — book early or look for Phoenix-based chefs willing to travel. A poolside BBQ at a waterfront rental is the ideal setup.",
+      },
+    ],
+  },
+
+  // ─── Laughlin, NV ───────────────────────────────────────────────────
+  {
+    id: "laughlin-nv",
+    city: "Laughlin",
+    state: "NV",
+    region: "Southwest",
+    tagline: "Cheap casino town on the Colorado with sneaky good golf",
+    description:
+      "Laughlin is a low-key casino town on the Colorado River with surprisingly good golf. Mojave Resort is a top-notch course, the casinos keep drinks cheap and tables running, and the whole trip costs a fraction of Vegas. Fly into Vegas and drive 90 minutes south or into Laughlin-Bullhead City Airport.",
+    population: "small",
+    nearestAirport: {
+      code: "IFP",
+      name: "Laughlin/Bullhead International Airport",
+      driveMinutes: 10,
+    },
+    bestSeasons: ["spring", "fall"],
+    courses: [
+      {
+        name: "Mojave Resort Golf Club",
+        tier: "premium",
+        greenFeeRange: [50, 110],
+        holes: 18,
+        par: 72,
+        yardage: 6939,
+        slope: 131,
+        rating: 72.9,
+        walkable: false,
+        style: "resort",
+        driveMinutes: 10,
+        highlight:
+          "Best course in the Laughlin area — well-conditioned resort layout with mountain and river valley views",
+      },
+      {
+        name: "Emerald River Golf Course",
+        tier: "solid",
+        greenFeeRange: [30, 65],
+        holes: 18,
+        par: 72,
+        yardage: 6301,
+        slope: 118,
+        rating: 69.5,
+        walkable: true,
+        style: "parkland",
+        driveMinutes: 5,
+        highlight:
+          "Flat and forgiving course right in Laughlin — cheap, walkable, and perfect for a warm-up round",
+      },
+      {
+        name: "Rio Vista Golf Club",
+        tier: "solid",
+        greenFeeRange: [25, 55],
+        holes: 9,
+        par: 34,
+        yardage: 2900,
+        slope: 110,
+        rating: 34.0,
+        walkable: true,
+        style: "desert",
+        driveMinutes: 15,
+        highlight:
+          "Quick 9-hole loop across the river in Bullhead City — budget-friendly twilight option",
+      },
+      {
+        name: "Chaparral Country Club",
+        tier: "solid",
+        greenFeeRange: [35, 70],
+        holes: 18,
+        par: 72,
+        yardage: 6600,
+        slope: 122,
+        rating: 70.5,
+        walkable: true,
+        style: "desert",
+        driveMinutes: 15,
+        highlight:
+          "Semi-private course in Bullhead City with mature trees and a well-maintained layout",
+      },
+    ],
+    lodging: [
+      {
+        type: "house",
+        sleeps: [10, 16],
+        nightlyRange: [300, 900],
+        amenities: [
+          "private pool",
+          "river views",
+          "BBQ grill",
+          "game room",
+        ],
+        areaDescription:
+          "Bullhead City across the river — vacation rentals with pools and river access",
+        searchUrl:
+          "https://www.vrbo.com/search?destination=Laughlin%2C+NV&groupSize=16",
+        notes:
+          "Most rental homes are in Bullhead City, AZ across the river (5-minute drive). Casino hotel rooms at Harrah's, Aquarius, or Don Laughlin's run $40-80/night and are the easy alternative.",
+      },
+      {
+        type: "lodge",
+        sleeps: [8, 16],
+        nightlyRange: [200, 600],
+        amenities: [
+          "casino access",
+          "pool",
+          "on-site dining",
+          "river views",
+        ],
+        areaDescription:
+          "Casino hotels along the Laughlin Strip — Harrah's, Aquarius, Don Laughlin's Riverside",
+        notes:
+          "Splitting 8 casino hotel rooms at $50/night is extremely budget-friendly. Everything is walkable along the riverwalk.",
+      },
+    ],
+    dining: [
+      {
+        name: "The Range Steakhouse (Harrah's)",
+        style: "steakhouse",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "Best steakhouse in Laughlin — Harrah's in-house spot with river views and solid cuts",
+        reservationNeeded: true,
+      },
+      {
+        name: "Joe's Crab Shack",
+        style: "seafood",
+        priceRange: "$$",
+        capacity: "large-group",
+        highlight:
+          "Riverfront seafood with a loud, fun vibe — buckets of crab and cold beer",
+        reservationNeeded: false,
+      },
+      {
+        name: "The Gourmet Room (Don Laughlin's Riverside)",
+        style: "upscale",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "Old-school fine dining in the original Laughlin casino — surprisingly good for a small town",
+        reservationNeeded: true,
+      },
+      {
+        name: "Pints Brewery & Sports Bar",
+        style: "brewpub",
+        priceRange: "$$",
+        capacity: "large-group",
+        highlight:
+          "Local brewpub with house-made beers and pub food — good casual group dinner option",
+        reservationNeeded: false,
+      },
+    ],
+    bars: [
+      {
+        name: "Aquarius Casino Bar",
+        vibe: "casino-bar",
+        highlight:
+          "Biggest casino floor in Laughlin with cheap drinks, live entertainment, and a lively crowd",
+        lateNight: true,
+        walkableFromDowntown: true,
+      },
+      {
+        name: "Losers Bar (Harrah's)",
+        vibe: "dive",
+        highlight:
+          "No-frills casino bar with the cheapest drinks on the strip — embrace the name",
+        lateNight: true,
+        walkableFromDowntown: true,
+      },
+      {
+        name: "Splash Cabaret (Aquarius)",
+        vibe: "casino-bar",
+        highlight:
+          "Late-night lounge with live music and entertainment — Laughlin's closest thing to a nightclub",
+        lateNight: true,
+        walkableFromDowntown: true,
+      },
+    ],
+    activities: [
+      {
+        name: "Casino Hopping on the Riverwalk",
+        type: "casino",
+        duration: "3-5 hours",
+        pricePerPerson: [0, 300],
+        groupFriendly: true,
+        highlight:
+          "Walk the mile-long riverwalk hitting Harrah's, Aquarius, Edgewater, and Don Laughlin's — cheap tables and free drinks",
+        bestFor: "arrival day",
+      },
+      {
+        name: "Jet Ski Rental on Colorado River",
+        type: "water-sports",
+        duration: "2-4 hours",
+        pricePerPerson: [60, 120],
+        groupFriendly: true,
+        highlight:
+          "Rip around the Colorado River between the casinos — surprisingly scenic canyon waters",
+        bestFor: "rest day",
+        provider: "Fun Country Marine",
+      },
+      {
+        name: "Lake Mohave Kayaking",
+        type: "kayaking",
+        duration: "half day",
+        pricePerPerson: [40, 80],
+        groupFriendly: true,
+        highlight:
+          "Paddle through slot canyons on Lake Mohave — turquoise water and canyon walls",
+        bestFor: "rest day",
+        provider: "Desert River Outfitters",
+      },
+      {
+        name: "Route 66 Day Trip to Oatman",
+        type: "hiking",
+        duration: "3-4 hours",
+        pricePerPerson: [0, 20],
+        groupFriendly: true,
+        highlight:
+          "Ghost town on old Route 66 with wild burros, saloons, and staged gunfights — 30 minutes from Laughlin",
+        bestFor: "rest day",
+      },
+      {
+        name: "Laughlin River Lodge Shooting Range",
+        type: "shooting",
+        duration: "2-3 hours",
+        pricePerPerson: [30, 70],
+        groupFriendly: true,
+        highlight:
+          "Desert shooting range near Bullhead City with pistol and rifle options",
+        bestFor: "rest day",
+      },
+    ],
+    partyBuses: [
+      {
+        type: "shuttle",
+        capacity: [10, 16],
+        hourlyRate: [80, 175],
+        providers: ["Laughlin Shuttle", "Las Vegas Limousine Service"],
+        notes:
+          "Laughlin is tiny and the casino strip is walkable. Main need is airport transfer from Vegas or a shuttle to courses. Rent a 15-passenger van for the trip.",
+      },
+    ],
+    privateChefs: [
+      {
+        pricePerPerson: [50, 115],
+        providers: ["Take a Chef", "Cozymeal"],
+        mealTypes: ["steak dinner", "BBQ cookout", "breakfast"],
+        notes:
+          "Very limited local chefs — most will come from Vegas or Phoenix. Casino dining is the easier path for group dinners.",
+      },
+    ],
+  },
+
+  // ─── Payson, AZ ─────────────────────────────────────────────────────
+  {
+    id: "payson-az",
+    city: "Payson",
+    state: "AZ",
+    region: "Southwest",
+    tagline: "Mountain escape golf 90 minutes north of Phoenix",
+    description:
+      "Payson sits at 5,000 feet under the Mogollon Rim, 20 degrees cooler than Phoenix in summer. Three excellent courses make it a legit golf destination, and the pine forests and mountain air feel like a different state. It is the anti-Scottsdale — small-town, laid-back, and built around the outdoors.",
+    population: "small",
+    nearestAirport: {
+      code: "PHX",
+      name: "Phoenix Sky Harbor International Airport",
+      driveMinutes: 90,
+    },
+    bestSeasons: ["spring", "summer", "fall"],
+    courses: [
+      {
+        name: "Payson Golf Club",
+        tier: "solid",
+        greenFeeRange: [45, 85],
+        holes: 18,
+        par: 71,
+        yardage: 6483,
+        slope: 131,
+        rating: 70.5,
+        walkable: true,
+        style: "mountain",
+        driveMinutes: 5,
+        highlight:
+          "Public mountain course with ponderosa pines lining every fairway — gorgeous and affordable",
+      },
+      {
+        name: "The Rim Golf Club",
+        tier: "premium",
+        greenFeeRange: [80, 150],
+        holes: 18,
+        par: 72,
+        yardage: 7005,
+        slope: 143,
+        rating: 73.5,
+        walkable: false,
+        style: "mountain",
+        driveMinutes: 10,
+        highlight:
+          "Tom Weiskopf design perched below the Mogollon Rim — dramatic elevation changes through pristine pine forest",
+      },
+      {
+        name: "Chaparral Pines Golf Club",
+        tier: "premium",
+        greenFeeRange: [75, 140],
+        holes: 18,
+        par: 71,
+        yardage: 6800,
+        slope: 139,
+        rating: 72.0,
+        walkable: false,
+        style: "mountain",
+        driveMinutes: 10,
+        highlight:
+          "Semi-private David Graham & Gary Panks design through thick pine and juniper forest — a hidden gem",
+      },
+    ],
+    lodging: [
+      {
+        type: "cabin",
+        sleeps: [10, 16],
+        nightlyRange: [350, 1200],
+        amenities: [
+          "hot tub",
+          "fire pit",
+          "pine forest setting",
+          "game room",
+          "BBQ grill",
+        ],
+        areaDescription:
+          "Cabins in the pines east of town near Rim Club and Chaparral Pines",
+        searchUrl:
+          "https://www.vrbo.com/search?destination=Payson%2C+AZ&groupSize=16",
+        notes:
+          "Large pine-forest cabins are the play here. The mountain setting makes it feel like a retreat. Book early for summer when Phoenix residents flee the heat.",
+      },
+      {
+        type: "lodge",
+        sleeps: [8, 16],
+        nightlyRange: [200, 600],
+        amenities: [
+          "restaurant on-site",
+          "pool",
+          "fire pit",
+          "mountain views",
+        ],
+        areaDescription:
+          "Mazatzal Hotel & Casino or local lodges along Highway 87",
+        notes:
+          "Mazatzal Casino has a hotel with a small casino and affordable rooms. Splitting lodge rooms works for smaller groups.",
+      },
+    ],
+    dining: [
+      {
+        name: "Fargo's Steakhouse",
+        style: "steakhouse",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "Payson's go-to steakhouse with a saloon vibe, big cuts, and a solid whiskey selection",
+        reservationNeeded: true,
+      },
+      {
+        name: "Macky's Grill",
+        style: "casual",
+        priceRange: "$$",
+        capacity: "large-group",
+        highlight:
+          "Local favorite with burgers, ribs, and a sports bar atmosphere — perfect post-round spot",
+        reservationNeeded: false,
+      },
+      {
+        name: "La Sierra Mexican Restaurant",
+        style: "mexican",
+        priceRange: "$",
+        capacity: "large-group",
+        highlight:
+          "Family-run Mexican joint with massive portions and cold margaritas at small-town prices",
+        reservationNeeded: false,
+      },
+      {
+        name: "Buffalo Bar & Grill",
+        style: "bbq",
+        priceRange: "$$",
+        capacity: "large-group",
+        highlight:
+          "Smoked meats and cold beer in a no-frills mountain bar — exactly what you want after 36 holes",
+        reservationNeeded: false,
+      },
+    ],
+    bars: [
+      {
+        name: "Buffalo Bar & Grill",
+        vibe: "saloon",
+        highlight:
+          "Classic Western bar with mounted game, pool tables, and a porch under the pines",
+        lateNight: true,
+        walkableFromDowntown: true,
+      },
+      {
+        name: "Mazatzal Casino Bar",
+        vibe: "casino-bar",
+        highlight:
+          "Small tribal casino with cheap drinks, slots, and poker — the late-night option in Payson",
+        lateNight: true,
+        walkableFromDowntown: false,
+      },
+      {
+        name: "Olde Payson Pub",
+        vibe: "dive",
+        highlight:
+          "No-frills local pub with darts, pool, and the kind of regulars who buy you a round",
+        lateNight: true,
+        walkableFromDowntown: true,
+      },
+    ],
+    activities: [
+      {
+        name: "Mogollon Rim Overlook Hike",
+        type: "hiking",
+        duration: "2-3 hours",
+        pricePerPerson: [0, 0],
+        groupFriendly: true,
+        highlight:
+          "Walk to the edge of the 2,000-foot Mogollon Rim for jaw-dropping views across the Tonto Basin",
+        bestFor: "rest day",
+      },
+      {
+        name: "Tonto Creek Fishing",
+        type: "fishing",
+        duration: "3-4 hours",
+        pricePerPerson: [0, 40],
+        groupFriendly: true,
+        highlight:
+          "Stocked trout creek running through pine forest — bring a rod or hire a local guide",
+        bestFor: "morning before golf",
+      },
+      {
+        name: "Mazatzal Casino",
+        type: "casino",
+        duration: "2-4 hours",
+        pricePerPerson: [0, 200],
+        groupFriendly: true,
+        highlight:
+          "Small Tonto Apache tribal casino with slots, poker, and table games",
+        bestFor: "arrival day",
+        provider: "Mazatzal Hotel & Casino",
+      },
+      {
+        name: "Horseback Riding at Kohl's Ranch",
+        type: "horseback",
+        duration: "2-3 hours",
+        pricePerPerson: [60, 120],
+        groupFriendly: true,
+        highlight:
+          "Trail rides through ponderosa pine forest below the Mogollon Rim",
+        bestFor: "rest day",
+        provider: "Kohl's Ranch Lodge",
+      },
+      {
+        name: "ATV Trails on the Rim",
+        type: "atv",
+        duration: "3-4 hours",
+        pricePerPerson: [75, 150],
+        groupFriendly: true,
+        highlight:
+          "Rent ATVs and rip through miles of forest trails in the Tonto National Forest",
+        bestFor: "rest day",
+      },
+    ],
+    partyBuses: [
+      {
+        type: "shuttle",
+        capacity: [10, 16],
+        hourlyRate: [80, 175],
+        providers: ["Payson Shuttle", "Rim Country Transit"],
+        notes:
+          "Payson is a small town — everything is 10 minutes apart. Rent a couple SUVs or a 15-passenger van. For the Phoenix airport transfer, book a shuttle in advance.",
+      },
+    ],
+    privateChefs: [
+      {
+        pricePerPerson: [55, 125],
+        providers: ["Take a Chef", "Cozymeal"],
+        mealTypes: ["steak dinner", "BBQ cookout", "mountain breakfast"],
+        notes:
+          "Limited local options — most chefs come from Phoenix. A cabin cookout with steaks on the grill under the pines is the ideal setup. Book well in advance.",
+      },
+    ],
+  },
 ];

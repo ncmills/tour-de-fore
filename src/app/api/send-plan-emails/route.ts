@@ -36,7 +36,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const plan = stored.plans!.devil; // Use the recommended tier for emails
+    // Use mid destination's devil tier for emails (recommended combo)
+    const plan = stored.destinations
+      ? stored.destinations.mid.plans.devil
+      : stored.plans!.devil;
     const planUrl = `https://tourdefore.com/plan/result/${planId}`;
     const organizerEmail = stored.inputs.organizerEmail;
 

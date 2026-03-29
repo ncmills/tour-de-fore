@@ -57,10 +57,11 @@ function reducer(state: WizardState, action: Action): WizardState {
 const REGIONS = [
   { label: "Southwest", sublabel: "AZ, NM, UT, NV" },
   { label: "Pacific NW", sublabel: "OR, WA, ID" },
-  { label: "Midwest", sublabel: "MI, WI, MN, OH" },
-  { label: "Southeast", sublabel: "SC, GA, NC, FL" },
-  { label: "Northeast", sublabel: "NY, VT, ME, MA" },
   { label: "Mountain West", sublabel: "CO, MT, WY, SD" },
+  { label: "Midwest", sublabel: "MI, WI, MN, OH, IN, IL" },
+  { label: "Southeast", sublabel: "SC, GA, NC, FL, TN, VA, AL" },
+  { label: "Northeast", sublabel: "NY, VT, ME, MA, PA, NJ, CT" },
+  { label: "South Central", sublabel: "TX, OK, AR, LA, KY" },
 ];
 
 const MONTHS = [
