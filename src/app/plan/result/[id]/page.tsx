@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getPlan } from "@/lib/kv";
 import PlanResultClient from "@/components/PlanResultClient";
 import PlanSelectionClient from "@/components/PlanSelectionClient";
+import FreePreviewClient from "@/components/FreePreviewClient";
 import TierSelectionClient from "@/components/TierSelectionClient";
 import type {
   TripTier,
@@ -26,54 +27,30 @@ function getTierPlan(plans: ThreePlanResult, tier: string): GeneratedPlan | null
   }
 }
 
-function getDestination(
-  stored: { destinations?: { budget: DestinationRecommendation; mid: DestinationRecommendation; premium: DestinationRecommendation }; plans?: ThreePlanResult },
-  dest: string
-): DestinationRecommendation | null {
-  if (stored.destinations) {
-    const level = dest as PriceLevel;
-    if (level === "budget" || level === "mid" || level === "premium") {
-      return stored.destinations[level];
-    }
-  }
-  // Legacy support: old plans without destinations
-  if (stored.plans) {
-    return {
-      destinationId: "legacy",
-      city: stored.plans.devil.destination.split(",")[0]?.trim() || "Unknown",
-      state: stored.plans.devil.destination.split(",")[1]?.trim() || "",
-      tagline: stored.plans.devil.tagline,
-      priceLevel: "mid",
-      plans: stored.plans,
-    };
-  }
-  return null;
-}
-
-export async function generateMetadata({ params, searchParams }: Props) {
+export async function generateMetadata({ params }: Props) {
   const { id } = await params;
-  const { dest, tier } = await searchParams;
   const stored = await getPlan(id);
 
   if (!stored) {
     return { title: "Plan Not Found | Tour de Fore" };
   }
 
-  const rec = stored.destinations?.mid;
-  const plan = rec
-    ? (tier ? getTierPlan(rec.plans, tier) : rec.plans.devil)
-    : stored.plans?.devil;
+  // Use free preview for metadata if no paid plan
+  const preview = stored.freePreviews?.mid;
+  if (preview) {
+    return {
+      title: `${preview.city}, ${preview.state} Trip Plan | Tour de Fore`,
+      description: `Plan your golf trip to ${preview.city} — ${preview.groupSize} people, ${preview.numberOfDays} days.`,
+    };
+  }
 
+  const rec = stored.destinations?.mid;
+  const plan = rec?.plans?.devil || stored.plans?.devil;
   const name = plan?.tripName || "Your Trip Plan";
-  const desc = plan?.tagline || "";
 
   return {
     title: `${name} | Tour de Fore`,
-    description: `${desc} — ${plan?.destination || ""}`,
-    openGraph: {
-      title: `${name} | Tour de Fore`,
-      description: `${desc} — ${plan?.destination || ""}`,
-    },
+    description: plan?.tagline || "",
   };
 }
 
@@ -86,16 +63,25 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
     notFound();
   }
 
-  // ── No dest param: show destination picker (3 city cards) ──
+  // ── FREEMIUM FLOW: No dest param → show free preview destination cards ──
   if (!dest) {
-    if (stored.destinations) {
+    // New freemium flow: show free previews with locked sections
+    if (stored.freePreviews) {
       return (
         <Suspense>
-          <PlanSelectionClient planId={id} destinations={stored.destinations} />
+          <PlanSelectionClient planId={id} freePreviews={stored.freePreviews} paid={stored.paid} />
         </Suspense>
       );
     }
-    // Legacy: old single-destination plans — show as tier picker
+    // Legacy: old paid destinations format
+    if (stored.destinations) {
+      return (
+        <Suspense>
+          <PlanSelectionClient planId={id} freePreviews={null} paid={true} legacyDestinations={stored.destinations} />
+        </Suspense>
+      );
+    }
+    // Legacy: old single-plan format
     if (stored.plans) {
       const legacyRec: DestinationRecommendation = {
         destinationId: "legacy",
@@ -114,27 +100,40 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
     notFound();
   }
 
-  // ── Has dest but no tier: show tier picker ──
-  if (!tier) {
-    const rec = getDestination(stored, dest);
-    if (!rec) notFound();
+  // ── Has dest param: check if paid ──
+  const destLevel = dest as PriceLevel;
+
+  // If paid and full plan exists for this destination, show it
+  if (stored.paid && stored.destinations?.[destLevel]) {
+    const rec = stored.destinations[destLevel];
+
+    // No tier selected → show tier picker
+    if (!tier) {
+      return (
+        <Suspense>
+          <TierSelectionClient planId={id} dest={destLevel} recommendation={rec} />
+        </Suspense>
+      );
+    }
+
+    // Has tier → show full plan
+    const plan = getTierPlan(rec.plans, tier);
+    if (!plan) notFound();
+
     return (
       <Suspense>
-        <TierSelectionClient planId={id} dest={dest as PriceLevel} recommendation={rec} />
+        <PlanResultClient plan={plan} planId={id} tier={tier as TripTier} dest={dest} />
       </Suspense>
     );
   }
 
-  // ── Has both dest and tier: show full plan ──
-  const rec = getDestination(stored, dest);
-  if (!rec) notFound();
-
-  const plan = getTierPlan(rec.plans, tier);
-  if (!plan) notFound();
+  // Not paid: show free preview with unlock CTA
+  const preview = stored.freePreviews?.[destLevel];
+  if (!preview) notFound();
 
   return (
     <Suspense>
-      <PlanResultClient plan={plan} planId={id} tier={tier as TripTier} dest={dest} />
+      <FreePreviewClient planId={id} dest={destLevel} preview={preview} />
     </Suspense>
   );
 }

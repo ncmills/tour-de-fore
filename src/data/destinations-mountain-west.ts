@@ -33,6 +33,9 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.golfwhitefish.com",
         highlight:
           "Classic 36-hole facility with the North course winding through towering pines along Whitefish Lake",
+        googleRating: 4.6,
+        reviewCount: 890,
+        hypeTag: "LOCALS' FAVORITE",
       },
       {
         name: "Whitefish Lake Golf Club - South",
@@ -49,6 +52,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.golfwhitefish.com",
         highlight:
           "Shorter but sneaky; more open layout with Flathead Valley views",
+        googleRating: 4.5,
+        reviewCount: 620,
       },
       {
         name: "Meadow Lake Golf Resort",
@@ -65,6 +70,9 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.meadowlakegolf.com",
         highlight:
           "Resort course near Columbia Falls with wide fairways and mountain panoramas",
+        googleRating: 4.3,
+        reviewCount: 410,
+        hypeTag: "BEST VALUE",
       },
       {
         name: "Eagle Bend Golf Club",
@@ -81,6 +89,9 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.eaglebendgolfclub.com",
         highlight:
           "Jack Nicklaus-influenced 27 holes on Flathead Lake — the largest natural freshwater lake west of the Mississippi",
+        googleRating: 4.5,
+        reviewCount: 530,
+        hypeTag: "DESIGNER CLASSIC",
       },
       {
         name: "Northern Pines Golf Club",
@@ -97,6 +108,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.northernpinesgolf.com",
         highlight:
           "Well-conditioned daily-fee course through dense Montana forest; great value",
+        googleRating: 4.2,
+        reviewCount: 280,
       },
     ],
     lodging: [
@@ -117,6 +130,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Whitefish%2C+Montana&guests=16",
         notes:
           "Ski chalets convert to summer lodges with great rates; many sleep 12-16 with multiple levels",
+        avgRating: 4.7,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
       {
         type: "cabin",
@@ -135,6 +150,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Whitefish--Montana/homes?adults=14",
         notes:
           "Lakefront cabins book early for summer; combine two neighboring cabins for bigger groups",
+        avgRating: 4.8,
+        bedsBreakdown: "2 kings + 2 queens = 8 guys at 2/bed",
       },
     ],
     dining: [
@@ -146,6 +163,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Iconic lakeside fine dining in a restored 1930s building; phenomenal steaks and fresh trout",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "Tupelo Grille",
@@ -155,6 +173,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Southern-meets-Montana with Cajun influences; great bourbon list and gumbo",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Craggy Range Bar & Grill",
@@ -164,6 +183,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Local favorite for big groups; hand-cut steaks and excellent whiskey selection",
         reservationNeeded: false,
+        googleRating: 4.4,
       },
       {
         name: "Pescado Blanco",
@@ -172,6 +192,7 @@ export const mountainWestDestinations: Destination[] = [
         capacity: "medium",
         highlight: "Baja-style tacos and margaritas on Central Avenue; fun patio scene",
         reservationNeeded: false,
+        googleRating: 4.3,
       },
     ],
     bars: [
@@ -267,6 +288,8 @@ export const mountainWestDestinations: Destination[] = [
         ],
         notes:
           "Sprinter vans are the norm here; book early for summer season. Some providers do full-day golf packages.",
+        fullDayRate: [800, 1200],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -317,6 +340,10 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.moonlightbasin.com/golf",
         highlight:
           "Jack Nicklaus Signature course at 7,500 feet with staggering views of Lone Mountain; one of the best mountain courses in America",
+        googleRating: 4.8,
+        reviewCount: 340,
+        hypeTag: "BUCKET LIST",
+        rankNote: "Top 100 Resort Courses — Golf Magazine 2024",
       },
       {
         name: "Big Sky Resort Golf Course",
@@ -333,6 +360,9 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.bigskyresort.com/golf",
         highlight:
           "Arnold Palmer design weaving through the Gallatin Canyon; elk and moose regularly cross fairways",
+        googleRating: 4.5,
+        reviewCount: 480,
+        hypeTag: "DESIGNER CLASSIC",
       },
       {
         name: "Riverside Country Club",
@@ -349,6 +379,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.riversidecc.net",
         highlight:
           "Classic Bozeman club along the Gallatin River; walkable and well-conditioned with mountain backdrop",
+        googleRating: 4.3,
+        reviewCount: 310,
       },
     ],
     lodging: [
@@ -370,6 +402,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Big+Sky%2C+Montana&guests=16",
         notes:
           "Summer rates are 40-60% less than ski season; large ski lodges perfect for groups with tons of space",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 2 queens = 12 guys at 2/bed",
       },
       {
         type: "cabin",
@@ -387,6 +421,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Big-Sky--Montana/homes?adults=12",
         notes:
           "Moonlight Basin cabins offer proximity to The Reserve; may need two for 16",
+        avgRating: 4.6,
+        bedsBreakdown: "2 kings + 2 queens = 8 guys at 2/bed",
       },
     ],
     dining: [
@@ -398,6 +434,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Lone Mountain Ranch's signature restaurant; farm-to-table Montana steaks in a stunning ranch setting",
         reservationNeeded: true,
+        googleRating: 4.7,
       },
       {
         name: "Olive B's Bistro",
@@ -407,6 +444,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Big Sky's best upscale-casual spot; creative seasonal menu with an excellent wine list",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "Lone Peak Brewery",
@@ -416,6 +454,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Big Sky's original brewery; solid pub food and house-brewed beers in a big lively space",
         reservationNeeded: false,
+        googleRating: 4.3,
       },
       {
         name: "Buck's T-4 Lodge",
@@ -425,6 +464,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Montana institution since 1946; game meats, prime rib, and a legendary bar scene",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
     ],
     bars: [
@@ -521,6 +561,8 @@ export const mountainWestDestinations: Destination[] = [
         ],
         notes:
           "Essential for the 50-min Bozeman airport run; many providers do full-day golf shuttles between Big Sky and Bozeman courses",
+        fullDayRate: [950, 1500],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -575,6 +617,10 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.haymakergolf.com",
         highlight:
           "Keith Foster design rated among Colorado's best public courses; wide valleys with the Yampa River in play and Sleeping Giant mountain as backdrop",
+        googleRating: 4.6,
+        reviewCount: 720,
+        hypeTag: "TOP 100 PUBLIC",
+        rankNote: "Top 100 Public Courses — Golf Digest 2024",
       },
       {
         name: "Rollingstone Ranch Golf Club",
@@ -591,6 +637,9 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.rollingstoneranchgc.com",
         highlight:
           "Robert Trent Jones Jr. design at the Sheraton; dramatic elevation changes and views of the Flat Tops Wilderness",
+        googleRating: 4.4,
+        reviewCount: 540,
+        hypeTag: "DESIGNER CLASSIC",
       },
       {
         name: "Catamount Ranch & Club",
@@ -607,6 +656,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.catamountranch.com",
         highlight:
           "Tom Weiskopf design through sage meadows and aspen groves; semi-private with limited public access",
+        googleRating: 4.5,
+        reviewCount: 290,
       },
     ],
     lodging: [
@@ -627,6 +678,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Steamboat+Springs%2C+Colorado&guests=16",
         notes:
           "Summer rates are 50-70% off ski season; large ski homes perfect for golf groups with tons of space and gear storage",
+        avgRating: 4.7,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
       {
         type: "ranch",
@@ -645,6 +698,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Steamboat-Springs--Colorado/homes?adults=16",
         notes:
           "Working ranch properties available north of town; incredible setting but 20-30 min from courses",
+        avgRating: 4.8,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
     ],
     dining: [
@@ -656,6 +711,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Steamboat's best restaurant in a converted laundry building; seasonal menu with Colorado lamb and craft cocktails",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "Ore House at the Pine Grove",
@@ -665,6 +721,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Classic Steamboat steakhouse since the 1970s; prime rib and big group energy",
         reservationNeeded: true,
+        googleRating: 4.4,
       },
       {
         name: "Carl's Tavern",
@@ -674,6 +731,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Elevated pub food with great burgers and a bourbon collection; big patio on Lincoln Ave",
         reservationNeeded: false,
+        googleRating: 4.5,
       },
       {
         name: "Mambo Italiano",
@@ -683,6 +741,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Reliable Italian spot on the mountain; hearty portions perfect for carb-loading between rounds",
         reservationNeeded: false,
+        googleRating: 4.2,
       },
     ],
     bars: [
@@ -787,6 +846,8 @@ export const mountainWestDestinations: Destination[] = [
         ],
         notes:
           "HDN airport is 30 min; if flying into DEN, Go Alpine runs shared shuttles (3.5 hrs). Local shuttles available for course transport.",
+        fullDayRate: [700, 1100],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -840,6 +901,9 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.daltonranch.com",
         highlight:
           "Ken Dye design carved along the Animas River valley with red-rock cliffs and mountain views; best public course in southwest Colorado",
+        googleRating: 4.5,
+        reviewCount: 580,
+        hypeTag: "HIDDEN GEM",
       },
       {
         name: "Glacier Club",
@@ -856,6 +920,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.theglacierlodge.com",
         highlight:
           "Ultra-private club with limited resort access; 9,000-foot elevation with jaw-dropping San Juan views and immaculate conditioning",
+        googleRating: 4.7,
+        reviewCount: 210,
       },
       {
         name: "Hillcrest Golf Club",
@@ -872,6 +938,9 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.hillcrestgolfclubdurango.com",
         highlight:
           "Classic muni perched above town at Fort Lewis College; cheap, walkable, and stunning panoramic views",
+        googleRating: 4.3,
+        reviewCount: 370,
+        hypeTag: "BEST VALUE",
       },
     ],
     lodging: [
@@ -892,6 +961,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Durango%2C+Colorado&guests=16",
         notes:
           "Animas Valley properties between town and Purgatory offer the best combination of space and proximity to courses",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
       {
         type: "cabin",
@@ -909,6 +980,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Durango--Colorado/homes?adults=14",
         notes:
           "Lake cabins are 30-40 min from town but offer incredible seclusion; great for groups wanting a true mountain retreat",
+        avgRating: 4.7,
+        bedsBreakdown: "2 kings + 3 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -920,6 +993,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Durango's legendary steakhouse since 1972; prime rib, big groups welcome, and a bar that gets rowdy",
         reservationNeeded: true,
+        googleRating: 4.4,
       },
       {
         name: "El Moro Spirits & Tavern",
@@ -929,6 +1003,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Craft cocktails and elevated bar food in a beautifully restored historic building on Main Ave",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "Steamworks Brewing Company",
@@ -938,6 +1013,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Award-winning brewery with a massive space; nachos the size of your head and excellent pale ales",
         reservationNeeded: false,
+        googleRating: 4.5,
       },
       {
         name: "Ken & Sue's",
@@ -947,6 +1023,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Creative American cuisine and a patio on Main Ave; the pan-seared trout is a must",
         reservationNeeded: true,
+        googleRating: 4.7,
       },
     ],
     bars: [
@@ -1040,6 +1117,8 @@ export const mountainWestDestinations: Destination[] = [
         ],
         notes:
           "Small town but shuttle services are available; helpful for Glacier Club which is 25 min from town",
+        fullDayRate: [700, 1000],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -1090,6 +1169,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.parkcitygolf.com",
         highlight:
           "Dramatic elevation changes and ridgeline views at the Park City Mountain Resort; signature holes perched above the Wasatch",
+        googleRating: 4.4,
+        reviewCount: 650,
       },
       {
         name: "Jeremy Ranch Golf & Country Club",
@@ -1106,6 +1187,9 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.jeremyranch.com",
         highlight:
           "Arnold Palmer design winding through a gorgeous mountain valley; one of the best public-access courses in Utah",
+        googleRating: 4.5,
+        reviewCount: 810,
+        hypeTag: "DESIGNER CLASSIC",
       },
       {
         name: "Park City Golf Club",
@@ -1122,6 +1206,9 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.parkcitygolf.org",
         highlight:
           "Muni course right in town with walkable terrain and mountain views; incredible value for the area",
+        googleRating: 4.3,
+        reviewCount: 420,
+        hypeTag: "BEST VALUE",
       },
       {
         name: "Promontory Club (Pete Dye)",
@@ -1138,6 +1225,9 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.promontoryclub.com",
         highlight:
           "Ultra-exclusive Pete Dye design at 6,800 feet; member access only but worth calling for reciprocal play — absolute world-class track",
+        googleRating: 4.9,
+        reviewCount: 180,
+        hypeTag: "BUCKET LIST",
       },
     ],
     lodging: [
@@ -1159,6 +1249,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Park+City%2C+Utah&guests=16",
         notes:
           "Summer rates are 50-70% off Sundance/ski season; massive ski homes with 6-8 bedrooms that are perfect for groups",
+        avgRating: 4.8,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "lodge",
@@ -1176,6 +1268,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Park-City--Utah/homes?adults=16",
         notes:
           "Deer Valley properties are upscale but pricey; walkability to Main Street depends on exact location",
+        avgRating: 4.7,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -1187,6 +1281,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Small-plates concept on Main Street with a phenomenal cocktail program; best food in Park City",
         reservationNeeded: true,
+        googleRating: 4.7,
       },
       {
         name: "Grappa Italian Restaurant",
@@ -1196,6 +1291,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Upscale Italian with a gorgeous patio and wine cellar; private dining available for groups",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "Butcher's Chophouse & Bar",
@@ -1205,6 +1301,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Prime dry-aged steaks and an impressive bourbon bar; the definitive Park City steakhouse",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Silver Star Cafe",
@@ -1214,6 +1311,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Beloved locals' spot for creative breakfasts and lunches; get there early or wait",
         reservationNeeded: false,
+        googleRating: 4.6,
       },
       {
         name: "HSL (Handle Salt Lake)",
@@ -1223,6 +1321,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Sister restaurant to Handle with seasonal American cuisine; excellent wine list",
         reservationNeeded: true,
+        googleRating: 4.4,
       },
     ],
     bars: [
@@ -1326,6 +1425,8 @@ export const mountainWestDestinations: Destination[] = [
         ],
         notes:
           "SLC airport is only 35 min; many services run regular shuttles. Great for course-hopping between Park City, Jeremy Ranch, and Canyons.",
+        fullDayRate: [850, 1300],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [

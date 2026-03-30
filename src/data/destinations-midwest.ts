@@ -35,6 +35,10 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.destinationkohler.com/golf/whistling-straits",
         highlight:
           "2021 Ryder Cup, 3-time PGA Championship host — lakeside links that rival anything in the British Isles",
+        googleRating: 4.8,
+        reviewCount: 2800,
+        hypeTag: "BUCKET LIST",
+        rankNote: "2021 Ryder Cup, 3x PGA Championship — Top 10 Public Courses, Golf Digest",
       },
       {
         name: "Whistling Straits - Irish Course",
@@ -51,6 +55,9 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.destinationkohler.com/golf/whistling-straits",
         highlight:
           "The 'other' Straits course — still world-class links with Lake Michigan views at a fraction of the price",
+        googleRating: 4.6,
+        reviewCount: 980,
+        hypeTag: "HIDDEN GEM",
       },
       {
         name: "Blackwolf Run - River Course",
@@ -67,6 +74,10 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.destinationkohler.com/golf/blackwolf-run",
         highlight:
           "Pete Dye's inland masterpiece — dramatic elevation changes along the Sheboygan River",
+        googleRating: 4.7,
+        reviewCount: 1600,
+        hypeTag: "TOP 100 PUBLIC",
+        rankNote: "Top 100 Public — Golf Digest, Pete Dye Masterpiece",
       },
       {
         name: "Blackwolf Run - Meadow Valleys",
@@ -83,6 +94,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.destinationkohler.com/golf/blackwolf-run",
         highlight:
           "Wider fairways than the River Course but no less challenging — great for a second-day loop",
+        googleRating: 4.5,
+        reviewCount: 750,
       },
       {
         name: "Erin Hills",
@@ -99,6 +112,10 @@ export const midwestDestinations: Destination[] = [
         url: "https://erinhills.com",
         highlight:
           "2017 US Open host — walk-only links on rolling glacial terrain, one of the purest golf experiences in the US",
+        googleRating: 4.8,
+        reviewCount: 1900,
+        hypeTag: "TOURNAMENT HOST",
+        rankNote: "2017 US Open Host — Top 25 Public Courses, Golf Digest",
       },
       {
         name: "The Bull at Pinehurst Farms",
@@ -115,6 +132,9 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.thebullgolfclub.com",
         highlight:
           "Jack Nicklaus design with broad fairways and demanding greens — top public course in Wisconsin",
+        googleRating: 4.5,
+        reviewCount: 680,
+        hypeTag: "DESIGNER CLASSIC",
       },
       {
         name: "Quit Qui Oc Golf Club",
@@ -131,6 +151,9 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.quitquiocgolf.com",
         highlight:
           "Affordable 27-hole layout perfect for a warm-up round or extra loops",
+        googleRating: 4.2,
+        reviewCount: 350,
+        hypeTag: "BEST VALUE",
       },
     ],
     lodging: [
@@ -152,6 +175,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Kohler%2C+Wisconsin&adults=16",
         notes:
           "Book Elkhart Lake and Sheboygan-area homes — 10-20 min to courses. The American Club resort is walkable to Blackwolf Run but pricier for large groups.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 4 queens = 14 guys at 2/bed",
       },
       {
         type: "house",
@@ -163,6 +188,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Sheboygan--Wisconsin/homes?adults=12",
         notes:
           "May need two houses for 16 — Sheboygan has good inventory 15 min from Whistling Straits",
+        avgRating: 4.5,
+        bedsBreakdown: "2 kings + 3 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -174,6 +201,7 @@ export const midwestDestinations: Destination[] = [
         highlight:
           "AAA Four Diamond dining inside The American Club — six themed rooms, outstanding wine list",
         reservationNeeded: true,
+        googleRating: 4.7,
       },
       {
         name: "River Wildlife",
@@ -183,6 +211,7 @@ export const midwestDestinations: Destination[] = [
         highlight:
           "Rustic log cabin on the Sheboygan River — game meats, steaks, prix fixe wilderness dining",
         reservationNeeded: true,
+        googleRating: 4.8,
       },
       {
         name: "Horse & Plow",
@@ -192,6 +221,7 @@ export const midwestDestinations: Destination[] = [
         highlight:
           "Gastropub inside The American Club — cheese curds, burgers, great beer list",
         reservationNeeded: false,
+        googleRating: 4.4,
       },
       {
         name: "Rupp's Lodge",
@@ -201,6 +231,7 @@ export const midwestDestinations: Destination[] = [
         highlight:
           "Old-school Wisconsin supper club in Sheboygan — prime rib, old fashioneds, wood-paneled vibes",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Black Pig",
@@ -210,6 +241,7 @@ export const midwestDestinations: Destination[] = [
         highlight:
           "Upscale farm-to-table in downtown Sheboygan with craft cocktails and rotating seasonal menu",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "Il Ritrovo",
@@ -219,6 +251,7 @@ export const midwestDestinations: Destination[] = [
         highlight:
           "Neapolitan pizza and pasta in Sheboygan — wood-fired oven, casual but excellent",
         reservationNeeded: false,
+        googleRating: 4.5,
       },
     ],
     bars: [

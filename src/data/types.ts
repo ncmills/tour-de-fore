@@ -15,6 +15,7 @@ export type Season = "spring" | "summer" | "fall";
 export type ActivityType = "atv" | "fishing" | "shooting" | "casino" | "brewery" | "spa" | "water-sports" | "horseback" | "hiking" | "rafting" | "zipline" | "go-karts" | "axe-throwing" | "skeet" | "boat-rental" | "kayaking" | "winery" | "distillery" | "paintball" | "mountain-biking";
 export type DiningStyle = "steakhouse" | "bbq" | "seafood" | "upscale" | "casual" | "brewpub" | "mexican" | "italian" | "southern" | "farm-to-table" | "sushi";
 export type BarVibe = "dive" | "sports-bar" | "rooftop" | "cocktail" | "brewpub" | "honky-tonk" | "casino-bar" | "patio" | "whiskey-bar" | "tiki" | "saloon";
+export type HypeTag = "BUCKET LIST" | "HIDDEN GEM" | "TOURNAMENT HOST" | "TOP 100 PUBLIC" | "LOCALS' FAVORITE" | "DESIGNER CLASSIC" | "BEST VALUE";
 
 export interface Airport {
   code: string;
@@ -36,6 +37,12 @@ export interface GolfCourse {
   driveMinutes: number; // from city center
   url?: string;
   highlight: string; // one-line sell
+  // Sentiment / hype fields
+  googleRating?: number; // e.g. 4.6
+  reviewCount?: number; // e.g. 1200
+  golfpassRating?: number; // e.g. 8.5 out of 10
+  rankNote?: string; // e.g. "Top 100 Public — Golf Digest 2025"
+  hypeTag?: HypeTag;
 }
 
 export interface LodgingOption {
@@ -46,6 +53,9 @@ export interface LodgingOption {
   areaDescription: string; // neighborhood / area
   searchUrl?: string; // Airbnb/VRBO search link pattern
   notes: string;
+  // Sentiment + beds
+  avgRating?: number; // Airbnb/VRBO avg rating
+  bedsBreakdown?: string; // e.g. "4 kings + 2 queens = 12 guys, 2/bed"
 }
 
 export interface DiningSpot {
@@ -55,6 +65,10 @@ export interface DiningSpot {
   capacity: "small" | "medium" | "large-group"; // can handle 16?
   highlight: string;
   reservationNeeded: boolean;
+  // Sentiment
+  googleRating?: number;
+  reviewCount?: number;
+  url?: string;
 }
 
 export interface Bar {
@@ -63,6 +77,7 @@ export interface Bar {
   highlight: string;
   lateNight: boolean; // open past midnight?
   walkableFromDowntown: boolean;
+  googleRating?: number;
 }
 
 export interface Activity {
@@ -74,12 +89,16 @@ export interface Activity {
   highlight: string;
   bestFor: string; // "arrival day", "rest day", "morning before golf"
   provider?: string;
+  googleRating?: number;
+  reviewCount?: number;
 }
 
 export interface PartyBus {
   type: "party-bus" | "shuttle" | "limo" | "sprinter-van" | "trolley";
   capacity: [number, number];
   hourlyRate: [number, number];
+  fullDayRate?: [number, number]; // full-day rate (better value)
+  canDoGolfAndBars?: boolean; // true if they'll do AM golf + PM bar runs
   providers: string[]; // company names in the area
   notes: string;
 }
@@ -110,4 +129,5 @@ export interface Destination {
   privateChefs: PrivateChef[];
   tdfTested?: boolean; // true if TDF has been here
   tdfYear?: number;
+  groceryNotes?: string; // grocery/alcohol pre-order info for the area
 }

@@ -1,0 +1,143 @@
+import { NextRequest, NextResponse } from "next/server";
+import Stripe from "stripe";
+import Anthropic from "@anthropic-ai/sdk";
+import { getPlan, storePlan } from "@/lib/kv";
+import { allDestinations } from "@/data/index";
+import { buildDestinationContext } from "@/data/query";
+import { buildSystemPrompt, buildUserMessage } from "@/lib/planner-prompt";
+import type {
+  PriceLevel,
+  ThreePlanResult,
+  DestinationRecommendation,
+  StoredPlan,
+} from "@/lib/plan-types";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "sk_test_placeholder");
+
+// Create Stripe checkout session for $99
+export async function POST(req: NextRequest) {
+  try {
+    const { planId, dest } = await req.json();
+
+    if (!planId || !dest) {
+      return NextResponse.json({ error: "Missing planId or dest" }, { status: 400 });
+    }
+
+    const stored = await getPlan(planId);
+    if (!stored) {
+      return NextResponse.json({ error: "Plan not found" }, { status: 404 });
+    }
+
+    // Get the destination info from the free preview
+    const preview = stored.freePreviews?.[dest as PriceLevel];
+    if (!preview) {
+      return NextResponse.json({ error: "Invalid destination" }, { status: 400 });
+    }
+
+    const origin = req.headers.get("origin") || "https://tourdefore.com";
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: `Tour de Fore Full Trip Plan`,
+              description: `Complete trip plan for ${preview.city}, ${preview.state} — ${preview.groupSize} people, ${preview.numberOfDays} days. Includes lodging options, all courses, restaurants, bars, party bus, schedule, and pro tips.`,
+            },
+            unit_amount: 9900, // $99
+          },
+          quantity: 1,
+        },
+      ],
+      mode: "payment",
+      success_url: `${origin}/plan/unlock-success?planId=${planId}&dest=${dest}&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/plan/result/${planId}`,
+      metadata: { planId, dest },
+    });
+
+    return NextResponse.json({ url: session.url });
+  } catch (err) {
+    console.error("Unlock plan checkout error:", err);
+    return NextResponse.json({ error: "Failed to create checkout" }, { status: 500 });
+  }
+}
+
+// Generate the full paid plan after successful payment
+export async function PUT(req: NextRequest) {
+  try {
+    const { planId, dest } = await req.json();
+
+    if (!planId || !dest) {
+      return NextResponse.json({ error: "Missing planId or dest" }, { status: 400 });
+    }
+
+    const stored = await getPlan(planId);
+    if (!stored) {
+      return NextResponse.json({ error: "Plan not found" }, { status: 404 });
+    }
+
+    // Find the destination in our database
+    const preview = stored.freePreviews?.[dest as PriceLevel];
+    if (!preview) {
+      return NextResponse.json({ error: "Invalid destination" }, { status: 400 });
+    }
+
+    const destination = allDestinations.find((d) => d.id === preview.destinationId);
+    if (!destination) {
+      return NextResponse.json({ error: "Destination not found in database" }, { status: 404 });
+    }
+
+    // NOW call Claude — this is the paid value ($99 worth)
+    const client = new Anthropic();
+    const context = buildDestinationContext(destination);
+    const message = await client.messages.create({
+      model: "claude-sonnet-4-20250514",
+      max_tokens: 16384,
+      system: buildSystemPrompt(context),
+      messages: [{ role: "user", content: buildUserMessage(stored.inputs) }],
+    });
+
+    const textBlock = message.content.find((b) => b.type === "text");
+    if (!textBlock || textBlock.type !== "text") {
+      throw new Error("No text response from Claude");
+    }
+
+    let jsonStr = textBlock.text.trim();
+    if (jsonStr.startsWith("```")) {
+      jsonStr = jsonStr.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "");
+    }
+
+    const plans: ThreePlanResult = JSON.parse(jsonStr);
+
+    // Build the destination recommendation
+    const recommendation: DestinationRecommendation = {
+      destinationId: destination.id,
+      city: destination.city,
+      state: destination.state,
+      tagline: destination.tagline,
+      priceLevel: dest as PriceLevel,
+      plans,
+    };
+
+    // Update the stored plan with the paid data
+    const updated: StoredPlan = {
+      ...stored,
+      destinations: {
+        ...(stored.destinations || { budget: recommendation, mid: recommendation, premium: recommendation }),
+        [dest]: recommendation,
+      },
+      paid: true,
+      paidAt: new Date().toISOString(),
+      paidDestination: dest as PriceLevel,
+    };
+
+    await storePlan(updated);
+
+    return NextResponse.json({ success: true, planId, dest });
+  } catch (err) {
+    console.error("Paid plan generation error:", err);
+    return NextResponse.json({ error: "Failed to generate paid plan" }, { status: 500 });
+  }
+}

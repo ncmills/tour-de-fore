@@ -35,6 +35,10 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.pinehurst.com/golf/courses/no-2/",
         highlight:
           "Donald Ross masterpiece. Host of multiple US Opens. The crowned, turtle-back greens are the ultimate test.",
+        googleRating: 4.7,
+        reviewCount: 2800,
+        hypeTag: "BUCKET LIST",
+        rankNote: "Top 10 Public — Golf Digest, US Open Host (2014, 2024)",
       },
       {
         name: "Pinehurst No. 4",
@@ -51,6 +55,9 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.pinehurst.com/golf/courses/no-4/",
         highlight:
           "Gil Hanse redesign with sandy waste areas and wide fairways. Many say it rivals No. 2.",
+        googleRating: 4.8,
+        reviewCount: 680,
+        hypeTag: "DESIGNER CLASSIC",
       },
       {
         name: "Pinehurst No. 8",
@@ -67,6 +74,8 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.pinehurst.com/golf/courses/no-8/",
         highlight:
           "Tom Fazio's Centennial course. Wide fairways, dramatic elevation changes, and pristine conditioning.",
+        googleRating: 4.6,
+        reviewCount: 520,
       },
       {
         name: "Mid Pines Inn & Golf Club",
@@ -83,6 +92,10 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.midpinesinn.com/",
         highlight:
           "Donald Ross gem restored by Kyle Franz. Understated elegance, incredible green complexes, walkable perfection.",
+        googleRating: 4.7,
+        reviewCount: 410,
+        hypeTag: "TOP 100 PUBLIC",
+        rankNote: "Top 100 Public — Golf Magazine",
       },
       {
         name: "Pine Needles Lodge & Golf Club",
@@ -99,6 +112,10 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.pineneedles-midpines.com/",
         highlight:
           "Host of multiple US Women's Opens. Another Ross classic with towering longleaf pines framing every hole.",
+        googleRating: 4.6,
+        reviewCount: 380,
+        hypeTag: "TOURNAMENT HOST",
+        rankNote: "US Women's Open Host (2022)",
       },
       {
         name: "Tobacco Road Golf Club",
@@ -115,6 +132,10 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.tobaccoroadgolf.com/",
         highlight:
           "Mike Strantz's wild, love-it-or-hate-it masterpiece. Blind shots, massive dunes, and 150 slope. Unforgettable.",
+        googleRating: 4.5,
+        reviewCount: 1900,
+        hypeTag: "TOP 100 PUBLIC",
+        rankNote: "Top 100 You Can Play — Golf Magazine",
       },
     ],
     lodging: [
@@ -134,6 +155,8 @@ export const southeastDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Pinehurst%2C+NC&adults=16",
         notes:
           "Book houses in Pinehurst Village or the resort communities. Many include golf cart access to courses. Book 3-6 months ahead for peak season.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "resort-house",
@@ -150,6 +173,8 @@ export const southeastDestinations: Destination[] = [
         searchUrl: "https://www.pinehurst.com/accommodations/",
         notes:
           "Resort condos and villas get you access to all resort amenities. May need two units for 12-16 but the convenience is unmatched.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 2 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -161,6 +186,7 @@ export const southeastDestinations: Destination[] = [
         highlight:
           "Pinehurst Resort's flagship. White-tablecloth Southern elegance with a jacket-suggested dress code.",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "1895 Grille",
@@ -170,6 +196,7 @@ export const southeastDestinations: Destination[] = [
         highlight:
           "Resort steakhouse with a clubby atmosphere. Great for the big group dinner.",
         reservationNeeded: true,
+        googleRating: 4.4,
       },
       {
         name: "Dugan's Pub",
@@ -179,6 +206,7 @@ export const southeastDestinations: Destination[] = [
         highlight:
           "Village pub with solid food and cold beer. The go-to casual spot after a round.",
         reservationNeeded: false,
+        googleRating: 4.3,
       },
       {
         name: "The Drum",
@@ -188,6 +216,7 @@ export const southeastDestinations: Destination[] = [
         highlight:
           "Craft cocktails and wood-fired fare in a laid-back setting. Best cocktail bar in the village.",
         reservationNeeded: false,
+        googleRating: 4.5,
       },
       {
         name: "Theo's Taverna",
@@ -197,6 +226,7 @@ export const southeastDestinations: Destination[] = [
         highlight:
           "Mediterranean-influenced spot in the village. Unexpectedly great pasta and seafood.",
         reservationNeeded: true,
+        googleRating: 4.4,
       },
     ],
     bars: [
@@ -269,6 +299,8 @@ export const southeastDestinations: Destination[] = [
         ],
         notes:
           "Sprinter vans work best for shuttling between village lodging and courses. Most courses are within 30 minutes.",
+        fullDayRate: [1200, 2000],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -324,6 +356,10 @@ export const southeastDestinations: Destination[] = [
         url: "https://kiawahresort.com/golf/the-ocean-course/",
         highlight:
           "Every hole has an ocean view. Host of the 1991 Ryder Cup War by the Shore and 2012/2021 PGA Championships. Bucket list.",
+        googleRating: 4.8,
+        reviewCount: 1500,
+        hypeTag: "BUCKET LIST",
+        rankNote: "Top 10 Public — Golf Digest, PGA Championship Host (2012, 2021)",
       },
       {
         name: "Osprey Point",
@@ -340,6 +376,8 @@ export const southeastDestinations: Destination[] = [
         url: "https://kiawahresort.com/golf/osprey-point/",
         highlight:
           "Tom Fazio design winding through lakes, oaks, and marshland. Most forgiving of the five courses.",
+        googleRating: 4.5,
+        reviewCount: 420,
       },
       {
         name: "Turtle Point",
@@ -356,6 +394,8 @@ export const southeastDestinations: Destination[] = [
         url: "https://kiawahresort.com/golf/turtle-point/",
         highlight:
           "Jack Nicklaus design with three holes along the Atlantic. Recently renovated with stunning ocean views.",
+        googleRating: 4.6,
+        reviewCount: 390,
       },
       {
         name: "Cougar Point",
@@ -372,6 +412,8 @@ export const southeastDestinations: Destination[] = [
         url: "https://kiawahresort.com/golf/cougar-point/",
         highlight:
           "Gary Player redesign hugging the Kiawah River. Beautiful marsh views and excellent conditioning.",
+        googleRating: 4.4,
+        reviewCount: 280,
       },
       {
         name: "Oak Point",
@@ -388,6 +430,9 @@ export const southeastDestinations: Destination[] = [
         url: "https://kiawahresort.com/golf/oak-point/",
         highlight:
           "Clyde Johnston design just off-island. Great value play with Kiawah-caliber conditioning at lower rates.",
+        googleRating: 4.3,
+        reviewCount: 350,
+        hypeTag: "BEST VALUE",
       },
     ],
     lodging: [
@@ -407,6 +452,8 @@ export const southeastDestinations: Destination[] = [
         searchUrl: "https://www.kiawahisland.com/vacation-rentals",
         notes:
           "Large beach houses on Kiawah are the move. 6-8 bedroom homes available for big groups. Book 4-6 months out for spring and fall.",
+        avgRating: 4.8,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "house",
@@ -425,6 +472,8 @@ export const southeastDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Seabrook+Island%2C+SC&adults=16",
         notes:
           "Seabrook Island homes offer similar quality at lower prices. Quick drive to Kiawah courses.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -436,6 +485,7 @@ export const southeastDestinations: Destination[] = [
         highlight:
           "Ocean Course clubhouse restaurant. Fine dining with panoramic Atlantic views. The splurge dinner.",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "Tomasso",
@@ -445,6 +495,7 @@ export const southeastDestinations: Destination[] = [
         highlight:
           "Upscale Italian at the Sanctuary Hotel. Handmade pastas, great wine list.",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "The Ryder Cup Bar",
@@ -454,6 +505,7 @@ export const southeastDestinations: Destination[] = [
         highlight:
           "Ocean Course 19th hole. Burgers, sandwiches, and cold beer after your round with ocean views.",
         reservationNeeded: false,
+        googleRating: 4.3,
       },
       {
         name: "Husk",
@@ -463,6 +515,7 @@ export const southeastDestinations: Destination[] = [
         highlight:
           "Sean Brock's farm-to-table Southern icon in downtown Charleston. Worth the 45-minute drive for one big dinner.",
         reservationNeeded: true,
+        googleRating: 4.4,
       },
     ],
     bars: [
@@ -528,6 +581,8 @@ export const southeastDestinations: Destination[] = [
         ],
         notes:
           "Sprinter vans for airport transfers and nights out in Charleston. Book early for peak season.",
+        fullDayRate: [1400, 2400],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -585,6 +640,10 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.seapines.com/golf/harbour-town-golf-links/",
         highlight:
           "Pete Dye and Jack Nicklaus co-design. Home of the RBC Heritage. The lighthouse behind 18 is one of golf's most iconic images.",
+        googleRating: 4.7,
+        reviewCount: 2200,
+        hypeTag: "TOURNAMENT HOST",
+        rankNote: "PGA Tour Host — RBC Heritage, Top 50 Public",
       },
       {
         name: "Heron Point by Pete Dye",
@@ -601,6 +660,8 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.seapines.com/golf/heron-point/",
         highlight:
           "Another Pete Dye gem at Sea Pines. Tight, challenging, and winding through lagoons and live oaks.",
+        googleRating: 4.5,
+        reviewCount: 480,
       },
       {
         name: "Atlantic Dunes by Davis Love III",
@@ -617,6 +678,8 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.seapines.com/golf/atlantic-dunes/",
         highlight:
           "Davis Love III redesign with ocean breezes and sandy waste areas. Sea Pines' most fun layout.",
+        googleRating: 4.5,
+        reviewCount: 360,
       },
       {
         name: "Palmetto Dunes - Robert Trent Jones Course",
@@ -633,6 +696,8 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.palmettodunes.com/golf/rtj-course/",
         highlight:
           "Classic RTJ design with wide fairways, big greens, and lagoons on 11 holes. Great resort course.",
+        googleRating: 4.4,
+        reviewCount: 620,
       },
       {
         name: "Palmetto Dunes - Arthur Hills Course",
@@ -649,6 +714,8 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.palmettodunes.com/golf/arthur-hills-course/",
         highlight:
           "Smaller greens and tighter fairways than its RTJ neighbor. A thinking player's course.",
+        googleRating: 4.3,
+        reviewCount: 310,
       },
       {
         name: "Palmetto Hall - Arthur Hills",
@@ -665,6 +732,9 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.palmettohallgolf.com/",
         highlight:
           "Excellent value with top-notch conditioning. The island's best-kept secret.",
+        googleRating: 4.3,
+        reviewCount: 250,
+        hypeTag: "HIDDEN GEM",
       },
     ],
     lodging: [
@@ -685,6 +755,8 @@ export const southeastDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Hilton+Head+Island%2C+SC&adults=16",
         notes:
           "Sea Pines has the best location (walking distance to Harbour Town). Palmetto Dunes is more affordable. Both are gated resort communities.",
+        avgRating: 4.7,
+        bedsBreakdown: "5 kings + 4 queens = 18 guys at 2/bed",
       },
       {
         type: "house",
@@ -702,6 +774,8 @@ export const southeastDestinations: Destination[] = [
           "https://www.airbnb.com/s/Hilton-Head-Island--SC/homes?adults=16",
         notes:
           "Shipyard and Port Royal are mid-island with good access to everything. Slightly lower prices than Sea Pines.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -713,6 +787,7 @@ export const southeastDestinations: Destination[] = [
         highlight:
           "Best restaurant on the island, period. House-made pastas, incredible wine cellar. Book the private room for 16.",
         reservationNeeded: true,
+        googleRating: 4.7,
       },
       {
         name: "Hudson's Seafood House on the Docks",
@@ -722,6 +797,7 @@ export const southeastDestinations: Destination[] = [
         highlight:
           "Waterfront institution since 1967. Fresh-off-the-boat seafood with sunset views over the marsh.",
         reservationNeeded: true,
+        googleRating: 4.4,
       },
       {
         name: "One Hot Mama's",
@@ -731,6 +807,7 @@ export const southeastDestinations: Destination[] = [
         highlight:
           "Award-winning ribs and wings in a rowdy, fun atmosphere. Perfect for a group of 16.",
         reservationNeeded: false,
+        googleRating: 4.3,
       },
       {
         name: "Lucky Rooster Kitchen + Bar",
@@ -740,6 +817,7 @@ export const southeastDestinations: Destination[] = [
         highlight:
           "Southern comfort food elevated. Fried chicken, shrimp and grits, and an excellent bourbon list.",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Skull Creek Boathouse",
@@ -749,6 +827,7 @@ export const southeastDestinations: Destination[] = [
         highlight:
           "Waterfront seafood with the best sunset on the island. Get the raw bar and a bucket of beers.",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
     ],
     bars: [
@@ -840,6 +919,8 @@ export const southeastDestinations: Destination[] = [
         ],
         notes:
           "Trolley-style shuttles are popular for bar-hopping on the island. Most courses offer shuttle service for resort guests.",
+        fullDayRate: [1600, 2800],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -899,6 +980,10 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.kivadunes.com/golf/",
         highlight:
           "Jerry Pate links-style design right on the Gulf. Ranked #1 public course in Alabama. Dunes, wind, and ocean views.",
+        googleRating: 4.6,
+        reviewCount: 850,
+        hypeTag: "TOP 100 PUBLIC",
+        rankNote: "#1 Public Course in Alabama — Golfweek",
       },
       {
         name: "Craft Farms - Cotton Creek",
@@ -915,6 +1000,8 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.craftfarms.com/golf/cotton-creek/",
         highlight:
           "Arnold Palmer design with wide fairways and generous greens. The most forgiving of the area courses.",
+        googleRating: 4.3,
+        reviewCount: 520,
       },
       {
         name: "Craft Farms - Cypress Bend",
@@ -931,6 +1018,8 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.craftfarms.com/golf/cypress-bend/",
         highlight:
           "Tighter and more demanding than its Cotton Creek sibling. Water on 15 holes keeps you honest.",
+        googleRating: 4.2,
+        reviewCount: 440,
       },
       {
         name: "Peninsula Golf & Racquet Club",
@@ -947,6 +1036,9 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.peninsulagolfclub.com/",
         highlight:
           "Earl Stone design with 27 holes in three 9-hole loops. Marshes, lakes, and great value.",
+        googleRating: 4.2,
+        reviewCount: 380,
+        hypeTag: "BEST VALUE",
       },
       {
         name: "Glenlakes Golf Club",
@@ -963,6 +1055,8 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.glenlakesgolf.com/",
         highlight:
           "Bruce Devlin design north of town. Consistently well-maintained and the best pure value in the area.",
+        googleRating: 4.3,
+        reviewCount: 290,
       },
     ],
     lodging: [
@@ -983,6 +1077,8 @@ export const southeastDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Gulf+Shores%2C+AL&adults=16",
         notes:
           "Beach houses and large condos are abundant and affordable compared to the Carolinas. Beachfront houses for 16 are very doable under $1000/night.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
     ],
     dining: [
@@ -994,6 +1090,7 @@ export const southeastDestinations: Destination[] = [
         highlight:
           "Upscale seafood with marina views. Best fine-dining seafood in the area.",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "The Gulf",
@@ -1003,6 +1100,7 @@ export const southeastDestinations: Destination[] = [
         highlight:
           "Shipping-container restaurant right on the beach. Fresh seafood, craft cocktails, and the best sunset spot.",
         reservationNeeded: false,
+        googleRating: 4.6,
       },
       {
         name: "LuLu's",
@@ -1012,6 +1110,7 @@ export const southeastDestinations: Destination[] = [
         highlight:
           "Lucy Buffett's (Jimmy's sister) waterfront spot. Massive, lively, and built for groups. Get the Cheeseburger in Paradise.",
         reservationNeeded: false,
+        googleRating: 4.2,
       },
       {
         name: "Cobalt The Restaurant",
@@ -1021,6 +1120,7 @@ export const southeastDestinations: Destination[] = [
         highlight:
           "Elevated coastal cuisine at the Perdido Beach Resort. Panoramic Gulf views and creative cocktails.",
         reservationNeeded: true,
+        googleRating: 4.4,
       },
       {
         name: "Original Oyster House",
@@ -1030,6 +1130,7 @@ export const southeastDestinations: Destination[] = [
         highlight:
           "A Gulf Shores institution on the bayou. Oysters every way, fried seafood platters, and sweet tea.",
         reservationNeeded: false,
+        googleRating: 4.3,
       },
     ],
     bars: [
@@ -1111,6 +1212,8 @@ export const southeastDestinations: Destination[] = [
         ],
         notes:
           "Party buses are popular for the Flora-Bama run. Also useful for PNS airport pickup.",
+        fullDayRate: [1200, 2200],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -2700,6 +2803,10 @@ export const southeastDestinations: Destination[] = [
         style: "coastal",
         driveMinutes: 25,
         highlight: "Mike Strantz masterpiece draped in live oaks and Spanish moss. Best course on the Grand Strand.",
+        googleRating: 4.8,
+        reviewCount: 1100,
+        hypeTag: "BUCKET LIST",
+        rankNote: "Top 100 Public — Golf Digest",
       },
       {
         name: "TPC Myrtle Beach",
@@ -2714,6 +2821,8 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 20,
         highlight: "Tom Fazio design with immaculate conditioning. The PGA-branded flagship of the Strand.",
+        googleRating: 4.5,
+        reviewCount: 780,
       },
       {
         name: "Barefoot Resort - Dye Course",
@@ -2728,6 +2837,9 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 15,
         highlight: "Pete Dye at his most diabolical. Waste bunkers, island greens, and pure challenge.",
+        googleRating: 4.4,
+        reviewCount: 650,
+        hypeTag: "DESIGNER CLASSIC",
       },
       {
         name: "Tidewater Golf Club",
@@ -2742,6 +2854,9 @@ export const southeastDestinations: Destination[] = [
         style: "coastal",
         driveMinutes: 20,
         highlight: "Perched above the Intracoastal Waterway with stunning marsh views. Consistently top-rated.",
+        googleRating: 4.6,
+        reviewCount: 920,
+        hypeTag: "LOCALS' FAVORITE",
       },
       {
         name: "Myrtlewood Palmetto Course",
@@ -2756,6 +2871,9 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 5,
         highlight: "Best value on the Strand. Solid layout, great conditioning for the price, and right in town.",
+        googleRating: 4.2,
+        reviewCount: 1400,
+        hypeTag: "BEST VALUE",
       },
     ],
     lodging: [
@@ -2767,6 +2885,8 @@ export const southeastDestinations: Destination[] = [
         areaDescription: "North Myrtle Beach & Barefoot Landing area",
         searchUrl: "https://www.vrbo.com/search?destination=Myrtle+Beach%2C+SC&adults=16",
         notes: "Beach houses in North Myrtle give you space, pools, and easy access to Barefoot courses. Book 2+ months ahead for spring.",
+        avgRating: 4.5,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "resort-house",
@@ -2775,6 +2895,8 @@ export const southeastDestinations: Destination[] = [
         amenities: ["resort pool", "lazy river", "oceanfront", "on-site dining"],
         areaDescription: "Myrtle Beach oceanfront resorts",
         notes: "Condo blocks along Ocean Boulevard sleep groups affordably. May need two units for 16.",
+        avgRating: 4.3,
+        bedsBreakdown: "2 kings + 3 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -2785,6 +2907,7 @@ export const southeastDestinations: Destination[] = [
         capacity: "large-group",
         highlight: "All-you-can-eat steamed crab legs on the Murrells Inlet marshwalk. Group-friendly chaos.",
         reservationNeeded: false,
+        googleRating: 4.1,
       },
       {
         name: "Rioz Brazilian Steakhouse",
@@ -2793,6 +2916,7 @@ export const southeastDestinations: Destination[] = [
         capacity: "large-group",
         highlight: "All-you-can-eat rodizio with 15+ meats carved tableside. The big night out for the crew.",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Wicked Tuna",
@@ -2801,6 +2925,7 @@ export const southeastDestinations: Destination[] = [
         capacity: "large-group",
         highlight: "Fresh catch on the Murrells Inlet marshwalk with great sunset views.",
         reservationNeeded: true,
+        googleRating: 4.4,
       },
       {
         name: "Croaker's Spot",
@@ -2809,6 +2934,7 @@ export const southeastDestinations: Destination[] = [
         capacity: "medium",
         highlight: "Soul food and seafood in a no-frills setting. Fried shrimp and mac & cheese hit different after 36 holes.",
         reservationNeeded: false,
+        googleRating: 4.3,
       },
     ],
     bars: [
@@ -2889,6 +3015,8 @@ export const southeastDestinations: Destination[] = [
         hourlyRate: [150, 300],
         providers: ["Myrtle Beach Party Bus", "Grand Strand Limo"],
         notes: "Essential for course-hopping and bar crawls along the Strand. Book for the full trip.",
+        fullDayRate: [1200, 2400],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [

@@ -196,14 +196,69 @@ export interface ThreeDestinationResult {
   premium: DestinationRecommendation;
 }
 
+// ── Freemium Types ──
+
+export interface FreePreview {
+  destinationId: string;
+  city: string;
+  state: string;
+  tagline: string;
+  description: string;
+  priceLevel: PriceLevel;
+  // Visible in free plan
+  lodgingPreview: {
+    type: string;
+    sleeps: [number, number];
+    nightlyRange: [number, number];
+    amenities: string[];
+    areaDescription: string;
+    avgRating?: number;
+    bedsBreakdown?: string;
+  };
+  coursePreview: {
+    name: string;
+    tier: string;
+    greenFeeRange: [number, number];
+    highlight: string;
+    googleRating?: number;
+    hypeTag?: string;
+  }[];
+  estimatedBudgetPerPerson: string;
+  numberOfDays: number;
+  groupSize: number;
+  // Locked counts (visible but grayed)
+  lockedCounts: {
+    moreHouses: number;
+    restaurants: number;
+    bars: number;
+    activities: number;
+    partyBusOptions: number;
+    privateChefOptions: number;
+  };
+}
+
+export interface ThreeFreePreview {
+  budget: FreePreview;
+  mid: FreePreview;
+  premium: FreePreview;
+}
+
 // ── Storage Types ──
 
 export interface StoredPlan {
   id: string;
+  // Freemium: free previews stored on generation, paid plans stored on payment
+  freePreviews?: ThreeFreePreview;
   destinations?: ThreeDestinationResult;
   /** @deprecated kept for backwards compat with old single-destination plans */
   plans?: ThreePlanResult;
   inputs: WizardState;
   createdAt: string;
   emailsSent: boolean;
+  // Paid plan state
+  paidDestination?: PriceLevel; // which destination the user paid for
+  paid?: boolean;
+  paidAt?: string;
+  // User selections (trip builder)
+  selectedOptions?: Record<string, string[]>; // category → selected option IDs
 }

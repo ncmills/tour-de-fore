@@ -33,6 +33,10 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.tpc.com/scottsdale",
         highlight:
           "Home of the WM Phoenix Open and the legendary Stadium Hole 16",
+        googleRating: 4.6,
+        reviewCount: 2900,
+        hypeTag: "TOURNAMENT HOST",
+        rankNote: "PGA Tour Host — WM Phoenix Open",
       },
       {
         name: "We-Ko-Pa Golf Club (Saguaro Course)",
@@ -49,6 +53,10 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.wekopa.com",
         highlight:
           "Bill Coore & Ben Crenshaw design on Fort McDowell Yavapai Nation land with jaw-dropping Sonoran views",
+        googleRating: 4.8,
+        reviewCount: 1200,
+        hypeTag: "TOP 100 PUBLIC",
+        rankNote: "Top 100 Public — Golf Digest",
       },
       {
         name: "Troon North Golf Club (Monument Course)",
@@ -65,6 +73,9 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.troonnorthgolf.com",
         highlight:
           "Tom Weiskopf masterpiece nestled against Pinnacle Peak with the iconic Monument boulder",
+        googleRating: 4.7,
+        reviewCount: 1400,
+        hypeTag: "DESIGNER CLASSIC",
       },
       {
         name: "Grayhawk Golf Club (Raptor Course)",
@@ -81,6 +92,8 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.grayhawkgolf.com",
         highlight:
           "Tom Fazio design with killer post-round scene at Phil's Grill on the patio",
+        googleRating: 4.6,
+        reviewCount: 950,
       },
       {
         name: "Quintero Golf Club",
@@ -97,6 +110,10 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.quinterogolf.com",
         highlight:
           "Rees Jones design carved through Hieroglyphic Mountains — remote but worth every minute of the drive",
+        googleRating: 4.9,
+        reviewCount: 680,
+        hypeTag: "BUCKET LIST",
+        rankNote: "Top 50 Public — Golf Digest",
       },
     ],
     lodging: [
@@ -118,6 +135,8 @@ export const southwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Scottsdale%2C+AZ&groupSize=16",
         notes:
           "Tons of 5-6 bed luxury homes with resort-style pools. Book early for spring season. Old Town proximity adds Uber costs but North Scottsdale is closer to courses.",
+        avgRating: 4.7,
+        bedsBreakdown: "5 kings + 3 queens = 16 guys at 2/bed",
       },
     ],
     dining: [
@@ -129,6 +148,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Iconic Scottsdale steakhouse with a live piano bar and butter cake that ends the night right",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "Steak 44",
@@ -138,6 +158,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Locally loved upscale steakhouse with tableside Caesar salad and a buzzing dining room",
         reservationNeeded: true,
+        googleRating: 4.7,
       },
       {
         name: "Diego Pops",
@@ -147,6 +168,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Colorful modern Mexican with killer tacos, margaritas, and a great Old Town patio",
         reservationNeeded: false,
+        googleRating: 4.4,
       },
       {
         name: "Grimaldi's Coal Brick-Oven Pizzeria",
@@ -156,6 +178,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Brooklyn-style coal-fired pizza — perfect low-key group dinner after a long day on the course",
         reservationNeeded: false,
+        googleRating: 4.3,
       },
       {
         name: "Hash Kitchen",
@@ -165,6 +188,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Boozy brunch paradise with a DIY Bloody Mary bar and oversized breakfast plates",
         reservationNeeded: true,
+        googleRating: 4.4,
       },
       {
         name: "Toca Madera",
@@ -174,6 +198,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Trendy Mexican-Asian fusion with craft cocktails and a nightclub-adjacent energy",
         reservationNeeded: true,
+        googleRating: 4.3,
       },
     ],
     bars: [
@@ -287,6 +312,8 @@ export const southwestDestinations: Destination[] = [
         ],
         notes:
           "Old Town Scottsdale is party bus central. Tons of options and most offer golf course shuttle packages. Book 2-3 months ahead for spring season.",
+        fullDayRate: [1600, 3200],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -342,6 +369,9 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.sevencanyons.com",
         highlight:
           "Tom Weiskopf design carved through red rock canyons — ultra-exclusive and jaw-dropping",
+        googleRating: 4.7,
+        reviewCount: 320,
+        hypeTag: "BUCKET LIST",
       },
       {
         name: "Sedona Golf Resort",
@@ -358,6 +388,9 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.sedonagolfresort.com",
         highlight:
           "The signature 10th hole frames Cathedral Rock — one of the most photographed golf holes in America",
+        googleRating: 4.5,
+        reviewCount: 1800,
+        hypeTag: "LOCALS' FAVORITE",
       },
       {
         name: "Oak Creek Country Club",
@@ -374,6 +407,9 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.oakcreekcc.com",
         highlight:
           "Robert Trent Jones Sr. design with creek crossings and red rock views at a fraction of the price",
+        googleRating: 4.3,
+        reviewCount: 420,
+        hypeTag: "BEST VALUE",
       },
     ],
     lodging: [
@@ -394,6 +430,8 @@ export const southwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Sedona%2C+AZ&groupSize=16",
         notes:
           "Big houses exist but inventory is tighter than Scottsdale. Book 3-4 months out. West Sedona has the best access to courses and Uptown restaurants.",
+        avgRating: 4.7,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -405,6 +443,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Stunning panoramic red rock views with upscale Latin-American cuisine — the special-night spot",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "Elote Cafe",
@@ -414,6 +453,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "James Beard-nominated Southwest Mexican. The fire-roasted elote and smoked pork cheeks are legendary",
         reservationNeeded: true,
+        googleRating: 4.7,
       },
       {
         name: "Hideaway House",
@@ -423,6 +463,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Pizza and Italian with a huge creekside patio overlooking red rocks — great casual group dinner",
         reservationNeeded: false,
+        googleRating: 4.4,
       },
       {
         name: "Cowboy Club Grille & Spirits",
@@ -432,6 +473,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Uptown Sedona icon serving rattlesnake bites, buffalo burgers, and prime cuts with Western flair",
         reservationNeeded: true,
+        googleRating: 4.3,
       },
     ],
     bars: [
@@ -513,6 +555,8 @@ export const southwestDestinations: Destination[] = [
         providers: ["Sedona Trolley", "Arizona Shuttle", "Red Rock Limo"],
         notes:
           "Party bus options are limited in Sedona. Sprinter vans and trolleys are the main group transport. Book well ahead — this is a small town.",
+        fullDayRate: [1200, 2400],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -562,6 +606,8 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.ventanacanyonclub.com",
         highlight:
           "Tom Fazio design in the Santa Catalina foothills — the 3rd hole island green is unforgettable",
+        googleRating: 4.5,
+        reviewCount: 580,
       },
       {
         name: "The Golf Club at Dove Mountain",
@@ -578,6 +624,10 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.dovemountain.com",
         highlight:
           "Jack Nicklaus design and former host of the WGC-Match Play. Stunning Tortolita Mountain setting.",
+        googleRating: 4.6,
+        reviewCount: 720,
+        hypeTag: "TOURNAMENT HOST",
+        rankNote: "Former WGC-Match Play Host",
       },
       {
         name: "Sewailo Golf Club",
@@ -594,6 +644,9 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.casinodelsol.com/sewailo-golf-club",
         highlight:
           "Notah Begay III design at Casino Del Sol — great value with a casino and resort next door",
+        googleRating: 4.3,
+        reviewCount: 450,
+        hypeTag: "BEST VALUE",
       },
       {
         name: "Arizona National Golf Club",

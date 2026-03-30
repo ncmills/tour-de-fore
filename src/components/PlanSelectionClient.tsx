@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import Link from "next/link";
-import { ThreeDestinationResult, PriceLevel } from "@/lib/plan-types";
+import { ThreeDestinationResult, ThreeFreePreview, PriceLevel, FreePreview } from "@/lib/plan-types";
 import MulliganButton from "./MulliganButton";
 
 const destinationTiers: { key: PriceLevel; icon: string; label: string; badge?: string }[] = [
@@ -13,10 +13,14 @@ const destinationTiers: { key: PriceLevel; icon: string; label: string; badge?: 
 
 export default function PlanSelectionClient({
   planId,
-  destinations,
+  freePreviews,
+  paid,
+  legacyDestinations,
 }: {
   planId: string;
-  destinations: ThreeDestinationResult;
+  freePreviews: ThreeFreePreview | null;
+  paid?: boolean;
+  legacyDestinations?: ThreeDestinationResult;
 }) {
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff", padding: "clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 3rem)" }}>
@@ -51,7 +55,7 @@ export default function PlanSelectionClient({
           transition={{ delay: 0.4 }}
           style={{ fontSize: "clamp(0.9rem, 2vw, 1.1rem)", color: "rgba(255,255,255,0.5)", maxWidth: "600px", margin: "0 auto" }}
         >
-          Three destinations, three vibes, three price points. Each one comes with full Imp / Devil / Demon King plans inside.
+          Three destinations, three vibes, three price points. {!paid && "Each includes a free preview — unlock the full plan for $99."}
         </motion.p>
       </div>
 
@@ -64,16 +68,31 @@ export default function PlanSelectionClient({
         margin: "0 auto",
       }}>
         {destinationTiers.map(({ key, icon, label, badge }, i) => {
-          const rec = destinations[key];
-          const devilPlan = rec.plans.devil; // use devil tier for preview info
+          // Support both free previews and legacy paid destinations
+          const preview: FreePreview | null = freePreviews?.[key] || null;
+          const legacyDest = legacyDestinations?.[key];
 
-          // Track selection on click
+          const city = preview?.city || legacyDest?.city || "";
+          const state = preview?.state || legacyDest?.state || "";
+          const tagline = preview?.tagline || legacyDest?.tagline || "";
+          const budget = preview?.estimatedBudgetPerPerson || legacyDest?.plans?.devil?.estimatedBudget?.perPerson || "";
+          const courseNames = preview
+            ? preview.coursePreview.map((c) => c.name)
+            : legacyDest?.plans?.devil?.courses?.map((c) => c.name) || [];
+          const lodgingType = preview
+            ? preview.lodgingPreview.type
+            : legacyDest?.plans?.devil?.lodging?.type || "";
+          const lockedCounts = preview?.lockedCounts;
+
           const trackClick = () => {
-            fetch("/api/track-selection", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ destinationId: rec.destinationId, tier: key }),
-            }).catch(() => {});
+            const destId = preview?.destinationId || legacyDest?.destinationId;
+            if (destId) {
+              fetch("/api/track-selection", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ destinationId: destId, tier: key }),
+              }).catch(() => {});
+            }
           };
 
           return (
@@ -113,7 +132,6 @@ export default function PlanSelectionClient({
                     e.currentTarget.style.boxShadow = "none";
                   }}
                 >
-                  {/* Badge */}
                   {badge && (
                     <div style={{
                       position: "absolute", top: "1rem", right: "1rem",
@@ -137,10 +155,8 @@ export default function PlanSelectionClient({
                     {label}
                   </div>
 
-                  {/* Icon */}
                   <div style={{ fontSize: "2.5rem", marginBottom: "0.75rem" }}>{icon}</div>
 
-                  {/* Destination Name */}
                   <h2 style={{
                     fontFamily: "var(--font-plan-script), cursive",
                     fontSize: "clamp(1.8rem, 4vw, 2.5rem)",
@@ -148,49 +164,44 @@ export default function PlanSelectionClient({
                     marginBottom: "0.25rem",
                     lineHeight: 1.1,
                   }}>
-                    {rec.city}, {rec.state}
+                    {city}, {state}
                   </h2>
 
-                  {/* Tagline */}
                   <p style={{
                     fontSize: "0.85rem",
                     color: "rgba(255,255,255,0.5)",
                     marginBottom: "1.25rem",
                     lineHeight: 1.4,
                   }}>
-                    {rec.tagline}
+                    {tagline}
                   </p>
 
-                  {/* Price Range (Devil tier as reference) */}
                   <div style={{
                     fontSize: "clamp(1.3rem, 3vw, 1.8rem)",
                     fontWeight: 800,
                     color: key === "mid" ? "rgba(220,38,38,0.9)" : "rgba(255,255,255,0.85)",
                     marginBottom: "1.25rem",
                   }}>
-                    {devilPlan.estimatedBudget.perPerson}
-                    <span style={{ fontSize: "0.7rem", fontWeight: 400, color: "rgba(255,255,255,0.35)", marginLeft: "0.5rem" }}>per person (Devil tier)</span>
+                    {budget}
+                    <span style={{ fontSize: "0.7rem", fontWeight: 400, color: "rgba(255,255,255,0.35)", marginLeft: "0.5rem" }}>per person</span>
                   </div>
 
-                  {/* Highlights */}
                   <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                     <div style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)" }}>
-                      ⛳ {devilPlan.courses.length} rounds — {devilPlan.courses.map(c => c.name).slice(0, 2).join(", ")}{devilPlan.courses.length > 2 ? "..." : ""}
+                      ⛳ {courseNames.slice(0, 2).join(", ")}{courseNames.length > 2 ? ` +${courseNames.length - 2} more` : ""}
                     </div>
                     <div style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)" }}>
-                      🏠 {devilPlan.lodging.type}
+                      🏠 {lodgingType}
                     </div>
-                    <div style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)" }}>
-                      🍽️ {devilPlan.dining.length} dining spots
-                    </div>
-                    {devilPlan.bars && devilPlan.bars.length > 0 && (
-                      <div style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)" }}>
-                        🌙 {devilPlan.bars.length} bars
-                      </div>
+                    {lockedCounts && (
+                      <>
+                        <div style={{ fontSize: "0.75rem", color: "rgba(234,88,12,0.6)", marginTop: "0.5rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                          🏆 {lockedCounts.restaurants} restaurants · {lockedCounts.bars} bars · {lockedCounts.activities} activities
+                        </div>
+                      </>
                     )}
                   </div>
 
-                  {/* CTA */}
                   <div style={{
                     marginTop: "1.5rem",
                     padding: "0.75rem",
@@ -202,7 +213,7 @@ export default function PlanSelectionClient({
                     color: key === "mid" ? "#fff" : "rgba(255,255,255,0.7)",
                     letterSpacing: "0.05em",
                   }}>
-                    Unleash the Plans →
+                    {paid ? "View Full Plan →" : "See Free Preview →"}
                   </div>
                 </div>
               </Link>
