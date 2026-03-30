@@ -1,5 +1,10 @@
 import BlackPage from "@/components/BlackPage";
 
+export const metadata = {
+  title: "Order Confirmed | Tour de Fore",
+  description: "Your Tour de Fore order has been confirmed.",
+};
+
 export default function ShopSuccessPage() {
   return (
     <BlackPage heading="Order Confirmed">

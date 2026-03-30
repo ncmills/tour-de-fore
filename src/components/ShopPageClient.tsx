@@ -252,7 +252,7 @@ export default function ShopPageClient({ onBack }: { onBack?: () => void }) {
                 {/* Product illustration */}
                 <div style={{
                   background: "rgba(255,255,255,0.03)",
-                  padding: "2rem 2.5rem",
+                  padding: "2rem clamp(1.5rem, 4vw, 2.5rem)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -379,9 +379,9 @@ export default function ShopPageClient({ onBack }: { onBack?: () => void }) {
                           <p style={{ fontSize: "0.8rem", color: "#D4A843" }}>${((item.price * item.quantity) / 100).toFixed(2)}</p>
                         </div>
                         <div style={{ display: "flex", alignItems: "center", gap: "0.8rem" }}>
-                          <button onClick={() => updateQty(item.id, -1)} style={{ background: "rgba(212,168,67,0.1)", border: "1px solid rgba(212,168,67,0.2)", color: "#fff", width: "28px", height: "28px", borderRadius: "6px", cursor: "pointer" }}>−</button>
+                          <button onClick={() => updateQty(item.id, -1)} style={{ background: "rgba(212,168,67,0.1)", border: "1px solid rgba(212,168,67,0.2)", color: "#fff", width: "44px", height: "44px", borderRadius: "6px", cursor: "pointer", fontSize: "1.1rem" }}>−</button>
                           <span style={{ fontSize: "0.9rem", minWidth: "16px", textAlign: "center" }}>{item.quantity}</span>
-                          <button onClick={() => updateQty(item.id, 1)} style={{ background: "rgba(212,168,67,0.1)", border: "1px solid rgba(212,168,67,0.2)", color: "#fff", width: "28px", height: "28px", borderRadius: "6px", cursor: "pointer" }}>+</button>
+                          <button onClick={() => updateQty(item.id, 1)} style={{ background: "rgba(212,168,67,0.1)", border: "1px solid rgba(212,168,67,0.2)", color: "#fff", width: "44px", height: "44px", borderRadius: "6px", cursor: "pointer", fontSize: "1.1rem" }}>+</button>
                         </div>
                       </div>
                     ))}

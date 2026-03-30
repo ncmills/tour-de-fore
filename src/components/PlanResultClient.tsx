@@ -74,6 +74,7 @@ function ConciergeCTA({ planId, tier, dest }: { planId: string; tier: TripTier; 
           textDecoration: "none",
           borderBottom: "1px solid rgba(255,255,255,0.2)",
           paddingBottom: 2,
+          padding: "12px 0",
           transition: "color 0.2s",
         }}
         onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
@@ -91,7 +92,7 @@ function AlternativeCards({ items }: { items?: SectionAlternative[] }) {
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+        gridTemplateColumns: "repeat(auto-fill, minmax(min(280px, 100%), 1fr))",
         gap: "1rem",
         marginTop: "2rem",
       }}
@@ -185,6 +186,8 @@ function ExternalLink({ href, label }: { href: string; label: string }) {
         textDecoration: "none",
         marginTop: 12,
         transition: "color 0.2s",
+        minHeight: 44,
+        padding: "12px 0",
       }}
       onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
       onMouseLeave={(e) => (e.currentTarget.style.color = "#aaa")}
@@ -395,7 +398,7 @@ export default function PlanResultClient({ plan, planId, tier, dest }: PlanResul
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fill, minmax(min(300px, 100%), 1fr))",
             gap: "1.25rem",
           }}
         >
@@ -468,7 +471,7 @@ export default function PlanResultClient({ plan, planId, tier, dest }: PlanResul
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fill, minmax(min(300px, 100%), 1fr))",
               gap: "1.25rem",
             }}
           >
@@ -530,7 +533,7 @@ export default function PlanResultClient({ plan, planId, tier, dest }: PlanResul
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fill, minmax(min(300px, 100%), 1fr))",
               gap: "1.25rem",
             }}
           >
@@ -611,8 +614,8 @@ export default function PlanResultClient({ plan, planId, tier, dest }: PlanResul
                 borderTop: "1px solid #222",
                 padding: "2rem 0",
                 display: "grid",
-                gridTemplateColumns: "180px 1fr",
-                gap: "2rem",
+                gridTemplateColumns: "clamp(100px, 30vw, 180px) 1fr",
+                gap: "clamp(1rem, 3vw, 2rem)",
               }}
             >
               <div style={{ fontWeight: 700, fontSize: 17 }}>{day.label}</div>
@@ -802,7 +805,7 @@ export default function PlanResultClient({ plan, planId, tier, dest }: PlanResul
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fill, minmax(min(300px, 100%), 1fr))",
             gap: "1.25rem",
           }}
         >

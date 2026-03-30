@@ -55,7 +55,7 @@ export default function ConciergeClient() {
       <section style={{ padding: "0 clamp(1.5rem, 6vw, 6rem) 5rem" }}>
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fill, minmax(min(300px, 100%), 1fr))",
           gap: "1.5rem",
           maxWidth: "1100px",
           margin: "0 auto",

@@ -109,7 +109,7 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               }}
             >
               🥃
-              <span style={{ fontSize: "clamp(0.5rem, 1vw, 0.65rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>drink</span>
+              <span style={{ fontSize: "clamp(0.7rem, 1.5vw, 0.75rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>drink</span>
             </motion.button>
 
             {/* 🍺 Beer = shop feature (right hand) */}
@@ -146,7 +146,7 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               }}
             >
               🍺
-              <span style={{ fontSize: "clamp(0.5rem, 1vw, 0.65rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>shop</span>
+              <span style={{ fontSize: "clamp(0.7rem, 1.5vw, 0.75rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>shop</span>
             </motion.button>
           </motion.div>
         )}
@@ -199,7 +199,7 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               }}
             >
               🍺
-              <span style={{ fontSize: "clamp(0.5rem, 1vw, 0.65rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>shop</span>
+              <span style={{ fontSize: "clamp(0.7rem, 1.5vw, 0.75rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>shop</span>
             </motion.button>
           </motion.div>
         )}

@@ -9,6 +9,17 @@ export function generateStaticParams() {
   return VALID_YEARS.map((y) => ({ year: String(y) }));
 }
 
+export async function generateMetadata({ params }: { params: Promise<{ year: string }> }) {
+  const { year: yearStr } = await params;
+  const year = parseInt(yearStr);
+  const trip = trips.find((t) => t.year === year);
+  const dest = trip ? `${trip.location}` : `${yearStr}`;
+  return {
+    title: `${dest} ${yearStr} | Tour de Fore`,
+    description: `Tour de Fore ${yearStr} trip to ${dest} — courses, nightlife, and memories from the annual golf odyssey.`,
+  };
+}
+
 export default async function YearPage({ params }: { params: Promise<{ year: string }> }) {
   const { year: yearStr } = await params;
   const year = parseInt(yearStr);

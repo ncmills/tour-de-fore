@@ -140,7 +140,7 @@ function DevilPinataScene() {
   });
 
   return (
-    <div style={{ position: "relative", width: "300px", height: "220px", marginBottom: "2rem", overflow: "hidden" }}>
+    <div style={{ position: "relative", width: "min(300px, 80vw)", height: "220px", marginBottom: "2rem", overflow: "hidden" }}>
       {/* Ground */}
       <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "6px", background: "repeating-linear-gradient(90deg, #5a3a1a 0px, #5a3a1a 20px, #3a2a10 20px, #3a2a10 40px)" }} />
 

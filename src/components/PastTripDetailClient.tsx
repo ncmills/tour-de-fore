@@ -138,7 +138,8 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
                   fontSize: "0.75rem",
                   letterSpacing: "0.1em",
                   textTransform: "uppercase",
-                  padding: "0.5rem 1rem",
+                  padding: "0.65rem 1rem",
+                  minHeight: "44px",
                   borderRadius: "4px",
                   border: activeDay === i ? "1px solid rgba(220,38,38,0.6)" : "1px solid rgba(255,255,255,0.15)",
                   background: activeDay === i ? "rgba(220,38,38,0.15)" : "transparent",
@@ -267,6 +268,10 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
                         color: "rgba(220,38,38,0.8)",
                         textDecoration: "none",
                         fontWeight: 600,
+                        display: "inline-block",
+                        padding: "0.5rem 0",
+                        minHeight: "44px",
+                        lineHeight: "44px",
                       }}
                     >
                       Visit Course →
@@ -375,7 +380,7 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
                   <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.4)", fontStyle: "italic" }}>{r.note}</p>
                 )}
                 {r.url && (
-                  <a href={r.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.75rem", color: "rgba(220,38,38,0.8)", textDecoration: "none", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase" }}>
+                  <a href={r.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.75rem", color: "rgba(220,38,38,0.8)", textDecoration: "none", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", display: "inline-block", padding: "0.5rem 0", minHeight: "44px" }}>
                     Visit →
                   </a>
                 )}
