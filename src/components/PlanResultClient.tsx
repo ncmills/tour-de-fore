@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import {
   GeneratedPlan,
+  ThreePlanResult,
   TripTier,
   SectionAlternative,
   PlanCourse,
@@ -209,13 +210,20 @@ function ExternalLink({ href, label }: { href: string; label: string }) {
 
 interface PlanResultClientProps {
   plan: GeneratedPlan;
+  allPlans?: ThreePlanResult;
   planId: string;
   tier: TripTier;
   dest?: string;
   paid?: boolean;
 }
 
-export default function PlanResultClient({ plan, planId, tier, dest, paid }: PlanResultClientProps) {
+const tierTabs: { key: TripTier; planKey: keyof ThreePlanResult; label: string }[] = [
+  { key: "imp", planKey: "imp", label: "The Imp" },
+  { key: "devil", planKey: "devil", label: "The Devil" },
+  { key: "demon-king", planKey: "demonKing", label: "The Demon King" },
+];
+
+export default function PlanResultClient({ plan, allPlans, planId, tier, dest, paid }: PlanResultClientProps) {
   const [copied, setCopied] = useState(false);
   const [showEmailForm, setShowEmailForm] = useState(false);
   const [emailInput, setEmailInput] = useState("");
@@ -319,6 +327,38 @@ export default function PlanResultClient({ plan, planId, tier, dest, paid }: Pla
 
       {/* Mulligan — below header */}
       <MulliganButton top="5.5rem" href={`/plan/result/${planId}`} />
+
+      {/* ─── Tier Toggle Tabs ─── */}
+      {allPlans && (
+        <div style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "0.5rem",
+          padding: "1rem clamp(1rem, 4vw, 3rem)",
+          marginTop: "4.5rem",
+        }}>
+          {tierTabs.map(({ key, label }) => (
+            <Link
+              key={key}
+              href={`/plan/result/${planId}?dest=${dest}&tier=${key}`}
+              style={{
+                padding: "8px 20px",
+                borderRadius: 6,
+                fontSize: "0.75rem",
+                fontWeight: 600,
+                letterSpacing: "0.05em",
+                textDecoration: "none",
+                transition: "all 0.2s",
+                background: tier === key ? tierColors[key] : "rgba(255,255,255,0.05)",
+                color: tier === key ? (key === "imp" ? "#000" : "#fff") : "rgba(255,255,255,0.4)",
+                border: tier === key ? "none" : "1px solid rgba(255,255,255,0.1)",
+              }}
+            >
+              {label}
+            </Link>
+          ))}
+        </div>
+      )}
 
       {/* ─── 2. City Overview ─── */}
       <motion.section
