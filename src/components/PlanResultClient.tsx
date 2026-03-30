@@ -80,7 +80,7 @@ function ConciergeCTA({ planId, tier, dest }: { planId: string; tier: TripTier; 
         onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
         onMouseLeave={(e) => (e.currentTarget.style.color = "#ccc")}
       >
-        Want us to do all the work? Try our concierge service &rarr;
+        Too much work? Let the devils handle it &rarr;
       </Link>
     </div>
   );
@@ -283,7 +283,7 @@ export default function PlanResultClient({ plan, planId, tier, dest }: PlanResul
             onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(220,38,38,1)"; }}
             onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(220,38,38,0.85)"; }}
           >
-            Just have us plan your trip →
+            Let the devils handle it →
           </Link>
         </div>
       </div>
@@ -450,7 +450,7 @@ export default function PlanResultClient({ plan, planId, tier, dest }: PlanResul
 
       </motion.section>
 
-      {/* ─── 5. Bars & Nightlife ─── */}
+      {/* ─── 5. The 19th Hole ─── */}
       {plan.bars && plan.bars.length > 0 && (
         <motion.section
           variants={fadeVariants}
@@ -466,7 +466,7 @@ export default function PlanResultClient({ plan, planId, tier, dest }: PlanResul
               marginBottom: "2.5rem",
             }}
           >
-            Bars & Nightlife
+            The 19th Hole
           </h2>
           <div
             style={{
@@ -674,7 +674,7 @@ export default function PlanResultClient({ plan, planId, tier, dest }: PlanResul
 
       </motion.section>
 
-      {/* ─── 8. Budget Breakdown ─── */}
+      {/* ─── 8. The Damage ─── */}
       <motion.section
         variants={fadeVariants}
         initial="hidden"
@@ -689,7 +689,7 @@ export default function PlanResultClient({ plan, planId, tier, dest }: PlanResul
             marginBottom: "2.5rem",
           }}
         >
-          Budget Breakdown
+          The Damage
         </h2>
         <div style={{ ...cardStyle, overflow: "hidden" }}>
           <div
@@ -914,35 +914,7 @@ export default function PlanResultClient({ plan, planId, tier, dest }: PlanResul
             {copied ? "Copied!" : "Copy Link"}
           </button>
 
-          <button
-            onClick={sendToAttendees}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-              padding: "12px 24px",
-              background: tierColors[tier],
-              border: "none",
-              borderRadius: 8,
-              color: "#000",
-              fontSize: 14,
-              fontWeight: 600,
-              cursor: "pointer",
-              transition: "opacity 0.2s",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.85")}
-            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-          >
-            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-              />
-            </svg>
-            Send to Attendees
-          </button>
+          {/* Send to Attendees — coming soon */}
         </div>
       </div>
     </div>

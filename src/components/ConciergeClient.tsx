@@ -108,11 +108,14 @@ export default function ConciergeClient() {
           <div style={{ fontSize: "clamp(3rem, 8vw, 5rem)", fontWeight: 800, color: "#fff", marginBottom: "0.5rem" }}>
             20%
           </div>
-          <p style={{ fontSize: "1.2rem", color: "rgba(255,255,255,0.6)", marginBottom: "2rem" }}>
+          <p style={{ fontSize: "1.2rem", color: "rgba(255,255,255,0.6)", marginBottom: "1rem" }}>
             of total trip cost
           </p>
+          <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.35)", marginBottom: "1.5rem", fontStyle: "italic" }}>
+            On a $1,500/person trip with 12 guys, that&apos;s about $300/person for the full package.
+          </p>
           <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.4)", lineHeight: 1.6, marginBottom: "2.5rem" }}>
-            That covers every booking, every reservation, custom branded gear for the whole crew, a dedicated trip website, a custom mobile app, and 24/7 support from your trip coordinator.
+            Every tee time locked down. Every house booked. Custom branded gear for the whole crew. A dedicated trip website. A custom mobile app. And a trip coordinator who answers at 2am when the hot tub breaks.
           </p>
 
           {/* Stripe checkout button */}
@@ -145,7 +148,7 @@ export default function ConciergeClient() {
           </form>
 
           <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.25)", marginTop: "1rem" }}>
-            Secure payment via Stripe. We&apos;ll reach out within 24 hours to begin planning.
+            Secure payment via Stripe. Your trip coordinator will reach out within 24 hours to start building something legendary.
           </p>
         </div>
       </motion.section>

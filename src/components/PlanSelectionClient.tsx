@@ -202,7 +202,7 @@ export default function PlanSelectionClient({
                     color: key === "mid" ? "#fff" : "rgba(255,255,255,0.7)",
                     letterSpacing: "0.05em",
                   }}>
-                    Explore 3 Plans →
+                    Unleash the Plans →
                   </div>
                 </div>
               </Link>

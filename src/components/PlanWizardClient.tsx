@@ -97,7 +97,7 @@ const PINATA_ITEMS: { emoji: string; color: string }[][] = [
   [{ emoji: "⛳", color: "#fff" }, { emoji: "🏌️", color: "#22c55e" }, { emoji: "⛳", color: "#fff" }],
   [{ emoji: "🥃", color: "#d97706" }, { emoji: "🍸", color: "#ec4899" }, { emoji: "🥃", color: "#d97706" }],
   [{ emoji: "🍺", color: "#f59e0b" }, { emoji: "🍻", color: "#f59e0b" }, { emoji: "🍺", color: "#f59e0b" }],
-  [{ emoji: "💊", color: "#ef4444" }, { emoji: "💉", color: "#3b82f6" }, { emoji: "💊", color: "#a855f7" }],
+  [{ emoji: "🔥", color: "#ef4444" }, { emoji: "😈", color: "#ef4444" }, { emoji: "🔥", color: "#ef4444" }],
   [{ emoji: "🫧", color: "#22c55e" }, { emoji: "🫧", color: "#4ade80" }, { emoji: "🫧", color: "#22c55e" }],
   [{ emoji: "💰", color: "#22c55e" }, { emoji: "💵", color: "#22c55e" }, { emoji: "💸", color: "#22c55e" }],
   [{ emoji: "💃", color: "#ec4899" }, { emoji: "👯", color: "#f472b6" }, { emoji: "💃", color: "#ec4899" }],
@@ -450,10 +450,10 @@ export default function PlanWizardClient() {
               <Logo className="w-16 h-16 opacity-80" />
               <div>
                 <p style={{ fontFamily: "var(--font-plan-groovy), cursive", fontSize: "clamp(1.6rem, 4vw, 2.8rem)", color: "rgba(255,255,255,0.9)", marginBottom: "1rem" }}>
-                  We&rsquo;ve got your plan.
+                  The devils are building your trip.
                 </p>
                 <p className="font-body text-text-muted text-base">
-                  We&rsquo;ll be in touch soon. Taking you home&hellip;
+                  Redirecting to your plans&hellip;
                 </p>
               </div>
               <button
@@ -979,7 +979,7 @@ export default function PlanWizardClient() {
       {(qIndex = 18, currentQ === 18) && (
         <Question number={qIndex + 1} total={totalQuestions} title="Anything else we should know?" id={questionIds[qIndex]}>
           <textarea
-            placeholder="Bachelor party, someone's 40th, accessibility needs, allergies..."
+            placeholder="Someone's bachelor party? A 40th birthday? Accessibility needs? Allergies? Spill it..."
             value={state.specialRequests}
             onChange={(e) => set("specialRequests", e.target.value)}
             rows={4}
@@ -1047,9 +1047,9 @@ export default function PlanWizardClient() {
                 onClick={handleGenerate}
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
-                style={{ width: "100%", padding: "1.1rem", background: "#fff", color: "#000", border: "none", borderRadius: 4, fontSize: "0.85rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", fontFamily: "var(--font-plan-script), cursive" }}
+                style={{ width: "100%", padding: "1.1rem", background: "rgba(220,38,38,0.9)", color: "#fff", border: "none", borderRadius: 4, fontSize: "0.85rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", fontFamily: "var(--font-plan-script), cursive" }}
               >
-                Generate My Trip Plan
+                Unleash the Devils
               </motion.button>
             </div>
           </div>
