@@ -663,6 +663,8 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.arizonanationalgolfclub.com",
         highlight:
           "Robert Trent Jones Jr. design near Saguaro National Park — great desert golf at mid-range pricing",
+        googleRating: 4.4,
+        reviewCount: 380,
       },
     ],
     lodging: [
@@ -683,6 +685,8 @@ export const southwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Tucson%2C+AZ&groupSize=16",
         notes:
           "More affordable than Scottsdale for comparable houses. Catalina Foothills puts you close to Ventana Canyon and great dining on Campbell Ave.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
     ],
     dining: [
@@ -694,6 +698,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Oldest continuously operated Mexican restaurant in the US — famous for carne seca and chimichanga origins",
         reservationNeeded: true,
+        googleRating: 4.3,
       },
       {
         name: "Vivace Restaurant",
@@ -703,6 +708,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Upscale Italian with a gorgeous Foothills patio — the bolognese and wine list are top tier",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "Mi Nidito",
@@ -712,6 +718,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Legendary South Tucson Mexican spot that even presidents have visited — the combo plate is iconic",
         reservationNeeded: false,
+        googleRating: 4.4,
       },
       {
         name: "Fleming's Prime Steakhouse",
@@ -721,6 +728,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Reliable upscale chain steakhouse for the group steak night — private dining available",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Barrio Bread & Baja Cafe",
@@ -730,6 +738,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Tucson breakfast institutions — fuel up before morning rounds with huevos rancheros and fresh tortillas",
         reservationNeeded: false,
+        googleRating: 4.5,
       },
     ],
     bars: [
@@ -822,6 +831,8 @@ export const southwestDestinations: Destination[] = [
         ],
         notes:
           "Fewer options than Phoenix/Scottsdale but party buses and sprinter vans are available. 4th Avenue bar district is walkable, so you may only need transport to courses.",
+        fullDayRate: [1400, 2800],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -874,6 +885,10 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.sandhollowresort.com",
         highlight:
           "John Fought design through red sandstone formations — a top-25 public course in the US and worth the trip alone",
+        googleRating: 4.7,
+        reviewCount: 1300,
+        hypeTag: "TOP 100 PUBLIC",
+        rankNote: "Top 25 Public — Golfweek",
       },
       {
         name: "Entrada at Snow Canyon Country Club",
@@ -890,6 +905,9 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.entradaatsnowcanyon.com",
         highlight:
           "Johnny Miller design with lava rock, red sand, and Snow Canyon State Park views — absolutely unique",
+        googleRating: 4.6,
+        reviewCount: 480,
+        hypeTag: "HIDDEN GEM",
       },
       {
         name: "Sunbrook Golf Club",
@@ -906,6 +924,9 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.sunbrookgolf.com",
         highlight:
           "27 holes with three distinct 9s — great value and the Black Rock 9 has dramatic lava rock scenery",
+        googleRating: 4.4,
+        reviewCount: 620,
+        hypeTag: "BEST VALUE",
       },
       {
         name: "SunRiver Golf Club",
@@ -921,6 +942,8 @@ export const southwestDestinations: Destination[] = [
         driveMinutes: 10,
         highlight:
           "Wide fairways and gentle layout — a great warm-up round or hangover-recovery course",
+        googleRating: 4.2,
+        reviewCount: 340,
       },
       {
         name: "Southgate Golf Club",
@@ -936,6 +959,8 @@ export const southwestDestinations: Destination[] = [
         driveMinutes: 5,
         highlight:
           "Short and affordable muni — good for an extra round or a quick morning scramble",
+        googleRating: 4.0,
+        reviewCount: 210,
       },
     ],
     lodging: [
@@ -957,6 +982,8 @@ export const southwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=St.+George%2C+UT&groupSize=16",
         notes:
           "Excellent VRBO inventory for big groups at reasonable prices. Entrada area homes are close to courses and have the best scenery. Book 2 months ahead for spring.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
     ],
     dining: [
@@ -968,6 +995,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Downtown St. George staple with a solid menu, great patio, and cold local beers on tap",
         reservationNeeded: true,
+        googleRating: 4.4,
       },
       {
         name: "Painted Pony",
@@ -977,6 +1005,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Fine dining in Ancestor Square — the best restaurant in town for the splurge dinner night",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Xetava Gardens Cafe",
@@ -986,6 +1015,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Hidden gem near Kayenta with garden seating and creative Southwest dishes",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "Wood Ash Rye",
@@ -995,6 +1025,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Wood-fired cooking with craft cocktails — the newer elevated dining spot in town",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
     ],
     bars: [
@@ -1078,6 +1109,8 @@ export const southwestDestinations: Destination[] = [
         ],
         notes:
           "Limited party bus options in a small Utah town but shuttles and sprinter vans are available. Most groups just pile into a couple large SUVs or rent a 15-passenger van. Utah liquor laws apply — no open containers in vehicles.",
+        fullDayRate: [1000, 2000],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -1829,6 +1862,10 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.shadowcreek.com",
         highlight:
           "Tom Fazio masterpiece built from flat desert into a lush Carolina-style paradise — limo ride included",
+        googleRating: 4.8,
+        reviewCount: 480,
+        hypeTag: "BUCKET LIST",
+        rankNote: "Top 100 You Can Play — Golf Magazine",
       },
       {
         name: "TPC Las Vegas (Canyon Course)",
@@ -1845,6 +1882,8 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.tpc.com/las-vegas",
         highlight:
           "Former PGA Tour stop in the Summerlin foothills with dramatic canyon views on the back nine",
+        googleRating: 4.5,
+        reviewCount: 1100,
       },
       {
         name: "Paiute Golf Resort (Wolf Course)",
@@ -1861,6 +1900,9 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.lvpaiutegolf.com",
         highlight:
           "Pete Dye design with 45 holes on site — Wolf is the beast, Snow Mountain and Sun Mountain round out the trio",
+        googleRating: 4.5,
+        reviewCount: 1600,
+        hypeTag: "DESIGNER CLASSIC",
       },
       {
         name: "Bali Hai Golf Club",
@@ -1877,6 +1919,8 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.balihaigolfclub.com",
         highlight:
           "Tropical-themed course steps from the Strip — palm trees, white sand, and convenience you can not beat",
+        googleRating: 4.4,
+        reviewCount: 2100,
       },
       {
         name: "Cascata Golf Club",
@@ -1893,6 +1937,9 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.cascatagolf.com",
         highlight:
           "Rees Jones design in Boulder City with a 418-foot waterfall behind the clubhouse — pure spectacle",
+        googleRating: 4.7,
+        reviewCount: 550,
+        hypeTag: "BUCKET LIST",
       },
     ],
     lodging: [
@@ -1914,6 +1961,8 @@ export const southwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Las+Vegas%2C+NV&groupSize=16",
         notes:
           "Vegas mansion rentals are the move for 12-20 guys. Summerlin is closest to the golf. Many come with private pools, poker tables, and home theaters.",
+        avgRating: 4.6,
+        bedsBreakdown: "5 kings + 3 queens = 16 guys at 2/bed",
       },
       {
         type: "resort-house",
@@ -1929,6 +1978,8 @@ export const southwestDestinations: Destination[] = [
           "The Strip or Downtown — hotel villa suites or multi-bedroom party suites",
         notes:
           "Cosmopolitan, Encore, and Aria offer connected suites that sleep groups. More expensive per night but you are on the Strip with zero Uber logistics.",
+        avgRating: 4.5,
+        bedsBreakdown: "4 kings + 2 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -1940,6 +1991,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "High-energy steakhouse inside the Cosmopolitan with DJ and lounge vibes — perfect group dinner",
         reservationNeeded: true,
+        googleRating: 4.3,
       },
       {
         name: "Herbs & Rye",
@@ -1949,6 +2001,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Off-Strip speakeasy with half-price steaks during happy hour and world-class cocktails",
         reservationNeeded: false,
+        googleRating: 4.6,
       },
       {
         name: "Tacos El Gordo",
@@ -1958,6 +2011,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Tijuana-style street tacos on the Strip — the 3 AM move after the clubs",
         reservationNeeded: false,
+        googleRating: 4.5,
       },
       {
         name: "AYCE Buffet (Palms)",
@@ -1967,6 +2021,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "All-you-can-eat spread with carving stations and seafood — classic Vegas fuel",
         reservationNeeded: false,
+        googleRating: 4.1,
       },
       {
         name: "Bavette's Park MGM",
@@ -1976,6 +2031,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Moody, dimly-lit Chicago-style steakhouse with incredible bone marrow and live jazz",
         reservationNeeded: true,
+        googleRating: 4.7,
       },
     ],
     bars: [
@@ -2086,6 +2142,8 @@ export const southwestDestinations: Destination[] = [
         providers: ["Vegas Party Bus", "Presidential Limousine", "Tux Limo"],
         notes:
           "Vegas party buses are an industry. LED lights, sound systems, and Strip loops are standard. Book early for weekends.",
+        fullDayRate: [1600, 4000],
+        canDoGolfAndBars: true,
       },
       {
         type: "limo",
@@ -2094,6 +2152,8 @@ export const southwestDestinations: Destination[] = [
         providers: ["AWG Ambassador", "Presidential Limousine"],
         notes:
           "Stretch limos and Hummer limos are classic Vegas. Great for a dinner-to-club transfer.",
+        fullDayRate: [1200, 3200],
+        canDoGolfAndBars: false,
       },
     ],
     privateChefs: [

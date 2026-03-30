@@ -32,6 +32,9 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.oceanedge.com/golf",
         highlight:
           "Jack Nicklaus signature design winding through cranberry bogs and Cape Cod pines",
+        googleRating: 4.4,
+        reviewCount: 680,
+        hypeTag: "DESIGNER CLASSIC",
       },
       {
         name: "Cranberry Valley Golf Course",
@@ -48,6 +51,9 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.cranberryvalleygolfcourse.com",
         highlight:
           "Top-rated municipal course consistently ranked among the best public tracks in Massachusetts",
+        googleRating: 4.5,
+        reviewCount: 920,
+        hypeTag: "LOCALS' FAVORITE",
       },
       {
         name: "Dennis Pines Golf Course",
@@ -64,6 +70,9 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.dennisgolf.com",
         highlight:
           "Longest public course on the Cape — tight, tree-lined fairways that demand accuracy",
+        googleRating: 4.3,
+        reviewCount: 510,
+        hypeTag: "BEST VALUE",
       },
       {
         name: "Willowbend Country Club",
@@ -79,6 +88,8 @@ export const northeastDestinations: Destination[] = [
         driveMinutes: 10,
         highlight:
           "Ultra-exclusive private club occasionally available through resort stay packages",
+        googleRating: 4.7,
+        reviewCount: 200,
       },
       {
         name: "Pinehills Golf Club - Jones Course",
@@ -95,6 +106,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.pinehillsgolf.com",
         highlight:
           "Rees Jones design in Plymouth with dramatic elevation changes and pristine conditioning",
+        googleRating: 4.5,
+        reviewCount: 730,
       },
       {
         name: "Pinehills Golf Club - Nicklaus Course",
@@ -111,6 +124,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.pinehillsgolf.com",
         highlight:
           "Nicklaus design at Pinehills — wider fairways but well-guarded greens through pine and scrub oak",
+        googleRating: 4.5,
+        reviewCount: 650,
       },
     ],
     lodging: [
@@ -129,6 +144,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/massachusetts/cape-cod",
         notes:
           "Book 4-6 months ahead for summer. Shoulder season (Sept-Oct) has great availability and lower rates. Look for homes near Hyannis Main Street for walkable nightlife.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
       {
         type: "house",
@@ -145,6 +162,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Chatham--MA",
         notes:
           "High-end area with upscale dining nearby. More secluded than Hyannis but quieter nightlife scene.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
     ],
     dining: [
@@ -156,6 +175,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Waterfront oyster bar on Hyannis Harbor — laid-back vibe, towers of shellfish, frozen drinks",
         reservationNeeded: false,
+        googleRating: 4.4,
       },
       {
         name: "Naked Oyster Bistro",
@@ -165,6 +185,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Upscale seafood in downtown Hyannis with an excellent raw bar and creative cocktails",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "The Impudent Oyster",
@@ -174,6 +195,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Chatham institution since 1979 — international seafood dishes in a cozy cellar setting",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Cooke's Seafood",
@@ -183,6 +205,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "No-frills fried clams and lobster rolls — the classic Cape Cod lunch spot",
         reservationNeeded: false,
+        googleRating: 4.3,
       },
       {
         name: "Pain D'Avignon",
@@ -192,6 +215,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "French-inspired bistro in Hyannis with artisan breads and elevated farm-to-table dining",
         reservationNeeded: true,
+        googleRating: 4.7,
       },
     ],
     bars: [
@@ -269,6 +293,8 @@ export const northeastDestinations: Destination[] = [
         providers: ["Cape Cod Car Service", "King Limo Cape Cod"],
         notes:
           "Essential for course-hopping. Sprinter vans work well on the narrow Cape roads. Book early for summer.",
+        fullDayRate: [1200, 1800],
+        canDoGolfAndBars: true,
       },
       {
         type: "trolley",
@@ -277,6 +303,8 @@ export const northeastDestinations: Destination[] = [
         providers: ["Cape Cod Trolley Co"],
         notes:
           "Vintage trolley is a fun group option for bar crawls on Hyannis Main Street",
+        fullDayRate: [1800, 2800],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -320,6 +348,9 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.whitefaceclub.com",
         highlight:
           "Classic 1898 Walter Hagen layout on the shores of Lake Placid with Adirondack peak views",
+        googleRating: 4.5,
+        reviewCount: 420,
+        hypeTag: "DESIGNER CLASSIC",
       },
       {
         name: "Lake Placid Club - Links Course",
@@ -336,6 +367,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.lakeplacidcp.com",
         highlight:
           "Seymour Dunn design with panoramic mountain views from nearly every hole",
+        googleRating: 4.4,
+        reviewCount: 350,
       },
       {
         name: "Lake Placid Club - Peaks Course",
@@ -351,6 +384,8 @@ export const northeastDestinations: Destination[] = [
         driveMinutes: 5,
         highlight:
           "Shorter companion course at LPC — great for an afternoon round with forgiving fairways",
+        googleRating: 4.3,
+        reviewCount: 280,
       },
       {
         name: "Craig Wood Golf Course",
@@ -367,6 +402,9 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.craigwoodgolfclub.com",
         highlight:
           "Municipal gem named after the 1941 Masters champ — affordable mountain golf with tight tree-lined fairways",
+        googleRating: 4.4,
+        reviewCount: 310,
+        hypeTag: "BEST VALUE",
       },
     ],
     lodging: [
@@ -386,6 +424,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/new-york/lake-placid",
         notes:
           "Adirondack lodges on or near Mirror Lake are ideal. Many have private docks. Book 3-4 months ahead for July-August.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "cabin",
@@ -402,6 +442,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Lake-Placid--NY",
         notes:
           "Slightly more affordable options in nearby Saranac Lake. Still close to all courses and Main Street.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 2 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -413,6 +455,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "AAA Four Diamond lakeside fine dining — the best dinner in town with a dress code",
         reservationNeeded: true,
+        googleRating: 4.7,
       },
       {
         name: "Smoke Signals",
@@ -422,6 +465,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Texas-style BBQ in the Adirondacks with brisket, ribs, and a solid bourbon list",
         reservationNeeded: false,
+        googleRating: 4.5,
       },
       {
         name: "Big Slide Brewery & Public House",
@@ -431,6 +475,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Lake Placid's craft brewery with elevated pub food and a great outdoor patio",
         reservationNeeded: false,
+        googleRating: 4.4,
       },
       {
         name: "Lisa G's",
@@ -440,6 +485,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Hearty Italian on Main Street — big portions, casual vibe, perfect post-round refuel",
         reservationNeeded: true,
+        googleRating: 4.3,
       },
     ],
     bars: [
@@ -539,6 +585,8 @@ export const northeastDestinations: Destination[] = [
         providers: ["Adirondack Limo", "Lake Placid Car Service"],
         notes:
           "Smaller vehicles are better for Adirondack mountain roads. Most courses are within 10 minutes so transport costs are low.",
+        fullDayRate: [1000, 1600],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -587,6 +635,10 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.kingsmill.com/golf",
         highlight:
           "Former PGA Tour stop on the James River — Pete Dye design with iconic finishing holes along the bluffs",
+        googleRating: 4.6,
+        reviewCount: 890,
+        hypeTag: "TOURNAMENT HOST",
+        rankNote: "Former PGA Tour host — LPGA Kingsmill Championship",
       },
       {
         name: "Kingsmill Resort - Plantation Course",
@@ -603,6 +655,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.kingsmill.com/golf",
         highlight:
           "Arnold Palmer design weaving through ravines and hardwoods — the more playable Kingsmill track",
+        googleRating: 4.4,
+        reviewCount: 520,
       },
       {
         name: "Kingsmill Resort - Woods Course",
@@ -618,6 +672,8 @@ export const northeastDestinations: Destination[] = [
         driveMinutes: 10,
         highlight:
           "Tom Clark design with wider fairways — great warm-up round or hangover-day option",
+        googleRating: 4.2,
+        reviewCount: 380,
       },
       {
         name: "Golden Horseshoe - Gold Course",
@@ -634,6 +690,9 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.colonialwilliamsburgresort.com/golf",
         highlight:
           "Robert Trent Jones Sr. masterpiece — dramatic elevation changes and the legendary island-green 16th",
+        googleRating: 4.7,
+        reviewCount: 1100,
+        hypeTag: "BUCKET LIST",
       },
       {
         name: "Golden Horseshoe - Green Course",
@@ -649,6 +708,8 @@ export const northeastDestinations: Destination[] = [
         driveMinutes: 5,
         highlight:
           "Rees Jones design — longer and more modern than the Gold with generous fairways through mature pines",
+        googleRating: 4.5,
+        reviewCount: 680,
       },
       {
         name: "Ford's Colony - Marsh Hawk Course",
@@ -665,6 +726,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.fordscolony.com/golf",
         highlight:
           "Dan Maples design with water on 14 holes — target golf through wetlands and Virginia hardwoods",
+        googleRating: 4.4,
+        reviewCount: 450,
       },
     ],
     lodging: [
@@ -683,6 +746,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/virginia/williamsburg",
         notes:
           "Rental homes inside Kingsmill or Ford's Colony give you golf-course proximity and resort amenities. Great value in spring and fall.",
+        avgRating: 4.5,
+        bedsBreakdown: "4 kings + 2 queens = 12 guys at 2/bed",
       },
       {
         type: "resort-house",
@@ -699,6 +764,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.colonialwilliamsburgresort.com",
         notes:
           "Colonial Williamsburg resort properties put you walking distance to historic taverns and restaurants.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 2 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -710,6 +777,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Williamsburg's best fine dining on Merchants Square — seasonal American cuisine with an award-winning wine list",
         reservationNeeded: true,
+        googleRating: 4.8,
       },
       {
         name: "Chowning's Tavern",
@@ -719,6 +787,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "18th-century colonial tavern in CW serving ale and pub grub — the Gambols night music is a blast",
         reservationNeeded: false,
+        googleRating: 4.3,
       },
       {
         name: "Cochon on 2nd",
@@ -728,6 +797,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Cajun-Southern fusion in New Town with excellent pork dishes and creative cocktails",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "Waypoint Seafood & Grill",
@@ -737,6 +807,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Fresh Chesapeake Bay seafood with a raw bar and solid steak options for the non-fish crowd",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Pierce's Pitt Bar-B-Que",
@@ -746,6 +817,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Legendary roadside BBQ since 1971 — pulled pork and ribs slow-smoked over oak and hickory",
         reservationNeeded: false,
+        googleRating: 4.6,
       },
     ],
     bars: [
@@ -838,6 +910,8 @@ export const northeastDestinations: Destination[] = [
         ],
         notes:
           "Courses are spread out 10-20 min from each other. Shuttle is essential. Colonial area is walkable at night.",
+        fullDayRate: [1000, 1800],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -887,6 +961,9 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.golfsaratoga.com",
         highlight:
           "Roger Rulewich design ranked among the best public courses in New York — stunning water features throughout",
+        googleRating: 4.6,
+        reviewCount: 780,
+        hypeTag: "TOP 100 PUBLIC",
       },
       {
         name: "Saratoga Spa Golf Course",
@@ -903,6 +980,9 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.saratogaspagolf.com",
         highlight:
           "Classic state park course inside Saratoga Spa State Park — great value with mature tree-lined fairways",
+        googleRating: 4.3,
+        reviewCount: 620,
+        hypeTag: "BEST VALUE",
       },
       {
         name: "Ballston Spa Country Club",
@@ -918,6 +998,8 @@ export const northeastDestinations: Destination[] = [
         driveMinutes: 10,
         highlight:
           "Semi-private club with public tee times — tight, strategic layout that rewards shot-making",
+        googleRating: 4.3,
+        reviewCount: 290,
       },
       {
         name: "Airway Meadows Golf Club",
@@ -933,6 +1015,8 @@ export const northeastDestinations: Destination[] = [
         driveMinutes: 15,
         highlight:
           "Affordable local favorite with wide fairways — good warm-up or cool-down round",
+        googleRating: 4.2,
+        reviewCount: 210,
       },
     ],
     lodging: [
@@ -945,6 +1029,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/new-york/saratoga-springs",
         notes:
           "Saratoga Lake houses offer space and privacy, 10 min from downtown. Book well ahead if visiting during racing season (late July-early Sept).",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
       {
         type: "house",
@@ -955,6 +1041,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Saratoga-Springs--NY",
         notes:
           "Downtown rentals mean walking to bars and restaurants. Smaller groups fit better here.",
+        avgRating: 4.4,
+        bedsBreakdown: "2 kings + 3 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -966,6 +1054,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Upscale steakhouse overlooking the 18th green — filet and lobster tail after your round",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Salt & Char",
@@ -975,6 +1064,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Downtown chophouse with dry-aged steaks and a killer bourbon list on Broadway",
         reservationNeeded: true,
+        googleRating: 4.4,
       },
       {
         name: "Hattie's Restaurant",
@@ -984,6 +1074,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Famous southern comfort food since 1938 — fried chicken that's worth the wait",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "Druthers Brewing Company",
@@ -993,6 +1084,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Broadway brewpub with house-brewed beers, burgers, and a huge patio",
         reservationNeeded: false,
+        googleRating: 4.5,
       },
       {
         name: "Fish at 30 Lake",
@@ -1002,6 +1094,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Fresh seafood and raw bar in an intimate downtown setting",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
     ],
     bars: [
@@ -1100,6 +1193,8 @@ export const northeastDestinations: Destination[] = [
         providers: ["Saratoga Luxury Limousine", "Upstate Transit"],
         notes:
           "Essential for getting between courses and Saratoga Lake lodging. Book early during racing season.",
+        fullDayRate: [1000, 1600],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -1143,6 +1238,9 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.bristolharbour.com/golf",
         highlight:
           "Robert Trent Jones Sr. design perched above Canandaigua Lake with jaw-dropping elevation changes",
+        googleRating: 4.5,
+        reviewCount: 480,
+        hypeTag: "DESIGNER CLASSIC",
       },
       {
         name: "Ravenwood Golf Club",
@@ -1159,6 +1257,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.ravenwoodgolf.com",
         highlight:
           "Well-conditioned public course in Victor with a links-style back nine and solid pace of play",
+        googleRating: 4.3,
+        reviewCount: 350,
       },
       {
         name: "Seneca Lake Country Club",
@@ -1174,6 +1274,8 @@ export const northeastDestinations: Destination[] = [
         driveMinutes: 15,
         highlight:
           "Charming semi-private track overlooking Seneca Lake — great views and honest golf",
+        googleRating: 4.2,
+        reviewCount: 220,
       },
       {
         name: "Reservoir Creek Golf Club",
@@ -1189,6 +1291,9 @@ export const northeastDestinations: Destination[] = [
         driveMinutes: 30,
         highlight:
           "Hidden gem near Watkins Glen — hilly terrain, well-maintained greens, very affordable",
+        googleRating: 4.3,
+        reviewCount: 190,
+        hypeTag: "HIDDEN GEM",
       },
     ],
     lodging: [
@@ -1201,6 +1306,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/new-york/finger-lakes",
         notes:
           "Lakefront houses are the way to go here. Seneca Lake is centrally located for wineries and courses. Book 2-3 months ahead for summer.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
       {
         type: "lodge",
@@ -1211,6 +1318,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Finger-Lakes--NY",
         notes:
           "Geneva has the best walkable downtown for dining. Canandaigua is closer to Bristol Harbour golf.",
+        avgRating: 4.4,
+        bedsBreakdown: "2 kings + 3 queens = 10 guys at 2/bed",
       },
     ],
     dining: [

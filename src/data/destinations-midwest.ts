@@ -356,6 +356,8 @@ export const midwestDestinations: Destination[] = [
         ],
         notes:
           "Book early for summer weekends. Most do airport pickups from MKE or GRB plus course-hopping runs.",
+        fullDayRate: [1100, 1800],
+        canDoGolfAndBars: true,
       },
       {
         type: "sprinter-van",
@@ -364,6 +366,8 @@ export const midwestDestinations: Destination[] = [
         providers: ["Executive Coach", "Kohler Transportation"],
         notes:
           "Good for smaller groups — Destination Kohler also offers shuttles between their properties",
+        fullDayRate: [800, 1300],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -418,6 +422,10 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.arcadiabluffs.com",
         highlight:
           "Clifftop links 200 feet above Lake Michigan — jaw-dropping views on every hole",
+        googleRating: 4.8,
+        reviewCount: 1400,
+        hypeTag: "BUCKET LIST",
+        rankNote: "Top 20 Public Courses — Golf Digest 2024",
       },
       {
         name: "Arcadia Bluffs - South Course",
@@ -434,6 +442,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.arcadiabluffs.com",
         highlight:
           "Reversible heathland-style course inspired by The Old Course — play it in two directions",
+        googleRating: 4.6,
+        reviewCount: 680,
       },
       {
         name: "Bay Harbor Golf Club - Links/Quarry/Preserve",
@@ -450,6 +460,9 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.bayharborgolf.com",
         highlight:
           "27 holes by Arthur Hills — the Links nine along Little Traverse Bay is the signature stretch",
+        googleRating: 4.6,
+        reviewCount: 920,
+        hypeTag: "DESIGNER CLASSIC",
       },
       {
         name: "Crystal Downs Country Club",
@@ -465,6 +478,10 @@ export const midwestDestinations: Destination[] = [
         driveMinutes: 25,
         highlight:
           "Top-10 course in the world (Alister MacKenzie/Perry Maxwell) — strictly private, need a member invite",
+        googleRating: 4.9,
+        reviewCount: 240,
+        hypeTag: "BUCKET LIST",
+        rankNote: "Top 10 in the World — Golf Magazine, MacKenzie/Maxwell design",
       },
       {
         name: "Manitou Passage Golf Club",
@@ -481,6 +498,9 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.manitoupassagegolfclub.com",
         highlight:
           "Arnold Palmer design through cedar forests and wetlands — outstanding value for the quality",
+        googleRating: 4.4,
+        reviewCount: 450,
+        hypeTag: "BEST VALUE",
       },
       {
         name: "Shanty Creek - The Legend",
@@ -497,6 +517,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.shantycreek.com",
         highlight:
           "Arnold Palmer design at a full-service resort — Cedar River and Schuss Mountain courses also available",
+        googleRating: 4.3,
+        reviewCount: 560,
       },
       {
         name: "The Bear at Grand Traverse Resort",
@@ -513,6 +535,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.grandtraverseresort.com",
         highlight:
           "Jack Nicklaus design — brutally tough from the tips but a marquee resort experience",
+        googleRating: 4.4,
+        reviewCount: 870,
       },
     ],
     lodging: [
@@ -534,6 +558,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Traverse+City%2C+Michigan&adults=16",
         notes:
           "Old Mission Peninsula homes put you between wineries and downtown. Book 6+ months out for summer.",
+        avgRating: 4.7,
+        bedsBreakdown: "3 kings + 4 queens = 14 guys at 2/bed",
       },
       {
         type: "resort-house",
@@ -549,6 +575,8 @@ export const midwestDestinations: Destination[] = [
         searchUrl: "https://www.grandtraverseresort.com",
         notes:
           "Condos and townhouses at the resort — walkable to The Bear course. Group rates available.",
+        avgRating: 4.5,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
     ],
     dining: [
@@ -560,6 +588,7 @@ export const midwestDestinations: Destination[] = [
         highlight:
           "Right on the water at the Traverse City marina — Great Lakes perch and whitefish",
         reservationNeeded: true,
+        googleRating: 4.4,
       },
       {
         name: "Trattoria Stella",
@@ -569,6 +598,7 @@ export const midwestDestinations: Destination[] = [
         highlight:
           "Northern Italian in a converted psychiatric hospital — one of the best restaurants in Michigan",
         reservationNeeded: true,
+        googleRating: 4.7,
       },
       {
         name: "Red Ginger",
@@ -578,6 +608,7 @@ export const midwestDestinations: Destination[] = [
         highlight:
           "Pan-Asian with excellent sushi — private dining room fits big groups",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Firefly",
@@ -587,6 +618,7 @@ export const midwestDestinations: Destination[] = [
         highlight:
           "New American with local farm partnerships — outdoor patio overlooking downtown",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "Bubba's",
@@ -596,6 +628,7 @@ export const midwestDestinations: Destination[] = [
         highlight:
           "No-frills BBQ joint with massive portions — brisket, pulled pork, and smoked chicken",
         reservationNeeded: false,
+        googleRating: 4.3,
       },
     ],
     bars: [
@@ -707,6 +740,8 @@ export const midwestDestinations: Destination[] = [
         ],
         notes:
           "Wine tour buses are the local specialty — most do course-hopping too. Book early for July/August.",
+        fullDayRate: [1100, 1900],
+        canDoGolfAndBars: true,
       },
       {
         type: "trolley",
@@ -715,6 +750,8 @@ export const midwestDestinations: Destination[] = [
         providers: ["TC Trolley Co", "Traverse Wine & Beer Tours"],
         notes:
           "Open-air trolleys are perfect for winery hops on warm days",
+        fullDayRate: [1200, 2200],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -770,6 +807,9 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.eagleridge.com",
         highlight:
           "The flagship — dramatic elevation changes and pristine conditioning on every hole",
+        googleRating: 4.5,
+        reviewCount: 740,
+        hypeTag: "TOP 100 PUBLIC",
       },
       {
         name: "Eagle Ridge - North Course",
@@ -786,6 +826,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.eagleridge.com",
         highlight:
           "Tight fairways through hardwood forest — the toughest of the four courses for some",
+        googleRating: 4.3,
+        reviewCount: 420,
       },
       {
         name: "Eagle Ridge - South Course",
@@ -802,6 +844,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.eagleridge.com",
         highlight:
           "The most playable of the four — wide fairways with rolling hills and lake views",
+        googleRating: 4.3,
+        reviewCount: 380,
       },
       {
         name: "Eagle Ridge - East Course",
@@ -818,6 +862,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.eagleridge.com",
         highlight:
           "Executive-length course — great for warm-up rounds or afternoon scrambles",
+        googleRating: 4.2,
+        reviewCount: 210,
       },
       {
         name: "Lacoma Golf Club",
@@ -834,6 +880,9 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.lacomagolf.com",
         highlight:
           "36 holes of affordable golf across the river in East Dubuque — two solid layouts",
+        googleRating: 4.2,
+        reviewCount: 290,
+        hypeTag: "BEST VALUE",
       },
     ],
     lodging: [
@@ -855,6 +904,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Galena%2C+Illinois&adults=16",
         notes:
           "Large resort homes at Eagle Ridge fit 12-16 easily — many have golf course views. Book through Eagle Ridge or VRBO.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
       {
         type: "cabin",
@@ -871,6 +922,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Galena--Illinois/homes?adults=12",
         notes:
           "May need two cabins for 16. The Galena Territory is a 6,800-acre resort community with its own golf course.",
+        avgRating: 4.5,
+        bedsBreakdown: "2 kings + 2 queens = 8 guys at 2/bed",
       },
     ],
     dining: [
@@ -882,6 +935,7 @@ export const midwestDestinations: Destination[] = [
         highlight:
           "Italian fine dining in a historic Main Street building — the go-to special-occasion spot in Galena",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "One Eleven Main",
@@ -891,6 +945,7 @@ export const midwestDestinations: Destination[] = [
         highlight:
           "Farm-to-table tasting menus in a beautifully restored space — wine pairings available",
         reservationNeeded: true,
+        googleRating: 4.7,
       },
       {
         name: "Vinny Vanucchi's",
@@ -900,6 +955,7 @@ export const midwestDestinations: Destination[] = [
         highlight:
           "Red-sauce Italian with massive portions — garlic bread and house wine for the table",
         reservationNeeded: true,
+        googleRating: 4.3,
       },
       {
         name: "Log Cabin Steakhouse",
@@ -909,6 +965,7 @@ export const midwestDestinations: Destination[] = [
         highlight:
           "Greek-style steakhouse with hand-cut steaks — a Galena institution since 1937",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
     ],
     bars: [
@@ -998,6 +1055,8 @@ export const midwestDestinations: Destination[] = [
         providers: ["Galena Trolley Tours", "Royal Limo Service"],
         notes:
           "Galena is compact enough that a shuttle handles everything — Main Street to Eagle Ridge is only 10 min",
+        fullDayRate: [650, 1100],
+        canDoGolfAndBars: true,
       },
       {
         type: "party-bus",
@@ -1010,6 +1069,8 @@ export const midwestDestinations: Destination[] = [
         ],
         notes:
           "Book from Dubuque — more inventory than tiny Galena. Most will serve the whole Jo Daviess County area.",
+        fullDayRate: [1000, 1700],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -1064,6 +1125,9 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.genevanationalresort.com",
         highlight:
           "Arnold Palmer design with water on 13 holes — the most scenic of the three GN courses",
+        googleRating: 4.4,
+        reviewCount: 620,
+        hypeTag: "DESIGNER CLASSIC",
       },
       {
         name: "Geneva National - Player Course",
@@ -1080,6 +1144,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.genevanationalresort.com",
         highlight:
           "Gary Player's design philosophy on full display — strategic bunkering and elevation changes",
+        googleRating: 4.4,
+        reviewCount: 510,
       },
       {
         name: "Geneva National - Trevino Course",
@@ -1096,6 +1162,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.genevanationalresort.com",
         highlight:
           "Lee Trevino's only Midwest design — the most forgiving of the three but still plenty of teeth",
+        googleRating: 4.3,
+        reviewCount: 430,
       },
       {
         name: "Grand Geneva Resort - The Brute",
@@ -1112,6 +1180,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.grandgeneva.com",
         highlight:
           "Lives up to its name — a brawny resort course with tight fairways and demanding greens",
+        googleRating: 4.3,
+        reviewCount: 780,
       },
       {
         name: "Grand Geneva Resort - The Highlands",
@@ -1164,6 +1234,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Lake+Geneva%2C+Wisconsin&adults=16",
         notes:
           "Lakefront homes go fast in summer — book early. Properties on the lake path are walkable to town.",
+        avgRating: 4.7,
+        bedsBreakdown: "3 kings + 4 queens = 14 guys at 2/bed",
       },
       {
         type: "resort-house",
@@ -1179,6 +1251,8 @@ export const midwestDestinations: Destination[] = [
         searchUrl: "https://www.grandgeneva.com",
         notes:
           "Geneva National has large condos and homes; Grand Geneva has suites. Both walkable to first tees.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -1190,6 +1264,7 @@ export const midwestDestinations: Destination[] = [
         highlight:
           "Upscale Italian on Main Street with a great wine list and handmade pasta",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Geneva ChopHouse",
@@ -1199,6 +1274,7 @@ export const midwestDestinations: Destination[] = [
         highlight:
           "Prime steaks and an extensive bourbon list inside Grand Geneva Resort",
         reservationNeeded: true,
+        googleRating: 4.4,
       },
       {
         name: "Oakfire Pizza",
@@ -1208,6 +1284,7 @@ export const midwestDestinations: Destination[] = [
         highlight:
           "Wood-fired Neapolitan pizza and craft cocktails — casual and group-friendly",
         reservationNeeded: false,
+        googleRating: 4.5,
       },
       {
         name: "Hunt Club Steakhouse",
@@ -1217,6 +1294,7 @@ export const midwestDestinations: Destination[] = [
         highlight:
           "White-tablecloth steakhouse at The Abbey Resort — lake views and classic supper club feel",
         reservationNeeded: true,
+        googleRating: 4.3,
       },
       {
         name: "Egg Harbor Cafe",
@@ -1226,6 +1304,7 @@ export const midwestDestinations: Destination[] = [
         highlight:
           "Top breakfast spot — skillets, pancakes, and strong coffee before an early tee time",
         reservationNeeded: false,
+        googleRating: 4.4,
       },
     ],
     bars: [
@@ -1320,6 +1399,8 @@ export const midwestDestinations: Destination[] = [
         ],
         notes:
           "Huge party bus market serving the Chicago weekend crowd — plenty of inventory year-round",
+        fullDayRate: [1100, 1900],
+        canDoGolfAndBars: true,
       },
       {
         type: "trolley",
@@ -1328,6 +1409,8 @@ export const midwestDestinations: Destination[] = [
         providers: ["Lake Geneva Trolley"],
         notes:
           "Classic trolley runs through downtown and to the resorts — fun for a group dinner crawl",
+        fullDayRate: [1200, 2200],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [

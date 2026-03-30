@@ -48,15 +48,19 @@ export default function MulliganButton({
     >
       <button
         onClick={handleClick}
+        aria-label="Go back"
         style={{
           position: "relative",
           background: "none",
           border: "none",
           cursor: "pointer",
-          padding: 0,
+          padding: "12px 16px",
+          margin: "-12px -16px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          minWidth: 56,
+          minHeight: 56,
         }}
       >
         {/* Animated hand-drawn beer can SVG */}

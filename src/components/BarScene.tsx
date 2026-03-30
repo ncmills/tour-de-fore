@@ -12,9 +12,16 @@ interface Props {
 
 export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
   // If already drunk (coming back from shop), skip straight to drunk phase with shop bubble
-  const [phase, setPhase] = useState<"arrive" | "bubbles" | "drinking" | "drunk" | "shopping">(
+  const [phase, setPhase] = useState<"arrive" | "bubbles" | "drinking" | "drunk" | "sobering" | "shopping">(
     isDrunk ? "drunk" : "arrive"
   );
+
+  const handleSober = () => {
+    setPhase("sobering");
+    // Dispatch event to undo drunk mode
+    window.dispatchEvent(new CustomEvent("tdf-sober"));
+    setTimeout(() => setPhase("bubbles"), 1500);
+  };
 
   useEffect(() => {
     if (isDrunk) return; // skip intro if already drunk
@@ -152,7 +159,7 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
         )}
       </AnimatePresence>
 
-      {/* Drunk phase — only shop bubble */}
+      {/* Drunk phase — water button (sober up) + shop bubble */}
       <AnimatePresence>
         {phase === "drunk" && (
           <motion.div
@@ -166,11 +173,49 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               pointerEvents: "none",
             }}
           >
+            {/* 💧 Water = sober up (replaces beer position on left) */}
             <motion.button
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: [1, 1.06, 1] }}
               exit={{ opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
+              whileHover={{ scale: 1.15 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={handleSober}
+              style={{
+                pointerEvents: "auto",
+                position: "absolute",
+                top: "58%",
+                left: "30%",
+                transform: "translate(-50%, -50%)",
+                background: "rgba(0,0,0,0.5)",
+                backdropFilter: "blur(4px)",
+                border: "3px solid rgba(59,130,246,0.7)",
+                borderRadius: "50%",
+                width: "clamp(65px, 11vw, 95px)",
+                height: "clamp(65px, 11vw, 95px)",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "2px",
+                cursor: "pointer",
+                boxShadow: "0 0 20px rgba(59,130,246,0.3), 0 4px 20px rgba(0,0,0,0.5)",
+                userSelect: "none",
+                fontSize: "clamp(1.6rem, 3vw, 2.4rem)",
+                lineHeight: 1,
+              }}
+            >
+              💧
+              <span style={{ fontSize: "clamp(0.7rem, 1.5vw, 0.75rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>sober up</span>
+            </motion.button>
+
+            {/* 🍺 Shop (right) */}
+            <motion.button
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: [1, 1.06, 1] }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
               whileHover={{ scale: 1.15 }}
               whileTap={{ scale: 0.9 }}
               onClick={handleShop}
@@ -201,6 +246,42 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               🍺
               <span style={{ fontSize: "clamp(0.7rem, 1.5vw, 0.75rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>shop</span>
             </motion.button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Sobering up overlay */}
+      <AnimatePresence>
+        {phase === "sobering" && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+              position: "absolute",
+              inset: 0,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "0.5rem",
+              pointerEvents: "none",
+              background: "rgba(0,0,0,0.4)",
+            }}
+          >
+            <motion.p
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ type: "spring", stiffness: 200 }}
+              style={{
+                fontFamily: "var(--font-scrawl), cursive",
+                fontSize: "clamp(2rem, 6vw, 4rem)",
+                color: "#3b82f6",
+                textShadow: "0 0 30px rgba(59,130,246,0.5)",
+              }}
+            >
+              Hydrating... 💧
+            </motion.p>
           </motion.div>
         )}
       </AnimatePresence>

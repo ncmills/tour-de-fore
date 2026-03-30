@@ -6,9 +6,14 @@ export default function DrunkMode() {
   const [drunk, setDrunk] = useState(false);
 
   useEffect(() => {
-    const check = () => setDrunk(true);
-    window.addEventListener("tdf-drunk", check);
-    return () => window.removeEventListener("tdf-drunk", check);
+    const goDrunk = () => setDrunk(true);
+    const goSober = () => setDrunk(false);
+    window.addEventListener("tdf-drunk", goDrunk);
+    window.addEventListener("tdf-sober", goSober);
+    return () => {
+      window.removeEventListener("tdf-drunk", goDrunk);
+      window.removeEventListener("tdf-sober", goSober);
+    };
   }, []);
 
   useEffect(() => {

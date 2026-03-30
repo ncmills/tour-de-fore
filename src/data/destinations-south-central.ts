@@ -840,6 +840,10 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.bigcedar.com/golf",
         highlight:
           "Nicklaus-designed par-3 masterpiece at Big Cedar Lodge — caves, waterfalls, and Table Rock Lake views. The 9th hole plays into a natural cave.",
+        googleRating: 4.8,
+        reviewCount: 900,
+        hypeTag: "BUCKET LIST",
+        rankNote: "Best Par-3 Course in America — Golf Digest",
       },
       {
         name: "Branson Hills Golf Club",
@@ -856,6 +860,10 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.bransonhillsgolf.com",
         highlight:
           "Chuck Smith design consistently ranked #1 public course in Missouri — dramatic Ozark terrain with 200 feet of elevation change",
+        googleRating: 4.7,
+        reviewCount: 620,
+        hypeTag: "TOP 100 PUBLIC",
+        rankNote: "#1 Public Course in Missouri — Golfweek",
       },
       {
         name: "Payne Stewart Golf Club",
@@ -872,6 +880,9 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.bransonmo.gov/golf",
         highlight:
           "Municipal course named for Branson's most famous golfer — great value with well-maintained fairways and mountain views",
+        googleRating: 4.4,
+        reviewCount: 380,
+        hypeTag: "BEST VALUE",
       },
       {
         name: "Thousand Hills Golf Resort",
@@ -888,6 +899,8 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.thousandhills.com",
         highlight:
           "Short executive course perfect for an afternoon round or hangover day — fun layout through Ozark hills",
+        googleRating: 4.2,
+        reviewCount: 510,
       },
       {
         name: "LedgeStone Championship Golf Course",
@@ -904,6 +917,8 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.ledgestonegolf.com",
         highlight:
           "Tom Clark design carved through Ozark ridgelines with 250 feet of elevation change — bring your A-game and extra balls",
+        googleRating: 4.5,
+        reviewCount: 340,
       },
       {
         name: "Buffalo Ridge Springs - Big Cedar Lodge",
@@ -920,6 +935,10 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.bigcedar.com/golf",
         highlight:
           "Tom Fazio design at Big Cedar — natural springs, Ozark meadows, and bison grazing near the fairways. One of the most scenic courses in the country.",
+        googleRating: 4.7,
+        reviewCount: 450,
+        hypeTag: "TOP 100 PUBLIC",
+        rankNote: "Top 100 Public — Golf Digest",
       },
     ],
     lodging: [
@@ -939,6 +958,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/missouri/branson",
         notes:
           "Large cabins on Table Rock Lake give you lake access and seclusion. Many sleep 16+ with bunk rooms and game rooms. Excellent value — half the price of comparable destinations.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 3 queens + bunks = 16 guys at 2/bed",
       },
       {
         type: "lodge",
@@ -956,6 +977,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.bigcedar.com",
         notes:
           "Big Cedar Lodge cabins and lodges put you on-site for Top of the Rock and Buffalo Ridge. Premium but worth it for the full experience.",
+        avgRating: 4.7,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -967,6 +990,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Fine dining overlooking Table Rock Lake at Big Cedar — wood-fired steaks and Ozark game dishes with sunset views",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "Danna's BBQ & Burger Shop",
@@ -976,6 +1000,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Award-winning Branson BBQ with brisket, burnt ends, and scratch sides — the local favorite",
         reservationNeeded: false,
+        googleRating: 4.7,
       },
       {
         name: "Level 2 Steakhouse",
@@ -985,6 +1010,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Hilton steakhouse with hand-cut prime beef, a solid bourbon list, and group-friendly private dining",
         reservationNeeded: true,
+        googleRating: 4.4,
       },
       {
         name: "Florentina's Ristorante Italiano",
@@ -994,6 +1020,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Homemade pasta and family-style Italian platters — big portions for big appetites after 36 holes",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Fall Creek Steak & Cocktail House",
@@ -1003,6 +1030,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Classic Ozark steakhouse with a lodge feel, premium cuts, and old-fashioned cocktails",
         reservationNeeded: true,
+        googleRating: 4.3,
       },
     ],
     bars: [
@@ -1102,6 +1130,8 @@ export const southCentralDestinations: Destination[] = [
         providers: ["Branson Scenic Tours", "Ozark Mountain Shuttle"],
         notes:
           "Courses are spread 10-25 min apart. Group shuttles are affordable and essential. Branson Landing is walkable for nightlife.",
+        fullDayRate: [800, 1400],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
