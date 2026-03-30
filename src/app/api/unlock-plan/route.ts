@@ -78,6 +78,30 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ error: "Plan not found" }, { status: 404 });
     }
 
+    // Verify payment — check if webhook marked it as paid, or verify with Stripe
+    if (!stored.paid) {
+      // Give webhook a moment to process, then check Stripe directly
+      const sessions = await stripe.checkout.sessions.list({
+        limit: 5,
+      });
+      const paidSession = sessions.data.find(
+        (s) => s.metadata?.planId === planId && s.payment_status === "paid"
+      );
+      if (!paidSession) {
+        return NextResponse.json({ error: "Payment not verified" }, { status: 402 });
+      }
+      // Mark as paid since we confirmed with Stripe
+      stored.paid = true;
+      stored.paidAt = new Date().toISOString();
+      stored.paidDestination = dest as PriceLevel;
+      await storePlan(stored);
+    }
+
+    // Already generated? Don't re-generate
+    if (stored.destinations?.[dest as PriceLevel]) {
+      return NextResponse.json({ success: true, planId, dest });
+    }
+
     // Find the destination in our database
     const preview = stored.freePreviews?.[dest as PriceLevel];
     if (!preview) {

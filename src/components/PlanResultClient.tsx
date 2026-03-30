@@ -1020,6 +1020,56 @@ export default function PlanResultClient({ plan, planId, tier, dest }: PlanResul
             </div>
           )}
         </div>
+
+        {/* Build Your Trip + Share with Crew CTAs */}
+        <div style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "0.75rem",
+          justifyContent: "center",
+          marginTop: "2rem",
+          paddingTop: "1.5rem",
+          borderTop: "1px solid rgba(255,255,255,0.06)",
+        }}>
+          <Link
+            href={`/plan/build?planId=${planId}&dest=${dest || "mid"}&tier=${tier}`}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              padding: "12px 28px",
+              background: "rgba(220,38,38,0.15)",
+              border: "1px solid rgba(220,38,38,0.4)",
+              borderRadius: 8,
+              color: "rgba(220,38,38,0.9)",
+              fontSize: 14,
+              fontWeight: 600,
+              textDecoration: "none",
+              transition: "all 0.2s",
+            }}
+          >
+            🛠️ Build Your Trip
+          </Link>
+          <Link
+            href={`/trip/plan/${planId}`}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              padding: "12px 28px",
+              background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(255,255,255,0.15)",
+              borderRadius: 8,
+              color: "rgba(255,255,255,0.7)",
+              fontSize: 14,
+              fontWeight: 600,
+              textDecoration: "none",
+              transition: "all 0.2s",
+            }}
+          >
+            🔗 Share with Crew
+          </Link>
+        </div>
       </div>
     </div>
   );

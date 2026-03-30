@@ -414,6 +414,21 @@ export default function TripBuilderClient({
             >
               View Full Plan
             </Link>
+            <Link
+              href={`/trip/plan/${planId}`}
+              style={{
+                padding: "10px 24px",
+                background: "rgba(255,255,255,0.06)",
+                border: "1px solid rgba(255,255,255,0.15)",
+                borderRadius: 6,
+                color: "rgba(255,255,255,0.7)",
+                fontSize: "0.8rem",
+                fontWeight: 600,
+                textDecoration: "none",
+              }}
+            >
+              Share with Crew
+            </Link>
           </div>
         </div>
       </div>
