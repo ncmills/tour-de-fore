@@ -19,7 +19,12 @@ const YEAR_HERO: Record<number, string> = {
 };
 
 export default function PastTripsClient() {
-  const past = trips.filter((t) => !t.upcoming).sort((a, b) => b.year - a.year);
+  // Show all trips — upcoming first, then past (newest first)
+  const allTrips = [...trips].sort((a, b) => {
+    if (a.upcoming && !b.upcoming) return -1;
+    if (!a.upcoming && b.upcoming) return 1;
+    return b.year - a.year;
+  });
   const [isMuted, setIsMuted] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -177,10 +182,10 @@ export default function PastTripsClient() {
           textShadow: "0 0 7px rgba(255,60,20,0.6), 0 0 20px rgba(255,60,20,0.3)",
           marginBottom: "0.3rem",
         }}>
-          The Archives
+          Body of Work
         </h1>
         <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.8rem", letterSpacing: "0.15em", textTransform: "uppercase", fontFamily: "monospace" }}>
-          {past.length} trips · {past.reduce((s, t) => s + t.courses.length, 0)} courses · countless beers
+          {trips.length} trips · {trips.reduce((s, t) => s + t.courses.length, 0)} courses · countless beers
         </p>
       </motion.div>
 
@@ -191,10 +196,10 @@ export default function PastTripsClient() {
         transition={{ duration: 0.8, delay: 0.6 }}
         style={{ padding: "1.5rem clamp(1.5rem, 6vw, 6rem) 6rem" }}
       >
-        {past.map((trip, i) => (
+        {allTrips.map((trip, i) => (
           <Link
             key={trip.slug}
-            href={`/past-trips/${trip.year}`}
+            href={trip.upcoming ? `/trip/${trip.slug}` : `/past-trips/${trip.year}`}
             style={{ textDecoration: "none", color: "inherit", display: "block" }}
           >
             <motion.div

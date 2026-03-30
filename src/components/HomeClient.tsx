@@ -32,8 +32,7 @@ export default function HomeClient() {
   const [logoVisible, setLogoVisible] = useState(skip);
   const [logoUninverted, setLogoUninverted] = useState(skip);
   const [isMobile, setIsMobile] = useState(false);
-  const [hoveredSubtitle, setHoveredSubtitle] = useState<string | null>(null);
-  const [typedText, setTypedText] = useState("");
+  // hoveredSubtitle/typedText removed — using permanent tagline
   const [ambientOn, setAmbientOn] = useState(false);
   const bgVideoRef = useRef<HTMLVideoElement>(null);
   const ambientAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -101,18 +100,7 @@ export default function HomeClient() {
     return () => { ambientAudioRef.current?.pause(); };
   }, []);
 
-  // Typewriter effect for hovered subtitle
-  useEffect(() => {
-    if (!hoveredSubtitle) { setTypedText(""); return; }
-    setTypedText("");
-    let i = 0;
-    const id = setInterval(() => {
-      i++;
-      setTypedText(hoveredSubtitle.slice(0, i));
-      if (i >= hoveredSubtitle.length) clearInterval(id);
-    }, 45);
-    return () => clearInterval(id);
-  }, [hoveredSubtitle]);
+  // Typewriter removed — using permanent tagline instead
 
   const handleExplodeStart = useCallback(() => {}, []);
 
@@ -229,26 +217,18 @@ export default function HomeClient() {
               : {}
           }
         >
-          {/* Hovered subtitle — typewriter in sandtrap */}
+          {/* Tagline above logo */}
           <span
             style={{
-              fontFamily: "var(--font-scrawl), cursive",
-              fontSize: "clamp(1.4rem, 2.4vw, 2rem)",
-              color: "#d4a843",
-              fontWeight: 400,
-              letterSpacing: "0.06em",
-              opacity: hoveredSubtitle ? 1 : 0,
-              transition: "opacity 0.25s",
-              whiteSpace: "nowrap",
-              marginBottom: "0.5rem",
-              minHeight: "2rem",
-              padding: "0.2em 0.8em",
-              background: hoveredSubtitle ? "rgba(194,160,80,0.15)" : "transparent",
-              borderRadius: "6px",
-              textShadow: "0 0 12px rgba(212,168,67,0.4)",
+              fontFamily: "var(--font-script), cursive",
+              fontSize: "clamp(0.9rem, 1.8vw, 1.3rem)",
+              color: "rgba(255,255,255,0.4)",
+              letterSpacing: "0.08em",
+              marginBottom: "clamp(0.75rem, 1.5vw, 1.25rem)",
+              textAlign: "center",
             }}
           >
-            {typedText || "\u00A0"}
+            Plan your crew&apos;s next golf odyssey
           </span>
           <Image
             src="/logo-full.png"
@@ -258,6 +238,19 @@ export default function HomeClient() {
             priority
             style={{ width: isMobile ? "clamp(150px, 45vw, 220px)" : "clamp(200px, 22vw, 340px)", height: "auto", filter: "brightness(0)" }}
           />
+          {/* Equal spacing below logo */}
+          <span
+            style={{
+              fontFamily: "var(--font-script), cursive",
+              fontSize: "clamp(0.75rem, 1.4vw, 1rem)",
+              color: "rgba(255,255,255,0.25)",
+              letterSpacing: "0.1em",
+              marginTop: "clamp(0.75rem, 1.5vw, 1.25rem)",
+              textAlign: "center",
+            }}
+          >
+            135+ destinations · AI-powered itineraries · built by golfers
+          </span>
         </motion.div>
       </div>
 
@@ -285,11 +278,10 @@ export default function HomeClient() {
             }}
           >
             {[
-              { label: "Shop", href: "/shop", subtitle: "devils gotta eat", blood: false },
-              { label: "Then", href: "/past-trips", subtitle: "devils were here", blood: false },
-              { label: "Now", href: "/trip/2026", subtitle: "devils are here", blood: false },
-              { label: "Plan a Trip", href: "/plan-a-trip", subtitle: "so you wanna be a devil?", blood: true },
-            ].map(({ label, href, subtitle, blood }) => (
+              { label: "Shop", href: "/shop", blood: false },
+              { label: "Body of Work", href: "/past-trips", blood: false },
+              { label: "Plan a Trip", href: "/plan-a-trip", blood: true },
+            ].map(({ label, href, blood }) => (
               <Link
                 key={label}
                 href={href}
@@ -311,12 +303,10 @@ export default function HomeClient() {
                 onMouseEnter={e => {
                   e.currentTarget.style.color = "rgba(255,255,255,1)";
                   e.currentTarget.style.textShadow = "0 0 12px rgba(255,60,20,0.6), 0 0 30px rgba(255,60,20,0.3)";
-                  setHoveredSubtitle(subtitle);
                 }}
                 onMouseLeave={e => {
                   e.currentTarget.style.color = blood ? "#fff" : "rgba(255,255,255,0.7)";
                   e.currentTarget.style.textShadow = blood ? "0 0 20px rgba(200,0,0,0.5), 0 2px 4px rgba(0,0,0,0.5)" : "0 0 8px rgba(255,60,20,0.3), 0 0 20px rgba(255,60,20,0.15)";
-                  setHoveredSubtitle(null);
                 }}
               >
                 {label}
