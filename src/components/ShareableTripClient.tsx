@@ -47,7 +47,7 @@ export default function ShareableTripClient({
           <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "1rem", fontStyle: "italic" }}>
             &ldquo;{plan.tagline}&rdquo;
           </p>
-          <div style={{ marginTop: "1rem", display: "flex", justifyContent: "center", gap: "2rem", fontSize: "0.85rem", color: "rgba(255,255,255,0.4)" }}>
+          <div style={{ marginTop: "1rem", display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "1rem 2rem", fontSize: "0.85rem", color: "rgba(255,255,255,0.4)" }}>
             <span>📍 {plan.destination}</span>
             <span>📅 {plan.dates}</span>
             <span>👥 {plan.groupSize} people</span>
@@ -151,7 +151,7 @@ export default function ShareableTripClient({
                   border: "1px solid rgba(255,255,255,0.15)",
                   borderRadius: 8,
                   color: "#fff",
-                  fontSize: "0.9rem",
+                  fontSize: "1rem",
                   textAlign: "center",
                   marginBottom: "1.5rem",
                   outline: "none",

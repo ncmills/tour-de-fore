@@ -167,7 +167,8 @@ function OptionCard({
         }}
         style={{
           marginTop: "0.75rem",
-          padding: "8px 20px",
+          padding: "12px 20px",
+          minHeight: 44,
           background: selected ? "rgba(255,255,255,0.1)" : "rgba(220,38,38,0.15)",
           border: selected ? "1px solid rgba(255,255,255,0.2)" : "1px solid rgba(220,38,38,0.3)",
           borderRadius: 6,
@@ -374,14 +375,15 @@ export default function TripBuilderClient({
           borderRadius: 12,
           padding: "1rem 1.5rem",
           display: "flex",
+          flexWrap: "wrap",
           justifyContent: "space-between",
           alignItems: "center",
-          gap: "1rem",
+          gap: "0.75rem",
         }}>
           <div style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.4)" }}>
             {Object.values(selectedOptions).flat().length} items selected
           </div>
-          <div style={{ display: "flex", gap: "0.75rem" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
             <button
               onClick={saveSelections}
               disabled={saving}

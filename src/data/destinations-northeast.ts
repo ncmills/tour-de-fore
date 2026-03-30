@@ -1506,6 +1506,7 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.mountairycasino.com/golf",
         highlight:
           "Hal Purdy design carved through Pocono Mountain forests — casino resort amenities included",
+        googleRating: 4.3,
       },
       {
         name: "Shawnee Inn & Golf Resort",
@@ -1522,6 +1523,7 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.shawneeinn.com/golf",
         highlight:
           "A.W. Tillinghast design on the Delaware River — 27 holes of classic resort golf with mountain views",
+        googleRating: 4.4,
       },
       {
         name: "Great Bear Golf Club",
@@ -1538,6 +1540,7 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.greatbeargc.com",
         highlight:
           "Jack Nicklaus signature course at Shawnee Mountain — dramatic elevation changes and forest corridors",
+        googleRating: 4.5,
       },
       {
         name: "Buck Hill Golf Club",
@@ -1553,6 +1556,7 @@ export const northeastDestinations: Destination[] = [
         driveMinutes: 20,
         highlight:
           "Historic 27-hole facility with Donald Ross roots and solid mountain views at a budget price",
+        googleRating: 4.2,
       },
     ],
     lodging: [
@@ -1565,6 +1569,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/pennsylvania/poconos",
         notes:
           "Cabins are the play here — tons of options sleeping 12-20 with hot tubs and game rooms. Very affordable compared to other NE destinations.",
+        avgRating: 4.5,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "lodge",
@@ -1574,6 +1580,8 @@ export const northeastDestinations: Destination[] = [
         areaDescription: "Shawnee on Delaware / Marshalls Creek",
         notes:
           "Shawnee Inn is a full resort with lodging packages that include golf. Good for groups wanting everything in one place.",
+        avgRating: 4.5,
+        bedsBreakdown: "4 kings + 2 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -1585,6 +1593,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Surprising gem — some of the best Thai food in rural PA, with group-friendly space",
         reservationNeeded: false,
+        googleRating: 4.5,
       },
       {
         name: "The Gem & Keystone Brewpub",
@@ -1594,6 +1603,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Pocono brewpub with house beers, pub food, and live music weekends",
         reservationNeeded: false,
+        googleRating: 4.3,
       },
       {
         name: "Desaki Restaurant",
@@ -1603,6 +1613,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Hibachi and sushi in a lodge-like setting — fun group dinner with tableside cooking",
         reservationNeeded: true,
+        googleRating: 4.4,
       },
       {
         name: "Guy Fieri's Mt. Pocono Kitchen",
@@ -1612,6 +1623,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Celebrity chef spot at Mount Airy Casino — over-the-top burgers, wings, and trash can nachos",
         reservationNeeded: false,
+        googleRating: 4.2,
       },
     ],
     bars: [
@@ -1763,6 +1775,7 @@ export const northeastDestinations: Destination[] = [
         driveMinutes: 5,
         highlight:
           "Wayne Stiles classic set against Mount Greylock — one of the best public courses in New England",
+        googleRating: 4.5,
       },
       {
         name: "Cranwell Resort Golf Course",
@@ -1779,6 +1792,7 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.miraval.com/berkshires/activities/golf",
         highlight:
           "Stiles & Van Kleek design on the grounds of a former Gilded Age estate — now part of Miraval Resort",
+        googleRating: 4.3,
       },
       {
         name: "Waubeeka Golf Links",
@@ -1794,6 +1808,7 @@ export const northeastDestinations: Destination[] = [
         driveMinutes: 15,
         highlight:
           "Williamstown gem in the shadow of the Green Mountains — friendly layout with excellent fall foliage",
+        googleRating: 4.3,
       },
       {
         name: "Wahconah Country Club",
@@ -1809,6 +1824,7 @@ export const northeastDestinations: Destination[] = [
         driveMinutes: 15,
         highlight:
           "Semi-private course in Dalton with tree-lined fairways and a classic New England feel",
+        googleRating: 4.2,
       },
     ],
     lodging: [
@@ -1821,6 +1837,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/massachusetts/berkshires",
         notes:
           "Lenox is central to most courses and restaurants. Great Barrington has a more lively downtown scene. Book ahead for Tanglewood season (June-Aug).",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
       {
         type: "house",
@@ -1831,6 +1849,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Berkshires--MA",
         notes:
           "Stockbridge is Norman Rockwell charming. Lee offers good proximity to both courses and I-90 access.",
+        avgRating: 4.5,
+        bedsBreakdown: "2 kings + 3 queens = 10 guys at 2/bed",
       },
     ],
     dining: [

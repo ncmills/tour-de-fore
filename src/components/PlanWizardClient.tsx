@@ -728,7 +728,7 @@ export default function PlanWizardClient() {
                 key={a}
                 onClick={() => dispatch({ type: "TOGGLE_ACTIVITY", activity: a })}
                 style={{
-                  padding: "0.5rem 1.2rem", borderRadius: 4,
+                  padding: "0.7rem 1.2rem", borderRadius: 4, minHeight: 44,
                   border: state.activities.includes(a) ? "1px solid #fff" : "1px solid rgba(255,255,255,0.15)",
                   background: state.activities.includes(a) ? "#fff" : "transparent",
                   color: state.activities.includes(a) ? "#000" : "rgba(255,255,255,0.6)",

@@ -1583,6 +1583,7 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.omnihotels.com/hotels/austin-barton-creek/golf",
         highlight:
           "Tom Fazio masterpiece through Hill Country canyons — hosted the Champions Tour and consistently ranked among Texas' best",
+        googleRating: 4.5,
       },
       {
         name: "Barton Creek - Crenshaw Cliffside",
@@ -1599,6 +1600,7 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.omnihotels.com/hotels/austin-barton-creek/golf",
         highlight:
           "Ben Crenshaw and Bill Coore design with dramatic 100-foot cliff drops and native wildflower meadows",
+        googleRating: 4.4,
       },
       {
         name: "Wolfdancer Golf Club",
@@ -1615,6 +1617,7 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.hyatt.com/en-US/hotel/texas/hyatt-regency-lost-pines-resort-and-spa/auslp/golf",
         highlight:
           "Hyatt Lost Pines resort course on the Colorado River — natural terrain, wildlife sightings, and a strong finishing stretch",
+        googleRating: 4.4,
       },
       {
         name: "Falconhead Golf Club",
@@ -1630,6 +1633,7 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 25,
         highlight:
           "Public course in Bee Cave with Hill Country terrain, well-maintained conditions, and a challenging layout at a reasonable price",
+        googleRating: 4.3,
       },
       {
         name: "Avery Ranch Golf Club",
@@ -1645,6 +1649,7 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 25,
         highlight:
           "North Austin public course with elevation changes, canyon crossings, and some of the best-maintained greens in the city",
+        googleRating: 4.3,
       },
     ],
     lodging: [
@@ -1663,6 +1668,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/texas/austin",
         notes:
           "Lake Travis area houses offer pools, privacy, and Hill Country views. 20-30 min from downtown. Best for groups prioritizing golf proximity and house quality over walkable nightlife.",
+        avgRating: 4.6,
+        bedsBreakdown: "5 kings + 3 queens = 16 guys at 2/bed",
       },
       {
         type: "house",
@@ -1678,6 +1685,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Austin--TX",
         notes:
           "East Austin and Rainey Street area houses put you in walking distance of the best bars and restaurants. Farther from courses but saves on transport for nightlife.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -1689,6 +1698,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "The most famous BBQ in America — the brisket is transcendent. Pre-order for groups to skip the 3-hour line.",
         reservationNeeded: true,
+        googleRating: 4.7,
       },
       {
         name: "Odd Duck",
@@ -1698,6 +1708,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Creative farm-to-table with a daily-changing menu of small plates — the best restaurant in Austin by many measures",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "Perry's Steakhouse & Grille",
@@ -1707,6 +1718,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Upscale Austin steakhouse with the legendary Friday pork chop lunch, private dining rooms, and an excellent wine list",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Matt's El Rancho",
@@ -1716,6 +1728,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Austin Tex-Mex institution since 1952 — the Bob Armstrong dip is mandatory and the margaritas are strong",
         reservationNeeded: false,
+        googleRating: 4.3,
       },
       {
         name: "la Barbecue",
@@ -1725,6 +1738,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "East Austin trailer serving world-class brisket and ribs — shorter line than Franklin with equally elite 'cue",
         reservationNeeded: false,
+        googleRating: 4.6,
       },
     ],
     bars: [
@@ -1893,6 +1907,7 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.tpc.com/craig-ranch",
         highlight:
           "Home of the PGA Tour's CJ Cup Byron Nelson — Tour-level conditioning with strategic bunkering and water hazards on a championship layout",
+        googleRating: 4.6,
       },
       {
         name: "Cowboys Golf Club",
@@ -1909,6 +1924,7 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.cowboysgolfclub.com",
         highlight:
           "The only NFL-themed golf course in the world — Dallas Cowboys branding, luxury clubhouse, and a legit championship layout",
+        googleRating: 4.5,
       },
       {
         name: "The Tribute Golf Links",
@@ -1925,6 +1941,7 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.thetributegc.com",
         highlight:
           "Links-style tribute to the great holes of Scotland and Ireland — pot bunkers, burn crossings, and fescue rough in North Texas",
+        googleRating: 4.4,
       },
       {
         name: "Texas Star Golf Course",
@@ -1940,6 +1957,7 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 20,
         highlight:
           "Former NCAA Championship venue in Euless — strong public course with mature trees and excellent conditioning at a fair price",
+        googleRating: 4.3,
       },
       {
         name: "Fossil Creek Golf Club",
@@ -1956,6 +1974,7 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.fossilcreekgolfclub.com",
         highlight:
           "Arnold Palmer design in Fort Worth with elevation changes, creek crossings, and a challenging back nine through mature oaks",
+        googleRating: 4.4,
       },
     ],
     lodging: [
@@ -1974,6 +1993,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/texas/dallas",
         notes:
           "Southlake and Grapevine area homes are large, affordable, and centrally located between Dallas and Fort Worth courses. Close to DFW Airport for easy arrivals.",
+        avgRating: 4.6,
+        bedsBreakdown: "5 kings + 3 queens = 16 guys at 2/bed",
       },
       {
         type: "house",
@@ -1989,6 +2010,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Dallas--TX",
         notes:
           "Downtown Dallas or Uptown properties give walkable access to Deep Ellum bars and Uptown restaurants. Farther from Fort Worth courses but ideal for nightlife-focused trips.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -2000,6 +2023,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "One of the best steakhouses in Texas — dry-aged prime cuts, tableside Caesars, and a 3,800-label wine cellar",
         reservationNeeded: true,
+        googleRating: 4.7,
       },
       {
         name: "Pecan Lodge",
@@ -2009,6 +2033,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Deep Ellum BBQ legend with brisket, hot mess (loaded baked potato with brisket), and massive beef ribs",
         reservationNeeded: false,
+        googleRating: 4.5,
       },
       {
         name: "Joe T. Garcia's",
@@ -2018,6 +2043,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Fort Worth institution since 1935 — enchiladas and fajitas served in a sprawling courtyard with fountains. Cash only.",
         reservationNeeded: false,
+        googleRating: 4.4,
       },
       {
         name: "Lonesome Dove Western Bistro",
@@ -2027,6 +2053,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Chef Tim Love's Fort Worth Stockyards showpiece — wild game, exotic meats, and cowboy-chic fine dining",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Terry Black's Barbecue",
@@ -2036,6 +2063,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Central Texas BBQ royalty in Deep Ellum — brisket, sausage, and ribs served cafeteria-style with all the fixings",
         reservationNeeded: false,
+        googleRating: 4.6,
       },
     ],
     bars: [

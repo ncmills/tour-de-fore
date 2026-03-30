@@ -2962,6 +2962,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Colorado-Springs--Colorado/homes?adults=16",
         notes:
           "Funky homes near Manitou Springs with walkable bars and restaurants; 15 min to courses",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -2973,6 +2975,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Multi-level downtown space with creative cocktails and elevated American fare; private event space upstairs",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Joseph's Fine Dining",
@@ -2982,6 +2985,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Classic fine dining steakhouse in downtown; prime cuts and a deep wine cellar",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "Shuga's",
@@ -2991,6 +2995,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Funky downtown spot with creative cocktails and eclectic food; the mixology is world-class",
         reservationNeeded: false,
+        googleRating: 4.4,
       },
       {
         name: "Front Range Barbeque",
@@ -3000,6 +3005,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Texas-style smoked meats in a casual setting; can handle big groups with platters to share",
         reservationNeeded: false,
+        googleRating: 4.3,
       },
     ],
     bars: [
