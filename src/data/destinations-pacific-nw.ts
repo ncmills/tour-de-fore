@@ -19,6 +19,7 @@ export const pacificNWDestinations: Destination[] = [
     bestSeasons: ["summer", "fall"],
     tdfTested: true,
     tdfYear: 2024,
+    groceryNotes: "Newport Market for craft beer/provisions. Costco 5 min from downtown.",
     courses: [
       {
         name: "Pronghorn Resort (Nicklaus Course)",

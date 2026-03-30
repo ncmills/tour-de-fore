@@ -212,9 +212,10 @@ interface PlanResultClientProps {
   planId: string;
   tier: TripTier;
   dest?: string;
+  paid?: boolean;
 }
 
-export default function PlanResultClient({ plan, planId, tier, dest }: PlanResultClientProps) {
+export default function PlanResultClient({ plan, planId, tier, dest, paid }: PlanResultClientProps) {
   const [copied, setCopied] = useState(false);
   const [showEmailForm, setShowEmailForm] = useState(false);
   const [emailInput, setEmailInput] = useState("");
@@ -1021,7 +1022,8 @@ export default function PlanResultClient({ plan, planId, tier, dest }: PlanResul
           )}
         </div>
 
-        {/* Build Your Trip + Share with Crew CTAs */}
+        {/* Build Your Trip + Share with Crew CTAs (paid only) */}
+        {paid && (
         <div style={{
           display: "flex",
           flexWrap: "wrap",
@@ -1070,6 +1072,7 @@ export default function PlanResultClient({ plan, planId, tier, dest }: PlanResul
             🔗 Share with Crew
           </Link>
         </div>
+        )}
       </div>
     </div>
   );

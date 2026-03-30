@@ -13,6 +13,7 @@ export const midwestDestinations: Destination[] = [
     population: "tiny",
     tdfTested: true,
     tdfYear: 2026,
+    groceryNotes: "Woodlake Market on-site at resort. Piggly Wiggly in Sheboygan 15 min.",
     nearestAirport: {
       code: "GRB",
       name: "Green Bay Austin Straubel International Airport",

@@ -624,6 +624,7 @@ export const southeastDestinations: Destination[] = [
       driveMinutes: 15,
     },
     bestSeasons: ["spring", "fall"],
+    groceryNotes: "Piggly Wiggly and Harris Teeter on island. Wines & More for liquor.",
     courses: [
       {
         name: "Harbour Town Golf Links",
@@ -2789,6 +2790,7 @@ export const southeastDestinations: Destination[] = [
       driveMinutes: 10,
     },
     bestSeasons: ["spring", "fall"],
+    groceryNotes: "Publix, Food Lion everywhere. ABC store for liquor (SC law).",
     courses: [
       {
         name: "Caledonia Golf & Fish Club",
@@ -3060,6 +3062,7 @@ export const southeastDestinations: Destination[] = [
         style: "links",
         driveMinutes: 15,
         highlight: "Larry Nelson design along the Cumberland River. Resort-quality conditioning with water on 13 holes.",
+        googleRating: 4.4,
       },
       {
         name: "Hermitage Golf Course - Presidents Reserve",
@@ -3074,6 +3077,7 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 25,
         highlight: "Former LPGA Tour venue. Long, challenging, and beautifully maintained municipal gem.",
+        googleRating: 4.5,
       },
       {
         name: "Nashville Golf & Athletic Club",
@@ -3088,6 +3092,7 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 20,
         highlight: "Best value in Metro Nashville. Well-kept, fair layout with some nice elevation changes.",
+        googleRating: 4.2,
       },
       {
         name: "Old Hickory Country Club (public times)",
@@ -3102,6 +3107,7 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 20,
         highlight: "Classic Nashville track with mature trees and tight fairways. Great afternoon round.",
+        googleRating: 4.2,
       },
     ],
     lodging: [
@@ -3113,6 +3119,8 @@ export const southeastDestinations: Destination[] = [
         areaDescription: "The Gulch, East Nashville, or Germantown",
         searchUrl: "https://www.vrbo.com/search?destination=Nashville%2C+TN&adults=16",
         notes: "Book in The Gulch or East Nashville for walkability to bars. Germantown has bigger houses. Prices spike on weekends.",
+        avgRating: 4.6,
+        bedsBreakdown: "5 kings + 3 queens = 16 guys at 2/bed",
       },
       {
         type: "house",
@@ -3121,6 +3129,8 @@ export const southeastDestinations: Destination[] = [
         amenities: ["pool", "full kitchen", "parking", "fire pit", "game room"],
         areaDescription: "Greater Nashville suburbs (Donelson, Hermitage)",
         notes: "Suburban houses near the airport area are cheaper with pools. 15-minute Uber to Broadway.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -3131,6 +3141,7 @@ export const southeastDestinations: Destination[] = [
         capacity: "large-group",
         highlight: "Nashville hot chicken institution. Get the Shut the Cluck Up if you dare.",
         reservationNeeded: false,
+        googleRating: 4.3,
       },
       {
         name: "Jeff Ruby's Steakhouse",
@@ -3139,6 +3150,7 @@ export const southeastDestinations: Destination[] = [
         capacity: "large-group",
         highlight: "The big-night-out steakhouse. Celebrity sightings, prime cuts, and full VIP energy.",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "Martin's Bar-B-Que Joint",
@@ -3147,6 +3159,7 @@ export const southeastDestinations: Destination[] = [
         capacity: "large-group",
         highlight: "Whole-hog BBQ done right. Brisket, ribs, and banana pudding. Multiple locations.",
         reservationNeeded: false,
+        googleRating: 4.4,
       },
       {
         name: "The Catbird Seat",
@@ -3155,6 +3168,7 @@ export const southeastDestinations: Destination[] = [
         capacity: "small",
         highlight: "Chef's counter tasting menu experience. Intimate and unforgettable for a small splinter group.",
         reservationNeeded: true,
+        googleRating: 4.8,
       },
     ],
     bars: [
@@ -3279,6 +3293,7 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 20,
         highlight: "Pete Dye design that hosts NCAA championships. Private but available through select packages.",
+        googleRating: 4.8,
       },
       {
         name: "The Course at Sewanee",
@@ -3293,6 +3308,7 @@ export const southeastDestinations: Destination[] = [
         style: "mountain",
         driveMinutes: 50,
         highlight: "Mountaintop course at the University of the South. Stunning views and absurd value.",
+        googleRating: 4.5,
       },
       {
         name: "Bear Trace at Harrison Bay",
@@ -3307,6 +3323,7 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 25,
         highlight: "Jack Nicklaus design on Chickamauga Lake. State park course with championship pedigree.",
+        googleRating: 4.4,
       },
       {
         name: "Lookout Mountain Golf Club",
@@ -3321,6 +3338,7 @@ export const southeastDestinations: Destination[] = [
         style: "mountain",
         driveMinutes: 20,
         highlight: "Scenic mountain layout with dramatic elevation changes and valley views.",
+        googleRating: 4.3,
       },
     ],
     lodging: [
@@ -3332,6 +3350,8 @@ export const southeastDestinations: Destination[] = [
         areaDescription: "Lookout Mountain & Signal Mountain",
         searchUrl: "https://www.vrbo.com/search?destination=Chattanooga%2C+TN&adults=16",
         notes: "Mountain homes near Lookout Mountain offer views and space. 15 minutes to downtown.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
       {
         type: "house",
@@ -3340,6 +3360,8 @@ export const southeastDestinations: Destination[] = [
         amenities: ["walkable to downtown", "full kitchen", "rooftop", "parking"],
         areaDescription: "Downtown Chattanooga / North Shore",
         notes: "Downtown rentals put you walking distance to bars and restaurants. Book early for fall.",
+        avgRating: 4.5,
+        bedsBreakdown: "4 kings + 2 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -3350,6 +3372,7 @@ export const southeastDestinations: Destination[] = [
         capacity: "large-group",
         highlight: "Chattanooga's best restaurant in a converted church. Creative Southern plates and great wine list.",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "Sugars Ribs",
@@ -3358,6 +3381,7 @@ export const southeastDestinations: Destination[] = [
         capacity: "large-group",
         highlight: "Legendary local BBQ. Dry-rubbed ribs and pulled pork that rival Memphis.",
         reservationNeeded: false,
+        googleRating: 4.4,
       },
       {
         name: "Public House",
@@ -3366,6 +3390,7 @@ export const southeastDestinations: Destination[] = [
         capacity: "large-group",
         highlight: "Farm-to-table gastropub with craft cocktails. Great group dinner spot on the North Shore.",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Champy's Famous Fried Chicken",
@@ -3374,6 +3399,7 @@ export const southeastDestinations: Destination[] = [
         capacity: "large-group",
         highlight: "Cash-only fried chicken joint that is absolutely worth it. Get the white beans too.",
         reservationNeeded: false,
+        googleRating: 4.5,
       },
     ],
     bars: [

@@ -5,6 +5,7 @@ import { getPlan, storePlan } from "@/lib/kv";
 import { allDestinations } from "@/data/index";
 import { buildDestinationContext } from "@/data/query";
 import { buildSystemPrompt, buildUserMessage } from "@/lib/planner-prompt";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import type {
   PriceLevel,
   ThreePlanResult,
@@ -67,6 +68,13 @@ export async function POST(req: NextRequest) {
 // Generate the full paid plan after successful payment
 export async function PUT(req: NextRequest) {
   try {
+    // Rate limit: 5 paid plan generations per IP per hour
+    const ip = getClientIp(req);
+    const rl = await rateLimit(`unlock:${ip}`, 5, 3600);
+    if (!rl.allowed) {
+      return NextResponse.json({ error: "Too many requests. Try again later." }, { status: 429 });
+    }
+
     const { planId, dest } = await req.json();
 
     if (!planId || !dest) {

@@ -1481,6 +1481,7 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.jhgtc.com",
         highlight:
           "Robert Trent Jones Jr. design with the Grand Teton as your backdrop on nearly every hole; the iconic mountain golf experience in America",
+        googleRating: 4.7,
       },
       {
         name: "Teton Pines Resort & Country Club",
@@ -1497,6 +1498,7 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.tetonpines.com",
         highlight:
           "Arnold Palmer/Ed Seay design through wetlands and aspens with the Tetons looming; resort guests can access this semi-private gem",
+        googleRating: 4.6,
       },
       {
         name: "Snake River Sporting Club",
@@ -1513,6 +1515,7 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.snakeriversc.com",
         highlight:
           "Tom Fazio design along the Snake River; ultra-private with limited access but absolutely world-class conditioning and views",
+        googleRating: 4.9,
       },
       {
         name: "3 Creek Ranch Golf Club",
@@ -1529,6 +1532,7 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.3creekranch.com",
         highlight:
           "Rees Jones design for the ultra-elite; member-only with rare guest access. If you can get on, it's top-100 worthy.",
+        googleRating: 4.8,
       },
     ],
     lodging: [
@@ -1550,6 +1554,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Jackson%2C+Wyoming&guests=16",
         notes:
           "Jackson is expensive — budget $2,000-4,000/night for a house that sleeps 16. Summer is peak season so book 3-6 months ahead.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 2 queens = 12 guys at 2/bed",
       },
       {
         type: "cabin",
@@ -1567,6 +1573,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Jackson--Wyoming/homes?adults=14",
         notes:
           "Wilson is 10 min from town and often cheaper; closer to Teton Village and the mountain courses",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 2 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -1578,6 +1586,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Jackson's best restaurant with a chef's table experience and hyper-local sourcing; wine list is extraordinary",
         reservationNeeded: true,
+        googleRating: 4.7,
       },
       {
         name: "Snake River Grill",
@@ -1587,6 +1596,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Town Square institution with elk tenderloin, bison short ribs, and a wood-burning oven; essential Jackson dining",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "Local Restaurant & Bar",
@@ -1596,6 +1606,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Elevated casual with a great group scene; locally sourced menu and excellent cocktails in a fun atmosphere",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Hatch Taqueria & Tequilas",
@@ -1605,6 +1616,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Upscale tacos and an absurd tequila selection; perfect for a rowdy group dinner before hitting the bars",
         reservationNeeded: false,
+        googleRating: 4.4,
       },
       {
         name: "Bin22",
@@ -1614,6 +1626,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Wine bar and small plates in an intimate setting; phenomenal wine list curated by Jackson's best sommelier",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
     ],
     bars: [
@@ -1774,6 +1787,7 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.bouldercanyoncc.com",
         highlight:
           "Tight 9-hole gem carved through Boulder Canyon; play it twice for a quick 18 with ponderosa pines and creek crossings",
+        googleRating: 4.4,
       },
       {
         name: "Elkhorn Ridge Golf Club",
@@ -1789,6 +1803,7 @@ export const mountainWestDestinations: Destination[] = [
         driveMinutes: 20,
         highlight:
           "Beautiful Black Hills 9-hole course with dramatic elevation changes and ponderosa forests",
+        googleRating: 4.3,
       },
       {
         name: "Spearfish Canyon Country Club",
@@ -1804,6 +1819,7 @@ export const mountainWestDestinations: Destination[] = [
         driveMinutes: 25,
         highlight:
           "Scenic course in Spearfish Canyon; shorter but character-filled with creek crossings and canyon walls",
+        googleRating: 4.2,
       },
       {
         name: "Hart Ranch Golf Course",
@@ -1820,6 +1836,7 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.hartranchgolf.com",
         highlight:
           "Best full 18 in the area; well-maintained Rapid City course with a links feel on the back nine",
+        googleRating: 4.3,
       },
     ],
     lodging: [
@@ -1840,6 +1857,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Deadwood%2C+South+Dakota&guests=16",
         notes:
           "Large cabin-style lodges in the Black Hills near Deadwood; very affordable compared to other mountain destinations",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
       {
         type: "cabin",
@@ -1857,6 +1876,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Deadwood--South-Dakota/homes?adults=14",
         notes:
           "Lead is 5 min from Deadwood with great cabin options; Terry Peak ski area has large properties at summer discount prices",
+        avgRating: 4.5,
+        bedsBreakdown: "2 kings + 3 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -1868,6 +1889,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Prime steaks in the Franklin Hotel; old-school steakhouse with big group capacity and a historic setting",
         reservationNeeded: true,
+        googleRating: 4.4,
       },
       {
         name: "Mustang Sally's",
@@ -1877,6 +1899,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Solid BBQ and big portions in a fun saloon atmosphere; great for groups that want meat and beer",
         reservationNeeded: false,
+        googleRating: 4.3,
       },
       {
         name: "The Deadwood Social Club",
@@ -1886,6 +1909,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Upscale Italian above the historic Saloon #10; surprisingly excellent pasta and wine in the Wild West",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Cheyenne Crossing",
@@ -1895,6 +1919,7 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Legendary Black Hills stop for Indian tacos, burgers, and pie in Spearfish Canyon; worth the drive",
         reservationNeeded: false,
+        googleRating: 4.6,
       },
     ],
     bars: [
@@ -2828,6 +2853,7 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.broadmoor.com/golf",
         highlight:
           "Host of multiple major championships; Robert Trent Jones Sr. design with Cheyenne Mountain views",
+        googleRating: 4.7,
       },
       {
         name: "The Broadmoor Golf Club - West Course",
@@ -2844,6 +2870,7 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.broadmoor.com/golf",
         highlight:
           "Mountain course with dramatic elevation changes; tighter and more demanding than the East",
+        googleRating: 4.5,
       },
       {
         name: "Cheyenne Shadows Golf Course",
@@ -2860,6 +2887,7 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.myairforcelife.com/golf",
         highlight:
           "Fort Carson military course open to public; outstanding mountain views and incredible value",
+        googleRating: 4.3,
       },
       {
         name: "Garden of the Gods Club",
@@ -2876,6 +2904,7 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.gardenofthegodsclub.com",
         highlight:
           "Stunning red rock formations backdrop; resort course with jaw-dropping scenery on every hole",
+        googleRating: 4.5,
       },
       {
         name: "Patty Jewett Golf Course",
@@ -2892,6 +2921,7 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.pattyjewett.com",
         highlight:
           "Historic muni opened in 1898; one of the oldest public courses west of the Mississippi",
+        googleRating: 4.2,
       },
     ],
     lodging: [
@@ -2912,6 +2942,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Colorado+Springs%2C+Colorado&guests=16",
         notes:
           "Large luxury homes near The Broadmoor with mountain views; great selection for big groups",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "house",

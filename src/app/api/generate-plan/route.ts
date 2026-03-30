@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
-  WizardState,
   ThreeFreePreview,
   FreePreview,
   StoredPlan,
@@ -11,17 +10,24 @@ import { getThreeDestinations } from "@/lib/planner-prompt";
 import { setPopularityScores } from "@/data/query";
 import { getAllPopularityScores } from "@/lib/kv";
 import { buildFreePreview } from "@/lib/free-plan";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
+import { validateWizardState } from "@/lib/validate";
 
 export async function POST(req: NextRequest) {
   try {
-    const state: WizardState = await req.json();
-
-    if (!state.organizerName || !state.organizerEmail) {
+    // Rate limit: 10 plans per IP per hour
+    const ip = getClientIp(req);
+    const rl = await rateLimit(`generate:${ip}`, 10, 3600);
+    if (!rl.allowed) {
       return NextResponse.json(
-        { error: "Organizer name and email are required" },
-        { status: 400 }
+        { error: "Too many plans generated. Try again later." },
+        { status: 429, headers: { "Retry-After": String(rl.resetIn) } }
       );
     }
+
+    // Validate and sanitize input
+    const raw = await req.json();
+    const state = validateWizardState(raw);
 
     // Load popularity scores from user interactions (learning engine)
     const popularity = await getAllPopularityScores();

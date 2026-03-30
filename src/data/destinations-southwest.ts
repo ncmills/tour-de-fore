@@ -17,6 +17,7 @@ export const southwestDestinations: Destination[] = [
       driveMinutes: 20,
     },
     bestSeasons: ["spring", "fall"],
+    groceryNotes: "Fry's, Safeway, Total Wine all within 10 min of most rentals",
     courses: [
       {
         name: "TPC Scottsdale (Stadium Course)",
@@ -1156,6 +1157,7 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.golfwolfcreek.com",
         highlight:
           "Dramatic canyon-to-canyon holes with 100-foot elevation changes — one of the most visually stunning courses in America",
+        googleRating: 4.8,
       },
       {
         name: "CasaBlanca Golf Club",
@@ -1172,6 +1174,7 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.casablancaresort.com/golf",
         highlight:
           "Well-maintained resort course at the CasaBlanca hotel — great value with casino and dining attached",
+        googleRating: 4.3,
       },
       {
         name: "Palms Golf Club",
@@ -1187,6 +1190,7 @@ export const southwestDestinations: Destination[] = [
         driveMinutes: 5,
         highlight:
           "Wide-open and forgiving layout — the ideal warm-up or hangover round",
+        googleRating: 4.2,
       },
       {
         name: "Falcon Ridge Golf Club",
@@ -1202,6 +1206,7 @@ export const southwestDestinations: Destination[] = [
         driveMinutes: 5,
         highlight:
           "Hilly desert layout with canyon views and some dramatic forced carries",
+        googleRating: 4.3,
       },
     ],
     lodging: [
@@ -1222,6 +1227,8 @@ export const southwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Mesquite%2C+NV&groupSize=16",
         notes:
           "Inventory is more limited than bigger cities but affordable large homes exist. Casino hotel rooms at CasaBlanca or Eureka are a viable alternative at $60-100/night per room.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -1233,6 +1240,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "CasaBlanca's in-house steakhouse — the best sit-down dinner option in Mesquite with solid cuts",
         reservationNeeded: true,
+        googleRating: 4.3,
       },
       {
         name: "Eureka Casino Buffet",
@@ -1242,6 +1250,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Classic casino buffet with prime rib on weekends — cheap, filling, and no reservation needed",
         reservationNeeded: false,
+        googleRating: 4.2,
       },
       {
         name: "Peggy Sue's Diner",
@@ -1251,6 +1260,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Old-school 50s-themed diner with big breakfasts and milkshakes — perfect pre-round fuel",
         reservationNeeded: false,
+        googleRating: 4.4,
       },
       {
         name: "Roberto's Taco Shop",
@@ -1260,6 +1270,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Fast casual Mexican that is a Nevada institution — carne asada burritos at 1 AM after the casino",
         reservationNeeded: false,
+        googleRating: 4.5,
       },
     ],
     bars: [
@@ -1375,6 +1386,7 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.linksdesantafe.com",
         highlight:
           "Muni-priced links course with panoramic Sangre de Cristo mountain views — best value in Santa Fe",
+        googleRating: 4.4,
       },
       {
         name: "Black Mesa Golf Club",
@@ -1391,6 +1403,7 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.blackmesagolfclub.com",
         highlight:
           "Baxter Spann design on Pueblo land with dramatic mesas and arroyos — the best course near Santa Fe",
+        googleRating: 4.5,
       },
       {
         name: "Towa Golf Resort",
@@ -1407,6 +1420,7 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.towagolf.com",
         highlight:
           "Hale Irwin design at Buffalo Thunder Resort with juniper-studded mountain terrain and casino on-site",
+        googleRating: 4.3,
       },
     ],
     lodging: [
@@ -1427,6 +1441,8 @@ export const southwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Santa+Fe%2C+NM&groupSize=16",
         notes:
           "Inventory for 12-16 is tighter than Arizona. Look for compound-style properties with casitas. Book 3+ months out for fall season when aspens turn gold.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -1438,6 +1454,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Iconic Santa Fe New Mexican restaurant since 1953 — the red chile enchiladas are mandatory",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Geronimo",
@@ -1447,6 +1464,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Fine dining in a 1756 adobe on Canyon Road — elk tenderloin and the best special-occasion meal in town",
         reservationNeeded: true,
+        googleRating: 4.7,
       },
       {
         name: "La Choza",
@@ -1456,6 +1474,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Sister restaurant to The Shed with equally legendary green chile — less tourist-heavy and bigger space",
         reservationNeeded: false,
+        googleRating: 4.5,
       },
       {
         name: "Tomasita's",
@@ -1465,6 +1484,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Railyard district New Mexican staple with potent margaritas and posole that cures all ills",
         reservationNeeded: false,
+        googleRating: 4.4,
       },
       {
         name: "Andiamo!",
@@ -1474,6 +1494,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Northern Italian in a cozy adobe space — handmade pasta and an excellent wine list",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
     ],
     bars: [
@@ -1630,6 +1651,7 @@ export const southwestDestinations: Destination[] = [
         driveMinutes: 25,
         highlight:
           "Unique 9-hole course weaving through massive boulder formations near Williams — play it twice for 18",
+        googleRating: 4.5,
       },
       {
         name: "Continental Country Club",
@@ -1646,6 +1668,7 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.continentalgolfclub.com",
         highlight:
           "Tree-lined mountain course with elk sightings and pine-scented fairways at 7,000 feet",
+        googleRating: 4.3,
       },
       {
         name: "Pine Canyon Club",
@@ -1661,6 +1684,7 @@ export const southwestDestinations: Destination[] = [
         driveMinutes: 10,
         highlight:
           "Jay Morrish private club that occasionally opens to resort guests — stunning ponderosa pine routing",
+        googleRating: 4.7,
       },
     ],
     lodging: [
@@ -1682,6 +1706,8 @@ export const southwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Flagstaff%2C+AZ&groupSize=16",
         notes:
           "Big cabin rentals are available but book fast in summer. Mountain lodge vibes are different from the desert trip — think fireplaces, pine trees, and cooler nights.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -1693,6 +1719,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Best restaurant in Flagstaff — farm-to-table American with a serious wine list in a renovated carriage house",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "Coppa Cafe",
@@ -1702,6 +1729,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Cozy Italian bistro with handmade pasta and a great wine selection — perfect date-night-level meal",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Salsa Brava",
@@ -1711,6 +1739,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Local go-to for big plates of New Mexican-style food with roasted green chile",
         reservationNeeded: false,
+        googleRating: 4.3,
       },
       {
         name: "Diablo Burger",
@@ -1720,6 +1749,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Local grass-fed beef burgers on English muffin buns with Belgian fries — a Flagstaff cult favorite",
         reservationNeeded: false,
+        googleRating: 4.6,
       },
     ],
     bars: [
@@ -2199,6 +2229,7 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.wolfrungolfclub.com",
         highlight:
           "Challenging mountain layout with Sierra Nevada views and some of the best conditioning in northern Nevada",
+        googleRating: 4.4,
       },
       {
         name: "ArrowCreek Golf Club (Legend Course)",
@@ -2215,6 +2246,7 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.arrowcreek.com",
         highlight:
           "Arnold Palmer design perched above the city with panoramic views of Reno and the Truckee Meadows",
+        googleRating: 4.5,
       },
       {
         name: "Lakeridge Golf Course",
@@ -2231,6 +2263,7 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.lakeridgegolf.com",
         highlight:
           "Robert Trent Jones II design with an island green par-3 — best value in the Reno area",
+        googleRating: 4.3,
       },
       {
         name: "Montreux Golf & Country Club",
@@ -2247,6 +2280,7 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.montreuxgolf.com",
         highlight:
           "Jack Nicklaus design that hosted the PGA Tour Barracuda Championship — private but resort access available",
+        googleRating: 4.7,
       },
     ],
     lodging: [
@@ -2267,6 +2301,8 @@ export const southwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Reno%2C+NV&groupSize=16",
         notes:
           "South Reno has the best large home inventory near the golf. Alternatively, Midtown condos put you walking distance from bars.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
       {
         type: "lodge",
@@ -2282,6 +2318,8 @@ export const southwestDestinations: Destination[] = [
           "Downtown Reno — casino hotel suites at Grand Sierra, Peppermill, or Atlantis",
         notes:
           "Casino resorts offer connected suites and group rates. The Peppermill is the standout with its retro-chic vibe.",
+        avgRating: 4.5,
+        bedsBreakdown: "4 kings = 8 guys at 2/bed",
       },
     ],
     dining: [
@@ -2293,6 +2331,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Elevated French-American cuisine in a beautifully restored Midtown building — great group energy",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Louis' Basque Corner",
@@ -2302,6 +2341,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Family-style Basque dinner with picon punch, lamb, and communal tables — a Reno institution since 1967",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "The Depot Craft Brewery Distillery",
@@ -2311,6 +2351,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "House-brewed beers and spirits in a converted railroad depot — great food menu too",
         reservationNeeded: false,
+        googleRating: 4.4,
       },
       {
         name: "Sterling's Seafood Steakhouse",
@@ -2320,6 +2361,7 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Classic high-end steakhouse inside Silver Legacy with big-group private dining",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
     ],
     bars: [
