@@ -215,23 +215,34 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               position: "absolute",
               inset: 0,
               display: "flex",
+              flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
+              gap: "0.5rem",
               pointerEvents: "none",
-              background: "rgba(0,0,0,0.3)",
+              background: "rgba(0,0,0,0.4)",
             }}
           >
             <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ type: "spring", stiffness: 200 }}
               style={{
-                fontFamily: "var(--font-script), cursive",
-                fontSize: "clamp(2rem, 5vw, 4rem)",
+                fontFamily: "var(--font-scrawl), cursive",
+                fontSize: "clamp(2.5rem, 7vw, 5rem)",
                 color: "#f5c842",
-                textShadow: "0 0 30px rgba(245,200,66,0.3)",
+                textShadow: "0 0 30px rgba(245,200,66,0.5), 0 0 60px rgba(245,200,66,0.2)",
               }}
             >
-              Cheers... 🍻
+              Cheers 🍻
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              style={{ fontFamily: "var(--font-script), cursive", fontSize: "clamp(0.9rem, 2vw, 1.2rem)", color: "rgba(255,255,255,0.4)" }}
+            >
+              now get to the pro shop
             </motion.p>
           </motion.div>
         )}
@@ -247,20 +258,23 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               position: "absolute",
               inset: 0,
               display: "flex",
+              flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
+              gap: "0.5rem",
               pointerEvents: "none",
-              background: "rgba(0,0,0,0.4)",
+              background: "rgba(0,0,0,0.5)",
             }}
           >
             <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ type: "spring", stiffness: 150 }}
               style={{
-                fontFamily: "var(--font-script), cursive",
-                fontSize: "clamp(2rem, 5vw, 4rem)",
-                color: "rgba(255,255,255,0.8)",
-                textShadow: "0 0 30px rgba(234,88,12,0.3)",
+                fontFamily: "var(--font-scrawl), cursive",
+                fontSize: "clamp(2.5rem, 7vw, 5rem)",
+                color: "#EA580C",
+                textShadow: "0 0 30px rgba(234,88,12,0.5), 0 0 60px rgba(234,88,12,0.2)",
               }}
             >
               Right this way...

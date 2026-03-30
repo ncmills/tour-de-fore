@@ -11,13 +11,14 @@ const VIDEO_HD = "/bg.mp4";
 const HYPE_VIDEO = "/hype-audio.mp4"; // has audio; TubeTv starts muted, user can unmute
 
 const textStyle: React.CSSProperties = {
-  fontFamily: "var(--font-script), cursive",
+  fontFamily: "var(--font-scrawl), cursive",
   fontSize: "clamp(1.3rem, 3.5vw, 3.5rem)",
   color: "rgba(255,255,255,0.9)",
   lineHeight: 1,
   margin: 0,
   padding: 0,
   textAlign: "center",
+  textShadow: "0 0 8px rgba(255,60,20,0.4), 0 0 20px rgba(255,60,20,0.15)",
 };
 
 type Phase = "text" | "tv" | "done";
@@ -294,11 +295,12 @@ export default function HomeClient() {
                 href={href}
                 onClick={() => { try { sessionStorage.setItem("tdf-explode", "1"); } catch {} }}
                 style={{
-                  fontFamily: "var(--font-script), cursive",
+                  fontFamily: "var(--font-scrawl), cursive",
                   fontSize: isMobile ? "clamp(1.4rem, 6vw, 2rem)" : "clamp(1.8rem, 3.5vw, 3.5rem)",
                   color: blood ? "#fff" : "rgba(255,255,255,0.7)",
                   textDecoration: "none",
-                  transition: "color 0.2s, background 0.3s",
+                  transition: "color 0.2s, background 0.3s, text-shadow 0.3s",
+                  textShadow: "0 0 8px rgba(255,60,20,0.3), 0 0 20px rgba(255,60,20,0.15)",
                   ...(blood ? {
                     background: "radial-gradient(ellipse at 50% 60%, rgba(139,0,0,0.7) 0%, rgba(180,20,20,0.45) 40%, rgba(120,0,0,0.2) 70%, transparent 100%)",
                     padding: "0.3em 1em",
@@ -308,10 +310,12 @@ export default function HomeClient() {
                 }}
                 onMouseEnter={e => {
                   e.currentTarget.style.color = "rgba(255,255,255,1)";
+                  e.currentTarget.style.textShadow = "0 0 12px rgba(255,60,20,0.6), 0 0 30px rgba(255,60,20,0.3)";
                   setHoveredSubtitle(subtitle);
                 }}
                 onMouseLeave={e => {
                   e.currentTarget.style.color = blood ? "#fff" : "rgba(255,255,255,0.7)";
+                  e.currentTarget.style.textShadow = blood ? "0 0 20px rgba(200,0,0,0.5), 0 2px 4px rgba(0,0,0,0.5)" : "0 0 8px rgba(255,60,20,0.3), 0 0 20px rgba(255,60,20,0.15)";
                   setHoveredSubtitle(null);
                 }}
               >

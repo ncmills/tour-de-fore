@@ -162,6 +162,28 @@ export default function PastTripsClient() {
         </div>
       </div>
 
+      {/* Heading */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.4 }}
+        style={{ textAlign: "center", padding: "1.5rem clamp(1.5rem, 6vw, 6rem) 0" }}
+      >
+        <h1 style={{
+          fontFamily: "var(--font-scrawl), cursive",
+          fontSize: "clamp(2rem, 6vw, 4rem)",
+          fontWeight: 400,
+          color: "#fff",
+          textShadow: "0 0 7px rgba(255,60,20,0.6), 0 0 20px rgba(255,60,20,0.3)",
+          marginBottom: "0.3rem",
+        }}>
+          The Archives
+        </h1>
+        <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.8rem", letterSpacing: "0.15em", textTransform: "uppercase", fontFamily: "monospace" }}>
+          {past.length} trips · {past.reduce((s, t) => s + t.courses.length, 0)} courses · countless beers
+        </p>
+      </motion.div>
+
       {/* Year grid */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}

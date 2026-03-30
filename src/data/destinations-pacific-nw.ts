@@ -798,7 +798,7 @@ export const pacificNWDestinations: Destination[] = [
       "Coeur d'Alene is a stunning mountain lake town with a golf resort famous for its par-3 island green that you reach by boat. Beyond the resort course, Circling Raven and The Idaho Club offer serious golf. The downtown lakefront packs plenty of restaurants and bars for group nightlife.",
     population: "medium",
     nearestAirport: {
-      code: "SFF",
+      code: "GEG",
       name: "Spokane International Airport (GEG)",
       driveMinutes: 40,
     },
@@ -2789,7 +2789,7 @@ export const pacificNWDestinations: Destination[] = [
       "Sandpoint sits on the shore of massive Lake Pend Oreille with the Selkirk Mountains rising behind it. The golf is solid, the lake activities are incredible, and the walkable downtown has a surprisingly good bar and restaurant scene for a town of 9,000. It's Coeur d'Alene's cooler, less-discovered neighbor.",
     population: "tiny",
     nearestAirport: {
-      code: "SFF",
+      code: "GEG",
       name: "Spokane Felts Field / GEG (Spokane International)",
       driveMinutes: 80,
     },

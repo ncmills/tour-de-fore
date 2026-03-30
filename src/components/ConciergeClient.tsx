@@ -38,11 +38,12 @@ export default function ConciergeClient() {
           Concierge Service
         </p>
         <h1 style={{
-          fontFamily: "var(--font-script), cursive",
+          fontFamily: "var(--font-scrawl), cursive",
           fontSize: "clamp(2.5rem, 8vw, 5rem)",
           color: "#fff",
           lineHeight: 1.1,
           marginBottom: "1.5rem",
+          textShadow: "0 0 10px rgba(220,38,38,0.5), 0 0 30px rgba(220,38,38,0.2)",
         }}>
           Let the Devils Handle It
         </h1>

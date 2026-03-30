@@ -200,7 +200,7 @@ export interface ThreeDestinationResult {
 
 export interface StoredPlan {
   id: string;
-  destinations: ThreeDestinationResult;
+  destinations?: ThreeDestinationResult;
   /** @deprecated kept for backwards compat with old single-destination plans */
   plans?: ThreePlanResult;
   inputs: WizardState;

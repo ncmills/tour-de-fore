@@ -158,9 +158,9 @@ function scoreDestination(d: Destination, options: FilterOptions): number {
   const desiredTiers = courseQualityToTiers(options.courseQuality || "");
   let score = 0;
 
-  // Course quality match
+  // Course quality match (capped at 3 to avoid data-richness bias)
   const matchingCourses = d.courses.filter((c) => desiredTiers.includes(c.tier));
-  score += matchingCourses.length * 10;
+  score += Math.min(matchingCourses.length, 3) * 10;
 
   // Budget fit
   const estimatedPerPerson = computePriceIndex(d, options.groupSize || 12);
@@ -168,14 +168,17 @@ function scoreDestination(d: Destination, options: FilterOptions): number {
     score += 20;
   }
 
-  // Number of courses available
-  score += Math.min(d.courses.length, 6) * 3;
+  // Has enough courses (3+ is the threshold, bonus for variety not quantity)
+  if (d.courses.length >= 3) score += 10;
+  if (d.courses.length >= 5) score += 5;
 
-  // Bar/nightlife scene
-  score += Math.min(d.bars.length, 5) * 2;
+  // Bar/nightlife — walkable bars are key to TDF philosophy
+  const walkableBars = d.bars.filter((b) => b.walkableFromDowntown).length;
+  score += walkableBars * 4;
+  score += Math.min(d.bars.filter((b) => b.lateNight).length, 3) * 2;
 
   // Dining options
-  score += Math.min(d.dining.length, 5) * 2;
+  score += Math.min(d.dining.length, 4) * 2;
 
   // Activity options
   score += Math.min(d.activities.length, 4) * 3;
@@ -183,6 +186,12 @@ function scoreDestination(d: Destination, options: FilterOptions): number {
   // Airport convenience
   if (d.nearestAirport.driveMinutes <= 30) score += 5;
   else if (d.nearestAirport.driveMinutes <= 60) score += 3;
+
+  // Arrival day activity bonus (TDF tradition)
+  const arrivalActivities = d.activities.filter((a) =>
+    a.bestFor === "arrival day" && a.groupFriendly
+  );
+  if (arrivalActivities.length > 0) score += 8;
 
   // Activity match bonus
   if (options.activities && options.activities.length > 0) {
@@ -389,35 +398,35 @@ export function buildDestinationContext(destination: Destination): string {
   const courseList = d.courses
     .map(
       (c) =>
-        `  - ${c.name} (${c.tier}) — $${c.greenFeeRange[0]}-${c.greenFeeRange[1]}/person, ${c.holes}h par ${c.par}, slope ${c.slope}, ${c.style}${c.walkable ? ", walkable" : ""} — ${c.highlight}${c.url ? ` | ${c.url}` : ""}`
+        `  - ${c.name} (${c.tier}) — $${c.greenFeeRange[0]}-${c.greenFeeRange[1]}/person, ${c.holes}h par ${c.par}, ${c.yardage}yd, slope ${c.slope}, rating ${c.rating}, ${c.style}${c.walkable ? ", walkable" : ""}, ${c.driveMinutes} min drive — ${c.highlight}${c.url ? ` | ${c.url}` : ""}`
     )
     .join("\n");
 
   const lodgingList = d.lodging
     .map(
       (l) =>
-        `  - ${l.type} (sleeps ${l.sleeps[0]}-${l.sleeps[1]}) — $${l.nightlyRange[0]}-${l.nightlyRange[1]}/night — ${l.amenities.join(", ")} — ${l.notes}`
+        `  - ${l.type} (sleeps ${l.sleeps[0]}-${l.sleeps[1]}) — $${l.nightlyRange[0]}-${l.nightlyRange[1]}/night — ${l.amenities.join(", ")} — ${l.areaDescription} — ${l.notes}${l.searchUrl ? ` | ${l.searchUrl}` : ""}`
     )
     .join("\n");
 
   const diningList = d.dining
     .map(
       (r) =>
-        `  - ${r.name} (${r.style}, ${r.priceRange}) — ${r.highlight}${r.capacity === "large-group" ? " [handles 16+]" : ""}`
+        `  - ${r.name} (${r.style}, ${r.priceRange}) — ${r.highlight}${r.capacity === "large-group" ? " [handles 16+]" : ""}${r.reservationNeeded ? " [reservation needed]" : ""}`
     )
     .join("\n");
 
   const barList = d.bars
     .map(
       (b) =>
-        `  - ${b.name} (${b.vibe}) — ${b.highlight}${b.lateNight ? " [late night]" : ""}`
+        `  - ${b.name} (${b.vibe}) — ${b.highlight}${b.lateNight ? " [late night]" : ""}${b.walkableFromDowntown ? " [walkable from downtown]" : ""}`
     )
     .join("\n");
 
   const activityList = d.activities
     .map(
       (a) =>
-        `  - ${a.name} (${a.type}) — $${a.pricePerPerson[0]}-${a.pricePerPerson[1]}/person, ${a.duration} — ${a.highlight} [${a.bestFor}]`
+        `  - ${a.name} (${a.type}) — $${a.pricePerPerson[0]}-${a.pricePerPerson[1]}/person, ${a.duration} — ${a.highlight} [${a.bestFor}]${a.groupFriendly ? " [group-friendly]" : ""}${a.provider ? ` — Provider: ${a.provider}` : ""}`
     )
     .join("\n");
 
