@@ -1,23 +1,58 @@
 import { NextRequest, NextResponse } from "next/server";
+import Anthropic from "@anthropic-ai/sdk";
 import {
   ThreeFreePreview,
-  FreePreview,
+  ThreePlanResult,
+  ThreeDestinationResult,
+  DestinationRecommendation,
   StoredPlan,
   PriceLevel,
 } from "@/lib/plan-types";
 import { storePlan, storeAttendees, recordDestinationView } from "@/lib/kv";
-import { getThreeDestinations } from "@/lib/planner-prompt";
-import { setPopularityScores } from "@/data/query";
+import {
+  getThreeDestinations,
+  buildSystemPrompt,
+  buildUserMessage,
+} from "@/lib/planner-prompt";
+import { buildDestinationContext, setPopularityScores } from "@/data/query";
 import { getAllPopularityScores } from "@/lib/kv";
 import { buildFreePreview } from "@/lib/free-plan";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import { validateWizardState } from "@/lib/validate";
+import {
+  isSubscribed,
+  canGenerateFreePlan,
+  recordFreePlanGeneration,
+  addPlanToUser,
+} from "@/lib/auth";
+
+async function generatePlansForDestination(
+  client: Anthropic,
+  state: Parameters<typeof buildUserMessage>[0],
+  destinationContext: string
+): Promise<ThreePlanResult> {
+  const message = await client.messages.create({
+    model: "claude-sonnet-4-20250514",
+    max_tokens: 16384,
+    system: buildSystemPrompt(destinationContext),
+    messages: [{ role: "user", content: buildUserMessage(state) }],
+  });
+
+  const textBlock = message.content.find((b) => b.type === "text");
+  if (!textBlock || textBlock.type !== "text") throw new Error("No text response");
+
+  let jsonStr = textBlock.text.trim();
+  if (jsonStr.startsWith("```")) {
+    jsonStr = jsonStr.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "");
+  }
+  return JSON.parse(jsonStr);
+}
 
 export async function POST(req: NextRequest) {
   try {
-    // Rate limit: 10 plans per IP per hour
+    // Rate limit: 5 plans per IP per hour
     const ip = getClientIp(req);
-    const rl = await rateLimit(`generate:${ip}`, 10, 3600);
+    const rl = await rateLimit(`generate:${ip}`, 5, 3600);
     if (!rl.allowed) {
       return NextResponse.json(
         { error: "Too many plans generated. Try again later." },
@@ -25,17 +60,30 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Validate and sanitize input
+    // Validate input
     const raw = await req.json();
     const state = validateWizardState(raw);
 
-    // Load popularity scores from user interactions (learning engine)
+    // Check subscription or free plan limit
+    const email = state.organizerEmail;
+    const subscribed = email ? await isSubscribed(email) : false;
+
+    if (!subscribed) {
+      const canGenerate = email ? await canGenerateFreePlan(email) : true;
+      if (!canGenerate) {
+        return NextResponse.json({
+          error: "You've used your free plan this month. Become a Devil for unlimited trips — $199/year.",
+          limitReached: true,
+        }, { status: 429 });
+      }
+    }
+
+    // Load popularity scores
     const popularity = await getAllPopularityScores();
     setPopularityScores(popularity);
 
-    // Pick 3 destinations at different price levels
+    // Pick 3 destinations
     const picks = getThreeDestinations(state);
-
     if (picks.length === 0) {
       return NextResponse.json(
         { error: "No destinations match your criteria. Try adjusting your preferences." },
@@ -43,50 +91,85 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Build FREE previews from database only — NO Claude API calls ($0 cost)
+    // Build free previews (for destination cards — always fast)
     const previews = picks.map((pick) =>
       buildFreePreview(pick.destination, state, pick.priceLevel)
     );
-
-    // Assemble the three-preview result
-    const byLevel: Record<PriceLevel, FreePreview | undefined> = {
+    const byLevel: Record<PriceLevel, typeof previews[0] | undefined> = {
       budget: previews.find((p) => p.priceLevel === "budget"),
       mid: previews.find((p) => p.priceLevel === "mid"),
       premium: previews.find((p) => p.priceLevel === "premium"),
     };
-
-    const fallback = previews[0];
+    const fallbackPreview = previews[0];
     const freePreviews: ThreeFreePreview = {
-      budget: byLevel.budget || fallback,
-      mid: byLevel.mid || fallback,
-      premium: byLevel.premium || fallback,
+      budget: byLevel.budget || fallbackPreview,
+      mid: byLevel.mid || fallbackPreview,
+      premium: byLevel.premium || fallbackPreview,
     };
 
-    // Store plan with free previews only (paid plans added after payment)
+    // Generate FULL Claude plans for ALL users (the recommended destination)
+    // For subscribers: generate all 3. For free: generate just the mid (recommended).
+    const client = new Anthropic();
+    const destsToGenerate = subscribed ? picks : [picks.find((p) => p.priceLevel === "mid") || picks[0]];
+
+    const planPromises = destsToGenerate.map(async (pick) => {
+      const context = buildDestinationContext(pick.destination);
+      const plans = await generatePlansForDestination(client, state, context);
+      return {
+        destinationId: pick.destination.id,
+        city: pick.destination.city,
+        state: pick.destination.state,
+        tagline: pick.destination.tagline,
+        priceLevel: pick.priceLevel,
+        plans,
+      } satisfies DestinationRecommendation;
+    });
+
+    const recommendations = await Promise.all(planPromises);
+
+    // Build destinations result
+    const destByLevel: Record<PriceLevel, DestinationRecommendation | undefined> = {
+      budget: recommendations.find((r) => r.priceLevel === "budget"),
+      mid: recommendations.find((r) => r.priceLevel === "mid"),
+      premium: recommendations.find((r) => r.priceLevel === "premium"),
+    };
+    const fallbackRec = recommendations[0];
+
+    const destinations: ThreeDestinationResult | undefined = recommendations.length > 0 ? {
+      budget: destByLevel.budget || fallbackRec,
+      mid: destByLevel.mid || fallbackRec,
+      premium: destByLevel.premium || fallbackRec,
+    } : undefined;
+
+    // Record free plan usage
+    if (!subscribed && email) {
+      await recordFreePlanGeneration(email);
+    }
+
+    // Store plan
     const planId = crypto.randomUUID();
     const storedPlan: StoredPlan = {
       id: planId,
       freePreviews,
+      destinations,
       inputs: state,
       createdAt: new Date().toISOString(),
       emailsSent: false,
+      paid: subscribed, // subscribers auto-marked as paid
     };
 
     await storePlan(storedPlan);
-    await storeAttendees(planId, [{ name: state.organizerName, email: state.organizerEmail }]);
+    await storeAttendees(planId, [{ name: state.organizerName, email }]);
 
-    // Associate plan with user profile
-    if (state.organizerEmail) {
-      const { addPlanToUser } = await import("@/lib/auth");
-      await addPlanToUser(state.organizerEmail, planId);
+    if (email) {
+      await addPlanToUser(email, planId);
     }
 
-    // Record destination views for the learning engine
     for (const preview of previews) {
       await recordDestinationView(preview.destinationId, state);
     }
 
-    return NextResponse.json({ planId, freePreviews });
+    return NextResponse.json({ planId, freePreviews, subscribed });
   } catch (err) {
     console.error("Plan generation error:", err);
     return NextResponse.json(

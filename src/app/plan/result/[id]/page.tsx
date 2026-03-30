@@ -1,6 +1,8 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { getPlan } from "@/lib/kv";
+import { getSessionEmail, isSubscribed } from "@/lib/auth";
+import { maskPlan } from "@/lib/mask";
 import PlanResultClient from "@/components/PlanResultClient";
 import PlanSelectionClient from "@/components/PlanSelectionClient";
 import type {
@@ -37,11 +39,7 @@ export async function generateMetadata({ params }: Props) {
     };
   }
 
-  const plan = stored.destinations?.mid?.plans?.devil || stored.plans?.devil;
-  return {
-    title: `${plan?.tripName || "Your Trip Plan"} | Tour de Fore`,
-    description: plan?.tagline || "",
-  };
+  return { title: "Your Trip Plan | Tour de Fore" };
 }
 
 export default async function PlanResultPage({ params, searchParams }: Props) {
@@ -50,14 +48,18 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
   const stored = await getPlan(id);
   if (!stored) notFound();
 
-  // ── No dest: show destination cards with inline previews + unlock CTAs ──
+  // Check subscription status
+  const email = await getSessionEmail();
+  const subscribed = email ? await isSubscribed(email) : false;
+
+  // ── No dest: show destination cards ──
   if (!dest) {
     return (
       <Suspense>
         <PlanSelectionClient
           planId={id}
           freePreviews={stored.freePreviews || null}
-          paid={stored.paid}
+          paid={subscribed || stored.paid}
           paidDestination={stored.paidDestination}
           legacyDestinations={stored.destinations}
         />
@@ -67,42 +69,47 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
 
   const destLevel = dest as PriceLevel;
 
-  // ── Paid: show full plan directly (default to devil tier, user can toggle) ──
-  if (stored.paid && stored.destinations?.[destLevel]) {
+  // ── Has dest + full plan data: show plan (masked or full) ──
+  if (stored.destinations?.[destLevel]) {
     const rec = stored.destinations[destLevel];
     const selectedTier = tier || "devil";
-    const plan = getTierPlan(rec.plans, selectedTier);
+    let plan = getTierPlan(rec.plans, selectedTier);
     if (!plan) notFound();
 
-    // Pass all 3 tier plans so the component can render tier tabs
+    // Mask names for non-subscribers
+    if (!subscribed) {
+      plan = maskPlan(plan);
+    }
+
     return (
       <Suspense>
         <PlanResultClient
           plan={plan}
-          allPlans={rec.plans}
+          allPlans={subscribed ? rec.plans : undefined}
           planId={id}
           tier={selectedTier as TripTier}
           dest={dest}
-          paid={true}
+          paid={subscribed}
+          subscribed={subscribed}
         />
       </Suspense>
     );
   }
 
-  // ── Not paid: redirect back to destination cards (unlock happens there now) ──
-  // Legacy support for old plans
+  // ── Legacy plans ──
   if (stored.plans) {
     const selectedTier = tier || "devil";
-    const plan = getTierPlan(stored.plans, selectedTier);
+    let plan = getTierPlan(stored.plans, selectedTier);
     if (!plan) notFound();
+    if (!subscribed) plan = maskPlan(plan);
     return (
       <Suspense>
-        <PlanResultClient plan={plan} planId={id} tier={selectedTier as TripTier} dest={dest} paid={true} />
+        <PlanResultClient plan={plan} planId={id} tier={selectedTier as TripTier} dest={dest} paid={true} subscribed={subscribed} />
       </Suspense>
     );
   }
 
-  // Unpaid user trying to access dest directly — send back to cards
+  // No full plan yet — show destination cards
   return (
     <Suspense>
       <PlanSelectionClient

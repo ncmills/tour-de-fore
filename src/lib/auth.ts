@@ -73,3 +73,41 @@ export async function setUserName(email: string, name: string): Promise<void> {
 export async function getUserName(email: string): Promise<string | null> {
   return await getRedis().get(`user:${email}:name`);
 }
+
+// ── Subscription ("Become a Devil") ──
+
+export async function setSubscription(email: string, stripeSubId: string, expiresAt: Date): Promise<void> {
+  const r = getRedis();
+  const ttl = Math.max(Math.floor((expiresAt.getTime() - Date.now()) / 1000), 86400);
+  await r.set(`user:${email}:sub`, JSON.stringify({ stripeSubId, expiresAt: expiresAt.toISOString() }), "EX", ttl);
+}
+
+export async function isSubscribed(email: string): Promise<boolean> {
+  const raw = await getRedis().get(`user:${email}:sub`);
+  if (!raw) return false;
+  const sub = JSON.parse(raw);
+  return new Date(sub.expiresAt) > new Date();
+}
+
+export async function cancelSubscription(email: string): Promise<void> {
+  await getRedis().del(`user:${email}:sub`);
+}
+
+// ── Free plan rate limiting (1 per month) ──
+
+export async function canGenerateFreePlan(email: string): Promise<boolean> {
+  const count = await getRedis().get(`user:${email}:freeplans:${getMonthKey()}`);
+  return !count || parseInt(count) < 1;
+}
+
+export async function recordFreePlanGeneration(email: string): Promise<void> {
+  const r = getRedis();
+  const key = `user:${email}:freeplans:${getMonthKey()}`;
+  await r.incr(key);
+  await r.expire(key, 60 * 60 * 24 * 35); // ~35 days
+}
+
+function getMonthKey(): string {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+}

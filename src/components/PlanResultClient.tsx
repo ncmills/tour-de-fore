@@ -215,6 +215,7 @@ interface PlanResultClientProps {
   tier: TripTier;
   dest?: string;
   paid?: boolean;
+  subscribed?: boolean;
 }
 
 const tierTabs: { key: TripTier; planKey: keyof ThreePlanResult; label: string }[] = [
@@ -223,7 +224,7 @@ const tierTabs: { key: TripTier; planKey: keyof ThreePlanResult; label: string }
   { key: "demon-king", planKey: "demonKing", label: "The Demon King" },
 ];
 
-export default function PlanResultClient({ plan, allPlans, planId, tier, dest, paid }: PlanResultClientProps) {
+export default function PlanResultClient({ plan, allPlans, planId, tier, dest, paid, subscribed }: PlanResultClientProps) {
   const [copied, setCopied] = useState(false);
   const [showEmailForm, setShowEmailForm] = useState(false);
   const [emailInput, setEmailInput] = useState("");
@@ -303,7 +304,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
         }}>
           <Link
             className="concierge-cta"
-            href={`/concierge?planId=${planId}&tier=${tier}${dest ? `&dest=${dest}` : ""}`}
+            href={subscribed ? `/plan/build?planId=${planId}&dest=${dest || "mid"}&tier=${tier}` : `/subscribe`}
             style={{
               display: "inline-block",
               background: "rgba(220,38,38,0.85)",
@@ -320,7 +321,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
             onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(220,38,38,1)"; }}
             onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(220,38,38,0.85)"; }}
           >
-            Let the devils handle it →
+            {subscribed ? "Build Your Trip →" : "Become a Devil — $199/yr →"}
           </Link>
         </div>
       </div>
