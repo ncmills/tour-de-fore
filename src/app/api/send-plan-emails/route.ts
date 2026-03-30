@@ -8,19 +8,10 @@ function getResend() {
 
 export async function POST(req: NextRequest) {
   try {
-    const { planId } = await req.json();
+    const { planId, emails } = await req.json();
 
     if (!planId) {
       return NextResponse.json({ error: "Missing planId" }, { status: 400 });
-    }
-
-    // Rate limit: one send per plan
-    const canSend = await markEmailsSent(planId);
-    if (!canSend) {
-      return NextResponse.json(
-        { error: "Emails already sent for this plan" },
-        { status: 409 }
-      );
     }
 
     const stored = await getPlan(planId);
@@ -28,12 +19,33 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Plan not found" }, { status: 404 });
     }
 
-    const attendees = await getAttendees(planId);
-    if (attendees.length === 0) {
-      return NextResponse.json(
-        { error: "No attendees found" },
-        { status: 404 }
-      );
+    // Accept emails from request body, or fall back to stored attendees
+    let attendees: { name: string; email: string }[];
+    if (emails && Array.isArray(emails) && emails.length > 0) {
+      // Validate and dedupe emails from request
+      const validEmails = emails
+        .filter((e: string) => typeof e === "string" && e.includes("@") && e.length < 254)
+        .slice(0, 20); // cap at 20 recipients
+      if (validEmails.length === 0) {
+        return NextResponse.json({ error: "No valid emails provided" }, { status: 400 });
+      }
+      attendees = validEmails.map((e: string) => ({ name: "", email: e }));
+    } else {
+      attendees = await getAttendees(planId);
+      if (attendees.length === 0) {
+        return NextResponse.json({ error: "No attendees found" }, { status: 404 });
+      }
+    }
+
+    // Rate limit: one send per plan (reset if new emails provided)
+    if (!emails) {
+      const canSend = await markEmailsSent(planId);
+      if (!canSend) {
+        return NextResponse.json(
+          { error: "Emails already sent for this plan" },
+          { status: 409 }
+        );
+      }
     }
 
     // Use mid destination's devil tier for emails (recommended combo)

@@ -277,6 +277,7 @@ export function getThreeDestinations(state: WizardState): PickedDestination[] {
     specificCity: state.destinationType === "specific" ? state.destination : undefined,
     season: seasonFromWizardState(state),
     groupSize: state.groupSize,
+    numberOfDays: state.numberOfDays,
     budget: state.budget,
     courseQuality: state.courseQuality,
     activities: state.activities,

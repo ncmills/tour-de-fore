@@ -16,6 +16,7 @@ interface FilterOptions {
   specificCity?: string;
   season?: Season;
   groupSize?: number;
+  numberOfDays?: number;
   budget?: string;
   courseQuality?: string;
   activities?: string[];
@@ -139,16 +140,25 @@ export function filterDestinations(options: FilterOptions): Destination[] {
 
 // ── Compute price index for a destination ──
 
-function computePriceIndex(d: Destination, groupSize: number): number {
+function computePriceIndex(d: Destination, groupSize: number, numberOfDays: number = 3): number {
   const avgGreenFee =
     d.courses.reduce((sum, c) => sum + (c.greenFeeRange[0] + c.greenFeeRange[1]) / 2, 0) /
     d.courses.length;
 
-  const cheapestLodging = Math.min(...d.lodging.map((l) => l.nightlyRange[0]));
-  const lodgingPerPerson = (cheapestLodging * 4) / Math.max(groupSize, 8); // 4 nights
+  // Rounds = 2 per golf day (arrival day has no golf, so golf days = numberOfDays - 1)
+  const golfDays = Math.max(numberOfDays - 1, 1);
+  const rounds = golfDays * 2;
+  const nights = numberOfDays + 1; // arrive night before, leave after last day
 
-  // 6 rounds of golf + lodging + food estimate
-  return avgGreenFee * 6 + lodgingPerPerson + 300;
+  // Use median lodging cost (not just cheapest floor) for better price differentiation
+  const lodgingCosts = d.lodging.map((l) => (l.nightlyRange[0] + l.nightlyRange[1]) / 2).sort((a, b) => a - b);
+  const medianLodging = lodgingCosts[Math.floor(lodgingCosts.length / 2)];
+  const lodgingPerPerson = (medianLodging * nights) / Math.max(groupSize, 8);
+
+  // Food scales with days: ~$75/person/day
+  const foodEstimate = numberOfDays * 75;
+
+  return avgGreenFee * rounds + lodgingPerPerson + foodEstimate;
 }
 
 // ── Score a destination based on user preferences ──
@@ -163,7 +173,7 @@ function scoreDestination(d: Destination, options: FilterOptions): number {
   score += Math.min(matchingCourses.length, 3) * 10;
 
   // Budget fit
-  const estimatedPerPerson = computePriceIndex(d, options.groupSize || 12);
+  const estimatedPerPerson = computePriceIndex(d, options.groupSize || 12, options.numberOfDays || 3);
   if (estimatedPerPerson >= budgetRange[0] && estimatedPerPerson <= budgetRange[1]) {
     score += 20;
   }
@@ -234,7 +244,7 @@ export function pickThreeDestinations(
       destination: d,
       priceLevel: "mid" as PriceLevel,
       score: scoreDestination(d, options),
-      priceIndex: computePriceIndex(d, options.groupSize || 12),
+      priceIndex: computePriceIndex(d, options.groupSize || 12, options.numberOfDays || 3),
     }];
   }
 
@@ -266,14 +276,14 @@ export function pickThreeDestinations(
   const scoredPrimary = primaryDestinations.map((d) => ({
     destination: d,
     score: scoreDestination(d, options),
-    priceIndex: computePriceIndex(d, options.groupSize || 12),
+    priceIndex: computePriceIndex(d, options.groupSize || 12, options.numberOfDays || 3),
   }));
 
   // Score neighbor destinations
   const scoredNeighbors = neighborDestinations.map((d) => ({
     destination: d,
     score: scoreDestination(d, options),
-    priceIndex: computePriceIndex(d, options.groupSize || 12),
+    priceIndex: computePriceIndex(d, options.groupSize || 12, options.numberOfDays || 3),
   }));
 
   // Sort primary by price to classify into tiers

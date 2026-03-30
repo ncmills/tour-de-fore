@@ -216,6 +216,11 @@ interface PlanResultClientProps {
 
 export default function PlanResultClient({ plan, planId, tier, dest }: PlanResultClientProps) {
   const [copied, setCopied] = useState(false);
+  const [showEmailForm, setShowEmailForm] = useState(false);
+  const [emailInput, setEmailInput] = useState("");
+  const [sendingEmails, setSendingEmails] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
+  const [emailError, setEmailError] = useState("");
 
   const copyLink = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -223,8 +228,31 @@ export default function PlanResultClient({ plan, planId, tier, dest }: PlanResul
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const sendToAttendees = () => {
-    /* placeholder — wire to API */
+  const sendToAttendees = async () => {
+    if (!emailInput.trim()) return;
+    const emails = emailInput.split(/[,\s]+/).filter((e) => e.includes("@"));
+    if (emails.length === 0) { setEmailError("Enter at least one valid email"); return; }
+
+    setSendingEmails(true);
+    setEmailError("");
+    try {
+      const res = await fetch("/api/send-plan-emails", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ planId, emails }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Failed to send");
+      }
+      setEmailSent(true);
+      setEmailInput("");
+      setTimeout(() => { setEmailSent(false); setShowEmailForm(false); }, 3000);
+    } catch (err) {
+      setEmailError(err instanceof Error ? err.message : "Failed to send emails");
+    } finally {
+      setSendingEmails(false);
+    }
   };
 
   return (
@@ -914,7 +942,83 @@ export default function PlanResultClient({ plan, planId, tier, dest }: PlanResul
             {copied ? "Copied!" : "Copy Link"}
           </button>
 
-          {/* Send to Attendees — coming soon */}
+          <button
+            onClick={() => setShowEmailForm(!showEmailForm)}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              padding: "12px 24px",
+              background: tierColors[tier],
+              border: "none",
+              borderRadius: 8,
+              color: "#000",
+              fontSize: 14,
+              fontWeight: 600,
+              cursor: "pointer",
+              transition: "opacity 0.2s",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.85")}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+          >
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              />
+            </svg>
+            Send to the Crew
+          </button>
+
+          {/* Email input form */}
+          {showEmailForm && (
+            <div style={{ width: "100%", maxWidth: 500, marginTop: "1rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+              <input
+                type="text"
+                value={emailInput}
+                onChange={(e) => setEmailInput(e.target.value)}
+                placeholder="Enter emails separated by commas..."
+                style={{
+                  width: "100%",
+                  padding: "12px 16px",
+                  background: "rgba(255,255,255,0.06)",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  borderRadius: 8,
+                  color: "#fff",
+                  fontSize: 14,
+                  outline: "none",
+                }}
+                onKeyDown={(e) => { if (e.key === "Enter") sendToAttendees(); }}
+              />
+              <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+                <button
+                  onClick={sendToAttendees}
+                  disabled={sendingEmails}
+                  style={{
+                    padding: "10px 20px",
+                    background: "rgba(220,38,38,0.9)",
+                    border: "none",
+                    borderRadius: 6,
+                    color: "#fff",
+                    fontSize: 13,
+                    fontWeight: 600,
+                    cursor: sendingEmails ? "wait" : "pointer",
+                    opacity: sendingEmails ? 0.6 : 1,
+                  }}
+                >
+                  {sendingEmails ? "Sending..." : emailSent ? "Sent!" : "Send Plans"}
+                </button>
+                {emailError && (
+                  <span style={{ color: "rgba(239,68,68,0.8)", fontSize: 12 }}>{emailError}</span>
+                )}
+                {emailSent && (
+                  <span style={{ color: "rgba(74,222,128,0.8)", fontSize: 12 }}>Plans sent to the crew!</span>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

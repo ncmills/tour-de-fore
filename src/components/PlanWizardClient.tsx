@@ -325,26 +325,13 @@ export default function PlanWizardClient() {
     dispatch({ type: "SET_FIELD", field, value });
 
   const questionIds = [
-    "q-destination-type",
-    state.destinationType === "specific" ? "q-destination" : "q-region",
-    "q-when",
-    state.flexible ? "q-season" : "q-month-year",
-    "q-days",
-    "q-group-size",
-    "q-skill-mix",
-    "q-age-range",
-    "q-rounds",
-    "q-course-quality",
-    "q-walking",
-    "q-must-play",
-    "q-lodging",
-    "q-dining",
-    "q-nightlife",
-    "q-activities",
-    "q-budget",
-    "q-priorities",
-    "q-special",
-    "q-roster",
+    "q-where",          // 0: destination type + region/city
+    "q-when",           // 1: flexible/season or month/year + days
+    "q-crew",           // 2: group size + skill mix + age range
+    "q-golf",           // 3: rounds + course quality + walking
+    "q-offcourse",      // 4: lodging + dining + nightlife + activities
+    "q-budget",         // 5: budget + priorities + special requests
+    "q-roster",         // 6: organizer info + generate
   ];
 
   const totalQuestions = questionIds.length;
@@ -497,7 +484,6 @@ export default function PlanWizardClient() {
   }
 
   const progress = Math.min((revealedCount / totalQuestions) * 100, 100);
-  let qIndex = 0;
 
   const inputClass = "w-full bg-transparent border-b border-white/20 px-0 py-4 text-white font-body text-xl placeholder:text-white/25 focus:border-white/60 focus:outline-none transition-colors text-center";
   const selectClass = "bg-transparent border-b border-white/20 px-0 py-4 text-white font-body text-base focus:border-white/60 focus:outline-none transition-colors appearance-none text-center w-full";
@@ -554,59 +540,37 @@ export default function PlanWizardClient() {
 
       <AnimatePresence mode="wait">
 
-      {/* Q1: Destination Type */}
-      {currentQ === 0 && <Question
-        number={qIndex + 1}
-        total={totalQuestions}
-        title="Where's the crew headed?"
-        subtitle="Destination"
-        id={questionIds[qIndex]}
-      >
-        <div className="grid grid-cols-2 gap-4">
-          <SelectionCard
-            label="Specific place"
-            sublabel="I know where we're going"
-            selected={state.destinationType === "specific"}
-            onClick={() => setAndAdvance("destinationType", "specific")}
-          />
-          <SelectionCard
-            label="Pick a region"
-            sublabel="Let AI suggest a spot"
-            selected={state.destinationType === "region"}
-            onClick={() => setAndAdvance("destinationType", "region")}
-          />
-        </div>
-      </Question>}
-
-      {/* Q2: Destination / Region */}
-      {(qIndex = 1, currentQ === 1) && (
-        state.destinationType === "specific" ? (
-          <Question
-            number={qIndex + 1}
-            total={totalQuestions}
-            title="What's the destination?"
-            id={questionIds[qIndex]}
-          >
-            <input
-              type="text"
-              placeholder="e.g. Scottsdale, AZ or Pinehurst, NC"
-              value={state.destination}
-              onChange={(e) => set("destination", e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && state.destination) advance(revealedCount);
-              }}
-              autoFocus
-              className={inputClass}
+      {/* STEP 1: WHERE — Destination + Region/City */}
+      {currentQ === 0 && (
+        <Question number={1} total={totalQuestions} title="Where's the crew headed?" subtitle="Destination" id={questionIds[0]}>
+          <div className="grid grid-cols-2 gap-4 mb-6">
+            <SelectionCard
+              label="Specific place"
+              sublabel="I know where we're going"
+              selected={state.destinationType === "specific"}
+              onClick={() => set("destinationType", "specific")}
             />
-            {state.destination && <ContinueBtn onClick={() => advance(revealedCount)} />}
-          </Question>
-        ) : (
-          <Question
-            number={qIndex + 1}
-            total={totalQuestions}
-            title="What region sounds good?"
-            id={questionIds[qIndex]}
-          >
+            <SelectionCard
+              label="Pick a region"
+              sublabel="Let AI suggest a spot"
+              selected={state.destinationType === "region"}
+              onClick={() => set("destinationType", "region")}
+            />
+          </div>
+          {state.destinationType === "specific" ? (
+            <>
+              <input
+                type="text"
+                placeholder="e.g. Scottsdale, AZ or Pinehurst, NC"
+                value={state.destination}
+                onChange={(e) => set("destination", e.target.value)}
+                onKeyDown={(e) => { if (e.key === "Enter" && state.destination) advance(revealedCount); }}
+                autoFocus
+                className={inputClass}
+              />
+              {state.destination && <ContinueBtn onClick={() => advance(revealedCount)} />}
+            </>
+          ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {REGIONS.map((r) => (
                 <SelectionCard
@@ -614,446 +578,231 @@ export default function PlanWizardClient() {
                   label={r.label}
                   sublabel={r.sublabel}
                   selected={state.region === r.label}
-                  onClick={() => setAndAdvance("region", r.label)}
+                  onClick={() => { set("region", r.label); advance(revealedCount); }}
                 />
               ))}
             </div>
-          </Question>
-        )
+          )}
+        </Question>
       )}
 
-      {/* Q3: When */}
-      {(qIndex = 2, currentQ === 2) && (
-        <Question
-          number={qIndex + 1}
-          total={totalQuestions}
-          title="Got specific dates in mind?"
-          subtitle="When"
-          id={questionIds[qIndex]}
-        >
-          <div className="grid grid-cols-2 gap-4">
-            <SelectionCard
-              label="Specific month"
-              sublabel="I know when"
-              selected={!state.flexible}
-              onClick={() => setAndAdvance("flexible", false)}
-            />
+      {/* STEP 2: WHEN — Timing + Days */}
+      {currentQ === 1 && (
+        <Question number={2} total={totalQuestions} title="When and how long?" subtitle="When" id={questionIds[1]}>
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem", letterSpacing: "0.08em", marginBottom: "1.5rem", marginTop: "-1.5rem" }}>Timing</p>
+          <div className="grid grid-cols-2 gap-4 mb-6">
             <SelectionCard
               label="Flexible"
               sublabel="Pick a season"
               selected={state.flexible}
-              onClick={() => setAndAdvance("flexible", true)}
+              onClick={() => set("flexible", true)}
+              compact
+            />
+            <SelectionCard
+              label="Specific month"
+              sublabel="I know when"
+              selected={!state.flexible}
+              onClick={() => set("flexible", false)}
+              compact
             />
           </div>
-        </Question>
-      )}
-
-      {/* Q4: Season or Month/Year */}
-      {(qIndex = 3, currentQ === 3) && (
-        state.flexible ? (
-          <Question
-            number={qIndex + 1}
-            total={totalQuestions}
-            title="What season works best?"
-            id={questionIds[qIndex]}
-          >
-            <div className="grid grid-cols-3 gap-4">
+          {state.flexible ? (
+            <div className="grid grid-cols-3 gap-4 mb-6">
               {SEASONS.map((s) => (
-                <SelectionCard
-                  key={s}
-                  label={s}
-                  selected={state.preferredSeason === s}
-                  onClick={() => setAndAdvance("preferredSeason", s)}
-                />
+                <SelectionCard key={s} label={s} selected={state.preferredSeason === s} onClick={() => set("preferredSeason", s)} compact />
               ))}
             </div>
-          </Question>
-        ) : (
-          <Question
-            number={qIndex + 1}
-            total={totalQuestions}
-            title="What month and year?"
-            id={questionIds[qIndex]}
-          >
-            <div className="grid grid-cols-2 gap-4">
-              <select
-                value={state.tripMonth}
-                onChange={(e) => set("tripMonth", e.target.value)}
-                className={selectClass}
-              >
+          ) : (
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              <select value={state.tripMonth} onChange={(e) => set("tripMonth", e.target.value)} className={selectClass}>
                 <option value="">Month</option>
-                {MONTHS.map((m) => (
-                  <option key={m} value={m}>{m}</option>
-                ))}
+                {MONTHS.map((m) => <option key={m} value={m}>{m}</option>)}
               </select>
-              <select
-                value={state.tripYear}
-                onChange={(e) => set("tripYear", e.target.value)}
-                className={selectClass}
-              >
+              <select value={state.tripYear} onChange={(e) => set("tripYear", e.target.value)} className={selectClass}>
                 <option value="">Year</option>
                 <option value="2026">2026</option>
                 <option value="2027">2027</option>
                 <option value="2028">2028</option>
               </select>
             </div>
-            {state.tripMonth && state.tripYear && (
-              <ContinueBtn onClick={() => advance(revealedCount)} />
-            )}
-          </Question>
-        )
-      )}
-
-      {/* Q5: Number of days */}
-      {(qIndex = 4, currentQ === 4) && (
-        <Question number={qIndex + 1} total={totalQuestions} title="How many days?" id={questionIds[qIndex]}>
+          )}
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem", letterSpacing: "0.08em", marginBottom: "1rem" }}>How many days?</p>
           <div className="grid grid-cols-3 gap-4">
             {[3, 4, 5].map((d) => (
-              <SelectionCard
-                key={d}
-                label={`${d} days`}
-                sublabel={d === 3 ? "The TDF standard" : undefined}
-                selected={state.numberOfDays === d}
-                onClick={() => setAndAdvance("numberOfDays", d)}
-              />
+              <SelectionCard key={d} label={`${d} days`} sublabel={d === 3 ? "The TDF standard" : undefined} selected={state.numberOfDays === d} onClick={() => { set("numberOfDays", d); advance(revealedCount); }} />
             ))}
           </div>
         </Question>
       )}
 
-      {/* Q6: Group size */}
-      {(qIndex = 5, currentQ === 5) && (
-        <Question number={qIndex + 1} total={totalQuestions} title="How many devils are coming?" subtitle="The Crew" id={questionIds[qIndex]}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "2rem" }}>
-            <button
-              onClick={() => set("groupSize", Math.max(4, state.groupSize - 1))}
-              style={{ width: 52, height: 52, borderRadius: "50%", border: "1px solid rgba(255,255,255,0.15)", background: "transparent", color: "#fff", fontSize: "1.5rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "border-color 0.2s" }}
-            >
-              −
-            </button>
-            <span style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "6rem", fontWeight: 700, color: "#fff", lineHeight: 1, minWidth: "5rem", textAlign: "center" }}>
-              {state.groupSize}
-            </span>
-            <button
-              onClick={() => set("groupSize", Math.min(32, state.groupSize + 1))}
-              style={{ width: 52, height: 52, borderRadius: "50%", border: "1px solid rgba(255,255,255,0.15)", background: "transparent", color: "#fff", fontSize: "1.5rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "border-color 0.2s" }}
-            >
-              +
-            </button>
+      {/* STEP 3: THE CREW — Group size + Skill + Age */}
+      {currentQ === 2 && (
+        <Question number={3} total={totalQuestions} title="Tell us about the crew" subtitle="The Crew" id={questionIds[2]}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "2rem", marginBottom: "2rem" }}>
+            <button onClick={() => set("groupSize", Math.max(4, state.groupSize - 1))} style={{ width: 48, height: 48, borderRadius: "50%", border: "1px solid rgba(255,255,255,0.15)", background: "transparent", color: "#fff", fontSize: "1.5rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>−</button>
+            <span style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "4rem", fontWeight: 700, color: "#fff", lineHeight: 1, minWidth: "3.5rem", textAlign: "center" }}>{state.groupSize}</span>
+            <button onClick={() => set("groupSize", Math.min(32, state.groupSize + 1))} style={{ width: 48, height: 48, borderRadius: "50%", border: "1px solid rgba(255,255,255,0.15)", background: "transparent", color: "#fff", fontSize: "1.5rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>+</button>
           </div>
-          <p style={{ color: "rgba(255,255,255,0.25)", fontSize: "0.8rem", marginTop: "1rem", letterSpacing: "0.05em" }}>
-            12–16 is the sweet spot. Min 4, max 32.
-          </p>
-          <ContinueBtn onClick={() => advance(revealedCount)} />
-        </Question>
-      )}
-
-      {/* Q7: Skill mix */}
-      {(qIndex = 6, currentQ === 6) && (
-        <Question number={qIndex + 1} total={totalQuestions} title="What's the skill mix?" id={questionIds[qIndex]}>
-          <div className="grid grid-cols-2 gap-4">
+          <p style={{ color: "rgba(255,255,255,0.25)", fontSize: "0.7rem", marginBottom: "1.5rem" }}>12–16 is the sweet spot</p>
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem", letterSpacing: "0.08em", marginBottom: "0.75rem" }}>Skill mix</p>
+          <div className="grid grid-cols-2 gap-3 mb-5">
             {["All similar", "Wide range", "Mostly beginners", "Here for the vibes"].map((s) => (
-              <SelectionCard
-                key={s}
-                label={s}
-                selected={state.skillMix === s}
-                onClick={() => setAndAdvance("skillMix", s)}
-                compact
-              />
+              <SelectionCard key={s} label={s} selected={state.skillMix === s} onClick={() => set("skillMix", s)} compact />
             ))}
           </div>
-        </Question>
-      )}
-
-      {/* Q8: Age range */}
-      {(qIndex = 7, currentQ === 7) && (
-        <Question number={qIndex + 1} total={totalQuestions} title="Average age range?" id={questionIds[qIndex]}>
-          <div className="grid grid-cols-4 gap-4">
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem", letterSpacing: "0.08em", marginBottom: "0.75rem" }}>Age range</p>
+          <div className="grid grid-cols-4 gap-3">
             {["20s", "30s", "40s", "Mixed"].map((a) => (
-              <SelectionCard
-                key={a}
-                label={a}
-                selected={state.ageRange === a}
-                onClick={() => setAndAdvance("ageRange", a)}
-                compact
-              />
+              <SelectionCard key={a} label={a} selected={state.ageRange === a} onClick={() => { set("ageRange", a); advance(revealedCount); }} compact />
             ))}
           </div>
         </Question>
       )}
 
-      {/* Q9: Rounds per day */}
-      {(qIndex = 8, currentQ === 8) && (
-        <Question number={qIndex + 1} total={totalQuestions} title="How much golf can you handle?" subtitle="The Golf" id={questionIds[qIndex]}>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {/* STEP 4: THE GOLF — Rounds + Quality + Walking + Must-play */}
+      {currentQ === 3 && (
+        <Question number={4} total={totalQuestions} title="How much golf can you handle?" subtitle="The Golf" id={questionIds[3]}>
+          <div className="grid grid-cols-3 gap-3 mb-5">
             {[
-              { label: "One (18)", sublabel: "Casual pace" },
+              { label: "One (18)", sublabel: "Casual" },
               { label: "Two (36)", sublabel: "The TDF way" },
               { label: "Let AI decide", sublabel: "Based on vibe" },
             ].map((r) => (
-              <SelectionCard
-                key={r.label}
-                label={r.label}
-                sublabel={r.sublabel}
-                selected={state.roundsPerDay === r.label}
-                onClick={() => setAndAdvance("roundsPerDay", r.label)}
-              />
+              <SelectionCard key={r.label} label={r.label} sublabel={r.sublabel} selected={state.roundsPerDay === r.label} onClick={() => set("roundsPerDay", r.label)} compact />
             ))}
           </div>
-        </Question>
-      )}
-
-      {/* Q10: Course quality */}
-      {(qIndex = 9, currentQ === 9) && (
-        <Question number={qIndex + 1} total={totalQuestions} title="What kind of courses?" id={questionIds[qIndex]}>
-          <div className="grid grid-cols-2 gap-4">
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem", letterSpacing: "0.08em", marginBottom: "0.75rem" }}>Course quality</p>
+          <div className="grid grid-cols-2 gap-3 mb-5">
             {["Cheap & fun", "Mix of public & resort", "Bucket list only", "Whatever fits budget"].map((q) => (
-              <SelectionCard
-                key={q}
-                label={q}
-                selected={state.courseQuality === q}
-                onClick={() => setAndAdvance("courseQuality", q)}
-                compact
-              />
+              <SelectionCard key={q} label={q} selected={state.courseQuality === q} onClick={() => set("courseQuality", q)} compact />
             ))}
           </div>
-        </Question>
-      )}
-
-      {/* Q11: Walking or riding */}
-      {(qIndex = 10, currentQ === 10) && (
-        <Question number={qIndex + 1} total={totalQuestions} title="Walking or riding?" id={questionIds[qIndex]}>
-          <div className="grid grid-cols-3 gap-4">
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem", letterSpacing: "0.08em", marginBottom: "0.75rem" }}>Walking or riding?</p>
+          <div className="grid grid-cols-3 gap-3 mb-5">
             {["Walking", "Riding", "Mix / Don't care"].map((w) => (
-              <SelectionCard
-                key={w}
-                label={w}
-                selected={state.walkingOrRiding === w}
-                onClick={() => setAndAdvance("walkingOrRiding", w)}
-                compact
-              />
+              <SelectionCard key={w} label={w} selected={state.walkingOrRiding === w} onClick={() => set("walkingOrRiding", w)} compact />
             ))}
           </div>
-        </Question>
-      )}
-
-      {/* Q12: Must-play courses */}
-      {(qIndex = 11, currentQ === 11) && (
-        <Question number={qIndex + 1} total={totalQuestions} title="Any must-play courses?" id={questionIds[qIndex]}>
           <input
             type="text"
-            placeholder="e.g. Bandon Dunes, Pebble Beach (or leave blank)"
+            placeholder="Must-play courses? (e.g. Bandon Dunes — or leave blank)"
             value={state.mustPlayCourses}
             onChange={(e) => set("mustPlayCourses", e.target.value)}
             onKeyDown={(e) => { if (e.key === "Enter") advance(revealedCount); }}
             className={inputClass}
           />
-          <ContinueBtn onClick={() => advance(revealedCount)} label={state.mustPlayCourses ? "Continue" : "Skip"} />
+          <ContinueBtn onClick={() => advance(revealedCount)} label={state.courseQuality ? "Continue" : "Skip"} />
         </Question>
       )}
 
-      {/* Q13: Lodging */}
-      {(qIndex = 12, currentQ === 12) && (
-        <Question number={qIndex + 1} total={totalQuestions} title="Where's everyone sleeping?" subtitle="Off-Course" id={questionIds[qIndex]}>
-          <div className="grid grid-cols-2 gap-4">
+      {/* STEP 5: OFF-COURSE — Lodging + Dining + Nightlife + Activities */}
+      {currentQ === 4 && (
+        <Question number={5} total={totalQuestions} title="What happens off the course?" subtitle="Off-Course" id={questionIds[4]}>
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem", letterSpacing: "0.08em", marginBottom: "0.75rem" }}>Lodging</p>
+          <div className="grid grid-cols-2 gap-3 mb-5">
             {[
               { label: "One big house", sublabel: "The TDF way" },
               { label: "Hotel / Resort", sublabel: "Separate rooms" },
               { label: "Split houses", sublabel: "Smaller groups" },
               { label: "Don't care", sublabel: "AI decides" },
             ].map((l) => (
-              <SelectionCard
-                key={l.label}
-                label={l.label}
-                sublabel={l.sublabel}
-                selected={state.lodging === l.label}
-                onClick={() => setAndAdvance("lodging", l.label)}
-              />
+              <SelectionCard key={l.label} label={l.label} sublabel={l.sublabel} selected={state.lodging === l.label} onClick={() => set("lodging", l.label)} compact />
             ))}
           </div>
-        </Question>
-      )}
-
-      {/* Q14: Dining */}
-      {(qIndex = 13, currentQ === 13) && (
-        <Question number={qIndex + 1} total={totalQuestions} title="How are you eating?" id={questionIds[qIndex]}>
-          <div className="grid grid-cols-2 gap-4">
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem", letterSpacing: "0.08em", marginBottom: "0.75rem" }}>Dining</p>
+          <div className="grid grid-cols-2 gap-3 mb-5">
             {["Steakhouses", "Casual & local", "Private chef", "Mix"].map((d) => (
-              <SelectionCard
-                key={d}
-                label={d}
-                selected={state.dining === d}
-                onClick={() => setAndAdvance("dining", d)}
-                compact
-              />
+              <SelectionCard key={d} label={d} selected={state.dining === d} onClick={() => set("dining", d)} compact />
             ))}
           </div>
-        </Question>
-      )}
-
-      {/* Q15: Nightlife */}
-      {(qIndex = 14, currentQ === 14) && (
-        <Question number={qIndex + 1} total={totalQuestions} title="What's the nightlife situation?" id={questionIds[qIndex]}>
-          <div className="grid grid-cols-2 gap-4">
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem", letterSpacing: "0.08em", marginBottom: "0.75rem" }}>Nightlife</p>
+          <div className="grid grid-cols-2 gap-3 mb-5">
             {["Going out every night", "Couple nights", "In bed by 10", "Point us to a bar"].map((n) => (
-              <SelectionCard
-                key={n}
-                label={n}
-                selected={state.nightlife === n}
-                onClick={() => setAndAdvance("nightlife", n)}
-                compact
-              />
+              <SelectionCard key={n} label={n} selected={state.nightlife === n} onClick={() => set("nightlife", n)} compact />
             ))}
           </div>
-        </Question>
-      )}
-
-      {/* Q16: Activities */}
-      {(qIndex = 15, currentQ === 15) && (
-        <Question number={qIndex + 1} total={totalQuestions} title="Any off-course activities?" id={questionIds[qIndex]}>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", justifyContent: "center" }}>
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem", letterSpacing: "0.08em", marginBottom: "0.75rem" }}>Activities (pick any)</p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem", justifyContent: "center" }}>
             {ACTIVITIES.map((a) => (
               <button
                 key={a}
                 onClick={() => dispatch({ type: "TOGGLE_ACTIVITY", activity: a })}
                 style={{
-                  padding: "0.6rem 1.4rem",
-                  borderRadius: 4,
+                  padding: "0.5rem 1.2rem", borderRadius: 4,
                   border: state.activities.includes(a) ? "1px solid #fff" : "1px solid rgba(255,255,255,0.15)",
                   background: state.activities.includes(a) ? "#fff" : "transparent",
                   color: state.activities.includes(a) ? "#000" : "rgba(255,255,255,0.6)",
-                  fontSize: "0.8rem",
-                  letterSpacing: "0.06em",
-                  cursor: "pointer",
-                  transition: "all 0.2s",
+                  fontSize: "0.75rem", letterSpacing: "0.06em", cursor: "pointer", transition: "all 0.2s",
                   fontFamily: "var(--font-plan-script), cursive",
                 }}
-              >
-                {a}
-              </button>
+              >{a}</button>
             ))}
           </div>
           <ContinueBtn onClick={() => advance(revealedCount)} />
         </Question>
       )}
 
-      {/* Q17: Budget */}
-      {(qIndex = 16, currentQ === 16) && (
-        <Question number={qIndex + 1} total={totalQuestions} title="What's the per-person budget?" subtitle="Budget" id={questionIds[qIndex]}>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      {/* STEP 6: BUDGET — Budget + Priorities + Special requests */}
+      {currentQ === 5 && (
+        <Question number={6} total={totalQuestions} title="What's the budget?" subtitle="Budget" id={questionIds[5]}>
+          <div className="grid grid-cols-2 gap-3 mb-5">
             {["$2K per person", "$4K per person", "$6K per person", "Fuck it we ball"].map((b) => (
-              <SelectionCard
-                key={b}
-                label={b}
-                selected={state.budget === b}
-                onClick={() => setAndAdvance("budget", b)}
-                compact
-              />
+              <SelectionCard key={b} label={b} selected={state.budget === b} onClick={() => set("budget", b)} compact />
             ))}
           </div>
-        </Question>
-      )}
-
-      {/* Q18: Budget priorities */}
-      {(qIndex = 17, currentQ === 17) && (
-        <Question number={qIndex + 1} total={totalQuestions} title="Where should the money go?" id={questionIds[qIndex]}>
-          <p style={{ color: "rgba(255,255,255,0.25)", fontSize: "0.75rem", letterSpacing: "0.08em", marginBottom: "2rem", marginTop: "-1.5rem" }}>Pick up to 2</p>
-          <div className="grid grid-cols-2 gap-4">
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem", letterSpacing: "0.08em", marginBottom: "0.75rem" }}>Where should the money go? (pick up to 2)</p>
+          <div className="grid grid-cols-2 gap-3 mb-5">
             {["Best courses", "Best lodging", "Best dining", "Keep balanced"].map((p) => (
-              <SelectionCard
-                key={p}
-                label={p}
-                selected={state.budgetPriorities.includes(p)}
-                onClick={() => dispatch({ type: "TOGGLE_PRIORITY", priority: p })}
-                compact
-              />
+              <SelectionCard key={p} label={p} selected={state.budgetPriorities.includes(p)} onClick={() => dispatch({ type: "TOGGLE_PRIORITY", priority: p })} compact />
             ))}
           </div>
-          {state.budgetPriorities.length > 0 && (
-            <ContinueBtn onClick={() => advance(revealedCount)} />
-          )}
-        </Question>
-      )}
-
-      {/* Q19: Special requests */}
-      {(qIndex = 18, currentQ === 18) && (
-        <Question number={qIndex + 1} total={totalQuestions} title="Anything else we should know?" id={questionIds[qIndex]}>
           <textarea
-            placeholder="Someone's bachelor party? A 40th birthday? Accessibility needs? Allergies? Spill it..."
+            placeholder="Anything else? Bachelor party, someone's 40th, accessibility needs..."
             value={state.specialRequests}
             onChange={(e) => set("specialRequests", e.target.value)}
-            rows={4}
-            style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "1rem 0", color: "#fff", fontFamily: "var(--font-plan-script), cursive", fontSize: "1rem", resize: "none", outline: "none", textAlign: "center" }}
+            rows={3}
+            style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.75rem 0", color: "#fff", fontFamily: "var(--font-plan-script), cursive", fontSize: "0.9rem", resize: "none", outline: "none", textAlign: "center" }}
             className="placeholder:text-white/25"
           />
-          <ContinueBtn onClick={() => advance(revealedCount)} label={state.specialRequests ? "Continue" : "Skip"} />
+          <ContinueBtn onClick={() => advance(revealedCount)} />
         </Question>
       )}
 
-      {/* Q20: Roster */}
-      {(qIndex = 19, currentQ === 19) && (
-        <motion.section
-          key={questionIds[qIndex]}
-          id={questionIds[qIndex]}
-          initial={{ opacity: 0, scale: 0.6, rotate: 8 }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          exit={{ opacity: 0, scale: 0.3, rotate: -15, transition: { duration: 0.35, ease: "easeIn" } }}
-          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-          style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "center", padding: "4rem 2rem", textAlign: "center", overflow: "auto" }}
-        >
-          <div style={{ maxWidth: 560, margin: "0 auto", width: "100%" }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", marginBottom: "2rem" }}>
-              <span style={{ fontSize: "0.6rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.2)", fontFamily: "var(--font-plan-script), cursive" }}>
-                {String(qIndex + 1).padStart(2, "0")} / {String(totalQuestions).padStart(2, "0")}
-              </span>
-              <span style={{ width: 20, height: 1, background: "rgba(255,255,255,0.12)", display: "inline-block" }} />
-              <span style={{ fontSize: "0.6rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(234,88,12,0.8)", fontFamily: "var(--font-plan-script), cursive" }}>
-                The Roster
-              </span>
-            </div>
-            <h2 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(1.9rem, 4.5vw, 3.2rem)", fontWeight: 700, color: "#fff", lineHeight: 1.1, letterSpacing: "-0.025em", marginBottom: "3rem" }}>
-              Who&rsquo;s organizing?
-            </h2>
-
-            <div className="space-y-10">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <input
-                  type="text"
-                  placeholder="Your name"
-                  value={state.organizerName}
-                  onChange={(e) => set("organizerName", e.target.value)}
-                  className="bg-bg-alt border border-border rounded-lg px-5 py-3.5 text-text font-body text-sm placeholder:text-text-dim focus:border-accent focus:outline-none transition-colors"
-                />
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  value={state.organizerEmail}
-                  onChange={(e) => set("organizerEmail", e.target.value)}
-                  className="bg-bg-alt border border-border rounded-lg px-5 py-3.5 text-text font-body text-sm placeholder:text-text-dim focus:border-accent focus:outline-none transition-colors"
-                />
-              </div>
-
-              {error && (
-                <motion.p
-                  initial={{ opacity: 0, y: -5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  style={{ color: "#f87171", fontSize: "0.8rem", fontFamily: "var(--font-plan-script), cursive" }}
-                >
-                  {error}
-                </motion.p>
-              )}
-
-              <motion.button
-                onClick={handleGenerate}
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
-                style={{ width: "100%", padding: "1.1rem", background: "rgba(220,38,38,0.9)", color: "#fff", border: "none", borderRadius: 4, fontSize: "0.85rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", fontFamily: "var(--font-plan-script), cursive" }}
-              >
-                Unleash the Devils
-              </motion.button>
-            </div>
+      {/* STEP 7: THE ROSTER — Organizer info + Generate */}
+      {currentQ === 6 && (
+        <Question number={7} total={totalQuestions} title="Who's organizing?" subtitle="The Roster" id={questionIds[6]}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+            <input
+              type="text"
+              placeholder="Your name"
+              value={state.organizerName}
+              onChange={(e) => set("organizerName", e.target.value)}
+              className="bg-bg-alt border border-border rounded-lg px-5 py-3.5 text-text font-body text-sm placeholder:text-text-dim focus:border-accent focus:outline-none transition-colors"
+            />
+            <input
+              type="email"
+              placeholder="Your email"
+              value={state.organizerEmail}
+              onChange={(e) => set("organizerEmail", e.target.value)}
+              className="bg-bg-alt border border-border rounded-lg px-5 py-3.5 text-text font-body text-sm placeholder:text-text-dim focus:border-accent focus:outline-none transition-colors"
+            />
           </div>
-        </motion.section>
+
+          {error && (
+            <motion.p initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} style={{ color: "#f87171", fontSize: "0.8rem", fontFamily: "var(--font-plan-script), cursive", marginBottom: "1rem" }}>
+              {error}
+            </motion.p>
+          )}
+
+          <motion.button
+            onClick={handleGenerate}
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
+            style={{ width: "100%", padding: "1.1rem", background: "rgba(220,38,38,0.9)", color: "#fff", border: "none", borderRadius: 4, fontSize: "0.85rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", fontFamily: "var(--font-plan-script), cursive" }}
+          >
+            Unleash the Devils
+          </motion.button>
+        </Question>
       )}
 
       </AnimatePresence>
