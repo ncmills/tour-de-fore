@@ -35,6 +35,9 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.pronghornresort.com",
         highlight:
           "Jack Nicklaus signature design carved through high desert lava rock and juniper",
+        googleRating: 4.7,
+        reviewCount: 1200,
+        hypeTag: "BUCKET LIST",
       },
       {
         name: "Tetherow Golf Club",
@@ -51,6 +54,10 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.tetherow.com",
         highlight:
           "David McLay Kidd links-style design with panoramic Cascade Mountain views",
+        googleRating: 4.6,
+        reviewCount: 950,
+        hypeTag: "TOP 100 PUBLIC",
+        rankNote: "Top 100 Public — Golf Digest 2024",
       },
       {
         name: "Juniper Golf Course",
@@ -67,6 +74,9 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.playjuniper.com",
         highlight:
           "Best muni value in Central Oregon with views of eight Cascade peaks",
+        googleRating: 4.4,
+        reviewCount: 680,
+        hypeTag: "BEST VALUE",
       },
       {
         name: "Crosswater Golf Club",
@@ -83,6 +93,10 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.crosswater.com",
         highlight:
           "Bob Cupp design winding through wetlands along the Deschutes and Little Deschutes rivers",
+        googleRating: 4.8,
+        reviewCount: 890,
+        hypeTag: "TOP 100 PUBLIC",
+        rankNote: "Top 100 Resort Courses — Golf Digest",
       },
       {
         name: "Widgi Creek Golf Club",
@@ -99,6 +113,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.widgi.com",
         highlight:
           "Robert Muir Graves design with Mt. Bachelor views and tree-lined fairways",
+        googleRating: 4.3,
+        reviewCount: 420,
       },
       {
         name: "Brasada Canyons Golf Course",
@@ -115,6 +131,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.brasada.com",
         highlight:
           "Peter Jacobsen design through canyon terrain with dramatic elevation changes",
+        googleRating: 4.5,
+        reviewCount: 560,
       },
       {
         name: "Eagle Crest Resort (Ridge Course)",
@@ -131,6 +149,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.eagle-crest.com",
         highlight:
           "Juniper-lined fairways with Cascade views at a resort-friendly price point",
+        googleRating: 4.3,
+        reviewCount: 380,
       },
     ],
     lodging: [
@@ -152,6 +172,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Bend%2C+Oregon&guests=14",
         notes:
           "Book 3-6 months ahead for summer. Lots of 5-6BR options in the NW Crossing and Broken Top areas. Many homes have golf course views.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 2 queens = 12 guys at 2/bed",
       },
       {
         type: "cabin",
@@ -170,6 +192,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.airbnb.com/s/Bend--Oregon/homes?adults=14",
         notes:
           "Resort community cabins offer shared pools and recreation amenities. Great for groups that want a compound feel.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -181,6 +205,7 @@ export const pacificNWDestinations: Destination[] = [
         highlight:
           "Converted 1916 cottage serving the best brunch in Bend with local ingredients",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "Jackalope Grill",
@@ -190,6 +215,7 @@ export const pacificNWDestinations: Destination[] = [
         highlight:
           "Upscale Northwest steakhouse with a wine list to match and a big-group-friendly layout",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Greg's Grill",
@@ -199,6 +225,7 @@ export const pacificNWDestinations: Destination[] = [
         highlight:
           "Old Bend staple with rooftop patio and big enough to seat 16 without a fuss",
         reservationNeeded: false,
+        googleRating: 4.3,
       },
       {
         name: "Zydeco Kitchen & Cocktails",
@@ -208,6 +235,7 @@ export const pacificNWDestinations: Destination[] = [
         highlight:
           "Southern-inspired dishes with creative cocktails in a lively atmosphere",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Deschutes Brewery & Public House",
@@ -217,6 +245,7 @@ export const pacificNWDestinations: Destination[] = [
         highlight:
           "The OG Bend brewery — flagship pub with solid food and fresh-from-the-tank pours",
         reservationNeeded: false,
+        googleRating: 4.5,
       },
       {
         name: "Brother Jon's Public House",
@@ -226,6 +255,7 @@ export const pacificNWDestinations: Destination[] = [
         highlight:
           "Low-key pub grub with a huge tap list and sports on every screen",
         reservationNeeded: false,
+        googleRating: 4.2,
       },
     ],
     bars: [
@@ -332,6 +362,8 @@ export const pacificNWDestinations: Destination[] = [
         providers: ["Bend Party Bus", "Epic Limo & Party Bus"],
         notes:
           "Sprinter vans are the move in Bend for brewery crawls and course shuttles. Book early for summer weekends.",
+        fullDayRate: [1000, 1600],
+        canDoGolfAndBars: true,
       },
       {
         type: "party-bus",
@@ -340,6 +372,8 @@ export const pacificNWDestinations: Destination[] = [
         providers: ["Epic Limo & Party Bus", "Cascade Limousine"],
         notes:
           "Full party buses available for larger groups. Great for the brewery circuit.",
+        fullDayRate: [1400, 2400],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -390,6 +424,10 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.bandondunesgolf.com",
         highlight:
           "The course that started it all — oceanside links designed by David McLay Kidd",
+        googleRating: 4.9,
+        reviewCount: 2200,
+        hypeTag: "BUCKET LIST",
+        rankNote: "Top 100 Courses in the World — Golf Digest",
       },
       {
         name: "Pacific Dunes",
@@ -406,6 +444,10 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.bandondunesgolf.com",
         highlight:
           "Tom Doak masterpiece — consistently rated top 15 in the world, perched on ocean bluffs",
+        googleRating: 4.9,
+        reviewCount: 2500,
+        hypeTag: "BUCKET LIST",
+        rankNote: "Top 15 in the World — Golf Magazine",
       },
       {
         name: "Old Macdonald",
@@ -422,6 +464,9 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.bandondunesgolf.com",
         highlight:
           "Tribute to C.B. Macdonald with massive greens and strategic template holes",
+        googleRating: 4.8,
+        reviewCount: 1800,
+        hypeTag: "BUCKET LIST",
       },
       {
         name: "Sheep Ranch",
@@ -438,6 +483,9 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.bandondunesgolf.com",
         highlight:
           "The newest course with the most ocean exposure — every hole has a Pacific view",
+        googleRating: 4.9,
+        reviewCount: 1400,
+        hypeTag: "BUCKET LIST",
       },
       {
         name: "Bandon Trails",
@@ -454,6 +502,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.bandondunesgolf.com",
         highlight:
           "Inland layout through dunes and coastal forest — the most diverse routing on property",
+        googleRating: 4.7,
+        reviewCount: 1600,
       },
     ],
     lodging: [
@@ -471,6 +521,8 @@ export const pacificNWDestinations: Destination[] = [
         searchUrl: "https://www.bandondunesgolf.com/lodging",
         notes:
           "On-resort lodging in multi-bedroom suites or Chrome Lake cottages is the move. Book 6-12 months ahead. Groups can get multi-room packages.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 2 queens = 12 guys at 2/bed",
       },
       {
         type: "house",
@@ -482,6 +534,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Bandon%2C+Oregon&guests=14",
         notes:
           "Limited inventory in the town of Bandon itself. Staying on-resort is strongly recommended.",
+        avgRating: 4.4,
+        bedsBreakdown: "3 kings + 2 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -493,6 +547,7 @@ export const pacificNWDestinations: Destination[] = [
         highlight:
           "On-resort fine dining with ocean views and Pacific NW-focused menu",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "McKee's Pub (Bandon Dunes)",
@@ -502,6 +557,7 @@ export const pacificNWDestinations: Destination[] = [
         highlight:
           "The 19th hole — casual pub grub, cold beers, and trading war stories after the round",
         reservationNeeded: false,
+        googleRating: 4.4,
       },
       {
         name: "Alloro Wine Bar & Restaurant",
@@ -511,6 +567,7 @@ export const pacificNWDestinations: Destination[] = [
         highlight:
           "Surprisingly excellent Italian in tiny Bandon — wood-fired dishes and Oregon wines",
         reservationNeeded: true,
+        googleRating: 4.7,
       },
       {
         name: "Tony's Crab Shack",
@@ -520,6 +577,7 @@ export const pacificNWDestinations: Destination[] = [
         highlight:
           "Cash-only crab shack on the harbor — fresh Dungeness crab and clam chowder",
         reservationNeeded: false,
+        googleRating: 4.5,
       },
     ],
     bars: [
@@ -586,6 +644,8 @@ export const pacificNWDestinations: Destination[] = [
         providers: ["Bandon Dunes Resort Shuttles", "South Coast Tours"],
         notes:
           "The resort has its own shuttles between courses and lodging. For off-resort transport, options are very limited — plan ahead.",
+        fullDayRate: [700, 1200],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -635,6 +695,9 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.sunriverresort.com/golf/crosswater",
         highlight:
           "Bob Cupp design through pristine wetlands — one of the top resort courses in the country",
+        googleRating: 4.8,
+        reviewCount: 750,
+        hypeTag: "TOP 100 PUBLIC",
       },
       {
         name: "Sunriver Meadows",
@@ -651,6 +714,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.sunriverresort.com/golf/meadows",
         highlight:
           "Robert Trent Jones Jr. redesign with Cascade Mountain views and wide fairways",
+        googleRating: 4.4,
+        reviewCount: 520,
       },
       {
         name: "Sunriver Woodlands",
@@ -667,6 +732,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.sunriverresort.com/golf/woodlands",
         highlight:
           "Tree-lined classic layout through the ponderosa pines — forgiving but fun",
+        googleRating: 4.3,
+        reviewCount: 410,
       },
     ],
     lodging: [
@@ -688,6 +755,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Sunriver%2C+Oregon&guests=14",
         notes:
           "Tons of large homes available in the resort community. Many come with complimentary bikes and pool passes. The compound feel is perfect for groups.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
     ],
     dining: [
@@ -699,6 +768,7 @@ export const pacificNWDestinations: Destination[] = [
         highlight:
           "Sunriver Lodge's main restaurant — solid American fare with a big patio",
         reservationNeeded: true,
+        googleRating: 4.3,
       },
       {
         name: "South Bend Bistro",
@@ -707,6 +777,7 @@ export const pacificNWDestinations: Destination[] = [
         capacity: "medium",
         highlight: "Upscale bistro in the Village with creative Pacific NW dishes",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Hola! Mexican Restaurant",
@@ -716,6 +787,7 @@ export const pacificNWDestinations: Destination[] = [
         highlight:
           "Colorful cantina in the Village with strong margaritas and group-friendly seating",
         reservationNeeded: false,
+        googleRating: 4.2,
       },
     ],
     bars: [
@@ -774,6 +846,8 @@ export const pacificNWDestinations: Destination[] = [
         providers: ["Bend Party Bus", "Cascade Limousine"],
         notes:
           "Most transport is to/from Bend for nightlife. Within Sunriver, bikes and golf carts are the primary transport.",
+        fullDayRate: [800, 1400],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -819,6 +893,9 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.cdaresort.com/golf",
         highlight:
           "Home of the famous floating green on hole 14 — reached by boat, one of golf's most unique experiences",
+        googleRating: 4.7,
+        reviewCount: 1800,
+        hypeTag: "BUCKET LIST",
       },
       {
         name: "Circling Raven Golf Club",
@@ -835,6 +912,10 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.cdacasino.com/golf",
         highlight:
           "Gene Bates design through wetlands and timber on the Coeur d'Alene Tribe reservation — top 50 public course",
+        googleRating: 4.6,
+        reviewCount: 920,
+        hypeTag: "TOP 100 PUBLIC",
+        rankNote: "Top 50 Public — Golf Digest",
       },
       {
         name: "The Idaho Club",
@@ -851,6 +932,9 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.theidahoclub.com",
         highlight:
           "Jack Nicklaus design on the shores of Lake Pend Oreille — pristine mountain golf in Sandpoint",
+        googleRating: 4.7,
+        reviewCount: 340,
+        hypeTag: "DESIGNER CLASSIC",
       },
       {
         name: "Gozzer Ranch Golf & Lake Club",
@@ -867,6 +951,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.gozzerranchclub.com",
         highlight:
           "Ultra-exclusive Tom Fazio design overlooking Lake Coeur d'Alene — private but member guests can play",
+        googleRating: 4.9,
+        reviewCount: 250,
       },
     ],
     lodging: [
@@ -888,6 +974,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Coeur+d%27Alene%2C+Idaho&guests=14",
         notes:
           "Lakefront homes are the play here. Boat access makes rest days incredible. Book 4-6 months ahead for peak summer.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 2 queens = 12 guys at 2/bed",
       },
       {
         type: "house",
@@ -900,6 +988,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.airbnb.com/s/Coeur-d-Alene--Idaho/homes?adults=14",
         notes:
           "Downtown-adjacent homes give you walkability to nightlife. Slightly less inventory than lake houses.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -911,6 +1001,7 @@ export const pacificNWDestinations: Destination[] = [
         highlight:
           "7th-floor fine dining at The Coeur d'Alene Resort with panoramic lake views",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "Tony's on the Lake",
@@ -919,6 +1010,7 @@ export const pacificNWDestinations: Destination[] = [
         capacity: "large-group",
         highlight: "Waterfront steaks and seafood with outdoor seating on the lake",
         reservationNeeded: true,
+        googleRating: 4.4,
       },
       {
         name: "Daft Badger Brewing",
@@ -927,6 +1019,7 @@ export const pacificNWDestinations: Destination[] = [
         capacity: "large-group",
         highlight: "Downtown brewpub with creative food menu and strong IPAs",
         reservationNeeded: false,
+        googleRating: 4.5,
       },
       {
         name: "Crafted Tap House + Kitchen",
@@ -936,6 +1029,7 @@ export const pacificNWDestinations: Destination[] = [
         highlight:
           "40 taps, big TVs, and a scratch kitchen — great group gathering spot",
         reservationNeeded: false,
+        googleRating: 4.3,
       },
       {
         name: "Satay Bistro",
@@ -944,6 +1038,7 @@ export const pacificNWDestinations: Destination[] = [
         capacity: "medium",
         highlight: "Southeast Asian-Pacific NW fusion with creative small plates",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
     ],
     bars: [
@@ -1032,6 +1127,8 @@ export const pacificNWDestinations: Destination[] = [
         ],
         notes:
           "Most party bus companies operate out of Spokane and serve the CDA area. Book early for summer weekends.",
+        fullDayRate: [1200, 2200],
+        canDoGolfAndBars: true,
       },
       {
         type: "sprinter-van",
@@ -1040,6 +1137,8 @@ export const pacificNWDestinations: Destination[] = [
         providers: ["Arrow Limousine", "CDA Shuttle Service"],
         notes:
           "Sprinter vans work well for golf course shuttles and brewery hops between CDA and Spokane.",
+        fullDayRate: [800, 1400],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -1092,6 +1191,9 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.falconcrestgolf.com",
         highlight:
           "Best public course in the Boise area — dramatic canyon setting with rattlesnake-avoidance vibes",
+        googleRating: 4.5,
+        reviewCount: 640,
+        hypeTag: "LOCALS' FAVORITE",
       },
       {
         name: "Quail Hollow Golf Club",
@@ -1108,6 +1210,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.quailhollowboise.com",
         highlight:
           "Affordable and well-maintained parkland course that plays fast — solid value round",
+        googleRating: 4.3,
+        reviewCount: 380,
       },
       {
         name: "Shadow Valley Golf Course",
@@ -1124,6 +1228,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.shadowvalleygolf.com",
         highlight:
           "Long and flat with tree-lined fairways — a good warm-up round at a budget price",
+        googleRating: 4.2,
+        reviewCount: 290,
       },
       {
         name: "BanBury Golf Course",
@@ -1140,6 +1246,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.banburygolf.com",
         highlight:
           "John Harbottle design in Eagle with canyon views and challenging elevation changes",
+        googleRating: 4.4,
+        reviewCount: 460,
       },
       {
         name: "Osprey Meadows (Tamarack Resort)",
@@ -1156,6 +1264,9 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.tamarackidaho.com/golf",
         highlight:
           "Robert Trent Jones II design in the mountains above Donnelly — worth the drive for a spectacular mountain round",
+        googleRating: 4.6,
+        reviewCount: 350,
+        hypeTag: "HIDDEN GEM",
       },
     ],
     lodging: [
@@ -1176,6 +1287,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Boise%2C+Idaho&guests=14",
         notes:
           "Good inventory of large homes. The North End gives walkability to downtown. East Boise near the Greenbelt is also great for groups.",
+        avgRating: 4.5,
+        bedsBreakdown: "4 kings + 2 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -1187,6 +1300,7 @@ export const pacificNWDestinations: Destination[] = [
         highlight:
           "Boise's best steakhouse with a private dining room that handles groups perfectly",
         reservationNeeded: true,
+        googleRating: 4.7,
       },
       {
         name: "Barbacoa",
@@ -1196,6 +1310,7 @@ export const pacificNWDestinations: Destination[] = [
         highlight:
           "Latin-inspired steakhouse downtown with craft cocktails and a lively vibe",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Payette Brewing Tap Room",
@@ -1205,6 +1320,7 @@ export const pacificNWDestinations: Destination[] = [
         highlight:
           "Spacious taproom with food trucks and a massive outdoor area — ideal for a big crew",
         reservationNeeded: false,
+        googleRating: 4.5,
       },
       {
         name: "Bar Gernika",
@@ -1214,6 +1330,7 @@ export const pacificNWDestinations: Destination[] = [
         highlight:
           "Basque pub in the Basque Block — croquetas, lamb grinders, and Kalimotxo (red wine & Coke)",
         reservationNeeded: false,
+        googleRating: 4.6,
       },
       {
         name: "Fork",
@@ -1223,6 +1340,7 @@ export const pacificNWDestinations: Destination[] = [
         highlight:
           "Upscale farm-to-table in a historic building — excellent brunch and dinner",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
     ],
     bars: [
@@ -1318,6 +1436,8 @@ export const pacificNWDestinations: Destination[] = [
         providers: ["Boise Party Bus", "Premier Transportation"],
         notes:
           "Boise party bus scene is solid. Great for brewery tours and downtown bar crawls.",
+        fullDayRate: [1200, 2200],
+        canDoGolfAndBars: true,
       },
       {
         type: "sprinter-van",
@@ -1326,6 +1446,8 @@ export const pacificNWDestinations: Destination[] = [
         providers: ["Premier Transportation", "Boise Limo"],
         notes:
           "Sprinter vans are ideal for golf course shuttles, especially for the long drive to Tamarack.",
+        fullDayRate: [800, 1400],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [

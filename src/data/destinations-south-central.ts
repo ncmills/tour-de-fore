@@ -32,6 +32,9 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.hsbresort.com/golf",
         highlight:
           "Robert Trent Jones Sr.'s Texas masterpiece — carved through solid granite with dramatic forced carries over ravines",
+        googleRating: 4.6,
+        reviewCount: 850,
+        hypeTag: "BUCKET LIST",
       },
       {
         name: "Horseshoe Bay - Slick Rock",
@@ -48,6 +51,8 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.hsbresort.com/golf",
         highlight:
           "Most scenic of the four courses — plays along Slick Rock Creek with waterfalls and wildflowers in spring",
+        googleRating: 4.5,
+        reviewCount: 620,
       },
       {
         name: "Horseshoe Bay - Apple Rock",
@@ -64,6 +69,8 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.hsbresort.com/golf",
         highlight:
           "The toughest of the four — elevated tees with panoramic Hill Country views and punishing carries",
+        googleRating: 4.5,
+        reviewCount: 580,
       },
       {
         name: "Horseshoe Bay - Summit Rock",
@@ -80,6 +87,9 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.hsbresort.com/golf",
         highlight:
           "Jack Nicklaus signature design and the newest addition — 400 feet of elevation change with jaw-dropping views of Lake LBJ",
+        googleRating: 4.8,
+        reviewCount: 420,
+        hypeTag: "DESIGNER CLASSIC",
       },
     ],
     lodging: [
@@ -98,6 +108,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.hsbresort.com",
         notes:
           "On-resort condos and villas sleep up to 16 when you book multiple units. Golf packages include cart and range. Staying on-site means zero transport headaches.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
       {
         type: "lakehouse",
@@ -115,6 +127,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/texas/horseshoe-bay",
         notes:
           "Lake LBJ houses with private docks are the play for larger groups. Most are 5-10 min from the resort. Book a pontoon boat with the house.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
     ],
     dining: [
@@ -126,6 +140,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Casual lakeside dining on Lake LBJ with great sunset views, fish tacos, and cold beer on tap",
         reservationNeeded: false,
+        googleRating: 4.3,
       },
       {
         name: "Horseshoe Bay Resort - Summit Restaurant",
@@ -135,6 +150,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Upscale resort steakhouse with Hill Country views, prime cuts, and an extensive Texas wine list",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "The Lighthouse",
@@ -144,6 +160,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Waterfront bar and grill at the marina with burgers, chicken fried steak, and a dock you can boat up to",
         reservationNeeded: false,
+        googleRating: 4.2,
       },
       {
         name: "Russo's Italian Kitchen",
@@ -153,6 +170,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "New York-style pizza and pasta in Marble Falls — solid group dinner option when you want a break from steak",
         reservationNeeded: false,
+        googleRating: 4.4,
       },
       {
         name: "River City Grille",
@@ -162,6 +180,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Marble Falls steakhouse with hand-cut steaks, live music on weekends, and a big patio",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
     ],
     bars: [
@@ -250,6 +269,8 @@ export const southCentralDestinations: Destination[] = [
         providers: ["Hill Country Shuttle", "Marble Falls Limo"],
         notes:
           "If staying on-resort, you likely won't need transport for golf. Shuttles are useful for wine trail or Marble Falls dinner runs.",
+        fullDayRate: [800, 1400],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -298,6 +319,9 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.bootranch.com",
         highlight:
           "Hal Sutton design through live oaks and granite outcrops — one of the best private courses in Texas with limited reciprocal access",
+        googleRating: 4.8,
+        reviewCount: 310,
+        hypeTag: "BUCKET LIST",
       },
       {
         name: "Lady Bird Johnson Golf Course",
@@ -314,6 +338,9 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.fbgtx.org/golf",
         highlight:
           "Affordable municipal course right in town — friendly layout with wildflower-lined fairways in spring",
+        googleRating: 4.2,
+        reviewCount: 280,
+        hypeTag: "BEST VALUE",
       },
       {
         name: "Comanche Trace",
@@ -329,6 +356,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 10,
         highlight:
           "Tom Kite design with 27 holes through rugged Hill Country terrain — three distinct 9-hole loops with dramatic elevation",
+        googleRating: 4.5,
+        reviewCount: 420,
       },
     ],
     lodging: [
@@ -348,6 +377,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/texas/fredericksburg",
         notes:
           "Hill Country ranches and estate homes along the 290 wine corridor are ideal. Many have 10+ acres of privacy and vineyard views. Book 2-3 months ahead for spring.",
+        avgRating: 4.7,
+        bedsBreakdown: "5 kings + 2 queens = 14 guys at 2/bed",
       },
       {
         type: "house",
@@ -363,6 +394,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Fredericksburg--TX",
         notes:
           "Downtown properties let you walk Main Street bars and restaurants. German-style Sunday Houses are charming but small — look for larger homes on the outskirts of downtown.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -374,6 +407,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "German-Texas fusion fine dining — schnitzel, bratwurst, and Hill Country game with local wine pairings",
         reservationNeeded: true,
+        googleRating: 4.7,
       },
       {
         name: "Cranky Frank's BBQ Co.",
@@ -383,6 +417,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Central Texas BBQ with brisket, sausage, and turkey — outdoor picnic tables and BYOB friendly",
         reservationNeeded: false,
+        googleRating: 4.5,
       },
       {
         name: "The Beerhive",
@@ -392,6 +427,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Casual Main Street spot with 40+ craft beers, sausage plates, and a great beer garden patio",
         reservationNeeded: false,
+        googleRating: 4.4,
       },
       {
         name: "Cabernet Grill",
@@ -401,6 +437,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Texas wine country fine dining with ranch-sourced meats and the deepest Texas wine list in town",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "Hondo's on Main",
@@ -410,6 +447,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Tex-Mex on Main Street with live music, margaritas, and a huge rooftop patio — the group hangout spot",
         reservationNeeded: false,
+        googleRating: 4.4,
       },
     ],
     bars: [
@@ -513,6 +551,8 @@ export const southCentralDestinations: Destination[] = [
         ],
         notes:
           "Essential for wine trail days. Many wine tour companies offer all-day packages with driver and cooler. Book 2-3 weeks ahead for weekends.",
+        fullDayRate: [1400, 2400],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -561,6 +601,9 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 5,
         highlight:
           "Classic 1890s course redesigned by Willie Park Jr. — tight mountain fairways with views of the Ouachita range",
+        googleRating: 4.4,
+        reviewCount: 380,
+        hypeTag: "DESIGNER CLASSIC",
       },
       {
         name: "Hot Springs Country Club - Majestic Course",
@@ -576,6 +619,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 5,
         highlight:
           "Companion course at HSCC — more open and forgiving than the Arlington with some of the same mountain views",
+        googleRating: 4.3,
+        reviewCount: 280,
       },
       {
         name: "Mountain Ranch Golf Club",
@@ -591,6 +636,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 15,
         highlight:
           "Mountain target golf with dramatic elevation changes — several blind shots over ridgelines keep it interesting",
+        googleRating: 4.2,
+        reviewCount: 210,
       },
       {
         name: "Diamante Golf Club",
@@ -606,6 +653,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 20,
         highlight:
           "Longest and most challenging public course in the area — carved through dense Ouachita forest with water on eight holes",
+        googleRating: 4.4,
+        reviewCount: 320,
       },
       {
         name: "Belvedere Country Club",
@@ -621,6 +670,9 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 10,
         highlight:
           "Classic 1920s course with a throwback feel — short but strategic with small, fast greens",
+        googleRating: 4.2,
+        reviewCount: 190,
+        hypeTag: "HIDDEN GEM",
       },
     ],
     lodging: [
@@ -640,6 +692,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/arkansas/hot-springs",
         notes:
           "Lake Hamilton houses are the best option — affordable, waterfront, and 10 min from everything. Many have private docks and boat slips.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
       {
         type: "lodge",
@@ -656,6 +710,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Hot-Springs--AR",
         notes:
           "Mountain lodges offer seclusion and privacy. Slightly further from courses but great for groups wanting a wilderness feel. Very affordable compared to peer destinations.",
+        avgRating: 4.4,
+        bedsBreakdown: "4 kings + 2 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -667,6 +723,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Oldest bar in Arkansas (1905) now serving steaks — Al Capone used to hang here. Live blues most nights.",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "McClard's Bar-B-Q",
@@ -676,6 +733,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Legendary since 1928 — Bill Clinton's favorite BBQ spot with ribs, tamales, and a secret sauce recipe",
         reservationNeeded: false,
+        googleRating: 4.4,
       },
       {
         name: "Fisherman's Wharf",
@@ -685,6 +743,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Lake Hamilton waterfront spot with catfish, crawfish, and sunset views from the dock",
         reservationNeeded: false,
+        googleRating: 4.3,
       },
       {
         name: "Rolando's Nuevo Latino Restaurante",
@@ -694,6 +753,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Cuban-Latin fusion in a converted bungalow — creative dishes, strong margaritas, and a cult following",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
     ],
     bars: [
@@ -792,6 +852,8 @@ export const southCentralDestinations: Destination[] = [
         providers: ["Hot Springs Shuttle", "Diamond Lakes Limo"],
         notes:
           "Downtown Hot Springs is walkable at night. Shuttles mainly needed for course-to-course transport and Lake Hamilton runs. Very affordable compared to other destinations.",
+        fullDayRate: [600, 1100],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
@@ -1180,6 +1242,10 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.tpc.com/san-antonio",
         highlight:
           "Home of the PGA Tour's Valero Texas Open — Greg Norman/Sergio Garcia design with Hill Country terrain and tour-level conditioning",
+        googleRating: 4.6,
+        reviewCount: 1400,
+        hypeTag: "TOURNAMENT HOST",
+        rankNote: "Home of PGA Tour Valero Texas Open",
       },
       {
         name: "TPC San Antonio - Canyons Course",
@@ -1196,6 +1262,8 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.tpc.com/san-antonio",
         highlight:
           "Pete Dye design at TPC — more dramatic elevation and tighter lines than the Oaks course with canyon carries",
+        googleRating: 4.5,
+        reviewCount: 780,
       },
       {
         name: "The Quarry Golf Club",
@@ -1212,6 +1280,9 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.quarrygolf.com",
         highlight:
           "Built inside a former quarry with 100-foot limestone walls — the back nine plays through the quarry pit. Totally unique.",
+        googleRating: 4.4,
+        reviewCount: 1100,
+        hypeTag: "LOCALS' FAVORITE",
       },
       {
         name: "Briggs Ranch Golf Club",
@@ -1228,6 +1299,8 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.briggsranch.com",
         highlight:
           "South Texas ranch-style golf with mesquite-lined fairways, wildlife crossings, and generous landing areas",
+        googleRating: 4.3,
+        reviewCount: 520,
       },
       {
         name: "La Cantera - Palmer Course",
@@ -1244,6 +1317,8 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.lacanteragolfclub.com",
         highlight:
           "Arnold Palmer design on a former quarry site with panoramic Hill Country views and a challenging finishing stretch",
+        googleRating: 4.4,
+        reviewCount: 880,
       },
     ],
     lodging: [
@@ -1262,6 +1337,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/texas/san-antonio",
         notes:
           "North-side houses near TPC put you close to courses and 20-25 min from River Walk. Best balance of golf proximity and nightlife access.",
+        avgRating: 4.5,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "house",
@@ -1277,6 +1354,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/San-Antonio--TX",
         notes:
           "Downtown houses and condos put you walking distance to River Walk nightlife. Longer drive to courses but saves on transport for evenings.",
+        avgRating: 4.4,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -1288,6 +1367,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "River Walk fine dining with New American cuisine, private dining room, and one of the best wine lists in the city",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "2M Smokehouse",
@@ -1297,6 +1377,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Texas Monthly Top 50 BBQ — Central Texas brisket with Tex-Mex twists like barbacoa and jalapeño sausage",
         reservationNeeded: false,
+        googleRating: 4.7,
       },
       {
         name: "Mi Tierra Cafe & Bakery",
@@ -1306,6 +1387,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "24-hour Tex-Mex institution in Market Square since 1941 — mariachi bands, enchiladas, and pan dulce at 2am",
         reservationNeeded: false,
+        googleRating: 4.4,
       },
       {
         name: "Bohanan's Prime Steaks & Seafood",
@@ -1315,6 +1397,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "San Antonio's top steakhouse with a private mezzanine for groups — dry-aged prime beef and a 900-label wine list",
         reservationNeeded: true,
+        googleRating: 4.7,
       },
       {
         name: "La Gloria",
@@ -1324,6 +1407,7 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Authentic Mexican street food from chef Johnny Hernandez — tacos al pastor, elote, and fresh agua frescas at the Pearl",
         reservationNeeded: false,
+        googleRating: 4.5,
       },
     ],
     bars: [
@@ -1434,6 +1518,8 @@ export const southCentralDestinations: Destination[] = [
         ],
         notes:
           "Essential for connecting north-side courses to River Walk nightlife. Many golf-trip groups use a party bus for the full trip to avoid DUIs on unfamiliar roads.",
+        fullDayRate: [1400, 2800],
+        canDoGolfAndBars: true,
       },
       {
         type: "sprinter-van",
@@ -1442,6 +1528,8 @@ export const southCentralDestinations: Destination[] = [
         providers: ["SA Sprinter", "Texas Shuttle"],
         notes:
           "Sprinter vans are more practical for course-to-course transport. Reserve party bus for big nights on the River Walk.",
+        fullDayRate: [1000, 1800],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [

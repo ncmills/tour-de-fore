@@ -1331,6 +1331,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Communal 14-seat tasting menu experience in Geneva — perfect for a group dinner if you can book it",
         reservationNeeded: true,
+        googleRating: 4.9,
       },
       {
         name: "Kindred Fare",
@@ -1340,6 +1341,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Farm-to-table bistro in Geneva with local ingredients and solid cocktail program",
         reservationNeeded: true,
+        googleRating: 4.6,
       },
       {
         name: "Dano's Heuriger on Seneca",
@@ -1349,6 +1351,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Austrian-inspired wine bar and restaurant on the Seneca Lake wine trail",
         reservationNeeded: true,
+        googleRating: 4.5,
       },
       {
         name: "Stonecat Cafe",
@@ -1358,6 +1361,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Relaxed farm-to-table spot near Hector with great local wine pairings and outdoor seating",
         reservationNeeded: false,
+        googleRating: 4.4,
       },
       {
         name: "The Red Dove Tavern",
@@ -1367,6 +1371,7 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Creative American menu in Geneva — duck confit, pork belly, and an impressive wine list",
         reservationNeeded: true,
+        googleRating: 4.7,
       },
     ],
     bars: [
@@ -1456,6 +1461,8 @@ export const northeastDestinations: Destination[] = [
         providers: ["Finger Lakes Wine Tours", "Luxury Wine Tours FLX"],
         notes:
           "A wine trail shuttle is practically required — distances between wineries and courses add up. Most services know the route cold.",
+        fullDayRate: [1000, 1500],
+        canDoGolfAndBars: true,
       },
     ],
     privateChefs: [
