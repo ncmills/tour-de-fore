@@ -69,6 +69,12 @@ export async function POST(req: NextRequest) {
     await storePlan(storedPlan);
     await storeAttendees(planId, [{ name: state.organizerName, email: state.organizerEmail }]);
 
+    // Associate plan with user profile
+    if (state.organizerEmail) {
+      const { addPlanToUser } = await import("@/lib/auth");
+      await addPlanToUser(state.organizerEmail, planId);
+    }
+
     // Record destination views for the learning engine
     for (const preview of previews) {
       await recordDestinationView(preview.destinationId, state);
