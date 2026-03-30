@@ -479,7 +479,10 @@ export default function PlanWizardClient() {
                   {LOADING_MESSAGES[loadingMsg]}
                 </motion.p>
               </AnimatePresence>
-              <div className="mt-10 w-48 h-px bg-border overflow-hidden">
+              <p className="mt-6 text-xs text-text-dim opacity-50 text-center max-w-[280px]">
+                Building 3 destinations × 3 plans each — 9 custom itineraries just for your crew
+              </p>
+              <div className="mt-4 w-48 h-px bg-border overflow-hidden">
                 <motion.div
                   className="h-full bg-gradient-to-r from-accent to-gold"
                   animate={{ x: ["-100%", "100%"] }}
