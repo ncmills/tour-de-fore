@@ -48,3 +48,28 @@ export async function addPlanToUser(email: string, planId: string): Promise<void
 export async function getUserPlans(email: string): Promise<string[]> {
   return await getRedis().smembers(`user:${email}:plans`);
 }
+
+// Past trip attendance: store which TDF years a user attended
+export async function setUserPastTrips(email: string, years: number[]): Promise<void> {
+  const r = getRedis();
+  const key = `user:${email}:attended`;
+  await r.del(key);
+  if (years.length > 0) {
+    await r.sadd(key, ...years.map(String));
+    await r.expire(key, SESSION_TTL * 12);
+  }
+}
+
+export async function getUserPastTrips(email: string): Promise<number[]> {
+  const years = await getRedis().smembers(`user:${email}:attended`);
+  return years.map(Number).sort((a, b) => b - a);
+}
+
+// User display name
+export async function setUserName(email: string, name: string): Promise<void> {
+  await getRedis().set(`user:${email}:name`, name, "EX", SESSION_TTL * 12);
+}
+
+export async function getUserName(email: string): Promise<string | null> {
+  return await getRedis().get(`user:${email}:name`);
+}
