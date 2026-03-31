@@ -217,19 +217,6 @@ export default function HomeClient() {
               : {}
           }
         >
-          {/* Tagline above logo */}
-          <span
-            style={{
-              fontFamily: "var(--font-script), cursive",
-              fontSize: "clamp(0.9rem, 1.8vw, 1.3rem)",
-              color: "rgba(255,255,255,0.4)",
-              letterSpacing: "0.08em",
-              marginBottom: "clamp(0.75rem, 1.5vw, 1.25rem)",
-              textAlign: "center",
-            }}
-          >
-            Plan your crew&apos;s next golf odyssey
-          </span>
           <Image
             src="/logo-full.png"
             alt="Tour de Fore"
@@ -238,19 +225,6 @@ export default function HomeClient() {
             priority
             style={{ width: isMobile ? "clamp(195px, 58vw, 286px)" : "clamp(260px, 29vw, 442px)", height: "auto", filter: "brightness(0)" }}
           />
-          {/* Equal spacing below logo */}
-          <span
-            style={{
-              fontFamily: "var(--font-script), cursive",
-              fontSize: "clamp(0.75rem, 1.4vw, 1rem)",
-              color: "rgba(255,255,255,0.25)",
-              letterSpacing: "0.1em",
-              marginTop: "clamp(0.75rem, 1.5vw, 1.25rem)",
-              textAlign: "center",
-            }}
-          >
-            135+ destinations · AI-powered itineraries · built by golfers
-          </span>
         </motion.div>
       </div>
 
