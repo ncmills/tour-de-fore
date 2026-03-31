@@ -4,12 +4,12 @@ import { createMagicToken } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, returnTo } = await req.json();
+    const { email, returnTo, wizardState } = await req.json();
     if (!email || !email.includes("@")) {
       return NextResponse.json({ error: "Valid email required" }, { status: 400 });
     }
 
-    const token = await createMagicToken(email);
+    const token = await createMagicToken(email, wizardState);
     const origin = req.headers.get("origin") || "https://tourdefore.com";
     const returnParam = returnTo ? `&returnTo=${encodeURIComponent(returnTo)}` : "";
     const link = `${origin}/api/auth/verify?token=${token}${returnParam}`;

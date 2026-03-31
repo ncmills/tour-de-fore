@@ -10,10 +10,20 @@ function getRedis() {
   return redis;
 }
 
-export async function createMagicToken(email: string): Promise<string> {
+export async function createMagicToken(email: string, wizardState?: unknown): Promise<string> {
   const token = crypto.randomUUID();
-  await getRedis().set(`magic:${token}`, email, "EX", TOKEN_TTL);
+  const r = getRedis();
+  await r.set(`magic:${token}`, email, "EX", TOKEN_TTL);
+  if (wizardState) {
+    await r.set(`magic:${token}:wizard`, JSON.stringify(wizardState), "EX", TOKEN_TTL);
+  }
   return token;
+}
+
+export async function getWizardStateForToken(token: string): Promise<unknown | null> {
+  const raw = await getRedis().get(`magic:${token}:wizard`);
+  if (!raw) return null;
+  return JSON.parse(raw);
 }
 
 export async function verifyMagicToken(token: string): Promise<string | null> {
