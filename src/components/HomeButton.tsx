@@ -5,7 +5,7 @@ export default function HomeButton({ side = "right" }: { side?: "left" | "right"
     <a
       href="/?skip=1"
       style={{
-        position: "fixed",
+        position: "absolute",
         top: "1.2rem",
         ...(side === "left"
           ? { left: "clamp(1rem, 4vw, 2rem)" }
