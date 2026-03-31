@@ -33,7 +33,8 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ ok: true });
   } catch (err) {
-    console.error("Magic link error:", err);
-    return NextResponse.json({ error: "Failed to send link" }, { status: 500 });
+    const msg = err instanceof Error ? err.message : "Unknown error";
+    console.error("Magic link error:", msg, err);
+    return NextResponse.json({ error: `Failed to send link: ${msg}` }, { status: 500 });
   }
 }
