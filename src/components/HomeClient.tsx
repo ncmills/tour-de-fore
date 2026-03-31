@@ -257,6 +257,30 @@ export default function HomeClient() {
         </motion.div>
       </div>
 
+      {/* Login icon top-right */}
+      {showLinks && (
+        <motion.a
+          href="/plan-a-trip"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 0.8 }}
+          style={{
+            position: "fixed",
+            top: "1.2rem",
+            right: "clamp(1rem, 4vw, 2rem)",
+            zIndex: 50,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "0.25rem",
+            textDecoration: "none",
+          }}
+        >
+          <img src="/icon-fancy.png" alt="Login" style={{ width: 32, height: 32, opacity: 0.7 }} />
+          <span style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "var(--font-inter), sans-serif" }}>Login</span>
+        </motion.a>
+      )}
+
       {/* ── CENTER: links (same position as original) ── */}
       <AnimatePresence>
         {showLinks && (

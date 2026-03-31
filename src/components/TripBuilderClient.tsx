@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "motion/react";
 import Link from "next/link";
 import type { GeneratedPlan, ThreePlanResult, TripTier } from "@/lib/plan-types";
 import MulliganButton from "./MulliganButton";
+import HomeButton from "./HomeButton";
 
 // ── Types ──
 
@@ -406,6 +407,7 @@ export default function TripBuilderClient({
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff", padding: "clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 3rem)" }}>
       <MulliganButton href={`/plan/result/${planId}?dest=${dest}`} />
+      <HomeButton />
 
       {/* Header */}
       <div style={{ textAlign: "center", marginBottom: "3rem", maxWidth: 700, margin: "0 auto 3rem" }}>
@@ -489,55 +491,29 @@ export default function TripBuilderClient({
           <div style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.4)" }}>
             {Object.values(selectedOptions).flat().length} items selected
           </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-            <button
-              onClick={saveSelections}
-              disabled={saving}
-              style={{
-                padding: "10px 24px",
-                background: "rgba(220,38,38,0.9)",
-                border: "none",
-                borderRadius: 6,
-                color: "#fff",
-                fontSize: "0.8rem",
-                fontWeight: 600,
-                cursor: saving ? "wait" : "pointer",
-                opacity: saving ? 0.6 : 1,
-              }}
-            >
-              {saving ? "Saving..." : saved ? "Saved!" : "Save My Trip"}
-            </button>
-            <Link
-              href={`/plan/result/${planId}?dest=${dest}&tier=${tier}`}
-              style={{
-                padding: "10px 24px",
-                background: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(255,255,255,0.15)",
-                borderRadius: 6,
-                color: "rgba(255,255,255,0.7)",
-                fontSize: "0.8rem",
-                fontWeight: 600,
-                textDecoration: "none",
-              }}
-            >
-              View Full Plan
-            </Link>
-            <Link
-              href={`/trip/plan/${planId}`}
-              style={{
-                padding: "10px 24px",
-                background: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(255,255,255,0.15)",
-                borderRadius: 6,
-                color: "rgba(255,255,255,0.7)",
-                fontSize: "0.8rem",
-                fontWeight: 600,
-                textDecoration: "none",
-              }}
-            >
-              Share with Crew
-            </Link>
-          </div>
+          <button
+            onClick={async () => {
+              await saveSelections();
+              window.location.href = `/plan/result/${planId}?dest=${dest}&tier=${tier}`;
+            }}
+            disabled={saving}
+            style={{
+              padding: "12px 32px",
+              background: "rgba(220,38,38,0.9)",
+              border: "none",
+              borderRadius: 6,
+              color: "#fff",
+              fontSize: "0.95rem",
+              fontWeight: 700,
+              letterSpacing: "0.06em",
+              textTransform: "uppercase",
+              fontFamily: "var(--font-plan-block), sans-serif",
+              cursor: saving ? "wait" : "pointer",
+              opacity: saving ? 0.6 : 1,
+            }}
+          >
+            {saving ? "Saving..." : "View Itinerary & Pricing"}
+          </button>
         </div>
       </div>
     </main>

@@ -13,6 +13,7 @@ import {
   PlanBar,
 } from "@/lib/plan-types";
 import MulliganButton from "./MulliganButton";
+import HomeButton from "./HomeButton";
 
 /* ── helpers ── */
 
@@ -308,12 +309,12 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
             style={{
               display: "inline-block",
               background: "rgba(220,38,38,0.85)",
-              borderRadius: "6px",
-              padding: "5px 16px",
+              borderRadius: "8px",
+              padding: "8px 24px",
               color: "#fff",
-              fontSize: 12,
+              fontSize: 17,
               fontWeight: 700,
-              letterSpacing: "0.04em",
+              letterSpacing: "0.06em",
               textDecoration: "none",
               transition: "all 0.2s",
               whiteSpace: "nowrap",
@@ -328,15 +329,19 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
 
       {/* Mulligan — below header */}
       <MulliganButton top="5.5rem" href={`/plan/result/${planId}`} />
+      <HomeButton />
 
       {/* ─── Tier Toggle Tabs ─── */}
       {allPlans && (
+        <div style={{ textAlign: "center", marginTop: "4.5rem" }}>
+          <p style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "0.9rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: "0.75rem" }}>
+            Sample Itinerary
+          </p>
         <div style={{
           display: "flex",
           justifyContent: "center",
           gap: "0.5rem",
-          padding: "1rem clamp(1rem, 4vw, 3rem)",
-          marginTop: "4.5rem",
+          padding: "0 clamp(1rem, 4vw, 3rem) 1rem",
         }}>
           {tierTabs.map(({ key, label }) => (
             <Link
@@ -358,6 +363,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
               {label}
             </Link>
           ))}
+        </div>
         </div>
       )}
 
