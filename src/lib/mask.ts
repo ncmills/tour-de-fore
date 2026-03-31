@@ -27,12 +27,52 @@ const diningLabels: Record<string, string> = {
   "sushi": "Sushi Bar",
 };
 
-function maskName(realName: string, fallback: string, index: number): string {
-  // Keep the first word if it's generic (e.g., "The"), otherwise use fallback
-  return `${fallback} ${String.fromCharCode(65 + index)}`; // "Premium Course A", "Steakhouse B"
+/**
+ * Build a list of all real venue names from the plan so we can
+ * search-and-replace them out of any text field.
+ */
+function collectRealNames(plan: GeneratedPlan): string[] {
+  const names: string[] = [];
+
+  // Course names
+  names.push(...plan.courses.map((c) => c.name));
+  if (plan.courseAlternatives) names.push(...plan.courseAlternatives.map((a) => a.name));
+
+  // Dining names
+  names.push(...plan.dining.map((d) => d.name));
+  if (plan.diningAlternatives) names.push(...plan.diningAlternatives.map((a) => a.name));
+
+  // Bar names
+  names.push(...plan.bars.map((b) => b.name));
+
+  // Lodging name
+  names.push(plan.lodging.name);
+  if (plan.lodgingAlternatives) names.push(...plan.lodgingAlternatives.map((a) => a.name));
+
+  // Filter out very short/generic names that would cause false matches
+  return names.filter((n) => n.length > 4);
+}
+
+/**
+ * Replace all real venue names in a text string with [subscribe to reveal].
+ */
+function scrubNames(text: string, realNames: string[]): string {
+  let result = text;
+  // Sort by length descending so longer names are replaced first
+  const sorted = [...realNames].sort((a, b) => b.length - a.length);
+  for (const name of sorted) {
+    // Case-insensitive replacement
+    const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    result = result.replace(new RegExp(escaped, "gi"), "[venue — subscribe to reveal]");
+  }
+  // Also strip URLs
+  result = result.replace(/https?:\/\/[^\s)]+/g, "[link — subscribe to reveal]");
+  return result;
 }
 
 export function maskPlan(plan: GeneratedPlan): GeneratedPlan {
+  const realNames = collectRealNames(plan);
+
   return {
     ...plan,
     lodging: {
@@ -40,66 +80,63 @@ export function maskPlan(plan: GeneratedPlan): GeneratedPlan {
       name: `${plan.lodging.type} Option`,
       address: "Location revealed with subscription",
       url: undefined,
-      rationale: plan.lodging.rationale, // keep the reasoning
+      rationale: scrubNames(plan.lodging.rationale, realNames),
+      imageSearch: undefined,
     },
     lodgingAlternatives: plan.lodgingAlternatives?.map((alt, i) => ({
       ...alt,
       name: `Alternative ${String.fromCharCode(65 + i)}`,
+      description: scrubNames(alt.description, realNames),
     })),
-    courses: plan.courses.map((c, i) => ({
-      ...c,
-      name: maskName(c.name, courseLabels[c.whyThisCourse?.includes("bucket") ? "bucket-list" : "solid"] || "Golf Course", i),
-      url: undefined,
-      imageSearch: undefined,
-    })),
+    courses: plan.courses.map((c, i) => {
+      // Determine tier label from green fee range as a heuristic
+      const avgFee = parseInt(c.greenFee.replace(/[^0-9]/g, "")) || 100;
+      const tierLabel = avgFee > 250 ? "Bucket-List Course" : avgFee > 120 ? "Premium Course" : avgFee > 60 ? "Solid Mid-Tier Course" : "Budget-Friendly Course";
+      return {
+        ...c,
+        name: `${tierLabel} ${String.fromCharCode(65 + i)}`,
+        url: undefined,
+        imageSearch: undefined,
+        whyThisCourse: scrubNames(c.whyThisCourse, realNames),
+      };
+    }),
     courseAlternatives: plan.courseAlternatives?.map((alt, i) => ({
       ...alt,
       name: `Alternative Course ${String.fromCharCode(65 + i)}`,
+      description: scrubNames(alt.description, realNames),
     })),
     dining: plan.dining.map((d, i) => ({
       ...d,
-      name: maskName(d.name, diningLabels[d.type] || "Restaurant", i),
+      name: `${diningLabels[d.type] || "Restaurant"} ${String.fromCharCode(65 + i)}`,
       url: undefined,
       imageSearch: undefined,
+      description: scrubNames(d.description, realNames),
     })),
     diningAlternatives: plan.diningAlternatives?.map((alt, i) => ({
       ...alt,
       name: `Alternative ${String.fromCharCode(65 + i)}`,
+      description: scrubNames(alt.description, realNames),
     })),
     bars: plan.bars.map((b, i) => ({
       ...b,
       name: `${b.vibe.charAt(0).toUpperCase() + b.vibe.slice(1)} Bar ${String.fromCharCode(65 + i)}`,
       url: undefined,
+      description: scrubNames(b.description, realNames),
     })),
-    // Mask venue names in schedule activity text
     schedule: plan.schedule.map((day) => ({
       ...day,
-      items: day.items.map((item) => {
-        let activity = item.activity;
-        let detail = item.detail || "";
-
-        // Replace real venue names with generic labels based on item type
-        if (item.type === "golf") {
-          activity = activity.replace(/at\s+.+$/, "at [course — subscribe to reveal]");
-        } else if (item.type === "dining") {
-          activity = activity.replace(/at\s+.+$/, "at [restaurant — subscribe to reveal]");
-        } else if (item.type === "nightlife") {
-          activity = activity.replace(/at\s+.+$/, "at [bar — subscribe to reveal]");
-        }
-
-        // Strip URLs from detail
-        detail = detail.replace(/https?:\/\/[^\s]+/g, "[link hidden]");
-
-        return { ...item, activity, detail: detail || undefined };
-      }),
+      items: day.items.map((item) => ({
+        ...item,
+        activity: scrubNames(item.activity, realNames),
+        detail: item.detail ? scrubNames(item.detail, realNames) : undefined,
+        proTip: item.proTip ? scrubNames(item.proTip, realNames) : undefined,
+      })),
     })),
-    // Mask pro tips — strip URLs and specific venue references
-    proTips: plan.proTips.map((tip) =>
-      tip.replace(/https?:\/\/[^\s]+/g, "[link — subscribe to reveal]")
-    ),
+    proTips: plan.proTips.map((tip) => scrubNames(tip, realNames)),
     groupLogistics: {
       ...plan.groupLogistics,
-      transport: plan.groupLogistics.transport.replace(/https?:\/\/[^\s]+/g, "[link hidden]"),
+      transport: scrubNames(plan.groupLogistics.transport, realNames),
+      teeTimeStrategy: scrubNames(plan.groupLogistics.teeTimeStrategy, realNames),
     },
   };
 }

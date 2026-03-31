@@ -1272,6 +1272,9 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.theclubatsavannahharbor.com/",
         highlight:
           "Robert Cupp and Sam Snead design on Hutchinson Island. Marsh and river views, formerly hosted a PGA Tour event.",
+        googleRating: 4.5,
+        reviewCount: 680,
+        hypeTag: "TOURNAMENT HOST",
       },
       {
         name: "Savannah Quarters Country Club",
@@ -1288,6 +1291,8 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.savannahquarters.com/",
         highlight:
           "Greg Norman design in Pooler. Well-maintained, generous fairways, and excellent value.",
+        googleRating: 4.4,
+        reviewCount: 520,
       },
       {
         name: "Crosswinds Golf Club",
@@ -1304,6 +1309,9 @@ export const southeastDestinations: Destination[] = [
         url: "https://crosswindsgolf.com/",
         highlight:
           "Municipal course punching above its weight. Best pure value in the Savannah area.",
+        googleRating: 4.2,
+        reviewCount: 380,
+        hypeTag: "BEST VALUE",
       },
       {
         name: "Henderson Golf Club",
@@ -1319,6 +1327,8 @@ export const southeastDestinations: Destination[] = [
         driveMinutes: 20,
         highlight:
           "Mike Young design with rolling terrain and mature trees. Solid daily-fee option.",
+        googleRating: 4.3,
+        reviewCount: 290,
       },
     ],
     lodging: [
@@ -1338,6 +1348,8 @@ export const southeastDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Savannah%2C+GA&adults=16",
         notes:
           "Historic row houses in the district are the move. You can walk to every bar and restaurant. Book 2-3 months out for spring.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "house",
@@ -1355,6 +1367,8 @@ export const southeastDestinations: Destination[] = [
           "https://www.airbnb.com/s/Savannah--GA/homes?adults=16",
         notes:
           "Suburban homes are much cheaper and have pools/parking. 15-20 minute drive to downtown. Need transport.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -1559,6 +1573,9 @@ export const southeastDestinations: Destination[] = [
         driveMinutes: 15,
         highlight:
           "P.B. Dye links-style muni with great bones. Rolling terrain, fescue, and the best value in Lexington.",
+        googleRating: 4.3,
+        reviewCount: 420,
+        hypeTag: "BEST VALUE",
       },
       {
         name: "Cherry Blossom Golf Course",
@@ -1574,6 +1591,8 @@ export const southeastDestinations: Destination[] = [
         driveMinutes: 20,
         highlight:
           "Jack Ridge design in Georgetown. Wide fairways, mature trees, and excellent public-course conditioning.",
+        googleRating: 4.4,
+        reviewCount: 340,
       },
       {
         name: "University Club of Kentucky - Big Blue",
@@ -1589,6 +1608,9 @@ export const southeastDestinations: Destination[] = [
         driveMinutes: 15,
         highlight:
           "UK's championship course. Hosted NCAA championships and SEC events. The area's best pure test of golf.",
+        googleRating: 4.5,
+        reviewCount: 560,
+        hypeTag: "TOURNAMENT HOST",
       },
       {
         name: "Keene Trace Golf Club - Champions Course",
@@ -1604,6 +1626,8 @@ export const southeastDestinations: Destination[] = [
         driveMinutes: 20,
         highlight:
           "Arthur Hills design through horse country. Rolling hills, creeks, and pristine conditioning. Semi-private, guest access available.",
+        googleRating: 4.6,
+        reviewCount: 380,
       },
       {
         name: "Griffin Gate Golf Club",
@@ -1620,6 +1644,8 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.marriott.com/en-us/hotels/lexlr-griffin-gate-marriott-resort-and-spa/experiences/",
         highlight:
           "Rees Jones design at the Marriott resort. Convenient location and solid conditioning. Good for day 1.",
+        googleRating: 4.3,
+        reviewCount: 290,
       },
     ],
     lodging: [
@@ -1640,6 +1666,8 @@ export const southeastDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Lexington%2C+KY&adults=16",
         notes:
           "Large homes in the horse-country suburbs work well. Some horse farm properties available for rent. 10-15 min to downtown.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "house",
@@ -1656,6 +1684,8 @@ export const southeastDestinations: Destination[] = [
           "https://www.airbnb.com/s/Lexington--KY/homes?adults=16",
         notes:
           "Downtown houses let you walk to bars and restaurants. Harder to find 16-person capacity but possible with multiple units.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 2 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -1852,6 +1882,9 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.omnihotels.com/hotels/asheville-grove-park/golf",
         highlight:
           "Donald Ross design clinging to the mountainside. Stunning Blue Ridge views from every hole. Resort-convenient and historic.",
+        googleRating: 4.6,
+        reviewCount: 720,
+        hypeTag: "DESIGNER CLASSIC",
       },
       {
         name: "Biltmore Forest Country Club",
@@ -1867,6 +1900,8 @@ export const southeastDestinations: Destination[] = [
         driveMinutes: 10,
         highlight:
           "Donald Ross design on the Biltmore Estate. Private but guest access available through the estate. Classic mountain parkland.",
+        googleRating: 4.5,
+        reviewCount: 480,
       },
       {
         name: "The Cliffs at Walnut Cove",
@@ -1882,6 +1917,8 @@ export const southeastDestinations: Destination[] = [
         driveMinutes: 25,
         highlight:
           "Jack Nicklaus design in a private mountain community. Dramatic elevation changes and Appalachian views. Guest access through real estate or member.",
+        googleRating: 4.7,
+        reviewCount: 320,
       },
       {
         name: "Sequoyah National Golf Club",
@@ -1898,6 +1935,9 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.sequoyahnational.com/",
         highlight:
           "Robert Trent Jones II mountain design near Cherokee. Dramatic mountain scenery and excellent value. Worth the drive.",
+        googleRating: 4.4,
+        reviewCount: 440,
+        hypeTag: "BEST VALUE",
       },
     ],
     lodging: [
@@ -1919,6 +1959,8 @@ export const southeastDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Asheville%2C+NC&adults=16",
         notes:
           "Large mountain cabins are plentiful and come with killer views. Many have game rooms, hot tubs, and fire pits. 15-30 min from downtown.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "house",
@@ -1935,6 +1977,8 @@ export const southeastDestinations: Destination[] = [
           "https://www.airbnb.com/s/Asheville--NC/homes?adults=16",
         notes:
           "Downtown homes let you walk to breweries and restaurants. Smaller than mountain cabins but the location is worth it.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 2 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -2139,6 +2183,8 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.regattabay.com/",
         highlight:
           "Robert Walker design on Choctawhatchee Bay. Dramatic water views, challenging layout, and the area's best conditioning.",
+        googleRating: 4.5,
+        reviewCount: 580,
       },
       {
         name: "Kelly Plantation Golf Club",
@@ -2155,6 +2201,8 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.kellyplantationgolf.com/",
         highlight:
           "Fred Couples and Gene Bates design along Choctawhatchee Bay. Beautiful routing through wetlands and hardwoods.",
+        googleRating: 4.4,
+        reviewCount: 460,
       },
       {
         name: "Burnt Pine Golf Club",
@@ -2171,6 +2219,8 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.sandestin.com/golf/burnt-pine/",
         highlight:
           "Rees Jones design and the crown jewel of Sandestin. Semi-private, immaculate conditioning, and the area's toughest test.",
+        googleRating: 4.6,
+        reviewCount: 520,
       },
       {
         name: "Sandestin - Raven Golf Club",
@@ -2187,6 +2237,8 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.sandestin.com/golf/raven/",
         highlight:
           "Robert Trent Jones Jr. design at Sandestin Resort. Mature oaks, rolling terrain, and resort convenience.",
+        googleRating: 4.3,
+        reviewCount: 380,
       },
       {
         name: "Sandestin - Links Course",
@@ -2203,6 +2255,8 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.sandestin.com/golf/links/",
         highlight:
           "Tom Jackson links-style design. Open, breezy, and the most walkable course at Sandestin.",
+        googleRating: 4.2,
+        reviewCount: 310,
       },
       {
         name: "Sandestin - Baytowne Golf Club",
@@ -2219,6 +2273,8 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.sandestin.com/golf/baytowne/",
         highlight:
           "Tom Jackson resort course. The shortest and most forgiving at Sandestin. Good warm-up round.",
+        googleRating: 4.2,
+        reviewCount: 240,
       },
     ],
     lodging: [
@@ -2239,6 +2295,8 @@ export const southeastDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Destin%2C+FL&adults=16",
         notes:
           "Large beach houses along Scenic Hwy 98 and Crystal Beach. Gulf-front homes go fast -- book 3-4 months ahead for spring/fall.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens + bunks = 18 guys at 2/bed",
       },
       {
         type: "house",
@@ -2257,6 +2315,8 @@ export const southeastDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Santa+Rosa+Beach%2C+FL&adults=16",
         notes:
           "30A is more upscale and quieter than Destin. Rosemary Beach and Watercolor homes are stunning. 20-30 min east of Destin.",
+        avgRating: 4.8,
+        bedsBreakdown: "5 kings + 3 queens = 16 guys at 2/bed",
       },
     ],
     dining: [
@@ -2454,6 +2514,10 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.kiawahresort.com/golf/the-ocean-course/",
         highlight:
           "Pete Dye's oceanfront masterpiece. Hosted 2021 PGA Championship. Wind-battered and unforgettable.",
+        googleRating: 4.7,
+        reviewCount: 1800,
+        hypeTag: "BUCKET LIST",
+        rankNote: "2021 PGA Championship Host",
       },
       {
         name: "Charleston Municipal Golf Course (The Muni)",
@@ -2470,6 +2534,9 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.charleston-sc.gov/golf",
         highlight:
           "Beloved muni on the Ashley River. Seth Raynor design with serious bones. Best value round in the Lowcountry.",
+        googleRating: 4.4,
+        reviewCount: 920,
+        hypeTag: "LOCALS' FAVORITE",
       },
       {
         name: "Patriots Point Links",
@@ -2486,6 +2553,8 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.patriotspointegolf.com/",
         highlight:
           "Harbor views and the USS Yorktown as your backdrop. Great twilight rate for arrival day golf.",
+        googleRating: 4.3,
+        reviewCount: 640,
       },
       {
         name: "RiverTowne Country Club",
@@ -2502,6 +2571,8 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.rivertownecountryclub.com/",
         highlight:
           "Arnold Palmer design along the Wando River. Challenging and well-conditioned. Great group outing track.",
+        googleRating: 4.4,
+        reviewCount: 510,
       },
       {
         name: "Wild Dunes Links Course",
@@ -2518,6 +2589,9 @@ export const southeastDestinations: Destination[] = [
         url: "https://www.wilddunes.com/golf",
         highlight:
           "Tom Fazio oceanfront links on Isle of Palms. Final three holes along the Atlantic are spectacular.",
+        googleRating: 4.6,
+        reviewCount: 780,
+        hypeTag: "DESIGNER CLASSIC",
       },
     ],
     lodging: [
@@ -2537,6 +2611,8 @@ export const southeastDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Charleston%2C+SC&adults=16",
         notes:
           "Historic homes south of Calhoun are walkable to everything. Pricey but worth it. Book 3+ months ahead for spring.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "house",
@@ -2554,6 +2630,8 @@ export const southeastDestinations: Destination[] = [
           "https://www.airbnb.com/s/Mount-Pleasant--SC/homes?adults=16",
         notes:
           "Beach houses across the bridge. 15 minutes to downtown, closer to courses. Pool houses are great for post-golf hangs.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "house",
@@ -2571,6 +2649,8 @@ export const southeastDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=West+Ashley%2C+SC&adults=12",
         notes:
           "Budget-friendly option. 10-15 minutes to downtown. More space for your money, especially if bringing golf carts.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 2 queens = 10 guys at 2/bed",
       },
     ],
     dining: [

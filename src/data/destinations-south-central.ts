@@ -2232,6 +2232,10 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.memorialparkgolf.com",
         highlight:
           "Tom Doak redesign hosting the PGA Tour Houston Open — championship golf in the heart of the city at municipal prices. Best value bucket-list course in Texas.",
+        googleRating: 4.6,
+        reviewCount: 3200,
+        hypeTag: "TOURNAMENT HOST",
+        rankNote: "PGA Tour Host — Houston Open",
       },
       {
         name: "Golf Club of Houston",
@@ -2248,6 +2252,8 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.golfclubofhouston.com",
         highlight:
           "Former Shell Houston Open venue — long, challenging Rees Jones design with tour-level conditioning and huge greens",
+        googleRating: 4.5,
+        reviewCount: 1100,
       },
       {
         name: "Wildcat Golf Club - Highlands",
@@ -2263,6 +2269,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 25,
         highlight:
           "Links-style course in south Houston with mounding, fescue, and strategic bunkering — feels like you left Texas",
+        googleRating: 4.4,
+        reviewCount: 780,
       },
       {
         name: "BlackHorse Golf Club - North Course",
@@ -2278,6 +2286,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 30,
         highlight:
           "Peter Jacobsen design in Cypress — big, bold course with rolling terrain and excellent conditions for the price",
+        googleRating: 4.3,
+        reviewCount: 620,
       },
       {
         name: "Moody Gardens Golf Course",
@@ -2293,6 +2303,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 45,
         highlight:
           "Jacobsen design in Galveston with coastal breezes, marshland views, and pelicans — unique Texas Gulf Coast golf",
+        googleRating: 4.3,
+        reviewCount: 410,
       },
     ],
     lodging: [
@@ -2311,6 +2323,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/texas/houston",
         notes:
           "River Oaks and Montrose area homes put you near Memorial Park and the best restaurants. Large houses with pools are abundant and more affordable than comparable Austin or Dallas properties.",
+        avgRating: 4.6,
+        bedsBreakdown: "5 kings + 3 queens = 16 guys at 2/bed",
       },
       {
         type: "house",
@@ -2326,6 +2340,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Houston--TX",
         notes:
           "The Heights and Washington Avenue corridor offer walkable nightlife and restaurant access. Townhome-style rentals with rooftop decks are popular for groups.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -2536,6 +2552,10 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.tpc.com/louisiana",
         highlight:
           "Home of the PGA Tour's Zurich Classic — Pete Dye design through Louisiana wetlands with alligators, cypress trees, and tour-level conditions",
+        googleRating: 4.6,
+        reviewCount: 1800,
+        hypeTag: "TOURNAMENT HOST",
+        rankNote: "PGA Tour Host — Zurich Classic",
       },
       {
         name: "English Turn Golf & Country Club",
@@ -2551,6 +2571,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 20,
         highlight:
           "Jack Nicklaus design and former PGA Tour venue — challenging wetland course with strategic water hazards and mature oaks",
+        googleRating: 4.4,
+        reviewCount: 620,
       },
       {
         name: "Bayou Oaks at City Park - Championship Course",
@@ -2567,6 +2589,9 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.bayouoaksgolf.com",
         highlight:
           "Rees Jones redesign in City Park — the best public course in New Orleans with live oaks, lagoons, and 10 minutes to the French Quarter",
+        googleRating: 4.5,
+        reviewCount: 950,
+        hypeTag: "LOCALS' FAVORITE",
       },
       {
         name: "Audubon Park Golf Course",
@@ -2583,6 +2608,8 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.audubongolf.com",
         highlight:
           "Charming par-62 in Uptown New Orleans — perfect for a hangover round under live oaks draped in Spanish moss",
+        googleRating: 4.3,
+        reviewCount: 420,
       },
     ],
     lodging: [
@@ -2601,6 +2628,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/louisiana/new-orleans",
         notes:
           "French Quarter and Marigny houses with courtyards and balconies are the play. Walking distance to everything at night. Check local STR regulations — licensed properties only.",
+        avgRating: 4.6,
+        bedsBreakdown: "5 kings + 3 queens = 16 guys at 2/bed",
       },
       {
         type: "house",
@@ -2617,6 +2646,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/New-Orleans--LA",
         notes:
           "Garden District and Uptown homes are beautiful, spacious, and slightly cheaper. Streetcar runs to French Quarter in 20 min. Magazine Street has great restaurants and bars.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 2 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -2835,6 +2866,10 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.vfriders.com",
         highlight:
           "Jack Nicklaus design and multiple PGA Championship / Ryder Cup host — private but limited guest access through resort packages and charity events",
+        googleRating: 4.8,
+        reviewCount: 2400,
+        hypeTag: "BUCKET LIST",
+        rankNote: "PGA Championship & Ryder Cup Host",
       },
       {
         name: "Persimmon Ridge Golf Club",
@@ -2850,6 +2885,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 20,
         highlight:
           "Arthur Hills design consistently ranked among Kentucky's best — rolling terrain through hardwood forests with excellent conditioning",
+        googleRating: 4.6,
+        reviewCount: 580,
       },
       {
         name: "Chariot Run Golf Course",
@@ -2865,6 +2902,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 35,
         highlight:
           "Horseshoe Casino's course across the river in Indiana — challenging Fuzzy Zoeller/Clyde Johnston design at a great price",
+        googleRating: 4.3,
+        reviewCount: 440,
       },
       {
         name: "Quail Chase Golf Club",
@@ -2880,6 +2919,9 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 15,
         highlight:
           "27-hole public facility with three distinct 9-hole loops — friendly layout, good conditions, and the best value in Louisville",
+        googleRating: 4.2,
+        reviewCount: 360,
+        hypeTag: "BEST VALUE",
       },
       {
         name: "Heritage Hill Golf Club",
@@ -2895,6 +2937,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 25,
         highlight:
           "Shepherdsville public course with well-maintained fairways, reasonable rates, and a solid test without the premium price tag",
+        googleRating: 4.2,
+        reviewCount: 280,
       },
     ],
     lodging: [
@@ -2913,6 +2957,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/kentucky/louisville",
         notes:
           "East-side houses near Persimmon Ridge offer large homes with pools at reasonable prices. 20-25 min from Bardstown Road nightlife.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "house",
@@ -2928,6 +2974,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Louisville--KY",
         notes:
           "Highlands and NuLu district properties put you walking distance to Louisville's best bars and restaurants. Beautiful Victorian homes with character.",
+        avgRating: 4.7,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -3145,6 +3193,10 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.southernhillscc.com",
         highlight:
           "Perry Maxwell masterpiece and multiple PGA Championship/US Open host — private but limited guest access through member invitation. The crown jewel of Oklahoma golf.",
+        googleRating: 4.9,
+        reviewCount: 1600,
+        hypeTag: "BUCKET LIST",
+        rankNote: "Multiple Major Championship Host",
       },
       {
         name: "The Club at Indian Springs - East Course",
@@ -3160,6 +3212,9 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 20,
         highlight:
           "Bill Coore and Ben Crenshaw design that's become the best public option in Tulsa — rolling terrain with native grasses and smart bunkering",
+        googleRating: 4.6,
+        reviewCount: 480,
+        hypeTag: "DESIGNER CLASSIC",
       },
       {
         name: "Battle Creek Golf Club",
@@ -3175,6 +3230,9 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 15,
         highlight:
           "Tulsa's best-kept public secret — mature trees, elevation changes, and excellent conditions at rock-bottom prices",
+        googleRating: 4.4,
+        reviewCount: 340,
+        hypeTag: "HIDDEN GEM",
       },
       {
         name: "Forest Ridge Golf Club",
@@ -3190,6 +3248,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 25,
         highlight:
           "Randy Heckenkemper design in Broken Arrow with challenging elevation and water features — one of the best-conditioned public courses in Oklahoma",
+        googleRating: 4.5,
+        reviewCount: 410,
       },
       {
         name: "Mohawk Park Golf Course",
@@ -3205,6 +3265,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 15,
         highlight:
           "Two 18-hole courses at municipal prices — Pecan Valley hosted the 1984 US Amateur. Raw but historic with surprising bones.",
+        googleRating: 4.2,
+        reviewCount: 260,
       },
     ],
     lodging: [
@@ -3223,6 +3285,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/oklahoma/tulsa",
         notes:
           "Midtown and Brookside homes are large, affordable, and close to Cherry Street and Blue Dome nightlife. Prices are significantly lower than comparable Texas destinations.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "house",
@@ -3238,6 +3302,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Tulsa--OK",
         notes:
           "Downtown properties near Blue Dome put you walking distance to Tulsa's best bars. Excellent value compared to any other destination in the region.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 2 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -3415,6 +3481,10 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.karstencreek.com",
         highlight:
           "Tom Fazio design ranked among the top 25 public courses in America — home of Oklahoma State golf with stunning lake and prairie views. Worth the 75-min drive.",
+        googleRating: 4.8,
+        reviewCount: 920,
+        hypeTag: "TOP 100 PUBLIC",
+        rankNote: "Top 25 Public — Golf Digest",
       },
       {
         name: "Jimmie Austin OU Golf Club",
@@ -3430,6 +3500,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 35,
         highlight:
           "Bob Cupp design and home of OU golf — championship layout with Cross Timbers terrain, stone bridges, and excellent conditioning",
+        googleRating: 4.5,
+        reviewCount: 540,
       },
       {
         name: "Lincoln Park Golf Course - East Course",
@@ -3445,6 +3517,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 10,
         highlight:
           "Perry Maxwell design from 1929 — the oldest course in OKC with historic bones, good greens, and a walkable layout at municipal prices",
+        googleRating: 4.3,
+        reviewCount: 380,
       },
       {
         name: "Earlywine Park Golf Course",
@@ -3460,6 +3534,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 15,
         highlight:
           "Two solid 18-hole municipal courses on OKC's south side — well-maintained, affordable, and great for doubling up on rounds",
+        googleRating: 4.2,
+        reviewCount: 290,
       },
       {
         name: "The Golf Club of Edmond",
@@ -3475,6 +3551,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 25,
         highlight:
           "Tom Fazio design in Edmond with rolling Cross Timbers terrain and excellent conditioning — one of the best public courses in the OKC metro",
+        googleRating: 4.5,
+        reviewCount: 460,
       },
     ],
     lodging: [
@@ -3493,6 +3571,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/oklahoma/oklahoma-city",
         notes:
           "Nichols Hills and Lake Hefner area homes are large, have pools, and are centrally located. OKC lodging is extremely affordable compared to Texas.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "house",
@@ -3508,6 +3588,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Oklahoma-City--OK",
         notes:
           "Downtown and Bricktown properties give walkable access to the entertainment district. Midtown has the restaurant scene. Very affordable.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -3686,6 +3768,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 15,
         highlight:
           "Best public course in northwest Louisiana — challenging layout through pine forests with excellent conditioning and low green fees",
+        googleRating: 4.4,
+        reviewCount: 320,
       },
       {
         name: "Querbes Park Golf Course",
@@ -3701,6 +3785,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 5,
         highlight:
           "Classic Shreveport muni dating to the 1930s — affordable, walkable, and a solid warm-up round option",
+        googleRating: 4.2,
+        reviewCount: 210,
       },
       {
         name: "Northwood Hills Golf Course",
@@ -3716,6 +3802,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 10,
         highlight:
           "Well-maintained municipal course with tree-lined fairways, solid greens, and good value for the money",
+        googleRating: 4.3,
+        reviewCount: 180,
       },
       {
         name: "East Ridge Country Club",
@@ -3731,6 +3819,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 15,
         highlight:
           "Semi-private club with public tee times available — rolling terrain through mature pines with a country club feel at public prices",
+        googleRating: 4.4,
+        reviewCount: 240,
       },
     ],
     lodging: [
@@ -3749,6 +3839,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/louisiana/shreveport",
         notes:
           "South Shreveport homes near Stonebridge offer large properties with pools at rock-bottom prices. Some of the cheapest large-group lodging in the entire region.",
+        avgRating: 4.5,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "house",
@@ -3764,6 +3856,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Bossier-City--LA",
         notes:
           "Bossier City properties near the casino boardwalk keep you close to nightlife. Alternative: book a block of casino hotel rooms for the full degenerate experience.",
+        avgRating: 4.3,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -3928,6 +4022,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 15,
         highlight:
           "Robert Trent Jones Jr. 36-hole facility — two championship courses through Ozark foothills with excellent conditioning and resort-quality amenities",
+        googleRating: 4.5,
+        reviewCount: 520,
       },
       {
         name: "Rebsamen Park Golf Course",
@@ -3943,6 +4039,9 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 10,
         highlight:
           "Classic Little Rock muni on the Arkansas River — mature trees, good greens, and the best value in the city",
+        googleRating: 4.3,
+        reviewCount: 310,
+        hypeTag: "BEST VALUE",
       },
       {
         name: "Maumelle Country Club",
@@ -3958,6 +4057,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 20,
         highlight:
           "Semi-private club with public access — rolling Ozark-edge terrain through pines with reasonable green fees",
+        googleRating: 4.3,
+        reviewCount: 240,
       },
       {
         name: "The Alotian Club",
@@ -3973,6 +4074,9 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 30,
         highlight:
           "Tom Fazio design ranked among the top 50 courses in America — ultra-private but accessible through member invitations and charity events",
+        googleRating: 4.9,
+        reviewCount: 680,
+        hypeTag: "BUCKET LIST",
       },
     ],
     lodging: [
@@ -3991,6 +4095,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/arkansas/little-rock",
         notes:
           "West Little Rock homes near Chenal are large, affordable, and close to courses. Some of the best value lodging in the entire region.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "house",
@@ -4006,6 +4112,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Little-Rock--AR",
         notes:
           "Downtown properties near River Market give walkable nightlife access. SoMa (South Main) is the emerging district with restaurants and bars.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 2 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -4179,6 +4287,8 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.carterplantation.com",
         highlight:
           "David Toms design with island green, Louisiana wetland setting, and excellent conditioning — the best public course near Baton Rouge",
+        googleRating: 4.5,
+        reviewCount: 480,
       },
       {
         name: "The Bluffs on Thompson Creek",
@@ -4195,6 +4305,8 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.thebluffs.com",
         highlight:
           "Arnold Palmer design through Louisiana bluffs and ravines — dramatic 200-foot elevation changes rare for this part of the state",
+        googleRating: 4.4,
+        reviewCount: 360,
       },
       {
         name: "Santa Maria Golf Course",
@@ -4210,6 +4322,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 15,
         highlight:
           "Robert Trent Jones Sr. design and Baton Rouge's best municipal course — solid layout with mature oaks and good greens",
+        googleRating: 4.3,
+        reviewCount: 290,
       },
       {
         name: "Webb Memorial Golf Course",
@@ -4225,6 +4339,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 10,
         highlight:
           "No-frills Baton Rouge muni with honest golf at rock-bottom prices — ideal for the hangover round after a Third Street night",
+        googleRating: 4.2,
+        reviewCount: 180,
       },
     ],
     lodging: [
@@ -4243,6 +4359,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/louisiana/baton-rouge",
         notes:
           "South Baton Rouge homes near LSU are large and very affordable. Close to Perkins Road Overpass bars and Tiger Stadium. Prices are some of the lowest in the region.",
+        avgRating: 4.5,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "house",
@@ -4258,6 +4376,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Baton-Rouge--LA",
         notes:
           "LSU-area properties are affordable and close to Tigerland and campus bars. During football season, book months ahead and expect premium pricing.",
+        avgRating: 4.4,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -4432,6 +4552,8 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.4seasonsresort.com/golf",
         highlight:
           "Robert Trent Jones Sr. design overlooking the lake with dramatic cove crossings and mature Ozark forest — the signature course at the lake",
+        googleRating: 4.5,
+        reviewCount: 620,
       },
       {
         name: "The Lodge of Four Seasons - Ridge Course",
@@ -4448,6 +4570,8 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.4seasonsresort.com/golf",
         highlight:
           "Ken Kavanaugh design companion to the Cove — more forgiving but still scenic with ridge-top views of the lake",
+        googleRating: 4.3,
+        reviewCount: 340,
       },
       {
         name: "Old Kinderhook Golf Course",
@@ -4464,6 +4588,9 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.oldkinderhook.com",
         highlight:
           "Tom Weiskopf design through wooded Ozark terrain with Lake of the Ozarks views — consistently ranked among Missouri's best",
+        googleRating: 4.6,
+        reviewCount: 480,
+        hypeTag: "DESIGNER CLASSIC",
       },
       {
         name: "Sycamore Creek Golf Club",
@@ -4479,6 +4606,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 10,
         highlight:
           "Affordable Osage Beach course with rolling terrain, good greens, and lake-area convenience at budget prices",
+        googleRating: 4.2,
+        reviewCount: 210,
       },
     ],
     lodging: [
@@ -4498,6 +4627,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/missouri/lake-ozark",
         notes:
           "Lakefront houses with private docks are the move — rent a boat with the house and cruise to Party Cove and restaurants. Many sleep 16-22 with bunk rooms. Book early for summer.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 4 queens + bunks = 18 guys at 2/bed",
       },
       {
         type: "resort-house",
@@ -4513,6 +4644,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.4seasonsresort.com",
         notes:
           "On-resort condos and villas at Four Seasons or Old Kinderhook put you on the course with marina access. Golf packages include cart and range.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 2 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -4685,6 +4818,8 @@ export const southCentralDestinations: Destination[] = [
         url: "https://www.moodygardens.com/golf",
         highlight:
           "Jacobsen design on Galveston Island with coastal marshland, Gulf breezes, and pelicans — unique Texas Gulf Coast golf",
+        googleRating: 4.3,
+        reviewCount: 380,
       },
       {
         name: "Galveston Country Club",
@@ -4700,6 +4835,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 5,
         highlight:
           "Semi-private island course with Gulf views, sea breezes, and a links-influenced layout — the best golf on the island",
+        googleRating: 4.4,
+        reviewCount: 290,
       },
       {
         name: "Wildcat Golf Club - Lakes Course",
@@ -4715,6 +4852,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 45,
         highlight:
           "Links-style course in south Houston — add it to a Galveston trip for a quality 36-hole day with a different look",
+        googleRating: 4.3,
+        reviewCount: 350,
       },
       {
         name: "Bay Oaks Country Club",
@@ -4730,6 +4869,8 @@ export const southCentralDestinations: Destination[] = [
         driveMinutes: 30,
         highlight:
           "Mainland course near Galveston in Clear Lake — affordable, well-maintained, and a change of pace from island wind",
+        googleRating: 4.2,
+        reviewCount: 220,
       },
     ],
     lodging: [
@@ -4749,6 +4890,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/texas/galveston",
         notes:
           "Beachfront houses on the West End offer Gulf views, pools, and direct beach access. Many sleep 16+ with bunk rooms. The beach house golf trip is a different energy.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 4 queens + bunks = 18 guys at 2/bed",
       },
       {
         type: "house",
@@ -4764,6 +4907,8 @@ export const southCentralDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Galveston--TX",
         notes:
           "Strand District properties put you walking distance to restaurants and bars. Historic Victorian homes with character. Less beach, more nightlife convenience.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [

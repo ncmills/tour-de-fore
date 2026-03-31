@@ -1724,6 +1724,8 @@ export const mountainWestDestinations: Destination[] = [
         type: "sprinter-van",
         capacity: [12, 14],
         hourlyRate: [175, 275],
+        fullDayRate: [1400, 2200],
+        canDoGolfAndBars: true,
         providers: [
           "Jackson Hole Limo & Transportation",
           "Teton Luxury Transportation",
@@ -2016,6 +2018,8 @@ export const mountainWestDestinations: Destination[] = [
         type: "shuttle",
         capacity: [12, 15],
         hourlyRate: [80, 130],
+        fullDayRate: [640, 1040],
+        canDoGolfAndBars: true,
         providers: [
           "Deadwood Trolley",
           "Black Hills Transportation",
@@ -2109,6 +2113,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=McCall%2C+Idaho&guests=16",
         notes:
           "Lakefront properties book fast for summer; Payette Lake is stunning and having a dock is a game-changer for the group",
+        avgRating: 4.8,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "cabin",
@@ -2126,6 +2132,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.airbnb.com/s/McCall--Idaho/homes?adults=14",
         notes:
           "Downtown cabins put you walking distance to restaurants and bars; smaller but convenient",
+        avgRating: 4.7,
+        bedsBreakdown: "3 kings + 4 queens = 14 guys at 2/bed",
       },
     ],
     dining: [
@@ -2254,6 +2262,8 @@ export const mountainWestDestinations: Destination[] = [
         type: "shuttle",
         capacity: [10, 14],
         hourlyRate: [100, 150],
+        fullDayRate: [800, 1200],
+        canDoGolfAndBars: true,
         providers: ["McCall Shuttle", "Salmon River Shuttle"],
         notes:
           "The 2.5 hour drive from Boise is the biggest logistics challenge; arrange airport shuttle in advance. Once in McCall, everything is 5-10 min away.",
@@ -2391,6 +2401,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Bozeman%2C+Montana&guests=16",
         notes:
           "Big houses available in the newer developments south of town; 10-15 min to downtown and courses",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "lodge",
@@ -2409,6 +2421,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Bozeman--Montana/homes?adults=16",
         notes:
           "River lodges along the Gallatin Canyon offer seclusion and stunning scenery; 20-30 min to town",
+        avgRating: 4.8,
+        bedsBreakdown: "5 kings + 5 queens = 20 guys at 2/bed",
       },
     ],
     dining: [
@@ -2656,6 +2670,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Missoula%2C+Montana&guests=16",
         notes:
           "Large homes in the hillside neighborhoods offer mountain views and are 10 min to downtown and courses",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "cabin",
@@ -2674,6 +2690,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Missoula--Montana/homes?adults=14",
         notes:
           "River cabins south along the Bitterroot offer great fishing access; combine two for bigger groups",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 4 queens = 14 guys at 2/bed",
       },
     ],
     dining: [
@@ -3217,6 +3235,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Breckenridge%2C+Colorado&guests=16",
         notes:
           "Massive ski chalets convert to summer lodges; summer rates are 40-50% less than ski season. Shuttle to Main Street.",
+        avgRating: 4.8,
+        bedsBreakdown: "5 kings + 5 queens = 20 guys at 2/bed",
       },
       {
         type: "lodge",
@@ -3235,6 +3255,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Breckenridge--Colorado/homes?adults=16",
         notes:
           "Walkable-to-downtown lodges are pricier but worth it for the nightlife access; book early for summer",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
     ],
     dining: [
@@ -3500,6 +3522,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Vail%2C+Colorado&guests=16",
         notes:
           "Summer rates are dramatically less than ski season; huge chalets in West Vail are 5 min to the village",
+        avgRating: 4.8,
+        bedsBreakdown: "5 kings + 5 queens = 20 guys at 2/bed",
       },
       {
         type: "lodge",
@@ -3518,6 +3542,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Vail--Colorado/homes?adults=16",
         notes:
           "Walkable-to-village properties command a premium but the nightlife access is unbeatable",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
     ],
     dining: [
@@ -3751,6 +3777,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Telluride%2C+Colorado&guests=16",
         notes:
           "Walkable-to-Main-Street homes are premium but worth it; summer rates are 50%+ off ski season",
+        avgRating: 4.8,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "house",
@@ -3769,6 +3797,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Telluride--Colorado/homes?adults=16",
         notes:
           "Mountain Village houses are larger and cheaper; free gondola to town runs until midnight",
+        avgRating: 4.7,
+        bedsBreakdown: "5 kings + 5 queens = 20 guys at 2/bed",
       },
     ],
     dining: [
@@ -4033,6 +4063,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Fort+Collins%2C+Colorado&guests=16",
         notes:
           "Walkable-to-Old-Town homes are the play; brewery crawl distance and easy Uber/Lyft coverage",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "house",
@@ -4051,6 +4083,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Fort-Collins--Colorado/homes?adults=16",
         notes:
           "Larger homes near Horsetooth Reservoir with mountain views and outdoor space; 10 min to Old Town",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 5 queens = 18 guys at 2/bed",
       },
     ],
     dining: [
@@ -4300,6 +4334,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Glenwood+Springs%2C+Colorado&guests=16",
         notes:
           "Homes along the Colorado River corridor offer great views and are 5-10 min to downtown",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "house",
@@ -4318,6 +4354,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Glenwood-Springs--Colorado/homes?adults=16",
         notes:
           "Carbondale is 15 min south with a great dining scene of its own; closer to River Valley Ranch GC",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 5 queens = 18 guys at 2/bed",
       },
     ],
     dining: [
@@ -4551,6 +4589,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Pagosa+Springs%2C+Colorado&guests=16",
         notes:
           "Mountain cabins and homes with great rates; many near the San Juan River with hot springs access nearby",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "house",
@@ -4569,6 +4609,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Pagosa-Springs--Colorado/homes?adults=16",
         notes:
           "Larger homes available in the surrounding area; slightly more secluded with bigger footprints",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 5 queens = 18 guys at 2/bed",
       },
     ],
     dining: [
@@ -4785,6 +4827,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Salida%2C+Colorado&guests=16",
         notes:
           "Walkable-to-downtown homes with mountain views; very affordable compared to I-70 corridor towns",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "cabin",
@@ -4803,6 +4847,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Salida--Colorado/homes?adults=14",
         notes:
           "River cabins along the Arkansas offer great access to rafting put-ins and fishing; combine two for bigger groups",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 4 queens = 14 guys at 2/bed",
       },
     ],
     dining: [
@@ -5025,6 +5071,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Cody%2C+Wyoming&guests=16",
         notes:
           "Western lodges and ranch homes along the Yellowstone Highway; real cowboy vibes with modern amenities",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "ranch",
@@ -5043,6 +5091,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Cody--Wyoming/homes?adults=16",
         notes:
           "Guest ranches along the Shoshone River offer the full Wyoming experience; some do group buyouts",
+        avgRating: 4.8,
+        bedsBreakdown: "5 kings + 5 queens = 20 guys at 2/bed",
       },
     ],
     dining: [
@@ -5288,6 +5338,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Rapid+City%2C+South+Dakota&guests=16",
         notes:
           "Large homes in the western hills area offer Black Hills views and are 10 min to downtown; great value",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "cabin",
@@ -5307,6 +5359,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Rapid-City--South-Dakota/homes?adults=16",
         notes:
           "Black Hills cabins near Keystone/Hill City are 20-30 min from RC but closer to Rushmore and Custer State Park",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 5 queens = 18 guys at 2/bed",
       },
     ],
     dining: [
@@ -5537,6 +5591,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Custer%2C+South+Dakota&guests=16",
         notes:
           "Large Black Hills cabins nestled in ponderosa pines; many sleep 16-20 and are minutes from Custer State Park",
+        avgRating: 4.7,
+        bedsBreakdown: "5 kings + 5 queens = 20 guys at 2/bed",
       },
       {
         type: "lodge",
@@ -5555,6 +5611,8 @@ export const mountainWestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Keystone--South-Dakota/homes?adults=16",
         notes:
           "Keystone lodges are closest to Rushmore; Hill City has a more charming downtown with restaurants",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
     ],
     dining: [

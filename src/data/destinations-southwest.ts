@@ -3051,6 +3051,8 @@ export const southwestDestinations: Destination[] = [
         driveMinutes: 5,
         highlight:
           "Well-maintained desert muni with mountain views — the best value in town",
+        googleRating: 4.3,
+        reviewCount: 380,
       },
       {
         name: "London Bridge Golf Club (West Course)",
@@ -3066,6 +3068,8 @@ export const southwestDestinations: Destination[] = [
         driveMinutes: 5,
         highlight:
           "Shorter sister course — wide open, forgiving, and perfect for a warm-up or hangover round",
+        googleRating: 4.2,
+        reviewCount: 290,
       },
       {
         name: "Havasu Island Golf Course",
@@ -3081,6 +3085,8 @@ export const southwestDestinations: Destination[] = [
         driveMinutes: 10,
         highlight:
           "Quick 9-hole loop that leaves the afternoon free for lake activities",
+        googleRating: 4.0,
+        reviewCount: 150,
       },
       {
         name: "Emerald Canyon Golf Course",
@@ -3097,6 +3103,9 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.emeraldcanyongolf.com",
         highlight:
           "Stunning canyon course in Parker with 300-foot elevation drops to the Colorado River — worth the 40-minute drive",
+        googleRating: 4.6,
+        reviewCount: 520,
+        hypeTag: "HIDDEN GEM",
       },
     ],
     lodging: [
@@ -3117,6 +3126,8 @@ export const southwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Lake+Havasu+City%2C+AZ&groupSize=16",
         notes:
           "Waterfront homes with private docks are the play — rent a boat and tie up at your house. Spring is peak season so book early.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
       {
         type: "house",
@@ -3132,6 +3143,8 @@ export const southwestDestinations: Destination[] = [
           "Off-water homes in residential areas — cheaper and still 10 minutes from everything",
         notes:
           "Non-waterfront homes are significantly cheaper. Everything in Havasu is a short drive.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 1 queen = 8 guys at 2/bed",
       },
     ],
     dining: [
@@ -3305,6 +3318,8 @@ export const southwestDestinations: Destination[] = [
         driveMinutes: 10,
         highlight:
           "Best course in the Laughlin area — well-conditioned resort layout with mountain and river valley views",
+        googleRating: 4.4,
+        reviewCount: 460,
       },
       {
         name: "Emerald River Golf Course",
@@ -3320,6 +3335,8 @@ export const southwestDestinations: Destination[] = [
         driveMinutes: 5,
         highlight:
           "Flat and forgiving course right in Laughlin — cheap, walkable, and perfect for a warm-up round",
+        googleRating: 4.2,
+        reviewCount: 310,
       },
       {
         name: "Rio Vista Golf Club",
@@ -3335,6 +3352,8 @@ export const southwestDestinations: Destination[] = [
         driveMinutes: 15,
         highlight:
           "Quick 9-hole loop across the river in Bullhead City — budget-friendly twilight option",
+        googleRating: 4.0,
+        reviewCount: 120,
       },
       {
         name: "Chaparral Country Club",
@@ -3350,6 +3369,8 @@ export const southwestDestinations: Destination[] = [
         driveMinutes: 15,
         highlight:
           "Semi-private course in Bullhead City with mature trees and a well-maintained layout",
+        googleRating: 4.3,
+        reviewCount: 240,
       },
     ],
     lodging: [
@@ -3369,6 +3390,8 @@ export const southwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Laughlin%2C+NV&groupSize=16",
         notes:
           "Most rental homes are in Bullhead City, AZ across the river (5-minute drive). Casino hotel rooms at Harrah's, Aquarius, or Don Laughlin's run $40-80/night and are the easy alternative.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
       {
         type: "lodge",
@@ -3384,6 +3407,8 @@ export const southwestDestinations: Destination[] = [
           "Casino hotels along the Laughlin Strip — Harrah's, Aquarius, Don Laughlin's Riverside",
         notes:
           "Splitting 8 casino hotel rooms at $50/night is extremely budget-friendly. Everything is walkable along the riverwalk.",
+        avgRating: 4.3,
+        bedsBreakdown: "8 kings = 16 guys at 2/bed",
       },
     ],
     dining: [
@@ -3556,6 +3581,8 @@ export const southwestDestinations: Destination[] = [
         driveMinutes: 5,
         highlight:
           "Public mountain course with ponderosa pines lining every fairway — gorgeous and affordable",
+        googleRating: 4.4,
+        reviewCount: 340,
       },
       {
         name: "The Rim Golf Club",
@@ -3571,6 +3598,9 @@ export const southwestDestinations: Destination[] = [
         driveMinutes: 10,
         highlight:
           "Tom Weiskopf design perched below the Mogollon Rim — dramatic elevation changes through pristine pine forest",
+        googleRating: 4.7,
+        reviewCount: 480,
+        hypeTag: "HIDDEN GEM",
       },
       {
         name: "Chaparral Pines Golf Club",
@@ -3586,6 +3616,9 @@ export const southwestDestinations: Destination[] = [
         driveMinutes: 10,
         highlight:
           "Semi-private David Graham & Gary Panks design through thick pine and juniper forest — a hidden gem",
+        googleRating: 4.6,
+        reviewCount: 280,
+        hypeTag: "HIDDEN GEM",
       },
     ],
     lodging: [
@@ -3606,6 +3639,8 @@ export const southwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Payson%2C+AZ&groupSize=16",
         notes:
           "Large pine-forest cabins are the play here. The mountain setting makes it feel like a retreat. Book early for summer when Phoenix residents flee the heat.",
+        avgRating: 4.7,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
       {
         type: "lodge",
@@ -3621,6 +3656,8 @@ export const southwestDestinations: Destination[] = [
           "Mazatzal Hotel & Casino or local lodges along Highway 87",
         notes:
           "Mazatzal Casino has a hotel with a small casino and affordable rooms. Splitting lodge rooms works for smaller groups.",
+        avgRating: 4.2,
+        bedsBreakdown: "4 kings + 2 queens = 12 guys at 2/bed",
       },
     ],
     dining: [

@@ -1549,6 +1549,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Hood+River%2C+Oregon&guests=14",
         notes:
           "Smaller inventory than Bend but there are some excellent large homes with Gorge or Mt. Hood views. Book 3-4 months ahead for summer.",
+        avgRating: 4.7,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
       {
         type: "cabin",
@@ -1567,6 +1569,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.airbnb.com/s/Hood-River--Oregon/homes?adults=14",
         notes:
           "Foothill cabins offer more space and privacy but you'll need cars or a shuttle to get to town.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 2 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -1838,6 +1842,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Portland%2C+Oregon&guests=14",
         notes:
           "Portland has excellent large-home inventory. SE Portland offers best walkability to bars; Alberta Arts for more eclectic vibes. Book 2-3 months ahead for summer.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 2 queens = 12 guys at 2/bed",
       },
       {
         type: "house",
@@ -1857,6 +1863,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.airbnb.com/s/Portland--Oregon/homes?adults=14",
         notes:
           "West Hills homes offer stunning views and more square footage but you'll need cars to get downtown.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -2158,6 +2166,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Seattle%2C+Washington&guests=14",
         notes:
           "Seattle's hilly terrain means many homes have water or mountain views. Ballard is best for brewery access; Capitol Hill for nightlife. Book 3+ months ahead in summer.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "house",
@@ -2177,6 +2187,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.airbnb.com/s/Seattle--Washington/homes?adults=14",
         notes:
           "Waterfront homes offer incredible views but are farther from nightlife. West Seattle is a good compromise.",
+        avgRating: 4.7,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -2461,6 +2473,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Spokane%2C+Washington&guests=14",
         notes:
           "Spokane lodging is excellent value. South Hill has the nicest homes; Browne's Addition is walkable to downtown. Book 2 months ahead for summer.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "house",
@@ -2479,6 +2493,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.airbnb.com/s/Spokane--Washington/homes?adults=14",
         notes:
           "Lake properties offer a resort feel at a fraction of Coeur d'Alene pricing. Great if you want water activities between rounds.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -2735,6 +2751,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Ketchum%2C+Idaho&guests=14",
         notes:
           "Ketchum lodges are pricey but high quality. Summer rates are significantly lower than ski season. Book 2+ months ahead.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 2 queens = 12 guys at 2/bed",
       },
       {
         type: "house",
@@ -2753,6 +2771,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.airbnb.com/s/Sun-Valley--Idaho/homes?adults=14",
         notes:
           "Hailey offers better value and larger homes. You'll need cars but the drive to Ketchum is easy and scenic.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -3000,6 +3020,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Sandpoint%2C+Idaho&guests=14",
         notes:
           "Lakefront homes are the move here. Some include boats and kayaks. Book 3+ months ahead for summer — inventory is limited.",
+        avgRating: 4.7,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
       {
         type: "cabin",
@@ -3018,6 +3040,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.airbnb.com/s/Sandpoint--Idaho/homes?adults=14",
         notes:
           "Mountain cabins are more affordable than lakefront and offer great views. You'll need cars.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 2 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -3250,6 +3274,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Walla+Walla%2C+Washington&guests=14",
         notes:
           "Downtown homes put you walking distance to 30+ tasting rooms. Book 2-3 months ahead for harvest season (Sept-Oct).",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
       {
         type: "house",
@@ -3268,6 +3294,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.airbnb.com/s/Walla-Walla--Washington/homes?adults=14",
         notes:
           "Vineyard properties offer incredible scenery. You'll need cars but the wineries are right next door.",
+        avgRating: 4.7,
+        bedsBreakdown: "3 kings + 2 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -3521,6 +3549,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Eugene%2C+Oregon&guests=14",
         notes:
           "Excellent value compared to Portland or Bend. Avoid booking during UO football weekends (fall) when prices spike and inventory disappears.",
+        avgRating: 4.5,
+        bedsBreakdown: "4 kings + 2 queens = 12 guys at 2/bed",
       },
       {
         type: "cabin",
@@ -3539,6 +3569,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.airbnb.com/s/Eugene--Oregon/homes?adults=14",
         notes:
           "McKenzie River cabins offer incredible scenery and proximity to Tokatee. Worth the drive for groups who want a mountain-cabin feel.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 2 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -3795,6 +3827,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Leavenworth%2C+Washington&guests=14",
         notes:
           "Mountain cabins are the play here. Icicle Road puts you closest to the village; Plain has larger properties. Book 3+ months ahead for summer.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "lodge",
@@ -3813,6 +3847,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.airbnb.com/s/Leavenworth--Washington/homes?adults=14",
         notes:
           "In-village lodges are more expensive but eliminate driving. Many have Bavarian character.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 2 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -4053,6 +4089,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Cannon+Beach%2C+Oregon&guests=14",
         notes:
           "Oceanfront homes in Cannon Beach are stunning but book fast. Tolovana Park (south Cannon Beach) has more large-home inventory. Book 4-6 months ahead for summer.",
+        avgRating: 4.8,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "house",
@@ -4071,6 +4109,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Seaside%2C+Oregon&guests=14",
         notes:
           "Gearhart and Seaside have more large-home options at lower prices. Seaside has the better bar scene.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -4317,6 +4357,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Gig+Harbor%2C+Washington&guests=14",
         notes:
           "Waterfront homes with Puget Sound views are the play. Fox Island has more space and privacy. Harbor-adjacent gives walkability to restaurants.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 2 queens = 12 guys at 2/bed",
       },
       {
         type: "house",

@@ -806,6 +806,11 @@ export default function PlanWizardClient() {
             />
           </div>
 
+          {/* Free plan indicator */}
+          <p style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.2)", textAlign: "center", marginBottom: "1rem" }}>
+            Free plan — venue names masked. <a href="/subscribe" style={{ color: "rgba(220,38,38,0.7)", textDecoration: "underline" }}>Become a Devil</a> for full details + unlimited plans.
+          </p>
+
           {error && (
             <motion.p initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} style={{ color: "#f87171", fontSize: "0.8rem", fontFamily: "var(--font-plan-script), cursive", marginBottom: "1rem" }}>
               {error}
