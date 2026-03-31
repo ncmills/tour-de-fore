@@ -16,8 +16,10 @@ export async function GET(req: NextRequest) {
   // Create session
   const sessionId = await createSession(email);
 
-  // Set cookie and redirect to my-trips
-  const response = NextResponse.redirect(new URL("/my-trips", req.url));
+  // Redirect to returnTo if provided, otherwise my-trips
+  const returnTo = req.nextUrl.searchParams.get("returnTo");
+  const redirectUrl = returnTo && returnTo.startsWith("/") ? returnTo : "/my-trips";
+  const response = NextResponse.redirect(new URL(redirectUrl, req.url));
   response.cookies.set("tdf-session", sessionId, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",

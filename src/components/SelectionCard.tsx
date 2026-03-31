@@ -4,13 +4,15 @@ import { motion } from "motion/react";
 
 interface SelectionCardProps {
   label: string;
-  sublabel?: string;
+  sublabel?: React.ReactNode;
   selected: boolean;
   onClick: () => void;
   compact?: boolean;
 }
 
 export default function SelectionCard({ label, sublabel, selected, onClick, compact }: SelectionCardProps) {
+  const isTdfEndorsed = sublabel === "tdf-endorsed";
+
   return (
     <motion.button
       onClick={onClick}
@@ -26,8 +28,15 @@ export default function SelectionCard({ label, sublabel, selected, onClick, comp
         cursor: "pointer",
         transition: "background 0.2s, border-color 0.2s",
         width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "flex-end",
       }}
     >
+      {isTdfEndorsed && (
+        <img src="/icon-fancy.png" alt="TDF Endorsed" style={{ width: 72, height: 72, marginBottom: "0.4rem" }} />
+      )}
       <span style={{
         display: "block",
         fontFamily: "var(--font-inter), sans-serif",
@@ -39,7 +48,7 @@ export default function SelectionCard({ label, sublabel, selected, onClick, comp
       }}>
         {label}
       </span>
-      {sublabel && (
+      {sublabel && !isTdfEndorsed && (
         <span style={{
           display: "block",
           fontSize: "0.84rem",
