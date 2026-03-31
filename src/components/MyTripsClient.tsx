@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import MulliganButton from "./MulliganButton";
+import HomeButton from "./HomeButton";
 
 interface PlannedTrip {
   id: string;
@@ -220,6 +221,7 @@ export default function MyTripsClient({
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff", padding: "clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 3rem)" }}>
       <MulliganButton />
+      <HomeButton />
 
       <div style={{ maxWidth: 700, margin: "0 auto" }}>
         {/* ── Profile Section ── */}
@@ -235,7 +237,7 @@ export default function MyTripsClient({
           }}
         >
           <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
-            <img src="/devil-avatar.png" alt="Devil" style={{ width: 160, height: 160, objectFit: "contain", margin: "0 auto 0.35rem" }} />
+            <img src="/devil-avatar.png" alt="Devil" style={{ width: 160, height: 160, objectFit: "contain", margin: "0 auto 0.09rem" }} />
 
             {editingName ? (
               <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>

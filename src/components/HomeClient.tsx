@@ -272,7 +272,7 @@ export default function HomeClient() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            gap: "0.03rem",
+            gap: "0",
             textDecoration: "none",
           }}
         >

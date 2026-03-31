@@ -189,7 +189,7 @@ export async function createPrintfulOrder(
     return null;
   }
 
-  const res = await fetch(`${PRINTFUL_API}/orders`, {
+  const res = await fetch(`${PRINTFUL_API}/orders?confirm=true`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${PRINTFUL_TOKEN}`,
