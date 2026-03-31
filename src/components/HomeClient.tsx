@@ -281,7 +281,7 @@ export default function HomeClient() {
               { label: "Pro Shop", href: "/shop", blood: false },
               { label: "Body of Work", href: "/past-trips", blood: false },
               { label: "Plan a Trip", href: "/plan-a-trip", blood: true },
-            ].map(({ label, href, blood }) => (
+            ].flatMap(({ label, href, blood }, i, arr) => [
               <Link
                 key={label}
                 href={href}
@@ -310,8 +310,18 @@ export default function HomeClient() {
                 }}
               >
                 {label}
-              </Link>
-            ))}
+              </Link>,
+              i < arr.length - 1 && !isMobile ? (
+                <div
+                  key={`divider-${i}`}
+                  style={{
+                    width: "1px",
+                    alignSelf: "stretch",
+                    background: "rgba(255,255,255,0.15)",
+                  }}
+                />
+              ) : null,
+            ])}
           </motion.div>
         )}
       </AnimatePresence>
