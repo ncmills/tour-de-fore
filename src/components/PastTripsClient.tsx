@@ -7,6 +7,7 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import { trips } from "@/lib/trips";
 import FireBackground from "./FireBackground";
 import MulliganButton from "./MulliganButton";
+import HomeButton from "./HomeButton";
 
 const PAST_TRIPS_VIDEO = "/past-trips-hype.mp4";
 
@@ -76,6 +77,7 @@ export default function PastTripsClient() {
       <FireBackground />
 
       <MulliganButton right="clamp(1.5rem, 6vw, 4rem)" />
+      <HomeButton side="left" />
 
       {/* TV Video — sticky at top */}
       <div style={{

@@ -1,13 +1,15 @@
 "use client";
 
-export default function HomeButton() {
+export default function HomeButton({ side = "right" }: { side?: "left" | "right" }) {
   return (
     <a
       href="/?skip=1"
       style={{
         position: "fixed",
         top: "1.2rem",
-        right: "clamp(1rem, 4vw, 2rem)",
+        ...(side === "left"
+          ? { left: "clamp(1rem, 4vw, 2rem)" }
+          : { right: "clamp(1rem, 4vw, 2rem)" }),
         zIndex: 90,
         display: "flex",
         alignItems: "center",

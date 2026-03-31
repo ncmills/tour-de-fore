@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import MulliganButton from "./MulliganButton";
+import HomeButton from "./HomeButton";
 import { SHOP_PRODUCTS } from "@/lib/printful";
 import type { ShopProduct } from "@/lib/printful";
 
@@ -254,6 +255,7 @@ export default function ShopPageClient({ onBack }: { onBack?: () => void }) {
       </div>
 
       <MulliganButton onClick={() => onBack ? onBack() : (window.location.href = "/?skip=1")} />
+      <HomeButton />
 
       {/* Products */}
       <div style={{ position: "relative", zIndex: 1, maxWidth: 1100, margin: "0 auto", padding: "5rem 1.5rem 4rem" }}>
