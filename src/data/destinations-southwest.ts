@@ -2498,6 +2498,9 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.papagogolfcourse.net",
         highlight:
           "Iconic Phoenix muni nestled between the Papago Buttes — where the locals play and the views punch way above the green fee",
+        googleRating: 4.5,
+        reviewCount: 2100,
+        hypeTag: "LOCALS' FAVORITE",
       },
       {
         name: "ASU Karsten Golf Course",
@@ -2514,6 +2517,8 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.asukarsten.com",
         highlight:
           "Pete Dye design for ASU — sneaky tough college course with great conditioning for the price",
+        googleRating: 4.4,
+        reviewCount: 860,
       },
       {
         name: "Longbow Golf Club",
@@ -2530,6 +2535,8 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.longbowgolf.com",
         highlight:
           "Ken Kavanaugh design in Mesa with water on 13 holes and mountain backdrops — great value",
+        googleRating: 4.3,
+        reviewCount: 720,
       },
       {
         name: "We-Ko-Pa Golf Club (Cholla Course)",
@@ -2546,6 +2553,8 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.wekopa.com",
         highlight:
           "Scott Miller design on Fort McDowell Yavapai land — wide fairways framed by untouched Sonoran Desert",
+        googleRating: 4.7,
+        reviewCount: 940,
       },
       {
         name: "Aguila Golf Course",
@@ -2561,6 +2570,8 @@ export const southwestDestinations: Destination[] = [
         driveMinutes: 15,
         highlight:
           "No-frills Phoenix muni that is perfect for a warm-up round or a hangover special",
+        googleRating: 4.2,
+        reviewCount: 510,
       },
     ],
     lodging: [
@@ -2581,6 +2592,8 @@ export const southwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Phoenix%2C+AZ&groupSize=16",
         notes:
           "Massive rental inventory keeps prices 30-50% below equivalent Scottsdale homes. East Valley homes are closer to courses; Tempe Mill Ave area is better for nightlife.",
+        avgRating: 4.6,
+        bedsBreakdown: "5 kings + 3 queens = 16 guys at 2/bed",
       },
       {
         type: "house",
@@ -2596,6 +2609,8 @@ export const southwestDestinations: Destination[] = [
           "Mesa near Longbow or Superstition Springs — newer communities with golf course homes",
         notes:
           "Mesa has great golf community homes with pools and putting greens at budget-friendly prices.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 2 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -2770,6 +2785,8 @@ export const southwestDestinations: Destination[] = [
         url: "https://unmgolf.com",
         highlight:
           "Red Ryder designed this monster for the Lobos — long, demanding, and one of the best college courses in the West",
+        googleRating: 4.5,
+        reviewCount: 1100,
       },
       {
         name: "Paako Ridge Golf Club",
@@ -2786,6 +2803,9 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.paakoridge.com",
         highlight:
           "Ken Dye design carved through juniper-studded foothills east of ABQ — 27 holes of pure high-desert beauty",
+        googleRating: 4.8,
+        reviewCount: 640,
+        hypeTag: "HIDDEN GEM",
       },
       {
         name: "Sandia Golf Club",
@@ -2802,6 +2822,8 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.sandiagolf.com",
         highlight:
           "Scott Miller design at Sandia Resort with Sandia Mountain views and a casino next door",
+        googleRating: 4.4,
+        reviewCount: 580,
       },
       {
         name: "Twin Warriors Golf Club",
@@ -2818,6 +2840,8 @@ export const southwestDestinations: Destination[] = [
         url: "https://www.twinwarriorsgolf.com",
         highlight:
           "Gary Panks design at Hyatt Regency Tamaya on Santa Ana Pueblo land — dramatic mesa and mountain backdrops",
+        googleRating: 4.5,
+        reviewCount: 420,
       },
     ],
     lodging: [
@@ -2838,6 +2862,8 @@ export const southwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Albuquerque%2C+NM&groupSize=16",
         notes:
           "ABQ is affordable. Large homes in the foothills with mountain views run well under Scottsdale prices. North Valley adobe homes add local character.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 2 queens = 12 guys at 2/bed",
       },
       {
         type: "resort-house",

@@ -75,12 +75,17 @@ export default function Footer() {
             <h4 className="text-xs tracking-[0.15em] uppercase text-accent mb-6 font-body font-medium">
               Plan
             </h4>
-            <Link
-              href="/plan"
-              className="text-text-muted hover:text-accent transition-colors duration-300 text-sm font-body block mb-8"
-            >
-              Plan a Trip
-            </Link>
+            <div className="space-y-3 mb-8">
+              <Link href="/plan" className="text-text-muted hover:text-accent transition-colors duration-300 text-sm font-body block">
+                Plan a Trip
+              </Link>
+              <Link href="/my-trips" className="text-text-muted hover:text-accent transition-colors duration-300 text-sm font-body block">
+                My Trips
+              </Link>
+              <Link href="/subscribe" className="text-text-muted hover:text-accent transition-colors duration-300 text-sm font-body block">
+                Become a Devil — $199/yr
+              </Link>
+            </div>
 
             <h4 className="text-xs tracking-[0.15em] uppercase text-accent mb-6 font-body font-medium">
               Shop
@@ -119,9 +124,10 @@ export default function Footer() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 15l7-7 7 7" />
             </svg>
           </button>
-          <p className="text-text-dim text-xs tracking-[0.15em] font-body">
-            Est. 2021 &mdash; Present
-          </p>
+          <div className="flex items-center gap-4">
+            <p className="text-text-dim text-xs tracking-[0.15em] font-body">Est. 2021 &mdash; Present</p>
+            <Link href="/privacy" className="text-text-dim text-xs tracking-[0.15em] font-body hover:text-accent transition-colors">Privacy</Link>
+          </div>
         </div>
       </div>
     </footer>

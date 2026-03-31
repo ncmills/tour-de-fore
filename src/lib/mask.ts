@@ -71,16 +71,29 @@ export function maskPlan(plan: GeneratedPlan): GeneratedPlan {
       name: `${b.vibe.charAt(0).toUpperCase() + b.vibe.slice(1)} Bar ${String.fromCharCode(65 + i)}`,
       url: undefined,
     })),
-    // Keep schedule structure but mask venue names in activities
+    // Mask venue names in schedule activity text
     schedule: plan.schedule.map((day) => ({
       ...day,
-      items: day.items.map((item) => ({
-        ...item,
-        // Keep times and types, mask specific venue references in activity text
-        detail: item.detail ? item.detail.replace(/https?:\/\/[^\s]+/g, "[link hidden]") : item.detail,
-      })),
+      items: day.items.map((item) => {
+        let activity = item.activity;
+        let detail = item.detail || "";
+
+        // Replace real venue names with generic labels based on item type
+        if (item.type === "golf") {
+          activity = activity.replace(/at\s+.+$/, "at [course — subscribe to reveal]");
+        } else if (item.type === "dining") {
+          activity = activity.replace(/at\s+.+$/, "at [restaurant — subscribe to reveal]");
+        } else if (item.type === "nightlife") {
+          activity = activity.replace(/at\s+.+$/, "at [bar — subscribe to reveal]");
+        }
+
+        // Strip URLs from detail
+        detail = detail.replace(/https?:\/\/[^\s]+/g, "[link hidden]");
+
+        return { ...item, activity, detail: detail || undefined };
+      }),
     })),
-    // Keep pro tips but strip any URLs
+    // Mask pro tips — strip URLs and specific venue references
     proTips: plan.proTips.map((tip) =>
       tip.replace(/https?:\/\/[^\s]+/g, "[link — subscribe to reveal]")
     ),
