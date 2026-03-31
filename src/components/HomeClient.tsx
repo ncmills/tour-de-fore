@@ -279,7 +279,7 @@ export default function HomeClient() {
           >
             {[
               { label: "Pro Shop", href: "/shop", blood: false },
-              { label: "Body of Work", href: "/past-trips", blood: true },
+              { label: "Body of Work", href: "/past-trips", blood: false },
               { label: "Plan a Trip", href: "/plan-a-trip", blood: false },
             ].flatMap(({ label, href, blood }, i, arr) => [
               <Link
