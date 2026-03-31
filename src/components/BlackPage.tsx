@@ -2,12 +2,14 @@
 
 import { motion } from "motion/react";
 import MulliganButton from "./MulliganButton";
+import HomeButton from "./HomeButton";
 
 export default function BlackPage({ children, heading }: { children: React.ReactNode; heading: string }) {
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff", padding: "0 clamp(1.5rem, 6vw, 6rem)" }}>
 
       <MulliganButton />
+      <HomeButton />
 
       {/* Section heading writes in — padded below the fixed back button */}
       <div style={{ overflow: "hidden", paddingTop: "4rem" }}>

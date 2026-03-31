@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import { DestinationRecommendation, ThreePlanResult, TripTier, PriceLevel } from "@/lib/plan-types";
 import MulliganButton from "./MulliganButton";
+import HomeButton from "./HomeButton";
 
 const tiers: { key: TripTier; planKey: keyof ThreePlanResult; icon: string; badge?: string }[] = [
   { key: "imp", planKey: "imp", icon: "👿" },
@@ -23,6 +24,7 @@ export default function TierSelectionClient({
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff", padding: "clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 3rem)" }}>
       <MulliganButton />
+      <HomeButton />
 
       {/* Back to destinations */}
       <div style={{ maxWidth: "1100px", margin: "0 auto 1.5rem" }}>

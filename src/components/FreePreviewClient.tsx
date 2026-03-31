@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import type { FreePreview, PriceLevel } from "@/lib/plan-types";
 import MulliganButton from "./MulliganButton";
+import HomeButton from "./HomeButton";
 
 function LockedSection({ label, count, icon }: { label: string; count: number; icon: string }) {
   return (
@@ -83,6 +84,7 @@ export default function FreePreviewClient({
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff", padding: "clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 3rem)" }}>
       <MulliganButton href={`/plan/result/${planId}`} />
+      <HomeButton />
 
       {/* Header */}
       <div style={{ textAlign: "center", marginBottom: "clamp(2rem, 5vw, 3rem)", maxWidth: 700, margin: "0 auto 3rem" }}>

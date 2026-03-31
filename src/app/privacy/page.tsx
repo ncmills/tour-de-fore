@@ -1,3 +1,4 @@
+import HomeButton from "@/components/HomeButton";
 import MulliganButton from "@/components/MulliganButton";
 
 export const metadata = {
@@ -9,6 +10,7 @@ export default function PrivacyPage() {
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff", padding: "clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 3rem)" }}>
       <MulliganButton />
+      <HomeButton />
       <div style={{ maxWidth: 700, margin: "0 auto", lineHeight: 1.8, fontSize: "0.9rem", color: "rgba(255,255,255,0.6)" }}>
         <h1 style={{ fontFamily: "var(--font-plan-groovy), cursive", fontSize: "clamp(2rem, 5vw, 3.5rem)", color: "#fff", marginBottom: "2rem" }}>
           Privacy Policy

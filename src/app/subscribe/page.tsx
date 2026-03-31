@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import MulliganButton from "@/components/MulliganButton";
+import HomeButton from "@/components/HomeButton";
 
 const perks = [
   { icon: "♾️", label: "Unlimited trip plans", desc: "Generate as many plans as you want, all year" },
@@ -36,6 +37,7 @@ export default function SubscribePage() {
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff", padding: "clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 3rem)" }}>
       <MulliganButton />
+      <HomeButton />
 
       <div style={{ maxWidth: 700, margin: "0 auto", textAlign: "center" }}>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>

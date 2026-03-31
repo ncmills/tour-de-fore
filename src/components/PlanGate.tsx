@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import MulliganButton from "./MulliganButton";
+import HomeButton from "./HomeButton";
 
 export default function PlanGate({ planId, city, state: st, prefillEmail = "" }: { planId: string; city: string; state: string; prefillEmail?: string }) {
   const [email, setEmail] = useState(prefillEmail);
@@ -38,6 +39,7 @@ export default function PlanGate({ planId, city, state: st, prefillEmail = "" }:
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "2rem", textAlign: "center" }}>
       <MulliganButton onClick={() => (window.location.href = "/?skip=1")} />
+      <HomeButton />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}

@@ -8,6 +8,7 @@ import SelectionCard from "./SelectionCard";
 import Logo from "./Logo";
 import Link from "next/link";
 import MulliganButton from "./MulliganButton";
+import HomeButton from "./HomeButton";
 import RegionMapThumb from "./RegionMap";
 
 type Action =

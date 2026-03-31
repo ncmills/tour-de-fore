@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import { ThreeDestinationResult, ThreeFreePreview, PriceLevel, FreePreview } from "@/lib/plan-types";
 import MulliganButton from "./MulliganButton";
+import HomeButton from "./HomeButton";
 
 const destinationTiers: { key: PriceLevel; icon: string; label: string; subtitle: string; badge?: string }[] = [
   { key: "budget", icon: "👿", label: "The Bargain", subtitle: "Budget" },
@@ -195,6 +196,7 @@ export default function PlanSelectionClient({
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff", padding: "clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 3rem)" }}>
       <MulliganButton />
+      <HomeButton />
 
       <div style={{ textAlign: "center", marginBottom: "clamp(2rem, 5vw, 4rem)" }}>
         <motion.p

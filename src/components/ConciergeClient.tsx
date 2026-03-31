@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import MulliganButton from "./MulliganButton";
+import HomeButton from "./HomeButton";
 
 const services = [
   { icon: "⛳", title: "Tee Time Bookings", desc: "Every round reserved, confirmed, and managed. Staggered times for your group size." },
@@ -26,6 +27,7 @@ export default function ConciergeClient() {
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff" }}>
       <MulliganButton href={planId ? `/plan/result/${planId}?dest=${dest}&tier=${tier}` : "/?skip=1"} />
+      <HomeButton />
 
       {/* Hero */}
       <motion.section

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import MulliganButton from "./MulliganButton";
+import HomeButton from "./HomeButton";
 
 export default function PlanLandingClient({ onFirstTime }: { onFirstTime: () => void }) {
   const [mode, setMode] = useState<"choose" | "login">("choose");
@@ -65,6 +66,7 @@ export default function PlanLandingClient({ onFirstTime }: { onFirstTime: () => 
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "2rem", textAlign: "center" }}>
       <MulliganButton onClick={() => (window.location.href = "/?skip=1")} />
+      <HomeButton />
 
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} style={{ maxWidth: 500, width: "100%" }}>
         <img src="/logo-est2021.png" alt="Tour de Fore Est. 2021" style={{ width: "clamp(140px, 50vw, 240px)", height: "clamp(140px, 50vw, 240px)", margin: "0 auto 1.5rem", objectFit: "contain" }} />

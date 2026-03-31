@@ -14,7 +14,7 @@ interface Props {
 export default function MulliganButton({
   href = "/?skip=1",
   onClick,
-  top = "2.8rem",
+  top = "1.2rem",
   left = "clamp(1.5rem, 6vw, 4rem)",
   right,
   zIndex = 600,
