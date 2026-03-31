@@ -80,8 +80,50 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
       initial={{ opacity: 0, scale: 0.9, y: 20 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-      style={{ display: "flex", flexDirection: "column", alignItems: "center", maxHeight: "60vh" }}
+      style={{ display: "flex", flexDirection: "column", alignItems: "center", maxHeight: "65vh" }}
     >
+      {/* ── SKIP BUTTON — ABOVE TV ── */}
+      <AnimatePresence>
+        {tvPhase === "playing" && (
+          <motion.div
+            key="skip-above"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.15 } }}
+            transition={{ delay: 1.0, duration: 0.4 }}
+            style={{
+              marginBottom: "clamp(10px, 1.5vh, 20px)",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <button
+              onClick={trigger}
+              style={{
+                fontFamily: "var(--font-scrawl), cursive",
+                fontSize: "clamp(11px, 1.4vw, 16px)",
+                fontWeight: 900,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color: "#fff",
+                background: "rgba(220,38,38,0.7)",
+                border: "2px solid rgba(220,38,38,0.9)",
+                padding: "clamp(6px, 0.8vw, 10px) clamp(16px, 2vw, 26px)",
+                borderRadius: "5px",
+                cursor: "pointer",
+                transition: "all 0.2s",
+                textShadow: "0 0 12px rgba(220,38,38,0.5), 0 2px 4px rgba(0,0,0,0.5)",
+                boxShadow: "0 4px 20px rgba(220,38,38,0.4)",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = "rgba(220,38,38,0.9)"; e.currentTarget.style.boxShadow = "0 6px 30px rgba(220,38,38,0.6)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "rgba(220,38,38,0.7)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(220,38,38,0.4)"; }}
+            >
+              Teleport Me Now
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* TV + VCR combo unit */}
       <motion.div
         animate={
@@ -407,49 +449,8 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
         </div>
       </motion.div>
 
-      {/* ── SKIP + MUTE BUTTONS ── */}
-      <AnimatePresence>
-        {tvPhase === "playing" && (
-          <motion.div
-            key="controls"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0, transition: { duration: 0.15 } }}
-            transition={{ delay: 1.0, duration: 0.4 }}
-            style={{
-              marginTop: "clamp(10px, 1.5vw, 18px)",
-              display: "flex",
-              alignItems: "center",
-              gap: "0.75rem",
-            }}
-          >
-            <button
-              onClick={trigger}
-              style={{
-                fontFamily: "var(--font-scrawl), cursive",
-                fontSize: "clamp(14px, 1.8vw, 20px)",
-                fontWeight: 900,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                color: "#fff",
-                background: "rgba(220,38,38,0.7)",
-                border: "3px solid rgba(220,38,38,0.9)",
-                padding: "clamp(8px, 1vw, 14px) clamp(20px, 2.5vw, 32px)",
-                borderRadius: "6px",
-                cursor: "pointer",
-                transition: "all 0.2s",
-                textShadow: "0 0 12px rgba(220,38,38,0.5), 0 2px 4px rgba(0,0,0,0.5)",
-                boxShadow: "0 4px 20px rgba(220,38,38,0.4)",
-              }}
-              onMouseEnter={e => { e.currentTarget.style.background = "rgba(220,38,38,0.9)"; e.currentTarget.style.boxShadow = "0 6px 30px rgba(220,38,38,0.6)"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "rgba(220,38,38,0.7)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(220,38,38,0.4)"; }}
-            >
-              Teleport Me Now
-            </button>
-
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Bottom spacer to match top button spacing */}
+      <div style={{ height: "clamp(10px, 1.5vh, 20px)" }} />
     </motion.div>
   );
 }
