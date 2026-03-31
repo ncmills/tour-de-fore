@@ -307,16 +307,16 @@ body.menu-open {
 
   /* Bar scene buttons — position over drinks on mobile */
   .bar-btn-left {
-    top: 38% !important;
+    top: 30% !important;
     left: 25% !important;
-    width: clamp(75px, 22vw, 110px) !important;
-    height: clamp(75px, 22vw, 110px) !important;
+    width: clamp(70px, 20vw, 100px) !important;
+    height: clamp(70px, 20vw, 100px) !important;
   }
   .bar-btn-right {
-    top: 36% !important;
+    top: 28% !important;
     left: 70% !important;
-    width: clamp(75px, 22vw, 110px) !important;
-    height: clamp(75px, 22vw, 110px) !important;
+    width: clamp(70px, 20vw, 100px) !important;
+    height: clamp(70px, 20vw, 100px) !important;
   }
 
   /* Plan result header — stack vertically */

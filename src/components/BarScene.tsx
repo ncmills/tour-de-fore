@@ -95,7 +95,7 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               style={{
                 pointerEvents: "auto",
                 position: "absolute",
-                top: "42%",
+                top: "35%",
                 left: "30%",
                 transform: "translate(-50%, -50%)",
                 background: "rgba(0,0,0,0.5)",
@@ -133,7 +133,7 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               style={{
                 pointerEvents: "auto",
                 position: "absolute",
-                top: "40%",
+                top: "33%",
                 left: "72%",
                 transform: "translate(-50%, -50%)",
                 background: "rgba(0,0,0,0.5)",
@@ -188,7 +188,7 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               style={{
                 pointerEvents: "auto",
                 position: "absolute",
-                top: "42%",
+                top: "35%",
                 left: "30%",
                 transform: "translate(-50%, -50%)",
                 background: "rgba(0,0,0,0.5)",
@@ -226,7 +226,7 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               style={{
                 pointerEvents: "auto",
                 position: "absolute",
-                top: "40%",
+                top: "33%",
                 left: "72%",
                 transform: "translate(-50%, -50%)",
                 background: "rgba(0,0,0,0.5)",

@@ -92,7 +92,7 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
             exit={{ opacity: 0, transition: { duration: 0.15 } }}
             transition={{ delay: 1.0, duration: 0.4 }}
             style={{
-              marginBottom: "clamp(13px, 2vh, 26px)",
+              marginBottom: "clamp(17px, 2.6vh, 34px)",
               display: "flex",
               alignItems: "center",
             }}
@@ -101,14 +101,14 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
               onClick={trigger}
               style={{
                 fontFamily: "var(--font-scrawl), cursive",
-                fontSize: "clamp(11px, 1.4vw, 16px)",
+                fontSize: "clamp(9px, 1.1vw, 13px)",
                 fontWeight: 900,
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
                 color: "#fff",
                 background: "rgba(220,38,38,0.7)",
                 border: "2px solid rgba(220,38,38,0.9)",
-                padding: "clamp(6px, 0.8vw, 10px) clamp(16px, 2vw, 26px)",
+                padding: "clamp(5px, 0.65vw, 8px) clamp(13px, 1.6vw, 21px)",
                 borderRadius: "5px",
                 cursor: "pointer",
                 transition: "all 0.2s",

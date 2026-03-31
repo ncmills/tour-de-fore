@@ -71,8 +71,8 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     printfulProductId: 426229505,
     name: "TDF Quarter-Zip",
     description: "Performance stretch fleece. Embroidered TDF crest on chest.",
-    price: 10000,
-    displayPrice: "$100",
+    price: 15000,
+    displayPrice: "$150",
     thumbnailUrl: "https://files.cdn.printful.com/files/af7/af71457c0e6c826d3ad34576b68ac573_preview.png",
     previewUrl: "https://files.cdn.printful.com/files/af7/af71457c0e6c826d3ad34576b68ac573_preview.png",
     colorPreviews: {
