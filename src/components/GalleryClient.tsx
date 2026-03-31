@@ -198,7 +198,7 @@ export default function GalleryClient({
       }}
     >
       {/* Navigation */}
-      <MulliganButton top="1.2rem" href={`/plan/result/${planId}`} />
+      <MulliganButton href={`/plan/result/${planId}`} />
       <HomeButton />
 
       {/* Header */}

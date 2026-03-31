@@ -328,7 +328,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
       </div>
 
       {/* Mulligan — below header */}
-      <MulliganButton top="1.2rem" href={`/plan/result/${planId}`} />
+      <MulliganButton href={`/plan/result/${planId}`} />
       <HomeButton />
 
       {/* ─── Tier Toggle Tabs ─── */}
