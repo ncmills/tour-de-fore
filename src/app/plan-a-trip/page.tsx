@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import ExplosionGate from "@/components/ExplosionGate";
-import PlanWizardClient from "@/components/PlanWizardClient";
+import PlanFlowClient from "@/components/PlanFlowClient";
 
 export const metadata = {
   title: "Plan a Golf Trip | Tour de Fore AI Trip Planner",
@@ -12,7 +12,7 @@ export default function PlanATripPage() {
   return (
     <Suspense>
       <ExplosionGate pageKey="plan-a-trip">
-        <PlanWizardClient />
+        <PlanFlowClient />
       </ExplosionGate>
     </Suspense>
   );

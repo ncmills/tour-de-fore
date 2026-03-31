@@ -163,7 +163,7 @@ export default function MyTripsClient({
             alignItems: "center",
           }}>
             My Planned Trips
-            <Link href="/plan" style={{ fontSize: "0.8rem", color: "rgba(220,38,38,0.8)", textDecoration: "none", fontFamily: "var(--font-space), sans-serif" }}>
+            <Link href="/plan-a-trip" style={{ fontSize: "0.8rem", color: "rgba(220,38,38,0.8)", textDecoration: "none", fontFamily: "var(--font-space), sans-serif" }}>
               + Plan a Trip
             </Link>
           </h2>
@@ -177,7 +177,7 @@ export default function MyTripsClient({
               borderRadius: 12,
             }}>
               <p style={{ color: "rgba(255,255,255,0.4)", marginBottom: "1rem" }}>No planned trips yet.</p>
-              <Link href="/plan" style={{ color: "rgba(220,38,38,0.9)", textDecoration: "none", fontWeight: 600, fontSize: "0.9rem" }}>
+              <Link href="/plan-a-trip" style={{ color: "rgba(220,38,38,0.9)", textDecoration: "none", fontWeight: 600, fontSize: "0.9rem" }}>
                 Plan your first trip →
               </Link>
             </div>

@@ -4,8 +4,8 @@ import { useState } from "react";
 import { motion } from "motion/react";
 import MulliganButton from "./MulliganButton";
 
-export default function PlanGate({ planId, city, state: st }: { planId: string; city: string; state: string }) {
-  const [email, setEmail] = useState("");
+export default function PlanGate({ planId, city, state: st, prefillEmail = "" }: { planId: string; city: string; state: string; prefillEmail?: string }) {
+  const [email, setEmail] = useState(prefillEmail);
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");

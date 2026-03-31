@@ -61,6 +61,7 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
           planId={id}
           city={preview?.city || "your destination"}
           state={preview?.state || ""}
+          prefillEmail={stored.inputs?.organizerEmail || ""}
         />
       </Suspense>
     );
