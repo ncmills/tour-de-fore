@@ -316,7 +316,7 @@ export default function HomeClient() {
                   key={`divider-${i}`}
                   style={{
                     width: "1px",
-                    alignSelf: "stretch",
+                    height: "clamp(1.8rem, 3.5vw, 3.5rem)",
                     background: "rgba(255,255,255,0.15)",
                   }}
                 />
