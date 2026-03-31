@@ -316,6 +316,7 @@ export const northeastDestinations: Destination[] = [
           "Traditional New England clambake is the move — lobster, clams, corn, potatoes done on-site. Book 2-3 weeks ahead in summer.",
       },
     ],
+    groceryNotes: "Stop & Shop, Shaw's within 10 min in Hyannis. Liquor at Cape Cod Package Store on Route 28.",
   },
   {
     id: "lake-placid-ny",
@@ -603,6 +604,7 @@ export const northeastDestinations: Destination[] = [
           "Elk, venison, and trout are popular local options. Most lodge kitchens can handle a private chef setup. Book 2 weeks ahead.",
       },
     ],
+    groceryNotes: "Price Chopper, Tops within 5 min in Lake Placid. Liquor at Lake Placid Liquor on Main St.",
   },
   {
     id: "williamsburg-va",
@@ -929,6 +931,7 @@ export const northeastDestinations: Destination[] = [
           "Chesapeake blue crab feast is the signature move here. Local chefs can source fresh crab and oysters daily.",
       },
     ],
+    groceryNotes: "Publix, Food Lion, Harris Teeter within 10 min. Liquor at ABC Store (state-run) on Richmond Rd.",
   },
   {
     id: "saratoga-springs-ny",
@@ -1206,6 +1209,7 @@ export const northeastDestinations: Destination[] = [
           "Mazzone is the premier local caterer — their steak and seafood dinner setup is top-notch for lake house events.",
       },
     ],
+    groceryNotes: "Hannaford, Price Chopper within 5 min. Liquor at Saratoga Wine & Spirits on Broadway.",
   },
   {
     id: "finger-lakes-ny",
@@ -1474,6 +1478,7 @@ export const northeastDestinations: Destination[] = [
           "The farm-to-table scene here is legit — chefs source from local farms and pair with FLX wines. A lakehouse dinner is the highlight of the trip.",
       },
     ],
+    groceryNotes: "Wegmans in Geneva or Canandaigua within 15 min. Liquor at Finger Lakes Wine & Spirits. Wine direct from the 100+ wineries.",
   },
   {
     id: "poconos-pa",
@@ -1730,6 +1735,8 @@ export const northeastDestinations: Destination[] = [
         type: "party-bus",
         capacity: [14, 22],
         hourlyRate: [175, 300],
+        fullDayRate: [1400, 2400],
+        canDoGolfAndBars: true,
         providers: ["Pocono Limo", "Lehigh Valley Limo"],
         notes:
           "Casino shuttle services are also available from most resorts. Party bus is great for course-to-casino runs.",
@@ -1744,6 +1751,7 @@ export const northeastDestinations: Destination[] = [
           "Cabin BBQ cookouts are the move here — grill setup on the deck with mountain views. Most chefs bring everything including charcoal.",
       },
     ],
+    groceryNotes: "Weis Markets, ShopRite within 10 min in Stroudsburg. Liquor at Wine & Spirits (PA state store) on Main St.",
   },
   {
     id: "berkshires-ma",
@@ -1975,6 +1983,8 @@ export const northeastDestinations: Destination[] = [
         type: "sprinter-van",
         capacity: [10, 14],
         hourlyRate: [150, 225],
+        fullDayRate: [1200, 1800],
+        canDoGolfAndBars: true,
         providers: ["Berkshire Limousine", "Abbott's Limousine"],
         notes:
           "Courses and restaurants are spread out, so transport is key. Sprinter vans handle the winding mountain roads well.",
@@ -1989,6 +1999,7 @@ export const northeastDestinations: Destination[] = [
           "The farm-to-table chef experience here is outstanding — local farms supply everything. A private wine-paired dinner at your rental is worth every penny.",
       },
     ],
+    groceryNotes: "Big Y, Guido's Fresh Marketplace within 10 min in Great Barrington or Pittsfield. Liquor at Berkshire Mountain Distillers.",
   },
   {
     id: "stowe-vt",
@@ -2243,6 +2254,8 @@ export const northeastDestinations: Destination[] = [
         type: "sprinter-van",
         capacity: [10, 14],
         hourlyRate: [150, 225],
+        fullDayRate: [1200, 1800],
+        canDoGolfAndBars: true,
         providers: ["Green Mountain Limo", "Stowe Cab & Shuttle"],
         notes:
           "Mountain Road is long and courses are spread out — a shuttle is very helpful. Brewery runs practically require one.",
@@ -2257,6 +2270,7 @@ export const northeastDestinations: Destination[] = [
           "Vermont farm-to-table chefs are incredible — local beef, cheese, and maple everything. A cabin dinner with local craft beer pairings is the peak Stowe experience.",
       },
     ],
+    groceryNotes: "Shaw's, Stowe Mercantile within 5 min on Mountain Rd. Liquor at Stowe Beverage on Main St.",
   },
   {
     id: "portland-me",
@@ -2513,6 +2527,8 @@ export const northeastDestinations: Destination[] = [
         type: "sprinter-van",
         capacity: [12, 14],
         hourlyRate: [150, 225],
+        fullDayRate: [1200, 1800],
+        canDoGolfAndBars: true,
         providers: ["VIP Tour Bus Maine", "Northeast Charter & Tour"],
         notes:
           "Great for brewery trail runs. Old Port is walkable for bar crawls, but courses require transport.",
@@ -2521,6 +2537,8 @@ export const northeastDestinations: Destination[] = [
         type: "trolley",
         capacity: [16, 24],
         hourlyRate: [225, 350],
+        fullDayRate: [1800, 2800],
+        canDoGolfAndBars: true,
         providers: ["Portland Discovery Land & Sea Tours"],
         notes:
           "Vintage trolley brewery tour is a fun group option — they know all the best stops.",
@@ -2535,6 +2553,7 @@ export const northeastDestinations: Destination[] = [
           "A traditional Maine lobster bake at your rental is the ultimate group meal — lobster, clams, corn, and potatoes cooked in seaweed. Book 2 weeks ahead in summer.",
       },
     ],
+    groceryNotes: "Trader Joe's, Whole Foods, Hannaford within 10 min. Liquor at Maine & Loire on Congress St.",
   },
   {
     id: "kennebunkport-me",
@@ -2757,6 +2776,8 @@ export const northeastDestinations: Destination[] = [
         type: "sprinter-van",
         capacity: [10, 14],
         hourlyRate: [150, 225],
+        fullDayRate: [1200, 1800],
+        canDoGolfAndBars: true,
         providers: ["Kennebunk Transportation", "Atlantic Limo Maine"],
         notes:
           "Courses and beaches are spread out along Route 9. A shuttle is helpful but Dock Square is walkable for nightlife.",
@@ -3027,6 +3048,8 @@ export const northeastDestinations: Destination[] = [
         type: "trolley",
         capacity: [14, 22],
         hourlyRate: [200, 325],
+        fullDayRate: [1600, 2600],
+        canDoGolfAndBars: true,
         providers: ["Newport Trolley Tours", "Viking Tours Newport"],
         notes:
           "Trolley is the classic Newport move — mansion tour by day, bar crawl by night. Thames Street is walkable though.",
@@ -3298,6 +3321,8 @@ export const northeastDestinations: Destination[] = [
         type: "party-bus",
         capacity: [14, 24],
         hourlyRate: [175, 300],
+        fullDayRate: [1400, 2400],
+        canDoGolfAndBars: true,
         providers: ["AC Party Bus", "J&J Transportation"],
         notes:
           "Party bus from Margate house to boardwalk casinos is the classic move. Some services include VIP casino entry.",
@@ -3306,6 +3331,8 @@ export const northeastDestinations: Destination[] = [
         type: "limo",
         capacity: [8, 14],
         hourlyRate: [150, 250],
+        fullDayRate: [1200, 2000],
+        canDoGolfAndBars: true,
         providers: ["Atlantic City Limo", "Prestige Limousine"],
         notes:
           "Stretch limo for the full AC experience — airport pickup to casino to courses.",
@@ -3547,6 +3574,8 @@ export const northeastDestinations: Destination[] = [
         type: "sprinter-van",
         capacity: [12, 14],
         hourlyRate: [150, 225],
+        fullDayRate: [1200, 1800],
+        canDoGolfAndBars: true,
         providers: ["Premiere Transportation", "Hershey Limo"],
         notes:
           "Helpful for getting between courses, Tröegs, and the casino. Hershey itself is relatively compact.",
@@ -3799,6 +3828,8 @@ export const northeastDestinations: Destination[] = [
         type: "party-bus",
         capacity: [14, 22],
         hourlyRate: [175, 300],
+        fullDayRate: [1400, 2400],
+        canDoGolfAndBars: true,
         providers: ["OC Party Bus", "Shore Transit Limo"],
         notes:
           "Party bus from the beach house to courses and Seacrets is the classic OC move. Essential for larger groups staying in North OC.",
@@ -4042,6 +4073,8 @@ export const northeastDestinations: Destination[] = [
         type: "sprinter-van",
         capacity: [10, 14],
         hourlyRate: [150, 250],
+        fullDayRate: [1200, 2000],
+        canDoGolfAndBars: true,
         providers: ["Catskill Car Service", "Kingston Limo"],
         notes:
           "Mountain roads and brewery hopping make a shuttle very helpful. Distances between towns add up fast.",
@@ -4269,6 +4302,8 @@ export const northeastDestinations: Destination[] = [
         type: "sprinter-van",
         capacity: [10, 14],
         hourlyRate: [175, 275],
+        fullDayRate: [1400, 2200],
+        canDoGolfAndBars: true,
         providers: ["White Mountain Limo", "North Country Transit"],
         notes:
           "If staying at the resort, transport is less critical as golf is on-site. Helpful for off-site brewery runs and hiking trailheads.",
@@ -4498,6 +4533,8 @@ export const northeastDestinations: Destination[] = [
         type: "sprinter-van",
         capacity: [10, 14],
         hourlyRate: [150, 250],
+        fullDayRate: [1200, 2000],
+        canDoGolfAndBars: true,
         providers: ["Acadia Transport", "Bar Harbor Shuttle"],
         notes:
           "Helpful for getting to Southwest Harbor courses and activities. Downtown Bar Harbor is walkable for nightlife.",
@@ -4759,6 +4796,8 @@ export const northeastDestinations: Destination[] = [
         type: "sprinter-van",
         capacity: [12, 14],
         hourlyRate: [150, 225],
+        fullDayRate: [1200, 1800],
+        canDoGolfAndBars: true,
         providers: ["Green Mountain Limo", "VT Brewery Bus"],
         notes:
           "Church Street is walkable for bar crawls, but the brewery trail and courses require transport. Brewery shuttle services are available.",
@@ -4847,6 +4886,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/new-york/cooperstown",
         notes:
           "Otsego Lake houses are the play — dock access, kayaks, and a lakefront fire pit for evening beers. Book 2-3 months ahead for Hall of Fame induction weekend.",
+        avgRating: 4.8,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "lodge",
@@ -4856,6 +4897,8 @@ export const northeastDestinations: Destination[] = [
         areaDescription: "Cooperstown Village / The Otesaga",
         notes:
           "The Otesaga resort is the premier option — on-site golf, lake views, and walkable to the Hall of Fame. Book suites for group rates.",
+        avgRating: 4.7,
+        bedsBreakdown: "3 kings + 4 queens = 14 guys at 2/bed",
       },
     ],
     dining: [
@@ -4982,6 +5025,8 @@ export const northeastDestinations: Destination[] = [
         type: "sprinter-van",
         capacity: [10, 14],
         hourlyRate: [150, 225],
+        fullDayRate: [1200, 1800],
+        canDoGolfAndBars: true,
         providers: ["Cooperstown Coach", "Upstate Shuttle"],
         notes:
           "Helpful for getting to Ommegang brewery and off-site courses. Downtown Cooperstown is easily walkable.",
@@ -5071,6 +5116,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/new-jersey/cape-may",
         notes:
           "Beach houses in Cape May book extremely early for summer. Fall is gorgeous and much more affordable. Look for West Cape May for more space.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "house",
@@ -5081,6 +5128,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Cape-May--NJ",
         notes:
           "Downtown rentals near the Washington Street Mall mean walking to every restaurant and bar. More historic charm, less beach house vibe.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 4 queens = 14 guys at 2/bed",
       },
     ],
     dining: [
@@ -5206,6 +5255,8 @@ export const northeastDestinations: Destination[] = [
         type: "sprinter-van",
         capacity: [10, 14],
         hourlyRate: [150, 225],
+        fullDayRate: [1200, 1800],
+        canDoGolfAndBars: true,
         providers: ["Cape May Limo", "South Jersey Shuttle"],
         notes:
           "Wine trail shuttles are popular and some include tastings. Downtown Cape May is walkable for bar crawls.",
@@ -5294,6 +5345,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/connecticut/mystic",
         notes:
           "Waterfront homes near Mystic Seaport are charming but book early for summer. Noank is a quiet alternative with great water access.",
+        avgRating: 4.8,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "resort-house",
@@ -5303,6 +5356,8 @@ export const northeastDestinations: Destination[] = [
         areaDescription: "Mohegan Sun / Foxwoods Casino Resorts",
         notes:
           "Casino resort rooms are an option for groups wanting nightlife on-site. Book connecting suites. Foxwoods is closer to Lake of Isles golf.",
+        avgRating: 4.5,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
     ],
     dining: [
@@ -5427,6 +5482,8 @@ export const northeastDestinations: Destination[] = [
         type: "party-bus",
         capacity: [14, 22],
         hourlyRate: [175, 300],
+        fullDayRate: [1400, 2400],
+        canDoGolfAndBars: true,
         providers: ["Mystic Luxury Rides", "Premier CT Limo"],
         notes:
           "Casino shuttle is the main use case — Mohegan and Foxwoods both offer free shuttles from area hotels too.",
@@ -5515,6 +5572,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/new-york/hudson-valley",
         notes:
           "Beacon and Cold Spring are the most charming towns with walkable Main Streets. Book 2-3 months ahead for fall foliage season.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "house",
@@ -5525,6 +5584,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Hudson-Valley--NY",
         notes:
           "Rhinebeck and Hudson have the best restaurant scenes. Hudson is having a major moment with new bars and restaurants opening constantly.",
+        avgRating: 4.8,
+        bedsBreakdown: "3 kings + 4 queens = 14 guys at 2/bed",
       },
     ],
     dining: [
@@ -5650,6 +5711,8 @@ export const northeastDestinations: Destination[] = [
         type: "sprinter-van",
         capacity: [12, 14],
         hourlyRate: [175, 275],
+        fullDayRate: [1400, 2200],
+        canDoGolfAndBars: true,
         providers: ["Hudson Valley Luxury Transportation", "Prestige Limo NY"],
         notes:
           "Distillery and cidery hopping requires transport — towns are spread along the valley. A sprinter with a planned route is the way to go.",

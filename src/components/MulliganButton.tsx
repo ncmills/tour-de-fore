@@ -22,7 +22,7 @@ export default function MulliganButton({
   const [drawn, setDrawn] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => setDrawn(true), 3000);
+    const t = setTimeout(() => setDrawn(true), 1200);
     return () => clearTimeout(t);
   }, []);
 
@@ -54,8 +54,8 @@ export default function MulliganButton({
           background: "none",
           border: "none",
           cursor: "pointer",
-          padding: "12px 16px",
-          margin: "-12px -16px",
+          padding: "10px 14px",
+          margin: "-10px -14px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -63,100 +63,84 @@ export default function MulliganButton({
           minHeight: 56,
         }}
       >
-        {/* Animated hand-drawn beer can SVG */}
+        {/* Golf flag SVG */}
         <svg
-          width="110"
-          height="52"
-          viewBox="0 0 110 52"
+          width="120"
+          height="48"
+          viewBox="0 0 120 48"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
         >
-          {/* Can body — draws over 3s then fills red */}
-          <rect
-            x="4"
-            y="6"
-            width="94"
-            height="40"
-            rx="8"
-            ry="8"
-            fill={drawn ? "rgba(139, 0, 0, 0.55)" : "rgba(0,0,0,0.35)"}
-            style={{ transition: "fill 0.6s ease" }}
-          />
-          <rect
-            x="4"
-            y="6"
-            width="94"
-            height="40"
-            rx="8"
-            ry="8"
-            fill="none"
-            stroke="rgba(212,168,67,0.5)"
+          {/* Flag pole — draws in */}
+          <line
+            x1="10" y1="4" x2="10" y2="44"
+            stroke="rgba(212,168,67,0.6)"
             strokeWidth="2"
-            strokeDasharray="280"
-            strokeDashoffset="0"
-            style={{
-              animation: "beerCanDraw 3s ease forwards",
-            }}
+            strokeLinecap="round"
+            strokeDasharray="40"
+            strokeDashoffset={drawn ? "0" : "40"}
+            style={{ transition: "stroke-dashoffset 0.8s ease" }}
           />
-          {/* Top rim */}
+
+          {/* Flag triangle — draws and fills */}
+          <path
+            d="M10 4 L 100 16 L 10 28 Z"
+            fill={drawn ? "rgba(139, 0, 0, 0.5)" : "rgba(0,0,0,0.2)"}
+            stroke="rgba(212,168,67,0.4)"
+            strokeWidth="1.5"
+            strokeLinejoin="round"
+            strokeDasharray="200"
+            strokeDashoffset={drawn ? "0" : "200"}
+            style={{ transition: "stroke-dashoffset 1s ease 0.3s, fill 0.6s ease 0.8s" }}
+          />
+
+          {/* Subtle wave lines on flag */}
+          <path
+            d="M20 12 Q 50 10 80 14"
+            fill="none"
+            stroke="rgba(255,255,255,0.08)"
+            strokeWidth="0.5"
+            style={{ opacity: drawn ? 1 : 0, transition: "opacity 0.5s ease 1s" }}
+          />
+          <path
+            d="M20 19 Q 50 17 80 21"
+            fill="none"
+            stroke="rgba(255,255,255,0.06)"
+            strokeWidth="0.5"
+            style={{ opacity: drawn ? 1 : 0, transition: "opacity 0.5s ease 1.1s" }}
+          />
+
+          {/* Ground line */}
           <line
-            x1="8" y1="12" x2="94" y2="12"
-            stroke="rgba(212,168,67,0.35)"
-            strokeWidth="1.5"
-            strokeDasharray="86"
-            style={{ animation: "beerCanDraw 3s ease forwards", animationDelay: "0.5s" }}
+            x1="4" y1="44" x2="16" y2="44"
+            stroke="rgba(212,168,67,0.3)"
+            strokeWidth="2"
+            strokeLinecap="round"
+            style={{ opacity: drawn ? 1 : 0, transition: "opacity 0.4s ease 0.6s" }}
           />
-          {/* Bottom rim */}
-          <line
-            x1="8" y1="40" x2="94" y2="40"
-            stroke="rgba(212,168,67,0.35)"
-            strokeWidth="1.5"
-            strokeDasharray="86"
-            style={{ animation: "beerCanDraw 3s ease forwards", animationDelay: "0.8s" }}
-          />
-          {/* Pull tab */}
-          <ellipse
-            cx="98"
-            cy="10"
-            rx="7"
-            ry="5"
-            fill={drawn ? "rgba(139, 0, 0, 0.4)" : "rgba(0,0,0,0.2)"}
-            stroke="rgba(212,168,67,0.45)"
-            strokeWidth="1.5"
-            strokeDasharray="30"
-            style={{
-              animation: "beerCanDraw 3s ease forwards",
-              animationDelay: "1.5s",
-              transition: "fill 0.6s ease",
-            }}
-          />
-          {/* Tab rivet */}
+
+          {/* Hole circle */}
           <circle
-            cx="93"
-            cy="10"
-            r="2"
-            fill="rgba(212,168,67,0.3)"
-            style={{ opacity: drawn ? 1 : 0, transition: "opacity 0.6s ease 3s" }}
+            cx="10" cy="44" r="3"
+            fill="none"
+            stroke="rgba(212,168,67,0.25)"
+            strokeWidth="1"
+            style={{ opacity: drawn ? 1 : 0, transition: "opacity 0.4s ease 0.8s" }}
           />
-          {/* Scratchy texture lines — appear as it draws */}
-          <line x1="20" y1="18" x2="80" y2="18" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5"
-            strokeDasharray="60" style={{ animation: "beerCanDraw 3s ease forwards", animationDelay: "2s" }} />
-          <line x1="20" y1="24" x2="80" y2="24" stroke="rgba(255,255,255,0.04)" strokeWidth="0.5"
-            strokeDasharray="60" style={{ animation: "beerCanDraw 3s ease forwards", animationDelay: "2.2s" }} />
-          <line x1="20" y1="30" x2="80" y2="30" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5"
-            strokeDasharray="60" style={{ animation: "beerCanDraw 3s ease forwards", animationDelay: "2.4s" }} />
         </svg>
 
-        {/* Text */}
+        {/* Text on the flag */}
         <span
           style={{
             position: "relative",
             zIndex: 1,
             fontFamily: "var(--font-script), cursive",
-            fontSize: "1.25rem",
+            fontSize: "1.1rem",
             color: "rgba(255,255,255,0.9)",
             textShadow: "0 1px 4px rgba(0,0,0,0.7)",
-            padding: "0.4em 1em",
+            padding: "0.2em 0.6em 0.2em 1.2em",
             whiteSpace: "nowrap",
+            opacity: drawn ? 1 : 0,
+            transition: "opacity 0.4s ease 0.8s",
           }}
         >
           ← mulligan
