@@ -115,20 +115,48 @@ export async function POST(req: NextRequest) {
             console.error("Redis order storage failed:", redisErr);
           }
 
-          // Send confirmation email
+          // Send confirmation email with product images
           if (customerEmail && process.env.RESEND_API_KEY) {
             try {
+              const { getProductById } = await import("@/lib/printful");
+              const itemRows = items.map((i) => {
+                const product = getProductById(i.productId);
+                const imgUrl = product?.colorPreviews?.[i.color] || product?.thumbnailUrl || "";
+                const name = product?.name || i.productId;
+                return `
+                  <tr>
+                    <td style="padding: 12px 0; border-bottom: 1px solid #eee;">
+                      ${imgUrl ? `<img src="${imgUrl}" alt="${name}" style="width: 80px; height: 80px; object-fit: contain; border-radius: 8px;" />` : ""}
+                    </td>
+                    <td style="padding: 12px 16px; border-bottom: 1px solid #eee; vertical-align: middle;">
+                      <strong style="color: #333;">${name}</strong><br/>
+                      <span style="color: #888; font-size: 13px;">${i.color}${i.size ? ` / ${i.size}` : ""} &times; ${i.quantity}</span>
+                    </td>
+                  </tr>
+                `;
+              }).join("");
+
               const resend = new Resend(process.env.RESEND_API_KEY);
               await resend.emails.send({
                 from: "Tour de Fore <noreply@tourdefore.com>",
                 to: customerEmail,
                 subject: "Your TDF Pro Shop Order is Confirmed",
                 html: `
-                  <div style="font-family: -apple-system, sans-serif; max-width: 500px; margin: 0 auto; padding: 40px 30px; text-align: center;">
-                    <h1 style="font-size: 24px; color: #c87941; margin: 0 0 20px;">Tour de Fore</h1>
-                    <h2 style="font-size: 20px; margin: 0 0 16px;">Order Confirmed</h2>
-                    <p style="color: #555;">Your gear is being prepared. You'll get a shipping confirmation with tracking once it ships.</p>
-                    <p style="color: #999; font-size: 12px; margin-top: 30px;">Sent from Tour de Fore Pro Shop</p>
+                  <div style="font-family: -apple-system, sans-serif; max-width: 520px; margin: 0 auto; padding: 40px 30px; text-align: center;">
+                    <img src="https://tourdefore.com/icon-fancy.png" alt="Tour de Fore" style="width: 64px; height: 64px; margin-bottom: 16px;" />
+                    <h1 style="font-size: 22px; color: #c87941; margin: 0 0 8px; font-weight: 600;">Tour de Fore</h1>
+                    <h2 style="font-size: 18px; margin: 0 0 24px; color: #333; font-weight: 500;">Order Confirmed</h2>
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px; text-align: left;">
+                      ${itemRows}
+                    </table>
+                    <p style="color: #555; font-size: 14px; line-height: 1.6; margin-bottom: 24px;">
+                      Your gear is being prepared. You'll get a shipping confirmation with tracking once it ships.
+                    </p>
+                    <hr style="border: none; border-top: 1px solid #eee; margin: 24px 0;" />
+                    <p style="color: #999; font-size: 12px;">
+                      Questions? Contact us at <a href="mailto:info@tourdefore.com" style="color: #c87941;">info@tourdefore.com</a>
+                    </p>
+                    <p style="color: #bbb; font-size: 11px; margin-top: 16px;">Tour de Fore Pro Shop</p>
                   </div>
                 `,
               });
