@@ -26,6 +26,19 @@ export async function getWizardStateForToken(token: string): Promise<unknown | n
   return JSON.parse(raw);
 }
 
+export async function storeWizardState(email: string, state: unknown): Promise<string> {
+  const id = crypto.randomUUID();
+  await getRedis().set(`wizard:${id}`, JSON.stringify({ email, state }), "EX", 60 * 30); // 30 min
+  return id;
+}
+
+export async function getStoredWizardState(id: string): Promise<{ email: string; state: unknown } | null> {
+  const raw = await getRedis().get(`wizard:${id}`);
+  if (!raw) return null;
+  await getRedis().del(`wizard:${id}`);
+  return JSON.parse(raw);
+}
+
 export async function verifyMagicToken(token: string): Promise<string | null> {
   const r = getRedis();
   const email = await r.get(`magic:${token}`);

@@ -289,8 +289,8 @@ function Question({
       <div style={{ maxWidth: 620, margin: "0 auto", width: "100%" }}>
         {/* Counter + category */}
         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "center", gap: "0.5rem", marginBottom: "2.4rem" }}>
-          <span style={{ fontSize: "1.1rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", fontFamily: "var(--font-plan-script), cursive" }}>
-            {String(number).padStart(2, "0")} / {String(total).padStart(2, "0")}
+          <span style={{ fontSize: "1.1rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", fontFamily: "var(--font-plan-script), cursive" }}>
+            {String(number).padStart(2, "0")}&thinsp;/&thinsp;{String(total).padStart(2, "0")}
           </span>
           {subtitle && (
             <span className="neon-stats" style={{ fontSize: "1.1rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#EA580C", fontFamily: "var(--font-plan-block), sans-serif", textShadow: "0 0 7px rgba(234,88,12,0.6), 0 0 20px rgba(234,88,12,0.3)" }}>
@@ -561,7 +561,7 @@ export default function PlanWizardClient() {
 
   const progress = Math.min((revealedCount / totalQuestions) * 100, 100);
 
-  const inputClass = "w-full bg-transparent border-b border-white/20 px-0 py-5 text-white font-body text-2xl placeholder:text-white/25 focus:border-white/60 focus:outline-none transition-colors text-center";
+  const inputClass = "w-full bg-transparent border-b border-white/20 px-0 py-5 text-white font-body text-2xl placeholder:text-white/25 focus:border-white/60 focus:outline-none focus:ring-0 outline-none transition-colors text-center";
   const selectClass = "bg-transparent border-b border-white/20 px-0 py-5 text-white font-body text-lg focus:border-white/60 focus:outline-none transition-colors appearance-none text-center w-full";
 
   const ContinueBtn = ({ onClick, label = "Continue" }: { onClick: () => void; label?: string }) => (

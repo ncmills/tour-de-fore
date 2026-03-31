@@ -52,7 +52,7 @@ const STATES: Record<string, string> = {
   MD: "M598,130 L650,118 652,138 600,148Z",
 };
 
-// Every state assigned to a region (complete coverage)
+// Every state assigned to a region
 const REGION_STATES: Record<string, string[]> = {
   "Pacific NW": ["WA", "OR", "ID"],
   "Southwest": ["CA", "NV", "AZ", "NM", "UT"],
@@ -69,26 +69,40 @@ for (const [region, states] of Object.entries(REGION_STATES)) {
 }
 
 export default function RegionMapThumb({ region, selected }: { region: string; selected: boolean }) {
+  const highlightColor = selected ? "rgba(0,0,0,0.6)" : "#EA580C";
+  const bgColor = selected ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.08)";
+  const strokeColor = selected ? "rgba(0,0,0,0.12)" : "rgba(255,255,255,0.12)";
+  const regionStates = REGION_STATES[region] || [];
+
+  // Combine all state paths in this region into one <path> element
+  const combinedRegionPath = regionStates
+    .map((st) => STATES[st])
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <svg viewBox="40 0 690 410" style={{ width: "100%", height: "auto", maxHeight: 70 }}>
-      {Object.entries(STATES).map(([state, path]) => {
-        const stateRegion = STATE_TO_REGION[state];
-        const highlighted = stateRegion === region;
-        return (
-          <path
-            key={state}
-            d={path}
-            fill={
-              highlighted
-                ? selected ? "rgba(0,0,0,0.6)" : "#EA580C"
-                : selected ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.08)"
-            }
-            stroke={selected ? "rgba(0,0,0,0.12)" : "rgba(255,255,255,0.12)"}
-            strokeWidth="1"
-            strokeLinejoin="round"
-          />
-        );
-      })}
+      {/* Background: all states as dim outlines */}
+      {Object.entries(STATES).map(([state, path]) => (
+        <path
+          key={state}
+          d={path}
+          fill={bgColor}
+          stroke={strokeColor}
+          strokeWidth="1"
+          strokeLinejoin="round"
+        />
+      ))}
+      {/* Highlighted region: single combined path with thick stroke to fill gaps */}
+      {combinedRegionPath && (
+        <path
+          d={combinedRegionPath}
+          fill={highlightColor}
+          stroke={highlightColor}
+          strokeWidth="3"
+          strokeLinejoin="round"
+        />
+      )}
     </svg>
   );
 }
