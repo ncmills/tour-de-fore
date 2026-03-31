@@ -74,6 +74,7 @@ export async function POST(req: NextRequest) {
           }));
 
           // Create Printful order
+          console.log("Creating Printful order for", items.length, "items. Shipping:", shipping.name, shipping.address?.city, shipping.address?.state);
           let printfulResult: { id: number; status: string } | null = null;
           try {
             printfulResult = await createPrintfulOrder(
@@ -93,6 +94,8 @@ export async function POST(req: NextRequest) {
           } catch (printfulErr) {
             console.error("Printful order creation failed:", printfulErr);
           }
+
+          console.log("Printful result:", printfulResult ? `ID ${printfulResult.id} Status ${printfulResult.status}` : "FAILED (null)");
 
           // Store order in Redis (use session ID for idempotency)
           const orderId = session.id;

@@ -1,6 +1,6 @@
 // ── Printful API Client + Product Catalog ──
 
-const PRINTFUL_TOKEN = process.env.PRINTFUL_API_TOKEN || "";
+const PRINTFUL_TOKEN = (process.env.PRINTFUL_API_TOKEN || "").trim();
 const PRINTFUL_API = "https://api.printful.com";
 
 // ── Product Catalog (synced from Printful) ──
