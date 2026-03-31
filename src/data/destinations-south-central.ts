@@ -3770,6 +3770,7 @@ export const southCentralDestinations: Destination[] = [
           "Oklahoma beef is excellent and chef rates are low. A poolside steak cookout is the move. The Oklahoma onion burger is a regional specialty worth requesting.",
       },
     ],
+    groceryNotes: "Crest, Sprouts, Walmart within 10 min. Liquor at Byron's Liquor Warehouse on N. Western (Oklahoma's largest liquor store).",
   },
   {
     id: "shreveport-bossier-la",
@@ -4026,6 +4027,7 @@ export const southCentralDestinations: Destination[] = [
           "A Cajun crawfish or shrimp boil is the signature group meal. Prices are the lowest in the region. Many houses have large outdoor spaces ideal for a boil setup.",
       },
     ],
+    groceryNotes: "Brookshire's, Walmart within 10 min. Liquor at Louisiana Spirits & Wine on Line Ave.",
   },
   {
     id: "little-rock-ar",
@@ -4292,6 +4294,7 @@ export const southCentralDestinations: Destination[] = [
           "Chef rates in Little Rock are among the lowest in the region. A Southern steak dinner or fried catfish cookout is the move. Houses in West Little Rock have large outdoor spaces.",
       },
     ],
+    groceryNotes: "Kroger, Whole Foods within 10 min in West LR. Liquor at Colonial Wine & Spirits on Cantrell Rd.",
   },
   {
     id: "baton-rouge-la",
@@ -4559,6 +4562,7 @@ export const southCentralDestinations: Destination[] = [
           "A backyard crawfish boil is the definitive Baton Rouge group meal. Local chefs do this better and cheaper than anywhere else. Spring crawfish season (March-June) is peak.",
       },
     ],
+    groceryNotes: "Rouses Market, Albertsons within 10 min. Liquor at Calandro's Supermarket (local institution with excellent wine/spirits selection).",
   },
   {
     id: "lake-of-the-ozarks-mo",
@@ -4827,6 +4831,7 @@ export const southCentralDestinations: Destination[] = [
           "Lakehouse kitchens and outdoor spaces are perfect for chef setups. A dock-side BBQ cookout after a day on the lake is the signature move. Fish fry with the day's catch is a solid option if anyone actually caught something.",
       },
     ],
+    groceryNotes: "Hy-Vee, Woods Supermarket in Osage Beach within 10 min. Liquor at Lake Liquor on Bagnell Dam Blvd.",
   },
   {
     id: "galveston-tx",
@@ -5094,5 +5099,6 @@ export const southCentralDestinations: Destination[] = [
           "A beachfront Gulf seafood boil is the signature Galveston group meal. Beach houses have outdoor kitchens and decks perfect for chef setups. Fresh Gulf shrimp and fish can be sourced same-day from the harbor.",
       },
     ],
+    groceryNotes: "Kroger on Broadway within 10 min. Liquor at Spec's on Seawall Blvd. Fresh seafood direct from Katie's Seafood Market at the harbor.",
   },
 ];

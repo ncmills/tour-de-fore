@@ -774,6 +774,7 @@ export const midwestDestinations: Destination[] = [
           "Local whitefish and cherry-based dishes are the regional specialties. Many chefs source from local farms.",
       },
     ],
+    groceryNotes: "Meijer, Tom's within 10 min on US-31. Liquor at House of Wine on Front St.",
   },
 
   // ─── 3. Galena, IL ────────────────────────────────────────────────
@@ -1092,6 +1093,7 @@ export const midwestDestinations: Destination[] = [
           "Eagle Ridge resort properties have full kitchens that work well for private chefs. Book through the resort or independently.",
       },
     ],
+    groceryNotes: "Hy-Vee in Dubuque (20 min). Galena has a small IGA downtown. Liquor at Galena Brewing Company or Family Beer & Liquor.",
   },
 
   // ─── 4. Lake Geneva, WI ───────────────────────────────────────────
@@ -1433,6 +1435,7 @@ export const midwestDestinations: Destination[] = [
           "Lakefront rental kitchens are usually well-equipped. Grand Geneva's catering can deliver to off-site properties.",
       },
     ],
+    groceryNotes: "Sentry Foods within 5 min on Broad St. Liquor at Lake Geneva Liquor on Main St.",
   },
 
   // ─── 5. French Lick, IN ───────────────────────────────────────────
@@ -1665,6 +1668,8 @@ export const midwestDestinations: Destination[] = [
         type: "shuttle",
         capacity: [12, 20],
         hourlyRate: [100, 175],
+        fullDayRate: [800, 1400],
+        canDoGolfAndBars: true,
         providers: [
           "French Lick Resort Transportation",
           "Hoosier Hills Limo",
@@ -1676,6 +1681,8 @@ export const midwestDestinations: Destination[] = [
         type: "party-bus",
         capacity: [14, 24],
         hourlyRate: [175, 300],
+        fullDayRate: [1400, 2400],
+        canDoGolfAndBars: true,
         providers: [
           "Derby City Limousine (Louisville)",
           "Elite Limousine (Evansville)",
@@ -1702,6 +1709,7 @@ export const midwestDestinations: Destination[] = [
           "The resort's catering handles private group events in dedicated dining spaces. For cabin rentals, book an independent chef through Take a Chef.",
       },
     ],
+    groceryNotes: "Springs Valley IGA within 5 min. Walmart in Paoli (15 min). Liquor at French Lick Liquor on Maple St.",
   },
 
   // ─── 6. Duluth, MN ────────────────────────────────────────────────
@@ -2002,6 +2010,7 @@ export const midwestDestinations: Destination[] = [
           "Smoked lake fish and wild rice are the local specialties. Northern Waters Smokehaus does incredible fish — ask about catering platters.",
       },
     ],
+    groceryNotes: "Super One Foods, Whole Foods Coop within 5 min. Liquor at Lake Aire Bottle Shoppe on Superior St.",
   },
 
   // ─── 7. Harbor Springs / Petoskey, MI ─────────────────────────────
@@ -2351,6 +2360,7 @@ export const midwestDestinations: Destination[] = [
           "Lake whitefish, morel mushrooms (spring), and cherries are the local stars. Boyne's catering arm handles resort property events.",
       },
     ],
+    groceryNotes: "Tom's, Oleson's within 10 min in Petoskey. Liquor at Symons General Store in Petoskey (local landmark).",
   },
 
   // ─── 8. Grand Rapids, MI ───────────────────────────────────────────
@@ -2634,6 +2644,7 @@ export const midwestDestinations: Destination[] = [
           "Local specialty is anything with Montmorency cherries. Craft beer pairings are a popular add-on.",
       },
     ],
+    groceryNotes: "Meijer, D&W Fresh Market within 10 min. Liquor at Martha's Vineyard Wine Bar & Bottle Shop on Wealthy St.",
   },
 
   // ─── 9. Door County, WI ───────────────────────────────────────────
@@ -2908,6 +2919,7 @@ export const midwestDestinations: Destination[] = [
           "Door County cherries and fresh Lake Michigan whitefish are the local stars. Many chefs will do a traditional fish boil at your rental.",
       },
     ],
+    groceryNotes: "Piggly Wiggly in Sister Bay or Sturgeon Bay within 15 min. Liquor at Door County Wine & Spirits in Fish Creek.",
   },
 
   // ─── 10. Madison, WI ──────────────────────────────────────────────
@@ -3199,6 +3211,7 @@ export const midwestDestinations: Destination[] = [
           "The Dane County farmers' market (largest producer-only market in the US) means outstanding local ingredients. Request a cheese course with local creamery selections.",
       },
     ],
+    groceryNotes: "Metcalfe's Market, Hy-Vee within 10 min. Liquor at Steve's Liquor on University Ave (massive Wisconsin craft beer selection).",
   },
 
   // ─── 11. Brainerd / Baxter, MN ────────────────────────────────────
@@ -3492,6 +3505,7 @@ export const midwestDestinations: Destination[] = [
           "A traditional walleye shore lunch on the lake is the Brainerd signature. Most lakehouse kitchens are fully equipped for big group meals.",
       },
     ],
+    groceryNotes: "Cub Foods, Walmart in Baxter within 10 min. Liquor at Brainerd Liquor on S. 6th St.",
   },
 
   // ─── 12. Cincinnati, OH ───────────────────────────────────────────
@@ -3776,6 +3790,7 @@ export const midwestDestinations: Destination[] = [
           "Cincinnati's food scene is top-tier. Request goetta (local sausage) for breakfast and Graeter's ice cream for dessert.",
       },
     ],
+    groceryNotes: "Kroger, Jungle Jim's (legendary international market, worth the trip) within 15 min. Liquor at Party Source in Bellevue, KY (right across the river, massive).",
   },
 
   // ─── 13. Columbus, OH ─────────────────────────────────────────────
@@ -4064,6 +4079,7 @@ export const midwestDestinations: Destination[] = [
           "Columbus is a serious food town. Request a cream puff dessert course in honor of Schmidt's.",
       },
     ],
+    groceryNotes: "Kroger, Giant Eagle within 10 min. Liquor at Weiland's Market on Indianola Ave (legendary German market with great beer/wine).",
   },
 
   // ─── 14. Indianapolis, IN ─────────────────────────────────────────
@@ -4348,6 +4364,7 @@ export const midwestDestinations: Destination[] = [
           "The breaded pork tenderloin sandwich is the state icon. Request a sugar cream pie for dessert — Indiana's official state pie.",
       },
     ],
+    groceryNotes: "Kroger, Trader Joe's within 10 min in Broad Ripple area. Liquor at Big Red Liquors on N. College Ave.",
   },
 
   // ─── 15. Des Moines, IA ───────────────────────────────────────────
@@ -4631,6 +4648,7 @@ export const midwestDestinations: Destination[] = [
           "Iowa pork is world-class — request a thick-cut pork chop dinner as the centerpiece. Everything in DSM is a great value compared to coastal cities.",
       },
     ],
+    groceryNotes: "Hy-Vee within 10 min everywhere (Iowa institution). Liquor at Hy-Vee Wine & Spirits or Ingersoll Wine & Spirits.",
   },
 
   // ─── 16. Marquette, MI ────────────────────────────────────────────
@@ -4896,6 +4914,7 @@ export const midwestDestinations: Destination[] = [
           "The UP pasty (meat pie) is the iconic local food. Lake Superior whitefish is pristine. Many rental homes have outdoor Finnish saunas — pair with a lakeside cookout.",
       },
     ],
+    groceryNotes: "Tadych's Econo Foods, Walmart within 10 min. Liquor at Marquette Discount Beverage on US-41.",
   },
 
   // ─── 17. St. Louis, MO ───────────────────────────────────────────
@@ -5180,6 +5199,7 @@ export const midwestDestinations: Destination[] = [
           "St. Louis pork steaks (grilled with Maull's BBQ sauce) are the city's signature. Toasted ravioli is the essential appetizer. The Hill neighborhood's Italian heritage means amazing chefs.",
       },
     ],
+    groceryNotes: "Schnucks, Dierbergs within 10 min. Liquor at Total Wine on Manchester Rd or Randall's Wine & Spirits in Clayton.",
   },
 
   // ─── 18. Kansas City, MO ──────────────────────────────────────────
@@ -5296,6 +5316,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Kansas+City%2C+Missouri&adults=16",
         notes:
           "Brookside and Waldo have large craftsman homes 10 min from downtown. Westport puts you walkable to the best bars. Kansas side (Overland Park) has newer, larger homes near courses.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "house",
@@ -5307,6 +5329,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Kansas-City--Missouri/homes?adults=14",
         notes:
           "Urban lofts and condos walkable to Power & Light and BBQ joints. May need two units for 16+.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 4 queens = 14 guys at 2/bed",
       },
     ],
     dining: [
@@ -5457,6 +5481,7 @@ export const midwestDestinations: Destination[] = [
           "Kansas City BBQ is the obvious centerpiece — request a full spread with burnt ends, ribs, brisket, and all the fixings. A good KC pitmaster will bring their own smoker.",
       },
     ],
+    groceryNotes: "Hen House, Hy-Vee, Price Chopper within 10 min. Liquor at Lukas Liquors on State Line (legendary KC spot with massive selection).",
   },
 
   // ─── 19. Milwaukee, WI ────────────────────────────────────────────
@@ -5575,6 +5600,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Milwaukee%2C+Wisconsin&adults=16",
         notes:
           "Bay View has the best bar strip in the city. Walker's Point puts you walkable to the Third Ward. East Side near Brady Street also has large rental homes near nightlife.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "house",
@@ -5586,6 +5613,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Milwaukee--Wisconsin/homes?adults=14",
         notes:
           "Lake Michigan-adjacent neighborhoods with good inventory. Walkable to Brady Street bars. UWM area has larger homes.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 4 queens = 14 guys at 2/bed",
       },
     ],
     dining: [
@@ -5738,6 +5767,7 @@ export const midwestDestinations: Destination[] = [
           "Friday fish fry is sacred in Milwaukee — request it if your trip includes a Friday. Cheese curds are the mandatory appetizer. Pair with Lakefront Brewery or Spotted Cow.",
       },
     ],
+    groceryNotes: "Sendik's, Pick 'n Save within 10 min. Liquor at Discount Liquor on Miller Park Way (huge Wisconsin craft beer wall).",
   },
 
   // ─── 20. Omaha, NE ────────────────────────────────────────────────
@@ -5854,6 +5884,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Omaha%2C+Nebraska&adults=16",
         notes:
           "Dundee has large craftsman homes near Warren Buffett's house (literally). Benson has a walkable bar strip. Both are 10-15 min from downtown. Omaha is extremely affordable.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "house",
@@ -5865,6 +5897,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Omaha--Nebraska/homes?adults=14",
         notes:
           "Old Market lofts put you walkable to the best restaurants and bars. Midtown has more space for less money.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 4 queens = 14 guys at 2/bed",
       },
     ],
     dining: [
@@ -6016,5 +6050,6 @@ export const midwestDestinations: Destination[] = [
           "This is steak country — a prime rib or filet dinner with Nebraska corn is the obvious play. Request a Reuben sandwich spread for lunch (the Reuben was invented in Omaha).",
       },
     ],
+    groceryNotes: "Hy-Vee, Baker's within 10 min. Liquor at Brix Wine & Liquor on Leavenworth St.",
   },
 ];
