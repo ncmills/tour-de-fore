@@ -276,7 +276,7 @@ export default function HomeClient() {
             textDecoration: "none",
           }}
         >
-          <img src="/icon-fancy.png" alt="Login" style={{ width: 32, height: 32, opacity: 0.7 }} />
+          <span style={{ fontSize: "1.8rem", lineHeight: 1 }}>😈</span>
           <span style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "var(--font-inter), sans-serif" }}>Login</span>
         </motion.a>
       )}
