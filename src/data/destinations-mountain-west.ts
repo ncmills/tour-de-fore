@@ -2366,6 +2366,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.cottonwoodhills.com",
         highlight:
           "Tight tree-lined fairways with a links-style finish; the most centrally located course in Bozeman",
+        googleRating: 4.3,
+        reviewCount: 280,
       },
       {
         name: "Riverside Country Club",
@@ -2382,6 +2384,9 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.riversidecountryclub.com",
         highlight:
           "Semi-private gem along the East Gallatin River; best-conditioned greens in the valley",
+        googleRating: 4.5,
+        reviewCount: 320,
+        hypeTag: "HIDDEN GEM",
       },
       {
         name: "Black Bull Golf Community",
@@ -2398,6 +2403,9 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.blackbullgolf.com",
         highlight:
           "Tom Weiskopf design with dramatic elevation changes and panoramic Gallatin Valley views; limited public times",
+        googleRating: 4.6,
+        reviewCount: 280,
+        hypeTag: "DESIGNER CLASSIC",
       },
     ],
     lodging: [
@@ -2622,6 +2630,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.canyonrivergc.com",
         highlight:
           "Stunning Steve Jones design along the Clark Fork River; risk/reward layout with canyon views",
+        googleRating: 4.5,
+        reviewCount: 410,
       },
       {
         name: "The Ranch Club Golf Course",
@@ -2638,6 +2648,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.theranchclub.net",
         highlight:
           "Well-conditioned course through ponderosa pines with a great practice facility and affordable rates",
+        googleRating: 4.3,
+        reviewCount: 280,
       },
       {
         name: "Larchmont Golf Course",
@@ -2654,6 +2666,9 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.larchmontgolf.com",
         highlight:
           "Missoula's beloved muni; deceptively long and great value, right in town",
+        googleRating: 4.2,
+        reviewCount: 340,
+        hypeTag: "BEST VALUE",
       },
       {
         name: "King Ranch Golf Course",
@@ -2670,6 +2685,9 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.kingranchgolf.com",
         highlight:
           "Hidden gem in the Bitterroot Valley with mountain views and a challenging layout",
+        googleRating: 4.4,
+        reviewCount: 190,
+        hypeTag: "HIDDEN GEM",
       },
     ],
     lodging: [
@@ -3193,6 +3211,9 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.breckenridgegolfclub.com",
         highlight:
           "Jack Nicklaus design at 9,324 feet; 27 holes with the Bear nine delivering the most dramatic mountain golf in Colorado",
+        googleRating: 4.6,
+        reviewCount: 680,
+        hypeTag: "BUCKET LIST",
       },
       {
         name: "Keystone Ranch Golf Course",
@@ -3209,6 +3230,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.keystoneresort.com/golf",
         highlight:
           "Robert Trent Jones Jr. design through sage meadows and aspen groves; elk sightings common",
+        googleRating: 4.4,
+        reviewCount: 420,
       },
       {
         name: "The River Course at Keystone",
@@ -3225,6 +3248,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.keystoneresort.com/golf",
         highlight:
           "More forgiving sister course along the Snake River; great mountain scenery with less intimidation",
+        googleRating: 4.3,
+        reviewCount: 310,
       },
       {
         name: "Copper Creek Golf Course",
@@ -3241,6 +3266,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.coppercolorado.com/golf",
         highlight:
           "Copper Mountain's Pete and Perry Dye design; short but tricky with stunning Gore Range views",
+        googleRating: 4.3,
+        reviewCount: 250,
       },
     ],
     lodging: [
@@ -3467,6 +3494,9 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.vailgolfclub.net",
         highlight:
           "Municipal course that plays like a resort; tight fairways along Gore Creek with spectacular mountain walls",
+        googleRating: 4.5,
+        reviewCount: 520,
+        hypeTag: "LOCALS' FAVORITE",
       },
       {
         name: "Eagle-Vail Golf Club",
@@ -3483,6 +3513,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.eaglevailgolfclub.com",
         highlight:
           "Classic mountain course between Vail and Beaver Creek; great conditioning and more affordable than Vail GC",
+        googleRating: 4.4,
+        reviewCount: 380,
       },
       {
         name: "Sonnenalp Golf Club",
@@ -3499,6 +3531,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.sonnenalp.com/golf",
         highlight:
           "Bob Cupp design with stunning Gore Range views; long and demanding with immaculate conditioning",
+        googleRating: 4.5,
+        reviewCount: 410,
       },
       {
         name: "Beaver Creek Golf Club",
@@ -3515,6 +3549,9 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.beavercreek.com/golf",
         highlight:
           "Robert Trent Jones Jr. design at 8,400 feet; Tom Kite called it 'Augusta at altitude'",
+        googleRating: 4.6,
+        reviewCount: 340,
+        hypeTag: "DESIGNER CLASSIC",
       },
       {
         name: "Cotton Ranch Golf Club",
@@ -3531,6 +3568,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.cottonranch.com",
         highlight:
           "Pete Dye design in Gypsum with great valley views; less crowded and more affordable alternative to Vail courses",
+        googleRating: 4.3,
+        reviewCount: 260,
       },
     ],
     lodging: [
@@ -3757,6 +3796,9 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.telluridegolfclub.com",
         highlight:
           "Possibly the most scenic course in America; San Juan Mountains tower over every hole at 9,500 feet",
+        googleRating: 4.8,
+        reviewCount: 520,
+        hypeTag: "BUCKET LIST",
       },
       {
         name: "The Divide Ranch & Club",
@@ -3773,6 +3815,9 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.thedivideclub.com",
         highlight:
           "High mesa course near Ridgway with sweeping views of the Sneffels Range; excellent value alternative",
+        googleRating: 4.4,
+        reviewCount: 280,
+        hypeTag: "BEST VALUE",
       },
       {
         name: "The Links at Cobble Creek",
@@ -3789,6 +3834,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.cobblecreekgolf.com",
         highlight:
           "Jim Engh design in Montrose; links-style through desert mesa terrain — totally different from Telluride GC",
+        googleRating: 4.5,
+        reviewCount: 310,
       },
     ],
     lodging: [
@@ -4014,6 +4061,9 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.lovelandgolf.com",
         highlight:
           "Jack Nicklaus-designed city course with dramatic red rock outcroppings and Horsetooth Reservoir views",
+        googleRating: 4.5,
+        reviewCount: 480,
+        hypeTag: "DESIGNER CLASSIC",
       },
       {
         name: "Collindale Golf Course",
@@ -4030,6 +4080,9 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.fcgov.com/golf/collindale",
         highlight:
           "Fort Collins' best muni; mature trees, tight fairways, and always in great shape",
+        googleRating: 4.3,
+        reviewCount: 340,
+        hypeTag: "LOCALS' FAVORITE",
       },
       {
         name: "Pelican Lakes Golf Club",
@@ -5270,6 +5323,7 @@ export const mountainWestDestinations: Destination[] = [
           "Small private chef market; ranch lodges often have catering connections for group meals",
       },
     ],
+    groceryNotes: "Walmart in Cody within 5 min. Liquor at Cody Liquor on Sheridan Ave. Stock up here — selection drops fast heading toward Yellowstone.",
   },
 
   // ── Rapid City, SD ──────────────────────────────────────────────────
@@ -5555,6 +5609,7 @@ export const mountainWestDestinations: Destination[] = [
           "Small private chef market but bison and game are the local specialties; some catering companies do in-home events",
       },
     ],
+    groceryNotes: "Safeway, Walmart within 10 min. Liquor at Tally's Liquor on St. Joseph St. Good selection for the region.",
   },
 
   // ── Keystone / Custer, SD ───────────────────────────────────────────
@@ -5793,5 +5848,6 @@ export const mountainWestDestinations: Destination[] = [
           "Very small private chef market; lodge kitchens are well-equipped for DIY cookouts. Some Rapid City chefs will travel.",
       },
     ],
+    groceryNotes: "Mt. Rushmore General Store in Keystone for basics. Grocery run to Rapid City (30 min) at Safeway or Walmart. Liquor at Black Hills Liquor in Hill City.",
   },
 ];

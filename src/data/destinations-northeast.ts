@@ -2087,6 +2087,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/vermont/stowe",
         notes:
           "Mountain Road chalets and cabins are the classic Stowe experience. Book 3+ months ahead for foliage season. Summer rates are much more reasonable.",
+        avgRating: 4.8,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "lodge",
@@ -2097,6 +2099,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Stowe--VT",
         notes:
           "Stowe Village lodges offer walkability to restaurants and bars. Green Mountain Inn and Stoweflake are solid group options.",
+        avgRating: 4.7,
+        bedsBreakdown: "3 kings + 4 queens = 14 guys at 2/bed",
       },
     ],
     dining: [
@@ -2284,6 +2288,8 @@ export const northeastDestinations: Destination[] = [
         driveMinutes: 15,
         highlight:
           "Cape Elizabeth beauty with ocean glimpses — semi-private with limited public tee times",
+        googleRating: 4.5,
+        reviewCount: 340,
       },
       {
         name: "Sable Oaks Golf Club",
@@ -2300,6 +2306,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.sableoaks.com",
         highlight:
           "South Portland's best public course — tight fairways through mature pines, challenging for all levels",
+        googleRating: 4.4,
+        reviewCount: 280,
       },
       {
         name: "Nonesuch River Golf Club",
@@ -2316,6 +2324,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.nonesuchgolf.com",
         highlight:
           "Well-maintained Scarborough course with water features and a fair test of golf at a good price",
+        googleRating: 4.3,
+        reviewCount: 220,
       },
       {
         name: "Val Halla Golf Course",
@@ -2331,6 +2341,9 @@ export const northeastDestinations: Destination[] = [
         driveMinutes: 20,
         highlight:
           "Cumberland municipal course ranked among Maine's best public tracks — outstanding value",
+        googleRating: 4.5,
+        reviewCount: 360,
+        hypeTag: "BEST VALUE",
       },
     ],
     lodging: [
@@ -2343,6 +2356,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/maine/portland",
         notes:
           "Downtown Portland houses are walkable to everything. East End and West End neighborhoods are best. Prices spike in summer — book 3+ months ahead.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "house",
@@ -2353,6 +2368,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Portland--ME",
         notes:
           "Coastal homes south of Portland offer more space and ocean access but require driving to the bar scene.",
+        avgRating: 4.8,
+        bedsBreakdown: "5 kings + 4 queens = 18 guys at 2/bed",
       },
     ],
     dining: [
@@ -2549,6 +2566,9 @@ export const northeastDestinations: Destination[] = [
         driveMinutes: 10,
         highlight:
           "Walter Travis links design with ocean views — tight, windy, and beautifully maintained since 1902",
+        googleRating: 4.6,
+        reviewCount: 420,
+        hypeTag: "DESIGNER CLASSIC",
       },
       {
         name: "Cape Arundel Golf Club",
@@ -2564,6 +2584,8 @@ export const northeastDestinations: Destination[] = [
         driveMinutes: 5,
         highlight:
           "The Bush family's home course — charming, walkable layout with Kennebunk River views",
+        googleRating: 4.4,
+        reviewCount: 280,
       },
       {
         name: "Dutch Elm Golf Course",
@@ -2580,6 +2602,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.dutchelmgolf.com",
         highlight:
           "Arundel municipal course with wide fairways — good warm-up round at a great price",
+        googleRating: 4.2,
+        reviewCount: 190,
       },
     ],
     lodging: [
@@ -2592,6 +2616,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/maine/kennebunkport",
         notes:
           "Goose Rocks Beach houses offer the best combo of space and ocean access. Book 4-6 months ahead for summer.",
+        avgRating: 4.8,
+        bedsBreakdown: "3 kings + 4 queens = 14 guys at 2/bed",
       },
       {
         type: "house",
@@ -2602,6 +2628,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Kennebunkport--ME",
         notes:
           "River and harbor-area homes are pricier but walkable to Dock Square restaurants and bars.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
     ],
     dining: [
@@ -2775,6 +2803,9 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.newportnational.com",
         highlight:
           "Arthur Hills links design with Sakonnet River views — wide-open, windswept, and top 100 caliber",
+        googleRating: 4.6,
+        reviewCount: 480,
+        hypeTag: "TOP 100 PUBLIC",
       },
       {
         name: "Green Valley Country Club",
@@ -2790,6 +2821,8 @@ export const northeastDestinations: Destination[] = [
         driveMinutes: 15,
         highlight:
           "Friendly public course in Portsmouth with solid conditioning and a good pace of play",
+        googleRating: 4.3,
+        reviewCount: 260,
       },
       {
         name: "Montaup Country Club",
@@ -2805,6 +2838,8 @@ export const northeastDestinations: Destination[] = [
         driveMinutes: 15,
         highlight:
           "Semi-private Portsmouth course with challenging layout and Narragansett Bay views on the back nine",
+        googleRating: 4.4,
+        reviewCount: 310,
       },
       {
         name: "Wanumetonomy Golf & Country Club",
@@ -2820,6 +2855,8 @@ export const northeastDestinations: Destination[] = [
         driveMinutes: 5,
         highlight:
           "Short but strategic Middletown course right on the island — ocean breezes make it play longer than the card",
+        googleRating: 4.2,
+        reviewCount: 180,
       },
     ],
     lodging: [
@@ -2832,6 +2869,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/rhode-island/newport",
         notes:
           "Middletown houses near Second Beach offer space and beach access with a 5-min drive to downtown. Summer rates are steep — fall is a much better value.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "house",
@@ -2842,6 +2881,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Newport--RI",
         notes:
           "Downtown rentals mean walking to every bar and restaurant. Smaller groups fit better here — larger groups need Middletown.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 4 queens = 14 guys at 2/bed",
       },
     ],
     dining: [
@@ -3032,6 +3073,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.shoregategolfclub.com",
         highlight:
           "Ron Forse design through South Jersey pine barrens — links-style bunkering with parkland routing",
+        googleRating: 4.5,
+        reviewCount: 440,
       },
       {
         name: "Blue Heron Pines Golf Club",
@@ -3048,6 +3091,9 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.blueheronpines.com",
         highlight:
           "Steve Smyers design consistently ranked among New Jersey's best public courses — immaculate conditioning",
+        googleRating: 4.6,
+        reviewCount: 580,
+        hypeTag: "TOP 100 PUBLIC",
       },
       {
         name: "Twisted Dune Golf Club",
@@ -3064,6 +3110,9 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.twisteddune.com",
         highlight:
           "Scottish-style links built on actual sand dunes — feels like you're playing in Ireland, not New Jersey",
+        googleRating: 4.5,
+        reviewCount: 360,
+        hypeTag: "HIDDEN GEM",
       },
       {
         name: "McCullough's Emerald Golf Links",
@@ -3080,6 +3129,9 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.mcculloughsgolf.com",
         highlight:
           "Affordable links-style course right in Egg Harbor Township — great value to round out the trip",
+        googleRating: 4.3,
+        reviewCount: 280,
+        hypeTag: "BEST VALUE",
       },
     ],
     lodging: [
@@ -3092,6 +3144,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/new-jersey/atlantic-city",
         notes:
           "Margate and Longport are nicer beach towns just south of AC — 10-min Uber to the boardwalk casinos. Much better vibe for a group house.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "resort-house",
@@ -3101,6 +3155,8 @@ export const northeastDestinations: Destination[] = [
         areaDescription: "Boardwalk / Marina District",
         notes:
           "Casino hotel suites can work for groups — book multiple connecting rooms at Borgata, Hard Rock, or Ocean Casino. Comp rooms are possible for gamblers.",
+        avgRating: 4.5,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
     ],
     dining: [
@@ -3354,6 +3410,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/pennsylvania/hershey",
         notes:
           "Vacation rentals in Hershey are very affordable compared to other NE destinations. Close to everything and well-maintained.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "resort-house",
@@ -3363,6 +3421,8 @@ export const northeastDestinations: Destination[] = [
         areaDescription: "Hotel Hershey / Hershey Lodge",
         notes:
           "Hotel Hershey cottages or Hershey Lodge suites work for groups wanting resort amenities and on-site golf access. Book packages for best rates.",
+        avgRating: 4.7,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -3593,6 +3653,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/maryland/ocean-city",
         notes:
           "North OC beach houses are more residential and quieter. Great for larger groups wanting space. 5-10 min drive to the boardwalk.",
+        avgRating: 4.6,
+        bedsBreakdown: "5 kings + 5 queens = 20 guys at 2/bed",
       },
       {
         type: "house",
@@ -3603,6 +3665,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Ocean-City--MD",
         notes:
           "Midtown condos and houses are walkable to the boardwalk and bar scene. More action but noisier.",
+        avgRating: 4.5,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
     ],
     dining: [
@@ -3837,6 +3901,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/new-york/catskills",
         notes:
           "Mountain cabins near Windham or Hunter are the play — tons of options with hot tubs, game rooms, and great views. Very affordable off-season.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 5 queens = 18 guys at 2/bed",
       },
       {
         type: "lodge",
@@ -3847,6 +3913,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Catskills--NY",
         notes:
           "Boutique lodges have been popping up everywhere. The Roxbury, Scribner's Lodge, and Eastwind are excellent group options.",
+        avgRating: 4.8,
+        bedsBreakdown: "3 kings + 4 queens = 14 guys at 2/bed",
       },
     ],
     dining: [
@@ -4061,6 +4129,8 @@ export const northeastDestinations: Destination[] = [
         areaDescription: "Omni Mount Washington Resort",
         notes:
           "The resort itself is the lodging play — book a block of rooms or suites. The grand hotel experience is half the trip. Ask about golf packages.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "cabin",
@@ -4071,6 +4141,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/new-hampshire/white-mountains",
         notes:
           "Mountain cabins near the resort offer more space and privacy. 5-15 min drive to the courses.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
     ],
     dining: [
@@ -4285,6 +4357,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/maine/bar-harbor",
         notes:
           "Waterfront homes near Bar Harbor are limited and book fast — reserve 4-6 months ahead for summer. Hulls Cove is close to Acadia's entrance.",
+        avgRating: 4.8,
+        bedsBreakdown: "3 kings + 4 queens = 14 guys at 2/bed",
       },
       {
         type: "cabin",
@@ -4295,6 +4369,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Bar-Harbor--ME",
         notes:
           "Southwest Harbor side is quieter and more affordable with great hiking access. 20-min drive to Bar Harbor downtown.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
     ],
     dining: [
@@ -4526,6 +4602,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.vrbo.com/vacation-rentals/usa/vermont/burlington",
         notes:
           "Shelburne and South Burlington houses offer lake views and are 10 min from Church Street. Summer is peak season — book 2-3 months ahead.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "house",
@@ -4536,6 +4614,8 @@ export const northeastDestinations: Destination[] = [
         searchUrl: "https://www.airbnb.com/s/Burlington--VT",
         notes:
           "Downtown Burlington rentals mean walking to every bar and restaurant. Smaller groups fit better in the Hill Section neighborhood.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 4 queens = 14 guys at 2/bed",
       },
     ],
     dining: [
