@@ -290,14 +290,19 @@ body.menu-open {
 
 /* ── Mobile-specific fixes ── */
 @media (max-width: 640px) {
-  /* Smaller mulligan beer can on mobile */
-  .mulligan-wrap svg {
-    width: 90px !important;
-    height: 42px !important;
+  /* Smaller mulligan on mobile */
+  .mulligan-wrap .mulligan-svg {
+    width: 14px !important;
+    height: 18px !important;
   }
-  .mulligan-wrap span {
-    font-size: 1rem !important;
-    padding: 0.3em 0.7em !important;
+  .mulligan-wrap .mulligan-text {
+    font-size: 0.8rem !important;
+  }
+  .mulligan-wrap button {
+    padding: 8px 10px !important;
+    margin: -8px -10px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
   }
 
   /* Plan result header — stack vertically */

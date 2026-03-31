@@ -67,6 +67,7 @@ export default function MulliganButton({
           width="22"
           height="28"
           viewBox="0 0 22 28"
+          className="mulligan-svg"
           style={{
             opacity: drawn ? 1 : 0,
             transition: "opacity 0.4s ease",
@@ -105,6 +106,7 @@ export default function MulliganButton({
 
         {/* Bold "mulligan" text */}
         <span
+          className="mulligan-text"
           style={{
             fontFamily: "var(--font-scrawl), cursive",
             fontSize: "1.15rem",
