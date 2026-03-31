@@ -101,8 +101,8 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
                 backdropFilter: "blur(4px)",
                 border: "3px solid rgba(245,200,66,0.7)",
                 borderRadius: "50%",
-                width: "clamp(65px, 11vw, 95px)",
-                height: "clamp(65px, 11vw, 95px)",
+                width: "clamp(98px, 16vw, 143px)",
+                height: "clamp(98px, 16vw, 143px)",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -111,12 +111,12 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
                 cursor: "pointer",
                 boxShadow: "0 0 20px rgba(245,200,66,0.3), 0 4px 20px rgba(0,0,0,0.5)",
                 userSelect: "none",
-                fontSize: "clamp(1.6rem, 3vw, 2.4rem)",
+                fontSize: "clamp(2.4rem, 4.5vw, 3.6rem)",
                 lineHeight: 1,
               }}
             >
               🥃
-              <span style={{ fontSize: "clamp(0.7rem, 1.5vw, 0.75rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>drink</span>
+              <span style={{ fontSize: "clamp(0.9rem, 2vw, 1.1rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>drink</span>
             </motion.button>
 
             {/* 🍺 Beer = shop feature (right hand) */}
@@ -138,8 +138,8 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
                 backdropFilter: "blur(4px)",
                 border: "3px solid rgba(234,88,12,0.7)",
                 borderRadius: "50%",
-                width: "clamp(65px, 11vw, 95px)",
-                height: "clamp(65px, 11vw, 95px)",
+                width: "clamp(98px, 16vw, 143px)",
+                height: "clamp(98px, 16vw, 143px)",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -148,12 +148,12 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
                 cursor: "pointer",
                 boxShadow: "0 0 20px rgba(234,88,12,0.3), 0 4px 20px rgba(0,0,0,0.5)",
                 userSelect: "none",
-                fontSize: "clamp(1.6rem, 3vw, 2.4rem)",
+                fontSize: "clamp(2.4rem, 4.5vw, 3.6rem)",
                 lineHeight: 1,
               }}
             >
               🍺
-              <span style={{ fontSize: "clamp(0.7rem, 1.5vw, 0.75rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>shop</span>
+              <span style={{ fontSize: "clamp(0.9rem, 2vw, 1.1rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>shop</span>
             </motion.button>
           </motion.div>
         )}
@@ -192,8 +192,8 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
                 backdropFilter: "blur(4px)",
                 border: "3px solid rgba(59,130,246,0.7)",
                 borderRadius: "50%",
-                width: "clamp(65px, 11vw, 95px)",
-                height: "clamp(65px, 11vw, 95px)",
+                width: "clamp(98px, 16vw, 143px)",
+                height: "clamp(98px, 16vw, 143px)",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -202,12 +202,12 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
                 cursor: "pointer",
                 boxShadow: "0 0 20px rgba(59,130,246,0.3), 0 4px 20px rgba(0,0,0,0.5)",
                 userSelect: "none",
-                fontSize: "clamp(1.6rem, 3vw, 2.4rem)",
+                fontSize: "clamp(2.4rem, 4.5vw, 3.6rem)",
                 lineHeight: 1,
               }}
             >
               💧
-              <span style={{ fontSize: "clamp(0.7rem, 1.5vw, 0.75rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>sober up</span>
+              <span style={{ fontSize: "clamp(0.9rem, 2vw, 1.1rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>sober up</span>
             </motion.button>
 
             {/* 🍺 Shop (right) */}
@@ -229,8 +229,8 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
                 backdropFilter: "blur(4px)",
                 border: "3px solid rgba(234,88,12,0.7)",
                 borderRadius: "50%",
-                width: "clamp(65px, 11vw, 95px)",
-                height: "clamp(65px, 11vw, 95px)",
+                width: "clamp(98px, 16vw, 143px)",
+                height: "clamp(98px, 16vw, 143px)",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -239,12 +239,12 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
                 cursor: "pointer",
                 boxShadow: "0 0 20px rgba(234,88,12,0.3), 0 4px 20px rgba(0,0,0,0.5)",
                 userSelect: "none",
-                fontSize: "clamp(1.6rem, 3vw, 2.4rem)",
+                fontSize: "clamp(2.4rem, 4.5vw, 3.6rem)",
                 lineHeight: 1,
               }}
             >
               🍺
-              <span style={{ fontSize: "clamp(0.7rem, 1.5vw, 0.75rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>shop</span>
+              <span style={{ fontSize: "clamp(0.9rem, 2vw, 1.1rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>shop</span>
             </motion.button>
           </motion.div>
         )}
