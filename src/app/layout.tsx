@@ -124,6 +124,12 @@ export default function RootLayout({
               description: "An Annual Golf Odyssey — six years of fairways, friendships, and questionable handicaps.",
               url: "https://tourdefore.com",
               foundingDate: "2021",
+              sameAs: [
+                "https://idonthaveawill.com",
+                "https://whatpeptidesdo.com",
+                "https://doppelwriter.com",
+                "https://imfrustrated.org",
+              ],
             }),
           }}
         />
