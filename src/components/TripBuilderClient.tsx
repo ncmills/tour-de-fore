@@ -288,7 +288,7 @@ export default function TripBuilderClient({
         body: JSON.stringify({ planId, dest, tier, selectedOptions }),
       });
     } catch { /* silent */ }
-    window.location.href = `/plan/result/${planId}?dest=${dest}&tier=${tier}`;
+    window.location.href = `/plan/itinerary?planId=${planId}&dest=${dest}&tier=${tier}`;
   };
 
   // ── Price calculation ──

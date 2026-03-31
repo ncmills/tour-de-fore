@@ -219,12 +219,6 @@ interface PlanResultClientProps {
   subscribed?: boolean;
 }
 
-const tierTabs: { key: TripTier; planKey: keyof ThreePlanResult; label: string }[] = [
-  { key: "imp", planKey: "imp", label: "The Imp" },
-  { key: "devil", planKey: "devil", label: "The Devil" },
-  { key: "demon-king", planKey: "demonKing", label: "The Demon King" },
-];
-
 export default function PlanResultClient({ plan, allPlans, planId, tier, dest, paid, subscribed }: PlanResultClientProps) {
   const [copied, setCopied] = useState(false);
   const [showEmailForm, setShowEmailForm] = useState(false);
@@ -297,76 +291,12 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
           <span style={{ color: "#555", fontSize: 12 }}>{plan.estimatedBudget.perPerson}/pp</span>
         </div>
 
-        {/* Concierge CTA */}
-        <div style={{
-          textAlign: "center",
-          padding: "0.35rem 1rem 0.5rem",
-          borderTop: "1px solid rgba(255,255,255,0.05)",
-        }}>
-          <Link
-            className="concierge-cta"
-            href={`/plan/gallery?planId=${planId}&dest=${dest || "mid"}&tier=${tier}`}
-            style={{
-              display: "inline-block",
-              background: "rgba(220,38,38,0.85)",
-              borderRadius: "8px",
-              padding: "8px 24px",
-              color: "#fff",
-              fontSize: 17,
-              fontWeight: 700,
-              letterSpacing: "0.06em",
-              textDecoration: "none",
-              transition: "all 0.2s",
-              whiteSpace: "nowrap",
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(220,38,38,1)"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(220,38,38,0.85)"; }}
-          >
-            Build Your Trip →
-          </Link>
-        </div>
       </div>
 
       {/* Mulligan — below header */}
       <MulliganButton href={`/plan/result/${planId}`} />
       <HomeButton />
 
-      {/* ─── Tier Toggle Tabs ─── */}
-      {allPlans && (
-        <div style={{ textAlign: "center", marginTop: "4.5rem" }}>
-          <p style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "0.9rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: "0.75rem" }}>
-            Sample Itinerary
-          </p>
-        <div style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "0.5rem",
-          padding: "0 clamp(1rem, 4vw, 3rem) 1rem",
-        }}>
-          {tierTabs.map(({ key, label }) => (
-            <Link
-              key={key}
-              href={`/plan/result/${planId}?dest=${dest}&tier=${key}`}
-              className="tier-tab-link"
-              style={{
-                padding: "8px 20px",
-                borderRadius: 6,
-                fontSize: "0.75rem",
-                fontWeight: 600,
-                letterSpacing: "0.05em",
-                textDecoration: "none",
-                transition: "all 0.2s",
-                background: tier === key ? tierColors[key] : "rgba(255,255,255,0.05)",
-                color: tier === key ? (key === "imp" ? "#000" : "#fff") : "rgba(255,255,255,0.4)",
-                border: tier === key ? "none" : "1px solid rgba(255,255,255,0.1)",
-              }}
-            >
-              {label}
-            </Link>
-          ))}
-        </div>
-        </div>
-      )}
 
       {/* ─── 2. City Overview ─── */}
       <motion.section
@@ -1043,7 +973,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
           )}
         </div>
 
-        {/* Build Your Trip + Share with Crew CTAs (paid only) */}
+        {/* Build Your Trip + Share with Crew CTAs */}
         <div style={{
           display: "flex",
           flexWrap: "wrap",
@@ -1070,10 +1000,10 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
               transition: "all 0.2s",
             }}
           >
-            🛠️ Build Your Trip
+            Build Your Trip
           </Link>
           <Link
-            href={`/trip/plan/${planId}`}
+            href={`/plan/gallery?planId=${planId}&dest=${dest || "mid"}&tier=${tier}`}
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -1089,7 +1019,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
               transition: "all 0.2s",
             }}
           >
-            🔗 Share with Crew
+            Share with Crew
           </Link>
         </div>
 

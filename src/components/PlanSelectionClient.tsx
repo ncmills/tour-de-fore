@@ -6,10 +6,10 @@ import Link from "next/link";
 import { ThreeDestinationResult, ThreeFreePreview, PriceLevel, FreePreview } from "@/lib/plan-types";
 import MulliganButton from "./MulliganButton";
 
-const destinationTiers: { key: PriceLevel; icon: string; label: string; badge?: string }[] = [
-  { key: "budget", icon: "👿", label: "The Bargain" },
-  { key: "mid", icon: "😈", label: "The Sweet Spot", badge: "RECOMMENDED" },
-  { key: "premium", icon: "👹", label: "The Splurge" },
+const destinationTiers: { key: PriceLevel; icon: string; label: string; subtitle: string; badge?: string }[] = [
+  { key: "budget", icon: "👿", label: "The Bargain", subtitle: "Budget" },
+  { key: "mid", icon: "😈", label: "The Sweet Spot", subtitle: "Mid-Range", badge: "RECOMMENDED" },
+  { key: "premium", icon: "👹", label: "The Splurge", subtitle: "Premium" },
 ];
 
 function DestinationCard({
@@ -17,6 +17,7 @@ function DestinationCard({
   priceKey,
   icon,
   label,
+  subtitle,
   badge,
   preview,
   legacyDest,
@@ -27,6 +28,7 @@ function DestinationCard({
   priceKey: PriceLevel;
   icon: string;
   label: string;
+  subtitle: string;
   badge?: string;
   preview: FreePreview | null;
   legacyDest?: { city?: string; state?: string; tagline?: string; destinationId?: string; plans?: { devil?: { estimatedBudget?: { perPerson?: string }; courses?: { name: string }[]; lodging?: { type?: string } } } };
@@ -100,8 +102,11 @@ function DestinationCard({
         </div>
 
         {/* Tier + Icon + City */}
-        <div style={{ fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: accentColor, marginBottom: "0.5rem" }}>
+        <div style={{ fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: accentColor, marginBottom: "0.15rem" }}>
           {label}
+        </div>
+        <div style={{ fontSize: "0.65rem", fontWeight: 500, color: "rgba(255,255,255,0.35)", marginBottom: "0.5rem", letterSpacing: "0.08em" }}>
+          {subtitle}
         </div>
         <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>{icon}</div>
         <h2 style={{ fontFamily: "var(--font-plan-script), cursive", fontSize: "clamp(1.6rem, 4vw, 2.2rem)", color: "#fff", marginBottom: "0.25rem", lineHeight: 1.1 }}>
@@ -151,7 +156,7 @@ function DestinationCard({
         )}
 
         <Link
-          href={`/plan/result/${planId}?dest=${priceKey}&tier=devil`}
+          href={`/plan/gallery?planId=${planId}&dest=${priceKey}&tier=devil`}
           onClick={trackClick}
           style={{
             display: "block",
@@ -224,13 +229,14 @@ export default function PlanSelectionClient({
         maxWidth: "1200px",
         margin: "0 auto",
       }}>
-        {destinationTiers.map(({ key, icon, label, badge }, i) => (
+        {destinationTiers.map(({ key, icon, label, subtitle, badge }, i) => (
           <DestinationCard
             key={key}
             planId={planId}
             priceKey={key}
             icon={icon}
             label={label}
+            subtitle={subtitle}
             badge={badge}
             preview={freePreviews?.[key] || null}
             legacyDest={legacyDestinations?.[key]}

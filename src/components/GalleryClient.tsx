@@ -440,6 +440,10 @@ export default function GalleryClient({
         style={{
           padding: "1.5rem clamp(1.5rem, 6vw, 6rem) 2.5rem",
           textAlign: "center",
+          display: "flex",
+          justifyContent: "center",
+          gap: "1rem",
+          flexWrap: "wrap",
         }}
       >
         <Link
@@ -461,6 +465,27 @@ export default function GalleryClient({
           onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(220,38,38,0.9)"; }}
         >
           Build Your Trip &rarr;
+        </Link>
+        <Link
+          href={`/plan/itinerary?planId=${planId}&dest=${dest}&tier=${tier}`}
+          style={{
+            display: "inline-block",
+            background: "transparent",
+            border: "1px solid rgba(220,38,38,0.6)",
+            borderRadius: 8,
+            padding: "14px 36px",
+            color: "rgba(220,38,38,0.9)",
+            fontSize: 17,
+            fontWeight: 700,
+            letterSpacing: "0.06em",
+            textDecoration: "none",
+            transition: "all 0.2s",
+            whiteSpace: "nowrap",
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(220,38,38,1)"; e.currentTarget.style.color = "rgba(220,38,38,1)"; }}
+          onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(220,38,38,0.6)"; e.currentTarget.style.color = "rgba(220,38,38,0.9)"; }}
+        >
+          Quick Build &mdash; Let TDF Pick &rarr;
         </Link>
       </motion.div>
 
