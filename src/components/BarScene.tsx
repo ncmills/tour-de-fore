@@ -81,10 +81,14 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
             style={{
               position: "absolute",
               inset: 0,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "clamp(2rem, 8vw, 6rem)",
               pointerEvents: "none",
             }}
           >
-            {/* 🥃 Shot = drink feature (over left drink) */}
+            {/* 🥃 Shot = drink feature */}
             <motion.button
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: [1, 1.06, 1] }}
@@ -96,10 +100,6 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               className="bar-btn-left"
               style={{
                 pointerEvents: "auto",
-                position: "absolute",
-                top: "35%",
-                left: "30%",
-                transform: "translate(-50%, -50%)",
                 background: "rgba(0,0,0,0.5)",
                 backdropFilter: "blur(4px)",
                 border: "3px solid rgba(245,200,66,0.7)",
@@ -122,7 +122,7 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               <span style={{ fontSize: "clamp(0.9rem, 2vw, 1.1rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>drink</span>
             </motion.button>
 
-            {/* 🍺 Beer = shop feature (over right drink) */}
+            {/* 🍺 Beer = shop feature */}
             <motion.button
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: [1, 1.06, 1] }}
@@ -134,10 +134,6 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               className="bar-btn-right"
               style={{
                 pointerEvents: "auto",
-                position: "absolute",
-                top: "33%",
-                left: "72%",
-                transform: "translate(-50%, -50%)",
                 background: "rgba(0,0,0,0.5)",
                 backdropFilter: "blur(4px)",
                 border: "3px solid rgba(234,88,12,0.7)",
@@ -174,10 +170,14 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
             style={{
               position: "absolute",
               inset: 0,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "clamp(2rem, 8vw, 6rem)",
               pointerEvents: "none",
             }}
           >
-            {/* 💧 Water = sober up (over left drink) */}
+            {/* 💧 Water = sober up */}
             <motion.button
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: [1, 1.06, 1] }}
@@ -189,10 +189,6 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               className="bar-btn-left"
               style={{
                 pointerEvents: "auto",
-                position: "absolute",
-                top: "35%",
-                left: "30%",
-                transform: "translate(-50%, -50%)",
                 background: "rgba(0,0,0,0.5)",
                 backdropFilter: "blur(4px)",
                 border: "3px solid rgba(59,130,246,0.7)",
@@ -215,7 +211,7 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               <span style={{ fontSize: "clamp(0.9rem, 2vw, 1.1rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>sober up</span>
             </motion.button>
 
-            {/* 🍺 Shop (over right drink) */}
+            {/* 🍺 Shop */}
             <motion.button
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: [1, 1.06, 1] }}
@@ -227,10 +223,6 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               className="bar-btn-right"
               style={{
                 pointerEvents: "auto",
-                position: "absolute",
-                top: "33%",
-                left: "72%",
-                transform: "translate(-50%, -50%)",
                 background: "rgba(0,0,0,0.5)",
                 backdropFilter: "blur(4px)",
                 border: "3px solid rgba(234,88,12,0.7)",
