@@ -52,7 +52,7 @@ function ProductCard({
         minHeight: 200,
       }}>
         <img
-          src={product.previewUrl}
+          src={product.colorPreviews[color] || product.previewUrl}
           alt={product.name}
           style={{ maxWidth: "100%", maxHeight: 180, objectFit: "contain" }}
         />

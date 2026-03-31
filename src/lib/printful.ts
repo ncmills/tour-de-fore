@@ -21,6 +21,7 @@ export interface ShopProduct {
   displayPrice: string;
   thumbnailUrl: string;
   previewUrl: string;
+  colorPreviews: Record<string, string>; // color → preview image URL
   variants: ProductVariant[];
   colors: string[];
   sizes: string[];
@@ -37,6 +38,12 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     displayPrice: "$100",
     thumbnailUrl: "https://files.cdn.printful.com/files/3bf/3bf9d4b707e593640195fe7615462a69_preview.png",
     previewUrl: "https://files.cdn.printful.com/files/3bf/3bf9d4b707e593640195fe7615462a69_preview.png",
+    colorPreviews: {
+      "Black Melange": "https://files.cdn.printful.com/files/3bf/3bf9d4b707e593640195fe7615462a69_preview.png",
+      "Collegiate Navy Melange": "https://files.cdn.printful.com/files/a02/a024d009706208073e7e53e1c9ff7776_preview.png",
+      "Collegiate Royal Melange": "https://files.cdn.printful.com/files/2fd/2fd4f33419096416bc7d4969f0b485ba_preview.png",
+      "Grey One Heather": "https://files.cdn.printful.com/files/bed/bedd53460cf90c0dee1788e0b451db57_preview.png",
+    },
     category: "apparel",
     colors: ["Black Melange", "Collegiate Navy Melange", "Collegiate Royal Melange", "Grey One Heather"],
     sizes: ["L", "XL", "2XL", "3XL"],
@@ -68,6 +75,12 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     displayPrice: "$100",
     thumbnailUrl: "https://files.cdn.printful.com/files/af7/af71457c0e6c826d3ad34576b68ac573_preview.png",
     previewUrl: "https://files.cdn.printful.com/files/af7/af71457c0e6c826d3ad34576b68ac573_preview.png",
+    colorPreviews: {
+      "Black": "https://files.cdn.printful.com/files/af7/af71457c0e6c826d3ad34576b68ac573_preview.png",
+      "Collegiate Navy": "https://files.cdn.printful.com/files/b2c/b2ce4da89fd9431a9e13dda85d16ebb9_preview.png",
+      "Black Heather": "https://files.cdn.printful.com/files/5ec/5ec79803000c50c4c45d09a94de870fe_preview.png",
+      "White": "https://files.cdn.printful.com/files/11d/11d353905deccefa96dc65405a55970a_preview.png",
+    },
     category: "apparel",
     colors: ["Black", "Collegiate Navy", "Black Heather", "White"],
     sizes: ["L", "XL", "2XL", "3XL"],
@@ -99,6 +112,10 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     displayPrice: "$75",
     thumbnailUrl: "https://files.cdn.printful.com/files/20e/20ed4575a571655a1ce668ce4c228432_preview.png",
     previewUrl: "https://files.cdn.printful.com/files/20e/20ed4575a571655a1ce668ce4c228432_preview.png",
+    colorPreviews: {
+      "Collegiate Navy": "https://files.cdn.printful.com/files/20e/20ed4575a571655a1ce668ce4c228432_preview.png",
+      "Grill": "https://files.cdn.printful.com/files/5ff/5ffe5bb76cb8fc6fc9a9fc13cbe906c4_preview.png",
+    },
     category: "headwear",
     colors: ["Collegiate Navy", "Grill"],
     sizes: [],
@@ -116,6 +133,11 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     displayPrice: "$50",
     thumbnailUrl: "https://files.cdn.printful.com/files/a39/a39ce4cdac1ea86a980ebca0a9d783bd_preview.png",
     previewUrl: "https://files.cdn.printful.com/files/a39/a39ce4cdac1ea86a980ebca0a9d783bd_preview.png",
+    colorPreviews: {
+      "Black": "https://files.cdn.printful.com/files/a39/a39ce4cdac1ea86a980ebca0a9d783bd_preview.png",
+      "Oxford Navy": "https://files.cdn.printful.com/files/504/50400c61b3605cae50c431fbaa9e2d57_preview.png",
+      "Dark Olive": "https://files.cdn.printful.com/files/9d2/9d277725c39980a823ce7d78ea111595_preview.png",
+    },
     category: "headwear",
     colors: ["Black", "Oxford Navy", "Dark Olive"],
     sizes: [],
