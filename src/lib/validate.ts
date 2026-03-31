@@ -57,6 +57,8 @@ export function validateWizardState(raw: unknown): WizardState {
     organizerName,
     organizerEmail,
     attendees: [], // sanitize out attendee data for now
+    authMode: (s.authMode === "login" ? "login" : "new") as "new" | "login",
+    authPassword: "", // never send password to plan generation
   };
 }
 

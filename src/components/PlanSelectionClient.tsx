@@ -8,9 +8,9 @@ import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
 
 const destinationTiers: { key: PriceLevel; icon: string; label: string; subtitle: string; badge?: string }[] = [
-  { key: "budget", icon: "👿", label: "The Bargain", subtitle: "Budget" },
-  { key: "mid", icon: "😈", label: "The Sweet Spot", subtitle: "Mid-Range", badge: "RECOMMENDED" },
-  { key: "premium", icon: "👹", label: "The Splurge", subtitle: "Premium" },
+  { key: "budget", icon: "", label: "The Bargain", subtitle: "Budget" },
+  { key: "mid", icon: "", label: "The Sweet Spot", subtitle: "Mid-Range", badge: "RECOMMENDED" },
+  { key: "premium", icon: "", label: "The Splurge", subtitle: "Premium" },
 ];
 
 function DestinationCard({
@@ -109,7 +109,7 @@ function DestinationCard({
         <div style={{ fontSize: "0.65rem", fontWeight: 500, color: "rgba(255,255,255,0.35)", marginBottom: "0.5rem", letterSpacing: "0.08em" }}>
           {subtitle}
         </div>
-        <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>{icon}</div>
+        {icon && <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>{icon}</div>}
         <h2 style={{ fontFamily: "var(--font-plan-script), cursive", fontSize: "clamp(1.6rem, 4vw, 2.2rem)", color: "#fff", marginBottom: "0.25rem", lineHeight: 1.1 }}>
           {city}, {state}
         </h2>
@@ -173,7 +173,7 @@ function DestinationCard({
             letterSpacing: "0.03em",
           }}
         >
-          View Full Plan →
+          View All Options →
         </Link>
       </div>
     </motion.div>

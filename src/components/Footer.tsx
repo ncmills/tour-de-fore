@@ -126,6 +126,15 @@ export default function Footer() {
             <Link href="/privacy" className="text-text-dim text-xs tracking-[0.15em] font-body hover:text-accent transition-colors">Privacy</Link>
           </div>
         </div>
+        <div className="mt-6 text-center">
+          <p className="text-[10px] text-text-dim/20 font-body">
+            <a href="https://whatpeptidesdo.com" className="hover:text-text-dim/40 transition-colors">whatpeptidesdo.com</a>
+            {" · "}
+            <a href="https://idonthaveawill.com" className="hover:text-text-dim/40 transition-colors">idonthaveawill.com</a>
+            {" · "}
+            <a href="https://doppelwriter.com" className="hover:text-text-dim/40 transition-colors">doppelwriter.com</a>
+          </p>
+        </div>
       </div>
     </footer>
   );

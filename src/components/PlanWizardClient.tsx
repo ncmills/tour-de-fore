@@ -392,12 +392,46 @@ export default function PlanWizardClient() {
   }, [isGenerating, revealedCount, totalQuestions, advance]);
 
   const handleGenerate = async () => {
-    if (!state.organizerName || !state.organizerEmail) {
-      setError("Please fill in your name and email.");
+    const authMode = state.authMode;
+    const password = state.authPassword;
+
+    if (!state.organizerEmail) {
+      setError("Please enter your email.");
+      return;
+    }
+    if (authMode !== "login" && !state.organizerName) {
+      setError("Please enter your name.");
+      return;
+    }
+    if (!password || password.length < 8) {
+      setError("Password must be at least 8 characters.");
       return;
     }
 
     setError("");
+
+    // Authenticate first
+    try {
+      const endpoint = authMode === "login" ? "/api/auth/login" : "/api/auth/register";
+      const body = authMode === "login"
+        ? { email: state.organizerEmail.toLowerCase().trim(), password }
+        : { email: state.organizerEmail.toLowerCase().trim(), password, name: state.organizerName };
+
+      const authRes = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      if (!authRes.ok) {
+        const data = await authRes.json().catch(() => ({}));
+        setError(data.error || (authMode === "login" ? "Invalid email or password." : "Failed to create account."));
+        return;
+      }
+    } catch {
+      setError("Authentication failed. Please try again.");
+      return;
+    }
+
     setIsGenerating(true);
     setLoadingMsg(0);
 
@@ -809,28 +843,69 @@ export default function PlanWizardClient() {
         </Question>
       )}
 
-      {/* STEP 7: THE ROSTER — Organizer info + Generate */}
+      {/* STEP 7: Account + Generate */}
       {currentQ === 6 && (
-        <Question number={7} total={totalQuestions} title="Who's organizing?" subtitle="Let's Plan" id={questionIds[6]}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4" style={{ marginBottom: "3rem" }}>
-            <input
-              type="text"
-              placeholder="Your name"
-              value={state.organizerName}
-              onChange={(e) => set("organizerName", e.target.value)}
-              className="bg-bg-alt border border-border rounded-lg px-7 py-5 text-text font-body text-xl placeholder:text-text-dim focus:border-accent focus:outline-none transition-colors"
-            />
+        <Question number={7} total={totalQuestions} title="Almost there" subtitle="Let's Plan" id={questionIds[6]}>
+          {/* Toggle: New Account vs Sign In */}
+          <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", marginBottom: "2rem" }}>
+            <button
+              onClick={() => set("authMode", "new")}
+              style={{
+                padding: "8px 20px", borderRadius: 4, fontSize: "0.8rem", fontWeight: 600, letterSpacing: "0.04em",
+                background: state.authMode !== "login" ? "#EA580C" : "rgba(255,255,255,0.05)",
+                color: state.authMode !== "login" ? "#fff" : "rgba(255,255,255,0.4)",
+                border: state.authMode !== "login" ? "none" : "1px solid rgba(255,255,255,0.1)",
+                cursor: "pointer",
+              }}
+            >
+              New Account
+            </button>
+            <button
+              onClick={() => set("authMode", "login")}
+              style={{
+                padding: "8px 20px", borderRadius: 4, fontSize: "0.8rem", fontWeight: 600, letterSpacing: "0.04em",
+                background: state.authMode === "login" ? "#EA580C" : "rgba(255,255,255,0.05)",
+                color: state.authMode === "login" ? "#fff" : "rgba(255,255,255,0.4)",
+                border: state.authMode === "login" ? "none" : "1px solid rgba(255,255,255,0.1)",
+                cursor: "pointer",
+              }}
+            >
+              Sign In
+            </button>
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "2rem", maxWidth: 400, margin: "0 auto 2rem" }}>
+            {state.authMode !== "login" && (
+              <input
+                type="text"
+                placeholder="Your name"
+                value={state.organizerName}
+                onChange={(e) => set("organizerName", e.target.value)}
+                autoComplete="name"
+                style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.75rem 0", color: "#fff", fontSize: "1.1rem", outline: "none", textAlign: "center" }}
+              />
+            )}
             <input
               type="email"
-              placeholder="Your email"
+              placeholder="Email"
               value={state.organizerEmail}
               onChange={(e) => set("organizerEmail", e.target.value)}
-              className="bg-bg-alt border border-border rounded-lg px-7 py-5 text-text font-body text-xl placeholder:text-text-dim focus:border-accent focus:outline-none transition-colors"
+              autoComplete="email"
+              style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.75rem 0", color: "#fff", fontSize: "1.1rem", outline: "none", textAlign: "center" }}
+            />
+            <input
+              type="password"
+              placeholder={state.authMode === "login" ? "Password" : "Create password (min 8 chars)"}
+              value={state.authPassword}
+              onChange={(e) => set("authPassword", e.target.value)}
+              autoComplete={state.authMode === "login" ? "current-password" : "new-password"}
+              onKeyDown={(e) => { if (e.key === "Enter") handleGenerate(); }}
+              style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.75rem 0", color: "#fff", fontSize: "1.1rem", outline: "none", textAlign: "center" }}
             />
           </div>
 
           {error && (
-            <motion.p initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} style={{ color: "#f87171", fontSize: "0.8rem", fontFamily: "var(--font-inter), sans-serif", marginBottom: "1rem" }}>
+            <motion.p initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} style={{ color: "#f87171", fontSize: "0.8rem", fontFamily: "var(--font-inter), sans-serif", marginBottom: "1rem", textAlign: "center" }}>
               {error}
             </motion.p>
           )}
@@ -844,7 +919,7 @@ export default function PlanWizardClient() {
             Unleash the Devils
           </motion.button>
           <p style={{ fontSize: "0.84rem", color: "rgba(255,255,255,0.25)", textAlign: "center", marginTop: "1rem" }}>
-            1 free plan per month — create an account to see your plan.
+            {state.authMode === "login" ? "Sign in to generate your trip." : "1 free plan per month."}
           </p>
         </Question>
       )}

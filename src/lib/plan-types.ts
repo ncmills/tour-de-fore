@@ -37,6 +37,10 @@ export interface WizardState {
   organizerName: string;
   organizerEmail: string;
   attendees: Attendee[];
+
+  // Auth (wizard step 7)
+  authMode: "new" | "login";
+  authPassword: string;
 }
 
 export interface Attendee {
@@ -70,6 +74,8 @@ export const initialWizardState: WizardState = {
   organizerName: "",
   organizerEmail: "",
   attendees: Array.from({ length: 7 }, () => ({ name: "", email: "" })),
+  authMode: "new",
+  authPassword: "",
 };
 
 // ── Tier Types ──
