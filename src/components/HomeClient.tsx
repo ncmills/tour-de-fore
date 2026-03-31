@@ -299,7 +299,7 @@ export default function HomeClient() {
               alignItems: "center",
               justifyContent: "center",
               gap: isMobile ? "0.8rem" : "1rem 2.5rem",
-              paddingTop: isMobile ? "clamp(312px, 65vh, 468px)" : "clamp(390px, 55vh, 520px)",
+              paddingTop: isMobile ? "clamp(260px, 55vh, 380px)" : "clamp(320px, 48vh, 440px)",
               paddingLeft: "1.5rem",
               paddingRight: "1.5rem",
             }}
