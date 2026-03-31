@@ -236,7 +236,7 @@ export default function HomeClient() {
             width={4504}
             height={3776}
             priority
-            style={{ width: isMobile ? "clamp(150px, 45vw, 220px)" : "clamp(200px, 22vw, 340px)", height: "auto", filter: "brightness(0)" }}
+            style={{ width: isMobile ? "clamp(195px, 58vw, 286px)" : "clamp(260px, 29vw, 442px)", height: "auto", filter: "brightness(0)" }}
           />
           {/* Equal spacing below logo */}
           <span
