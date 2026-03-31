@@ -17,14 +17,20 @@ export default function HomeButton({ side = "right" }: { side?: "left" | "right"
         textDecoration: "none",
       }}
     >
-      <img
-        src="/icon-fancy.png"
-        alt="Tour de Fore Home"
-        className="home-btn-img"
-        style={{ width: 22, height: 28, opacity: 0.7, transition: "opacity 0.2s" }}
-        onMouseEnter={(e) => { (e.target as HTMLImageElement).style.opacity = "1"; }}
-        onMouseLeave={(e) => { (e.target as HTMLImageElement).style.opacity = "0.7"; }}
-      />
+      {/* Golf club icon — matches mulligan flag style */}
+      <svg
+        width="22"
+        height="28"
+        viewBox="0 0 22 28"
+        style={{ opacity: 0.85 }}
+      >
+        {/* Club shaft */}
+        <line x1="11" y1="2" x2="11" y2="22" stroke="rgba(212,168,67,0.7)" strokeWidth="1.5" strokeLinecap="round" />
+        {/* Club head */}
+        <path d="M11 2 Q 18 4, 16 8 Q 14 11, 11 9" fill="rgba(139,0,0,0.7)" stroke="rgba(212,168,67,0.5)" strokeWidth="1" strokeLinejoin="round" />
+        {/* Grip */}
+        <line x1="11" y1="20" x2="11" y2="26" stroke="rgba(212,168,67,0.4)" strokeWidth="3" strokeLinecap="round" />
+      </svg>
       <span
         style={{
           fontFamily: "var(--font-scrawl), cursive",
