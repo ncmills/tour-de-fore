@@ -119,6 +119,43 @@ export default function GolfTripsIndex() {
             </a>
           ))}
         </div>
+
+        {/* Browse by Course Tier */}
+        <div style={{ marginTop: "4rem" }}>
+          <h2 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1.5rem", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "1.5rem" }}>Browse by Course Tier</h2>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
+            {[{ slug: "bucket-list", label: "Bucket List", color: "#D4A843" }, { slug: "premium", label: "Premium", color: "#EA580C" }, { slug: "solid", label: "Solid", color: "#3a7050" }, { slug: "budget", label: "Budget", color: "#71717A" }].map((t) => (
+              <a key={t.slug} href={`/golf-trips/courses/${t.slug}`} style={{ padding: "10px 24px", background: "rgba(255,255,255,0.04)", border: `1px solid ${t.color}40`, borderRadius: 8, textDecoration: "none", color: t.color, fontSize: "0.9rem", fontWeight: 600 }}>{t.label}</a>
+            ))}
+          </div>
+        </div>
+
+        {/* Popular Collections */}
+        <div style={{ marginTop: "3rem" }}>
+          <h2 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1.5rem", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "1.5rem" }}>Popular Collections</h2>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
+            <a href="/golf-trips/bachelor-party" style={{ padding: "10px 24px", background: "rgba(234,88,12,0.08)", border: "1px solid rgba(234,88,12,0.3)", borderRadius: 8, textDecoration: "none", color: "#EA580C", fontSize: "0.9rem", fontWeight: 600 }}>Bachelor Party</a>
+            <a href="/golf-trips/budget-trips" style={{ padding: "10px 24px", background: "rgba(74,222,128,0.08)", border: "1px solid rgba(74,222,128,0.3)", borderRadius: 8, textDecoration: "none", color: "#4ade80", fontSize: "0.9rem", fontWeight: 600 }}>Budget Friendly</a>
+            <a href="/golf-trips/bucket-list-trips" style={{ padding: "10px 24px", background: "rgba(212,168,67,0.08)", border: "1px solid rgba(212,168,67,0.3)", borderRadius: 8, textDecoration: "none", color: "#D4A843", fontSize: "0.9rem", fontWeight: 600 }}>Bucket List</a>
+          </div>
+        </div>
+
+        {/* Browse by Activity */}
+        <div style={{ marginTop: "3rem", marginBottom: "2rem" }}>
+          <h2 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1.5rem", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "1.5rem" }}>Browse by Activity</h2>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+            {["fishing", "casino", "brewery", "spa", "hiking", "atv", "shooting", "water-sports", "winery", "rafting"].map((a) => (
+              <a key={a} href={`/golf-trips/activities/${a}`} style={{ padding: "6px 16px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 6, textDecoration: "none", color: "rgba(255,255,255,0.6)", fontSize: "0.8rem" }}>{a.replace(/-/g, " ")}</a>
+            ))}
+          </div>
+        </div>
+
+        {/* Crawlable intro */}
+        <div style={{ marginTop: "4rem", borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "2rem" }}>
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.85rem", lineHeight: 1.8, maxWidth: 700 }}>
+            Tour de Fore&apos;s AI-powered golf trip planner covers 133 destinations across America. Browse courses, lodging, dining, nightlife, and activities — then build a custom itinerary for your crew. Plan your next group golf getaway in minutes.
+          </p>
+        </div>
       </div>
     </main>
   );
