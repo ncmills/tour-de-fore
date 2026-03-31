@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { allDestinations } from "@/data";
-import { REGION_SLUGS, stateSlug } from "./golf-trips/helpers";
+import { REGION_SLUGS, stateSlug, slugify } from "./golf-trips/helpers";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://tourdefore.com";
@@ -50,11 +50,53 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  // Course pages
+  const coursePages: MetadataRoute.Sitemap = [];
+  for (const d of allDestinations) {
+    for (const c of d.courses) {
+      coursePages.push({
+        url: `${base}/golf-trips/${d.id}/courses/${slugify(c.name)}`,
+        lastModified: new Date(),
+        changeFrequency: "monthly" as const,
+        priority: 0.6,
+      });
+    }
+  }
+
+  // Tier pages
+  const tierPages: MetadataRoute.Sitemap = ["bucket-list", "premium", "solid", "budget"].map((t) => ({
+    url: `${base}/golf-trips/courses/${t}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  // Activity pages
+  const activityTypes = ["atv", "fishing", "shooting", "casino", "brewery", "spa", "water-sports", "horseback", "hiking", "rafting", "zipline", "go-karts", "axe-throwing", "skeet", "boat-rental", "kayaking", "winery", "distillery", "paintball", "mountain-biking"];
+  const activityPages: MetadataRoute.Sitemap = activityTypes.map((t) => ({
+    url: `${base}/golf-trips/activities/${t}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
+
+  // Theme pages
+  const themePages: MetadataRoute.Sitemap = ["bachelor-party", "budget", "bucket-list"].map((t) => ({
+    url: `${base}/golf-trips/${t}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
   return [
     ...staticPages,
     ...golfTripsIndex,
     ...destinationPages,
     ...regionPages,
     ...statePages,
+    ...coursePages,
+    ...tierPages,
+    ...activityPages,
+    ...themePages,
   ];
 }

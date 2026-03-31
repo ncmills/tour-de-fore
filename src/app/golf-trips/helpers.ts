@@ -115,3 +115,7 @@ export function tierColor(tier: string): string {
 export function seasonLabel(seasons: string[]): string {
   return seasons.map((s) => s.charAt(0).toUpperCase() + s.slice(1)).join(", ");
 }
+
+export function slugify(name: string): string {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
