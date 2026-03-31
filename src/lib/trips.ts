@@ -3,6 +3,7 @@ export interface ScheduleItem {
   activity: string;
   detail?: string;
   type: "golf" | "dining" | "activity" | "nightlife";
+  image?: string;
 }
 
 export interface DaySchedule {
@@ -74,17 +75,17 @@ export const trips: Trip[] = [
       { name: "The Bull at Pinehurst Farms", url: "https://golfthebull.com", image: "https://golfthebull.com/wp-content/uploads/hdr-golf-course-2025.jpg", description: "Jack Nicklaus-designed championship course with pristine conditioning and strategic bunkering.", holes: 18 },
     ],
     restaurants: [
-      { name: "The Blind Horse", cuisine: "American", url: "https://theblindhorse.com" },
-      { name: "River Wildlife", cuisine: "Rustic American", url: "https://www.americanclubresort.com/dining/river-wildlife" },
-      { name: "Private Chef @ House", cuisine: "Private Dining", note: "In-house private chef experience" },
+      { name: "The Blind Horse", cuisine: "American", url: "https://theblindhorse.com", image: "https://fabulouswisconsin.com/wp-content/uploads/sites/3/2023/05/Blind-Horse-Restaurant-Winery-Kohler.jpg" },
+      { name: "River Wildlife", cuisine: "Rustic American", url: "https://www.americanclubresort.com/dining/river-wildlife", image: "https://s7d9.scene7.com/is/image/kohlerhospitality/aaf99614_rgb?wid=800" },
+      { name: "Private Chef @ House", cuisine: "Private Dining", note: "In-house private chef experience", image: "https://s7d9.scene7.com/is/image/kohlerhospitality/zab44850_rgb?wid=800" },
     ],
     schedule: [
       {
         day: "Wednesday",
         date: "July 8",
         items: [
-          { time: "9:00 AM", activity: "Salmon & Trout Fishing Charter", detail: "Lake Michigan", type: "activity" },
-          { time: "7:00 PM", activity: "The Blind Horse", detail: "Dinner", type: "dining" },
+          { time: "9:00 AM", activity: "Salmon & Trout Fishing Charter", detail: "Lake Michigan", type: "activity", image: "https://sheboygancharterfishing.com/wp-content/uploads/2025/02/2024salmonfishing.jpg" },
+          { time: "7:00 PM", activity: "The Blind Horse", detail: "Dinner", type: "dining", image: "https://fabulouswisconsin.com/wp-content/uploads/sites/3/2023/05/Blind-Horse-Restaurant-Winery-Kohler.jpg" },
         ],
       },
       {
@@ -93,7 +94,7 @@ export const trips: Trip[] = [
         items: [
           { time: "9:00 AM", activity: "Erin Hills", detail: "18 holes", type: "golf" },
           { time: "2:00 PM", activity: "Quit Qui Oc", detail: "18 holes", type: "golf" },
-          { time: "8:00 PM", activity: "Private Chef @ House", detail: "Dinner", type: "dining" },
+          { time: "8:00 PM", activity: "Private Chef @ House", detail: "Dinner", type: "dining", image: "https://s7d9.scene7.com/is/image/kohlerhospitality/zab44850_rgb?wid=800" },
         ],
       },
       {
@@ -102,7 +103,7 @@ export const trips: Trip[] = [
         items: [
           { time: "9:00 AM", activity: "Whistling Straits", detail: "18 holes", type: "golf" },
           { time: "2:00 PM", activity: "The Bull at Pinehurst Farms", detail: "18 holes", type: "golf" },
-          { time: "8:00 PM", activity: "River Wildlife", detail: "Dinner", type: "dining" },
+          { time: "8:00 PM", activity: "River Wildlife", detail: "Dinner", type: "dining", image: "https://s7d9.scene7.com/is/image/kohlerhospitality/aaf99614_rgb?wid=800" },
         ],
       },
       {
@@ -111,7 +112,7 @@ export const trips: Trip[] = [
         items: [
           { time: "9:03 AM", activity: "Blackwolf Run", detail: "18 holes", type: "golf" },
           { time: "2:00 PM", activity: "Blackwolf Run", detail: "18 holes", type: "golf" },
-          { time: "8:00 PM", activity: "Private Chef @ House", detail: "Dinner", type: "dining" },
+          { time: "8:00 PM", activity: "Private Chef @ House", detail: "Dinner", type: "dining", image: "https://s7d9.scene7.com/is/image/kohlerhospitality/zab44850_rgb?wid=800" },
         ],
       },
     ],
@@ -147,15 +148,15 @@ export const trips: Trip[] = [
       { name: "Spearfish Canyon Golf Course", image: "https://golf-pass-brightspot.s3.amazonaws.com/96/98/04e3f2cf8173d0ad41094946eb1f/44360.jpg", description: "A hidden gem running through the floor of Spearfish Canyon with creek crossings and dramatic scenery.", holes: 18 },
     ],
     restaurants: [
-      { name: "Legends Steakhouse & Casino", cuisine: "Steakhouse" },
-      { name: "Mavericks Steakhouse & Casino", cuisine: "Steakhouse" },
+      { name: "Legends Steakhouse & Casino", cuisine: "Steakhouse", image: "https://www.deadwood.com/wp/wp-content/uploads/2017/07/SilveradoFranklin_Legends_2026.jpg" },
+      { name: "Mavericks Steakhouse & Casino", cuisine: "Steakhouse", image: "https://cdn.prod.website-files.com/6877da935f9923a29c53c54c/6877da935f9923a29c53c6b7_mavs.jpg" },
     ],
     schedule: [
       {
         day: "Wednesday",
         date: "June 25",
         items: [
-          { time: "12:00 PM", activity: "ATV Shenanigans", detail: "Custer Peak Rd, Deadwood", type: "activity" },
+          { time: "12:00 PM", activity: "ATV Shenanigans", detail: "Custer Peak Rd, Deadwood", type: "activity", image: "https://www.deadwood.com/wp/wp-content/uploads/2024/03/recreation-homepageimage-summer.jpg" },
         ],
       },
       {
@@ -164,7 +165,7 @@ export const trips: Trip[] = [
         items: [
           { time: "9:10 AM", activity: "Boulder Canyon Golf Course", detail: "18 holes", type: "golf" },
           { time: "2:00 PM", activity: "Boulder Canyon Golf Course", detail: "18 holes", type: "golf" },
-          { time: "8:00 PM", activity: "Legends Steakhouse & Casino", detail: "Dinner", type: "dining" },
+          { time: "8:00 PM", activity: "Legends Steakhouse & Casino", detail: "Dinner", type: "dining", image: "https://www.deadwood.com/wp/wp-content/uploads/2017/07/SilveradoFranklin_Legends_2026.jpg" },
         ],
       },
       {
@@ -173,7 +174,7 @@ export const trips: Trip[] = [
         items: [
           { time: "9:00 AM", activity: "Elkhorn Ridge Resort", detail: "18 holes", type: "golf" },
           { time: "2:00 PM", activity: "Elkhorn Ridge Resort", detail: "18 holes", type: "golf" },
-          { time: "8:00 PM", activity: "Mavericks Steakhouse & Casino", detail: "Dinner", type: "dining" },
+          { time: "8:00 PM", activity: "Mavericks Steakhouse & Casino", detail: "Dinner", type: "dining", image: "https://cdn.prod.website-files.com/6877da935f9923a29c53c54c/6877da935f9923a29c53c6b7_mavs.jpg" },
         ],
       },
       {
@@ -188,7 +189,7 @@ export const trips: Trip[] = [
         day: "Nightly",
         date: "Wed \u2013 Sat",
         items: [
-          { time: "9:00 PM", activity: "Downtown Deadwood", detail: "General Chaos", type: "nightlife" },
+          { time: "9:00 PM", activity: "Downtown Deadwood", detail: "General Chaos", type: "nightlife", image: "https://www.deadwood.com/wp/wp-content/uploads/2021/10/DWD21_WebUpdates_LandingPageImage_Desktop_1400x740_Shoulder_Casinos.jpg" },
         ],
       },
     ],
