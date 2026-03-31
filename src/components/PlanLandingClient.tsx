@@ -67,8 +67,8 @@ export default function PlanLandingClient({ onFirstTime }: { onFirstTime: () => 
       <MulliganButton onClick={() => (window.location.href = "/?skip=1")} />
 
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} style={{ maxWidth: 500, width: "100%" }}>
-        <img src="/logo-est2021.png" alt="Tour de Fore Est. 2021" style={{ width: 240, height: 240, margin: "0 auto 0.75rem", objectFit: "contain" }} />
-        <h1 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "2.5rem" }}>
+        <img src="/logo-est2021.png" alt="Tour de Fore Est. 2021" style={{ width: 240, height: 240, margin: "0 auto 1.5rem", objectFit: "contain" }} />
+        <h1 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "1.5rem" }}>
           Plan a Trip
         </h1>
 

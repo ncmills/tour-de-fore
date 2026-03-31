@@ -331,6 +331,43 @@ body.menu-open {
     font-size: 11px !important;
     padding: 4px 12px !important;
   }
+
+  /* HomeButton — shrink from 108px to 56px on mobile */
+  .home-btn-img {
+    width: 56px !important;
+    height: 56px !important;
+  }
+
+  /* Login icon on homepage — shrink devil avatar */
+  /* Handled inline with isMobile checks already */
+
+  /* Wizard: age range grid-cols-4 → grid-cols-2 on small screens */
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  /* Wizard: grid-cols-3 → grid-cols-2 on very small screens for better tap targets */
+  .grid-cols-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  /* Wizard question container — reduce side padding on mobile */
+  #main-content section[id^="q-"] > div {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Itinerary grid — stack on mobile instead of side-by-side */
+  .plan-itinerary-row {
+    grid-template-columns: 1fr !important;
+    gap: 0.5rem !important;
+  }
+
+  /* Tier toggle tabs — smaller padding on mobile */
+  .tier-tab-link {
+    padding: 6px 12px !important;
+    font-size: 0.65rem !important;
+  }
 }
 
 /* ── Glow pulse (kept for CTA emphasis) ── */

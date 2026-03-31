@@ -347,6 +347,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
             <Link
               key={key}
               href={`/plan/result/${planId}?dest=${dest}&tier=${key}`}
+              className="tier-tab-link"
               style={{
                 padding: "8px 20px",
                 borderRadius: 6,
@@ -654,6 +655,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
               whileInView="visible"
               viewport={{ once: true, amount: 0.15 }}
               transition={{ delay: i * 0.06 }}
+              className="plan-itinerary-row"
               style={{
                 borderTop: "1px solid #222",
                 padding: "2rem 0",

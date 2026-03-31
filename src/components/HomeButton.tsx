@@ -19,6 +19,7 @@ export default function HomeButton({ side = "right" }: { side?: "left" | "right"
       <img
         src="/icon-fancy.png"
         alt="Tour de Fore Home"
+        className="home-btn-img"
         style={{ width: 108, height: 108, opacity: 0.7, transition: "opacity 0.2s" }}
         onMouseEnter={(e) => { (e.target as HTMLImageElement).style.opacity = "1"; }}
         onMouseLeave={(e) => { (e.target as HTMLImageElement).style.opacity = "0.7"; }}

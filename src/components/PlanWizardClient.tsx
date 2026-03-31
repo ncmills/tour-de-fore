@@ -284,7 +284,7 @@ function Question({
       animate={{ opacity: 1, scale: 1, rotate: 0 }}
       exit={{ opacity: 0, scale: 0.3, rotate: -15, transition: { duration: 0.35, ease: "easeIn" } }}
       transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-      style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "flex-start", padding: "clamp(3rem, 8vh, 5rem) 2.5rem 4.5rem", textAlign: "center", overflow: "auto" }}
+      style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "flex-start", padding: "clamp(3rem, 8vh, 5rem) clamp(1rem, 5vw, 2.5rem) 4.5rem", textAlign: "center", overflow: "auto" }}
     >
       <div style={{ maxWidth: 620, margin: "0 auto", width: "100%" }}>
         {/* Counter + category */}

@@ -237,7 +237,7 @@ export default function MyTripsClient({
           }}
         >
           <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
-            <img src="/devil-avatar.png" alt="Devil" style={{ width: 160, height: 160, objectFit: "contain", margin: "0 auto 0.09rem" }} />
+            <img src="/devil-avatar.png" alt="Devil" style={{ width: "clamp(80px, 25vw, 160px)", height: "clamp(80px, 25vw, 160px)", objectFit: "contain", margin: "0 auto 0.09rem" }} />
 
             {editingName ? (
               <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
@@ -535,7 +535,7 @@ export default function MyTripsClient({
                     onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; }}
                     >
                       <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-start", gap: "0.5rem" }}>
-                        <div style={{ flex: 1, minWidth: 200 }}>
+                        <div style={{ flex: 1, minWidth: 0 }}>
                           {isEditing ? (
                             <input
                               type="text"
