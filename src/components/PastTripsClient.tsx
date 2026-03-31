@@ -196,7 +196,7 @@ export default function PastTripsClient() {
           margin: "0 auto",
           lineHeight: 1.8,
         }}>
-          an annual descent upon a small town, leaving quadruple bogies and empty shot glasses in our wake
+          leaving a trail of quadruple bogies and missed putts
         </p>
         <p style={{ color: "rgba(255,255,255,0.25)", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", fontFamily: "monospace", marginTop: "0.75rem" }}>
           {trips.length} trips · {trips.reduce((s, t) => s + t.courses.length, 0)} courses · countless beers
