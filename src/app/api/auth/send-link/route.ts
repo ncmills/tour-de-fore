@@ -20,13 +20,13 @@ export async function POST(req: NextRequest) {
       to: email,
       subject: "Your Tour de Fore Login Link",
       html: `
-        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 500px; margin: 0 auto; background: #0a0a0a; color: #ece8e1; padding: 40px 30px; text-align: center;">
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 500px; margin: 0 auto; padding: 40px 30px; text-align: center;">
           <h1 style="font-size: 24px; font-weight: 300; color: #c87941; margin: 0 0 24px;">Tour de Fore</h1>
-          <p style="color: #9a9590; margin-bottom: 32px;">Click below to access your saved trips.</p>
+          <p style="color: #555; margin-bottom: 32px;">Click below to verify your email and generate your trip plan.</p>
           <a href="${link}" style="display: inline-block; background: #c87941; color: #fff; text-decoration: none; padding: 14px 40px; border-radius: 4px; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase;">
-            Sign In
+            Verify & Plan
           </a>
-          <p style="color: #5a5550; font-size: 12px; margin-top: 32px;">This link expires in 15 minutes.</p>
+          <p style="color: #999; font-size: 12px; margin-top: 32px;">This link expires in 15 minutes.</p>
         </div>
       `,
     });
