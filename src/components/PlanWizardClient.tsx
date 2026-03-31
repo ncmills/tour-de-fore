@@ -290,7 +290,7 @@ function Question({
         {/* Counter + category */}
         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "center", gap: "0.5rem", marginBottom: "2.4rem" }}>
           <span style={{ fontSize: "1.1rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", fontFamily: "var(--font-plan-script), cursive" }}>
-            {String(number).padStart(2, "0")}&thinsp;:&thinsp;{String(total).padStart(2, "0")}
+            {number} of {total}
           </span>
           {subtitle && (
             <span className="neon-stats" style={{ fontSize: "1.1rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#EA580C", fontFamily: "var(--font-plan-block), sans-serif", textShadow: "0 0 7px rgba(234,88,12,0.6), 0 0 20px rgba(234,88,12,0.3)" }}>
