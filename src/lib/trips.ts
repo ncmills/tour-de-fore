@@ -64,6 +64,7 @@ export const trips: Trip[] = [
     dates: "July 7 \u2013 12, 2026",
     upcoming: true,
     lodgingAddress: "1489 Shoreline Dr, Kohler, WI",
+    lodgingBookingUrl: "https://www.airbnb.com/trips/shared/874073c7-812c-457d-97c4-feec6f41e3e9",
     heroImage: `${SQ}/b6c09435-bdb9-495f-8c09-90dd2abbf79e/Screenshot+2025-07-05+at+7.21.00%E2%80%AFPM.png`,
     courses: [
       { name: "Erin Hills", url: "https://erinhills.com", image: "https://erinhills.com/wp-content/smush-webp/2025/01/EH-Web-Images_Home-Golf-2-768x512.jpg.webp", description: "Former U.S. Open host set on dramatic glacial terrain with sweeping views of the Kettle Moraine.", holes: 18 },
@@ -269,6 +270,7 @@ export const trips: Trip[] = [
     tagline: "16 lads with 108 chances to triple bogey.",
     dates: "August 21 \u2013 25, 2024",
     lodgingAddress: "16155 Skyliners Rd, Bend, OR 97701",
+    lodgingBookingUrl: "https://www.airbnb.com/rooms/42360205",
     heroImage: `${SQ}/40030cd0-2783-4cca-ab1b-ec4b3d674471/a.jpeg`,
     courses: [
       { name: "Pronghorn", url: "https://juniperpreserve.com/golf/jack-nicklaus-signature-course/", image: "https://juniperpreserve.com/wp-content/uploads/2025/08/1-pronghorn-nickalus-at-juniper-ridge-2025-OAR.jpg", description: "Jack Nicklaus signature course set in the high desert with views of the Cascade Range.", holes: 18 },
@@ -471,6 +473,7 @@ export const trips: Trip[] = [
     tagline: "16 guys, 6 rounds, 3 days.",
     dates: "June 2 \u2013 23, 2022",
     heroImage: `${SQ}/ff8d47e6-8753-45f8-b511-812d49db7bcd/IMG_0729.jpeg`,
+    lodgingBookingUrl: "https://www.airbnb.com/rooms/42715072",
     courses: [
       { name: "Falcon Crest Golf Club", url: "https://falconcrestgolf.com", image: "https://golfcoursegurus.com/photos/idaho/falconcrest/large/Falcon-Crest-18th-tee.jpg", description: "A desert canyon course cut into the rolling foothills south of Boise.", holes: 18 },
       { name: "Quail Hollow Golf Course", url: "https://quailhollowboise.com", image: "https://golf-pass-brightspot.s3.amazonaws.com/d9/56/c33878e5da4fc805683db81dc69c/90495.jpg", description: "A challenging layout in the Boise foothills with panoramic valley views.", holes: 18 },
@@ -570,6 +573,7 @@ export const trips: Trip[] = [
     tagline: "18 guys, 6 rounds, 3 days.",
     dates: "June 24 \u2013 26, 2021",
     heroImage: `${SQ}/668ee548-a6f4-4b37-9d7a-18d5fb6a54e3/IMG_0519.jpeg`,
+    lodgingBookingUrl: "https://www.airbnb.com/rooms/49259696",
     courses: [
       { name: "Sunriver Golf Course", image: "https://sunriverres.wpenginepowered.com/wp-content/uploads/2024/06/SRR_Meadows-Golf_Fall-2022_Wicked_ARR_DJI_0014.jpg", description: "A stunning desert links course carved through red sandstone with views of Snow Canyon.", holes: 18 },
       { name: "Sunbrooke Golf Course", url: "https://www.sunbrookgolf.com", image: "https://cdn.greaterzion.com/wp-content/uploads/2019/04/22154748/golf-course-sunbrook1.jpg", description: "Three distinct nines weaving through black lava fields and red rock in a spectacular setting.", holes: 18 },
