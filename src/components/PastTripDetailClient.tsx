@@ -159,12 +159,14 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
           {trip.schedule.map((day, i) => (
             <div key={i} id={`day-${i}`} style={{ marginBottom: "2.5rem", scrollMarginTop: "80px" }}>
               <h3 style={{
-                fontFamily: "var(--font-scrawl), cursive",
-                fontSize: "1.3rem",
-                fontWeight: 400,
-                color: "#fff",
+                fontFamily: "var(--font-plan-block), sans-serif",
+                fontSize: "1.1rem",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: "0.06em",
+                color: "#ff6a28",
                 marginBottom: "0.5rem",
-                textShadow: "0 0 5px rgba(255,60,20,0.3)",
+                textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3)",
               }}>
                 {day.day} — {day.date}
               </h3>
@@ -250,7 +252,16 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
                   </div>
                 )}
                 <div style={{ padding: "1rem 1.25rem" }}>
-                  <h3 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "0.4rem" }}>{course.name}</h3>
+                  <h3 style={{
+                    fontFamily: "var(--font-plan-block), sans-serif",
+                    fontSize: "1rem",
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.04em",
+                    color: "#ff6a28",
+                    textShadow: "0 0 7px rgba(255,106,40,0.8), 0 0 15px rgba(255,60,20,0.4)",
+                    marginBottom: "0.4rem",
+                  }}>{course.name}</h3>
                   {course.description && (
                     <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.5, marginBottom: "0.75rem" }}>
                       {course.description}

@@ -184,7 +184,21 @@ export default function PastTripsClient() {
         }}>
           Body of Work
         </h1>
-        <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.8rem", letterSpacing: "0.15em", textTransform: "uppercase", fontFamily: "monospace" }}>
+        <p className="neon-stats" style={{
+          fontFamily: "var(--font-plan-block), sans-serif",
+          fontSize: "clamp(0.7rem, 1.4vw, 0.95rem)",
+          fontWeight: 700,
+          textTransform: "uppercase",
+          letterSpacing: "0.08em",
+          color: "#ff6a28",
+          textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3)",
+          maxWidth: "600px",
+          margin: "0 auto",
+          lineHeight: 1.8,
+        }}>
+          an annual descent upon a small town, leaving quadruple bogies and empty shot glasses in our wake
+        </p>
+        <p style={{ color: "rgba(255,255,255,0.25)", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", fontFamily: "monospace", marginTop: "0.75rem" }}>
           {trips.length} trips · {trips.reduce((s, t) => s + t.courses.length, 0)} courses · countless beers
         </p>
       </motion.div>
