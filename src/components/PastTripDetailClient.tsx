@@ -9,6 +9,7 @@ import USMap from "./USMap";
 import PhotoSlideshow from "./PhotoSlideshow";
 import FireBackground from "./FireBackground";
 import MulliganButton from "./MulliganButton";
+import HomeButton from "./HomeButton";
 
 const sectionHeadingStyle: React.CSSProperties = {
   fontFamily: "var(--font-scrawl), cursive",
@@ -58,6 +59,7 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
       <FireBackground />
 
       <MulliganButton href={isLive ? "/?skip=1" : "/past-trips"} top="3.5rem" />
+      <HomeButton />
 
       {/* Page header */}
       <div style={{ position: "relative", zIndex: 1, padding: "clamp(3rem, 8vw, 5rem) clamp(1.5rem, 6vw, 6rem) 0", textAlign: "center" }}>

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import MulliganButton from "./MulliganButton";
+import HomeButton from "./HomeButton";
 
 interface Props {
   onShop: () => void;
@@ -52,6 +53,7 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
       }}
     >
       <MulliganButton />
+      <HomeButton />
 
       {/* Bar scene — photo background */}
       <img
