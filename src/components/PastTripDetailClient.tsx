@@ -58,7 +58,7 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff", position: "relative" }}>
       <FireBackground />
 
-      <MulliganButton href={isLive ? "/?skip=1" : "/past-trips"} top="3.5rem" />
+      <MulliganButton href={isLive ? "/?skip=1" : "/past-trips"} top="1.2rem" />
       <HomeButton />
 
       {/* Page header */}
