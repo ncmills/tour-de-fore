@@ -299,6 +299,7 @@ export default function MyTripsClient({
                     placeholder="New email address"
                     value={newEmail}
                     onChange={(e) => setNewEmail(e.target.value)}
+                    autoComplete="email"
                     style={inputStyle}
                   />
                   <input
@@ -307,6 +308,7 @@ export default function MyTripsClient({
                     value={emailPassword}
                     onChange={(e) => setEmailPassword(e.target.value)}
                     onKeyDown={(e) => { if (e.key === "Enter") handleChangeEmail(); }}
+                    autoComplete="current-password"
                     style={inputStyle}
                   />
                   {emailError && <p style={{ color: "rgba(220,38,38,0.9)", fontSize: "0.8rem", margin: 0 }}>{emailError}</p>}
@@ -344,6 +346,7 @@ export default function MyTripsClient({
                     placeholder="Current password"
                     value={currentPassword}
                     onChange={(e) => setCurrentPassword(e.target.value)}
+                    autoComplete="current-password"
                     style={inputStyle}
                   />
                   <input
@@ -351,6 +354,7 @@ export default function MyTripsClient({
                     placeholder="New password (min 8 characters)"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
+                    autoComplete="new-password"
                     style={inputStyle}
                   />
                   <input
@@ -359,6 +363,7 @@ export default function MyTripsClient({
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     onKeyDown={(e) => { if (e.key === "Enter") handleChangePassword(); }}
+                    autoComplete="new-password"
                     style={inputStyle}
                   />
                   {passwordError && <p style={{ color: "rgba(220,38,38,0.9)", fontSize: "0.8rem", margin: 0 }}>{passwordError}</p>}
@@ -372,6 +377,24 @@ export default function MyTripsClient({
                 </div>
               </motion.div>
             )}
+          </div>
+
+          {/* Sign Out */}
+          <div style={{ marginTop: "1.5rem", textAlign: "center" }}>
+            <button
+              onClick={() => {
+                fetch("/api/auth/logout", { method: "POST" }).then(() => {
+                  window.location.href = "/?skip=1";
+                });
+              }}
+              style={{
+                ...smallBtnStyle,
+                color: "rgba(255,255,255,0.35)",
+                border: "1px solid rgba(255,255,255,0.08)",
+              }}
+            >
+              Sign Out
+            </button>
           </div>
         </motion.section>
 

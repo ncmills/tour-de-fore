@@ -267,10 +267,38 @@ export default function TripBuilderClient({
   });
 
   const [saving, setSaving] = useState(false);
+  const [expandedDay, setExpandedDay] = useState<number | null>(0);
+  const [autoSaved, setAutoSaved] = useState(false);
+  const autoSaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const autoSaveFadeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const updateDay = useCallback((dayIndex: number, field: keyof DaySelections, value: string | boolean) => {
     setDays((prev) => prev.map((d, i) => i === dayIndex ? { ...d, [field]: value } : d));
   }, []);
+
+  // Auto-save selections with 2s debounce
+  useEffect(() => {
+    if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current);
+    autoSaveTimer.current = setTimeout(() => {
+      const selectedOptions: Record<string, string[]> = {
+        lodging: [lodging],
+        courses: [...new Set(days.flatMap((d) => d.round2IsActivity ? [d.round1] : [d.round1, d.round2]).filter(Boolean))],
+        dining: days.map((d) => d.dinner).filter(Boolean),
+        bars: days.map((d) => d.bar).filter(Boolean),
+        activities: days.filter((d) => d.round2IsActivity && d.activity).map((d) => d.activity),
+      };
+      fetch("/api/save-selections", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ planId, dest, tier, selectedOptions }),
+      }).then(() => {
+        setAutoSaved(true);
+        if (autoSaveFadeTimer.current) clearTimeout(autoSaveFadeTimer.current);
+        autoSaveFadeTimer.current = setTimeout(() => setAutoSaved(false), 2000);
+      }).catch(() => {});
+    }, 2000);
+    return () => { if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current); };
+  }, [days, lodging, planId, dest, tier]);
 
   const saveAndView = async () => {
     setSaving(true);
@@ -472,7 +500,7 @@ export default function TripBuilderClient({
         top: 0,
         left: 0,
         right: 0,
-        zIndex: 9999,
+        zIndex: 999,
         height: 48,
         background: "rgba(10,10,12,0.88)",
         backdropFilter: "blur(16px)",
@@ -541,90 +569,128 @@ export default function TripBuilderClient({
         </section>
 
         {/* ── Day-by-Day ── */}
-        {days.map((day, di) => (
-          <section key={di} style={{ marginBottom: "3rem", borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "2rem" }}>
-            <h2 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(1.8rem, 4vw, 2.5rem)", textTransform: "uppercase", letterSpacing: "0.08em", color: "#EA580C", marginBottom: "1.5rem" }}>
-              Day {di + 1}
-            </h2>
+        {days.map((day, di) => {
+          const isExpanded = expandedDay === di;
+          const daySummary = [
+            day.round1,
+            day.round2IsActivity ? day.activity : day.round2,
+            day.dinner,
+          ].filter(Boolean).join(" · ");
 
-            {/* Round 1 — Morning */}
-            <SlotSection
-              label="Round 1 — Morning"
-              options={allCourses}
-              selectedId={day.round1}
-              onSelect={(id) => updateDay(di, "round1", id)}
-              tagMap={courseTagMap}
-            />
+          return (
+            <section key={di} style={{ marginBottom: "1rem", borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "1.5rem" }}>
+              <button
+                onClick={() => setExpandedDay(isExpanded ? null : di)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  width: "100%",
+                  textAlign: "left",
+                  padding: "0.5rem 0",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: isExpanded ? "1.5rem" : "0",
+                }}
+              >
+                <h2 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(1.8rem, 4vw, 2.5rem)", textTransform: "uppercase", letterSpacing: "0.08em", color: "#EA580C", margin: 0 }}>
+                  Day {di + 1}
+                </h2>
+                <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "1.2rem", transition: "transform 0.2s", transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)" }}>
+                  &#9660;
+                </span>
+              </button>
 
-            {/* Round 2 — Afternoon (or Activity) */}
-            <div style={{ marginBottom: "1.5rem" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
-                <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "var(--font-plan-block), sans-serif" }}>
-                  {day.round2IsActivity ? "Activity — Afternoon" : "Round 2 — Afternoon"}
+              {!isExpanded && daySummary && (
+                <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.35)", marginTop: "0.25rem", lineHeight: 1.6, fontFamily: "var(--font-inter), sans-serif" }}>
+                  {daySummary}
                 </p>
-                <button
-                  onClick={() => updateDay(di, "round2IsActivity", !day.round2IsActivity)}
-                  style={{
-                    background: "none",
-                    border: "1px solid rgba(255,255,255,0.12)",
-                    color: "rgba(255,255,255,0.45)",
-                    fontSize: "0.65rem",
-                    padding: "8px 12px",
-                    borderRadius: 4,
-                    cursor: "pointer",
-                    letterSpacing: "0.04em",
-                    textTransform: "uppercase",
-                    minHeight: 44,
-                  }}
-                >
-                  {day.round2IsActivity ? "Back to Golf" : "Swap for Activity"}
-                </button>
-              </div>
+              )}
 
-              {day.round2IsActivity ? (
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                  {activityOptions.map((o) => (
-                    <OptionCard key={o.id} option={o} selected={day.activity === o.id} onSelect={() => updateDay(di, "activity", o.id)} />
-                  ))}
-                </div>
-              ) : (
+              {isExpanded && (
                 <>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                    {allCourses.map((o) => {
-                      const r2Tags = getRound2TagMap(day.round1);
-                      return (
-                        <OptionCard key={o.id} option={o} selected={day.round2 === o.id} onSelect={() => updateDay(di, "round2", o.id)} tags={r2Tags[o.id]} />
-                      );
-                    })}
+                  {/* Round 1 — Morning */}
+                  <SlotSection
+                    label="Round 1 — Morning"
+                    options={allCourses}
+                    selectedId={day.round1}
+                    onSelect={(id) => updateDay(di, "round1", id)}
+                    tagMap={courseTagMap}
+                  />
+
+                  {/* Round 2 — Afternoon (or Activity) */}
+                  <div style={{ marginBottom: "1.5rem" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
+                      <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "var(--font-plan-block), sans-serif" }}>
+                        {day.round2IsActivity ? "Activity — Afternoon" : "Round 2 — Afternoon"}
+                      </p>
+                      <button
+                        onClick={() => updateDay(di, "round2IsActivity", !day.round2IsActivity)}
+                        style={{
+                          background: "none",
+                          border: "1px solid rgba(255,255,255,0.12)",
+                          color: "rgba(255,255,255,0.45)",
+                          fontSize: "0.65rem",
+                          padding: "8px 12px",
+                          borderRadius: 4,
+                          cursor: "pointer",
+                          letterSpacing: "0.04em",
+                          textTransform: "uppercase",
+                          minHeight: 44,
+                        }}
+                      >
+                        {day.round2IsActivity ? "Back to Golf" : "Swap for Activity"}
+                      </button>
+                    </div>
+
+                    {day.round2IsActivity ? (
+                      <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                        {activityOptions.map((o) => (
+                          <OptionCard key={o.id} option={o} selected={day.activity === o.id} onSelect={() => updateDay(di, "activity", o.id)} />
+                        ))}
+                      </div>
+                    ) : (
+                      <>
+                        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                          {allCourses.map((o) => {
+                            const r2Tags = getRound2TagMap(day.round1);
+                            return (
+                              <OptionCard key={o.id} option={o} selected={day.round2 === o.id} onSelect={() => updateDay(di, "round2", o.id)} tags={r2Tags[o.id]} />
+                            );
+                          })}
+                        </div>
+                        {getTravelHint(day) && (
+                          <p style={{ fontSize: "0.7rem", color: "#D4A843", marginTop: "0.5rem", fontStyle: "italic" }}>
+                            {getTravelHint(day)}
+                          </p>
+                        )}
+                      </>
+                    )}
                   </div>
-                  {getTravelHint(day) && (
-                    <p style={{ fontSize: "0.7rem", color: "#D4A843", marginTop: "0.5rem", fontStyle: "italic" }}>
-                      ⚠ {getTravelHint(day)}
-                    </p>
-                  )}
+
+                  {/* Dinner */}
+                  <SlotSection
+                    label={`Dinner — Day ${di + 1}`}
+                    options={allDining}
+                    selectedId={day.dinner}
+                    onSelect={(id) => updateDay(di, "dinner", id)}
+                    tagMap={diningTagMap}
+                  />
+
+                  {/* Bar */}
+                  <SlotSection
+                    label={`Nightlife — Day ${di + 1}`}
+                    options={allBars}
+                    selectedId={day.bar}
+                    onSelect={(id) => updateDay(di, "bar", id)}
+                    tagMap={barTagMap}
+                  />
                 </>
               )}
-            </div>
-
-            {/* Dinner */}
-            <SlotSection
-              label={`Dinner — Day ${di + 1}`}
-              options={allDining}
-              selectedId={day.dinner}
-              onSelect={(id) => updateDay(di, "dinner", id)}
-              tagMap={diningTagMap}
-            />
-
-            {/* Bar */}
-            <SlotSection
-              label={`Nightlife — Day ${di + 1}`}
-              options={allBars}
-              selectedId={day.bar}
-              onSelect={(id) => updateDay(di, "bar", id)}
-              tagMap={barTagMap}
-            />
-          </section>
-        ))}
+            </section>
+          );
+        })}
 
         {/* ── Bottom CTA ── */}
         <div style={{
@@ -638,7 +704,13 @@ export default function TripBuilderClient({
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          gap: "1rem",
         }}>
+          {autoSaved && (
+            <span style={{ fontSize: "0.75rem", color: "rgba(74,222,128,0.8)", fontFamily: "var(--font-inter), sans-serif", transition: "opacity 0.3s", whiteSpace: "nowrap" }}>
+              Saved &#10003;
+            </span>
+          )}
           <button
             onClick={saveAndView}
             disabled={saving}

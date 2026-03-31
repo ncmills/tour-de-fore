@@ -5,12 +5,12 @@ export default function HomeButton({ side = "right" }: { side?: "left" | "right"
     <a
       href="/?skip=1"
       style={{
-        position: "absolute",
+        position: "fixed",
         top: "1.2rem",
         ...(side === "left"
           ? { left: "clamp(1rem, 4vw, 2rem)" }
           : { right: "clamp(1rem, 4vw, 2rem)" }),
-        zIndex: 90,
+        zIndex: 10000,
         display: "flex",
         alignItems: "center",
         textDecoration: "none",

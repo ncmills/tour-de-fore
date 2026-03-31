@@ -17,6 +17,7 @@ const YEAR_HERO: Record<number, string> = {
   2023: "/photos/2023/DSC01476.jpeg",
   2024: "/photos/2024/IMG_6034.jpeg",
   2025: "/photos/2025/IMG_5751.jpeg",
+  2026: "/photos/2026/kohler-hero.jpg",
 };
 
 export default function PastTripsClient() {
@@ -76,8 +77,8 @@ export default function PastTripsClient() {
     >
       <FireBackground />
 
-      <MulliganButton right="clamp(1.5rem, 6vw, 4rem)" />
-      <HomeButton side="left" />
+      <MulliganButton />
+      <HomeButton />
 
       {/* TV Video — sticky at top */}
       <div style={{

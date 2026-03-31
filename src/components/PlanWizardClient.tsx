@@ -323,8 +323,30 @@ export default function PlanWizardClient() {
   const [error, setError] = useState("");
   const isScrolling = useRef(false);
 
-  const set = (field: keyof WizardState, value: unknown) =>
+  // Restore wizard state from sessionStorage on mount
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem("tdf-wizard-state");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed && typeof parsed === "object") {
+          dispatch({ type: "RESTORE_STATE", state: parsed });
+        }
+      }
+    } catch { /* ignore */ }
+  }, []);
+
+  const saveToSession = useCallback((newState: WizardState) => {
+    try {
+      sessionStorage.setItem("tdf-wizard-state", JSON.stringify(newState));
+    } catch { /* ignore */ }
+  }, []);
+
+  const set = (field: keyof WizardState, value: unknown) => {
     dispatch({ type: "SET_FIELD", field, value });
+    const updated = { ...state, [field]: value };
+    saveToSession(updated);
+  };
 
   const tdfRec = "tdf-endorsed";
 
@@ -396,6 +418,7 @@ export default function PlanWizardClient() {
       }
 
       const data = await res.json();
+      try { sessionStorage.removeItem("tdf-wizard-state"); } catch { /* ignore */ }
       setConfirmed(true);
       setTimeout(() => { window.location.href = `/plan/result/${data.planId}`; }, 3000);
     } catch (err) {
@@ -730,7 +753,13 @@ export default function PlanWizardClient() {
             {ACTIVITIES.map((a) => (
               <button
                 key={a}
-                onClick={() => dispatch({ type: "TOGGLE_ACTIVITY", activity: a })}
+                onClick={() => {
+                  dispatch({ type: "TOGGLE_ACTIVITY", activity: a });
+                  const activities = state.activities.includes(a)
+                    ? state.activities.filter((x) => x !== a)
+                    : [...state.activities, a];
+                  saveToSession({ ...state, activities });
+                }}
                 style={{
                   padding: "0.85rem 1.5rem", borderRadius: 4, minHeight: 48,
                   border: state.activities.includes(a) ? "1px solid #fff" : "1px solid rgba(255,255,255,0.15)",
@@ -757,7 +786,15 @@ export default function PlanWizardClient() {
           <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>Where should the money go? (pick up to 2)</p>
           <div className="grid grid-cols-2 gap-5" style={{ marginBottom: "3rem" }}>
             {["Best courses", "Best lodging", "Best dining", "Keep balanced"].map((p) => (
-              <SelectionCard key={p} label={p} selected={state.budgetPriorities.includes(p)} onClick={() => dispatch({ type: "TOGGLE_PRIORITY", priority: p })} compact />
+              <SelectionCard key={p} label={p} selected={state.budgetPriorities.includes(p)} onClick={() => {
+                dispatch({ type: "TOGGLE_PRIORITY", priority: p });
+                const budgetPriorities = state.budgetPriorities.includes(p)
+                  ? state.budgetPriorities.filter((x) => x !== p)
+                  : state.budgetPriorities.length < 2
+                    ? [...state.budgetPriorities, p]
+                    : state.budgetPriorities;
+                saveToSession({ ...state, budgetPriorities });
+              }} compact />
             ))}
           </div>
           <textarea

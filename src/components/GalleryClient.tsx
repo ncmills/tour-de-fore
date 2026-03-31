@@ -184,9 +184,6 @@ export default function GalleryClient({
     return () => el.removeEventListener("scroll", onScroll);
   }, [cards.length]);
 
-  const dotCount = Math.min(cards.length, 20); // cap dots for readability
-  const dotsPerCard = cards.length / dotCount;
-
   return (
     <div
       style={{
@@ -395,40 +392,78 @@ export default function GalleryClient({
           ))}
         </div>
 
-        {/* Progress dots */}
+        {/* Prev / Counter / Next */}
         <div
           style={{
             display: "flex",
             justifyContent: "center",
-            gap: 6,
+            alignItems: "center",
+            gap: "1rem",
             padding: "1rem 0",
           }}
         >
-          {Array.from({ length: dotCount }, (_, i) => {
-            const isActive = Math.floor(activeIdx / dotsPerCard) === i;
-            return (
-              <button
-                key={i}
-                onClick={() => {
-                  const el = scrollRef.current;
-                  if (!el) return;
-                  const target = Math.round(i * dotsPerCard);
-                  el.scrollTo({ left: target * 316, behavior: "smooth" });
-                }}
-                style={{
-                  width: isActive ? 18 : 6,
-                  height: 6,
-                  borderRadius: 3,
-                  background: isActive ? "rgba(234,88,12,0.8)" : "rgba(255,255,255,0.15)",
-                  border: "none",
-                  cursor: "pointer",
-                  padding: 0,
-                  transition: "all 0.3s",
-                }}
-                aria-label={`Go to card ${i + 1}`}
-              />
-            );
-          })}
+          <button
+            onClick={() => {
+              const el = scrollRef.current;
+              if (!el) return;
+              const prev = Math.max(0, activeIdx - 1);
+              el.scrollTo({ left: prev * 316, behavior: "smooth" });
+            }}
+            aria-label="Previous card"
+            style={{
+              minWidth: 44,
+              minHeight: 44,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "rgba(255,255,255,0.06)",
+              border: "1px solid rgba(255,255,255,0.15)",
+              borderRadius: 8,
+              color: activeIdx > 0 ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.2)",
+              fontSize: "1.1rem",
+              cursor: activeIdx > 0 ? "pointer" : "default",
+              transition: "all 0.2s",
+            }}
+          >
+            &#9664;
+          </button>
+          <span
+            style={{
+              fontFamily: "var(--font-inter), sans-serif",
+              fontSize: "0.85rem",
+              color: "rgba(255,255,255,0.5)",
+              letterSpacing: "0.06em",
+              minWidth: 60,
+              textAlign: "center",
+            }}
+          >
+            {activeIdx + 1} of {cards.length}
+          </span>
+          <button
+            onClick={() => {
+              const el = scrollRef.current;
+              if (!el) return;
+              const next = Math.min(cards.length - 1, activeIdx + 1);
+              el.scrollTo({ left: next * 316, behavior: "smooth" });
+            }}
+            aria-label="Next card"
+            style={{
+              minWidth: 44,
+              minHeight: 44,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "rgba(255,255,255,0.06)",
+              border: "1px solid rgba(255,255,255,0.15)",
+              borderRadius: 8,
+              color: activeIdx < cards.length - 1 ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.2)",
+              fontSize: "1.1rem",
+              cursor: activeIdx < cards.length - 1 ? "pointer" : "default",
+              transition: "all 0.2s",
+            }}
+          >
+            &#9654;
+          </button>
         </div>
       </div>
 

@@ -88,6 +88,7 @@ export default function PlanGate({ planId, city, state: st, prefillEmail = "" }:
               onChange={(e) => setEmail(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter") handleSend(); }}
               autoFocus
+              autoComplete="email"
               style={{
                 width: "100%",
                 background: "transparent",

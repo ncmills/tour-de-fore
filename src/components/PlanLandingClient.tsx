@@ -135,6 +135,7 @@ export default function PlanLandingClient({ onFirstTime }: { onFirstTime: () => 
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     autoFocus
+                    autoComplete="email"
                     style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.75rem 0", color: "#fff", fontSize: "1rem", outline: "none", textAlign: "center" }}
                   />
                   <input
@@ -143,6 +144,7 @@ export default function PlanLandingClient({ onFirstTime }: { onFirstTime: () => 
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     onKeyDown={(e) => { if (e.key === "Enter") handleLogin(); }}
+                    autoComplete="current-password"
                     style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.75rem 0", color: "#fff", fontSize: "1rem", outline: "none", textAlign: "center" }}
                   />
                 </div>

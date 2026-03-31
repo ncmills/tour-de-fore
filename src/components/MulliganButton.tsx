@@ -38,11 +38,11 @@ export default function MulliganButton({
     <div
       className="mulligan-wrap"
       style={{
-        position: "absolute",
+        position: "fixed",
         top,
         left: right ? undefined : left,
         right: right || undefined,
-        zIndex,
+        zIndex: 10000,
         pointerEvents: "auto",
       }}
     >
