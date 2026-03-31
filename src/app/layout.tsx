@@ -87,18 +87,22 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://tourdefore.com/logo-full.png",
-        width: 4504,
-        height: 3776,
+        url: "https://tourdefore.com/icon-fancy.png",
+        width: 1024,
+        height: 1024,
         alt: "Tour de Fore Logo",
       },
     ],
+  },
+  icons: {
+    icon: "/icon-fancy.png",
+    apple: "/icon-fancy.png",
   },
   twitter: {
     card: "summary_large_image",
     title: "Tour de Fore",
     description: "An Annual Golf Odyssey",
-    images: ["https://tourdefore.com/logo-full.png"],
+    images: ["https://tourdefore.com/icon-fancy.png"],
   },
 };
 
