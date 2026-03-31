@@ -233,7 +233,7 @@ export default function HomeClient() {
                 key={stat}
                 style={{
                   fontFamily: "var(--font-plan-block), sans-serif",
-                  fontSize: isMobile ? "clamp(0.85rem, 3.6vw, 1.1rem)" : "clamp(1.05rem, 1.6vw, 1.45rem)",
+                  fontSize: isMobile ? "clamp(1rem, 4.3vw, 1.3rem)" : "clamp(1.25rem, 1.9vw, 1.75rem)",
                   fontWeight: 700,
                   textTransform: "uppercase",
                   letterSpacing: "0.1em",
