@@ -92,7 +92,7 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
             exit={{ opacity: 0, transition: { duration: 0.15 } }}
             transition={{ delay: 1.0, duration: 0.4 }}
             style={{
-              marginBottom: "clamp(10px, 1.5vh, 20px)",
+              marginBottom: "clamp(13px, 2vh, 26px)",
               display: "flex",
               alignItems: "center",
             }}
@@ -450,7 +450,7 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
       </motion.div>
 
       {/* Bottom spacer to match top button spacing */}
-      <div style={{ height: "clamp(10px, 1.5vh, 20px)" }} />
+      <div style={{ height: "clamp(13px, 2vh, 26px)" }} />
     </motion.div>
   );
 }

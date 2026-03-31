@@ -279,20 +279,22 @@ export default function HomeClient() {
           >
             {[
               { label: "Pro Shop", href: "/shop", blood: false },
-              { label: "Body of Work", href: "/past-trips", blood: false },
-              { label: "Plan a Trip", href: "/plan-a-trip", blood: true },
+              { label: "Body of Work", href: "/past-trips", blood: true },
+              { label: "Plan a Trip", href: "/plan-a-trip", blood: false },
             ].flatMap(({ label, href, blood }, i, arr) => [
               <Link
                 key={label}
                 href={href}
                 onClick={() => { try { sessionStorage.setItem("tdf-explode", "1"); } catch {} }}
                 style={{
+                  position: "relative" as const,
                   fontFamily: "var(--font-scrawl), cursive",
                   fontSize: isMobile ? "clamp(1.4rem, 6vw, 2rem)" : "clamp(1.8rem, 3.5vw, 3.5rem)",
                   color: blood ? "#fff" : "rgba(255,255,255,0.7)",
                   textDecoration: "none",
                   transition: "color 0.2s, background 0.3s, text-shadow 0.3s",
                   textShadow: "0 0 8px rgba(255,60,20,0.3), 0 0 20px rgba(255,60,20,0.15)",
+                  overflow: "visible" as const,
                   ...(blood ? {
                     background: "radial-gradient(ellipse at 50% 60%, rgba(139,0,0,0.7) 0%, rgba(180,20,20,0.45) 40%, rgba(120,0,0,0.2) 70%, transparent 100%)",
                     padding: "0.3em 1em",
@@ -310,6 +312,32 @@ export default function HomeClient() {
                 }}
               >
                 {label}
+                {/* Blood drips — only on the blood item */}
+                {blood && (
+                  <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "clamp(30px, 4vw, 50px)", pointerEvents: "none", overflow: "visible" }}>
+                    {[
+                      { left: "15%", delay: "0s", dur: "2.5s", height: "clamp(18px, 3vw, 35px)" },
+                      { left: "40%", delay: "0.8s", dur: "3s", height: "clamp(22px, 3.5vw, 40px)" },
+                      { left: "65%", delay: "1.6s", dur: "2.8s", height: "clamp(15px, 2.5vw, 28px)" },
+                      { left: "85%", delay: "2.2s", dur: "3.2s", height: "clamp(20px, 3vw, 32px)" },
+                      { left: "30%", delay: "3s", dur: "2.6s", height: "clamp(16px, 2.8vw, 30px)" },
+                    ].map((drip, di) => (
+                      <div
+                        key={di}
+                        style={{
+                          position: "absolute",
+                          left: drip.left,
+                          top: "100%",
+                          width: "clamp(2px, 0.3vw, 3px)",
+                          height: drip.height,
+                          background: "linear-gradient(180deg, rgba(139,0,0,0.8) 0%, rgba(139,0,0,0.3) 70%, transparent 100%)",
+                          borderRadius: "0 0 2px 2px",
+                          animation: `bloodDrip ${drip.dur} ease-in ${drip.delay} infinite`,
+                        }}
+                      />
+                    ))}
+                  </div>
+                )}
               </Link>,
               i < arr.length - 1 && !isMobile ? (
                 <div
