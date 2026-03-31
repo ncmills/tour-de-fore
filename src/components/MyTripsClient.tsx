@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import MulliganButton from "./MulliganButton";
@@ -13,159 +13,490 @@ interface PlannedTrip {
   paid: boolean;
   groupSize: number;
   numberOfDays: number;
+  tripName?: string;
 }
 
-interface PastTrip {
-  year: number;
-  location: string;
-  state: string;
-  tagline: string;
-  dates: string;
-  heroImage: string;
-  slug: string;
-  attended: boolean;
+interface AccountStatus {
+  canPlan: boolean;
+  plansUsed: number;
+  plansLimit: number;
+  unlimited: boolean;
 }
 
 export default function MyTripsClient({
-  email,
+  email: initialEmail,
   name: initialName,
   plannedTrips,
-  pastTrips,
 }: {
   email: string;
   name: string;
   plannedTrips: PlannedTrip[];
-  pastTrips: PastTrip[];
 }) {
   const [name, setName] = useState(initialName);
   const [editingName, setEditingName] = useState(false);
-  const [attended, setAttended] = useState<Set<number>>(
-    new Set(pastTrips.filter((t) => t.attended).map((t) => t.year))
-  );
-  const [saving, setSaving] = useState(false);
+  const [savingName, setSavingName] = useState(false);
+  const [email, setEmail] = useState(initialEmail);
 
-  const toggleAttendance = async (year: number) => {
-    const next = new Set(attended);
-    if (next.has(year)) {
-      next.delete(year);
-    } else {
-      next.add(year);
+  // Change email state
+  const [showEmailForm, setShowEmailForm] = useState(false);
+  const [newEmail, setNewEmail] = useState("");
+  const [emailPassword, setEmailPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [emailSaving, setEmailSaving] = useState(false);
+
+  // Change password state
+  const [showPasswordForm, setShowPasswordForm] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [passwordSuccess, setPasswordSuccess] = useState(false);
+  const [passwordSaving, setPasswordSaving] = useState(false);
+
+  // Trip names (editable)
+  const [tripNames, setTripNames] = useState<Record<string, string>>(() => {
+    const map: Record<string, string> = {};
+    plannedTrips.forEach((t) => {
+      map[t.id] = t.tripName || `${t.city}${t.state ? `, ${t.state}` : ""} Trip`;
+    });
+    return map;
+  });
+  const [editingTripId, setEditingTripId] = useState<string | null>(null);
+
+  // Account status
+  const [accountStatus, setAccountStatus] = useState<AccountStatus | null>(null);
+
+  const nameInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    fetch("/api/account-status")
+      .then((r) => r.json())
+      .then(setAccountStatus)
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    if (editingName && nameInputRef.current) {
+      nameInputRef.current.focus();
     }
-    setAttended(next);
-
-    // Save immediately
-    await fetch("/api/profile", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ attendedYears: Array.from(next) }),
-    }).catch(() => {});
-  };
+  }, [editingName]);
 
   const saveName = async () => {
-    setSaving(true);
+    setSavingName(true);
     await fetch("/api/profile", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name }),
     }).catch(() => {});
     setEditingName(false);
-    setSaving(false);
+    setSavingName(false);
   };
 
-  const attendedTrips = pastTrips.filter((t) => attended.has(t.year));
-  const stats = {
-    trips: attendedTrips.length,
-    rounds: attendedTrips.length * 6, // ~6 rounds per trip
-    years: attendedTrips.length > 0
-      ? `${Math.min(...attendedTrips.map((t) => t.year))}–${Math.max(...attendedTrips.map((t) => t.year))}`
-      : "—",
+  const handleChangeEmail = async () => {
+    setEmailError("");
+    if (!newEmail.trim()) {
+      setEmailError("Enter a new email address.");
+      return;
+    }
+    if (!emailPassword) {
+      setEmailError("Enter your current password to confirm.");
+      return;
+    }
+    setEmailSaving(true);
+    try {
+      const res = await fetch("/api/auth/change-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ newEmail: newEmail.trim(), password: emailPassword }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setEmailError(data.error || "Failed to change email.");
+      } else {
+        setEmail(data.email);
+        setShowEmailForm(false);
+        setNewEmail("");
+        setEmailPassword("");
+      }
+    } catch {
+      setEmailError("Something went wrong.");
+    }
+    setEmailSaving(false);
+  };
+
+  const handleChangePassword = async () => {
+    setPasswordError("");
+    setPasswordSuccess(false);
+    if (!currentPassword) {
+      setPasswordError("Enter your current password.");
+      return;
+    }
+    if (newPassword.length < 8) {
+      setPasswordError("New password must be at least 8 characters.");
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      setPasswordError("Passwords don't match.");
+      return;
+    }
+    setPasswordSaving(true);
+    try {
+      // Verify current password via login endpoint
+      const verifyRes = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password: currentPassword }),
+      });
+      if (!verifyRes.ok) {
+        setPasswordError("Current password is incorrect.");
+        setPasswordSaving(false);
+        return;
+      }
+      // Set new password
+      const setRes = await fetch("/api/auth/set-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: newPassword }),
+      });
+      if (!setRes.ok) {
+        setPasswordError("Failed to set new password.");
+      } else {
+        setPasswordSuccess(true);
+        setCurrentPassword("");
+        setNewPassword("");
+        setConfirmPassword("");
+        setTimeout(() => {
+          setShowPasswordForm(false);
+          setPasswordSuccess(false);
+        }, 2000);
+      }
+    } catch {
+      setPasswordError("Something went wrong.");
+    }
+    setPasswordSaving(false);
+  };
+
+  const remaining = accountStatus
+    ? accountStatus.unlimited
+      ? null
+      : accountStatus.plansLimit - accountStatus.plansUsed
+    : null;
+
+  const canPlan = accountStatus?.canPlan ?? true;
+
+  // ── Styles ──
+  const inputStyle: React.CSSProperties = {
+    background: "rgba(255,255,255,0.06)",
+    border: "1px solid rgba(255,255,255,0.15)",
+    borderRadius: 6,
+    padding: "10px 14px",
+    color: "#fff",
+    fontSize: "0.9rem",
+    width: "100%",
+    outline: "none",
+    fontFamily: "var(--font-inter), sans-serif",
+  };
+
+  const smallBtnStyle: React.CSSProperties = {
+    padding: "6px 14px",
+    fontSize: "0.75rem",
+    fontWeight: 600,
+    border: "1px solid rgba(255,255,255,0.15)",
+    borderRadius: 6,
+    background: "rgba(255,255,255,0.05)",
+    color: "rgba(255,255,255,0.6)",
+    cursor: "pointer",
+    fontFamily: "var(--font-inter), sans-serif",
+    transition: "all 0.15s",
+  };
+
+  const primaryBtnStyle: React.CSSProperties = {
+    ...smallBtnStyle,
+    background: "rgba(220,38,38,0.85)",
+    border: "1px solid rgba(220,38,38,0.6)",
+    color: "#fff",
   };
 
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff", padding: "clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 3rem)" }}>
       <MulliganButton />
 
-      <div style={{ maxWidth: 800, margin: "0 auto" }}>
-        {/* Profile Header */}
-        <motion.div
+      <div style={{ maxWidth: 700, margin: "0 auto" }}>
+        {/* ── Profile Section ── */}
+        <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          style={{ textAlign: "center", marginBottom: "3rem" }}
+          style={{
+            background: "rgba(255,255,255,0.02)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            borderRadius: 14,
+            padding: "2rem 2rem 1.75rem",
+            marginBottom: "1.5rem",
+          }}
         >
-          <div style={{ fontSize: "3.5rem", marginBottom: "1rem" }}>😈</div>
+          <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
+            <div style={{ fontSize: "3rem", marginBottom: "0.75rem" }}>&#128520;</div>
 
-          {editingName ? (
-            <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                onKeyDown={(e) => { if (e.key === "Enter") saveName(); }}
-                autoFocus
+            {editingName ? (
+              <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
+                <input
+                  ref={nameInputRef}
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter") saveName(); if (e.key === "Escape") setEditingName(false); }}
+                  onBlur={saveName}
+                  style={{
+                    ...inputStyle,
+                    width: "auto",
+                    maxWidth: 280,
+                    textAlign: "center",
+                    fontSize: "1.3rem",
+                    fontFamily: "var(--font-plan-groovy), cursive",
+                  }}
+                />
+              </div>
+            ) : (
+              <h1
+                onClick={() => setEditingName(true)}
                 style={{
-                  background: "rgba(255,255,255,0.06)",
-                  border: "1px solid rgba(255,255,255,0.2)",
-                  borderRadius: 6,
-                  padding: "8px 16px",
-                  color: "#fff",
-                  fontSize: "1.2rem",
-                  textAlign: "center",
-                  outline: "none",
                   fontFamily: "var(--font-plan-groovy), cursive",
+                  fontSize: "clamp(1.8rem, 5vw, 2.8rem)",
+                  marginBottom: "0.25rem",
+                  cursor: "pointer",
                 }}
-              />
-              <button onClick={saveName} disabled={saving} style={{ padding: "8px 16px", background: "rgba(220,38,38,0.9)", border: "none", borderRadius: 6, color: "#fff", fontSize: "0.8rem", cursor: "pointer" }}>
-                {saving ? "..." : "Save"}
+                title="Click to edit name"
+              >
+                {name || "Set Your Name"}
+                <span style={{ fontSize: "0.6em", color: "rgba(255,255,255,0.2)", marginLeft: "0.4em" }}>&#9998;</span>
+              </h1>
+            )}
+            {savingName && <p style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.3)" }}>Saving...</p>}
+          </div>
+
+          {/* Email row */}
+          <div style={{ marginBottom: "1rem" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.5rem" }}>
+              <div>
+                <div style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.1em", color: "rgba(255,255,255,0.3)", marginBottom: "0.2rem" }}>Email</div>
+                <div style={{ fontSize: "0.95rem", color: "rgba(255,255,255,0.7)" }}>{email}</div>
+              </div>
+              <button
+                onClick={() => { setShowEmailForm(!showEmailForm); setShowPasswordForm(false); setEmailError(""); }}
+                style={smallBtnStyle}
+              >
+                Change Email
               </button>
             </div>
-          ) : (
-            <h1
-              onClick={() => setEditingName(true)}
-              style={{
-                fontFamily: "var(--font-plan-groovy), cursive",
-                fontSize: "clamp(2rem, 6vw, 3.5rem)",
-                marginBottom: "0.25rem",
-                cursor: "pointer",
-              }}
-              title="Click to edit name"
-            >
-              {name || "Set Your Name"}
-            </h1>
-          )}
 
-          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.85rem" }}>{email}</p>
-
-          {/* Stats */}
-          {attendedTrips.length > 0 && (
-            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "1.5rem 2rem", marginTop: "1.5rem" }}>
-              {[
-                { label: "Trips", value: stats.trips },
-                { label: "Rounds", value: `~${stats.rounds}` },
-                { label: "Years", value: stats.years },
-              ].map(({ label, value }) => (
-                <div key={label} style={{ textAlign: "center" }}>
-                  <div style={{ fontSize: "1.5rem", fontWeight: 700, color: "#fff" }}>{value}</div>
-                  <div style={{ fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)" }}>{label}</div>
+            {showEmailForm && (
+              <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} style={{ marginTop: "1rem", overflow: "hidden" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+                  <input
+                    type="email"
+                    placeholder="New email address"
+                    value={newEmail}
+                    onChange={(e) => setNewEmail(e.target.value)}
+                    style={inputStyle}
+                  />
+                  <input
+                    type="password"
+                    placeholder="Current password to confirm"
+                    value={emailPassword}
+                    onChange={(e) => setEmailPassword(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === "Enter") handleChangeEmail(); }}
+                    style={inputStyle}
+                  />
+                  {emailError && <p style={{ color: "rgba(220,38,38,0.9)", fontSize: "0.8rem", margin: 0 }}>{emailError}</p>}
+                  <div style={{ display: "flex", gap: "0.5rem" }}>
+                    <button onClick={handleChangeEmail} disabled={emailSaving} style={primaryBtnStyle}>
+                      {emailSaving ? "Saving..." : "Update Email"}
+                    </button>
+                    <button onClick={() => { setShowEmailForm(false); setEmailError(""); }} style={smallBtnStyle}>Cancel</button>
+                  </div>
                 </div>
-              ))}
+              </motion.div>
+            )}
+          </div>
+
+          {/* Password row */}
+          <div>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.5rem" }}>
+              <div>
+                <div style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.1em", color: "rgba(255,255,255,0.3)", marginBottom: "0.2rem" }}>Password</div>
+                <div style={{ fontSize: "0.95rem", color: "rgba(255,255,255,0.4)" }}>********</div>
+              </div>
+              <button
+                onClick={() => { setShowPasswordForm(!showPasswordForm); setShowEmailForm(false); setPasswordError(""); setPasswordSuccess(false); }}
+                style={smallBtnStyle}
+              >
+                Change Password
+              </button>
             </div>
-          )}
-        </motion.div>
+
+            {showPasswordForm && (
+              <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} style={{ marginTop: "1rem", overflow: "hidden" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+                  <input
+                    type="password"
+                    placeholder="Current password"
+                    value={currentPassword}
+                    onChange={(e) => setCurrentPassword(e.target.value)}
+                    style={inputStyle}
+                  />
+                  <input
+                    type="password"
+                    placeholder="New password (min 8 characters)"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    style={inputStyle}
+                  />
+                  <input
+                    type="password"
+                    placeholder="Confirm new password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === "Enter") handleChangePassword(); }}
+                    style={inputStyle}
+                  />
+                  {passwordError && <p style={{ color: "rgba(220,38,38,0.9)", fontSize: "0.8rem", margin: 0 }}>{passwordError}</p>}
+                  {passwordSuccess && <p style={{ color: "rgba(74,222,128,0.9)", fontSize: "0.8rem", margin: 0 }}>Password updated.</p>}
+                  <div style={{ display: "flex", gap: "0.5rem" }}>
+                    <button onClick={handleChangePassword} disabled={passwordSaving} style={primaryBtnStyle}>
+                      {passwordSaving ? "Saving..." : "Update Password"}
+                    </button>
+                    <button onClick={() => { setShowPasswordForm(false); setPasswordError(""); }} style={smallBtnStyle}>Cancel</button>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </div>
+        </motion.section>
+
+        {/* ── Plan Limit Ticker ── */}
+        {accountStatus && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            style={{
+              marginBottom: "1.5rem",
+              padding: "0.85rem 1.25rem",
+              borderRadius: 10,
+              background: accountStatus.unlimited
+                ? "rgba(212,168,67,0.08)"
+                : canPlan
+                  ? "rgba(74,222,128,0.06)"
+                  : "rgba(220,38,38,0.06)",
+              border: `1px solid ${
+                accountStatus.unlimited
+                  ? "rgba(212,168,67,0.25)"
+                  : canPlan
+                    ? "rgba(74,222,128,0.2)"
+                    : "rgba(220,38,38,0.25)"
+              }`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: "0.5rem",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+              <span style={{
+                width: 8,
+                height: 8,
+                borderRadius: "50%",
+                background: accountStatus.unlimited
+                  ? "rgba(212,168,67,0.8)"
+                  : canPlan
+                    ? "rgba(74,222,128,0.8)"
+                    : "rgba(220,38,38,0.8)",
+                display: "inline-block",
+                flexShrink: 0,
+              }} />
+              <span style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-inter), sans-serif" }}>
+                {accountStatus.unlimited
+                  ? "Unlimited plans"
+                  : canPlan
+                    ? `You can plan ${remaining} more trip${remaining !== 1 ? "s" : ""} this month`
+                    : "You've reached your plan limit this month"}
+              </span>
+            </div>
+            {accountStatus.unlimited && (
+              <span style={{
+                fontSize: "0.6rem",
+                fontWeight: 700,
+                letterSpacing: "0.1em",
+                padding: "3px 8px",
+                background: "rgba(212,168,67,0.12)",
+                border: "1px solid rgba(212,168,67,0.3)",
+                borderRadius: 4,
+                color: "rgba(212,168,67,0.9)",
+                textTransform: "uppercase",
+              }}>
+                VIP
+              </span>
+            )}
+          </motion.div>
+        )}
 
         {/* ── Planned Trips ── */}
-        <section style={{ marginBottom: "3rem" }}>
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          style={{ marginBottom: "3rem" }}
+        >
           <h2 style={{
-            fontFamily: "var(--font-plan-script), cursive",
-            fontSize: "1.8rem",
+            fontFamily: "var(--font-plan-block), sans-serif",
+            fontSize: "1.3rem",
             marginBottom: "1rem",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
+            letterSpacing: "0.02em",
           }}>
             My Planned Trips
-            <Link href="/plan-a-trip" style={{ fontSize: "0.8rem", color: "rgba(220,38,38,0.8)", textDecoration: "none", fontFamily: "var(--font-space), sans-serif" }}>
-              + Plan a Trip
-            </Link>
+            {canPlan ? (
+              <Link href="/plan-a-trip" style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: 36,
+                height: 36,
+                borderRadius: "50%",
+                background: "rgba(220,38,38,0.85)",
+                color: "#fff",
+                fontSize: "1.3rem",
+                fontWeight: 300,
+                textDecoration: "none",
+                lineHeight: 1,
+                transition: "background 0.15s",
+              }}>
+                +
+              </Link>
+            ) : (
+              <span
+                title="Plan limit reached"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: 36,
+                  height: 36,
+                  borderRadius: "50%",
+                  background: "rgba(255,255,255,0.05)",
+                  color: "rgba(255,255,255,0.2)",
+                  fontSize: "1.3rem",
+                  fontWeight: 300,
+                  lineHeight: 1,
+                  cursor: "not-allowed",
+                }}
+              >
+                +
+              </span>
+            )}
           </h2>
 
           {plannedTrips.length === 0 ? (
@@ -176,136 +507,106 @@ export default function MyTripsClient({
               border: "1px dashed rgba(255,255,255,0.1)",
               borderRadius: 12,
             }}>
-              <p style={{ color: "rgba(255,255,255,0.4)", marginBottom: "1rem" }}>No planned trips yet.</p>
-              <Link href="/plan-a-trip" style={{ color: "rgba(220,38,38,0.9)", textDecoration: "none", fontWeight: 600, fontSize: "0.9rem" }}>
-                Plan your first trip →
-              </Link>
+              <p style={{ color: "rgba(255,255,255,0.4)", marginBottom: "1rem", fontFamily: "var(--font-inter), sans-serif" }}>No planned trips yet.</p>
+              {canPlan && (
+                <Link href="/plan-a-trip" style={{ color: "rgba(220,38,38,0.9)", textDecoration: "none", fontWeight: 600, fontSize: "0.9rem", fontFamily: "var(--font-inter), sans-serif" }}>
+                  Plan your first trip &rarr;
+                </Link>
+              )}
             </div>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-              {plannedTrips.map((trip, i) => (
-                <motion.div key={trip.id} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
-                  <Link href={`/plan/result/${trip.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+              {plannedTrips.map((trip, i) => {
+                const isEditing = editingTripId === trip.id;
+                const tripName = tripNames[trip.id] || `${trip.city}${trip.state ? `, ${trip.state}` : ""} Trip`;
+
+                return (
+                  <motion.div key={trip.id} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.05 }}>
                     <div style={{
                       background: "rgba(255,255,255,0.03)",
                       border: "1px solid rgba(255,255,255,0.08)",
                       borderRadius: 10,
-                      padding: "1.25rem 1.25rem",
-                      display: "flex",
-                      flexWrap: "wrap",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      gap: "0.5rem",
-                      cursor: "pointer",
+                      padding: "1.25rem",
                       transition: "border-color 0.2s",
                     }}
                     onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)"; }}
                     onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; }}
                     >
-                      <div>
-                        <h3 style={{ fontSize: "1.1rem", fontWeight: 600, marginBottom: "0.2rem" }}>
-                          {trip.city}, {trip.state}
-                        </h3>
-                        <p style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.8rem" }}>
-                          {trip.groupSize} people · {trip.numberOfDays} days · {new Date(trip.createdAt).toLocaleDateString()}
-                        </p>
-                      </div>
-                      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                        {trip.paid && (
-                          <span style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", padding: "3px 8px", background: "rgba(74,222,128,0.15)", border: "1px solid rgba(74,222,128,0.3)", borderRadius: 4, color: "rgba(74,222,128,0.9)" }}>
-                            UNLOCKED
-                          </span>
-                        )}
-                        <span style={{ color: "rgba(255,255,255,0.2)" }}>→</span>
+                      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-start", gap: "0.5rem" }}>
+                        <div style={{ flex: 1, minWidth: 200 }}>
+                          {isEditing ? (
+                            <input
+                              type="text"
+                              value={tripNames[trip.id] || ""}
+                              onChange={(e) => setTripNames({ ...tripNames, [trip.id]: e.target.value })}
+                              onBlur={() => setEditingTripId(null)}
+                              onKeyDown={(e) => { if (e.key === "Enter" || e.key === "Escape") setEditingTripId(null); }}
+                              autoFocus
+                              style={{
+                                ...inputStyle,
+                                fontSize: "1.05rem",
+                                fontWeight: 600,
+                                padding: "6px 10px",
+                                marginBottom: "0.3rem",
+                              }}
+                            />
+                          ) : (
+                            <h3
+                              onClick={() => setEditingTripId(trip.id)}
+                              style={{
+                                fontSize: "1.05rem",
+                                fontWeight: 600,
+                                marginBottom: "0.3rem",
+                                cursor: "pointer",
+                                fontFamily: "var(--font-inter), sans-serif",
+                              }}
+                              title="Click to rename"
+                            >
+                              {tripName}
+                              <span style={{ fontSize: "0.6em", color: "rgba(255,255,255,0.2)", marginLeft: "0.4em" }}>&#9998;</span>
+                            </h3>
+                          )}
+                          <p style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.8rem", fontFamily: "var(--font-inter), sans-serif" }}>
+                            {trip.groupSize} people &middot; {trip.numberOfDays} days &middot; {new Date(trip.createdAt).toLocaleDateString()}
+                          </p>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                          {trip.paid && (
+                            <span style={{
+                              fontSize: "0.6rem",
+                              fontWeight: 700,
+                              letterSpacing: "0.1em",
+                              padding: "3px 8px",
+                              background: "rgba(74,222,128,0.15)",
+                              border: "1px solid rgba(74,222,128,0.3)",
+                              borderRadius: 4,
+                              color: "rgba(74,222,128,0.9)",
+                            }}>
+                              UNLOCKED
+                            </span>
+                          )}
+                          <Link
+                            href={`/plan/result/${trip.id}`}
+                            style={{
+                              fontSize: "0.75rem",
+                              color: "rgba(220,38,38,0.8)",
+                              textDecoration: "none",
+                              fontWeight: 600,
+                              fontFamily: "var(--font-inter), sans-serif",
+                              whiteSpace: "nowrap",
+                            }}
+                          >
+                            View &rarr;
+                          </Link>
+                        </div>
                       </div>
                     </div>
-                  </Link>
-                </motion.div>
-              ))}
+                  </motion.div>
+                );
+              })}
             </div>
           )}
-        </section>
-
-        {/* ── Past TDF Trips ── */}
-        <section style={{ marginBottom: "3rem" }}>
-          <h2 style={{ fontFamily: "var(--font-plan-script), cursive", fontSize: "1.8rem", marginBottom: "0.5rem" }}>
-            TDF History
-          </h2>
-          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.8rem", marginBottom: "1.5rem" }}>
-            Tap the trips you were on to build your TDF record.
-          </p>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-            {pastTrips.map((trip, i) => {
-              const isAttended = attended.has(trip.year);
-              return (
-                <motion.div key={trip.year} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 + i * 0.05 }}>
-                  <div style={{
-                    background: isAttended ? "rgba(220,38,38,0.06)" : "rgba(255,255,255,0.02)",
-                    border: isAttended ? "1px solid rgba(220,38,38,0.3)" : "1px solid rgba(255,255,255,0.06)",
-                    borderRadius: 10,
-                    padding: "1rem 1.25rem",
-                    display: "flex",
-                    flexWrap: "wrap",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                    cursor: "pointer",
-                    transition: "all 0.2s",
-                  }}
-                  onClick={() => toggleAttendance(trip.year)}
-                  >
-                    <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                      <span style={{
-                        fontFamily: "var(--font-plan-block), sans-serif",
-                        fontSize: "1.8rem",
-                        color: isAttended ? "rgba(220,38,38,0.9)" : "rgba(255,255,255,0.15)",
-                        minWidth: "3.5rem",
-                      }}>
-                        {trip.year}
-                      </span>
-                      <div>
-                        <h3 style={{ fontSize: "1rem", fontWeight: 600, color: isAttended ? "#fff" : "rgba(255,255,255,0.5)" }}>
-                          {trip.location}, {trip.state}
-                        </h3>
-                        <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.3)" }}>
-                          {trip.dates}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                      {isAttended && (
-                        <Link
-                          href={`/trip/${trip.slug}`}
-                          onClick={(e) => e.stopPropagation()}
-                          style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.4)", textDecoration: "none" }}
-                        >
-                          View →
-                        </Link>
-                      )}
-                      <div style={{
-                        width: 28,
-                        height: 28,
-                        borderRadius: "50%",
-                        border: isAttended ? "2px solid rgba(220,38,38,0.8)" : "2px solid rgba(255,255,255,0.15)",
-                        background: isAttended ? "rgba(220,38,38,0.9)" : "transparent",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontSize: "0.75rem",
-                        color: "#fff",
-                        transition: "all 0.2s",
-                      }}>
-                        {isAttended && "✓"}
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-        </section>
+        </motion.section>
       </div>
     </main>
   );

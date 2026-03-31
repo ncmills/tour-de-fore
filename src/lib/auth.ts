@@ -119,9 +119,74 @@ export async function recordFreePlanGeneration(email: string): Promise<void> {
   await r.expire(key, 60 * 60 * 24 * 35); // ~35 days
 }
 
-function getMonthKey(): string {
+export function getMonthKey(): string {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+}
+
+export async function getFreePlanCount(email: string): Promise<number> {
+  const count = await getRedis().get(`user:${email}:freeplans:${getMonthKey()}`);
+  return count ? parseInt(count) : 0;
+}
+
+// ── Change Email ──
+
+export async function changeUserEmail(oldEmail: string, newEmail: string): Promise<void> {
+  const r = getRedis();
+
+  // Migrate name
+  const name = await r.get(`user:${oldEmail}:name`);
+  if (name) {
+    await r.set(`user:${newEmail}:name`, name, "EX", PROFILE_TTL);
+    await r.del(`user:${oldEmail}:name`);
+  }
+
+  // Migrate password
+  const passwordHash = await r.get(`user:${oldEmail}:password`);
+  if (passwordHash) {
+    await r.set(`user:${newEmail}:password`, passwordHash, "EX", PROFILE_TTL);
+    await r.del(`user:${oldEmail}:password`);
+  }
+
+  // Migrate plans
+  const plans = await r.smembers(`user:${oldEmail}:plans`);
+  if (plans.length > 0) {
+    await r.sadd(`user:${newEmail}:plans`, ...plans);
+    await r.expire(`user:${newEmail}:plans`, SESSION_TTL * 12);
+    await r.del(`user:${oldEmail}:plans`);
+  }
+
+  // Migrate subscription
+  const sub = await r.get(`user:${oldEmail}:sub`);
+  if (sub) {
+    const ttl = await r.ttl(`user:${oldEmail}:sub`);
+    await r.set(`user:${newEmail}:sub`, sub, "EX", ttl > 0 ? ttl : PROFILE_TTL);
+    await r.del(`user:${oldEmail}:sub`);
+  }
+
+  // Migrate attended years
+  const attended = await r.smembers(`user:${oldEmail}:attended`);
+  if (attended.length > 0) {
+    await r.sadd(`user:${newEmail}:attended`, ...attended);
+    await r.expire(`user:${newEmail}:attended`, SESSION_TTL * 12);
+    await r.del(`user:${oldEmail}:attended`);
+  }
+
+  // Migrate free plan count for current month
+  const monthKey = getMonthKey();
+  const freePlanCount = await r.get(`user:${oldEmail}:freeplans:${monthKey}`);
+  if (freePlanCount) {
+    const ttl = await r.ttl(`user:${oldEmail}:freeplans:${monthKey}`);
+    await r.set(`user:${newEmail}:freeplans:${monthKey}`, freePlanCount, "EX", ttl > 0 ? ttl : 60 * 60 * 24 * 35);
+    await r.del(`user:${oldEmail}:freeplans:${monthKey}`);
+  }
+
+  // Migrate email verified
+  const verified = await r.get(`user:${oldEmail}:email_verified`);
+  if (verified) {
+    await r.del(`user:${oldEmail}:email_verified`);
+    // Don't migrate — new email needs its own verification
+  }
 }
 
 // ── Password Auth ──

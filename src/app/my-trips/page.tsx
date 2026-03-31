@@ -1,12 +1,11 @@
 import { redirect } from "next/navigation";
-import { getSessionEmail, getUserPlans, getUserPastTrips, getUserName } from "@/lib/auth";
+import { getSessionEmail, getUserPlans, getUserName } from "@/lib/auth";
 import { getPlan } from "@/lib/kv";
-import { trips } from "@/lib/trips";
 import MyTripsClient from "@/components/MyTripsClient";
 
 export const metadata = {
-  title: "My Trips | Tour de Fore",
-  description: "Your saved Tour de Fore trip plans and past trip history.",
+  title: "My Account | Tour de Fore",
+  description: "Your Tour de Fore account and saved trip plans.",
 };
 
 export default async function MyTripsPage() {
@@ -16,9 +15,8 @@ export default async function MyTripsPage() {
     redirect("/?skip=1");
   }
 
-  const [planIds, attendedYears, name] = await Promise.all([
+  const [planIds, name] = await Promise.all([
     getUserPlans(email),
-    getUserPastTrips(email),
     getUserName(email),
   ]);
 
@@ -41,26 +39,11 @@ export default async function MyTripsPage() {
     })
   );
 
-  // Build past trip data from trips.ts
-  const allPastTrips = trips
-    .filter((t) => !t.upcoming)
-    .map((t) => ({
-      year: t.year,
-      location: t.location,
-      state: t.stateAbbr,
-      tagline: t.tagline,
-      dates: t.dates,
-      heroImage: t.heroImage,
-      slug: t.slug,
-      attended: attendedYears.includes(t.year),
-    }));
-
   return (
     <MyTripsClient
       email={email}
       name={name || ""}
       plannedTrips={plannedTrips.filter(Boolean) as NonNullable<(typeof plannedTrips)[number]>[]}
-      pastTrips={allPastTrips}
     />
   );
 }
