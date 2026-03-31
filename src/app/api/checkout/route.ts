@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
       },
       metadata: {
         type: "shop",
-        items: JSON.stringify(orderItems),
+        items: JSON.stringify(orderItems.map(i => ({ s: i.syncVariantId, q: i.quantity, p: i.productId, c: i.color, z: i.size }))),
       },
     });
 

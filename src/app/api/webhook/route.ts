@@ -49,11 +49,24 @@ export async function POST(req: NextRequest) {
       try {
         const customerEmail = session.customer_details?.email || "";
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const shipping = (session as any).shipping_details as { name?: string; address?: { line1?: string; line2?: string; city?: string; state?: string; country?: string; postal_code?: string } } | undefined;
+        const sessionAny = session as any;
+        // Stripe SDK v20+: shipping_details moved to collected_information.shipping_details
+        const shipping = (sessionAny.collected_information?.shipping_details || sessionAny.shipping_details || sessionAny.shipping) as { name?: string; address?: { line1?: string; line2?: string; city?: string; state?: string; country?: string; postal_code?: string } } | undefined;
         const itemsJson = session.metadata.items;
 
+        if (!shipping?.address) {
+          console.error("Shop order webhook: no shipping address found on session", session.id);
+        }
+
         if (shipping?.address && itemsJson) {
-          const items = JSON.parse(itemsJson) as { syncVariantId: number; quantity: number; productId: string; color: string; size?: string }[];
+          const rawItems = JSON.parse(itemsJson) as ({ syncVariantId?: number; quantity?: number; productId?: string; color?: string; size?: string; s?: number; q?: number; p?: string; c?: string; z?: string })[];
+          const items = rawItems.map(i => ({
+            syncVariantId: i.syncVariantId ?? i.s ?? 0,
+            quantity: i.quantity ?? i.q ?? 1,
+            productId: i.productId ?? i.p ?? "",
+            color: i.color ?? i.c ?? "",
+            size: i.size ?? i.z,
+          }));
 
           // Create Printful order
           let printfulResult: { id: number; status: string } | null = null;
@@ -76,8 +89,8 @@ export async function POST(req: NextRequest) {
             console.error("Printful order creation failed:", printfulErr);
           }
 
-          // Store order in Redis
-          const orderId = crypto.randomUUID();
+          // Store order in Redis (use session ID for idempotency)
+          const orderId = session.id;
           try {
             await storeOrder({
               id: orderId,

@@ -17,7 +17,7 @@ export default function HomeButton() {
       <img
         src="/icon-fancy.png"
         alt="Tour de Fore Home"
-        style={{ width: 36, height: 36, opacity: 0.7, transition: "opacity 0.2s" }}
+        style={{ width: 108, height: 108, opacity: 0.7, transition: "opacity 0.2s" }}
         onMouseEnter={(e) => { (e.target as HTMLImageElement).style.opacity = "1"; }}
         onMouseLeave={(e) => { (e.target as HTMLImageElement).style.opacity = "0.7"; }}
       />
