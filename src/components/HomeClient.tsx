@@ -272,12 +272,12 @@ export default function HomeClient() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            gap: "0.125rem",
+            gap: "0.03rem",
             textDecoration: "none",
           }}
         >
           <img src="/devil-avatar.png" alt="Login" style={{ width: 81, height: 81 }} />
-          <span style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "var(--font-inter), sans-serif" }}>Login</span>
+          <span style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.9)", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "var(--font-inter), sans-serif" }}>Login</span>
         </motion.a>
       )}
 
