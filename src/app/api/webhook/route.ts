@@ -52,15 +52,17 @@ export async function POST(req: NextRequest) {
       try {
         const customerEmail = session.customer_details?.email || "";
 
-        // Webhook event doesn't include collected_information — fetch the full session
-        const fullSession = await stripe.checkout.sessions.retrieve(session.id);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const fullAny = fullSession as any;
-        const shipping = (fullAny.collected_information?.shipping_details || fullAny.shipping_details || fullAny.shipping) as { name?: string; address?: { line1?: string; line2?: string; city?: string; state?: string; country?: string; postal_code?: string } } | undefined;
-        const itemsJson = session.metadata?.items || fullSession.metadata?.items;
+        // Fetch full session via raw API (SDK doesn't return collected_information)
+        const stripeKey = (process.env.STRIPE_SECRET_KEY || "").trim();
+        const rawRes = await fetch(`https://api.stripe.com/v1/checkout/sessions/${session.id}`, {
+          headers: { Authorization: `Basic ${Buffer.from(stripeKey + ":").toString("base64")}` },
+        });
+        const rawSession = await rawRes.json();
+        const shipping = (rawSession.collected_information?.shipping_details || rawSession.shipping_details || rawSession.shipping) as { name?: string; address?: { line1?: string; line2?: string; city?: string; state?: string; country?: string; postal_code?: string } } | undefined;
+        const itemsJson = session.metadata?.items || rawSession.metadata?.items;
 
         if (!shipping?.address) {
-          console.error("Shop order webhook: no shipping address found on session", session.id, "collected_information:", JSON.stringify(fullAny.collected_information));
+          console.error("Shop order webhook: no shipping address found on session", session.id, "rawSession keys:", Object.keys(rawSession).join(","));
         }
 
         if (shipping?.address && itemsJson) {
