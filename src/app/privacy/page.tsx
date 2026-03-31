@@ -4,6 +4,7 @@ import MulliganButton from "@/components/MulliganButton";
 export const metadata = {
   title: "Privacy Policy | Tour de Fore",
   description: "Tour de Fore privacy policy — how we collect, use, and protect your data.",
+  alternates: { canonical: "https://tourdefore.com/privacy" },
 };
 
 export default function PrivacyPage() {
