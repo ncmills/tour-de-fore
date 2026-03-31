@@ -129,3 +129,32 @@ export async function getAllPopularityScores(): Promise<Map<string, number>> {
 
   return scores;
 }
+
+// ── Shop Orders ──
+
+export interface ShopOrder {
+  id: string;
+  email: string;
+  items: { productId: string; color: string; size?: string; quantity: number }[];
+  stripeSessionId: string;
+  printfulOrderId: number | null;
+  status: string;
+  createdAt: string;
+}
+
+const ORDER_TTL = 60 * 60 * 24 * 365; // 1 year
+
+export async function storeOrder(order: ShopOrder): Promise<void> {
+  const r = getRedis();
+  await r.set(`order:${order.id}`, JSON.stringify(order), "EX", ORDER_TTL);
+  if (order.email) {
+    await r.sadd(`user:${order.email}:orders`, order.id);
+    await r.expire(`user:${order.email}:orders`, ORDER_TTL);
+  }
+}
+
+export async function getOrder(id: string): Promise<ShopOrder | null> {
+  const raw = await getRedis().get(`order:${id}`);
+  if (!raw) return null;
+  return JSON.parse(raw);
+}
