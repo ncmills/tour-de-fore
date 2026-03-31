@@ -5,8 +5,8 @@ import { addPlanToUser, setSubscription } from "@/lib/auth";
 import { createPrintfulOrder } from "@/lib/printful";
 import { Resend } from "resend";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "sk_test_placeholder");
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+const stripe = new Stripe((process.env.STRIPE_SECRET_KEY ?? "sk_test_placeholder").trim());
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET?.trim();
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
@@ -24,9 +24,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
+  console.log("Webhook received:", event.type, event.id);
+
   // Handle checkout completion (one-time plan purchases — legacy)
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
+    console.log("Checkout completed:", session.id, "type:", session.metadata?.type);
 
     // Legacy per-plan payment
     const planId = session.metadata?.planId;
