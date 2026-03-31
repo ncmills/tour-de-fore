@@ -368,10 +368,25 @@ body.menu-open {
     padding: 6px 12px !important;
     font-size: 0.65rem !important;
   }
+
+  /* Shop cart button — move below HomeButton on mobile to avoid overlap */
+  .shop-cart-btn {
+    top: 4.5rem !important;
+  }
 }
 
 /* ── Glow pulse (kept for CTA emphasis) ── */
 @keyframes glowPulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0); }
   50% { box-shadow: 0 0 24px 6px rgba(234, 88, 12, 0.15); }
+}
+
+/* ── Trip Builder: Flame glow for TDF PICK cards ── */
+@keyframes flameGlow {
+  0%, 100% { box-shadow: 0 0 8px rgba(234,88,12,0.15), inset 0 0 4px rgba(234,88,12,0.05); }
+  50% { box-shadow: 0 0 16px rgba(234,88,12,0.3), 0 0 4px rgba(255,140,0,0.2), inset 0 0 6px rgba(234,88,12,0.1); }
+}
+
+.flame-glow {
+  animation: flameGlow 2.5s ease-in-out infinite;
 }

@@ -240,7 +240,7 @@ export default function ShopPageClient({ onBack }: { onBack?: () => void }) {
       </div>
 
       {/* Cart button */}
-      <div style={{ position: "fixed", top: "1.2rem", right: "clamp(1.5rem, 6vw, 4rem)", zIndex: 100 }}>
+      <div className="shop-cart-btn" style={{ position: "fixed", top: "1.2rem", right: "clamp(1.5rem, 6vw, 4rem)", zIndex: 100 }}>
         <button
           onClick={() => setCartOpen(true)}
           style={{

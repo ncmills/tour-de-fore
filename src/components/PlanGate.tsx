@@ -65,13 +65,13 @@ export default function PlanGate({ planId, city, state: st, prefillEmail = "" }:
             <div style={{ display: "flex", gap: "1.5rem", justifyContent: "center", flexWrap: "wrap" }}>
               <button
                 onClick={() => { setSent(false); handleSend(); }}
-                style={{ background: "none", border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.5)", fontSize: "0.85rem", cursor: "pointer", padding: "0.6rem 1.2rem", borderRadius: 4 }}
+                style={{ background: "none", border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.5)", fontSize: "0.85rem", cursor: "pointer", padding: "0.75rem 1.2rem", borderRadius: 4, minHeight: 44 }}
               >
                 Resend email
               </button>
               <button
                 onClick={() => setSent(false)}
-                style={{ background: "none", border: "none", color: "rgba(255,255,255,0.3)", fontSize: "0.85rem", cursor: "pointer", textDecoration: "underline" }}
+                style={{ background: "none", border: "none", color: "rgba(255,255,255,0.3)", fontSize: "0.85rem", cursor: "pointer", textDecoration: "underline", minHeight: 44, padding: "0.5rem 0.5rem" }}
               >
                 Use a different email
               </button>

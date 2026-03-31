@@ -67,7 +67,7 @@ export default function PlanLandingClient({ onFirstTime }: { onFirstTime: () => 
       <MulliganButton onClick={() => (window.location.href = "/?skip=1")} />
 
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} style={{ maxWidth: 500, width: "100%" }}>
-        <img src="/logo-est2021.png" alt="Tour de Fore Est. 2021" style={{ width: 240, height: 240, margin: "0 auto 1.5rem", objectFit: "contain" }} />
+        <img src="/logo-est2021.png" alt="Tour de Fore Est. 2021" style={{ width: "clamp(140px, 50vw, 240px)", height: "clamp(140px, 50vw, 240px)", margin: "0 auto 1.5rem", objectFit: "contain" }} />
         <h1 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "1.5rem" }}>
           Plan a Trip
         </h1>
@@ -120,7 +120,7 @@ export default function PlanLandingClient({ onFirstTime }: { onFirstTime: () => 
                 <p style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.9rem", marginBottom: "1.5rem" }}>
                   We sent a password reset link to <strong style={{ color: "rgba(255,255,255,0.7)" }}>{email}</strong>.
                 </p>
-                <button onClick={() => { setForgotSent(false); setError(""); }} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.3)", cursor: "pointer", textDecoration: "underline", fontSize: "0.85rem" }}>
+                <button onClick={() => { setForgotSent(false); setError(""); }} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.3)", cursor: "pointer", textDecoration: "underline", fontSize: "0.85rem", minHeight: 44, padding: "0.5rem 0.75rem" }}>
                   Back to login
                 </button>
               </div>
@@ -157,17 +157,17 @@ export default function PlanLandingClient({ onFirstTime }: { onFirstTime: () => 
                   {loading ? "Logging in..." : "Login"}
                 </motion.button>
 
-                <div style={{ display: "flex", justifyContent: "center", gap: "1.5rem" }}>
+                <div style={{ display: "flex", justifyContent: "center", gap: "1rem" }}>
                   <button
                     onClick={handleForgot}
                     disabled={sendingReset}
-                    style={{ background: "none", border: "none", color: "rgba(255,255,255,0.3)", cursor: "pointer", fontSize: "0.8rem", textDecoration: "underline" }}
+                    style={{ background: "none", border: "none", color: "rgba(255,255,255,0.3)", cursor: "pointer", fontSize: "0.8rem", textDecoration: "underline", minHeight: 44, padding: "0.5rem 0.75rem" }}
                   >
                     {sendingReset ? "Sending..." : "Forgot password?"}
                   </button>
                   <button
                     onClick={() => { setMode("choose"); setError(""); }}
-                    style={{ background: "none", border: "none", color: "rgba(255,255,255,0.3)", cursor: "pointer", fontSize: "0.8rem", textDecoration: "underline" }}
+                    style={{ background: "none", border: "none", color: "rgba(255,255,255,0.3)", cursor: "pointer", fontSize: "0.8rem", textDecoration: "underline", minHeight: 44, padding: "0.5rem 0.75rem" }}
                   >
                     Back
                   </button>

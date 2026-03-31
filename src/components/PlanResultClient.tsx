@@ -305,7 +305,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
         }}>
           <Link
             className="concierge-cta"
-            href={`/plan/build?planId=${planId}&dest=${dest || "mid"}&tier=${tier}`}
+            href={`/plan/gallery?planId=${planId}&dest=${dest || "mid"}&tier=${tier}`}
             style={{
               display: "inline-block",
               background: "rgba(220,38,38,0.85)",
@@ -1054,7 +1054,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
           borderTop: "1px solid rgba(255,255,255,0.06)",
         }}>
           <Link
-            href={`/plan/build?planId=${planId}&dest=${dest || "mid"}&tier=${tier}`}
+            href={`/plan/gallery?planId=${planId}&dest=${dest || "mid"}&tier=${tier}`}
             style={{
               display: "inline-flex",
               alignItems: "center",
