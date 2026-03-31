@@ -347,6 +347,16 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
                 📍 {trip.lodgingAddress}
               </a>
             )}
+            {trip.lodgingBookingUrl && (
+              <a
+                href={trip.lodgingBookingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ fontSize: "0.9rem", color: "#EA580C", textDecoration: "underline", textUnderlineOffset: "3px" }}
+              >
+                🏠 View on Airbnb
+              </a>
+            )}
           </div>
         </motion.section>
       )}
