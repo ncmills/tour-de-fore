@@ -54,7 +54,7 @@ function ProductCard({
         <img
           src={product.colorPreviews[color] || product.previewUrl}
           alt={product.name}
-          style={{ maxWidth: "100%", maxHeight: 180, objectFit: "contain" }}
+          style={{ maxWidth: "100%", maxHeight: 180, objectFit: "contain", mixBlendMode: "multiply" }}
         />
       </div>
 
