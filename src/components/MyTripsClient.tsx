@@ -137,7 +137,7 @@ export default function MyTripsClient({
 
           {/* Stats */}
           {attendedTrips.length > 0 && (
-            <div style={{ display: "flex", justifyContent: "center", gap: "2rem", marginTop: "1.5rem" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "1.5rem 2rem", marginTop: "1.5rem" }}>
               {[
                 { label: "Trips", value: stats.trips },
                 { label: "Rounds", value: `~${stats.rounds}` },
@@ -190,10 +190,12 @@ export default function MyTripsClient({
                       background: "rgba(255,255,255,0.03)",
                       border: "1px solid rgba(255,255,255,0.08)",
                       borderRadius: 10,
-                      padding: "1.25rem 1.5rem",
+                      padding: "1.25rem 1.25rem",
                       display: "flex",
+                      flexWrap: "wrap",
                       justifyContent: "space-between",
                       alignItems: "center",
+                      gap: "0.5rem",
                       cursor: "pointer",
                       transition: "border-color 0.2s",
                     }}
@@ -242,10 +244,12 @@ export default function MyTripsClient({
                     background: isAttended ? "rgba(220,38,38,0.06)" : "rgba(255,255,255,0.02)",
                     border: isAttended ? "1px solid rgba(220,38,38,0.3)" : "1px solid rgba(255,255,255,0.06)",
                     borderRadius: 10,
-                    padding: "1.25rem 1.5rem",
+                    padding: "1rem 1.25rem",
                     display: "flex",
+                    flexWrap: "wrap",
                     justifyContent: "space-between",
                     alignItems: "center",
+                    gap: "0.5rem",
                     cursor: "pointer",
                     transition: "all 0.2s",
                   }}

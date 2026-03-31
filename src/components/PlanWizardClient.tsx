@@ -431,14 +431,14 @@ export default function PlanWizardClient() {
                 ) : (
                   <button
                     onClick={() => { setOverlayError(""); setIsGenerating(false); }}
-                    className="font-body text-sm text-text-muted underline"
+                    className="font-body text-sm text-text-muted underline py-3 px-4"
                   >
                     Try again
                   </button>
                 )}
                 <button
                   onClick={() => { window.location.href = "/?skip=1"; }}
-                  className="font-body text-sm text-text-muted underline"
+                  className="font-body text-sm text-text-muted underline py-3 px-4"
                 >
                   Go home
                 </button>

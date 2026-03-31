@@ -306,6 +306,7 @@ export const mountainWestDestinations: Destination[] = [
           "Montana private chef scene is growing; many specialize in wild game and locally sourced ingredients",
       },
     ],
+    groceryNotes: "Super 1 Foods, Whitefish within 5 min. Liquor at Whitefish Liquor Store on Baker Ave.",
   },
 
   // ── Big Sky, MT ────────────────────────────────────────────────────
@@ -583,6 +584,7 @@ export const mountainWestDestinations: Destination[] = [
           "Private chef scene is well-developed in Big Sky due to the resort crowd; book 2-3 weeks ahead in summer",
       },
     ],
+    groceryNotes: "Roxy's Market in Big Sky Town Center within 5 min. Liquor at Big Sky Liquor. Albertsons in Bozeman (45 min) for big stock-ups.",
   },
 
   // ── Steamboat Springs, CO ──────────────────────────────────────────
@@ -867,6 +869,7 @@ export const mountainWestDestinations: Destination[] = [
           "Private chef availability is solid in summer; many ski-season chefs stay through golf season",
       },
     ],
+    groceryNotes: "City Market, Safeway within 5 min downtown. Liquor at Steamboat Liquor on Lincoln Ave.",
   },
 
   // ── Durango, CO ────────────────────────────────────────────────────
@@ -1135,6 +1138,7 @@ export const mountainWestDestinations: Destination[] = [
           "Limited but growing private chef options; book well in advance for summer dates",
       },
     ],
+    groceryNotes: "Kroger (City Market), Walmart within 10 min. Liquor at Durango Liquors on Main Ave.",
   },
 
   // ── Park City, UT ──────────────────────────────────────────────────
@@ -1447,6 +1451,7 @@ export const mountainWestDestinations: Destination[] = [
           "Well-established private chef market due to the Sundance/resort crowd; excellent quality and availability in summer",
       },
     ],
+    groceryNotes: "Smith's, Fresh Market within 5 min on Park Ave. Liquor at Park City Liquor Store. State liquor stores close early — plan ahead.",
   },
 
   // ── Jackson Hole, WY ──────────────────────────────────────────────
@@ -1753,6 +1758,7 @@ export const mountainWestDestinations: Destination[] = [
           "Excellent private chef scene catering to the ultra-wealthy Jackson crowd; expect to pay premium prices but get extraordinary quality",
       },
     ],
+    groceryNotes: "Albertsons, Jackson Whole Grocer within 5 min. Liquor at Jackson Hole Wine & Spirits on Broadway.",
   },
 
   // ── Deadwood, SD ───────────────────────────────────────────────────
@@ -2042,6 +2048,7 @@ export const mountainWestDestinations: Destination[] = [
           "Limited private chef options but local catering companies fill the gap well; very affordable compared to resort towns",
       },
     ],
+    groceryNotes: "Lynn's Dakotamart in Lead within 10 min. Liquor at Deadwood Liquor on Main St. Walmart in Spearfish (20 min) for big runs.",
   },
 
   // ── McCall, ID ─────────────────────────────────────────────────────
@@ -2076,6 +2083,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.mccallgolfclub.com",
         highlight:
           "Classic mountain muni with ponderosa pines, a creek running through, and views of the surrounding peaks; walkable and well-conditioned",
+        googleRating: 4.4,
+        reviewCount: 380,
       },
       {
         name: "Whitetail Club",
@@ -2092,6 +2101,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.whitetailclub.com",
         highlight:
           "Private club with limited guest access through Shore Lodge; Gene Bates design with lakefront holes and mountain backdrops",
+        googleRating: 4.7,
+        reviewCount: 260,
       },
     ],
     lodging: [
@@ -2283,6 +2294,7 @@ export const mountainWestDestinations: Destination[] = [
           "Small private chef market but growing; Shore Lodge concierge can help arrange in-cabin dining for groups",
       },
     ],
+    groceryNotes: "McCall Hometown Market within 5 min. Liquor at McCall Liquor Store on 3rd St. Limited selection — stock up in Boise.",
   },
 
   // ── Bozeman, MT ─────────────────────────────────────────────────────
@@ -2317,6 +2329,9 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.bridgercreek.com",
         highlight:
           "Best public value in the valley; Bridger Mountain views from every hole and a fun, rolling layout",
+        googleRating: 4.3,
+        reviewCount: 340,
+        hypeTag: "BEST VALUE",
       },
       {
         name: "Valley View Golf Course",
@@ -2333,6 +2348,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.valleyviewgolfcourse.com",
         highlight:
           "Budget-friendly muni with wide fairways; perfect warm-up or hangover round",
+        googleRating: 4.2,
+        reviewCount: 210,
       },
       {
         name: "Cottonwood Hills Golf Course",
@@ -2546,6 +2563,8 @@ export const mountainWestDestinations: Destination[] = [
         type: "sprinter-van",
         capacity: [12, 14],
         hourlyRate: [125, 175],
+        fullDayRate: [1000, 1400],
+        canDoGolfAndBars: true,
         providers: [
           "Bozeman Party Bus",
           "Greater Yellowstone Transportation",
@@ -2568,6 +2587,7 @@ export const mountainWestDestinations: Destination[] = [
           "Growing private chef market; farm-to-table focus with local bison, elk, and trout",
       },
     ],
+    groceryNotes: "Albertsons, Town & Country Foods within 5 min. Liquor at Montana Spirits on Main St.",
   },
 
   // ── Missoula, MT ────────────────────────────────────────────────────
@@ -2815,6 +2835,8 @@ export const mountainWestDestinations: Destination[] = [
         type: "sprinter-van",
         capacity: [12, 14],
         hourlyRate: [110, 160],
+        fullDayRate: [880, 1280],
+        canDoGolfAndBars: true,
         providers: [
           "Missoula Party Bus",
           "Adventure Shuttle",
@@ -2837,6 +2859,7 @@ export const mountainWestDestinations: Destination[] = [
           "Smaller private chef scene; several local catering companies also do in-home group dinners",
       },
     ],
+    groceryNotes: "Albertsons, Good Food Store within 5 min. Liquor at Worden's Market on Higgins Ave (legendary local spot).",
   },
 
   // ── Colorado Springs, CO ────────────────────────────────────────────
@@ -3110,6 +3133,8 @@ export const mountainWestDestinations: Destination[] = [
         type: "party-bus",
         capacity: [14, 30],
         hourlyRate: [175, 300],
+        fullDayRate: [1400, 2400],
+        canDoGolfAndBars: true,
         providers: [
           "Colorado Springs Party Bus",
           "Peak View Limousine",
@@ -3133,6 +3158,7 @@ export const mountainWestDestinations: Destination[] = [
           "Solid private chef market due to Broadmoor area wealth; many cater to large group events",
       },
     ],
+    groceryNotes: "King Soopers, Safeway, Whole Foods within 10 min. Liquor at Cheers Liquor Mart (massive selection) on S. Circle Dr.",
   },
 
   // ── Breckenridge, CO ────────────────────────────────────────────────
@@ -3381,6 +3407,8 @@ export const mountainWestDestinations: Destination[] = [
         type: "shuttle",
         capacity: [10, 14],
         hourlyRate: [100, 160],
+        fullDayRate: [800, 1280],
+        canDoGolfAndBars: true,
         providers: [
           "Summit Express",
           "Mountain Limo",
@@ -3404,6 +3432,7 @@ export const mountainWestDestinations: Destination[] = [
           "Good private chef options in Summit County; many service both Breck and Keystone properties",
       },
     ],
+    groceryNotes: "City Market within 5 min on Park Ave. Liquor at Breckenridge Liquor on Main St. Stock up in Silverthorne outlets area for better selection.",
   },
 
   // ── Vail, CO ────────────────────────────────────────────────────────
@@ -3668,6 +3697,8 @@ export const mountainWestDestinations: Destination[] = [
         type: "shuttle",
         capacity: [12, 16],
         hourlyRate: [125, 200],
+        fullDayRate: [1000, 1600],
+        canDoGolfAndBars: true,
         providers: [
           "Epic Mountain Express",
           "Vail Valley Shuttle",
@@ -3691,6 +3722,7 @@ export const mountainWestDestinations: Destination[] = [
           "Strong private chef market in Vail; many experienced with large groups in luxury chalets",
       },
     ],
+    groceryNotes: "City Market in West Vail within 5 min. Liquor at Vail Liquor Mart. Stock up in Eagle-Vail area for better prices.",
   },
 
   // ── Telluride, CO ───────────────────────────────────────────────────
@@ -3923,6 +3955,8 @@ export const mountainWestDestinations: Destination[] = [
         type: "shuttle",
         capacity: [10, 14],
         hourlyRate: [100, 175],
+        fullDayRate: [800, 1400],
+        canDoGolfAndBars: true,
         providers: [
           "Telluride Express",
           "Skip's Taxi & Shuttle",
@@ -3945,6 +3979,7 @@ export const mountainWestDestinations: Destination[] = [
           "Small but high-quality private chef market; many cater to the luxury vacation home crowd",
       },
     ],
+    groceryNotes: "Clark's Market in town within 5 min. Liquor at Telluride Liquor on Colorado Ave. Small-town markup — stock up in Montrose if driving.",
   },
 
   // ── Fort Collins, CO ────────────────────────────────────────────────
@@ -4209,6 +4244,8 @@ export const mountainWestDestinations: Destination[] = [
         type: "party-bus",
         capacity: [14, 24],
         hourlyRate: [150, 250],
+        fullDayRate: [1200, 2000],
+        canDoGolfAndBars: true,
         providers: [
           "Fort Collins Party Bus",
           "Shamrock Shuttle",
@@ -4232,6 +4269,7 @@ export const mountainWestDestinations: Destination[] = [
           "Growing private chef scene; many will do beer-pairing dinners with local brewery selections",
       },
     ],
+    groceryNotes: "King Soopers, Natural Grocers, Trader Joe's within 10 min. Liquor at Wilbur's Total Beverage (huge selection) on S. College Ave.",
   },
 
   // ── Glenwood Springs, CO ────────────────────────────────────────────
@@ -4481,6 +4519,8 @@ export const mountainWestDestinations: Destination[] = [
         type: "shuttle",
         capacity: [10, 14],
         hourlyRate: [100, 160],
+        fullDayRate: [800, 1280],
+        canDoGolfAndBars: true,
         providers: [
           "Roaring Fork Transportation Authority",
           "Colorado Mountain Express",
@@ -4503,6 +4543,7 @@ export const mountainWestDestinations: Destination[] = [
           "Roaring Fork Valley has a strong culinary scene; private chefs often source from local farms in Carbondale",
       },
     ],
+    groceryNotes: "City Market within 5 min downtown. Liquor at Glenwood Liquors on Grand Ave. Bigger selection at Whole Foods in Basalt (20 min).",
   },
 
   // ── Pagosa Springs, CO ──────────────────────────────────────────────
@@ -4719,6 +4760,8 @@ export const mountainWestDestinations: Destination[] = [
         type: "shuttle",
         capacity: [8, 14],
         hourlyRate: [80, 140],
+        fullDayRate: [640, 1120],
+        canDoGolfAndBars: true,
         providers: [
           "Mountain Express",
           "Pagosa Cab",
@@ -4741,6 +4784,7 @@ export const mountainWestDestinations: Destination[] = [
           "Limited private chef market; the Alley House Grille team sometimes does private events",
       },
     ],
+    groceryNotes: "City Market within 5 min. Liquor at Pagosa Liquor on Pagosa St. Small-town selection — stock up in Durango if driving.",
   },
 
   // ── Salida, CO ──────────────────────────────────────────────────────
@@ -4965,6 +5009,8 @@ export const mountainWestDestinations: Destination[] = [
         type: "shuttle",
         capacity: [8, 14],
         hourlyRate: [80, 130],
+        fullDayRate: [640, 1040],
+        canDoGolfAndBars: true,
         providers: [
           "Salida Shuttle",
         ],
@@ -4985,6 +5031,7 @@ export const mountainWestDestinations: Destination[] = [
           "Tiny private chef market; local catering companies like Sweetie's Salida can handle group dinners",
       },
     ],
+    groceryNotes: "Safeway, Simple Foods Market within 5 min downtown. Liquor at Salida Liquor on F St.",
   },
 
   // ── Cody, WY ────────────────────────────────────────────────────────
@@ -5199,6 +5246,8 @@ export const mountainWestDestinations: Destination[] = [
         type: "shuttle",
         capacity: [8, 14],
         hourlyRate: [80, 130],
+        fullDayRate: [640, 1040],
+        canDoGolfAndBars: true,
         providers: [
           "Cody Shuttle Service",
           "Yellowstone Tour Guides",
@@ -5482,6 +5531,8 @@ export const mountainWestDestinations: Destination[] = [
         type: "shuttle",
         capacity: [10, 14],
         hourlyRate: [100, 160],
+        fullDayRate: [800, 1280],
+        canDoGolfAndBars: true,
         providers: [
           "Black Hills Party Bus",
           "Affordable Limo & Car Service",
@@ -5719,6 +5770,8 @@ export const mountainWestDestinations: Destination[] = [
         type: "shuttle",
         capacity: [8, 14],
         hourlyRate: [80, 140],
+        fullDayRate: [640, 1120],
+        canDoGolfAndBars: true,
         providers: [
           "Black Hills Party Bus",
         ],

@@ -110,20 +110,20 @@ export default function SubscribePage() {
           <h3 style={{ fontSize: "1rem", color: "rgba(255,255,255,0.3)", marginBottom: "1rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>
             Free vs Devil
           </h3>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 0, fontSize: "0.8rem", textAlign: "left" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: 0, fontSize: "clamp(0.65rem, 2vw, 0.8rem)", textAlign: "left" }}>
             {[
               ["", "Free", "Devil"],
-              ["Plans/month", "1", "Unlimited"],
-              ["Venue names", "Hidden", "✓ Revealed"],
-              ["Booking links", "—", "✓ Direct links"],
-              ["Trip builder", "—", "✓ Full access"],
-              ["Share with crew", "—", "✓ RSVP page"],
-              ["Pro tips", "—", "✓ Insider intel"],
+              ["Plans/mo", "1", "Unlimited"],
+              ["Venues", "Hidden", "✓ Real"],
+              ["Links", "—", "✓ Direct"],
+              ["Builder", "—", "✓ Full"],
+              ["Share", "—", "✓ RSVP"],
+              ["Tips", "—", "✓ Insider"],
             ].map(([feature, free, devil], i) => (
               <div key={i} style={{ display: "contents" }}>
-                <div style={{ padding: "0.6rem 0", color: "rgba(255,255,255,0.5)", borderBottom: "1px solid rgba(255,255,255,0.05)", fontWeight: i === 0 ? 600 : 400 }}>{feature}</div>
-                <div style={{ padding: "0.6rem 0", color: "rgba(255,255,255,0.3)", borderBottom: "1px solid rgba(255,255,255,0.05)", textAlign: "center", fontWeight: i === 0 ? 600 : 400 }}>{free}</div>
-                <div style={{ padding: "0.6rem 0", color: i === 0 ? "rgba(255,255,255,0.5)" : "rgba(220,38,38,0.9)", borderBottom: "1px solid rgba(255,255,255,0.05)", textAlign: "center", fontWeight: 600 }}>{devil}</div>
+                <div style={{ padding: "0.5rem 0.25rem", color: "rgba(255,255,255,0.5)", borderBottom: "1px solid rgba(255,255,255,0.05)", fontWeight: i === 0 ? 600 : 400 }}>{feature}</div>
+                <div style={{ padding: "0.5rem 0.25rem", color: "rgba(255,255,255,0.3)", borderBottom: "1px solid rgba(255,255,255,0.05)", textAlign: "center", fontWeight: i === 0 ? 600 : 400 }}>{free}</div>
+                <div style={{ padding: "0.5rem 0.25rem", color: i === 0 ? "rgba(255,255,255,0.5)" : "rgba(220,38,38,0.9)", borderBottom: "1px solid rgba(255,255,255,0.05)", textAlign: "center", fontWeight: 600 }}>{devil}</div>
               </div>
             ))}
           </div>

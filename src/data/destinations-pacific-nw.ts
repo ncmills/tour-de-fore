@@ -4377,6 +4377,8 @@ export const pacificNWDestinations: Destination[] = [
           "https://www.airbnb.com/s/Gig-Harbor--Washington/homes?adults=14",
         notes:
           "Good inventory of large homes at reasonable prices compared to Seattle. 5-10 min drive to the harbor.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [

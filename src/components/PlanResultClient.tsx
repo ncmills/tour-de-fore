@@ -764,15 +764,17 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
         <div style={{ ...cardStyle, overflow: "hidden" }}>
           <div
             style={{
-              padding: "1.75rem 2rem",
+              padding: "1.25rem clamp(1rem, 4vw, 2rem)",
               borderBottom: "1px solid #222",
               display: "flex",
+              flexWrap: "wrap",
               justifyContent: "space-between",
               alignItems: "center",
+              gap: "0.5rem",
             }}
           >
-            <span style={{ fontSize: 18, fontWeight: 600 }}>Total Per Person</span>
-            <span style={{ fontSize: 28, fontWeight: 700, color: tierColors[tier] }}>
+            <span style={{ fontSize: "clamp(0.9rem, 3vw, 1.1rem)", fontWeight: 600 }}>Total Per Person</span>
+            <span style={{ fontSize: "clamp(1.4rem, 5vw, 1.75rem)", fontWeight: 700, color: tierColors[tier] }}>
               {plan.estimatedBudget.perPerson}
             </span>
           </div>
@@ -780,11 +782,13 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
             <div
               key={item.category}
               style={{
-                padding: "1rem 2rem",
+                padding: "0.75rem clamp(1rem, 4vw, 2rem)",
                 borderBottom: "1px solid #181818",
                 display: "flex",
+                flexWrap: "wrap",
                 justifyContent: "space-between",
                 alignItems: "center",
+                gap: "0.25rem",
                 transition: "background 0.2s",
               }}
               onMouseEnter={(e) => (e.currentTarget.style.background = "#111")}

@@ -2021,6 +2021,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.stowe.com/golf",
         highlight:
           "Classic mountain course with Mount Mansfield as the backdrop — immaculate conditioning and challenging greens",
+        googleRating: 4.5,
+        reviewCount: 520,
       },
       {
         name: "Stowe Mountain Lodge Golf Club",
@@ -2037,6 +2039,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.destinationhotels.com/stowe-mountain-lodge",
         highlight:
           "Bob Cupp design at the base of Spruce Peak with resort luxury and spectacular mountain views",
+        googleRating: 4.6,
+        reviewCount: 380,
       },
       {
         name: "Copley Country Club",
@@ -2052,6 +2056,8 @@ export const northeastDestinations: Destination[] = [
         driveMinutes: 5,
         highlight:
           "Charming 9-hole course right in Stowe village — quick round with Vermont village charm",
+        googleRating: 4.3,
+        reviewCount: 180,
       },
       {
         name: "Country Club of Vermont",
@@ -2067,6 +2073,8 @@ export const northeastDestinations: Destination[] = [
         driveMinutes: 20,
         highlight:
           "Waterbury semi-private course — solid value with rolling terrain and mountain views",
+        googleRating: 4.3,
+        reviewCount: 240,
       },
     ],
     lodging: [

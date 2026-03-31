@@ -1517,6 +1517,8 @@ export const midwestDestinations: Destination[] = [
         searchUrl: "https://www.frenchlick.com",
         notes:
           "Book suites at both historic hotels or get a block of rooms. West Baden's atrium dome is a must-see. Group rates available for 12+.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 2 queens = 12 guys at 2/bed",
       },
       {
         type: "cabin",
@@ -1534,6 +1536,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=French+Lick%2C+Indiana&adults=12",
         notes:
           "Cabin rentals near Patoka Lake are 15-20 min from the resort — more private, great for groups that want their own space",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 2 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -1799,6 +1803,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Duluth%2C+Minnesota&adults=16",
         notes:
           "Park Point has beach homes on a sandy peninsula. North Shore cabins (toward Two Harbors) are more secluded.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "cabin",
@@ -1816,6 +1822,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.airbnb.com/s/North-Shore--Minnesota/homes?adults=12",
         notes:
           "May need two cabins for 16. Closer to Superior National at Lutsen if you stay further up the shore.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 2 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -2145,6 +2153,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Harbor+Springs%2C+Michigan&adults=16",
         notes:
           "Bay Harbor condos are walkable to the course. Harbor Springs has large waterfront homes. Book 6+ months out for summer.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "lodge",
@@ -2161,6 +2171,8 @@ export const midwestDestinations: Destination[] = [
         searchUrl: "https://www.boyne.com/boyne-highlands",
         notes:
           "Condo suites and chalets at the resort — walkable to all four courses. Group packages with golf included.",
+        avgRating: 4.5,
+        bedsBreakdown: "4 kings + 2 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -2456,6 +2468,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Grand+Rapids%2C+Michigan&adults=16",
         notes:
           "East GR lakefront homes sleep 12-16 and are 10 min from downtown. Also check Ada and Cascade for larger estates.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "house",
@@ -2467,6 +2481,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Grand-Rapids--Michigan/homes?adults=14",
         notes:
           "Historic neighborhoods walkable to downtown breweries. May need two houses for 16+.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 2 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -2719,6 +2735,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Door+County%2C+Wisconsin&adults=16",
         notes:
           "Fish Creek and Egg Harbor have the best large-home inventory. Book 6+ months out for July/August. Many homes come with kayaks and bikes.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "cabin",
@@ -2736,6 +2754,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Door-County--Wisconsin/homes?adults=14",
         notes:
           "The quiet side of the peninsula — larger cabin properties with more privacy. 15-20 min to Fish Creek action.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -3006,6 +3026,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Madison%2C+Wisconsin&adults=16",
         notes:
           "Lakefront homes on Mendota or Monona are ideal. The Maple Bluff neighborhood has large estates 10 min from downtown and courses.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "house",
@@ -3023,6 +3045,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Madison--Wisconsin/homes?adults=14",
         notes:
           "Western suburbs put you closer to University Ridge and Hawks Landing. Newer inventory with good space for groups.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -3294,6 +3318,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Brainerd%2C+Minnesota&adults=16",
         notes:
           "Gull Lake has the best large-home inventory — many come with pontoon boats included. Book early for summer weekends.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
       {
         type: "lodge",
@@ -3311,6 +3337,8 @@ export const midwestDestinations: Destination[] = [
         searchUrl: "https://www.maddens.com",
         notes:
           "Both resorts offer multi-bedroom cabins and lodge suites. Golf/stay packages with breakfast are the way to go.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 2 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -3581,6 +3609,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Cincinnati%2C+Ohio&adults=16",
         notes:
           "OTR has walkable townhomes near bars. Northern Kentucky (Covington/Newport) offers cheaper, larger properties with skyline views. Mount Adams has mid-size homes near Eden Park.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "house",
@@ -3592,6 +3622,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Cincinnati--Ohio/homes?adults=14",
         notes:
           "Eastern suburbs with their own bar/restaurant strip. 15 min to downtown, closer to eastern courses.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 2 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -3859,6 +3891,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Columbus%2C+Ohio&adults=16",
         notes:
           "German Village has beautiful brick homes walkable to bars. Short North offers a younger vibe. Both neighborhoods have large rental inventory.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "house",
@@ -3876,6 +3910,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Columbus--Ohio/homes?adults=14",
         notes:
           "Suburbs offer newer, larger homes closer to courses. Dublin is near Muirfield (private but in the area) and Westerville is near Little Turtle.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -4145,6 +4181,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Indianapolis%2C+Indiana&adults=16",
         notes:
           "Broad Ripple has a walkable bar strip and larger rental homes. Meridian-Kessler offers beautiful older homes 10 min from downtown.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "house",
@@ -4156,6 +4194,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Indianapolis--Indiana/homes?adults=14",
         notes:
           "Urban neighborhoods walkable to downtown nightlife. May need two properties for 16+ but location is unbeatable.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 2 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -4424,6 +4464,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Des+Moines%2C+Iowa&adults=16",
         notes:
           "Sherman Hill is walkable to downtown. Beaverdale has charming larger homes 10 min out. Des Moines is extremely affordable compared to other Midwest cities.",
+        avgRating: 4.5,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "house",
@@ -4435,6 +4477,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Des-Moines--Iowa/homes?adults=14",
         notes:
           "East Village is walkable to bars and restaurants. Drake area near the university has good rental inventory.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 2 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -4688,6 +4732,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=Marquette%2C+Michigan&adults=16",
         notes:
           "Lake Superior shoreline homes are stunning but book fast for summer. Big Bay (25 min north) has large remote properties. Sauna is a UP tradition — look for homes that have one.",
+        avgRating: 4.7,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "cabin",
@@ -4705,6 +4751,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.airbnb.com/s/Marquette--Michigan/homes?adults=14",
         notes:
           "Iron Range towns 15 min west of Marquette have larger cabin properties at lower prices. Close to Greywalls.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -4965,6 +5013,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.vrbo.com/search?destination=St+Louis%2C+Missouri&adults=16",
         notes:
           "Soulard has large brick rowhouses walkable to bars. Central West End offers upscale homes near Forest Park. The Grove has newer lofts with a vibrant nightlife strip.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
       {
         type: "house",
@@ -4976,6 +5026,8 @@ export const midwestDestinations: Destination[] = [
           "https://www.airbnb.com/s/St-Louis--Missouri/homes?adults=14",
         notes:
           "Charming inner-ring suburbs with larger homes and easy access to courses south and west of the city.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
