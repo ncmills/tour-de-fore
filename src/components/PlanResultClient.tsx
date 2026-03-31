@@ -304,7 +304,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
         }}>
           <Link
             className="concierge-cta"
-            href={subscribed ? `/plan/build?planId=${planId}&dest=${dest || "mid"}&tier=${tier}` : `/subscribe`}
+            href={`/plan/build?planId=${planId}&dest=${dest || "mid"}&tier=${tier}`}
             style={{
               display: "inline-block",
               background: "rgba(220,38,38,0.85)",
@@ -321,7 +321,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
             onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(220,38,38,1)"; }}
             onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(220,38,38,0.85)"; }}
           >
-            {subscribed ? "Build Your Trip →" : "Become a Devil — $199/yr →"}
+            Build Your Trip →
           </Link>
         </div>
       </div>
@@ -1068,7 +1068,6 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
         </div>
 
         {/* Build Your Trip + Share with Crew CTAs (paid only) */}
-        {paid && (
         <div style={{
           display: "flex",
           flexWrap: "wrap",
@@ -1117,47 +1116,8 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
             🔗 Share with Crew
           </Link>
         </div>
-        )}
 
-        {/* Become a Devil CTA for non-subscribers */}
-        {!subscribed && (
-          <div style={{
-            textAlign: "center",
-            background: "rgba(220,38,38,0.06)",
-            border: "2px solid rgba(220,38,38,0.3)",
-            borderRadius: 16,
-            padding: "2.5rem 2rem",
-            marginTop: "3rem",
-          }}>
-            <div style={{ fontSize: "3rem", marginBottom: "0.75rem" }}>😈</div>
-            <h3 style={{
-              fontFamily: "var(--font-plan-groovy), cursive",
-              fontSize: "clamp(1.5rem, 4vw, 2.2rem)",
-              marginBottom: "0.75rem",
-            }}>
-              Become a Devil
-            </h3>
-            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.9rem", maxWidth: 400, margin: "0 auto 1.5rem", lineHeight: 1.6 }}>
-              Unlock real venue names, booking links, and unlimited trip plans. See exactly where to book.
-            </p>
-            <Link
-              href="/subscribe"
-              style={{
-                display: "inline-block",
-                padding: "1rem 2.5rem",
-                background: "rgba(220,38,38,0.9)",
-                borderRadius: 8,
-                color: "#fff",
-                fontSize: "1rem",
-                fontWeight: 700,
-                textDecoration: "none",
-                fontFamily: "var(--font-plan-script), cursive",
-              }}
-            >
-              $199/year — Unlock Everything
-            </Link>
-          </div>
-        )}
+        {/* Subscription CTA removed — plans are fully free */}
       </div>
     </div>
   );

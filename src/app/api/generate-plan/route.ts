@@ -107,10 +107,9 @@ export async function POST(req: NextRequest) {
       premium: byLevel.premium || fallbackPreview,
     };
 
-    // Generate FULL Claude plans for ALL users (the recommended destination)
-    // For subscribers: generate all 3. For free: generate just the mid (recommended).
+    // Generate FULL Claude plans for ALL users — all 3 destinations
     const client = new Anthropic();
-    const destsToGenerate = subscribed ? picks : [picks.find((p) => p.priceLevel === "mid") || picks[0]];
+    const destsToGenerate = picks;
 
     const planPromises = destsToGenerate.map(async (pick) => {
       const context = buildDestinationContext(pick.destination);
@@ -141,8 +140,8 @@ export async function POST(req: NextRequest) {
       premium: destByLevel.premium || fallbackRec,
     } : undefined;
 
-    // Record free plan usage
-    if (!subscribed && email) {
+    // Record free plan usage (1/month limit)
+    if (email) {
       await recordFreePlanGeneration(email);
     }
 
@@ -155,7 +154,7 @@ export async function POST(req: NextRequest) {
       inputs: state,
       createdAt: new Date().toISOString(),
       emailsSent: false,
-      paid: subscribed, // subscribers auto-marked as paid
+      paid: true, // all plans are fully unlocked now
     };
 
     await storePlan(storedPlan);

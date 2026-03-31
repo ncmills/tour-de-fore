@@ -1,8 +1,6 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { getPlan } from "@/lib/kv";
-import { getSessionEmail, isSubscribed } from "@/lib/auth";
-import { maskPlan } from "@/lib/mask";
 import PlanResultClient from "@/components/PlanResultClient";
 import PlanSelectionClient from "@/components/PlanSelectionClient";
 import type {
@@ -48,18 +46,14 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
   const stored = await getPlan(id);
   if (!stored) notFound();
 
-  // Check subscription status
-  const email = await getSessionEmail();
-  const subscribed = email ? await isSubscribed(email) : false;
-
-  // ── No dest: show destination cards ──
+  // No dest: show destination cards
   if (!dest) {
     return (
       <Suspense>
         <PlanSelectionClient
           planId={id}
           freePreviews={stored.freePreviews || null}
-          paid={subscribed || stored.paid}
+          paid={true}
           paidDestination={stored.paidDestination}
           legacyDestinations={stored.destinations}
         />
@@ -69,54 +63,43 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
 
   const destLevel = dest as PriceLevel;
 
-  // ── Has dest + full plan data: show plan (masked or full) ──
+  // Show full plan — no masking, no paywall
   if (stored.destinations?.[destLevel]) {
     const rec = stored.destinations[destLevel];
     const selectedTier = tier || "devil";
-    let plan = getTierPlan(rec.plans, selectedTier);
+    const plan = getTierPlan(rec.plans, selectedTier);
     if (!plan) notFound();
-
-    // Mask names for non-subscribers
-    if (!subscribed) {
-      plan = maskPlan(plan);
-    }
 
     return (
       <Suspense>
         <PlanResultClient
           plan={plan}
-          allPlans={subscribed ? rec.plans : undefined}
+          allPlans={rec.plans}
           planId={id}
           tier={selectedTier as TripTier}
           dest={dest}
-          paid={subscribed}
-          subscribed={subscribed}
+          paid={true}
         />
       </Suspense>
     );
   }
 
-  // ── Legacy plans ──
+  // Legacy plans
   if (stored.plans) {
     const selectedTier = tier || "devil";
-    let plan = getTierPlan(stored.plans, selectedTier);
+    const plan = getTierPlan(stored.plans, selectedTier);
     if (!plan) notFound();
-    if (!subscribed) plan = maskPlan(plan);
     return (
       <Suspense>
-        <PlanResultClient plan={plan} planId={id} tier={selectedTier as TripTier} dest={dest} paid={true} subscribed={subscribed} />
+        <PlanResultClient plan={plan} planId={id} tier={selectedTier as TripTier} dest={dest} paid={true} />
       </Suspense>
     );
   }
 
-  // No full plan yet — show destination cards
+  // Fallback: show destination cards
   return (
     <Suspense>
-      <PlanSelectionClient
-        planId={id}
-        freePreviews={stored.freePreviews || null}
-        paid={false}
-      />
+      <PlanSelectionClient planId={id} freePreviews={stored.freePreviews || null} paid={true} />
     </Suspense>
   );
 }

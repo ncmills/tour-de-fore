@@ -142,67 +142,33 @@ function DestinationCard({
         )}
 
         {/* Locked teaser OR View Plan CTA */}
-        {isUnlocked ? (
-          <Link
-            href={`/plan/result/${planId}?dest=${priceKey}&tier=devil`}
-            onClick={trackClick}
-            style={{
-              display: "block",
-              marginTop: "1rem",
-              padding: "0.75rem",
-              background: "rgba(74,222,128,0.15)",
-              border: "1px solid rgba(74,222,128,0.3)",
-              borderRadius: 8,
-              textAlign: "center",
-              fontSize: "0.85rem",
-              fontWeight: 600,
-              color: "rgba(74,222,128,0.9)",
-              textDecoration: "none",
-            }}
-          >
-            View Full Plan →
-          </Link>
-        ) : (
-          <>
-            {/* Locked content teaser */}
-            {lockedCounts && (
-              <div style={{ padding: "0.75rem", background: "rgba(255,255,255,0.02)", borderRadius: 8, border: "1px solid rgba(255,255,255,0.05)", marginBottom: "0.75rem" }}>
-                <div style={{ fontSize: "0.65rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(234,88,12,0.7)", marginBottom: "0.4rem", display: "flex", alignItems: "center", gap: "0.3rem" }}>
-                  🏆 Unlock to see:
-                </div>
-                <div style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.35)", lineHeight: 1.6 }}>
-                  {lockedCounts.moreHouses > 0 && `${lockedCounts.moreHouses} more houses · `}
-                  {lockedCounts.restaurants} restaurants · {lockedCounts.bars} bars · {lockedCounts.activities} activities
-                  {lockedCounts.partyBusOptions > 0 && ` · party bus`}
-                  {lockedCounts.privateChefOptions > 0 && ` · private chef`}
-                  {` · full schedule · pro tips`}
-                </div>
-              </div>
-            )}
-
-            {/* Unlock CTA */}
-            <button
-              onClick={handleUnlock}
-              disabled={unlocking}
-              style={{
-                width: "100%",
-                padding: "0.85rem",
-                background: isMid ? "rgba(220,38,38,0.9)" : "rgba(255,255,255,0.08)",
-                border: isMid ? "none" : "1px solid rgba(255,255,255,0.15)",
-                borderRadius: 8,
-                fontSize: "0.85rem",
-                fontWeight: 700,
-                color: isMid ? "#fff" : "rgba(255,255,255,0.7)",
-                cursor: unlocking ? "wait" : "pointer",
-                opacity: unlocking ? 0.6 : 1,
-                transition: "all 0.2s",
-                letterSpacing: "0.03em",
-              }}
-            >
-              {unlocking ? "Redirecting to checkout..." : "Unlock Full Plan — $99"}
-            </button>
-          </>
+        {/* What's included teaser */}
+        {lockedCounts && (
+          <div style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.35)", marginBottom: "0.75rem" }}>
+            {lockedCounts.restaurants} restaurants · {lockedCounts.bars} bars · {lockedCounts.activities} activities
+            {lockedCounts.partyBusOptions > 0 && ` · party bus`}
+          </div>
         )}
+
+        <Link
+          href={`/plan/result/${planId}?dest=${priceKey}&tier=devil`}
+          onClick={trackClick}
+          style={{
+            display: "block",
+            padding: "0.85rem",
+            background: isMid ? "rgba(220,38,38,0.9)" : "rgba(255,255,255,0.08)",
+            border: isMid ? "none" : "1px solid rgba(255,255,255,0.15)",
+            borderRadius: 8,
+            textAlign: "center",
+            fontSize: "0.85rem",
+            fontWeight: 700,
+            color: isMid ? "#fff" : "rgba(255,255,255,0.7)",
+            textDecoration: "none",
+            letterSpacing: "0.03em",
+          }}
+        >
+          View Full Plan →
+        </Link>
       </div>
     </motion.div>
   );
@@ -247,7 +213,7 @@ export default function PlanSelectionClient({
           transition={{ delay: 0.4 }}
           style={{ fontSize: "clamp(0.9rem, 2vw, 1.1rem)", color: "rgba(255,255,255,0.5)", maxWidth: 600, margin: "0 auto" }}
         >
-          Three destinations at three price points. Preview each for free — unlock the full plan with courses, restaurants, bars, schedule, and pro tips for $99.
+          Three destinations at three price points — each with a full AI-generated trip plan.
         </motion.p>
       </div>
 

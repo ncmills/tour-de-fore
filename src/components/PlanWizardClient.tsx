@@ -808,7 +808,7 @@ export default function PlanWizardClient() {
 
           {/* Free plan indicator */}
           <p style={{ fontSize: "0.84rem", color: "rgba(255,255,255,0.25)", textAlign: "center", marginBottom: "1rem" }}>
-            Free plan — venue names masked. <a href="/subscribe" style={{ color: "rgba(220,38,38,0.7)", textDecoration: "underline" }}>Become a Devil</a> for full details + unlimited plans.
+            1 free plan per month — create an account to save your trips.
           </p>
 
           {error && (

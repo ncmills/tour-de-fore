@@ -82,9 +82,6 @@ export default function Footer() {
               <Link href="/my-trips" className="text-text-muted hover:text-accent transition-colors duration-300 text-sm font-body block">
                 My Trips
               </Link>
-              <Link href="/subscribe" className="text-text-muted hover:text-accent transition-colors duration-300 text-sm font-body block">
-                Become a Devil — $199/yr
-              </Link>
             </div>
 
             <h4 className="text-xs tracking-[0.15em] uppercase text-accent mb-6 font-body font-medium">
