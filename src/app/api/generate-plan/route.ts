@@ -20,7 +20,6 @@ import { buildFreePreview } from "@/lib/free-plan";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import { validateWizardState } from "@/lib/validate";
 import {
-  isSubscribed,
   canGenerateFreePlan,
   recordFreePlanGeneration,
   addPlanToUser,
@@ -64,15 +63,14 @@ export async function POST(req: NextRequest) {
     const raw = await req.json();
     const state = validateWizardState(raw);
 
-    // Check subscription or free plan limit
+    // Check free plan limit (1 per month)
     const email = state.organizerEmail;
-    const subscribed = email ? await isSubscribed(email) : false;
 
-    if (!subscribed) {
-      const canGenerate = email ? await canGenerateFreePlan(email) : true;
+    if (email) {
+      const canGenerate = await canGenerateFreePlan(email);
       if (!canGenerate) {
         return NextResponse.json({
-          error: "You've used your free plan this month. Become a Devil for unlimited trips — $199/year.",
+          error: "You've used your free plan this month. Check back next month!",
           limitReached: true,
         }, { status: 429 });
       }
@@ -168,7 +166,7 @@ export async function POST(req: NextRequest) {
       await recordDestinationView(preview.destinationId, state);
     }
 
-    return NextResponse.json({ planId, freePreviews, subscribed });
+    return NextResponse.json({ planId, freePreviews });
   } catch (err) {
     console.error("Plan generation error:", err);
     return NextResponse.json(

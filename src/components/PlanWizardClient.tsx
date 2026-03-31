@@ -470,30 +470,12 @@ export default function PlanWizardClient() {
               <Logo className="w-12 h-12 opacity-40" />
               <p className="font-body text-red-400 text-base max-w-sm">{overlayError}</p>
               <div className="flex flex-wrap gap-4 justify-center">
-                {overlayError.includes("Become a Devil") ? (
-                  <a
-                    href="/subscribe"
-                    style={{
-                      padding: "12px 28px",
-                      background: "rgba(220,38,38,0.9)",
-                      borderRadius: 8,
-                      color: "#fff",
-                      fontSize: "0.9rem",
-                      fontWeight: 700,
-                      textDecoration: "none",
-                      fontFamily: "var(--font-inter), sans-serif",
-                    }}
-                  >
-                    😈 Become a Devil — $199/yr
-                  </a>
-                ) : (
-                  <button
-                    onClick={() => { setOverlayError(""); setIsGenerating(false); }}
-                    className="font-body text-sm text-text-muted underline py-3 px-4"
-                  >
-                    Try again
-                  </button>
-                )}
+                <button
+                  onClick={() => { setOverlayError(""); setIsGenerating(false); }}
+                  className="font-body text-sm text-text-muted underline py-3 px-4"
+                >
+                  Try again
+                </button>
                 <button
                   onClick={() => { window.location.href = "/?skip=1"; }}
                   className="font-body text-sm text-text-muted underline py-3 px-4"
