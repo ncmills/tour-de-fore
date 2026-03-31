@@ -305,6 +305,20 @@ body.menu-open {
     min-height: 44px !important;
   }
 
+  /* Bar scene buttons — position over drinks on mobile */
+  .bar-btn-left {
+    top: 38% !important;
+    left: 25% !important;
+    width: clamp(75px, 22vw, 110px) !important;
+    height: clamp(75px, 22vw, 110px) !important;
+  }
+  .bar-btn-right {
+    top: 36% !important;
+    left: 70% !important;
+    width: clamp(75px, 22vw, 110px) !important;
+    height: clamp(75px, 22vw, 110px) !important;
+  }
+
   /* Plan result header — stack vertically */
   .plan-header-row {
     flex-direction: column !important;

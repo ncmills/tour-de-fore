@@ -82,7 +82,7 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               pointerEvents: "none",
             }}
           >
-            {/* 🥃 Shot = drink feature (left hand) */}
+            {/* 🥃 Shot = drink feature (over left drink) */}
             <motion.button
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: [1, 1.06, 1] }}
@@ -91,10 +91,11 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               whileHover={{ scale: 1.15 }}
               whileTap={{ scale: 0.9 }}
               onClick={handleDrink}
+              className="bar-btn-left"
               style={{
                 pointerEvents: "auto",
                 position: "absolute",
-                top: "58%",
+                top: "42%",
                 left: "30%",
                 transform: "translate(-50%, -50%)",
                 background: "rgba(0,0,0,0.5)",
@@ -119,7 +120,7 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               <span style={{ fontSize: "clamp(0.9rem, 2vw, 1.1rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>drink</span>
             </motion.button>
 
-            {/* 🍺 Beer = shop feature (right hand) */}
+            {/* 🍺 Beer = shop feature (over right drink) */}
             <motion.button
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: [1, 1.06, 1] }}
@@ -128,10 +129,11 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               whileHover={{ scale: 1.15 }}
               whileTap={{ scale: 0.9 }}
               onClick={handleShop}
+              className="bar-btn-right"
               style={{
                 pointerEvents: "auto",
                 position: "absolute",
-                top: "55%",
+                top: "40%",
                 left: "72%",
                 transform: "translate(-50%, -50%)",
                 background: "rgba(0,0,0,0.5)",
@@ -173,7 +175,7 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               pointerEvents: "none",
             }}
           >
-            {/* 💧 Water = sober up (replaces beer position on left) */}
+            {/* 💧 Water = sober up (over left drink) */}
             <motion.button
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: [1, 1.06, 1] }}
@@ -182,10 +184,11 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               whileHover={{ scale: 1.15 }}
               whileTap={{ scale: 0.9 }}
               onClick={handleSober}
+              className="bar-btn-left"
               style={{
                 pointerEvents: "auto",
                 position: "absolute",
-                top: "58%",
+                top: "42%",
                 left: "30%",
                 transform: "translate(-50%, -50%)",
                 background: "rgba(0,0,0,0.5)",
@@ -210,7 +213,7 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               <span style={{ fontSize: "clamp(0.9rem, 2vw, 1.1rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>sober up</span>
             </motion.button>
 
-            {/* 🍺 Shop (right) */}
+            {/* 🍺 Shop (over right drink) */}
             <motion.button
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: [1, 1.06, 1] }}
@@ -219,10 +222,11 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               whileHover={{ scale: 1.15 }}
               whileTap={{ scale: 0.9 }}
               onClick={handleShop}
+              className="bar-btn-right"
               style={{
                 pointerEvents: "auto",
                 position: "absolute",
-                top: "55%",
+                top: "40%",
                 left: "72%",
                 transform: "translate(-50%, -50%)",
                 background: "rgba(0,0,0,0.5)",
