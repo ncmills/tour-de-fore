@@ -90,8 +90,8 @@ export default function PlanLandingClient({ onFirstTime }: { onFirstTime: () => 
                 textAlign: "center",
               }}
             >
-              <span style={{ display: "block", fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1.3rem", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.3rem" }}>Login</span>
-              <span style={{ display: "block", fontSize: "0.8rem", color: "rgba(255,255,255,0.4)" }}>View your planned trips</span>
+              <span style={{ display: "block", fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1.3rem", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.3rem" }}>View Planned Trips</span>
+              <span style={{ display: "block", fontSize: "0.8rem", color: "rgba(255,255,255,0.4)" }}>Sign in to see your trips</span>
             </motion.button>
 
             <motion.button
@@ -108,8 +108,8 @@ export default function PlanLandingClient({ onFirstTime }: { onFirstTime: () => 
                 textAlign: "center",
               }}
             >
-              <span style={{ display: "block", fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1.3rem", textTransform: "uppercase", letterSpacing: "0.06em", color: "#EA580C", marginBottom: "0.3rem" }}>First Time Planner</span>
-              <span style={{ display: "block", fontSize: "0.8rem", color: "rgba(255,255,255,0.4)" }}>Plan your first golf trip</span>
+              <span style={{ display: "block", fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1.3rem", textTransform: "uppercase", letterSpacing: "0.06em", color: "#EA580C", marginBottom: "0.3rem" }}>Plan New Trip</span>
+              <span style={{ display: "block", fontSize: "0.8rem", color: "rgba(255,255,255,0.4)" }}>Build a custom golf trip with AI</span>
             </motion.button>
           </motion.div>
         )}
