@@ -2792,6 +2792,7 @@ export const northeastDestinations: Destination[] = [
           "A beachside or backyard lobster bake is the signature Kennebunkport group meal. Chefs bring the seaweed, lobsters, clams, corn, and potatoes.",
       },
     ],
+    groceryNotes: "Hannaford in Kennebunk within 10 min. Liquor at The Kennebunk Wine & Spirits on Route 1.",
   },
   {
     id: "newport-ri",
@@ -3064,6 +3065,7 @@ export const northeastDestinations: Destination[] = [
           "A New England clambake at your rental is quintessential Newport — lobster, clams, and chowder with ocean views.",
       },
     ],
+    groceryNotes: "Stop & Shop, Clements Marketplace within 10 min. Liquor at Thames Street Wine & Spirits.",
   },
   {
     id: "atlantic-city-nj",
@@ -3347,6 +3349,7 @@ export const northeastDestinations: Destination[] = [
           "Beach house cookout in Margate before hitting the casinos is a solid play. Most chefs serve the shore house rental crowd all summer.",
       },
     ],
+    groceryNotes: "ShopRite, ACME within 10 min in Margate/Ventnor. Liquor at Joe Canal's Discount Liquor on Fire Rd.",
   },
   {
     id: "hershey-pa",
@@ -3590,6 +3593,7 @@ export const northeastDestinations: Destination[] = [
           "Backyard BBQ at the rental is a great way to kick off the trip. Most chefs serve the Hershey vacation rental crowd regularly.",
       },
     ],
+    groceryNotes: "Giant, Karns within 10 min. Liquor at Fine Wine & Good Spirits (PA state store) on Chocolate Ave.",
   },
   {
     id: "ocean-city-md",
@@ -3844,6 +3848,7 @@ export const northeastDestinations: Destination[] = [
           "A Maryland crab feast at the beach house is mandatory — steamed blue crabs, Old Bay, corn, and cold beer on newspaper-covered tables.",
       },
     ],
+    groceryNotes: "Food Lion, Giant within 10 min on Coastal Hwy. Liquor at OC Liquors or Cork Bar & Bottle Shop.",
   },
   {
     id: "catskills-ny",
@@ -4089,6 +4094,7 @@ export const northeastDestinations: Destination[] = [
           "Cabin BBQ with local beef and craft beer is the quintessential Catskills group meal. Many chefs source from nearby farms.",
       },
     ],
+    groceryNotes: "Sunflower Market in Woodstock, ShopRite in Kingston within 20 min. Liquor at Windham Wine & Spirits.",
   },
   {
     id: "bretton-woods-nh",
@@ -4318,6 +4324,7 @@ export const northeastDestinations: Destination[] = [
           "Cabin dinners with local sourcing are excellent here. The resort dining is so good though that many groups skip the private chef.",
       },
     ],
+    groceryNotes: "Shaw's in Littleton (25 min) or resort gift shop for basics. Liquor at NH State Liquor Store on I-93. NH has no sales tax on liquor.",
   },
   {
     id: "bar-harbor-me",
@@ -4549,6 +4556,7 @@ export const northeastDestinations: Destination[] = [
           "A traditional Maine lobster bake on the shore or at your rental is the ultimate Bar Harbor group meal. Book 2+ weeks ahead in summer.",
       },
     ],
+    groceryNotes: "Hannaford in Bar Harbor within 5 min. Liquor at Bar Harbor Cellars on Cottage St.",
   },
   {
     id: "burlington-vt",
@@ -4812,6 +4820,7 @@ export const northeastDestinations: Destination[] = [
           "Burlington's farm-to-table scene is legit — local beef, cheese, and produce with Vermont craft beer pairings. A lake-view dinner is the move.",
       },
     ],
+    groceryNotes: "Hannaford, City Market (co-op) within 5 min. Liquor at Church Street Spirits or Healthy Living Market.",
   },
   {
     id: "cooperstown-ny",
@@ -5041,6 +5050,7 @@ export const northeastDestinations: Destination[] = [
           "A lakeside BBQ cookout is the Cooperstown move — grill out on the dock with local craft beer and lake views at sunset.",
       },
     ],
+    groceryNotes: "Price Chopper in Oneonta (25 min). Cooperstown General Store for basics. Liquor at Cooperstown Beverage Exchange on Main St.",
   },
   {
     id: "cape-may-nj",
@@ -5271,6 +5281,7 @@ export const northeastDestinations: Destination[] = [
           "A seafood dinner on the deck with Cape May wine pairings is the signature group meal. Many chefs source directly from the fishing fleet.",
       },
     ],
+    groceryNotes: "ACME on Lafayette St within 5 min. Liquor at Collier's Liquor Store on Jackson St.",
   },
   {
     id: "mystic-ct",
@@ -5498,6 +5509,7 @@ export const northeastDestinations: Destination[] = [
           "A New England clambake at a waterfront rental is the peak Mystic group meal. Many chefs work the coastal rental circuit all summer.",
       },
     ],
+    groceryNotes: "Stop & Shop in Mystic within 5 min. Liquor at Mystic Discount Liquors on Route 1.",
   },
   {
     id: "hudson-valley-ny",
@@ -5727,5 +5739,6 @@ export const northeastDestinations: Destination[] = [
           "The farm-to-table chef scene here is exceptional — chefs source from Fishkill Farms, Glynwood, and local dairies. A house dinner paired with local wines is the quintessential HV experience.",
       },
     ],
+    groceryNotes: "Adams Fairacre Farms in Poughkeepsie, ShopRite within 15 min. Liquor at Hudson Wine Merchants on Warren St.",
   },
 ];

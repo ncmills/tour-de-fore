@@ -22,7 +22,7 @@ export default function SelectionCard({ label, sublabel, selected, onClick, comp
         borderRadius: 4,
         border: selected ? "1px solid #fff" : "1px solid rgba(255,255,255,0.12)",
         background: selected ? "#fff" : "transparent",
-        padding: compact ? "0.8rem 1rem" : "1.2rem 1.4rem",
+        padding: compact ? "1rem 1.2rem" : "1.4rem 1.7rem",
         cursor: "pointer",
         transition: "background 0.2s, border-color 0.2s",
         width: "100%",
@@ -31,7 +31,7 @@ export default function SelectionCard({ label, sublabel, selected, onClick, comp
       <span style={{
         display: "block",
         fontFamily: "var(--font-inter), sans-serif",
-        fontSize: compact ? "0.8rem" : "0.875rem",
+        fontSize: compact ? "0.96rem" : "1.05rem",
         fontWeight: 500,
         letterSpacing: "0.02em",
         color: selected ? "#000" : "rgba(255,255,255,0.75)",
@@ -42,7 +42,7 @@ export default function SelectionCard({ label, sublabel, selected, onClick, comp
       {sublabel && (
         <span style={{
           display: "block",
-          fontSize: "0.7rem",
+          fontSize: "0.84rem",
           color: selected ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.3)",
           marginTop: "0.25rem",
           fontFamily: "var(--font-inter), sans-serif",

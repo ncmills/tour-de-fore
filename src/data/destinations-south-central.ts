@@ -287,6 +287,7 @@ export const southCentralDestinations: Destination[] = [
           "Lakehouse kitchens are usually large enough for a chef setup. BBQ cookout on the dock is the signature move. Some chefs will do a whole brisket smoked on-site.",
       },
     ],
+    groceryNotes: "H-E-B in Marble Falls within 15 min. Liquor at Marble Falls Liquor on Hwy 281. Stock up — limited options closer to the lake.",
   },
   {
     id: "fredericksburg-tx",
@@ -570,6 +571,7 @@ export const southCentralDestinations: Destination[] = [
           "Ranch kitchens are big enough for full chef setups. Ask for venison, quail, or wild boar — locally sourced game is the move here.",
       },
     ],
+    groceryNotes: "H-E-B on Main St within 5 min. Liquor at Fredericksburg Beverage Barn on E. Main. Wine direct from the 50+ Hill Country wineries.",
   },
   {
     id: "hot-springs-ar",
@@ -870,6 +872,7 @@ export const southCentralDestinations: Destination[] = [
           "Fried catfish and BBQ are the local specialties. Lake houses have big kitchens and outdoor spaces perfect for chef setups. Prices are notably lower than Texas or coastal destinations.",
       },
     ],
+    groceryNotes: "Kroger, Walmart within 10 min on Central Ave. Liquor at Hot Springs Liquor on Malvern Ave.",
   },
   {
     id: "branson-mo",
@@ -1210,6 +1213,7 @@ export const southCentralDestinations: Destination[] = [
           "Cabin kitchens in the Branson area are typically large and well-equipped for chef setups. Smoked trout and Ozark game options are unique to the area. Very affordable rates.",
       },
     ],
+    groceryNotes: "Harter House, Walmart within 10 min on Shepherd of the Hills Expy. Liquor at Branson Liquor on Hwy 76.",
   },
   {
     id: "san-antonio-tx",
@@ -1551,6 +1555,7 @@ export const southCentralDestinations: Destination[] = [
           "Fajita night with hand-made tortillas is the signature group meal. Many chefs will bring a portable grill for pool-side cooking. Breakfast tacos the morning after are clutch.",
       },
     ],
+    groceryNotes: "H-E-B on Loop 1604 within 10 min. Liquor at Spec's on Blanco Rd (huge Texas chain with great selection and prices).",
   },
   {
     id: "austin-tx",
@@ -1843,6 +1848,8 @@ export const southCentralDestinations: Destination[] = [
         type: "party-bus",
         capacity: [14, 30],
         hourlyRate: [225, 400],
+        fullDayRate: [1800, 3200],
+        canDoGolfAndBars: true,
         providers: [
           "Austin Party Bus",
           "Lux Bus America",
@@ -1855,6 +1862,8 @@ export const southCentralDestinations: Destination[] = [
         type: "sprinter-van",
         capacity: [12, 14],
         hourlyRate: [150, 275],
+        fullDayRate: [1200, 2200],
+        canDoGolfAndBars: true,
         providers: ["ATX Sprinter", "Royal Executive Transportation"],
         notes:
           "Sprinters are practical for daytime course shuttles. Save the party bus for Sixth Street and Rainey nights.",
@@ -1875,6 +1884,7 @@ export const southCentralDestinations: Destination[] = [
           "Austin's food scene attracts serious culinary talent. A private BBQ cookout by the pool is the signature move. Breakfast taco service the morning after a Sixth Street night is non-negotiable.",
       },
     ],
+    groceryNotes: "H-E-B within 10 min everywhere. Liquor at Spec's or Twin Liquors on S. Lamar. Austin has abundant options.",
   },
   {
     id: "dallas-fort-worth-tx",
@@ -2168,6 +2178,8 @@ export const southCentralDestinations: Destination[] = [
         type: "party-bus",
         capacity: [14, 30],
         hourlyRate: [225, 400],
+        fullDayRate: [1800, 3200],
+        canDoGolfAndBars: true,
         providers: [
           "Dallas Party Bus",
           "DFW Party Bus Rental",
@@ -2180,6 +2192,8 @@ export const southCentralDestinations: Destination[] = [
         type: "sprinter-van",
         capacity: [12, 14],
         hourlyRate: [150, 275],
+        fullDayRate: [1200, 2200],
+        canDoGolfAndBars: true,
         providers: ["DFW Executive Transportation", "Premier Sprinter"],
         notes:
           "Sprinter vans for daytime course transport. Party bus for Fort Worth Stockyards and Deep Ellum nights.",
@@ -2200,6 +2214,7 @@ export const southCentralDestinations: Destination[] = [
           "DFW houses typically have large kitchens and outdoor spaces perfect for private chef setups. A poolside steak dinner is the signature move for arrival night.",
       },
     ],
+    groceryNotes: "Kroger, Tom Thumb, H-E-B within 10 min everywhere. Liquor at Spec's or Total Wine (massive selection).",
   },
   {
     id: "houston-tx",
@@ -2483,6 +2498,8 @@ export const southCentralDestinations: Destination[] = [
         type: "party-bus",
         capacity: [14, 30],
         hourlyRate: [225, 400],
+        fullDayRate: [1800, 3200],
+        canDoGolfAndBars: true,
         providers: [
           "Houston Party Bus",
           "Lux Bus America",
@@ -2495,6 +2512,8 @@ export const southCentralDestinations: Destination[] = [
         type: "sprinter-van",
         capacity: [12, 14],
         hourlyRate: [150, 275],
+        fullDayRate: [1200, 2200],
+        canDoGolfAndBars: true,
         providers: ["Houston Sprinter", "Executive Car Service Houston"],
         notes:
           "Sprinter vans for golf day logistics. Houston traffic can be brutal — allow extra time during rush hours.",
@@ -2520,6 +2539,7 @@ export const southCentralDestinations: Destination[] = [
           "Houston's diverse food culture means chefs here can do things others can't — a Viet-Cajun crawfish boil or Gulf seafood spread is the move. Pool houses are ideal for chef setups.",
       },
     ],
+    groceryNotes: "H-E-B, Kroger within 10 min everywhere. Liquor at Spec's (Houston HQ, legendary selection and prices).",
   },
   {
     id: "new-orleans-la",
@@ -2798,6 +2818,8 @@ export const southCentralDestinations: Destination[] = [
         type: "party-bus",
         capacity: [14, 28],
         hourlyRate: [200, 375],
+        fullDayRate: [1600, 3000],
+        canDoGolfAndBars: true,
         providers: [
           "NOLA Party Bus",
           "Cajun Country Limo",
@@ -2810,6 +2832,8 @@ export const southCentralDestinations: Destination[] = [
         type: "trolley",
         capacity: [12, 20],
         hourlyRate: [175, 300],
+        fullDayRate: [1400, 2400],
+        canDoGolfAndBars: true,
         providers: ["NOLA Trolley Tours", "Cajun Crawler"],
         notes:
           "Trolley-style buses are popular for group brewery crawls and bar tours. Open-air with sound systems and coolers.",
@@ -2834,6 +2858,7 @@ export const southCentralDestinations: Destination[] = [
           "New Orleans has some of the most talented private chefs in the country. A courtyard crawfish boil is the signature group meal. Book early — NOLA chefs are in high demand.",
       },
     ],
+    groceryNotes: "Rouses Market, Winn-Dixie within 10 min. Liquor at Martin Wine Cellar on Baronne St (legendary local shop).",
   },
   {
     id: "louisville-ky",
@@ -3126,6 +3151,8 @@ export const southCentralDestinations: Destination[] = [
         type: "party-bus",
         capacity: [14, 24],
         hourlyRate: [200, 350],
+        fullDayRate: [1600, 2800],
+        canDoGolfAndBars: true,
         providers: [
           "Louisville Party Bus",
           "Derby City Limousine",
@@ -3161,6 +3188,7 @@ export const southCentralDestinations: Destination[] = [
           "A bourbon-paired steak dinner is the signature group meal. Many chefs will bring a bourbon flight to pair with each course. The Kentucky Hot Brown (open-faced turkey sandwich with Mornay sauce) is a local must-try.",
       },
     ],
+    groceryNotes: "Kroger, Trader Joe's within 10 min in the Highlands. Liquor at Total Wine or Old Town Liquors on Bardstown Rd.",
   },
   {
     id: "tulsa-ok",
@@ -3426,6 +3454,8 @@ export const southCentralDestinations: Destination[] = [
         type: "party-bus",
         capacity: [14, 22],
         hourlyRate: [175, 300],
+        fullDayRate: [1400, 2400],
+        canDoGolfAndBars: true,
         providers: [
           "Tulsa Party Bus",
           "Oklahoma Limo Service",
@@ -3449,6 +3479,7 @@ export const southCentralDestinations: Destination[] = [
           "Chef rates in Tulsa are some of the lowest in the region. A poolside BBQ cookout or steak dinner is the move. Oklahoma beef is seriously underrated.",
       },
     ],
+    groceryNotes: "Reasor's, Sprouts within 10 min on Brookside. Liquor at Byron's Liquor Warehouse on S. Peoria (huge selection).",
   },
   {
     id: "oklahoma-city-ok",
@@ -3714,6 +3745,8 @@ export const southCentralDestinations: Destination[] = [
         type: "party-bus",
         capacity: [14, 22],
         hourlyRate: [175, 300],
+        fullDayRate: [1400, 2400],
+        canDoGolfAndBars: true,
         providers: [
           "OKC Party Bus",
           "Oklahoma Limo & Party Bus",
@@ -3969,6 +4002,8 @@ export const southCentralDestinations: Destination[] = [
         type: "shuttle",
         capacity: [12, 16],
         hourlyRate: [100, 175],
+        fullDayRate: [800, 1400],
+        canDoGolfAndBars: true,
         providers: [
           "Shreveport Party Bus",
           "Ark-La-Tex Limousine",
@@ -4236,6 +4271,8 @@ export const southCentralDestinations: Destination[] = [
         type: "shuttle",
         capacity: [12, 16],
         hourlyRate: [100, 175],
+        fullDayRate: [800, 1400],
+        canDoGolfAndBars: true,
         providers: ["Little Rock Party Bus", "Arkansas Limo Service"],
         notes:
           "River Market is walkable for nightlife. Shuttles needed for course transport and Hot Springs day trips. Very affordable.",
@@ -4500,6 +4537,8 @@ export const southCentralDestinations: Destination[] = [
         type: "shuttle",
         capacity: [12, 16],
         hourlyRate: [100, 175],
+        fullDayRate: [800, 1400],
+        canDoGolfAndBars: true,
         providers: ["Baton Rouge Party Bus", "Louisiana Limo Service"],
         notes:
           "Perkins Road area is walkable for nightlife. Shuttles needed for course transport (Carter Plantation and Bluffs are 30-35 min out). Affordable rates.",
@@ -4767,6 +4806,8 @@ export const southCentralDestinations: Destination[] = [
         type: "shuttle",
         capacity: [12, 16],
         hourlyRate: [100, 175],
+        fullDayRate: [800, 1400],
+        canDoGolfAndBars: true,
         providers: ["Lake Ozark Shuttle", "Ozark Transportation"],
         notes:
           "A boat is your primary transport at the lake. Shuttles needed for course-to-course transport and strip bar crawls. Most lake houses are boat-accessible to dock bars.",
@@ -5031,6 +5072,8 @@ export const southCentralDestinations: Destination[] = [
         type: "trolley",
         capacity: [12, 20],
         hourlyRate: [150, 250],
+        fullDayRate: [1200, 2000],
+        canDoGolfAndBars: true,
         providers: ["Galveston Island Trolley", "Island Party Bus"],
         notes:
           "The Strand is walkable for nightlife. Trolley rentals are fun for brewery tours and beach-to-bar transport. Golf course transport is straightforward on the island.",

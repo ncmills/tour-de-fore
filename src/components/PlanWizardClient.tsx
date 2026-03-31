@@ -280,18 +280,18 @@ function Question({
       animate={{ opacity: 1, scale: 1, rotate: 0 }}
       exit={{ opacity: 0, scale: 0.3, rotate: -15, transition: { duration: 0.35, ease: "easeIn" } }}
       transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-      style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "center", padding: "4rem 2rem", textAlign: "center", overflow: "auto" }}
+      style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "center", padding: "4.5rem 2.5rem", textAlign: "center", overflow: "auto" }}
     >
-      <div style={{ maxWidth: 560, margin: "0 auto", width: "100%" }}>
+      <div style={{ maxWidth: 620, margin: "0 auto", width: "100%" }}>
         {/* Counter + category */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", marginBottom: "2rem" }}>
-          <span style={{ fontSize: "0.7rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", fontFamily: "var(--font-plan-script), cursive" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.9rem", marginBottom: "2.4rem" }}>
+          <span style={{ fontSize: "0.84rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", fontFamily: "var(--font-plan-script), cursive" }}>
             {String(number).padStart(2, "0")} / {String(total).padStart(2, "0")}
           </span>
           {subtitle && (
             <>
-              <span style={{ width: 20, height: 1, background: "rgba(255,255,255,0.12)", display: "inline-block" }} />
-              <span style={{ fontSize: "0.7rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(234,88,12,0.8)", fontFamily: "var(--font-plan-script), cursive" }}>
+              <span style={{ width: 24, height: 1, background: "rgba(255,255,255,0.12)", display: "inline-block" }} />
+              <span style={{ fontSize: "0.84rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(234,88,12,0.8)", fontFamily: "var(--font-plan-script), cursive" }}>
                 {subtitle}
               </span>
             </>
@@ -299,7 +299,7 @@ function Question({
         </div>
 
         {/* Title — ICE COLD blocky slab */}
-        <h2 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(2.2rem, 5vw, 3.5rem)", fontWeight: 700, color: "#fff", lineHeight: 1.1, letterSpacing: "0.04em", textTransform: "uppercase", marginBottom: "2.5rem" }}>
+        <h2 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(2.6rem, 6vw, 4.2rem)", fontWeight: 700, color: "#fff", lineHeight: 1.1, letterSpacing: "0.04em", textTransform: "uppercase", marginBottom: "3rem" }}>
           {title}
         </h2>
 
@@ -503,24 +503,24 @@ export default function PlanWizardClient() {
 
   const progress = Math.min((revealedCount / totalQuestions) * 100, 100);
 
-  const inputClass = "w-full bg-transparent border-b border-white/20 px-0 py-4 text-white font-body text-xl placeholder:text-white/25 focus:border-white/60 focus:outline-none transition-colors text-center";
-  const selectClass = "bg-transparent border-b border-white/20 px-0 py-4 text-white font-body text-base focus:border-white/60 focus:outline-none transition-colors appearance-none text-center w-full";
+  const inputClass = "w-full bg-transparent border-b border-white/20 px-0 py-5 text-white font-body text-2xl placeholder:text-white/25 focus:border-white/60 focus:outline-none transition-colors text-center";
+  const selectClass = "bg-transparent border-b border-white/20 px-0 py-5 text-white font-body text-lg focus:border-white/60 focus:outline-none transition-colors appearance-none text-center w-full";
 
   const ContinueBtn = ({ onClick, label = "Continue" }: { onClick: () => void; label?: string }) => (
     <button
       onClick={onClick}
       style={{
-        marginTop: "3rem",
+        marginTop: "3.5rem",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        gap: "0.5rem",
+        gap: "0.6rem",
         width: "100%",
         background: "none",
         border: "none",
         cursor: "pointer",
         color: "rgba(255,255,255,0.5)",
-        fontSize: "0.72rem",
+        fontSize: "0.86rem",
         letterSpacing: "0.2em",
         textTransform: "uppercase",
         fontFamily: "var(--font-plan-script), cursive",
@@ -561,7 +561,7 @@ export default function PlanWizardClient() {
       {/* STEP 1: WHERE — Destination + Region/City */}
       {currentQ === 0 && (
         <Question number={1} total={totalQuestions} title="Where's the crew headed?" subtitle="Destination" id={questionIds[0]}>
-          <div className="grid grid-cols-2 gap-4 mb-6">
+          <div className="grid grid-cols-2 gap-5 mb-7">
             <SelectionCard
               label="Specific place"
               sublabel="I know where we're going"
@@ -608,7 +608,7 @@ export default function PlanWizardClient() {
       {currentQ === 1 && (
         <Question number={2} total={totalQuestions} title="When and how long?" subtitle="When" id={questionIds[1]}>
           <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem", letterSpacing: "0.08em", marginBottom: "1.5rem", marginTop: "-1.5rem" }}>Timing</p>
-          <div className="grid grid-cols-2 gap-4 mb-6">
+          <div className="grid grid-cols-2 gap-5 mb-7">
             <SelectionCard
               label="Flexible"
               sublabel="Pick a season"
@@ -625,13 +625,13 @@ export default function PlanWizardClient() {
             />
           </div>
           {state.flexible ? (
-            <div className="grid grid-cols-3 gap-4 mb-6">
+            <div className="grid grid-cols-3 gap-5 mb-7">
               {SEASONS.map((s) => (
                 <SelectionCard key={s} label={s} selected={state.preferredSeason === s} onClick={() => set("preferredSeason", s)} compact />
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-4 mb-6">
+            <div className="grid grid-cols-2 gap-5 mb-7">
               <select value={state.tripMonth} onChange={(e) => set("tripMonth", e.target.value)} className={selectClass}>
                 <option value="">Month</option>
                 {MONTHS.map((m) => <option key={m} value={m}>{m}</option>)}
@@ -644,7 +644,7 @@ export default function PlanWizardClient() {
               </select>
             </div>
           )}
-          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem", letterSpacing: "0.08em", marginBottom: "1rem" }}>How many days?</p>
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", letterSpacing: "0.08em", marginBottom: "1.2rem" }}>How many days?</p>
           <div className="grid grid-cols-3 gap-4">
             {[3, 4, 5].map((d) => (
               <SelectionCard key={d} label={`${d} days`} sublabel={d === 3 ? "The TDF standard" : undefined} selected={state.numberOfDays === d} onClick={() => { set("numberOfDays", d); advance(revealedCount); }} />
@@ -658,18 +658,18 @@ export default function PlanWizardClient() {
         <Question number={3} total={totalQuestions} title="Tell us about the crew" subtitle="The Crew" id={questionIds[2]}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "2rem", marginBottom: "2rem" }}>
             <button onClick={() => set("groupSize", Math.max(4, state.groupSize - 1))} style={{ width: 48, height: 48, borderRadius: "50%", border: "1px solid rgba(255,255,255,0.15)", background: "transparent", color: "#fff", fontSize: "1.5rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>−</button>
-            <span style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "4rem", fontWeight: 700, color: "#fff", lineHeight: 1, minWidth: "3.5rem", textAlign: "center" }}>{state.groupSize}</span>
+            <span style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "4.8rem", fontWeight: 700, color: "#fff", lineHeight: 1, minWidth: "3.5rem", textAlign: "center" }}>{state.groupSize}</span>
             <button onClick={() => set("groupSize", Math.min(32, state.groupSize + 1))} style={{ width: 48, height: 48, borderRadius: "50%", border: "1px solid rgba(255,255,255,0.15)", background: "transparent", color: "#fff", fontSize: "1.5rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>+</button>
           </div>
-          <p style={{ color: "rgba(255,255,255,0.25)", fontSize: "0.7rem", marginBottom: "1.5rem" }}>12–16 is the sweet spot</p>
-          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem", letterSpacing: "0.08em", marginBottom: "0.75rem" }}>Skill mix</p>
-          <div className="grid grid-cols-2 gap-3 mb-5">
+          <p style={{ color: "rgba(255,255,255,0.25)", fontSize: "0.84rem", marginBottom: "1.8rem" }}>12–16 is the sweet spot</p>
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", letterSpacing: "0.08em", marginBottom: "1rem" }}>Skill mix</p>
+          <div className="grid grid-cols-2 gap-5 mb-7">
             {["All similar", "Wide range", "Mostly beginners", "Here for the vibes"].map((s) => (
               <SelectionCard key={s} label={s} selected={state.skillMix === s} onClick={() => set("skillMix", s)} compact />
             ))}
           </div>
-          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem", letterSpacing: "0.08em", marginBottom: "0.75rem" }}>Age range</p>
-          <div className="grid grid-cols-4 gap-3">
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", letterSpacing: "0.08em", marginBottom: "1rem" }}>Age range</p>
+          <div className="grid grid-cols-4 gap-4">
             {["20s", "30s", "40s", "Mixed"].map((a) => (
               <SelectionCard key={a} label={a} selected={state.ageRange === a} onClick={() => { set("ageRange", a); advance(revealedCount); }} compact />
             ))}
@@ -680,7 +680,7 @@ export default function PlanWizardClient() {
       {/* STEP 4: THE GOLF — Rounds + Quality + Walking + Must-play */}
       {currentQ === 3 && (
         <Question number={4} total={totalQuestions} title="How much golf can you handle?" subtitle="The Golf" id={questionIds[3]}>
-          <div className="grid grid-cols-3 gap-3 mb-5">
+          <div className="grid grid-cols-3 gap-5 mb-7">
             {[
               { label: "One (18)", sublabel: "Casual" },
               { label: "Two (36)", sublabel: "The TDF way" },
@@ -689,14 +689,14 @@ export default function PlanWizardClient() {
               <SelectionCard key={r.label} label={r.label} sublabel={r.sublabel} selected={state.roundsPerDay === r.label} onClick={() => set("roundsPerDay", r.label)} compact />
             ))}
           </div>
-          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem", letterSpacing: "0.08em", marginBottom: "0.75rem" }}>Course quality</p>
-          <div className="grid grid-cols-2 gap-3 mb-5">
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", letterSpacing: "0.08em", marginBottom: "1rem" }}>Course quality</p>
+          <div className="grid grid-cols-2 gap-5 mb-7">
             {["Cheap & fun", "Mix of public & resort", "Bucket list only", "Whatever fits budget"].map((q) => (
               <SelectionCard key={q} label={q} selected={state.courseQuality === q} onClick={() => set("courseQuality", q)} compact />
             ))}
           </div>
-          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem", letterSpacing: "0.08em", marginBottom: "0.75rem" }}>Walking or riding?</p>
-          <div className="grid grid-cols-3 gap-3 mb-5">
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", letterSpacing: "0.08em", marginBottom: "1rem" }}>Walking or riding?</p>
+          <div className="grid grid-cols-3 gap-5 mb-7">
             {["Walking", "Riding", "Mix / Don't care"].map((w) => (
               <SelectionCard key={w} label={w} selected={state.walkingOrRiding === w} onClick={() => set("walkingOrRiding", w)} compact />
             ))}
@@ -716,8 +716,8 @@ export default function PlanWizardClient() {
       {/* STEP 5: OFF-COURSE — Lodging + Dining + Nightlife + Activities */}
       {currentQ === 4 && (
         <Question number={5} total={totalQuestions} title="What happens off the course?" subtitle="Off-Course" id={questionIds[4]}>
-          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem", letterSpacing: "0.08em", marginBottom: "0.75rem" }}>Lodging</p>
-          <div className="grid grid-cols-2 gap-3 mb-5">
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", letterSpacing: "0.08em", marginBottom: "1rem" }}>Lodging</p>
+          <div className="grid grid-cols-2 gap-5 mb-7">
             {[
               { label: "One big house", sublabel: "The TDF way" },
               { label: "Hotel / Resort", sublabel: "Separate rooms" },
@@ -727,30 +727,30 @@ export default function PlanWizardClient() {
               <SelectionCard key={l.label} label={l.label} sublabel={l.sublabel} selected={state.lodging === l.label} onClick={() => set("lodging", l.label)} compact />
             ))}
           </div>
-          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem", letterSpacing: "0.08em", marginBottom: "0.75rem" }}>Dining</p>
-          <div className="grid grid-cols-2 gap-3 mb-5">
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", letterSpacing: "0.08em", marginBottom: "1rem" }}>Dining</p>
+          <div className="grid grid-cols-2 gap-5 mb-7">
             {["Steakhouses", "Casual & local", "Private chef", "Mix"].map((d) => (
               <SelectionCard key={d} label={d} selected={state.dining === d} onClick={() => set("dining", d)} compact />
             ))}
           </div>
-          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem", letterSpacing: "0.08em", marginBottom: "0.75rem" }}>Nightlife</p>
-          <div className="grid grid-cols-2 gap-3 mb-5">
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", letterSpacing: "0.08em", marginBottom: "1rem" }}>Nightlife</p>
+          <div className="grid grid-cols-2 gap-5 mb-7">
             {["Going out every night", "Couple nights", "In bed by 10", "Point us to a bar"].map((n) => (
               <SelectionCard key={n} label={n} selected={state.nightlife === n} onClick={() => set("nightlife", n)} compact />
             ))}
           </div>
-          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem", letterSpacing: "0.08em", marginBottom: "0.75rem" }}>Activities (pick any)</p>
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", letterSpacing: "0.08em", marginBottom: "1rem" }}>Activities (pick any)</p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem", justifyContent: "center" }}>
             {ACTIVITIES.map((a) => (
               <button
                 key={a}
                 onClick={() => dispatch({ type: "TOGGLE_ACTIVITY", activity: a })}
                 style={{
-                  padding: "0.7rem 1.2rem", borderRadius: 4, minHeight: 44,
+                  padding: "0.85rem 1.5rem", borderRadius: 4, minHeight: 48,
                   border: state.activities.includes(a) ? "1px solid #fff" : "1px solid rgba(255,255,255,0.15)",
                   background: state.activities.includes(a) ? "#fff" : "transparent",
                   color: state.activities.includes(a) ? "#000" : "rgba(255,255,255,0.6)",
-                  fontSize: "0.75rem", letterSpacing: "0.06em", cursor: "pointer", transition: "all 0.2s",
+                  fontSize: "0.9rem", letterSpacing: "0.06em", cursor: "pointer", transition: "all 0.2s",
                   fontFamily: "var(--font-plan-script), cursive",
                 }}
               >{a}</button>
@@ -763,13 +763,13 @@ export default function PlanWizardClient() {
       {/* STEP 6: BUDGET — Budget + Priorities + Special requests */}
       {currentQ === 5 && (
         <Question number={6} total={totalQuestions} title="What's the budget?" subtitle="Budget" id={questionIds[5]}>
-          <div className="grid grid-cols-2 gap-3 mb-5">
+          <div className="grid grid-cols-2 gap-5 mb-7">
             {["$2K per person", "$4K per person", "$6K per person", "Fuck it we ball"].map((b) => (
               <SelectionCard key={b} label={b} selected={state.budget === b} onClick={() => set("budget", b)} compact />
             ))}
           </div>
-          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem", letterSpacing: "0.08em", marginBottom: "0.75rem" }}>Where should the money go? (pick up to 2)</p>
-          <div className="grid grid-cols-2 gap-3 mb-5">
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", letterSpacing: "0.08em", marginBottom: "1rem" }}>Where should the money go? (pick up to 2)</p>
+          <div className="grid grid-cols-2 gap-5 mb-7">
             {["Best courses", "Best lodging", "Best dining", "Keep balanced"].map((p) => (
               <SelectionCard key={p} label={p} selected={state.budgetPriorities.includes(p)} onClick={() => dispatch({ type: "TOGGLE_PRIORITY", priority: p })} compact />
             ))}
@@ -789,7 +789,7 @@ export default function PlanWizardClient() {
       {/* STEP 7: THE ROSTER — Organizer info + Generate */}
       {currentQ === 6 && (
         <Question number={7} total={totalQuestions} title="Who's organizing?" subtitle="The Roster" id={questionIds[6]}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-7">
             <input
               type="text"
               placeholder="Your name"
@@ -807,7 +807,7 @@ export default function PlanWizardClient() {
           </div>
 
           {/* Free plan indicator */}
-          <p style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.2)", textAlign: "center", marginBottom: "1rem" }}>
+          <p style={{ fontSize: "0.84rem", color: "rgba(255,255,255,0.25)", textAlign: "center", marginBottom: "1rem" }}>
             Free plan — venue names masked. <a href="/subscribe" style={{ color: "rgba(220,38,38,0.7)", textDecoration: "underline" }}>Become a Devil</a> for full details + unlimited plans.
           </p>
 
@@ -821,7 +821,7 @@ export default function PlanWizardClient() {
             onClick={handleGenerate}
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.99 }}
-            style={{ width: "100%", padding: "1.1rem", background: "rgba(220,38,38,0.9)", color: "#fff", border: "none", borderRadius: 4, fontSize: "0.85rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", fontFamily: "var(--font-plan-script), cursive" }}
+            style={{ width: "100%", padding: "1.3rem", background: "rgba(220,38,38,0.9)", color: "#fff", border: "none", borderRadius: 4, fontSize: "1rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", fontFamily: "var(--font-plan-script), cursive" }}
           >
             Unleash the Devils
           </motion.button>
