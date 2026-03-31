@@ -235,7 +235,7 @@ export default function MyTripsClient({
           }}
         >
           <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
-            <img src="/devil-avatar.png" alt="Devil" style={{ width: 80, height: 80, objectFit: "contain", margin: "0 auto 0.75rem" }} />
+            <img src="/devil-avatar.png" alt="Devil" style={{ width: 160, height: 160, objectFit: "contain", margin: "0 auto 0.75rem" }} />
 
             {editingName ? (
               <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
