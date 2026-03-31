@@ -43,18 +43,18 @@ function ProductCard({
     >
       {/* Product image from Printful */}
       <div style={{
-        background: "rgba(255,255,255,0.03)",
+        background: "#fff",
         padding: "1.5rem",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        borderBottom: "1px solid rgba(212,168,67,0.08)",
+        borderRadius: "16px 16px 0 0",
         minHeight: 200,
       }}>
         <img
           src={product.colorPreviews[color] || product.previewUrl}
           alt={product.name}
-          style={{ maxWidth: "100%", maxHeight: 180, objectFit: "contain", mixBlendMode: "multiply" }}
+          style={{ maxWidth: "100%", maxHeight: 180, objectFit: "contain" }}
         />
       </div>
 
