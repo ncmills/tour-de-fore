@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import PlanWizardClient from "@/components/PlanWizardClient";
 
 export const metadata = {
@@ -6,5 +7,9 @@ export const metadata = {
 };
 
 export default function PlanPage() {
-  return <PlanWizardClient />;
+  return (
+    <Suspense>
+      <PlanWizardClient />
+    </Suspense>
+  );
 }
