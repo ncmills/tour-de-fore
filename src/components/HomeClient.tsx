@@ -217,6 +217,35 @@ export default function HomeClient() {
               : {}
           }
         >
+          {/* Neon stats above logo */}
+          <div
+            className="neon-stats"
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              gap: isMobile ? "0.4rem 1rem" : "0.5rem 1.5rem",
+              marginBottom: isMobile ? "clamp(1rem, 3vw, 1.5rem)" : "clamp(1.2rem, 2.5vw, 2rem)",
+            }}
+          >
+            {["600+ beers", "108+ holes", "12+ guys", "4+ courses", "3+ days", "1 small town"].map((stat) => (
+              <span
+                key={stat}
+                style={{
+                  fontFamily: "var(--font-plan-block), sans-serif",
+                  fontSize: isMobile ? "clamp(0.85rem, 3.6vw, 1.1rem)" : "clamp(1.05rem, 1.6vw, 1.45rem)",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.1em",
+                  color: "#ff6a28",
+                  textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3), 0 0 80px rgba(200,30,0,0.15)",
+                  WebkitTextStroke: "0.3px rgba(255,140,60,0.4)",
+                }}
+              >
+                {stat}
+              </span>
+            ))}
+          </div>
           <Image
             src="/logo-full.png"
             alt="Tour de Fore"
