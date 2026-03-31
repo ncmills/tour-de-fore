@@ -1,8 +1,10 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { getPlan } from "@/lib/kv";
+import { getSessionEmail } from "@/lib/auth";
 import PlanResultClient from "@/components/PlanResultClient";
 import PlanSelectionClient from "@/components/PlanSelectionClient";
+import PlanGate from "@/components/PlanGate";
 import type {
   TripTier,
   ThreePlanResult,
@@ -46,6 +48,24 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
   const stored = await getPlan(id);
   if (!stored) notFound();
 
+  // Check if user is authenticated
+  const sessionEmail = await getSessionEmail();
+  const authenticated = !!sessionEmail;
+
+  // If not authenticated, show gate
+  if (!authenticated) {
+    const preview = stored.freePreviews?.mid || stored.freePreviews?.budget;
+    return (
+      <Suspense>
+        <PlanGate
+          planId={id}
+          city={preview?.city || "your destination"}
+          state={preview?.state || ""}
+        />
+      </Suspense>
+    );
+  }
+
   // No dest: show destination cards
   if (!dest) {
     return (
@@ -63,7 +83,7 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
 
   const destLevel = dest as PriceLevel;
 
-  // Show full plan — no masking, no paywall
+  // Show full plan
   if (stored.destinations?.[destLevel]) {
     const rec = stored.destinations[destLevel];
     const selectedTier = tier || "devil";
@@ -96,7 +116,7 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
     );
   }
 
-  // Fallback: show destination cards
+  // Fallback
   return (
     <Suspense>
       <PlanSelectionClient planId={id} freePreviews={stored.freePreviews || null} paid={true} />

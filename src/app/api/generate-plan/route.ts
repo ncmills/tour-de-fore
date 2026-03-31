@@ -63,10 +63,11 @@ export async function POST(req: NextRequest) {
     const raw = await req.json();
     const state = validateWizardState(raw);
 
-    // Check free plan limit (1 per month)
+    // Check free plan limit (1 per month, unlimited for test account)
     const email = state.organizerEmail;
+    const UNLIMITED_EMAILS = ["nicholauscmills@gmail.com"];
 
-    if (email) {
+    if (email && !UNLIMITED_EMAILS.includes(email)) {
       const canGenerate = await canGenerateFreePlan(email);
       if (!canGenerate) {
         return NextResponse.json({
