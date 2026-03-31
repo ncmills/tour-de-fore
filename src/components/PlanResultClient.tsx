@@ -13,7 +13,6 @@ import {
   PlanBar,
 } from "@/lib/plan-types";
 import MulliganButton from "./MulliganButton";
-import SwapDrawer from "./SwapDrawer";
 
 /* ── helpers ── */
 
@@ -227,7 +226,6 @@ const tierTabs: { key: TripTier; planKey: keyof ThreePlanResult; label: string }
 
 export default function PlanResultClient({ plan, allPlans, planId, tier, dest, paid, subscribed }: PlanResultClientProps) {
   const [copied, setCopied] = useState(false);
-  const [swapOpen, setSwapOpen] = useState<{ category: "courses" | "lodging" | "dining" | "bars"; currentName: string } | null>(null);
   const [showEmailForm, setShowEmailForm] = useState(false);
   const [emailInput, setEmailInput] = useState("");
   const [sendingEmails, setSendingEmails] = useState(false);
@@ -398,10 +396,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
         viewport={{ once: true }}
         style={{ ...sectionPadding, maxWidth: 1100, margin: "0 auto" }}
       >
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "2.5rem" }}>
-          <h2 style={{ ...headingFont, fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>The Lodging</h2>
-          <button onClick={() => setSwapOpen({ category: "lodging", currentName: plan.lodging.name || "" })} style={{ background: "none", border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.5)", fontSize: "0.75rem", padding: "6px 14px", borderRadius: 4, cursor: "pointer", letterSpacing: "0.06em", textTransform: "uppercase" }}>Swap</button>
-        </div>
+        <h2 style={{ ...headingFont, fontSize: "clamp(2rem, 5vw, 3.5rem)", marginBottom: "2.5rem" }}>The Lodging</h2>
         <HoverCard style={{ padding: "2rem 2.5rem" }}>
           <div
             style={{
@@ -453,10 +448,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
         viewport={{ once: true }}
         style={{ ...sectionPadding, maxWidth: 1100, margin: "0 auto" }}
       >
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "2.5rem" }}>
-          <h2 style={{ ...headingFont, fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>The Courses</h2>
-          <button onClick={() => setSwapOpen({ category: "courses", currentName: plan.courses[0]?.name || "" })} style={{ background: "none", border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.5)", fontSize: "0.75rem", padding: "6px 14px", borderRadius: 4, cursor: "pointer", letterSpacing: "0.06em", textTransform: "uppercase" }}>Swap</button>
-        </div>
+        <h2 style={{ ...headingFont, fontSize: "clamp(2rem, 5vw, 3.5rem)", marginBottom: "2.5rem" }}>The Courses</h2>
         <div
           style={{
             display: "grid",
@@ -521,10 +513,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
           viewport={{ once: true }}
           style={{ ...sectionPadding, maxWidth: 1100, margin: "0 auto" }}
         >
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "2.5rem" }}>
-            <h2 style={{ ...headingFont, fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>The 19th Hole</h2>
-            <button onClick={() => setSwapOpen({ category: "bars", currentName: plan.bars[0]?.name || "" })} style={{ background: "none", border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.5)", fontSize: "0.75rem", padding: "6px 14px", borderRadius: 4, cursor: "pointer", letterSpacing: "0.06em", textTransform: "uppercase" }}>Swap</button>
-          </div>
+          <h2 style={{ ...headingFont, fontSize: "clamp(2rem, 5vw, 3.5rem)", marginBottom: "2.5rem" }}>The 19th Hole</h2>
           <div
             style={{
               display: "grid",
@@ -578,10 +567,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
           viewport={{ once: true }}
           style={{ ...sectionPadding, maxWidth: 1100, margin: "0 auto" }}
         >
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "2.5rem" }}>
-            <h2 style={{ ...headingFont, fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>Dining</h2>
-            <button onClick={() => setSwapOpen({ category: "dining", currentName: plan.dining[0]?.name || "" })} style={{ background: "none", border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.5)", fontSize: "0.75rem", padding: "6px 14px", borderRadius: 4, cursor: "pointer", letterSpacing: "0.06em", textTransform: "uppercase" }}>Swap</button>
-          </div>
+          <h2 style={{ ...headingFont, fontSize: "clamp(2rem, 5vw, 3.5rem)", marginBottom: "2.5rem" }}>Dining</h2>
           <div
             style={{
               display: "grid",
@@ -1102,19 +1088,6 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
         {/* Subscription CTA removed — plans are fully free */}
       </div>
 
-      {/* Swap Drawer */}
-      <SwapDrawer
-        planId={planId}
-        destLevel={dest || "mid"}
-        category={swapOpen?.category || "courses"}
-        currentName={swapOpen?.currentName || ""}
-        open={!!swapOpen}
-        onClose={() => setSwapOpen(null)}
-        onSwap={() => {
-          // Reload to reflect changes (swap is visual for now)
-          window.location.reload();
-        }}
-      />
     </div>
   );
 }

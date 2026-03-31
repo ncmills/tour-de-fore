@@ -3,7 +3,7 @@
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import Link from "next/link";
-import type { GeneratedPlan, TripTier } from "@/lib/plan-types";
+import type { GeneratedPlan, ThreePlanResult, TripTier } from "@/lib/plan-types";
 import MulliganButton from "./MulliganButton";
 
 // ── Types ──
@@ -188,13 +188,17 @@ function OptionCard({
 
 // ── Main Trip Builder ──
 
+const MAX_COURSES = 6; // 2 rounds/day × 3 days
+
 export default function TripBuilderClient({
   plan,
+  allPlans,
   planId,
   tier,
   dest,
 }: {
   plan: GeneratedPlan;
+  allPlans?: ThreePlanResult;
   planId: string;
   tier: TripTier;
   dest: string;
@@ -215,10 +219,14 @@ export default function TripBuilderClient({
   const toggle = useCallback((category: string, id: string) => {
     setSelectedOptions((prev) => {
       const current = prev[category] || [];
-      const next = current.includes(id)
-        ? current.filter((x) => x !== id)
-        : [...current, id];
-      return { ...prev, [category]: next };
+      if (current.includes(id)) {
+        return { ...prev, [category]: current.filter((x) => x !== id) };
+      }
+      // Enforce max course limit
+      if (category === "courses" && current.length >= MAX_COURSES) {
+        return prev;
+      }
+      return { ...prev, [category]: [...current, id] };
     });
   }, []);
 
@@ -239,7 +247,18 @@ export default function TripBuilderClient({
     }
   };
 
-  // Build option lists from the plan data
+  // Collect options from all tiers (deduped by name), selected tier marked as recommended
+  const tierLabel: Record<string, string> = { imp: "Imp", devil: "Devil", demonKing: "Demon King" };
+  const otherPlans: { key: string; plan: GeneratedPlan }[] = [];
+  if (allPlans) {
+    for (const [k, p] of Object.entries(allPlans)) {
+      if (p && k !== (tier === "demon-king" ? "demonKing" : tier)) {
+        otherPlans.push({ key: k, plan: p });
+      }
+    }
+  }
+
+  // Lodging: selected tier first, then alternatives from other tiers
   const lodgingOptions: BuilderOption[] = [
     {
       id: plan.lodging.name,
@@ -264,7 +283,25 @@ export default function TripBuilderClient({
       },
     })),
   ];
+  const seenLodging = new Set(lodgingOptions.map((o) => o.id));
+  for (const { key, plan: p } of otherPlans) {
+    if (p.lodging && !seenLodging.has(p.lodging.name)) {
+      seenLodging.add(p.lodging.name);
+      lodgingOptions.push({
+        id: p.lodging.name,
+        name: p.lodging.name,
+        category: "lodging",
+        price: p.lodging.costPerNight + "/night",
+        details: {
+          Type: p.lodging.type,
+          Area: p.lodging.address,
+          Tier: tierLabel[key] || key,
+        },
+      });
+    }
+  }
 
+  // Courses: selected tier first, then from other tiers (deduped)
   const courseOptions: BuilderOption[] = plan.courses.map((c, i) => ({
     id: c.name,
     name: c.name,
@@ -277,7 +314,27 @@ export default function TripBuilderClient({
       "Why this course": c.whyThisCourse,
     },
   }));
+  const seenCourses = new Set(courseOptions.map((o) => o.id));
+  for (const { key, plan: p } of otherPlans) {
+    for (const c of p.courses) {
+      if (!seenCourses.has(c.name)) {
+        seenCourses.add(c.name);
+        courseOptions.push({
+          id: c.name,
+          name: c.name,
+          category: "courses",
+          price: c.greenFee + "/person",
+          details: {
+            Day: `Day ${c.day} ${c.session}`,
+            "Why this course": c.whyThisCourse,
+            Tier: tierLabel[key] || key,
+          },
+        });
+      }
+    }
+  }
 
+  // Dining: selected tier first, then from other tiers
   const diningOptions: BuilderOption[] = plan.dining.map((d, i) => ({
     id: d.name,
     name: d.name,
@@ -290,7 +347,27 @@ export default function TripBuilderClient({
       Description: d.description,
     },
   }));
+  const seenDining = new Set(diningOptions.map((o) => o.id));
+  for (const { key, plan: p } of otherPlans) {
+    for (const d of p.dining) {
+      if (!seenDining.has(d.name)) {
+        seenDining.add(d.name);
+        diningOptions.push({
+          id: d.name,
+          name: d.name,
+          category: "dining",
+          price: d.priceRange,
+          details: {
+            Type: d.type,
+            Description: d.description,
+            Tier: tierLabel[key] || key,
+          },
+        });
+      }
+    }
+  }
 
+  // Bars: selected tier first, then from other tiers
   const barOptions: BuilderOption[] = (plan.bars || []).map((b) => ({
     id: b.name,
     name: b.name,
@@ -300,6 +377,24 @@ export default function TripBuilderClient({
       Description: b.description,
     },
   }));
+  const seenBars = new Set(barOptions.map((o) => o.id));
+  for (const { key, plan: p } of otherPlans) {
+    for (const b of (p.bars || [])) {
+      if (!seenBars.has(b.name)) {
+        seenBars.add(b.name);
+        barOptions.push({
+          id: b.name,
+          name: b.name,
+          category: "bars",
+          details: {
+            Vibe: b.vibe,
+            Description: b.description,
+            Tier: tierLabel[key] || key,
+          },
+        });
+      }
+    }
+  }
 
   const sections: { title: string; category: string; options: BuilderOption[] }[] = [
     { title: "The Lodging", category: "lodging", options: lodgingOptions },
@@ -336,14 +431,25 @@ export default function TripBuilderClient({
       <div style={{ maxWidth: 800, margin: "0 auto" }}>
         {sections.map((section) => (
           <section key={section.category} style={{ marginBottom: "2.5rem" }}>
-            <h2 style={{
-              fontFamily: "var(--font-plan-script), cursive",
-              fontSize: "1.8rem",
-              marginBottom: "1rem",
-              color: "#fff",
-            }}>
-              {section.title}
-            </h2>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem" }}>
+              <h2 style={{
+                fontFamily: "var(--font-plan-script), cursive",
+                fontSize: "1.8rem",
+                color: "#fff",
+              }}>
+                {section.title}
+              </h2>
+              {section.category === "courses" && (
+                <span style={{
+                  fontSize: "0.8rem",
+                  color: (selectedOptions.courses || []).length >= MAX_COURSES ? "#EA580C" : "rgba(255,255,255,0.3)",
+                  fontFamily: "var(--font-plan-block), sans-serif",
+                  letterSpacing: "0.06em",
+                }}>
+                  {(selectedOptions.courses || []).length}/{MAX_COURSES} SELECTED
+                </span>
+              )}
+            </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
               {section.options.map((option) => (
                 <OptionCard

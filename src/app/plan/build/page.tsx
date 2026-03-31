@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { getPlan } from "@/lib/kv";
 import TripBuilderClient from "@/components/TripBuilderClient";
-import type { TripTier, PriceLevel } from "@/lib/plan-types";
+import type { TripTier, PriceLevel, ThreePlanResult } from "@/lib/plan-types";
 
 interface Props {
   searchParams: Promise<{ planId?: string; dest?: string; tier?: string }>;
@@ -32,7 +32,13 @@ export default async function BuildPage({ searchParams }: Props) {
 
   return (
     <Suspense>
-      <TripBuilderClient plan={plan} planId={planId} tier={tier as TripTier} dest={dest} />
+      <TripBuilderClient
+        plan={plan}
+        allPlans={rec.plans}
+        planId={planId}
+        tier={tier as TripTier}
+        dest={dest}
+      />
     </Suspense>
   );
 }
