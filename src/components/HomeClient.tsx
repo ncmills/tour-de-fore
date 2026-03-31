@@ -278,7 +278,7 @@ export default function HomeClient() {
             }}
           >
             {[
-              { label: "Shop", href: "/shop", blood: false },
+              { label: "Pro Shop", href: "/shop", blood: false },
               { label: "Body of Work", href: "/past-trips", blood: false },
               { label: "Plan a Trip", href: "/plan-a-trip", blood: true },
             ].map(({ label, href, blood }) => (
