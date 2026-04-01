@@ -74,32 +74,12 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
       <HomeButton />
 
       {/* Page header with map background */}
-      <div style={{ position: "relative", zIndex: 1, padding: "clamp(3rem, 8vw, 5rem) clamp(1.5rem, 6vw, 6rem) 2rem", textAlign: "center", overflow: "hidden" }}>
-        {/* Map behind header — positioned so top cuts through the year number */}
-        <div style={{
-          position: "absolute",
-          left: 0,
-          right: 0,
-          top: "115%",
-          bottom: "-60%",
-          display: "flex",
-          alignItems: "flex-start",
-          justifyContent: "center",
-          opacity: 0.8,
-          pointerEvents: "none",
-          zIndex: 0,
-        }}>
-          <div style={{ width: "60%", maxWidth: "420px" }}>
-            <USMap singleTrip={trip.year} compact />
-          </div>
-        </div>
-
+      <div style={{ position: "relative", zIndex: 1, padding: "clamp(3rem, 8vw, 5rem) clamp(1.5rem, 6vw, 6rem) 0", textAlign: "center" }}>
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           style={{
-            position: "relative", zIndex: 1,
             fontFamily: "var(--font-scrawl), cursive",
             fontSize: "clamp(4rem, 12vw, 8rem)",
             fontWeight: 400,
@@ -115,7 +95,7 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          style={{ position: "relative", zIndex: 1, fontFamily: "var(--font-scrawl), cursive", fontSize: "clamp(1rem, 2.5vw, 1.4rem)", color: "rgba(255,255,255,0.6)", marginTop: "0.5rem" }}
+          style={{ fontFamily: "var(--font-scrawl), cursive", fontSize: "clamp(1rem, 2.5vw, 1.4rem)", color: "rgba(255,255,255,0.6)", marginTop: "0.5rem" }}
         >
           {trip.location}, {trip.state}
         </motion.p>
@@ -123,56 +103,71 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.6 }}
-          style={{ position: "relative", zIndex: 1, fontFamily: "monospace", fontSize: "clamp(0.75rem, 1.5vw, 0.9rem)", color: "rgba(255,255,255,0.35)", marginTop: "0.5rem", letterSpacing: "0.1em" }}
+          style={{ fontFamily: "monospace", fontSize: "clamp(0.75rem, 1.5vw, 0.9rem)", color: "rgba(255,255,255,0.35)", marginTop: "0.5rem", letterSpacing: "0.1em" }}
         >
           {trip.dates.replace(/,?\s*\d{4}$/, "")}
         </motion.p>
 
-        {/* Day pills inline below header text */}
-        {trip.schedule.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.7, duration: 0.6 }}
-            style={{
-              position: "relative", zIndex: 1,
-              display: "flex",
-              justifyContent: "center",
-              flexWrap: "wrap",
-              gap: "0.5rem",
-              marginTop: "1.5rem",
-            }}
-          >
-            {trip.schedule.map((day, i) => (
-              <button
-                key={i}
-                onClick={() => {
-                  setActiveDay(i);
-                  document.getElementById(`day-${i}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
-                }}
-                style={{
-                  fontFamily: "monospace",
-                  fontSize: "0.75rem",
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                  padding: "0.65rem 1rem",
-                  minHeight: "44px",
-                  borderRadius: "4px",
-                  border: activeDay === i ? "1px solid rgba(220,38,38,0.6)" : "1px solid rgba(255,255,255,0.15)",
-                  background: activeDay === i ? "rgba(220,38,38,0.15)" : "transparent",
-                  color: activeDay === i ? "#fff" : "rgba(255,255,255,0.5)",
-                  cursor: "pointer",
-                  transition: "all 0.2s",
-                  flexShrink: 0,
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {day.day}
-              </button>
-            ))}
-          </motion.div>
-        )}
       </div>
+
+      {/* Day pills — sticky top nav */}
+      {trip.schedule.length > 0 && (
+        <div style={{
+          position: "sticky",
+          top: 0,
+          zIndex: 50,
+          background: "rgba(0,0,0,0.85)",
+          backdropFilter: "blur(10px)",
+          padding: isMobile ? "0.5rem 0.75rem" : "0.75rem clamp(1.5rem, 6vw, 6rem)",
+          display: "flex",
+          justifyContent: isMobile ? "flex-start" : "center",
+          gap: isMobile ? "0.35rem" : "0.5rem",
+          overflowX: "auto",
+          WebkitOverflowScrolling: "touch",
+          borderBottom: "1px solid rgba(255,255,255,0.06)",
+          msOverflowStyle: "none",
+          scrollbarWidth: "none",
+        }}>
+          {trip.schedule.map((day, i) => (
+            <button
+              key={i}
+              onClick={() => {
+                setActiveDay(i);
+                document.getElementById(`day-${i}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+              }}
+              style={{
+                fontFamily: "monospace",
+                fontSize: isMobile ? "0.65rem" : "0.75rem",
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                padding: isMobile ? "0.5rem 0.6rem" : "0.65rem 1rem",
+                minHeight: "44px",
+                borderRadius: "4px",
+                border: activeDay === i ? "1px solid rgba(220,38,38,0.6)" : "1px solid rgba(255,255,255,0.15)",
+                background: activeDay === i ? "rgba(220,38,38,0.15)" : "transparent",
+                color: activeDay === i ? "#fff" : "rgba(255,255,255,0.5)",
+                cursor: "pointer",
+                transition: "all 0.2s",
+                flexShrink: 0,
+                whiteSpace: "nowrap",
+              }}
+            >
+              {day.day}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* US Map */}
+      <motion.section
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        style={{ position: "relative", zIndex: 1, padding: isMobile ? "0.75rem 1.5rem 0" : "1.4rem clamp(1.5rem, 6vw, 6rem) 0.014rem", maxWidth: isMobile ? "300px" : "700px", margin: "0 auto" }}
+      >
+        <USMap singleTrip={trip.year} compact />
+      </motion.section>
 
       {/* Section 2: Lads on Tour — 3-panel dissolving gallery */}
       {galleryImages.length >= 3 && (
@@ -181,7 +176,7 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          style={{ position: "relative", zIndex: 1, padding: "3rem clamp(1.5rem, 6vw, 6rem)" }}
+          style={{ position: "relative", zIndex: 1, padding: "0.6rem clamp(1.5rem, 6vw, 6rem) 3rem" }}
         >
           <h2 style={sectionHeadingStyle}>Lads on Tour</h2>
           <div style={{
@@ -189,7 +184,7 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
             height: isMobile ? "auto" : "clamp(320px, 40vw, 500px)",
             display: isMobile ? "flex" : "block",
             flexDirection: "column",
-            gap: isMobile ? "1rem" : undefined,
+            gap: isMobile ? "0" : undefined,
           }}>
             {panelIndices.map((imgIdx, panel) => {
               const layouts = [
@@ -198,9 +193,9 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
                 { width: "48%", top: "15%", left: "50%", rotate: -1, zIndex: 1, aspectRatio: "4/3" },
               ];
               const mobileLayouts = [
-                { width: "100%", rotate: -1, aspectRatio: "16/10" },
-                { width: "90%", rotate: 1.2, aspectRatio: "3/2", marginLeft: "10%" },
-                { width: "95%", rotate: -0.5, aspectRatio: "16/10", marginLeft: "2%" },
+                { width: "92%", rotate: -1, aspectRatio: "16/10", marginLeft: "0%" },
+                { width: "85%", rotate: 1.2, aspectRatio: "3/2", marginLeft: "15%", marginTop: "-1.5rem" },
+                { width: "88%", rotate: -0.5, aspectRatio: "16/10", marginLeft: "4%", marginTop: "-1rem" },
               ];
               const l = isMobile ? mobileLayouts[panel] : layouts[panel];
               return (
@@ -210,7 +205,7 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
                     position: isMobile ? "relative" : "absolute",
                     width: l.width,
                     ...(isMobile ? {} : { top: (l as typeof layouts[0]).top, left: (l as typeof layouts[0]).left }),
-                    ...(isMobile && "marginLeft" in l ? { marginLeft: (l as typeof mobileLayouts[1]).marginLeft } : {}),
+                    ...(isMobile && "marginLeft" in l ? { marginLeft: (l as typeof mobileLayouts[1]).marginLeft, marginTop: (l as typeof mobileLayouts[1]).marginTop } : {}),
                     aspectRatio: l.aspectRatio,
                     borderRadius: "6px",
                     overflow: "hidden",
@@ -299,8 +294,8 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
                         display: "flex",
                         flexDirection: isMobile && resolvedImage ? "column" : "row",
                         alignItems: isMobile ? "stretch" : "center",
-                        gap: "1rem",
-                        padding: "0.75rem 1rem",
+                        gap: isMobile ? "0.5rem" : "1rem",
+                        padding: isMobile ? "0.6rem 0.75rem" : "0.75rem 1rem",
                         background: "rgba(255,255,255,0.03)",
                         borderRadius: "6px",
                         borderLeft: `3px solid ${item.type === "golf" ? "rgba(34,197,94,0.6)" : item.type === "dining" ? "rgba(234,179,8,0.6)" : item.type === "nightlife" ? "rgba(168,85,247,0.6)" : "rgba(59,130,246,0.6)"}`,

@@ -209,13 +209,6 @@ export const trips: Trip[] = [
         ],
       },
       {
-        day: "Nightly",
-        date: "Wed \u2013 Sat",
-        items: [
-          { time: "9:00 PM", activity: "Downtown Deadwood", detail: "General Chaos", type: "nightlife", image: "https://www.deadwood.com/wp/wp-content/uploads/2021/10/DWD21_WebUpdates_LandingPageImage_Desktop_1400x740_Shoulder_Casinos.jpg" },
-        ],
-      },
-      {
         day: "Sunday",
         date: "June 29",
         items: [
