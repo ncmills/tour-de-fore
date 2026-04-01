@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { getPlan, storePlan, storeOrder } from "@/lib/kv";
 import { addPlanToUser, setSubscription } from "@/lib/auth";
-import { createPrintfulOrder } from "@/lib/printful";
+import { createPrintfulOrder, findVariant } from "@/lib/printful";
 import { Resend } from "resend";
 
 const stripe = new Stripe((process.env.STRIPE_SECRET_KEY ?? "sk_test_placeholder").trim());
@@ -52,28 +52,29 @@ export async function POST(req: NextRequest) {
       try {
         const customerEmail = session.customer_details?.email || "";
 
-        // Fetch full session with expand to get shipping details
-        const stripeKey = (process.env.STRIPE_SECRET_KEY || "").trim();
-        const rawRes = await fetch(
-          `https://api.stripe.com/v1/checkout/sessions/${session.id}?expand[]=collected_information&expand[]=shipping_details`,
-          {
-            headers: {
-              Authorization: `Basic ${Buffer.from(stripeKey + ":").toString("base64")}`,
-              "Stripe-Version": "2025-03-31.basil",
-            },
-          }
-        );
-        const rawSession = await rawRes.json();
-        const shipping = (
-          rawSession.collected_information?.shipping_details ||
-          rawSession.shipping_details ||
-          rawSession.shipping ||
-          rawSession.customer_details?.address
-        ) as { name?: string; address?: { line1?: string; line2?: string; city?: string; state?: string; country?: string; postal_code?: string } } | undefined;
-        const itemsJson = session.metadata?.items || rawSession.metadata?.items;
+        // Fetch full session via SDK to get shipping details reliably
+        const fullSession = await stripe.checkout.sessions.retrieve(session.id, {
+          expand: ["shipping_details"],
+        });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const rawFull = fullSession as any;
+        const shippingObj = rawFull.collected_information?.shipping_details
+          || rawFull.shipping_details
+          || rawFull.shipping;
+        // Fall back to customer_details.address if no dedicated shipping
+        const customerAddr = fullSession.customer_details?.address;
+        const shipping = (shippingObj || (customerAddr ? {
+          name: fullSession.customer_details?.name,
+          address: {
+            line1: customerAddr.line1, line2: customerAddr.line2,
+            city: customerAddr.city, state: customerAddr.state,
+            country: customerAddr.country, postal_code: customerAddr.postal_code,
+          },
+        } : undefined)) as { name?: string; address?: { line1?: string; line2?: string; city?: string; state?: string; country?: string; postal_code?: string } } | undefined;
+        const itemsJson = session.metadata?.items || fullSession.metadata?.items;
 
         if (!shipping?.address) {
-          console.error("Shop order webhook: no shipping address found on session", session.id, "rawSession keys:", Object.keys(rawSession).join(","), "collected_information:", JSON.stringify(rawSession.collected_information));
+          console.error("Shop order webhook: no shipping address found on session", session.id, "collected_information:", JSON.stringify(rawFull.collected_information));
 
           // Still store the order so paid orders don't silently disappear
           if (itemsJson) {
@@ -112,6 +113,14 @@ export async function POST(req: NextRequest) {
             size: i.size ?? i.z,
           }));
 
+          // Resolve any missing syncVariantIds from the catalog
+          for (const item of items) {
+            if (!item.syncVariantId && item.productId && item.color) {
+              const variant = findVariant(item.productId, item.color, item.size);
+              if (variant) item.syncVariantId = variant.syncVariantId;
+            }
+          }
+
           // Create Printful order
           console.log("Creating Printful order for", items.length, "items. Shipping:", shipping.name, shipping.address?.city, shipping.address?.state);
           let printfulResult: { id: number; status: string } | null = null;
@@ -119,7 +128,7 @@ export async function POST(req: NextRequest) {
             printfulResult = await createPrintfulOrder(
               items.map((i) => ({ sync_variant_id: i.syncVariantId, quantity: i.quantity })),
               {
-                name: shipping.name || "Customer",
+                name: shipping.name || fullSession.customer_details?.name || "Customer",
                 address1: shipping.address.line1 || "",
                 address2: shipping.address.line2 || undefined,
                 city: shipping.address.city || "",
