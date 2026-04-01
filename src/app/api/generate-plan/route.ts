@@ -31,52 +31,35 @@ import {
 async function generatePlansForDestination(
   client: Anthropic,
   state: Parameters<typeof buildUserMessage>[0],
-  destinationContext: string,
-  onProgress?: (tokens: number, status?: string) => void
+  destinationContext: string
 ): Promise<ThreePlanResult> {
-  // Use streaming to avoid Anthropic SDK timeout on long generations
-  const stream = client.messages.stream({
+  // Non-streaming call — our outer NDJSON stream handles keepalive
+  const message = await client.messages.create({
     model: "claude-haiku-4-5-20251001",
     max_tokens: 8000,
     system: buildSystemPrompt(destinationContext),
     messages: [{ role: "user", content: buildUserMessage(state) }],
   });
 
-  let fullText = "";
-  let tokenCount = 0;
-  let stopReason = "";
+  console.log(`Claude response: model=${message.model} in=${message.usage.input_tokens} out=${message.usage.output_tokens} stop=${message.stop_reason}`);
 
-  for await (const event of stream) {
-    if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
-      fullText += event.delta.text;
-      tokenCount++;
-      if (onProgress && tokenCount % 200 === 0) {
-        onProgress(tokenCount, `Generating... ${tokenCount} tokens`);
-      }
-    }
-    if (event.type === "message_delta") {
-      stopReason = (event.delta as { stop_reason?: string }).stop_reason || "";
-    }
+  const textBlock = message.content.find((b) => b.type === "text");
+  if (!textBlock || textBlock.type !== "text") throw new Error("No text response from Claude");
+
+  if (message.stop_reason === "max_tokens") {
+    console.warn(`Plan hit max_tokens at ${message.usage.output_tokens} tokens. Truncated.`);
   }
 
-  if (onProgress) onProgress(tokenCount, `Done: ${tokenCount} tokens, stop: ${stopReason}`);
-
-  if (!fullText.trim()) throw new Error("No text response from Claude");
-
-  if (stopReason === "max_tokens") {
-    console.warn(`Plan generation hit max_tokens (${tokenCount} tokens). Response may be truncated.`);
-  }
-
-  let jsonStr = fullText.trim();
+  let jsonStr = textBlock.text.trim();
   if (jsonStr.startsWith("```")) {
     jsonStr = jsonStr.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "");
   }
 
   try {
     return JSON.parse(jsonStr);
-  } catch (parseErr) {
-    console.error(`JSON parse failed after ${tokenCount} tokens (stop: ${stopReason}). First 500 chars: ${jsonStr.slice(0, 500)}`);
-    throw new Error(`Plan generation produced invalid output (${tokenCount} tokens, stop: ${stopReason})`);
+  } catch {
+    console.error(`JSON parse failed (${message.usage.output_tokens} tokens, stop: ${message.stop_reason}). First 500 chars: ${jsonStr.slice(0, 500)}`);
+    throw new Error(`Plan generation produced invalid output (${message.usage.output_tokens} tokens)`);
   }
 }
 
@@ -176,7 +159,7 @@ export async function POST(req: NextRequest) {
       try {
         send({ type: "status", message: "Scouting destinations..." });
 
-        const client = new Anthropic({ timeout: 120_000 });
+        const client = new Anthropic({ timeout: 240_000 }); // 4 min — our NDJSON stream keeps Vercel alive
 
         // Generate ALL destinations in parallel
         send({ type: "status", message: `Building plans for ${picks.map(p => p.destination.city).join(", ")}...` });
@@ -184,9 +167,7 @@ export async function POST(req: NextRequest) {
         const recommendations = await Promise.all(
           picks.map(async (pick) => {
             const context = buildDestinationContext(pick.destination);
-            const plans = await generatePlansForDestination(client, state, context, (tokens, status) => {
-              send({ type: "progress", city: pick.destination.city, tokens, status });
-            });
+            const plans = await generatePlansForDestination(client, state, context);
             return {
               destinationId: pick.destination.id,
               city: pick.destination.city,
