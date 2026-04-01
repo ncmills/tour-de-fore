@@ -25,7 +25,7 @@ function reducer(state: WizardState, action: Action): WizardState {
     case "SET_FIELD":
       return { ...state, [action.field]: action.value };
     case "RESTORE_STATE":
-      return { ...action.state };
+      return { ...initialWizardState, ...action.state };
     case "TOGGLE_ACTIVITY": {
       const activities = state.activities.includes(action.activity)
         ? state.activities.filter((a) => a !== action.activity)
