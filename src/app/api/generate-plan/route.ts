@@ -32,11 +32,11 @@ async function generatePlansForDestination(
   client: Anthropic,
   state: Parameters<typeof buildUserMessage>[0],
   destinationContext: string,
-  onProgress?: (tokens: number) => void
+  onProgress?: (tokens: number, status?: string) => void
 ): Promise<ThreePlanResult> {
   // Use streaming to avoid Anthropic SDK timeout on long generations
   const stream = client.messages.stream({
-    model: "claude-sonnet-4-6",
+    model: "claude-haiku-4-5-20251001",
     max_tokens: 8000,
     system: buildSystemPrompt(destinationContext),
     messages: [{ role: "user", content: buildUserMessage(state) }],
@@ -44,21 +44,40 @@ async function generatePlansForDestination(
 
   let fullText = "";
   let tokenCount = 0;
+  let stopReason = "";
+
   for await (const event of stream) {
     if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
       fullText += event.delta.text;
       tokenCount++;
-      if (onProgress && tokenCount % 200 === 0) onProgress(tokenCount);
+      if (onProgress && tokenCount % 200 === 0) {
+        onProgress(tokenCount, `Generating... ${tokenCount} tokens`);
+      }
+    }
+    if (event.type === "message_delta") {
+      stopReason = (event.delta as { stop_reason?: string }).stop_reason || "";
     }
   }
 
+  if (onProgress) onProgress(tokenCount, `Done: ${tokenCount} tokens, stop: ${stopReason}`);
+
   if (!fullText.trim()) throw new Error("No text response from Claude");
+
+  if (stopReason === "max_tokens") {
+    console.warn(`Plan generation hit max_tokens (${tokenCount} tokens). Response may be truncated.`);
+  }
 
   let jsonStr = fullText.trim();
   if (jsonStr.startsWith("```")) {
     jsonStr = jsonStr.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "");
   }
-  return JSON.parse(jsonStr);
+
+  try {
+    return JSON.parse(jsonStr);
+  } catch (parseErr) {
+    console.error(`JSON parse failed after ${tokenCount} tokens (stop: ${stopReason}). First 500 chars: ${jsonStr.slice(0, 500)}`);
+    throw new Error(`Plan generation produced invalid output (${tokenCount} tokens, stop: ${stopReason})`);
+  }
 }
 
 export async function POST(req: NextRequest) {
@@ -165,8 +184,8 @@ export async function POST(req: NextRequest) {
         const recommendations = await Promise.all(
           picks.map(async (pick) => {
             const context = buildDestinationContext(pick.destination);
-            const plans = await generatePlansForDestination(client, state, context, (tokens) => {
-              send({ type: "progress", city: pick.destination.city, tokens });
+            const plans = await generatePlansForDestination(client, state, context, (tokens, status) => {
+              send({ type: "progress", city: pick.destination.city, tokens, status });
             });
             return {
               destinationId: pick.destination.id,
