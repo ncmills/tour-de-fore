@@ -31,19 +31,30 @@ import {
 async function generatePlansForDestination(
   client: Anthropic,
   state: Parameters<typeof buildUserMessage>[0],
-  destinationContext: string
+  destinationContext: string,
+  onProgress?: (tokens: number) => void
 ): Promise<ThreePlanResult> {
-  const message = await client.messages.create({
+  // Use streaming to avoid Anthropic SDK timeout on long generations
+  const stream = client.messages.stream({
     model: "claude-sonnet-4-6",
     max_tokens: 8000,
     system: buildSystemPrompt(destinationContext),
     messages: [{ role: "user", content: buildUserMessage(state) }],
   });
 
-  const textBlock = message.content.find((b) => b.type === "text");
-  if (!textBlock || textBlock.type !== "text") throw new Error("No text response");
+  let fullText = "";
+  let tokenCount = 0;
+  for await (const event of stream) {
+    if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
+      fullText += event.delta.text;
+      tokenCount++;
+      if (onProgress && tokenCount % 200 === 0) onProgress(tokenCount);
+    }
+  }
 
-  let jsonStr = textBlock.text.trim();
+  if (!fullText.trim()) throw new Error("No text response from Claude");
+
+  let jsonStr = fullText.trim();
   if (jsonStr.startsWith("```")) {
     jsonStr = jsonStr.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "");
   }
@@ -154,7 +165,9 @@ export async function POST(req: NextRequest) {
         const recommendations = await Promise.all(
           picks.map(async (pick) => {
             const context = buildDestinationContext(pick.destination);
-            const plans = await generatePlansForDestination(client, state, context);
+            const plans = await generatePlansForDestination(client, state, context, (tokens) => {
+              send({ type: "progress", city: pick.destination.city, tokens });
+            });
             return {
               destinationId: pick.destination.id,
               city: pick.destination.city,
