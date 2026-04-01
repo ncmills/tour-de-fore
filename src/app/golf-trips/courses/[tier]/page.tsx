@@ -47,6 +47,20 @@ export default async function TierCoursesPage({ params }: Props) {
 
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff", padding: "clamp(3rem, 8vw, 6rem) clamp(1.5rem, 6vw, 6rem)" }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://tourdefore.com" },
+              { "@type": "ListItem", position: 2, name: "Golf Trips", item: "https://tourdefore.com/golf-trips" },
+              { "@type": "ListItem", position: 3, name: `${label} Courses`, item: `https://tourdefore.com/golf-trips/courses/${tier}` },
+            ],
+          }),
+        }}
+      />
       <MulliganButton href="/golf-trips" />
       <HomeButton />
 

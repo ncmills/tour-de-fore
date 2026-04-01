@@ -77,6 +77,20 @@ export default async function StatePage({
         position: "relative",
       }}
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://tourdefore.com" },
+              { "@type": "ListItem", position: 2, name: "Golf Trips", item: "https://tourdefore.com/golf-trips" },
+              { "@type": "ListItem", position: 3, name, item: `https://tourdefore.com/golf-trips/state/${stateParam}` },
+            ],
+          }),
+        }}
+      />
       <MulliganButton href="/golf-trips" />
       <HomeButton />
 

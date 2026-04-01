@@ -151,6 +151,21 @@ export default async function CoursePage({ params }: Props) {
           }),
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://tourdefore.com" },
+              { "@type": "ListItem", position: 2, name: "Golf Trips", item: "https://tourdefore.com/golf-trips" },
+              { "@type": "ListItem", position: 3, name: `${dest.city}, ${dest.state}`, item: `https://tourdefore.com/golf-trips/${slug}` },
+              { "@type": "ListItem", position: 4, name: course.name, item: `https://tourdefore.com/golf-trips/${slug}/courses/${courseSlug}` },
+            ],
+          }),
+        }}
+      />
     </main>
   );
 }

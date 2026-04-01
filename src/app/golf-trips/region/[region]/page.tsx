@@ -88,6 +88,20 @@ export default async function RegionPage({
         position: "relative",
       }}
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://tourdefore.com" },
+              { "@type": "ListItem", position: 2, name: "Golf Trips", item: "https://tourdefore.com/golf-trips" },
+              { "@type": "ListItem", position: 3, name: label, item: `https://tourdefore.com/golf-trips/region/${regionParam}` },
+            ],
+          }),
+        }}
+      />
       <MulliganButton href="/golf-trips" />
       <HomeButton />
 
