@@ -9,6 +9,7 @@ import {
   DestinationRecommendation,
   StoredPlan,
   PriceLevel,
+  GeneratedPlan,
 } from "@/lib/plan-types";
 import { storePlan, storeAttendees, recordDestinationView } from "@/lib/kv";
 import {
@@ -28,26 +29,26 @@ import {
   isSubscribed,
 } from "@/lib/auth";
 
-async function generatePlansForDestination(
+async function generateSingleTier(
   client: Anthropic,
   state: Parameters<typeof buildUserMessage>[0],
-  destinationContext: string
-): Promise<ThreePlanResult> {
-  // Non-streaming call — our outer NDJSON stream handles keepalive
+  destinationContext: string,
+  tier: "imp" | "devil" | "demonKing"
+): Promise<GeneratedPlan> {
   const message = await client.messages.create({
     model: "claude-haiku-4-5-20251001",
-    max_tokens: 16000,
+    max_tokens: 8000,
     system: buildSystemPrompt(destinationContext),
-    messages: [{ role: "user", content: buildUserMessage(state) }],
+    messages: [{ role: "user", content: buildUserMessage(state, tier) }],
   });
 
-  console.log(`Claude response: model=${message.model} in=${message.usage.input_tokens} out=${message.usage.output_tokens} stop=${message.stop_reason}`);
+  console.log(`Claude [${tier}]: model=${message.model} in=${message.usage.input_tokens} out=${message.usage.output_tokens} stop=${message.stop_reason}`);
 
   const textBlock = message.content.find((b) => b.type === "text");
-  if (!textBlock || textBlock.type !== "text") throw new Error("No text response from Claude");
+  if (!textBlock || textBlock.type !== "text") throw new Error(`No text response for ${tier}`);
 
   if (message.stop_reason === "max_tokens") {
-    console.warn(`Plan hit max_tokens at ${message.usage.output_tokens} tokens. Truncated.`);
+    console.warn(`${tier} hit max_tokens at ${message.usage.output_tokens} tokens`);
   }
 
   let jsonStr = textBlock.text.trim();
@@ -58,9 +59,23 @@ async function generatePlansForDestination(
   try {
     return JSON.parse(jsonStr);
   } catch {
-    console.error(`JSON parse failed (${message.usage.output_tokens} tokens, stop: ${message.stop_reason}). First 500 chars: ${jsonStr.slice(0, 500)}`);
-    throw new Error(`Plan generation produced invalid output (${message.usage.output_tokens} tokens)`);
+    console.error(`JSON parse failed for ${tier} (${message.usage.output_tokens} tokens, stop: ${message.stop_reason}). First 500 chars: ${jsonStr.slice(0, 500)}`);
+    throw new Error(`Plan generation failed for ${tier} tier (${message.usage.output_tokens} tokens)`);
   }
+}
+
+async function generatePlansForDestination(
+  client: Anthropic,
+  state: Parameters<typeof buildUserMessage>[0],
+  destinationContext: string
+): Promise<ThreePlanResult> {
+  // Generate all 3 tiers in parallel — each fits in 8K tokens
+  const [imp, devil, demonKing] = await Promise.all([
+    generateSingleTier(client, state, destinationContext, "imp"),
+    generateSingleTier(client, state, destinationContext, "devil"),
+    generateSingleTier(client, state, destinationContext, "demonKing"),
+  ]);
+  return { imp, devil, demonKing };
 }
 
 export async function POST(req: NextRequest) {
