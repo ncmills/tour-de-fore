@@ -35,7 +35,7 @@ async function generatePlansForDestination(
 ): Promise<ThreePlanResult> {
   const message = await client.messages.create({
     model: "claude-sonnet-4-6",
-    max_tokens: 12000,
+    max_tokens: 8000,
     system: buildSystemPrompt(destinationContext),
     messages: [{ role: "user", content: buildUserMessage(state) }],
   });
@@ -148,23 +148,23 @@ export async function POST(req: NextRequest) {
 
         const client = new Anthropic({ timeout: 120_000 });
 
-        // Generate plans for each destination
-        const recommendations: DestinationRecommendation[] = [];
-        for (let i = 0; i < picks.length; i++) {
-          const pick = picks[i];
-          send({ type: "status", message: `Building ${pick.destination.city} plans (${i + 1}/${picks.length})...` });
+        // Generate ALL destinations in parallel
+        send({ type: "status", message: `Building plans for ${picks.map(p => p.destination.city).join(", ")}...` });
 
-          const context = buildDestinationContext(pick.destination);
-          const plans = await generatePlansForDestination(client, state, context);
-          recommendations.push({
-            destinationId: pick.destination.id,
-            city: pick.destination.city,
-            state: pick.destination.state,
-            tagline: pick.destination.tagline,
-            priceLevel: pick.priceLevel,
-            plans,
-          });
-        }
+        const recommendations = await Promise.all(
+          picks.map(async (pick) => {
+            const context = buildDestinationContext(pick.destination);
+            const plans = await generatePlansForDestination(client, state, context);
+            return {
+              destinationId: pick.destination.id,
+              city: pick.destination.city,
+              state: pick.destination.state,
+              tagline: pick.destination.tagline,
+              priceLevel: pick.priceLevel,
+              plans,
+            } satisfies DestinationRecommendation;
+          })
+        );
 
         send({ type: "status", message: "Saving your trip..." });
 
