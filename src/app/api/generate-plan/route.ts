@@ -36,7 +36,7 @@ async function generatePlansForDestination(
   // Non-streaming call — our outer NDJSON stream handles keepalive
   const message = await client.messages.create({
     model: "claude-haiku-4-5-20251001",
-    max_tokens: 8000,
+    max_tokens: 16000,
     system: buildSystemPrompt(destinationContext),
     messages: [{ role: "user", content: buildUserMessage(state) }],
   });
