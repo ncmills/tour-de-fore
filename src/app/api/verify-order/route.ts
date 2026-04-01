@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
         zip: shippingAddress.postal_code || "",
         email: customerEmail,
       },
-      `tdf-verify-${sessionId.slice(-10)}`
+      `tdf-${sessionId}`
     );
 
     await storeOrder({

@@ -207,6 +207,26 @@ interface PrintfulRecipient {
   email: string;
 }
 
+// Check if a Printful order already exists with a given external_id
+export async function checkPrintfulOrderExists(externalId: string): Promise<{ id: number; status: string } | null> {
+  if (!PRINTFUL_TOKEN) return null;
+
+  try {
+    const res = await fetch(`${PRINTFUL_API}/orders/@${externalId}`, {
+      headers: { Authorization: `Bearer ${PRINTFUL_TOKEN}` },
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.result?.id) {
+        return { id: data.result.id, status: data.result.status };
+      }
+    }
+  } catch {
+    // Not found or API error — safe to proceed
+  }
+  return null;
+}
+
 export async function createPrintfulOrder(
   items: PrintfulOrderItem[],
   recipient: PrintfulRecipient,
@@ -215,6 +235,15 @@ export async function createPrintfulOrder(
   if (!PRINTFUL_TOKEN) {
     console.error("PRINTFUL_API_TOKEN not set");
     return null;
+  }
+
+  // Dedup: check if this order already exists in Printful
+  if (externalId) {
+    const existing = await checkPrintfulOrderExists(externalId);
+    if (existing) {
+      console.log(`Printful order already exists for ${externalId}: #${existing.id} (${existing.status})`);
+      return existing;
+    }
   }
 
   const res = await fetch(`${PRINTFUL_API}/orders?confirm=true`, {

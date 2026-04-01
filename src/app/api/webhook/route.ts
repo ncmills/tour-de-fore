@@ -137,7 +137,7 @@ export async function POST(req: NextRequest) {
                 zip: shipping.address.postal_code || "",
                 email: customerEmail,
               },
-              `tdf-${Date.now()}`
+              `tdf-${session.id}`
             );
           } catch (printfulErr) {
             console.error("Printful order creation failed:", printfulErr);

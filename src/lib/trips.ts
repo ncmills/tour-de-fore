@@ -83,6 +83,13 @@ export const trips: Trip[] = [
     ],
     schedule: [
       {
+        day: "Tuesday",
+        date: "July 7",
+        items: [
+          { time: "—", activity: "Arrive in Kohler", detail: "✈️ Fly in", type: "activity" as const },
+        ],
+      },
+      {
         day: "Wednesday",
         date: "July 8",
         items: [
@@ -115,6 +122,13 @@ export const trips: Trip[] = [
           { time: "9:03 AM", activity: "Blackwolf Run", detail: "18 holes", type: "golf" },
           { time: "2:00 PM", activity: "Blackwolf Run", detail: "18 holes", type: "golf" },
           { time: "8:00 PM", activity: "Private Chef @ House", detail: "Dinner", type: "dining", image: "https://s7d9.scene7.com/is/image/kohlerhospitality/zab44850_rgb?wid=800" },
+        ],
+      },
+      {
+        day: "Sunday",
+        date: "July 12",
+        items: [
+          { time: "—", activity: "Depart Kohler", detail: "✈️ Fly out", type: "activity" as const },
         ],
       },
     ],
@@ -155,6 +169,13 @@ export const trips: Trip[] = [
     ],
     schedule: [
       {
+        day: "Tuesday",
+        date: "June 24",
+        items: [
+          { time: "—", activity: "Arrive in Deadwood", detail: "✈️ Fly in", type: "activity" as const },
+        ],
+      },
+      {
         day: "Wednesday",
         date: "June 25",
         items: [
@@ -192,6 +213,13 @@ export const trips: Trip[] = [
         date: "Wed \u2013 Sat",
         items: [
           { time: "9:00 PM", activity: "Downtown Deadwood", detail: "General Chaos", type: "nightlife", image: "https://www.deadwood.com/wp/wp-content/uploads/2021/10/DWD21_WebUpdates_LandingPageImage_Desktop_1400x740_Shoulder_Casinos.jpg" },
+        ],
+      },
+      {
+        day: "Sunday",
+        date: "June 29",
+        items: [
+          { time: "—", activity: "Depart Deadwood", detail: "✈️ Fly out", type: "activity" as const },
         ],
       },
     ],
@@ -284,6 +312,13 @@ export const trips: Trip[] = [
     restaurants: [],
     schedule: [
       {
+        day: "Wednesday",
+        date: "August 21",
+        items: [
+          { time: "—", activity: "Arrive in Bend", detail: "✈️ Fly in", type: "activity" as const },
+        ],
+      },
+      {
         day: "Thursday",
         date: "August 22",
         items: [
@@ -305,6 +340,13 @@ export const trips: Trip[] = [
         items: [
           { time: "9:00 AM", activity: "Widgi", detail: "18 holes", type: "golf" },
           { time: "2:00 PM", activity: "Tetherow", detail: "18 holes", type: "golf" },
+        ],
+      },
+      {
+        day: "Sunday",
+        date: "August 25",
+        items: [
+          { time: "—", activity: "Depart Bend", detail: "✈️ Fly out", type: "activity" as const },
         ],
       },
     ],
@@ -363,6 +405,13 @@ export const trips: Trip[] = [
     restaurants: [],
     schedule: [
       {
+        day: "Wednesday",
+        date: "June 28",
+        items: [
+          { time: "—", activity: "Arrive in Lexington", detail: "✈️ Fly in", type: "activity" as const },
+        ],
+      },
+      {
         day: "Thursday",
         date: "June 29",
         items: [
@@ -384,6 +433,13 @@ export const trips: Trip[] = [
         items: [
           { time: "8:30 AM", activity: "University of Kentucky Club", detail: "18 holes", type: "golf" },
           { time: "2:12 PM", activity: "University of Kentucky Club", detail: "18 holes", type: "golf" },
+        ],
+      },
+      {
+        day: "Sunday",
+        date: "July 2",
+        items: [
+          { time: "—", activity: "Depart Lexington", detail: "✈️ Fly out", type: "activity" as const },
         ],
       },
     ],
@@ -486,6 +542,13 @@ export const trips: Trip[] = [
     restaurants: [],
     schedule: [
       {
+        day: "Arrival",
+        date: "June 1",
+        items: [
+          { time: "—", activity: "Arrive in Boise", detail: "✈️ Fly in", type: "activity" as const },
+        ],
+      },
+      {
         day: "Day 1",
         date: "June 2",
         items: [
@@ -507,6 +570,13 @@ export const trips: Trip[] = [
         items: [
           { time: "10:00 AM", activity: "Shadow Valley Golf Course", detail: "18 holes", type: "golf" },
           { time: "3:00 PM", activity: "Shadow Valley Golf Course", detail: "18 holes", type: "golf" },
+        ],
+      },
+      {
+        day: "Departure",
+        date: "June 24",
+        items: [
+          { time: "—", activity: "Depart Boise", detail: "✈️ Fly out", type: "activity" as const },
         ],
       },
     ],
@@ -586,6 +656,13 @@ export const trips: Trip[] = [
     restaurants: [],
     schedule: [
       {
+        day: "Arrival",
+        date: "June 23",
+        items: [
+          { time: "—", activity: "Arrive in St. George", detail: "✈️ Fly in", type: "activity" as const },
+        ],
+      },
+      {
         day: "Day 1",
         date: "June 24",
         items: [
@@ -607,6 +684,13 @@ export const trips: Trip[] = [
         items: [
           { time: "10:00 AM", activity: "Southgate Golf Club", detail: "18 holes", type: "golf" },
           { time: "3:00 PM", activity: "Southgate Golf Club", detail: "18 holes", type: "golf" },
+        ],
+      },
+      {
+        day: "Departure",
+        date: "June 27",
+        items: [
+          { time: "—", activity: "Depart St. George", detail: "✈️ Fly out", type: "activity" as const },
         ],
       },
     ],

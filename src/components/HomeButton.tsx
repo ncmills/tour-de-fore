@@ -17,20 +17,6 @@ export default function HomeButton({ side = "right" }: { side?: "left" | "right"
         textDecoration: "none",
       }}
     >
-      {/* Golf club icon — matches mulligan flag style */}
-      <svg
-        width="22"
-        height="28"
-        viewBox="0 0 22 28"
-        style={{ opacity: 0.85 }}
-      >
-        {/* Club shaft */}
-        <line x1="11" y1="2" x2="11" y2="22" stroke="rgba(212,168,67,0.7)" strokeWidth="1.5" strokeLinecap="round" />
-        {/* Club head */}
-        <path d="M11 2 Q 18 4, 16 8 Q 14 11, 11 9" fill="rgba(139,0,0,0.7)" stroke="rgba(212,168,67,0.5)" strokeWidth="1" strokeLinejoin="round" />
-        {/* Grip */}
-        <line x1="11" y1="20" x2="11" y2="26" stroke="rgba(212,168,67,0.4)" strokeWidth="3" strokeLinecap="round" />
-      </svg>
       <span
         style={{
           fontFamily: "var(--font-scrawl), cursive",
@@ -43,6 +29,20 @@ export default function HomeButton({ side = "right" }: { side?: "left" | "right"
       >
         home
       </span>
+      {/* Golf flag icon — mirrored to point left (toward center) */}
+      <svg
+        width="22"
+        height="28"
+        viewBox="0 0 22 28"
+        style={{ opacity: 0.85 }}
+      >
+        {/* Flag pole */}
+        <line x1="18" y1="2" x2="18" y2="26" stroke="rgba(212,168,67,0.7)" strokeWidth="1.5" strokeLinecap="round" />
+        {/* Flag triangle — points left */}
+        <path d="M18 2 L 2 7 L 18 12 Z" fill="rgba(139,0,0,0.7)" stroke="rgba(212,168,67,0.5)" strokeWidth="1" strokeLinejoin="round" />
+        {/* Ground dot */}
+        <circle cx="18" cy="26" r="2" fill="none" stroke="rgba(212,168,67,0.3)" strokeWidth="1" />
+      </svg>
     </a>
   );
 }
