@@ -81,14 +81,17 @@ async function generatePlansForDestination(
 export async function POST(req: NextRequest) {
   // ── Pre-flight checks (fast, before streaming) ──
 
-  // Rate limit: 5 plans per IP per hour
-  const ip = getClientIp(req);
-  const rl = await rateLimit(`generate:${ip}`, 5, 3600);
-  if (!rl.allowed) {
-    return NextResponse.json(
-      { error: "Too many plans generated. Try again later." },
-      { status: 429, headers: { "Retry-After": String(rl.resetIn) } }
-    );
+  // Rate limit: 5 plans per IP per hour (admin bypass for testing)
+  const isAdmin = req.headers.get("x-admin-secret") === process.env.ADMIN_SECRET;
+  if (!isAdmin) {
+    const ip = getClientIp(req);
+    const rl = await rateLimit(`generate:${ip}`, 5, 3600);
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { error: "Too many plans generated. Try again later." },
+        { status: 429, headers: { "Retry-After": String(rl.resetIn) } }
+      );
+    }
   }
 
   // Validate input
