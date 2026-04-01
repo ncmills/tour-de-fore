@@ -4,7 +4,9 @@ import { createPrintfulOrder, findVariant } from "@/lib/printful";
 import { storeOrder, getOrder } from "@/lib/kv";
 import { Resend } from "resend";
 
-const stripe = new Stripe((process.env.STRIPE_SECRET_KEY ?? "").trim());
+function getStripe() {
+  return new Stripe((process.env.STRIPE_SECRET_KEY ?? "").trim());
+}
 
 export async function GET(req: NextRequest) {
   // Vercel cron sends this header; also accept manual calls with the secret
@@ -21,6 +23,7 @@ export async function GET(req: NextRequest) {
   try {
     // Look back 48 hours for any paid shop orders
     const since = Math.floor(Date.now() / 1000) - 48 * 60 * 60;
+    const stripe = getStripe();
     const sessions = await stripe.checkout.sessions.list({
       limit: 50,
       created: { gte: since },

@@ -3,11 +3,14 @@ import Stripe from "stripe";
 import { createPrintfulOrder, findVariant } from "@/lib/printful";
 import { storeOrder, getOrder } from "@/lib/kv";
 
-const stripe = new Stripe((process.env.STRIPE_SECRET_KEY ?? "").trim());
+function getStripe() {
+  return new Stripe((process.env.STRIPE_SECRET_KEY ?? "").trim());
+}
 
 // Called by the success page to ensure this specific order made it to Printful
 export async function POST(req: NextRequest) {
   try {
+    const stripe = getStripe();
     const { sessionId } = await req.json();
     if (!sessionId || typeof sessionId !== "string") {
       return NextResponse.json({ error: "Missing sessionId" }, { status: 400 });

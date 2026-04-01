@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 
-export const maxDuration = 120; // Claude generates 3 plans — needs time
+export const maxDuration = 60; // Vercel Hobby plan max
 import {
   ThreeFreePreview,
   ThreePlanResult,
@@ -34,8 +34,8 @@ async function generatePlansForDestination(
   destinationContext: string
 ): Promise<ThreePlanResult> {
   const message = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
-    max_tokens: 16384,
+    model: "claude-sonnet-4-6",
+    max_tokens: 12000,
     system: buildSystemPrompt(destinationContext),
     messages: [{ role: "user", content: buildUserMessage(state) }],
   });
@@ -121,7 +121,7 @@ export async function POST(req: NextRequest) {
     };
 
     // Generate FULL Claude plans for ALL users — all 3 destinations
-    const client = new Anthropic();
+    const client = new Anthropic({ timeout: 45_000 }); // 45s timeout per call
     const destsToGenerate = picks;
 
     const planPromises = destsToGenerate.map(async (pick) => {
@@ -184,7 +184,10 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ planId, freePreviews });
   } catch (err) {
-    console.error("Plan generation error:", err);
+    const errMsg = err instanceof Error ? err.message : String(err);
+    const errName = err instanceof Error ? err.constructor.name : "Unknown";
+    console.error(`Plan generation error [${errName}]: ${errMsg}`);
+    if (err instanceof Error && err.stack) console.error(err.stack);
     return NextResponse.json(
       { error: "Failed to generate plan. Please try again." },
       { status: 500 }
