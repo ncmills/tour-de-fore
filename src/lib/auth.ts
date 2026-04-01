@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import Redis from "ioredis";
-import bcrypt from "bcryptjs";
+import { hash as bcryptHash, compare as bcryptCompare } from "bcryptjs";
 
 const SESSION_TTL = 60 * 60 * 24 * 30; // 30 days
 const TOKEN_TTL = 60 * 15; // 15 min for magic link
@@ -194,14 +194,14 @@ export async function changeUserEmail(oldEmail: string, newEmail: string): Promi
 const PROFILE_TTL = 60 * 60 * 24 * 365; // 1 year
 
 export async function setPassword(email: string, password: string): Promise<void> {
-  const hash = await bcrypt.hash(password, 10);
-  await getRedis().set(`user:${email}:password`, hash, "EX", PROFILE_TTL);
+  const hashed = await bcryptHash(password, 10);
+  await getRedis().set(`user:${email}:password`, hashed, "EX", PROFILE_TTL);
 }
 
 export async function verifyPassword(email: string, password: string): Promise<boolean> {
   const hash = await getRedis().get(`user:${email}:password`);
   if (!hash) return false;
-  return bcrypt.compare(password, hash);
+  return bcryptCompare(password, hash);
 }
 
 export async function hasPassword(email: string): Promise<boolean> {

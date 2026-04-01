@@ -104,27 +104,6 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     ],
   },
   {
-    id: "bucket-hat",
-    printfulProductId: 426229361,
-    name: "TDF Bucket Hat",
-    description: "Embroidered TDF crest. One size fits most.",
-    price: 7500,
-    displayPrice: "$75",
-    thumbnailUrl: "https://files.cdn.printful.com/files/20e/20ed4575a571655a1ce668ce4c228432_preview.png",
-    previewUrl: "https://files.cdn.printful.com/files/20e/20ed4575a571655a1ce668ce4c228432_preview.png",
-    colorPreviews: {
-      "Collegiate Navy": "https://files.cdn.printful.com/files/20e/20ed4575a571655a1ce668ce4c228432_preview.png",
-      "Grill": "https://files.cdn.printful.com/files/5ff/5ffe5bb76cb8fc6fc9a9fc13cbe906c4_preview.png",
-    },
-    category: "headwear",
-    colors: ["Collegiate Navy", "Grill"],
-    sizes: [],
-    variants: [
-      { syncVariantId: 5252491845, color: "Collegiate Navy", sku: "69CBD564AA111_Collegiate-Navy" },
-      { syncVariantId: 5252491846, color: "Grill", sku: "69CBD564AA111_Grill" },
-    ],
-  },
-  {
     id: "cap",
     printfulProductId: 426229150,
     name: "TDF Cap",

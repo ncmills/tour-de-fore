@@ -344,14 +344,12 @@ export default function TripBuilderClient({
   };
 
   // ── Price calculation ──
-  const basePrice = useMemo(() => parseDollars(plan.estimatedBudget?.perPerson), [plan]);
+  const aiEstimate = useMemo(() => parseDollars(plan.estimatedBudget?.perPerson), [plan]);
 
   // Build a map of course name → green fee (number)
   const courseFeeMap = useMemo(() => {
     const m: Record<string, number> = {};
-    // From the selected tier plan
     for (const c of plan.courses) m[c.name] = parseDollars(c.greenFee);
-    // From other tiers
     for (const { plan: p } of otherPlans) {
       for (const c of p.courses) {
         if (!(c.name in m)) m[c.name] = parseDollars(c.greenFee);
@@ -360,15 +358,22 @@ export default function TripBuilderClient({
     return m;
   }, [plan, otherPlans]);
 
-  // Sum of default (recommended) course fees
-  const defaultCourseFeeTotal = useMemo(() => {
-    return plan.courses.reduce((sum, c) => sum + parseDollars(c.greenFee), 0);
-  }, [plan]);
+  // Build a map of dining name → per-person cost
+  const diningFeeMap = useMemo(() => {
+    const m: Record<string, number> = {};
+    for (const d of plan.dining) m[d.name] = diningPricePerPerson(d.priceRange);
+    for (const { plan: p } of otherPlans) {
+      for (const d of p.dining) {
+        if (!(d.name in m)) m[d.name] = diningPricePerPerson(d.priceRange);
+      }
+    }
+    return m;
+  }, [plan, otherPlans]);
 
   // Default lodging cost per night
   const defaultLodgingCost = useMemo(() => parseDollars(plan.lodging.costPerNight), [plan]);
 
-  // Current lodging cost
+  // Current lodging cost per night
   const currentLodgingCost = useMemo(() => {
     const sel = allLodging.find((o) => o.id === lodging);
     return sel ? parseDollars(sel.price) : defaultLodgingCost;
@@ -383,6 +388,15 @@ export default function TripBuilderClient({
     }
     return total;
   }, [days, courseFeeMap]);
+
+  // Current dining total (sum of per-person cost for each day's dinner)
+  const currentDiningTotal = useMemo(() => {
+    let total = 0;
+    for (const d of days) {
+      total += diningFeeMap[d.dinner] || 50; // fallback $50 if unknown
+    }
+    return total;
+  }, [days, diningFeeMap]);
 
   const groupSize = plan.groupSize || 12;
 
@@ -404,15 +418,29 @@ export default function TripBuilderClient({
     return 0; // "none"
   }, [transport, numDays, groupSize]);
 
-  // Price per person: base + delta from courses + delta from lodging + transport
-  const currentPricePerPerson = useMemo(() => {
-    const courseDelta = currentCourseFeeTotal - defaultCourseFeeTotal;
-    const lodgingDeltaPerNight = currentLodgingCost - defaultLodgingCost;
-    const lodgingDelta = (lodgingDeltaPerNight * numNights) / groupSize;
-    return Math.round(basePrice + courseDelta + lodgingDelta + transportCostPerPerson);
-  }, [basePrice, currentCourseFeeTotal, defaultCourseFeeTotal, currentLodgingCost, defaultLodgingCost, numNights, groupSize, transportCostPerPerson]);
+  // Default transport is rental-car
+  const defaultTransportCostPerPerson = 50 * numDays;
 
-  const priceDelta = currentPricePerPerson - basePrice;
+  // Bottom-up price: lodging + golf + dining + transport
+  const currentPricePerPerson = useMemo(() => {
+    const lodgingPerPerson = (currentLodgingCost * numNights) / groupSize;
+    return Math.round(lodgingPerPerson + currentCourseFeeTotal + currentDiningTotal + transportCostPerPerson);
+  }, [currentLodgingCost, numNights, groupSize, currentCourseFeeTotal, currentDiningTotal, transportCostPerPerson]);
+
+  // Initial price from default selections (for delta arrow)
+  const initialPricePerPerson = useMemo(() => {
+    const lodgingPerPerson = (defaultLodgingCost * numNights) / groupSize;
+    const defaultGolfTotal = plan.courses.reduce((sum, c) => sum + parseDollars(c.greenFee), 0);
+    // Default dining: use the initial day selections (first N dining options)
+    let defaultDiningTotal = 0;
+    for (let d = 0; d < numDays; d++) {
+      const diningId = allDining[d % allDining.length]?.id || "";
+      defaultDiningTotal += diningFeeMap[diningId] || 50;
+    }
+    return Math.round(lodgingPerPerson + defaultGolfTotal + defaultDiningTotal + defaultTransportCostPerPerson);
+  }, [defaultLodgingCost, numNights, groupSize, plan.courses, numDays, allDining, diningFeeMap, defaultTransportCostPerPerson]);
+
+  const priceDelta = currentPricePerPerson - initialPricePerPerson;
 
   // Track previous price for directional arrow
   const prevPriceRef = useRef(currentPricePerPerson);
@@ -579,6 +607,11 @@ export default function TripBuilderClient({
       )}
       {priceDirection === "down" && (
         <span style={{ fontSize: "0.65rem", color: "#6ee7b7", opacity: 0.7 }}>↓</span>
+      )}
+      {aiEstimate > 0 && (
+        <span style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.3)", marginLeft: "0.25rem", whiteSpace: "nowrap" }}>
+          AI est: ${aiEstimate.toLocaleString()}
+        </span>
       )}
     </div>
 
