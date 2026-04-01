@@ -81,19 +81,6 @@ async function generatePlansForDestination(
 export async function POST(req: NextRequest) {
   // ── Pre-flight checks (fast, before streaming) ──
 
-  // Rate limit: 5 plans per IP per hour (admin bypass for testing)
-  const isAdmin = req.headers.get("x-admin-secret") === process.env.ADMIN_SECRET;
-  if (!isAdmin) {
-    const ip = getClientIp(req);
-    const rl = await rateLimit(`generate:${ip}`, 5, 3600);
-    if (!rl.allowed) {
-      return NextResponse.json(
-        { error: "Too many plans generated. Try again later." },
-        { status: 429, headers: { "Retry-After": String(rl.resetIn) } }
-      );
-    }
-  }
-
   // Validate input
   let state;
   try {
@@ -114,10 +101,24 @@ export async function POST(req: NextRequest) {
     else state.organizerName = "Trip Organizer";
   }
 
-  // Check free plan limit
   const email = state.organizerEmail;
   const UNLIMITED_EMAILS = ["nicholauscmills@gmail.com"];
+  const isAdminHeader = req.headers.get("x-admin-secret") === process.env.ADMIN_SECRET;
+  const isUnlimited = isAdminHeader || (!!email && UNLIMITED_EMAILS.includes(email));
 
+  // Rate limit: 5 plans per IP per hour (bypass for admin / unlimited emails)
+  if (!isUnlimited) {
+    const ip = getClientIp(req);
+    const rl = await rateLimit(`generate:${ip}`, 5, 3600);
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { error: "Too many plans generated. Try again later." },
+        { status: 429, headers: { "Retry-After": String(rl.resetIn) } }
+      );
+    }
+  }
+
+  // Check free plan limit (1 plan/month for non-subscribed, non-unlimited users)
   if (email && !UNLIMITED_EMAILS.includes(email)) {
     const isUserSubscribed = await isSubscribed(email);
     if (!isUserSubscribed) {
