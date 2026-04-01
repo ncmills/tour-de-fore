@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 
-export const maxDuration = 60; // Vercel Hobby plan max
+export const maxDuration = 300; // streaming responses bypass Vercel timeout
 import {
   ThreeFreePreview,
   ThreePlanResult,
@@ -51,146 +51,186 @@ async function generatePlansForDestination(
 }
 
 export async function POST(req: NextRequest) {
-  try {
-    // Rate limit: 5 plans per IP per hour
-    const ip = getClientIp(req);
-    const rl = await rateLimit(`generate:${ip}`, 5, 3600);
-    if (!rl.allowed) {
-      return NextResponse.json(
-        { error: "Too many plans generated. Try again later." },
-        { status: 429, headers: { "Retry-After": String(rl.resetIn) } }
-      );
-    }
+  // ── Pre-flight checks (fast, before streaming) ──
 
-    // Validate input
-    const raw = await req.json();
-    const state = validateWizardState(raw);
-
-    // If login mode and no name, fetch from stored profile
-    if (!state.organizerName && state.organizerEmail) {
-      const { getUserName } = await import("@/lib/auth");
-      const storedName = await getUserName(state.organizerEmail);
-      if (storedName) state.organizerName = storedName;
-      else state.organizerName = "Trip Organizer";
-    }
-
-    // Check free plan limit (1 per month, unlimited for test account)
-    const email = state.organizerEmail;
-    const UNLIMITED_EMAILS = ["nicholauscmills@gmail.com"];
-
-    if (email && !UNLIMITED_EMAILS.includes(email)) {
-      const isUserSubscribed = await isSubscribed(email);
-      if (!isUserSubscribed) {
-        const canGenerate = await canGenerateFreePlan(email);
-        if (!canGenerate) {
-          return NextResponse.json({
-            error: "You've used your free plan this month. Check back next month!",
-            limitReached: true,
-          }, { status: 429 });
-        }
-      }
-    }
-
-    // Load popularity scores
-    const popularity = await getAllPopularityScores();
-    setPopularityScores(popularity);
-
-    // Pick 3 destinations
-    const picks = getThreeDestinations(state);
-    if (picks.length === 0) {
-      return NextResponse.json(
-        { error: "No destinations match your criteria. Try adjusting your preferences." },
-        { status: 400 }
-      );
-    }
-
-    // Build free previews (for destination cards — always fast)
-    const previews = picks.map((pick) =>
-      buildFreePreview(pick.destination, state, pick.priceLevel)
-    );
-    const byLevel: Record<PriceLevel, typeof previews[0] | undefined> = {
-      budget: previews.find((p) => p.priceLevel === "budget"),
-      mid: previews.find((p) => p.priceLevel === "mid"),
-      premium: previews.find((p) => p.priceLevel === "premium"),
-    };
-    const fallbackPreview = previews[0];
-    const freePreviews: ThreeFreePreview = {
-      budget: byLevel.budget || fallbackPreview,
-      mid: byLevel.mid || fallbackPreview,
-      premium: byLevel.premium || fallbackPreview,
-    };
-
-    // Generate FULL Claude plans for ALL users — all 3 destinations
-    const client = new Anthropic({ timeout: 45_000 }); // 45s timeout per call
-    const destsToGenerate = picks;
-
-    const planPromises = destsToGenerate.map(async (pick) => {
-      const context = buildDestinationContext(pick.destination);
-      const plans = await generatePlansForDestination(client, state, context);
-      return {
-        destinationId: pick.destination.id,
-        city: pick.destination.city,
-        state: pick.destination.state,
-        tagline: pick.destination.tagline,
-        priceLevel: pick.priceLevel,
-        plans,
-      } satisfies DestinationRecommendation;
-    });
-
-    const recommendations = await Promise.all(planPromises);
-
-    // Build destinations result
-    const destByLevel: Record<PriceLevel, DestinationRecommendation | undefined> = {
-      budget: recommendations.find((r) => r.priceLevel === "budget"),
-      mid: recommendations.find((r) => r.priceLevel === "mid"),
-      premium: recommendations.find((r) => r.priceLevel === "premium"),
-    };
-    const fallbackRec = recommendations[0];
-
-    const destinations: ThreeDestinationResult | undefined = recommendations.length > 0 ? {
-      budget: destByLevel.budget || fallbackRec,
-      mid: destByLevel.mid || fallbackRec,
-      premium: destByLevel.premium || fallbackRec,
-    } : undefined;
-
-    // Record free plan usage BEFORE generation (prevents race condition)
-    const subscribed = email ? await isSubscribed(email) : false;
-    if (email && !UNLIMITED_EMAILS.includes(email) && !subscribed) {
-      await recordFreePlanGeneration(email);
-    }
-
-    // Store plan — only mark paid if subscriber
-    const planId = crypto.randomUUID();
-    const storedPlan: StoredPlan = {
-      id: planId,
-      freePreviews,
-      destinations,
-      inputs: state,
-      createdAt: new Date().toISOString(),
-      emailsSent: false,
-      paid: subscribed || UNLIMITED_EMAILS.includes(email || ""),
-    };
-
-    await storePlan(storedPlan);
-    await storeAttendees(planId, [{ name: state.organizerName, email }]);
-
-    if (email) {
-      await addPlanToUser(email, planId);
-    }
-
-    for (const preview of previews) {
-      await recordDestinationView(preview.destinationId, state);
-    }
-
-    return NextResponse.json({ planId, freePreviews });
-  } catch (err) {
-    const errMsg = err instanceof Error ? err.message : String(err);
-    const errName = err instanceof Error ? err.constructor.name : "Unknown";
-    console.error(`Plan generation error [${errName}]: ${errMsg}`);
-    if (err instanceof Error && err.stack) console.error(err.stack);
+  // Rate limit: 5 plans per IP per hour
+  const ip = getClientIp(req);
+  const rl = await rateLimit(`generate:${ip}`, 5, 3600);
+  if (!rl.allowed) {
     return NextResponse.json(
-      { error: "Failed to generate plan. Please try again." },
-      { status: 500 }
+      { error: "Too many plans generated. Try again later." },
+      { status: 429, headers: { "Retry-After": String(rl.resetIn) } }
     );
   }
+
+  // Validate input
+  let state;
+  try {
+    const raw = await req.json();
+    state = validateWizardState(raw);
+  } catch (err) {
+    return NextResponse.json(
+      { error: err instanceof Error ? err.message : "Invalid request" },
+      { status: 400 }
+    );
+  }
+
+  // If login mode and no name, fetch from stored profile
+  if (!state.organizerName && state.organizerEmail) {
+    const { getUserName } = await import("@/lib/auth");
+    const storedName = await getUserName(state.organizerEmail);
+    if (storedName) state.organizerName = storedName;
+    else state.organizerName = "Trip Organizer";
+  }
+
+  // Check free plan limit
+  const email = state.organizerEmail;
+  const UNLIMITED_EMAILS = ["nicholauscmills@gmail.com"];
+
+  if (email && !UNLIMITED_EMAILS.includes(email)) {
+    const isUserSubscribed = await isSubscribed(email);
+    if (!isUserSubscribed) {
+      const canGenerate = await canGenerateFreePlan(email);
+      if (!canGenerate) {
+        return NextResponse.json({
+          error: "You've used your free plan this month. Check back next month!",
+          limitReached: true,
+        }, { status: 429 });
+      }
+    }
+  }
+
+  // Load popularity scores + pick destinations (fast, pure data)
+  const popularity = await getAllPopularityScores();
+  setPopularityScores(popularity);
+
+  const picks = getThreeDestinations(state);
+  if (picks.length === 0) {
+    return NextResponse.json(
+      { error: "No destinations match your criteria. Try adjusting your preferences." },
+      { status: 400 }
+    );
+  }
+
+  // Build free previews (no Claude, instant)
+  const previews = picks.map((pick) =>
+    buildFreePreview(pick.destination, state, pick.priceLevel)
+  );
+  const byLevel: Record<PriceLevel, typeof previews[0] | undefined> = {
+    budget: previews.find((p) => p.priceLevel === "budget"),
+    mid: previews.find((p) => p.priceLevel === "mid"),
+    premium: previews.find((p) => p.priceLevel === "premium"),
+  };
+  const fallbackPreview = previews[0];
+  const freePreviews: ThreeFreePreview = {
+    budget: byLevel.budget || fallbackPreview,
+    mid: byLevel.mid || fallbackPreview,
+    premium: byLevel.premium || fallbackPreview,
+  };
+
+  // ── Stream the slow part (Claude generation) ──
+  // Streaming keeps the Vercel function alive — no timeout.
+
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream({
+    async start(controller) {
+      const send = (data: Record<string, unknown>) => {
+        controller.enqueue(encoder.encode(JSON.stringify(data) + "\n"));
+      };
+
+      // Send keepalive pings every 5s to prevent proxy/CDN timeouts
+      const keepalive = setInterval(() => {
+        send({ type: "ping" });
+      }, 5000);
+
+      try {
+        send({ type: "status", message: "Scouting destinations..." });
+
+        const client = new Anthropic({ timeout: 120_000 });
+
+        // Generate plans for each destination
+        const recommendations: DestinationRecommendation[] = [];
+        for (let i = 0; i < picks.length; i++) {
+          const pick = picks[i];
+          send({ type: "status", message: `Building ${pick.destination.city} plans (${i + 1}/${picks.length})...` });
+
+          const context = buildDestinationContext(pick.destination);
+          const plans = await generatePlansForDestination(client, state, context);
+          recommendations.push({
+            destinationId: pick.destination.id,
+            city: pick.destination.city,
+            state: pick.destination.state,
+            tagline: pick.destination.tagline,
+            priceLevel: pick.priceLevel,
+            plans,
+          });
+        }
+
+        send({ type: "status", message: "Saving your trip..." });
+
+        // Build destinations result
+        const destByLevel: Record<PriceLevel, DestinationRecommendation | undefined> = {
+          budget: recommendations.find((r) => r.priceLevel === "budget"),
+          mid: recommendations.find((r) => r.priceLevel === "mid"),
+          premium: recommendations.find((r) => r.priceLevel === "premium"),
+        };
+        const fallbackRec = recommendations[0];
+
+        const destinations: ThreeDestinationResult | undefined = recommendations.length > 0 ? {
+          budget: destByLevel.budget || fallbackRec,
+          mid: destByLevel.mid || fallbackRec,
+          premium: destByLevel.premium || fallbackRec,
+        } : undefined;
+
+        // Record free plan usage
+        const subscribed = email ? await isSubscribed(email) : false;
+        if (email && !UNLIMITED_EMAILS.includes(email) && !subscribed) {
+          await recordFreePlanGeneration(email);
+        }
+
+        // Store plan
+        const planId = crypto.randomUUID();
+        const storedPlan: StoredPlan = {
+          id: planId,
+          freePreviews,
+          destinations,
+          inputs: state,
+          createdAt: new Date().toISOString(),
+          emailsSent: false,
+          paid: subscribed || UNLIMITED_EMAILS.includes(email || ""),
+        };
+
+        await storePlan(storedPlan);
+        await storeAttendees(planId, [{ name: state.organizerName, email }]);
+
+        if (email) {
+          await addPlanToUser(email, planId);
+        }
+
+        for (const preview of previews) {
+          await recordDestinationView(preview.destinationId, state);
+        }
+
+        // Final result
+        send({ type: "done", planId, freePreviews });
+      } catch (err) {
+        const errMsg = err instanceof Error ? err.message : String(err);
+        const errName = err instanceof Error ? err.constructor.name : "Unknown";
+        console.error(`Plan generation error [${errName}]: ${errMsg}`);
+        if (err instanceof Error && err.stack) console.error(err.stack);
+        send({ type: "error", error: "Failed to generate plan. Please try again." });
+      } finally {
+        clearInterval(keepalive);
+        controller.close();
+      }
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      "Content-Type": "application/x-ndjson",
+      "Cache-Control": "no-cache",
+      "Transfer-Encoding": "chunked",
+    },
+  });
 }

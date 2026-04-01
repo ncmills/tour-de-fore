@@ -474,7 +474,9 @@ export default function PlanWizardClient() {
         body: JSON.stringify(state),
       });
 
-      if (!res.ok) {
+      // Non-streaming error responses (rate limit, validation, etc.)
+      const contentType = res.headers.get("content-type") || "";
+      if (!contentType.includes("ndjson")) {
         const data = await res.json().catch(() => ({}));
         if (data.limitReached) {
           setOverlayLimitReached(true);
@@ -484,10 +486,42 @@ export default function PlanWizardClient() {
         throw new Error(data.error || "Failed to generate plan");
       }
 
-      const data = await res.json();
+      // Stream the response — read NDJSON lines
+      const reader = res.body!.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let result: { planId?: string } | null = null;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n");
+        buffer = lines.pop() || "";
+        for (const line of lines) {
+          if (!line.trim()) continue;
+          try {
+            const msg = JSON.parse(line);
+            if (msg.type === "done") {
+              result = msg;
+            } else if (msg.type === "error") {
+              throw new Error(msg.error || "Failed to generate plan");
+            }
+            // ping and status messages are ignored (keepalive)
+          } catch (parseErr) {
+            if (parseErr instanceof SyntaxError) continue;
+            throw parseErr;
+          }
+        }
+      }
+
+      if (!result?.planId) {
+        throw new Error("Failed to generate plan. Please try again.");
+      }
+
       try { sessionStorage.removeItem("tdf-wizard-state"); } catch { /* ignore */ }
       setConfirmed(true);
-      setTimeout(() => { window.location.href = `/plan/result/${data.planId}`; }, 3000);
+      setTimeout(() => { window.location.href = `/plan/result/${result!.planId}`; }, 3000);
     } catch (err) {
       // Show error inside the overlay — never drop back to the wizard
       setOverlayError(err instanceof Error ? err.message : "Something went wrong. Try again.");
