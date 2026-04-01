@@ -66,6 +66,14 @@ export async function POST(req: NextRequest) {
     const raw = await req.json();
     const state = validateWizardState(raw);
 
+    // If login mode and no name, fetch from stored profile
+    if (!state.organizerName && state.organizerEmail) {
+      const { getUserName } = await import("@/lib/auth");
+      const storedName = await getUserName(state.organizerEmail);
+      if (storedName) state.organizerName = storedName;
+      else state.organizerName = "Trip Organizer";
+    }
+
     // Check free plan limit (1 per month, unlimited for test account)
     const email = state.organizerEmail;
     const UNLIMITED_EMAILS = ["nicholauscmills@gmail.com"];

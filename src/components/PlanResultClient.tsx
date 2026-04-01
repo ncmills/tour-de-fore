@@ -277,10 +277,10 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
           maxWidth: 1100,
           margin: "0 auto",
           display: "flex",
+          flexDirection: "column",
           alignItems: "center",
-          justifyContent: "space-between",
           padding: "0.6rem clamp(1rem, 4vw, 3rem)",
-          gap: "0.75rem",
+          gap: "0.4rem",
         }}>
           <span style={{
             fontFamily: "var(--font-plan-block), sans-serif",
@@ -289,29 +289,26 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
             letterSpacing: "0.04em",
             textTransform: "uppercase",
             color: "#fff",
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
           }}>
             {plan.tripName || plan.destination}
           </span>
           <Link
             href={`/plan/result/${planId}?dest=${dest || "mid"}`}
             style={{
-              fontSize: "0.7rem",
-              fontWeight: 600,
+              fontSize: "0.65rem",
+              fontWeight: 700,
               letterSpacing: "0.06em",
               textTransform: "uppercase",
-              color: "rgba(255,255,255,0.5)",
+              color: "#fff",
               textDecoration: "none",
-              padding: "6px 14px",
-              border: "1px solid rgba(255,255,255,0.15)",
+              padding: "5px 14px",
+              background: "rgba(220,38,38,0.8)",
               borderRadius: 4,
               whiteSpace: "nowrap",
-              transition: "color 0.2s, border-color 0.2s",
+              transition: "background 0.2s",
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.4)"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.5)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)"; }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(220,38,38,1)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(220,38,38,0.8)"; }}
           >
             &larr; All Plans
           </Link>

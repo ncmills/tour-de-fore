@@ -285,10 +285,30 @@ export default function GalleryClient({
             fontSize: "0.95rem",
             color: "rgba(255,255,255,0.45)",
             marginTop: "0.5rem",
+            marginBottom: "1rem",
           }}
         >
           Swipe through everything this destination has to offer
         </p>
+        <Link
+          href={`/plan/build?planId=${planId}&dest=${dest}&tier=${tier}`}
+          style={{
+            display: "inline-block",
+            background: "rgba(220,38,38,0.9)",
+            borderRadius: 8,
+            padding: "12px 28px",
+            color: "#fff",
+            fontSize: 15,
+            fontWeight: 700,
+            letterSpacing: "0.06em",
+            textDecoration: "none",
+            transition: "all 0.2s",
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(220,38,38,1)"; }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(220,38,38,0.9)"; }}
+        >
+          Build Your Trip &rarr;
+        </Link>
       </motion.div>
 
       {/* Category sections */}

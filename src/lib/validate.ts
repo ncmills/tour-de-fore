@@ -15,7 +15,6 @@ export function validateWizardState(raw: unknown): WizardState {
   const organizerName = sanitizeString(s.organizerName, 100);
   const organizerEmail = sanitizeEmail(s.organizerEmail);
 
-  if (!organizerName) throw new Error("Organizer name is required");
   if (!organizerEmail) throw new Error("Valid organizer email is required");
 
   // Enum validations

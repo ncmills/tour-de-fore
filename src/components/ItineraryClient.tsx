@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { motion } from "motion/react";
-import type { GeneratedPlan, TripTier, PlanCourse, PlanDining, PlanBar } from "@/lib/plan-types";
+import type { GeneratedPlan, TripTier, PlanCourse, PlanDining, PlanBar, PlanScheduleItem } from "@/lib/plan-types";
 import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
 import PlanBreadcrumb from "./PlanBreadcrumb";
@@ -76,6 +76,39 @@ function ExternalLink({ href, label }: { href: string; label: string }) {
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
       </svg>
     </a>
+  );
+}
+
+const scheduleIcons: Record<string, string> = {
+  golf: "⛳",
+  dining: "🍽️",
+  activity: "🎯",
+  nightlife: "🍺",
+  travel: "🚗",
+  lodging: "🏠",
+};
+
+function ScheduleItemCard({ item, plan }: { item: PlanScheduleItem; plan: GeneratedPlan }) {
+  // Try to find matching course/dining/bar for URL links
+  const courseMatch = item.type === "golf" ? plan.courses.find((c) => item.activity.includes(c.name)) : null;
+  const diningMatch = item.type === "dining" ? plan.dining.find((d) => item.activity.includes(d.name)) : null;
+  const barMatch = item.type === "nightlife" ? plan.bars.find((b) => item.activity.includes(b.name)) : null;
+  const url = courseMatch?.url || diningMatch?.url || barMatch?.url;
+  const linkLabel = item.type === "golf" ? "Tee Times & Info" : item.type === "dining" ? "View Menu" : item.type === "nightlife" ? "Check it Out" : "View";
+
+  return (
+    <ItineraryCard icon={scheduleIcons[item.type] || "📌"} label={item.time}>
+      <p style={{ fontSize: "1.05rem", fontWeight: 600, marginBottom: "0.2rem" }}>{item.activity}</p>
+      {item.detail && (
+        <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.5 }}>{item.detail}</p>
+      )}
+      {item.proTip && (
+        <p style={{ fontSize: "0.75rem", color: "rgba(249,115,22,0.7)", fontStyle: "italic", marginTop: "0.3rem" }}>
+          💡 {item.proTip}
+        </p>
+      )}
+      {url && <ExternalLink href={url} label={linkLabel} />}
+    </ItineraryCard>
   );
 }
 
@@ -162,7 +195,7 @@ export default function ItineraryClient({
   const [emailError, setEmailError] = useState("");
 
   const numDays = plan.schedule?.length || plan.numberOfDays || 3;
-  const numNights = Math.max(numDays - 1, 1);
+  const numNights = numDays + 2; // arrival night + activity days + departure night
   const groupSize = plan.groupSize || 12;
 
   // Build selected course/dining/bar lists from selectedOptions or fall back to plan defaults
@@ -418,116 +451,93 @@ export default function ItineraryClient({
           </div>
         </motion.section>
 
-        {/* ── Day-by-Day Breakdown ── */}
-        {dayItineraries.map((day, di) => (
-          <motion.section
-            key={day.day}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 * di + 0.3 }}
-            style={{
-              marginBottom: "2.5rem",
-              borderTop: di > 0 ? "1px solid rgba(255,255,255,0.06)" : "none",
-              paddingTop: di > 0 ? "2rem" : 0,
-            }}
-          >
-            {/* Day header */}
-            <h2 style={{
-              fontFamily: "var(--font-plan-block), sans-serif",
-              fontSize: "clamp(1.8rem, 4vw, 2.5rem)",
-              textTransform: "uppercase",
-              letterSpacing: "0.08em",
-              color: "#EA580C",
-              marginBottom: "1.25rem",
-            }}>
-              Day {day.day}
-            </h2>
-
-            {/* Morning */}
-            {day.morning && (
-              <ItineraryCard icon="⛳" label="Morning — Round 1">
-                <p style={{ fontSize: "1.05rem", fontWeight: 600, marginBottom: "0.2rem" }}>{day.morning.name}</p>
-                <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)" }}>
-                  Green fee: {day.morning.greenFee}/pp
-                </p>
-                {day.morning.whyThisCourse && (
-                  <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)", marginTop: "0.3rem", fontStyle: "italic" }}>
-                    {day.morning.whyThisCourse}
-                  </p>
-                )}
-                {day.morning.url && <ExternalLink href={day.morning.url} label="Tee Times & Info" />}
-              </ItineraryCard>
-            )}
-
-            {/* Afternoon */}
-            {day.afternoon && (
-              <ItineraryCard icon="⛳" label="Afternoon — Round 2">
-                <p style={{ fontSize: "1.05rem", fontWeight: 600, marginBottom: "0.2rem" }}>{day.afternoon.name}</p>
-                <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)" }}>
-                  Green fee: {day.afternoon.greenFee}/pp
-                </p>
-                {day.afternoon.whyThisCourse && (
-                  <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)", marginTop: "0.3rem", fontStyle: "italic" }}>
-                    {day.afternoon.whyThisCourse}
-                  </p>
-                )}
-                {day.afternoon.url && <ExternalLink href={day.afternoon.url} label="Tee Times & Info" />}
-              </ItineraryCard>
-            )}
-
-            {day.afternoonActivity && (
-              <ItineraryCard icon="🎯" label="Afternoon — Activity">
-                <p style={{ fontSize: "1.05rem", fontWeight: 600 }}>{day.afternoonActivity}</p>
-              </ItineraryCard>
-            )}
-
-            {/* Travel note */}
-            {day.morning && day.afternoon && day.morning.name !== day.afternoon.name && (
-              <div style={{
-                padding: "0.5rem 1rem",
-                background: "rgba(212,168,67,0.08)",
-                border: "1px solid rgba(212,168,67,0.15)",
-                borderRadius: 8,
-                marginBottom: "0.75rem",
-                fontSize: "0.75rem",
-                color: "#D4A843",
+        {/* ── Full Schedule (all days from AI) ── */}
+        {plan.schedule?.length > 0 ? (
+          plan.schedule.map((day, di) => (
+            <motion.section
+              key={day.day}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 * di + 0.3 }}
+              style={{
+                marginBottom: "2.5rem",
+                borderTop: di > 0 ? "1px solid rgba(255,255,255,0.06)" : "none",
+                paddingTop: di > 0 ? "2rem" : 0,
+              }}
+            >
+              <h2 style={{
+                fontFamily: "var(--font-plan-block), sans-serif",
+                fontSize: "clamp(1.8rem, 4vw, 2.5rem)",
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+                color: "#EA580C",
+                marginBottom: "1.25rem",
               }}>
-                🚗 Check drive time between {day.morning.name} and {day.afternoon.name}
-              </div>
-            )}
+                {day.label}
+              </h2>
 
-            {/* Dinner */}
-            {day.dinner && (
-              <ItineraryCard icon="🍽️" label="Dinner">
-                <p style={{ fontSize: "1.05rem", fontWeight: 600, marginBottom: "0.2rem" }}>{day.dinner.name}</p>
-                <div style={{ display: "flex", gap: "0.75rem", fontSize: "0.8rem", color: "rgba(255,255,255,0.5)" }}>
-                  <span>{day.dinner.type}</span>
-                  {day.dinner.priceRange && <span>· {day.dinner.priceRange}</span>}
-                </div>
-                {day.dinner.description && (
-                  <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)", marginTop: "0.3rem" }}>
-                    {day.dinner.description}
-                  </p>
-                )}
-                {day.dinner.url && <ExternalLink href={day.dinner.url} label="View Menu" />}
-              </ItineraryCard>
-            )}
-
-            {/* Nightlife */}
-            {day.bar && (
-              <ItineraryCard icon="🍺" label="Nightlife">
-                <p style={{ fontSize: "1.05rem", fontWeight: 600, marginBottom: "0.2rem" }}>{day.bar.name}</p>
-                <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)" }}>{day.bar.vibe}</p>
-                {day.bar.description && (
-                  <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)", marginTop: "0.3rem" }}>
-                    {day.bar.description}
-                  </p>
-                )}
-                {day.bar.url && <ExternalLink href={day.bar.url} label="Check it Out" />}
-              </ItineraryCard>
-            )}
-          </motion.section>
-        ))}
+              {day.items.map((item, j) => (
+                <ScheduleItemCard key={j} item={item} plan={plan} />
+              ))}
+            </motion.section>
+          ))
+        ) : (
+          /* Fallback: use constructed dayItineraries if no schedule */
+          dayItineraries.map((day, di) => (
+            <motion.section
+              key={day.day}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 * di + 0.3 }}
+              style={{
+                marginBottom: "2.5rem",
+                borderTop: di > 0 ? "1px solid rgba(255,255,255,0.06)" : "none",
+                paddingTop: di > 0 ? "2rem" : 0,
+              }}
+            >
+              <h2 style={{
+                fontFamily: "var(--font-plan-block), sans-serif",
+                fontSize: "clamp(1.8rem, 4vw, 2.5rem)",
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+                color: "#EA580C",
+                marginBottom: "1.25rem",
+              }}>
+                Day {day.day}
+              </h2>
+              {day.morning && (
+                <ItineraryCard icon="⛳" label="Morning — Round 1">
+                  <p style={{ fontSize: "1.05rem", fontWeight: 600, marginBottom: "0.2rem" }}>{day.morning.name}</p>
+                  <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)" }}>Green fee: {day.morning.greenFee}/pp</p>
+                  {day.morning.whyThisCourse && <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)", marginTop: "0.3rem", fontStyle: "italic" }}>{day.morning.whyThisCourse}</p>}
+                </ItineraryCard>
+              )}
+              {day.afternoon && (
+                <ItineraryCard icon="⛳" label="Afternoon — Round 2">
+                  <p style={{ fontSize: "1.05rem", fontWeight: 600, marginBottom: "0.2rem" }}>{day.afternoon.name}</p>
+                  <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)" }}>Green fee: {day.afternoon.greenFee}/pp</p>
+                </ItineraryCard>
+              )}
+              {day.afternoonActivity && (
+                <ItineraryCard icon="🎯" label="Afternoon — Activity">
+                  <p style={{ fontSize: "1.05rem", fontWeight: 600 }}>{day.afternoonActivity}</p>
+                </ItineraryCard>
+              )}
+              {day.dinner && (
+                <ItineraryCard icon="🍽️" label="Dinner">
+                  <p style={{ fontSize: "1.05rem", fontWeight: 600, marginBottom: "0.2rem" }}>{day.dinner.name}</p>
+                  <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)" }}>{day.dinner.type}</p>
+                </ItineraryCard>
+              )}
+              {day.bar && (
+                <ItineraryCard icon="🍺" label="Nightlife">
+                  <p style={{ fontSize: "1.05rem", fontWeight: 600, marginBottom: "0.2rem" }}>{day.bar.name}</p>
+                  <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)" }}>{day.bar.vibe}</p>
+                </ItineraryCard>
+              )}
+            </motion.section>
+          ))
+        )}
 
         {/* ── Pricing Breakdown ── */}
         <motion.section
@@ -570,6 +580,11 @@ export default function ItineraryClient({
             </div>
           </div>
         </motion.section>
+
+        {/* ── Pro Tips & Logistics (collapsed) ── */}
+        {(plan.proTips?.length > 0 || plan.groupLogistics) && (
+          <ProTipsSection plan={plan} />
+        )}
 
         {/* ── Bottom Actions ── */}
         <motion.div
@@ -729,7 +744,114 @@ export default function ItineraryClient({
             Edit Selections
           </a>
         </motion.div>
+
       </div>
     </main>
+  );
+}
+
+function ProTipsSection({ plan }: { plan: GeneratedPlan }) {
+  const [open, setOpen] = useState(false);
+  const hasLogistics = plan.groupLogistics && (plan.groupLogistics.teeTimeStrategy || plan.groupLogistics.transport || plan.groupLogistics.packingList?.length > 0);
+
+  return (
+    <motion.section
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.5 }}
+      style={{ marginTop: "2rem", marginBottom: "3rem" }}
+    >
+      <button
+        onClick={() => setOpen(!open)}
+        style={{
+          background: "none",
+          border: "1px solid rgba(255,255,255,0.1)",
+          borderRadius: 10,
+          cursor: "pointer",
+          width: "100%",
+          textAlign: "left",
+          padding: "1.25rem 1.5rem",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          transition: "border-color 0.2s",
+        }}
+        onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)"; }}
+        onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }}
+      >
+        <span style={{
+          fontFamily: "var(--font-plan-block), sans-serif",
+          fontSize: "1.2rem",
+          textTransform: "uppercase",
+          letterSpacing: "0.06em",
+          color: "#fff",
+        }}>
+          Pro Tips & Logistics
+        </span>
+        <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "1.2rem", transition: "transform 0.2s", transform: open ? "rotate(180deg)" : "rotate(0deg)" }}>
+          ▾
+        </span>
+      </button>
+
+      {open && (
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          transition={{ duration: 0.3 }}
+          style={{
+            background: "#111",
+            border: "1px solid rgba(255,255,255,0.1)",
+            borderTop: "none",
+            borderRadius: "0 0 10px 10px",
+            padding: "1.5rem",
+          }}
+        >
+          {plan.proTips?.length > 0 && (
+            <div style={{ marginBottom: hasLogistics ? "1.5rem" : 0 }}>
+              <h3 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "0.85rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "#EA580C", marginBottom: "0.75rem" }}>
+                Pro Tips
+              </h3>
+              <ul style={{ margin: 0, paddingLeft: "1.2rem", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                {plan.proTips.map((tip, i) => (
+                  <li key={i} style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.5 }}>
+                    {tip}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {hasLogistics && (
+            <div>
+              <h3 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "0.85rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "#EA580C", marginBottom: "0.75rem" }}>
+                Logistics
+              </h3>
+              {plan.groupLogistics.teeTimeStrategy && (
+                <div style={{ marginBottom: "0.75rem" }}>
+                  <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.25rem" }}>Tee Time Strategy</p>
+                  <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.5 }}>{plan.groupLogistics.teeTimeStrategy}</p>
+                </div>
+              )}
+              {plan.groupLogistics.transport && (
+                <div style={{ marginBottom: "0.75rem" }}>
+                  <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.25rem" }}>Transport</p>
+                  <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.5 }}>{plan.groupLogistics.transport}</p>
+                </div>
+              )}
+              {plan.groupLogistics.packingList?.length > 0 && (
+                <div>
+                  <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.25rem" }}>Packing List</p>
+                  <ul style={{ margin: 0, paddingLeft: "1.2rem", display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+                    {plan.groupLogistics.packingList.map((item, i) => (
+                      <li key={i} style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.4 }}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
+        </motion.div>
+      )}
+    </motion.section>
   );
 }

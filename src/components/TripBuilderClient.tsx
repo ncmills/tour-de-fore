@@ -301,9 +301,9 @@ export default function TripBuilderClient({
 
 
 
-  // Number of days and nights (3-day trip = 2 nights of lodging)
+  // Number of days and nights (3 activity days = 5 nights: arrive day before, depart day after)
   const numDays = plan.schedule?.length || plan.numberOfDays || 3;
-  const numNights = Math.max(numDays - 1, 1);
+  const numNights = numDays + 2;
 
   // Initialize day selections
   const [lodging, setLodging] = useState(plan.lodging.name);
@@ -712,7 +712,32 @@ export default function TripBuilderClient({
           </div>
         </section>
 
-        {/* ── Day-by-Day ── */}
+        {/* ── Arrival Day ── */}
+        <section style={{ marginBottom: "1rem", borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "1.5rem" }}>
+          <div style={{ padding: "0.5rem 0", marginBottom: "0.5rem" }}>
+            <h2 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(1.8rem, 4vw, 2.5rem)", textTransform: "uppercase", letterSpacing: "0.08em", color: "#EA580C", margin: 0 }}>
+              Day 1 — Arrival
+            </h2>
+          </div>
+          <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.4)", marginBottom: "1rem", lineHeight: 1.6 }}>
+            Fly in, check into lodging, and settle in. Kick off the trip with a group dinner.
+          </p>
+          <SlotSection
+            label="Welcome Dinner"
+            options={allDining}
+            selectedId={days[0]?.dinner || ""}
+            onSelect={(id) => updateDay(0, "dinner", id)}
+            tagMap={diningTagMap}
+          />
+          <SlotSection
+            label="First Night Out"
+            options={allBars}
+            selectedId={days[0]?.bar || ""}
+            onSelect={(id) => updateDay(0, "bar", id)}
+          />
+        </section>
+
+        {/* ── Activity Days ── */}
         {days.map((day, di) => {
           const isExpanded = expandedDay === di;
           const daySummary = [
@@ -739,7 +764,7 @@ export default function TripBuilderClient({
                 }}
               >
                 <h2 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(1.8rem, 4vw, 2.5rem)", textTransform: "uppercase", letterSpacing: "0.08em", color: "#EA580C", margin: 0 }}>
-                  Day {di + 1}
+                  Day {di + 2}
                 </h2>
                 <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "1.2rem", transition: "transform 0.2s", transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)" }}>
                   &#9660;
@@ -844,6 +869,18 @@ export default function TripBuilderClient({
             </section>
           );
         })}
+
+        {/* ── Departure Day ── */}
+        <section style={{ marginBottom: "2rem", borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "1.5rem" }}>
+          <div style={{ padding: "0.5rem 0", marginBottom: "0.5rem" }}>
+            <h2 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(1.8rem, 4vw, 2.5rem)", textTransform: "uppercase", letterSpacing: "0.08em", color: "#EA580C", margin: 0 }}>
+              Day {numDays + 2} — Departure
+            </h2>
+          </div>
+          <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.4)", lineHeight: 1.6 }}>
+            Check out, grab brunch, and head to the airport. Trip complete.
+          </p>
+        </section>
 
         {/* ── Bottom CTA ── */}
         <div style={{
