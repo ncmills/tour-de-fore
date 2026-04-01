@@ -410,7 +410,7 @@ export default function TripBuilderClient({
     const lodgingDeltaPerNight = currentLodgingCost - defaultLodgingCost;
     const lodgingDelta = (lodgingDeltaPerNight * numNights) / groupSize;
     return Math.round(basePrice + courseDelta + lodgingDelta + transportCostPerPerson);
-  }, [basePrice, currentCourseFeeTotal, defaultCourseFeeTotal, currentLodgingCost, defaultLodgingCost, numDays, groupSize, transportCostPerPerson]);
+  }, [basePrice, currentCourseFeeTotal, defaultCourseFeeTotal, currentLodgingCost, defaultLodgingCost, numNights, groupSize, transportCostPerPerson]);
 
   const priceDelta = currentPricePerPerson - basePrice;
 
