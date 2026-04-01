@@ -1,10 +1,4 @@
-import Redis from "ioredis";
-
-let redis: Redis;
-function getRedis() {
-  if (!redis) redis = new Redis(process.env.REDIS_URL!);
-  return redis;
-}
+import { getRedis } from "./redis";
 
 /**
  * Simple sliding-window rate limiter using Redis.

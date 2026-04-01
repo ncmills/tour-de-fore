@@ -273,24 +273,49 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
           borderBottom: "1px solid #222",
         }}
       >
-        {/* Summary row */}
-        <div className="plan-header-row" style={{
+        <div style={{
           maxWidth: 1100,
           margin: "0 auto",
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
-          padding: "0.5rem clamp(1rem, 4vw, 3rem)",
+          justifyContent: "space-between",
+          padding: "0.6rem clamp(1rem, 4vw, 3rem)",
           gap: "0.75rem",
-          flexWrap: "wrap",
         }}>
-          <span style={{ display: "inline-block", padding: "2px 10px", borderRadius: 999, fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", background: tierColors[tier], color: "#000" }}>
-            {tierLabels[tier]}
+          <span style={{
+            fontFamily: "var(--font-plan-block), sans-serif",
+            fontSize: "0.9rem",
+            fontWeight: 700,
+            letterSpacing: "0.04em",
+            textTransform: "uppercase",
+            color: "#fff",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}>
+            {plan.tripName || plan.destination}
           </span>
-          <span style={{ color: "#ccc", fontSize: 13 }}>{plan.destination}</span>
-          <span style={{ color: "#555", fontSize: 12 }}>{plan.estimatedBudget.perPerson}/pp</span>
+          <Link
+            href={`/plan/result/${planId}?dest=${dest || "mid"}`}
+            style={{
+              fontSize: "0.7rem",
+              fontWeight: 600,
+              letterSpacing: "0.06em",
+              textTransform: "uppercase",
+              color: "rgba(255,255,255,0.5)",
+              textDecoration: "none",
+              padding: "6px 14px",
+              border: "1px solid rgba(255,255,255,0.15)",
+              borderRadius: 4,
+              whiteSpace: "nowrap",
+              transition: "color 0.2s, border-color 0.2s",
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.4)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.5)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)"; }}
+          >
+            &larr; All Plans
+          </Link>
         </div>
-
       </div>
 
       {/* Mulligan — below header */}
@@ -316,12 +341,18 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
           style={{
             ...headingFont,
             fontSize: "clamp(3rem, 8vw, 6rem)",
-            lineHeight: 1.1,
+            lineHeight: 1.3,
             margin: "0 0 1rem",
           }}
         >
           {plan.destination}
         </h1>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", flexWrap: "wrap", marginBottom: "0.5rem" }}>
+          <span style={{ display: "inline-block", padding: "3px 12px", borderRadius: 999, fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", background: tierColors[tier], color: "#000" }}>
+            {tierLabels[tier]}
+          </span>
+          <span style={{ color: "#ccc", fontSize: 15 }}>{plan.estimatedBudget.perPerson}/pp</span>
+        </div>
         <p style={{ color: "#999", fontSize: 18, margin: 0 }}>{plan.dates}</p>
       </motion.section>
 
@@ -973,53 +1004,35 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
           )}
         </div>
 
-        {/* Build Your Trip + Share with Crew CTAs */}
+        {/* Change Itinerary CTA */}
         <div style={{
           display: "flex",
-          flexWrap: "wrap",
-          gap: "0.75rem",
           justifyContent: "center",
           marginTop: "2rem",
           paddingTop: "1.5rem",
           borderTop: "1px solid rgba(255,255,255,0.06)",
         }}>
           <Link
-            href={`/plan/gallery?planId=${planId}&dest=${dest || "mid"}&tier=${tier}`}
+            href={`/plan/build?planId=${planId}&dest=${dest || "mid"}&tier=${tier}`}
             style={{
               display: "inline-flex",
               alignItems: "center",
               gap: 8,
               padding: "12px 28px",
-              background: "rgba(220,38,38,0.15)",
-              border: "1px solid rgba(220,38,38,0.4)",
-              borderRadius: 8,
-              color: "rgba(220,38,38,0.9)",
-              fontSize: 14,
-              fontWeight: 600,
-              textDecoration: "none",
-              transition: "all 0.2s",
-            }}
-          >
-            Build Your Trip
-          </Link>
-          <Link
-            href={`/plan/gallery?planId=${planId}&dest=${dest || "mid"}&tier=${tier}`}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-              padding: "12px 28px",
-              background: "rgba(255,255,255,0.05)",
-              border: "1px solid rgba(255,255,255,0.15)",
+              background: "transparent",
+              border: "2px solid rgba(255,255,255,0.3)",
               borderRadius: 8,
               color: "rgba(255,255,255,0.7)",
               fontSize: 14,
-              fontWeight: 600,
+              fontWeight: 700,
+              letterSpacing: "0.04em",
               textDecoration: "none",
               transition: "all 0.2s",
             }}
+            onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.6)"; e.currentTarget.style.color = "#fff"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)"; e.currentTarget.style.color = "rgba(255,255,255,0.7)"; }}
           >
-            Share with Crew
+            Change Itinerary
           </Link>
         </div>
 

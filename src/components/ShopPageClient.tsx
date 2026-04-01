@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
-import { SHOP_PRODUCTS } from "@/lib/printful";
 import type { ShopProduct } from "@/lib/printful";
 
 type CartItem = {
@@ -164,10 +163,20 @@ function ProductCard({
 }
 
 export default function ShopPageClient({ onBack }: { onBack?: () => void }) {
+  const [products, setProducts] = useState<ShopProduct[]>([]);
+  const [productsLoading, setProductsLoading] = useState(true);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    fetch("/api/products")
+      .then((r) => r.json())
+      .then((data) => setProducts(data))
+      .catch(() => setError("Failed to load products"))
+      .finally(() => setProductsLoading(false));
+  }, []);
 
   const addToCart = (product: ShopProduct, color: string, size?: string) => {
     const key = `${product.id}-${color}-${size || ""}`;
@@ -276,8 +285,14 @@ export default function ShopPageClient({ onBack }: { onBack?: () => void }) {
           </p>
         </motion.div>
 
+        {productsLoading && (
+          <div style={{ textAlign: "center", padding: "3rem 0" }}>
+            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.9rem" }}>Loading gear...</p>
+          </div>
+        )}
+
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: "2rem" }}>
-          {SHOP_PRODUCTS.map((product, i) => (
+          {products.map((product, i) => (
             <motion.div key={product.id} transition={{ delay: 0.1 + i * 0.1 }}>
               <ProductCard
                 product={product}

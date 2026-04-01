@@ -1,17 +1,8 @@
-import Redis from "ioredis";
 import { StoredPlan, Attendee, WizardState } from "./plan-types";
+import { getRedis } from "./redis";
 
 const PLAN_TTL = 60 * 60 * 24 * 90; // 90 days
 const SIGNAL_TTL = 60 * 60 * 24 * 365; // 1 year for learning signals
-
-let redis: Redis;
-
-function getRedis() {
-  if (!redis) {
-    redis = new Redis(process.env.REDIS_URL!);
-  }
-  return redis;
-}
 
 // ── Plan storage ──
 

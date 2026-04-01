@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
     const orderItems: { productId: string; color: string; size?: string; quantity: number; syncVariantId: number }[] = [];
 
     for (const item of items) {
-      const product = getProductById(item.productId);
+      const product = await getProductById(item.productId);
       if (!product) {
         return NextResponse.json({ error: `Unknown product: ${item.productId}` }, { status: 400 });
       }

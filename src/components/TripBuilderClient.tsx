@@ -24,10 +24,15 @@ interface Tag {
   color: string;
 }
 
+type SlotMode = "golf" | "activity" | "rest";
+
 interface DaySelections {
   round1: string;
+  round1Mode: SlotMode;
+  round1Activity: string;
   round2: string;
   round2IsActivity: boolean;
+  round2Mode: SlotMode;
   activity: string;
   dinner: string;
   bar: string;
@@ -137,10 +142,43 @@ function OptionCard({ option, selected, onSelect, disabled, tags }: { option: Op
 
 // ── Slot Section ──
 
+function SlotModeToggle({ mode, onChange }: { mode: SlotMode; onChange: (m: SlotMode) => void }) {
+  const modes: { value: SlotMode; label: string }[] = [
+    { value: "golf", label: "Golf" },
+    { value: "activity", label: "Activity" },
+    { value: "rest", label: "Rest" },
+  ];
+  return (
+    <div style={{ display: "flex", gap: 0, borderRadius: 4, overflow: "hidden", border: "1px solid rgba(255,255,255,0.12)" }}>
+      {modes.map((m) => (
+        <button
+          key={m.value}
+          onClick={() => onChange(m.value)}
+          style={{
+            background: mode === m.value ? "rgba(220,38,38,0.8)" : "transparent",
+            color: mode === m.value ? "#fff" : "rgba(255,255,255,0.4)",
+            border: "none",
+            fontSize: "0.65rem",
+            fontWeight: 600,
+            padding: "6px 12px",
+            cursor: "pointer",
+            letterSpacing: "0.04em",
+            textTransform: "uppercase",
+            minHeight: 32,
+            transition: "background 0.15s, color 0.15s",
+          }}
+        >
+          {m.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 function SlotSection({ label, options, selectedId, onSelect, tagMap }: { label: string; options: Option[]; selectedId: string; onSelect: (id: string) => void; tagMap?: Record<string, Tag[]> }) {
   return (
     <div style={{ marginBottom: "1.5rem" }}>
-      <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.5rem", fontFamily: "var(--font-plan-block), sans-serif" }}>
+      <p style={{ fontSize: "1.125rem", color: "#fff", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.5rem", fontFamily: "var(--font-plan-block), sans-serif" }}>
         {label}
       </p>
       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
@@ -277,8 +315,11 @@ export default function TripBuilderClient({
       const r2 = plan.courses.find((c) => c.day === dayNum && c.session === "PM");
       init.push({
         round1: r1?.name || allCourses[d % allCourses.length]?.id || "",
+        round1Mode: "golf",
+        round1Activity: "",
         round2: r2?.name || r1?.name || allCourses[(d + 1) % allCourses.length]?.id || "",
         round2IsActivity: false,
+        round2Mode: "golf",
         activity: "",
         dinner: allDining[d % allDining.length]?.id || "",
         bar: allBars[d % allBars.length]?.id || "",
@@ -304,10 +345,20 @@ export default function TripBuilderClient({
     autoSaveTimer.current = setTimeout(() => {
       const selectedOptions: Record<string, string[]> = {
         lodging: [lodging],
-        courses: [...new Set(days.flatMap((d) => d.round2IsActivity ? [d.round1] : [d.round1, d.round2]).filter(Boolean))],
+        courses: [...new Set(days.flatMap((d) => {
+          const r: string[] = [];
+          if (d.round1Mode === "golf") r.push(d.round1);
+          if (d.round2Mode === "golf") r.push(d.round2);
+          return r;
+        }).filter(Boolean))],
         dining: days.map((d) => d.dinner).filter(Boolean),
         bars: days.map((d) => d.bar).filter(Boolean),
-        activities: days.filter((d) => d.round2IsActivity && d.activity).map((d) => d.activity),
+        activities: [...new Set(days.flatMap((d) => {
+          const a: string[] = [];
+          if (d.round1Mode === "activity" && d.round1Activity) a.push(d.round1Activity);
+          if (d.round2Mode === "activity" && d.activity) a.push(d.activity);
+          return a;
+        }))],
         transport: [transport],
       };
       fetch("/api/save-selections", {
@@ -327,10 +378,20 @@ export default function TripBuilderClient({
     setSaving(true);
     const selectedOptions: Record<string, string[]> = {
       lodging: [lodging],
-      courses: [...new Set(days.flatMap((d) => d.round2IsActivity ? [d.round1] : [d.round1, d.round2]).filter(Boolean))],
+      courses: [...new Set(days.flatMap((d) => {
+        const r: string[] = [];
+        if (d.round1Mode === "golf") r.push(d.round1);
+        if (d.round2Mode === "golf") r.push(d.round2);
+        return r;
+      }).filter(Boolean))],
       dining: days.map((d) => d.dinner).filter(Boolean),
       bars: days.map((d) => d.bar).filter(Boolean),
-      activities: days.filter((d) => d.round2IsActivity && d.activity).map((d) => d.activity),
+      activities: [...new Set(days.flatMap((d) => {
+        const a: string[] = [];
+        if (d.round1Mode === "activity" && d.round1Activity) a.push(d.round1Activity);
+        if (d.round2Mode === "activity" && d.activity) a.push(d.activity);
+        return a;
+      }))],
       transport: [transport],
     };
     try {
@@ -383,8 +444,8 @@ export default function TripBuilderClient({
   const currentCourseFeeTotal = useMemo(() => {
     let total = 0;
     for (const d of days) {
-      total += courseFeeMap[d.round1] || 0;
-      if (!d.round2IsActivity) total += courseFeeMap[d.round2] || 0;
+      if (d.round1Mode === "golf") total += courseFeeMap[d.round1] || 0;
+      if (d.round2Mode === "golf") total += courseFeeMap[d.round2] || 0;
     }
     return total;
   }, [days, courseFeeMap]);
@@ -566,61 +627,12 @@ export default function TripBuilderClient({
   return (
     <>
     {/* ── Sticky Price Bar ── */}
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 999,
-        height: 48,
-        background: "rgba(10,10,12,0.88)",
-        backdropFilter: "blur(16px)",
-        WebkitBackdropFilter: "blur(16px)",
-        borderBottom: "1px solid rgba(255,255,255,0.06)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "0.75rem",
-        padding: "0 1rem",
-      }}
-    >
-      <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.4)", letterSpacing: "0.08em", textTransform: "uppercase" }}>Est.</span>
-      <span style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1.25rem", fontWeight: 700, color: "#fff", letterSpacing: "0.02em" }}>
-        ${currentPricePerPerson.toLocaleString()}
-      </span>
-      <span style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.4)" }}>/ person</span>
-      {priceDelta !== 0 && (
-        <span style={{
-          fontSize: "0.7rem",
-          fontWeight: 600,
-          color: priceDelta > 0 ? "#f87171" : "#6ee7b7",
-          display: "flex",
-          alignItems: "center",
-          gap: "2px",
-        }}>
-          {priceDelta > 0 ? "▲" : "▼"} ${Math.abs(priceDelta).toLocaleString()}
-        </span>
-      )}
-      {priceDirection === "up" && (
-        <span style={{ fontSize: "0.65rem", color: "#f87171", opacity: 0.7 }}>↑</span>
-      )}
-      {priceDirection === "down" && (
-        <span style={{ fontSize: "0.65rem", color: "#6ee7b7", opacity: 0.7 }}>↓</span>
-      )}
-      {aiEstimate > 0 && (
-        <span style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.3)", marginLeft: "0.25rem", whiteSpace: "nowrap" }}>
-          AI est: ${aiEstimate.toLocaleString()}
-        </span>
-      )}
-    </div>
-
-    <main style={{ minHeight: "100vh", background: "#000", color: "#fff", padding: "clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 3rem)", paddingTop: "calc(48px + clamp(2rem, 6vw, 4rem))" }}>
+    <main style={{ minHeight: "100vh", background: "#000", color: "#fff", padding: "clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 3rem)" }}>
       <MulliganButton href={`/plan/result/${planId}?dest=${dest}`} />
       <HomeButton />
 
       {/* Header */}
-      <div style={{ textAlign: "center", marginBottom: "3rem", maxWidth: 700, margin: "0 auto 3rem" }}>
+      <div style={{ textAlign: "center", marginBottom: "1.5rem", maxWidth: 700, margin: "0 auto 1.5rem" }}>
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -629,6 +641,49 @@ export default function TripBuilderClient({
           Build Your Trip
         </motion.h1>
         <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.95rem" }}>{plan.destination} · {numDays} Days</p>
+      </div>
+
+      {/* Price estimate */}
+      <div style={{
+        maxWidth: 700,
+        margin: "0 auto 3rem",
+        border: "1px solid rgba(255,255,255,0.15)",
+        borderRadius: 8,
+        padding: "1.2rem 1.5rem",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "1rem",
+        background: "rgba(255,255,255,0.03)",
+      }}>
+        <span style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.4)", letterSpacing: "0.08em", textTransform: "uppercase" }}>Est.</span>
+        <span style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1.625rem", fontWeight: 700, color: "#fff", letterSpacing: "0.02em" }}>
+          ${currentPricePerPerson.toLocaleString()}
+        </span>
+        <span style={{ fontSize: "0.975rem", color: "rgba(255,255,255,0.4)" }}>/ person</span>
+        {priceDelta !== 0 && (
+          <span style={{
+            fontSize: "0.9rem",
+            fontWeight: 600,
+            color: priceDelta > 0 ? "#f87171" : "#6ee7b7",
+            display: "flex",
+            alignItems: "center",
+            gap: "2px",
+          }}>
+            {priceDelta > 0 ? "▲" : "▼"} ${Math.abs(priceDelta).toLocaleString()}
+          </span>
+        )}
+        {priceDirection === "up" && (
+          <span style={{ fontSize: "0.85rem", color: "#f87171", opacity: 0.7 }}>↑</span>
+        )}
+        {priceDirection === "down" && (
+          <span style={{ fontSize: "0.85rem", color: "#6ee7b7", opacity: 0.7 }}>↓</span>
+        )}
+        {aiEstimate > 0 && (
+          <span style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.3)", marginLeft: "0.25rem", whiteSpace: "nowrap" }}>
+            AI est: ${aiEstimate.toLocaleString()}
+          </span>
+        )}
       </div>
 
       <div style={{ maxWidth: 700, margin: "0 auto" }}>
@@ -661,8 +716,8 @@ export default function TripBuilderClient({
         {days.map((day, di) => {
           const isExpanded = expandedDay === di;
           const daySummary = [
-            day.round1,
-            day.round2IsActivity ? day.activity : day.round2,
+            day.round1Mode === "golf" ? day.round1 : day.round1Mode === "activity" ? day.round1Activity : "Rest",
+            day.round2Mode === "golf" ? day.round2 : day.round2Mode === "activity" ? day.activity : "Rest",
             day.dinner,
           ].filter(Boolean).join(" · ");
 
@@ -700,46 +755,43 @@ export default function TripBuilderClient({
               {isExpanded && (
                 <>
                   {/* Round 1 — Morning */}
-                  <SlotSection
-                    label="Round 1 — Morning"
-                    options={allCourses}
-                    selectedId={day.round1}
-                    onSelect={(id) => updateDay(di, "round1", id)}
-                    tagMap={courseTagMap}
-                  />
-
-                  {/* Round 2 — Afternoon (or Activity) */}
                   <div style={{ marginBottom: "1.5rem" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
-                      <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "var(--font-plan-block), sans-serif" }}>
-                        {day.round2IsActivity ? "Activity — Afternoon" : "Round 2 — Afternoon"}
+                      <p style={{ fontSize: "1.125rem", color: "#fff", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "var(--font-plan-block), sans-serif" }}>
+                        {day.round1Mode === "golf" ? "Round 1 — Morning" : day.round1Mode === "activity" ? "Activity — Morning" : "Rest — Morning"}
                       </p>
-                      <button
-                        onClick={() => updateDay(di, "round2IsActivity", !day.round2IsActivity)}
-                        style={{
-                          background: "none",
-                          border: "1px solid rgba(255,255,255,0.12)",
-                          color: "rgba(255,255,255,0.45)",
-                          fontSize: "0.65rem",
-                          padding: "8px 12px",
-                          borderRadius: 4,
-                          cursor: "pointer",
-                          letterSpacing: "0.04em",
-                          textTransform: "uppercase",
-                          minHeight: 44,
-                        }}
-                      >
-                        {day.round2IsActivity ? "Back to Golf" : "Swap for Activity"}
-                      </button>
+                      <SlotModeToggle mode={day.round1Mode} onChange={(m) => updateDay(di, "round1Mode", m)} />
                     </div>
-
-                    {day.round2IsActivity ? (
+                    {day.round1Mode === "golf" && (
                       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                        {activityOptions.map((o) => (
-                          <OptionCard key={o.id} option={o} selected={day.activity === o.id} onSelect={() => updateDay(di, "activity", o.id)} />
+                        {allCourses.map((o) => (
+                          <OptionCard key={o.id} option={o} selected={day.round1 === o.id} onSelect={() => updateDay(di, "round1", o.id)} tags={courseTagMap[o.id]} />
                         ))}
                       </div>
-                    ) : (
+                    )}
+                    {day.round1Mode === "activity" && (
+                      <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                        {activityOptions.map((o) => (
+                          <OptionCard key={o.id} option={o} selected={day.round1Activity === o.id} onSelect={() => updateDay(di, "round1Activity", o.id)} />
+                        ))}
+                      </div>
+                    )}
+                    {day.round1Mode === "rest" && (
+                      <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.3)", fontStyle: "italic", padding: "1rem 0" }}>
+                        Sleep in, hit the pool, or just chill.
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Round 2 — Afternoon */}
+                  <div style={{ marginBottom: "1.5rem" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
+                      <p style={{ fontSize: "1.125rem", color: "#fff", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "var(--font-plan-block), sans-serif" }}>
+                        {day.round2Mode === "golf" ? "Round 2 — Afternoon" : day.round2Mode === "activity" ? "Activity — Afternoon" : "Rest — Afternoon"}
+                      </p>
+                      <SlotModeToggle mode={day.round2Mode} onChange={(m) => { updateDay(di, "round2Mode", m); updateDay(di, "round2IsActivity", m === "activity"); }} />
+                    </div>
+                    {day.round2Mode === "golf" && (
                       <>
                         <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                           {allCourses.map((o) => {
@@ -755,6 +807,18 @@ export default function TripBuilderClient({
                           </p>
                         )}
                       </>
+                    )}
+                    {day.round2Mode === "activity" && (
+                      <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                        {activityOptions.map((o) => (
+                          <OptionCard key={o.id} option={o} selected={day.activity === o.id} onSelect={() => updateDay(di, "activity", o.id)} />
+                        ))}
+                      </div>
+                    )}
+                    {day.round2Mode === "rest" && (
+                      <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.3)", fontStyle: "italic", padding: "1rem 0" }}>
+                        Take the afternoon off — recharge for tonight.
+                      </p>
                     )}
                   </div>
 

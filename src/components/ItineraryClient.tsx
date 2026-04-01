@@ -51,6 +51,34 @@ interface DayItinerary {
 
 // ── Card Components ──
 
+function ExternalLink({ href, label }: { href: string; label: string }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 4,
+        fontSize: "0.72rem",
+        color: "#EA580C",
+        textDecoration: "none",
+        marginTop: "0.4rem",
+        letterSpacing: "0.03em",
+        transition: "opacity 0.2s",
+      }}
+      onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.7"; }}
+      onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; }}
+    >
+      {label}
+      <svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+      </svg>
+    </a>
+  );
+}
+
 function ItineraryCard({ icon, label, children }: { icon: string; label: string; children: React.ReactNode }) {
   return (
     <motion.div
@@ -386,6 +414,7 @@ export default function ItineraryClient({
                 {plan.lodging.rationale}
               </p>
             )}
+            {plan.lodging.url && <ExternalLink href={plan.lodging.url} label="View Listing" />}
           </div>
         </motion.section>
 
@@ -426,6 +455,7 @@ export default function ItineraryClient({
                     {day.morning.whyThisCourse}
                   </p>
                 )}
+                {day.morning.url && <ExternalLink href={day.morning.url} label="Tee Times & Info" />}
               </ItineraryCard>
             )}
 
@@ -441,6 +471,7 @@ export default function ItineraryClient({
                     {day.afternoon.whyThisCourse}
                   </p>
                 )}
+                {day.afternoon.url && <ExternalLink href={day.afternoon.url} label="Tee Times & Info" />}
               </ItineraryCard>
             )}
 
@@ -478,6 +509,7 @@ export default function ItineraryClient({
                     {day.dinner.description}
                   </p>
                 )}
+                {day.dinner.url && <ExternalLink href={day.dinner.url} label="View Menu" />}
               </ItineraryCard>
             )}
 
@@ -491,6 +523,7 @@ export default function ItineraryClient({
                     {day.bar.description}
                   </p>
                 )}
+                {day.bar.url && <ExternalLink href={day.bar.url} label="Check it Out" />}
               </ItineraryCard>
             )}
           </motion.section>

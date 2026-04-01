@@ -1,13 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionEmail } from "@/lib/auth";
 import { getPlan } from "@/lib/kv";
-import Redis from "ioredis";
-
-let redis: Redis;
-function getRedis() {
-  if (!redis) redis = new Redis(process.env.REDIS_URL!);
-  return redis;
-}
+import { getRedis } from "@/lib/redis";
 
 export async function DELETE(
   _req: NextRequest,

@@ -84,7 +84,6 @@ const LOADING_MESSAGES = [
   "Burning the corpses...",
   "Deleting the text thread...",
   "Sharpening the stakes...",
-  "Calling my guy...",
   "Shotgunning 19 double airplane bottles...",
   "Bribing the starter...",
   "Hiding the receipts...",
@@ -269,6 +268,7 @@ function Question({
   subtitle,
   children,
   id,
+  typedSteps,
 }: {
   number: number;
   total: number;
@@ -276,7 +276,28 @@ function Question({
   subtitle?: string;
   children: React.ReactNode;
   id: string;
+  typedSteps: React.MutableRefObject<Set<string>>;
 }) {
+  const alreadyTyped = typedSteps.current.has(id);
+  const [displayedTitle, setDisplayedTitle] = useState(alreadyTyped ? title : "");
+  const [hasTyped, setHasTyped] = useState(alreadyTyped);
+
+  useEffect(() => {
+    if (hasTyped) { setDisplayedTitle(title); return; }
+    setDisplayedTitle("");
+    let i = 0;
+    const cleanupRef = { current: () => {} };
+    const delay = setTimeout(() => {
+      const interval = setInterval(() => {
+        i++;
+        setDisplayedTitle(title.slice(0, i));
+        if (i >= title.length) { clearInterval(interval); setHasTyped(true); typedSteps.current.add(id); }
+      }, 35);
+      cleanupRef.current = () => clearInterval(interval);
+    }, 500);
+    return () => { clearTimeout(delay); cleanupRef.current(); };
+  }, [title, hasTyped, id, typedSteps]);
+
   return (
     <motion.section
       id={id}
@@ -290,19 +311,23 @@ function Question({
       <div style={{ maxWidth: 620, margin: "0 auto", width: "100%" }}>
         {/* Counter + category */}
         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "center", gap: "0.5rem", marginBottom: "2.4rem" }}>
-          <span style={{ fontSize: "1.1rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", fontFamily: "var(--font-plan-script), cursive" }}>
-            {number} of {total}
+          <span style={{ fontSize: "1.1rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", fontFamily: "var(--font-plan-block), sans-serif" }}>
+            {number} <span style={{ fontSize: "0.715rem" }}>of</span> {total}
           </span>
           {subtitle && (
-            <span className="neon-stats" style={{ fontSize: "1.1rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#EA580C", fontFamily: "var(--font-plan-block), sans-serif", textShadow: "0 0 7px rgba(234,88,12,0.6), 0 0 20px rgba(234,88,12,0.3)" }}>
-              <span>{subtitle}</span>
-            </span>
+            <>
+              <span style={{ color: "rgba(255,255,255,0.25)" }}>&mdash;</span>
+              <span className="neon-stats" style={{ fontSize: "1.1rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#EA580C", fontFamily: "var(--font-plan-block), sans-serif", textShadow: "0 0 7px rgba(234,88,12,0.6), 0 0 20px rgba(234,88,12,0.3)" }}>
+                <span>{subtitle}</span>
+              </span>
+            </>
           )}
         </div>
 
         {/* Title — ICE COLD blocky slab */}
-        <h2 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(2.6rem, 6vw, 4.2rem)", fontWeight: 700, color: "#fff", lineHeight: 1.1, letterSpacing: "0.04em", textTransform: "uppercase", marginBottom: "3rem" }}>
-          {title}
+        <h2 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(2.6rem, 6vw, 4.2rem)", fontWeight: 700, color: "#fff", lineHeight: 1.1, letterSpacing: "0.04em", textTransform: "uppercase", marginBottom: "3rem", minHeight: "1.1em" }}>
+          {displayedTitle}
+          {!hasTyped && <span style={{ opacity: 0.6 }}>|</span>}
         </h2>
 
         {children}
@@ -324,6 +349,7 @@ export default function PlanWizardClient() {
   const [loadingMsg, setLoadingMsg] = useState(0);
   const [error, setError] = useState("");
   const isScrolling = useRef(false);
+  const typedSteps = useRef<Set<string>>(new Set());
 
   // Restore wizard state from sessionStorage on mount
   useEffect(() => {
@@ -610,8 +636,8 @@ export default function PlanWizardClient() {
 
   const progress = Math.min((revealedCount / totalQuestions) * 100, 100);
 
-  const inputClass = "w-full bg-transparent border-b border-white/20 px-0 py-5 text-white font-body text-2xl placeholder:text-white/25 focus:border-white/60 focus:outline-none focus:ring-0 outline-none transition-colors text-center";
-  const selectClass = "bg-transparent border-b border-white/20 px-0 py-5 text-white font-body text-lg focus:border-white/60 focus:outline-none transition-colors appearance-none text-center w-full";
+  const inputClass = "wizard-input w-full bg-transparent border-b border-white/20 px-0 py-5 text-white font-body text-2xl placeholder:text-white/25 focus:border-white/60 focus:outline-none focus:ring-0 outline-none transition-colors text-center";
+  const selectClass = "wizard-input bg-transparent border-b border-white/20 px-0 py-5 text-white font-body text-lg focus:border-white/60 focus:outline-none transition-colors appearance-none text-center w-full";
 
   const ContinueBtn = ({ onClick, label = "Continue" }: { onClick: () => void; label?: string }) => (
     <button
@@ -622,20 +648,23 @@ export default function PlanWizardClient() {
         alignItems: "center",
         justifyContent: "center",
         gap: "0.6rem",
-        width: "100%",
+        width: "auto",
+        margin: "3.5rem auto 0",
         background: "none",
-        border: "none",
+        border: "2px solid rgba(255,255,255,0.3)",
+        borderRadius: "4px",
         cursor: "pointer",
         color: "rgba(255,255,255,0.5)",
         fontSize: "0.86rem",
+        fontWeight: 700,
         letterSpacing: "0.2em",
         textTransform: "uppercase",
         fontFamily: "var(--font-inter), sans-serif",
-        padding: "0.5rem 0",
-        transition: "color 0.2s",
+        padding: "1rem 2.5rem",
+        transition: "color 0.2s, border-color 0.2s",
       }}
-      onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.9)"; }}
-      onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.5)"; }}
+      onMouseEnter={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.9)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.7)"; }}
+      onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.5)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)"; }}
     >
       {label}
       <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -667,7 +696,7 @@ export default function PlanWizardClient() {
 
       {/* STEP 1: WHERE — Destination + Region/City */}
       {currentQ === 0 && (
-        <Question number={1} total={totalQuestions} title="Where's the crew headed?" subtitle="Destination" id={questionIds[0]}>
+        <Question number={1} total={totalQuestions} title="Where's the crew headed?" subtitle="Destination" id={questionIds[0]} typedSteps={typedSteps}>
           <div className="grid grid-cols-2 gap-5" style={{ marginBottom: "3rem" }}>
             <SelectionCard
               label="Specific place"
@@ -713,7 +742,7 @@ export default function PlanWizardClient() {
 
       {/* STEP 2: WHEN — Timing + Days */}
       {currentQ === 1 && (
-        <Question number={2} total={totalQuestions} title="When and how long?" subtitle="Timing" id={questionIds[1]}>
+        <Question number={2} total={totalQuestions} title="When and how long?" subtitle="Timing" id={questionIds[1]} typedSteps={typedSteps}>
           <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>Timing</p>
           <div className="grid grid-cols-2 gap-5" style={{ marginBottom: "3rem" }}>
             <SelectionCard
@@ -751,7 +780,8 @@ export default function PlanWizardClient() {
               </select>
             </div>
           )}
-          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", letterSpacing: "0.08em", marginBottom: "1.2rem" }}>How many days?</p>
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", letterSpacing: "0.08em", marginBottom: "0.4rem" }}>How many days?</p>
+          <p style={{ color: "rgba(255,255,255,0.18)", fontSize: "0.75rem", letterSpacing: "0.06em", marginBottom: "1.2rem" }}>Days of activities — excludes arrival &amp; departure</p>
           <div className="grid grid-cols-3 gap-4">
             {[3, 4, 5].map((d) => (
               <SelectionCard key={d} label={`${d} days`} sublabel={d === 4 ? tdfRec : undefined} selected={state.numberOfDays === d} onClick={() => { set("numberOfDays", d); advance(revealedCount); }} />
@@ -762,7 +792,7 @@ export default function PlanWizardClient() {
 
       {/* STEP 3: THE CREW — Group size + Skill + Age */}
       {currentQ === 2 && (
-        <Question number={3} total={totalQuestions} title="Tell us about the crew" subtitle="The Crew" id={questionIds[2]}>
+        <Question number={3} total={totalQuestions} title="Tell us about the crew" subtitle="The Crew" id={questionIds[2]} typedSteps={typedSteps}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "2rem", marginBottom: "2rem" }}>
             <button onClick={() => set("groupSize", Math.max(4, state.groupSize - 1))} style={{ width: 48, height: 48, borderRadius: "50%", border: "1px solid rgba(255,255,255,0.15)", background: "transparent", color: "#fff", fontSize: "1.5rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>−</button>
             <span style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "4.8rem", fontWeight: 700, color: "#fff", lineHeight: 1, minWidth: "3.5rem", textAlign: "center" }}>{state.groupSize}</span>
@@ -786,7 +816,7 @@ export default function PlanWizardClient() {
 
       {/* STEP 4: THE GOLF — Rounds + Quality + Walking + Must-play */}
       {currentQ === 3 && (
-        <Question number={4} total={totalQuestions} title="How much golf can you handle?" subtitle="The Golf" id={questionIds[3]}>
+        <Question number={4} total={totalQuestions} title="How much golf can you handle?" subtitle="The Golf" id={questionIds[3]} typedSteps={typedSteps}>
           <div className="grid grid-cols-3 gap-5" style={{ marginBottom: "3rem" }}>
             {[
               { label: "One (18)", sublabel: "Casual" },
@@ -816,13 +846,13 @@ export default function PlanWizardClient() {
             onKeyDown={(e) => { if (e.key === "Enter") advance(revealedCount); }}
             className={inputClass}
           />
-          <ContinueBtn onClick={() => advance(revealedCount)} label={state.courseQuality ? "Continue" : "Skip"} />
+          <ContinueBtn onClick={() => advance(revealedCount)} />
         </Question>
       )}
 
       {/* STEP 5: OFF-COURSE — Lodging + Dining + Nightlife + Activities */}
       {currentQ === 4 && (
-        <Question number={5} total={totalQuestions} title="What happens off the course?" subtitle="Off-Course" id={questionIds[4]}>
+        <Question number={5} total={totalQuestions} title="What happens off the course?" subtitle="Off-Course" id={questionIds[4]} typedSteps={typedSteps}>
           <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>Lodging</p>
           <div className="grid grid-cols-2 gap-5" style={{ marginBottom: "3rem" }}>
             {[
@@ -836,8 +866,8 @@ export default function PlanWizardClient() {
           </div>
           <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>Dining</p>
           <div className="grid grid-cols-2 gap-5" style={{ marginBottom: "3rem" }}>
-            {["Steakhouses", "Casual & local", "Private chef", "Mix"].map((d) => (
-              <SelectionCard key={d} label={d} selected={state.dining === d} onClick={() => set("dining", d)} compact />
+            {[{ label: "Steakhouses" }, { label: "Casual & local" }, { label: "Private chef", sublabel: tdfRec }, { label: "Mix" }].map((d) => (
+              <SelectionCard key={d.label} label={d.label} sublabel={d.sublabel} selected={state.dining === d.label} onClick={() => set("dining", d.label)} compact />
             ))}
           </div>
           <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>Nightlife</p>
@@ -875,7 +905,7 @@ export default function PlanWizardClient() {
 
       {/* STEP 6: BUDGET — Budget + Priorities + Special requests */}
       {currentQ === 5 && (
-        <Question number={6} total={totalQuestions} title="What's the budget?" subtitle="Budget" id={questionIds[5]}>
+        <Question number={6} total={totalQuestions} title="What's the budget?" subtitle="Budget" id={questionIds[5]} typedSteps={typedSteps}>
           <div className="grid grid-cols-2 gap-5" style={{ marginBottom: "3rem" }}>
             {["$2K per person", "$4K per person", "$6K per person", "Fat pockets"].map((b) => (
               <SelectionCard key={b} label={b} selected={state.budget === b} onClick={() => set("budget", b)} compact />
@@ -901,7 +931,7 @@ export default function PlanWizardClient() {
             onChange={(e) => set("specialRequests", e.target.value)}
             rows={3}
             style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.75rem 0", color: "#fff", fontFamily: "var(--font-inter), sans-serif", fontSize: "0.9rem", resize: "none", outline: "none", textAlign: "center" }}
-            className="placeholder:text-white/25"
+            className="wizard-input placeholder:text-white/25"
           />
           <ContinueBtn onClick={() => advance(revealedCount)} />
         </Question>
@@ -909,7 +939,7 @@ export default function PlanWizardClient() {
 
       {/* STEP 7: Account + Generate */}
       {currentQ === 6 && (
-        <Question number={7} total={totalQuestions} title="Almost there" subtitle="Let's Plan" id={questionIds[6]}>
+        <Question number={7} total={totalQuestions} title="Almost there" subtitle="Let's Plan" id={questionIds[6]} typedSteps={typedSteps}>
           {/* Toggle: New Account vs Sign In */}
           <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", marginBottom: "2rem" }}>
             <button
@@ -941,6 +971,7 @@ export default function PlanWizardClient() {
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "2rem", maxWidth: 400, margin: "0 auto 2rem" }}>
             {state.authMode !== "login" && (
               <input
+                className="wizard-input"
                 type="text"
                 placeholder="Your name"
                 value={state.organizerName}
@@ -950,6 +981,7 @@ export default function PlanWizardClient() {
               />
             )}
             <input
+              className="wizard-input"
               type="email"
               placeholder="Email"
               value={state.organizerEmail}
@@ -958,6 +990,7 @@ export default function PlanWizardClient() {
               style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.75rem 0", color: "#fff", fontSize: "1.1rem", outline: "none", textAlign: "center" }}
             />
             <input
+              className="wizard-input"
               type="password"
               placeholder={state.authMode === "login" ? "Password" : "Create password (min 8 chars)"}
               value={state.authPassword}

@@ -110,7 +110,7 @@ function DestinationCard({
           {subtitle}
         </div>
         {icon && <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>{icon}</div>}
-        <h2 style={{ fontFamily: "var(--font-plan-script), cursive", fontSize: "clamp(1.6rem, 4vw, 2.2rem)", color: "#fff", marginBottom: "0.25rem", lineHeight: 1.1 }}>
+        <h2 style={{ fontFamily: "var(--font-plan-script), cursive", fontSize: "clamp(1.6rem, 4vw, 2.2rem)", color: "#fff", marginBottom: "0.6rem", lineHeight: 1.3 }}>
           {city}, {state}
         </h2>
         <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.45)", marginBottom: "1rem", lineHeight: 1.4 }}>

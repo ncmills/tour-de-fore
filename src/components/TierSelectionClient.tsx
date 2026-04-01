@@ -139,7 +139,8 @@ export default function TierSelectionClient({
                     fontFamily: "var(--font-plan-script), cursive",
                     fontSize: "clamp(1.8rem, 4vw, 2.5rem)",
                     color: "#fff",
-                    marginBottom: "0.25rem",
+                    marginBottom: "0.6rem",
+                    lineHeight: 1.3,
                   }}>
                     {plan.tierName}
                   </h2>

@@ -1,15 +1,9 @@
 import { cookies } from "next/headers";
-import Redis from "ioredis";
 import { hash as bcryptHash, compare as bcryptCompare } from "bcryptjs";
+import { getRedis } from "./redis";
 
 const SESSION_TTL = 60 * 60 * 24 * 30; // 30 days
 const TOKEN_TTL = 60 * 15; // 15 min for magic link
-
-let redis: Redis;
-function getRedis() {
-  if (!redis) redis = new Redis(process.env.REDIS_URL!);
-  return redis;
-}
 
 export async function createMagicToken(email: string, wizardState?: unknown): Promise<string> {
   const token = crypto.randomUUID();

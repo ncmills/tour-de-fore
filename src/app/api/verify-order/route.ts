@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
 
     for (const item of items) {
       if (!item.syncVariantId && item.productId && item.color) {
-        const variant = findVariant(item.productId, item.color, item.size);
+        const variant = await findVariant(item.productId, item.color, item.size);
         if (variant) item.syncVariantId = variant.syncVariantId;
       }
     }
@@ -63,8 +63,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ status: "no_shipping" });
     }
 
+    const validItems = items.filter((i) => i.syncVariantId && i.syncVariantId > 0);
+    if (validItems.length === 0) {
+      return NextResponse.json({ status: "error", message: "No valid variants" }, { status: 400 });
+    }
+
     const printfulResult = await createPrintfulOrder(
-      items.map(i => ({ sync_variant_id: i.syncVariantId, quantity: i.quantity })),
+      validItems.map(i => ({ sync_variant_id: i.syncVariantId, quantity: i.quantity })),
       {
         name: shippingName,
         address1: shippingAddress.line1 || "",

@@ -1,9 +1,9 @@
-// ── Printful API Client + Product Catalog ──
+// ── Printful API Client + Dynamic Product Catalog ──
 
 const PRINTFUL_TOKEN = (process.env.PRINTFUL_API_TOKEN || "").trim();
 const PRINTFUL_API = "https://api.printful.com";
 
-// ── Product Catalog (synced from Printful) ──
+// ── Product Types ──
 
 export interface ProductVariant {
   syncVariantId: number; // Printful sync_variant ID (used for orders)
@@ -13,7 +13,7 @@ export interface ProductVariant {
 }
 
 export interface ShopProduct {
-  id: string; // our internal ID
+  id: string; // derived from Printful name (e.g. "polo", "bucket")
   printfulProductId: number;
   name: string;
   description: string;
@@ -28,168 +28,163 @@ export interface ShopProduct {
   category: "apparel" | "headwear";
 }
 
-export const SHOP_PRODUCTS: ShopProduct[] = [
-  {
-    id: "polo",
-    printfulProductId: 426229688,
-    name: "TDF Polo",
-    description: "Performance stretch polo. Embroidered TDF crest on chest.",
-    price: 10000,
-    displayPrice: "$100",
-    thumbnailUrl: "https://files.cdn.printful.com/files/3bf/3bf9d4b707e593640195fe7615462a69_preview.png",
-    previewUrl: "https://files.cdn.printful.com/files/3bf/3bf9d4b707e593640195fe7615462a69_preview.png",
-    colorPreviews: {
-      "Black Melange": "https://files.cdn.printful.com/files/3bf/3bf9d4b707e593640195fe7615462a69_preview.png",
-      "Collegiate Navy Melange": "https://files.cdn.printful.com/files/a02/a024d009706208073e7e53e1c9ff7776_preview.png",
-      "Collegiate Royal Melange": "https://files.cdn.printful.com/files/2fd/2fd4f33419096416bc7d4969f0b485ba_preview.png",
-      "Grey One Heather": "https://files.cdn.printful.com/files/bed/bedd53460cf90c0dee1788e0b451db57_preview.png",
-    },
-    category: "apparel",
-    colors: ["Black Melange", "Collegiate Navy Melange", "Collegiate Royal Melange", "Grey One Heather"],
-    sizes: ["L", "XL", "2XL", "3XL"],
-    variants: [
-      { syncVariantId: 5252493756, color: "Black Melange", size: "L", sku: "69CBD61F91D5D_Black-Melange-L" },
-      { syncVariantId: 5252493757, color: "Black Melange", size: "XL", sku: "69CBD61F91D5D_Black-Melange-XL" },
-      { syncVariantId: 5252493758, color: "Black Melange", size: "2XL", sku: "69CBD61F91D5D_Black-Melange-2XL" },
-      { syncVariantId: 5252493759, color: "Black Melange", size: "3XL", sku: "69CBD61F91D5D_Black-Melange-3XL" },
-      { syncVariantId: 5252493760, color: "Collegiate Navy Melange", size: "L", sku: "69CBD61F91D5D_Collegiate-Navy-Melange-L" },
-      { syncVariantId: 5252493761, color: "Collegiate Navy Melange", size: "XL", sku: "69CBD61F91D5D_Collegiate-Navy-Melange-XL" },
-      { syncVariantId: 5252493762, color: "Collegiate Navy Melange", size: "2XL", sku: "69CBD61F91D5D_Collegiate-Navy-Melange-2XL" },
-      { syncVariantId: 5252493763, color: "Collegiate Navy Melange", size: "3XL", sku: "69CBD61F91D5D_Collegiate-Navy-Melange-3XL" },
-      { syncVariantId: 5252493764, color: "Collegiate Royal Melange", size: "L", sku: "69CBD61F91D5D_Collegiate-Royal-Melange-L" },
-      { syncVariantId: 5252493765, color: "Collegiate Royal Melange", size: "XL", sku: "69CBD61F91D5D_Collegiate-Royal-Melange-XL" },
-      { syncVariantId: 5252493766, color: "Collegiate Royal Melange", size: "2XL", sku: "69CBD61F91D5D_Collegiate-Royal-Melange-2XL" },
-      { syncVariantId: 5252493767, color: "Collegiate Royal Melange", size: "3XL", sku: "69CBD61F91D5D_Collegiate-Royal-Melange-3XL" },
-      { syncVariantId: 5252493768, color: "Grey One Heather", size: "L", sku: "69CBD61F91D5D_Grey-One-Heather-L" },
-      { syncVariantId: 5252493769, color: "Grey One Heather", size: "XL", sku: "69CBD61F91D5D_Grey-One-Heather-XL" },
-      { syncVariantId: 5252493770, color: "Grey One Heather", size: "2XL", sku: "69CBD61F91D5D_Grey-One-Heather-2XL" },
-      { syncVariantId: 5252493771, color: "Grey One Heather", size: "3XL", sku: "69CBD61F91D5D_Grey-One-Heather-3XL" },
-    ],
-  },
-  {
-    id: "qzip",
-    printfulProductId: 426229505,
-    name: "TDF Quarter-Zip",
-    description: "Performance stretch fleece. Embroidered TDF crest on chest.",
-    price: 15000,
-    displayPrice: "$150",
-    thumbnailUrl: "https://files.cdn.printful.com/files/af7/af71457c0e6c826d3ad34576b68ac573_preview.png",
-    previewUrl: "https://files.cdn.printful.com/files/af7/af71457c0e6c826d3ad34576b68ac573_preview.png",
-    colorPreviews: {
-      "Black": "https://files.cdn.printful.com/files/af7/af71457c0e6c826d3ad34576b68ac573_preview.png",
-      "Collegiate Navy": "https://files.cdn.printful.com/files/b2c/b2ce4da89fd9431a9e13dda85d16ebb9_preview.png",
-      "Black Heather": "https://files.cdn.printful.com/files/5ec/5ec79803000c50c4c45d09a94de870fe_preview.png",
-      "White": "https://files.cdn.printful.com/files/11d/11d353905deccefa96dc65405a55970a_preview.png",
-    },
-    category: "apparel",
-    colors: ["Black", "Collegiate Navy", "Black Heather", "White"],
-    sizes: ["L", "XL", "2XL", "3XL"],
-    variants: [
-      { syncVariantId: 5252492585, color: "Black", size: "L", sku: "69CBD5B5607B9_Black-L" },
-      { syncVariantId: 5252492586, color: "Black", size: "XL", sku: "69CBD5B5607B9_Black-XL" },
-      { syncVariantId: 5252492587, color: "Black", size: "2XL", sku: "69CBD5B5607B9_Black-2XL" },
-      { syncVariantId: 5252492588, color: "Black", size: "3XL", sku: "69CBD5B5607B9_Black-3XL" },
-      { syncVariantId: 5252492589, color: "Collegiate Navy", size: "L", sku: "69CBD5B5607B9_Collegiate-Navy-L" },
-      { syncVariantId: 5252492590, color: "Collegiate Navy", size: "XL", sku: "69CBD5B5607B9_Collegiate-Navy-XL" },
-      { syncVariantId: 5252492591, color: "Collegiate Navy", size: "2XL", sku: "69CBD5B5607B9_Collegiate-Navy-2XL" },
-      { syncVariantId: 5252492592, color: "Collegiate Navy", size: "3XL", sku: "69CBD5B5607B9_Collegiate-Navy-3XL" },
-      { syncVariantId: 5252492593, color: "Black Heather", size: "L", sku: "69CBD5B5607B9_Black-Heather-L" },
-      { syncVariantId: 5252492594, color: "Black Heather", size: "XL", sku: "69CBD5B5607B9_Black-Heather-XL" },
-      { syncVariantId: 5252492596, color: "Black Heather", size: "2XL", sku: "69CBD5B5607B9_Black-Heather-2XL" },
-      { syncVariantId: 5252492597, color: "Black Heather", size: "3XL", sku: "69CBD5B5607B9_Black-Heather-3XL" },
-      { syncVariantId: 5252492598, color: "White", size: "L", sku: "69CBD5B5607B9_White-L" },
-      { syncVariantId: 5252492600, color: "White", size: "XL", sku: "69CBD5B5607B9_White-XL" },
-      { syncVariantId: 5252492601, color: "White", size: "2XL", sku: "69CBD5B5607B9_White-2XL" },
-      { syncVariantId: 5252492602, color: "White", size: "3XL", sku: "69CBD5B5607B9_White-3XL" },
-    ],
-  },
-  {
-    id: "cap",
-    printfulProductId: 426229150,
-    name: "TDF Cap",
-    description: "Structured cap with embroidered TDF crest.",
-    price: 5000,
-    displayPrice: "$50",
-    thumbnailUrl: "https://files.cdn.printful.com/files/a39/a39ce4cdac1ea86a980ebca0a9d783bd_preview.png",
-    previewUrl: "https://files.cdn.printful.com/files/a39/a39ce4cdac1ea86a980ebca0a9d783bd_preview.png",
-    colorPreviews: {
-      "Black": "https://files.cdn.printful.com/files/a39/a39ce4cdac1ea86a980ebca0a9d783bd_preview.png",
-      "Oxford Navy": "https://files.cdn.printful.com/files/504/50400c61b3605cae50c431fbaa9e2d57_preview.png",
-      "Dark Olive": "https://files.cdn.printful.com/files/9d2/9d277725c39980a823ce7d78ea111595_preview.png",
-    },
-    category: "headwear",
-    colors: ["Black", "Oxford Navy", "Dark Olive"],
-    sizes: [],
-    variants: [
-      { syncVariantId: 5252490018, color: "Black", sku: "69CBD4D41C880_Black" },
-      { syncVariantId: 5252490019, color: "Oxford Navy", sku: "69CBD4D41C880_Oxford-Navy" },
-      { syncVariantId: 5252490020, color: "Dark Olive", sku: "69CBD4D41C880_Dark-Olive" },
-    ],
-  },
-  {
-    id: "hat",
-    printfulProductId: 426321678,
-    name: "TDF Hat",
-    description: "Embroidered TDF crest. One size fits most.",
-    price: 5000,
-    displayPrice: "$50",
-    thumbnailUrl: "https://files.cdn.printful.com/files/d58/d5812ceb1c38831ce95bd015e6f50b67_preview.png",
-    previewUrl: "https://files.cdn.printful.com/files/d58/d5812ceb1c38831ce95bd015e6f50b67_preview.png",
-    colorPreviews: {
-      "Spruce": "https://files.cdn.printful.com/files/d58/d5812ceb1c38831ce95bd015e6f50b67_preview.png",
-      "Dark Grey": "https://files.cdn.printful.com/files/23a/23a89271a1679763686f8b625e2d4429_preview.png",
-      "Green Camo": "https://files.cdn.printful.com/files/0ee/0eee10f5296a1430c96f2b86db572bdf_preview.png",
-      "Stone": "https://files.cdn.printful.com/files/911/9110643e3fde8466e6e91839779e4fa6_preview.png",
-      "Pink": "https://files.cdn.printful.com/files/a65/a65d0778a7878d71b4e6866570d8f960_preview.png",
-      "White": "https://files.cdn.printful.com/files/d9a/d9ab166dad035942dd6a6bf31c6e9f07_preview.png",
-    },
-    category: "headwear",
-    colors: ["Spruce", "Dark Grey", "Green Camo", "Stone", "Pink", "White"],
-    sizes: [],
-    variants: [
-      { syncVariantId: 5253259951, color: "Spruce", sku: "69CC976439BA9_Spruce" },
-      { syncVariantId: 5253259952, color: "Dark Grey", sku: "69CC976439BA9_Dark-Grey" },
-      { syncVariantId: 5253259953, color: "Green Camo", sku: "69CC976439BA9_Green-Camo" },
-      { syncVariantId: 5253259954, color: "Stone", sku: "69CC976439BA9_Stone" },
-      { syncVariantId: 5253259955, color: "Pink", sku: "69CC976439BA9_Pink" },
-      { syncVariantId: 5253259956, color: "White", sku: "69CC976439BA9_White" },
-    ],
-  },
-  {
-    id: "band",
-    printfulProductId: 426321248,
-    name: "TDF Band",
-    description: "Embroidered TDF crest headband.",
-    price: 3000,
-    displayPrice: "$30",
-    thumbnailUrl: "https://files.cdn.printful.com/files/0f9/0f9fde724f8e0804af4735b04c2ca781_preview.png",
-    previewUrl: "https://files.cdn.printful.com/files/0f9/0f9fde724f8e0804af4735b04c2ca781_preview.png",
-    colorPreviews: {
-      "White": "https://files.cdn.printful.com/files/0f9/0f9fde724f8e0804af4735b04c2ca781_preview.png",
-    },
-    category: "headwear",
-    colors: ["White"],
-    sizes: ["M", "L"],
-    variants: [
-      { syncVariantId: 5253257733, color: "White", size: "M", sku: "69CC95CFC415C_M" },
-      { syncVariantId: 5253257734, color: "White", size: "L", sku: "69CC95CFC415C_L" },
-    ],
-  },
-];
+// ── In-memory cache (5 min TTL) ──
 
-export function getProductById(id: string): ShopProduct | undefined {
-  return SHOP_PRODUCTS.find((p) => p.id === id);
+let cachedProducts: ShopProduct[] | null = null;
+let cacheTime = 0;
+const CACHE_TTL = 5 * 60 * 1000;
+
+// ── Fetch all products from Printful ──
+
+async function printfulGet(path: string) {
+  const res = await fetch(`${PRINTFUL_API}${path}`, {
+    headers: { Authorization: `Bearer ${PRINTFUL_TOKEN}` },
+    next: { revalidate: 300 },
+    signal: AbortSignal.timeout(8000), // 8s timeout — keeps webhook under Stripe's 3-min limit
+  });
+  if (!res.ok) throw new Error(`Printful ${res.status}: ${await res.text()}`);
+  return res.json();
 }
 
-export function findVariant(productId: string, color: string, size?: string): ProductVariant | undefined {
-  const product = getProductById(productId);
+function deriveId(name: string): string {
+  // "TDF POLO" → "polo", "TDF BUCKET" → "bucket", "TDF QZIP" → "qzip"
+  return name
+    .replace(/^TDF\s+/i, "")
+    .toLowerCase()
+    .replace(/\s+/g, "-");
+}
+
+function deriveDisplayName(name: string): string {
+  // "TDF POLO" → "TDF Polo", "TDF BUCKET" → "TDF Bucket"
+  return name
+    .split(/\s+/)
+    .map((w, i) => (i === 0 ? w.toUpperCase() : w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()))
+    .join(" ");
+}
+
+// Headwear Printful category IDs (hats, caps, beanies, headbands, etc.)
+const HEADWEAR_CATEGORIES = new Set([42, 46, 217]);
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+function transformProduct(result: any): ShopProduct | null {
+  const sp = result.sync_product;
+  const svs: any[] = result.sync_variants || [];
+
+  if (svs.length === 0) return null;
+
+  // Use retail_price from first variant — skip products with $0 price
+  const retailPrice = parseFloat(svs[0].retail_price || "0");
+  if (retailPrice <= 0) return null;
+
+  const priceCents = Math.round(retailPrice * 100);
+
+  // Build variants, colors, sizes, and colorPreviews
+  const variants: ProductVariant[] = [];
+  const colorSet = new Set<string>();
+  const sizeSet = new Set<string>();
+  const colorPreviews: Record<string, string> = {};
+
+  for (const sv of svs) {
+    const color = sv.color || "Default";
+    const size = sv.size || undefined;
+    colorSet.add(color);
+    if (size) sizeSet.add(size);
+
+    variants.push({
+      syncVariantId: sv.id,
+      color,
+      size,
+      sku: sv.sku || "",
+    });
+
+    // Extract preview image for this color from files
+    if (!colorPreviews[color]) {
+      const previewFile = (sv.files || []).find((f: any) => f.type === "preview");
+      if (previewFile?.preview_url) {
+        colorPreviews[color] = previewFile.preview_url;
+      }
+    }
+  }
+
+  const isHeadwear = HEADWEAR_CATEGORIES.has(svs[0].main_category_id);
+
+  return {
+    id: deriveId(sp.name),
+    printfulProductId: sp.id,
+    name: deriveDisplayName(sp.name),
+    description: "Embroidered TDF crest.",
+    price: priceCents,
+    displayPrice: `$${retailPrice.toFixed(0)}`,
+    thumbnailUrl: sp.thumbnail_url || "",
+    previewUrl: sp.thumbnail_url || "",
+    colorPreviews,
+    variants,
+    colors: [...colorSet],
+    sizes: [...sizeSet],
+    category: isHeadwear ? "headwear" : "apparel",
+  };
+}
+/* eslint-enable @typescript-eslint/no-explicit-any */
+
+export async function fetchShopProducts(): Promise<ShopProduct[]> {
+  // Return cache if fresh
+  if (cachedProducts && Date.now() - cacheTime < CACHE_TTL) {
+    return cachedProducts;
+  }
+
+  if (!PRINTFUL_TOKEN) {
+    console.error("PRINTFUL_API_TOKEN not set — returning empty catalog");
+    return cachedProducts || [];
+  }
+
+  try {
+    const listData = await printfulGet("/store/products");
+    const ids: number[] = (listData.result || []).map((p: { id: number }) => p.id);
+
+    const products: ShopProduct[] = [];
+    // Fetch all product details in parallel
+    const details = await Promise.all(
+      ids.map((id) => printfulGet(`/store/products/${id}`).catch(() => null))
+    );
+
+    for (const detail of details) {
+      if (!detail) continue;
+      const product = transformProduct(detail.result);
+      if (product) products.push(product);
+    }
+
+    // Sort: apparel first, then headwear, alphabetical within each group
+    products.sort((a, b) => {
+      if (a.category !== b.category) return a.category === "apparel" ? -1 : 1;
+      return a.name.localeCompare(b.name);
+    });
+
+    cachedProducts = products;
+    cacheTime = Date.now();
+    return products;
+  } catch (err) {
+    console.error("Failed to fetch Printful products:", err);
+    // Return stale cache if available
+    return cachedProducts || [];
+  }
+}
+
+// ── Lookup helpers (async — fetches catalog if needed) ──
+
+export async function getProductById(id: string): Promise<ShopProduct | undefined> {
+  const products = await fetchShopProducts();
+  return products.find((p) => p.id === id);
+}
+
+export async function findVariant(productId: string, color: string, size?: string): Promise<ProductVariant | undefined> {
+  const product = await getProductById(productId);
   if (!product) return undefined;
   return product.variants.find((v) =>
     v.color === color && (size ? v.size === size : true)
   );
 }
 
-// ── Printful API ──
+// ── Printful API (order management) ──
 
 interface PrintfulOrderItem {
   sync_variant_id: number;

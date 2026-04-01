@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useRef, useCallback } from "react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import type {
@@ -47,6 +47,71 @@ const tierLabels: Record<string, string> = {
 };
 
 /* ── Component ── */
+
+function CarouselRow({ children }: { children: React.ReactNode }) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const scroll = useCallback((dir: -1 | 1) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * 320, behavior: "smooth" });
+  }, []);
+  const arrowStyle: React.CSSProperties = {
+    position: "absolute",
+    top: "50%",
+    transform: "translateY(-50%)",
+    zIndex: 10,
+    background: "rgba(0,0,0,0.7)",
+    border: "1px solid rgba(255,255,255,0.15)",
+    borderRadius: "50%",
+    width: 40,
+    height: 40,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "pointer",
+    color: "rgba(255,255,255,0.7)",
+    fontSize: "1.2rem",
+    transition: "background 0.2s, color 0.2s",
+  };
+  return (
+    <div style={{ position: "relative" }}>
+      <button
+        onClick={() => scroll(-1)}
+        style={{ ...arrowStyle, left: "clamp(0.25rem, 2vw, 1.5rem)" }}
+        onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.15)"; e.currentTarget.style.color = "#fff"; }}
+        onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(0,0,0,0.7)"; e.currentTarget.style.color = "rgba(255,255,255,0.7)"; }}
+        aria-label="Scroll left"
+      >
+        &#8249;
+      </button>
+      <div
+        ref={scrollRef}
+        style={{
+          display: "flex",
+          gap: 16,
+          overflowX: "auto",
+          scrollSnapType: "x mandatory",
+          WebkitOverflowScrolling: "touch",
+          padding: "0.5rem clamp(1.5rem, 6vw, 6rem)",
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+        }}
+        className="gallery-carousel"
+      >
+        {children}
+      </div>
+      <button
+        onClick={() => scroll(1)}
+        style={{ ...arrowStyle, right: "clamp(0.25rem, 2vw, 1.5rem)" }}
+        onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.15)"; e.currentTarget.style.color = "#fff"; }}
+        onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(0,0,0,0.7)"; e.currentTarget.style.color = "rgba(255,255,255,0.7)"; }}
+        aria-label="Scroll right"
+      >
+        &#8250;
+      </button>
+    </div>
+  );
+}
 
 export default function GalleryClient({
   plan,
@@ -268,20 +333,8 @@ export default function GalleryClient({
                 </span>
               </div>
 
-              {/* Horizontal scroll row */}
-              <div
-                style={{
-                  display: "flex",
-                  gap: 16,
-                  overflowX: "auto",
-                  scrollSnapType: "x mandatory",
-                  WebkitOverflowScrolling: "touch",
-                  padding: "0.5rem clamp(1.5rem, 6vw, 6rem)",
-                  scrollbarWidth: "none",
-                  msOverflowStyle: "none",
-                }}
-                className="gallery-carousel"
-              >
+              {/* Horizontal scroll row with arrows */}
+              <CarouselRow>
                 {cards.map((card, i) => (
                   <motion.div
                     key={card.id}
@@ -424,7 +477,7 @@ export default function GalleryClient({
                     )}
                   </motion.div>
                 ))}
-              </div>
+              </CarouselRow>
             </div>
           );
         })}

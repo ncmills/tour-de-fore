@@ -1,11 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import Redis from "ioredis";
-
-let redis: Redis;
-function getRedis() {
-  if (!redis) redis = new Redis(process.env.REDIS_URL!);
-  return redis;
-}
+import { getRedis } from "@/lib/redis";
 
 export async function POST(req: NextRequest) {
   const { email, secret } = await req.json();

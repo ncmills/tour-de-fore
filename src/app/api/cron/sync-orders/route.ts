@@ -55,7 +55,7 @@ export async function GET(req: NextRequest) {
       // Resolve missing syncVariantIds
       for (const item of items) {
         if (!item.syncVariantId && item.productId && item.color) {
-          const variant = findVariant(item.productId, item.color, item.size);
+          const variant = await findVariant(item.productId, item.color, item.size);
           if (variant) item.syncVariantId = variant.syncVariantId;
         }
       }
@@ -86,10 +86,17 @@ export async function GET(req: NextRequest) {
         continue;
       }
 
+      // Filter out unresolved variants
+      const validItems = items.filter((i) => i.syncVariantId && i.syncVariantId > 0);
+      if (validItems.length === 0) {
+        results.push({ sessionId: session.id, status: "needs_attention", detail: "No valid variant IDs" });
+        continue;
+      }
+
       // Create Printful order
       try {
         const printfulResult = await createPrintfulOrder(
-          items.map(i => ({ sync_variant_id: i.syncVariantId, quantity: i.quantity })),
+          validItems.map(i => ({ sync_variant_id: i.syncVariantId, quantity: i.quantity })),
           {
             name: shippingName,
             address1: shippingAddress.line1 || "",

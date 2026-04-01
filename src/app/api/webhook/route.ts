@@ -116,17 +116,23 @@ export async function POST(req: NextRequest) {
           // Resolve any missing syncVariantIds from the catalog
           for (const item of items) {
             if (!item.syncVariantId && item.productId && item.color) {
-              const variant = findVariant(item.productId, item.color, item.size);
+              const variant = await findVariant(item.productId, item.color, item.size);
               if (variant) item.syncVariantId = variant.syncVariantId;
             }
           }
 
+          // Filter out items with unresolved variant IDs
+          const validItems = items.filter((i) => i.syncVariantId && i.syncVariantId > 0);
+          if (validItems.length < items.length) {
+            console.error(`Webhook: ${items.length - validItems.length} item(s) had unresolved syncVariantId — skipped`);
+          }
+
           // Create Printful order
-          console.log("Creating Printful order for", items.length, "items. Shipping:", shipping.name, shipping.address?.city, shipping.address?.state);
+          console.log("Creating Printful order for", validItems.length, "items. Shipping:", shipping.name, shipping.address?.city, shipping.address?.state);
           let printfulResult: { id: number; status: string } | null = null;
           try {
-            printfulResult = await createPrintfulOrder(
-              items.map((i) => ({ sync_variant_id: i.syncVariantId, quantity: i.quantity })),
+            printfulResult = validItems.length > 0 ? await createPrintfulOrder(
+              validItems.map((i) => ({ sync_variant_id: i.syncVariantId, quantity: i.quantity })),
               {
                 name: shipping.name || fullSession.customer_details?.name || "Customer",
                 address1: shipping.address.line1 || "",
@@ -138,7 +144,7 @@ export async function POST(req: NextRequest) {
                 email: customerEmail,
               },
               `tdf-${session.id}`
-            );
+            ) : null;
           } catch (printfulErr) {
             console.error("Printful order creation failed:", printfulErr);
           }
@@ -180,8 +186,8 @@ export async function POST(req: NextRequest) {
           if (customerEmail && process.env.RESEND_API_KEY) {
             try {
               const { getProductById } = await import("@/lib/printful");
-              const itemRows = items.map((i) => {
-                const product = getProductById(i.productId);
+              const itemRows = await Promise.all(items.map(async (i) => {
+                const product = await getProductById(i.productId);
                 const imgUrl = product?.colorPreviews?.[i.color] || product?.thumbnailUrl || "";
                 const name = product?.name || i.productId;
                 return `
@@ -195,7 +201,8 @@ export async function POST(req: NextRequest) {
                     </td>
                   </tr>
                 `;
-              }).join("");
+              }));
+              const itemRowsHtml = itemRows.join("");
 
               const resend = new Resend(process.env.RESEND_API_KEY);
               await resend.emails.send({
@@ -208,7 +215,7 @@ export async function POST(req: NextRequest) {
                     <h1 style="font-size: 22px; color: #c87941; margin: 0 0 8px; font-weight: 600;">Tour de Fore</h1>
                     <h2 style="font-size: 18px; margin: 0 0 24px; color: #333; font-weight: 500;">Order Confirmed</h2>
                     <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px; text-align: left;">
-                      ${itemRows}
+                      ${itemRowsHtml}
                     </table>
                     <p style="color: #555; font-size: 14px; line-height: 1.6; margin-bottom: 24px;">
                       Your gear is being prepared. You'll get a shipping confirmation with tracking once it ships.
