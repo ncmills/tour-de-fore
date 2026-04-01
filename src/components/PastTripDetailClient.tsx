@@ -1,35 +1,48 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import type { Trip } from "@/lib/trips";
 import USMap from "./USMap";
-import PhotoSlideshow from "./PhotoSlideshow";
 import FireBackground from "./FireBackground";
 import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
 
 const sectionHeadingStyle: React.CSSProperties = {
-  fontFamily: "var(--font-scrawl), cursive",
+  fontFamily: "var(--font-slab-cold), serif",
   fontSize: "clamp(2rem, 5vw, 3.5rem)",
   color: "#fff",
   marginBottom: "2rem",
+  textAlign: "center",
+  textTransform: "uppercase",
   textShadow: "0 0 7px rgba(255,60,20,0.5), 0 0 20px rgba(255,60,20,0.25), 0 0 40px rgba(255,30,10,0.1)",
-};
-
-const cardStyle: React.CSSProperties = {
-  background: "rgba(255,255,255,0.04)",
-  borderRadius: "8px",
-  overflow: "hidden",
-  border: "1px solid rgba(255,255,255,0.08)",
-  transition: "transform 0.3s, border-color 0.3s",
 };
 
 export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isLive?: boolean }) {
   const [isMobile, setIsMobile] = useState(false);
   const [activeDay, setActiveDay] = useState(0);
+
+  // 3-panel gallery: each panel cycles at a different cadence
+  const galleryImages = useMemo(() => trip.gallery.filter((s) => !/\.(mp4|mov|webm)$/i.test(s)), [trip.gallery]);
+  const panelIntervals = [3400, 4700, 6100]; // staggered ms per panel
+  const [panelIndices, setPanelIndices] = useState([0, Math.floor(galleryImages.length / 3), Math.floor((galleryImages.length * 2) / 3)]);
+
+  useEffect(() => {
+    if (galleryImages.length < 3) return;
+    const timers = panelIntervals.map((ms, panel) =>
+      setInterval(() => {
+        setPanelIndices((prev) => {
+          const next = [...prev];
+          next[panel] = (prev[panel] + 1) % galleryImages.length;
+          return next;
+        });
+      }, ms)
+    );
+    return () => timers.forEach(clearInterval);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [galleryImages.length]);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth <= 640);
@@ -38,21 +51,20 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  const hasLodging = trip.photoSections.length > 0 && trip.photoSections[0].images.length > 0;
-  const hasRestaurants = trip.restaurants && trip.restaurants.length > 0;
-  const restaurants = trip.restaurants;
-
-  // Calculate total holes played per course from schedule data
-  const holesPerCourse: Record<string, number> = {};
-  for (const day of trip.schedule) {
-    for (const item of day.items) {
-      if (item.type === "golf") {
-        const holes = item.detail?.match(/(\d+)\s*holes/i);
-        const count = holes ? parseInt(holes[1]) : 18;
-        holesPerCourse[item.activity] = (holesPerCourse[item.activity] || 0) + count;
-      }
+  // Build a lookup map: activity name → image URL from courses and restaurants
+  const imageMap = useMemo(() => {
+    const map: Record<string, string> = {};
+    for (const c of trip.courses) {
+      if (c.image) map[c.name] = c.image;
     }
-  }
+    for (const r of trip.restaurants) {
+      if (r.image) map[r.name] = r.image;
+    }
+    return map;
+  }, [trip.courses, trip.restaurants]);
+
+  // Resolve lodging image
+  const lodgingImage = trip.lodgingImage || trip.photoSections?.[0]?.images?.[0] || null;
 
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff", position: "relative" }}>
@@ -89,6 +101,52 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
         </motion.p>
       </div>
 
+      {/* Day pills — sticky top nav */}
+      {trip.schedule.length > 0 && (
+        <div style={{
+          position: "sticky",
+          top: 0,
+          zIndex: 50,
+          background: "rgba(0,0,0,0.85)",
+          backdropFilter: "blur(10px)",
+          padding: "0.75rem clamp(1.5rem, 6vw, 6rem)",
+          display: "flex",
+          justifyContent: "center",
+          gap: "0.5rem",
+          overflowX: "auto",
+          WebkitOverflowScrolling: "touch",
+          borderBottom: "1px solid rgba(255,255,255,0.06)",
+        }}>
+          {trip.schedule.map((day, i) => (
+            <button
+              key={i}
+              onClick={() => {
+                setActiveDay(i);
+                document.getElementById(`day-${i}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+              }}
+              style={{
+                fontFamily: "monospace",
+                fontSize: "0.75rem",
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                padding: "0.65rem 1rem",
+                minHeight: "44px",
+                borderRadius: "4px",
+                border: activeDay === i ? "1px solid rgba(220,38,38,0.6)" : "1px solid rgba(255,255,255,0.15)",
+                background: activeDay === i ? "rgba(220,38,38,0.15)" : "transparent",
+                color: activeDay === i ? "#fff" : "rgba(255,255,255,0.5)",
+                cursor: "pointer",
+                transition: "all 0.2s",
+                flexShrink: 0,
+                whiteSpace: "nowrap",
+              }}
+            >
+              {day.day}
+            </button>
+          ))}
+        </div>
+      )}
+
       {/* Section 1: US Map */}
       <motion.section
         initial={{ opacity: 0, y: 30 }}
@@ -100,7 +158,57 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
         <USMap singleTrip={trip.year} compact />
       </motion.section>
 
-      {/* Section 2: Devils in the Details — Interactive Itinerary */}
+      {/* Section 2: Lads on Tour — 3-panel dissolving gallery */}
+      {galleryImages.length >= 3 && (
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          style={{ position: "relative", zIndex: 1, padding: "3rem clamp(1.5rem, 6vw, 6rem)" }}
+        >
+          <h2 style={sectionHeadingStyle}>Lads on Tour</h2>
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
+            gap: "0.75rem",
+          }}>
+            {panelIndices.map((imgIdx, panel) => (
+              <div
+                key={panel}
+                style={{
+                  position: "relative",
+                  aspectRatio: "4/3",
+                  borderRadius: "8px",
+                  overflow: "hidden",
+                  background: "#111",
+                }}
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={imgIdx}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 2 }}
+                    style={{ position: "absolute", inset: 0 }}
+                  >
+                    <Image
+                      src={galleryImages[imgIdx]}
+                      alt={`Gallery ${imgIdx + 1}`}
+                      fill
+                      style={{ objectFit: "cover" }}
+                      sizes={isMobile ? "90vw" : "33vw"}
+                    />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
+        </motion.section>
+      )}
+
+      {/* Section 3: Devils in the Details — Itinerary with inline images */}
       {trip.schedule.length > 0 && (
         <motion.section
           initial={{ opacity: 0, y: 30 }}
@@ -109,53 +217,7 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
           transition={{ duration: 0.8 }}
           style={{ position: "relative", zIndex: 1, padding: "3rem clamp(1.5rem, 6vw, 6rem)" }}
         >
-          <h2 style={sectionHeadingStyle}>
-            {isLive ? "Devils in the Details" : "Devils in the Details"}
-          </h2>
-
-          {/* Day pills */}
-          <div style={{
-            display: "flex",
-            flexWrap: "nowrap",
-            gap: "0.5rem",
-            marginBottom: "2rem",
-            position: "sticky",
-            top: 0,
-            zIndex: 50,
-            background: "rgba(0,0,0,0.8)",
-            backdropFilter: "blur(8px)",
-            padding: "0.75rem 0",
-            overflowX: "auto",
-            WebkitOverflowScrolling: "touch",
-          }}>
-            {trip.schedule.map((day, i) => (
-              <button
-                key={i}
-                onClick={() => {
-                  setActiveDay(i);
-                  document.getElementById(`day-${i}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
-                }}
-                style={{
-                  fontFamily: "monospace",
-                  fontSize: "0.75rem",
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                  padding: "0.65rem 1rem",
-                  minHeight: "44px",
-                  borderRadius: "4px",
-                  border: activeDay === i ? "1px solid rgba(220,38,38,0.6)" : "1px solid rgba(255,255,255,0.15)",
-                  background: activeDay === i ? "rgba(220,38,38,0.15)" : "transparent",
-                  color: activeDay === i ? "#fff" : "rgba(255,255,255,0.5)",
-                  cursor: "pointer",
-                  transition: "all 0.2s",
-                  flexShrink: 0,
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {day.day}
-              </button>
-            ))}
-          </div>
+          <h2 style={sectionHeadingStyle}>Devils&apos; Details</h2>
 
           {/* Day sections */}
           {trip.schedule.map((day, i) => (
@@ -173,132 +235,69 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
                 {day.day} — {day.date}
               </h3>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                {day.items.map((item, j) => (
-                  <div
-                    key={j}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "1rem",
-                      padding: "0.75rem 1rem",
-                      background: "rgba(255,255,255,0.03)",
-                      borderRadius: "6px",
-                      borderLeft: `3px solid ${item.type === "golf" ? "rgba(34,197,94,0.6)" : item.type === "dining" ? "rgba(234,179,8,0.6)" : item.type === "nightlife" ? "rgba(168,85,247,0.6)" : "rgba(59,130,246,0.6)"}`,
-                    }}
-                  >
-                    <span style={{ fontSize: "1.2rem" }}>
-                      {item.type === "golf" ? "⛳" : item.type === "dining" ? "🍽️" : item.type === "nightlife" ? "🌙" : "🏌️"}
-                    </span>
-                    <div>
-                      <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.35)", fontFamily: "monospace", marginRight: "0.75rem" }}>
-                        {item.time}
-                      </span>
-                      <span style={{ fontWeight: 600, color: "rgba(255,255,255,0.85)" }}>
-                        {item.activity}
-                      </span>
-                      {item.detail && (
-                        <span style={{ color: "rgba(255,255,255,0.4)", marginLeft: "0.5rem", fontSize: "0.85rem" }}>
-                          — {item.detail}
+                {day.items.map((item, j) => {
+                  const resolvedImage = item.image || imageMap[item.activity] || null;
+                  return (
+                    <div
+                      key={j}
+                      style={{
+                        display: "flex",
+                        flexDirection: isMobile && resolvedImage ? "column" : "row",
+                        alignItems: isMobile ? "stretch" : "center",
+                        gap: "1rem",
+                        padding: "0.75rem 1rem",
+                        background: "rgba(255,255,255,0.03)",
+                        borderRadius: "6px",
+                        borderLeft: `3px solid ${item.type === "golf" ? "rgba(34,197,94,0.6)" : item.type === "dining" ? "rgba(234,179,8,0.6)" : item.type === "nightlife" ? "rgba(168,85,247,0.6)" : "rgba(59,130,246,0.6)"}`,
+                      }}
+                    >
+                      <div style={{ display: "flex", alignItems: "center", gap: "1rem", flex: 1, minWidth: 0 }}>
+                        <span style={{ fontSize: "1.2rem", flexShrink: 0 }}>
+                          {item.type === "golf" ? "⛳" : item.type === "dining" ? "🍽️" : item.type === "nightlife" ? "🌙" : "🏌️"}
                         </span>
+                        <div>
+                          <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.35)", fontFamily: "monospace", marginRight: "0.75rem" }}>
+                            {item.time}
+                          </span>
+                          <span style={{ fontWeight: 600, color: "rgba(255,255,255,0.85)" }}>
+                            {item.activity}
+                          </span>
+                          {item.detail && (
+                            <span style={{ color: "rgba(255,255,255,0.4)", marginLeft: "0.5rem", fontSize: "0.85rem" }}>
+                              — {item.detail}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      {resolvedImage && (
+                        <div style={{
+                          position: "relative",
+                          width: isMobile ? "100%" : "120px",
+                          aspectRatio: "3/2",
+                          borderRadius: "4px",
+                          overflow: "hidden",
+                          flexShrink: 0,
+                        }}>
+                          <Image
+                            src={resolvedImage}
+                            alt={item.activity}
+                            fill
+                            style={{ objectFit: "cover" }}
+                            sizes={isMobile ? "90vw" : "120px"}
+                          />
+                        </div>
                       )}
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           ))}
         </motion.section>
       )}
 
-      {/* Section 3: 108 Chances to Bogey — Courses */}
-      {trip.courses.length > 0 && (
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          style={{ position: "relative", zIndex: 1, padding: "3rem clamp(1.5rem, 6vw, 6rem)" }}
-        >
-          <h2 style={sectionHeadingStyle}>
-            {isLive ? "108 Chances to Bogey" : "108 Chances to Bogey"}
-          </h2>
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fill, minmax(300px, 1fr))",
-            gap: "1.5rem",
-          }}>
-            {trip.courses.map((course, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-                style={cardStyle}
-                onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; }}
-              >
-                {course.image && (
-                  <div style={{ position: "relative", aspectRatio: "16/10", overflow: "hidden" }}>
-                    <Image src={course.image} alt={course.name} fill style={{ objectFit: "cover" }} sizes="(max-width: 768px) 90vw, 33vw" />
-                    {(holesPerCourse[course.name] || course.holes) && (
-                      <div style={{
-                        position: "absolute", top: "0.75rem", right: "0.75rem",
-                        background: "rgba(0,0,0,0.7)", borderRadius: "4px",
-                        padding: "2px 8px", fontFamily: "monospace", fontSize: "0.7rem",
-                        color: "rgba(255,255,255,0.7)",
-                      }}>
-                        {holesPerCourse[course.name] || course.holes} holes
-                      </div>
-                    )}
-                  </div>
-                )}
-                <div style={{ padding: "1rem 1.25rem" }}>
-                  <h3 style={{
-                    fontFamily: "var(--font-plan-block), sans-serif",
-                    fontSize: "1rem",
-                    fontWeight: 700,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.04em",
-                    color: "#ff6a28",
-                    textShadow: "0 0 7px rgba(255,106,40,0.8), 0 0 15px rgba(255,60,20,0.4)",
-                    marginBottom: "0.4rem",
-                  }}>{course.name}</h3>
-                  {course.description && (
-                    <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.5, marginBottom: "0.75rem" }}>
-                      {course.description}
-                    </p>
-                  )}
-                  {course.url && (
-                    <a
-                      href={course.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        fontSize: "0.75rem",
-                        letterSpacing: "0.1em",
-                        textTransform: "uppercase",
-                        color: "rgba(220,38,38,0.8)",
-                        textDecoration: "none",
-                        fontWeight: 600,
-                        display: "inline-block",
-                        padding: "0.5rem 0",
-                        minHeight: "44px",
-                        lineHeight: "44px",
-                      }}
-                    >
-                      Visit Course →
-                    </a>
-                  )}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
-      )}
-
-      {/* Section 4: Devils' Lodging */}
-      {hasLodging && (
+      {/* Section 4: Lodging — single front-of-house image */}
+      {lodgingImage && (
         <motion.section
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -308,122 +307,61 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
         >
           <h2 style={sectionHeadingStyle}>Home is Where Hell is</h2>
 
-          {/* Hero lodging image */}
-          <div style={{ position: "relative", aspectRatio: "16/9", borderRadius: "8px", overflow: "hidden", marginBottom: "1.5rem" }}>
-            <Image
-              src={trip.photoSections[0].images[0]}
-              alt={trip.photoSections[0].label}
-              fill
-              style={{ objectFit: "cover" }}
-              sizes="90vw"
-            />
-          </div>
-
-          {/* Additional lodging images */}
-          {trip.photoSections[0].images.length > 1 && (
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(auto-fill, minmax(200px, 1fr))",
-              gap: "0.75rem",
-              marginBottom: "1.5rem",
-            }}>
-              {trip.photoSections[0].images.slice(1).map((img, i) => (
-                <div key={i} style={{ position: "relative", aspectRatio: "4/3", borderRadius: "6px", overflow: "hidden" }}>
-                  <Image src={img} alt={`Lodging ${i + 2}`} fill style={{ objectFit: "cover" }} sizes="(max-width: 768px) 45vw, 25vw" />
+          {trip.lodgingBookingUrl ? (
+            <a href={trip.lodgingBookingUrl} target="_blank" rel="noopener noreferrer" style={{ display: "block", maxWidth: "800px", margin: "0 auto" }}>
+              <div style={{
+                position: "relative",
+                aspectRatio: "16/9",
+                borderRadius: "8px",
+                overflow: "hidden",
+                border: "1px solid rgba(255,255,255,0.08)",
+                transition: "border-color 0.3s",
+              }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; }}
+              >
+                <Image
+                  src={lodgingImage}
+                  alt="Trip lodging"
+                  fill
+                  style={{ objectFit: "cover" }}
+                  sizes="(max-width: 768px) 90vw, 800px"
+                />
+                <div style={{
+                  position: "absolute",
+                  bottom: "1rem",
+                  right: "1rem",
+                  background: "rgba(0,0,0,0.7)",
+                  borderRadius: "4px",
+                  padding: "0.4rem 0.75rem",
+                  fontSize: "0.75rem",
+                  color: "#EA580C",
+                  fontWeight: 600,
+                  letterSpacing: "0.05em",
+                }}>
+                  🏠 View on Airbnb
                 </div>
-              ))}
+              </div>
+            </a>
+          ) : (
+            <div style={{
+              position: "relative",
+              aspectRatio: "16/9",
+              borderRadius: "8px",
+              overflow: "hidden",
+              maxWidth: "800px",
+              margin: "0 auto",
+              border: "1px solid rgba(255,255,255,0.08)",
+            }}>
+              <Image
+                src={lodgingImage}
+                alt="Trip lodging"
+                fill
+                style={{ objectFit: "cover" }}
+                sizes="(max-width: 768px) 90vw, 800px"
+              />
             </div>
           )}
-
-          {/* Address + booking link */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", alignItems: "center" }}>
-            {trip.lodgingAddress && (
-              <a
-                href={`https://maps.google.com/?q=${encodeURIComponent(trip.lodgingAddress)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.5)", textDecoration: "underline", textUnderlineOffset: "3px" }}
-              >
-                📍 {trip.lodgingAddress}
-              </a>
-            )}
-            {trip.lodgingBookingUrl && (
-              <a
-                href={trip.lodgingBookingUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ fontSize: "0.9rem", color: "#EA580C", textDecoration: "underline", textUnderlineOffset: "3px" }}
-              >
-                🏠 View on Airbnb
-              </a>
-            )}
-          </div>
-        </motion.section>
-      )}
-
-      {/* Section 5: Devils' Lettuce — Restaurants */}
-      {hasRestaurants && restaurants && (
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          style={{ position: "relative", zIndex: 1, padding: "3rem clamp(1.5rem, 6vw, 6rem)" }}
-        >
-          <h2 style={sectionHeadingStyle}>Devils&apos; Lettuce</h2>
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fill, minmax(280px, 1fr))",
-            gap: "1.5rem",
-          }}>
-            {restaurants.map((r, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-                style={{
-                  ...cardStyle,
-                  padding: "1.25rem",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0.5rem",
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; }}
-              >
-                <h3 style={{ fontSize: "1.1rem", fontWeight: 700 }}>{r.name}</h3>
-                {r.cuisine && (
-                  <span style={{ fontSize: "0.75rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)" }}>
-                    {r.cuisine}
-                  </span>
-                )}
-                {r.note && (
-                  <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.4)", fontStyle: "italic" }}>{r.note}</p>
-                )}
-                {r.url && (
-                  <a href={r.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.75rem", color: "rgba(220,38,38,0.8)", textDecoration: "none", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", display: "inline-block", padding: "0.5rem 0", minHeight: "44px" }}>
-                    Visit →
-                  </a>
-                )}
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
-      )}
-
-      {/* Section 6: Lads on Tour — Photo Slideshow */}
-      {trip.gallery.length > 0 && (
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          style={{ position: "relative", zIndex: 1, padding: "3rem clamp(1.5rem, 6vw, 6rem) 6rem" }}
-        >
-          <h2 style={sectionHeadingStyle}>Lads on Tour</h2>
-          <PhotoSlideshow images={trip.gallery} />
         </motion.section>
       )}
     </main>

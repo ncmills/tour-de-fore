@@ -1,5 +1,7 @@
+import { Suspense } from "react";
 import HomeButton from "@/components/HomeButton";
 import MulliganButton from "@/components/MulliganButton";
+import OrderVerifier from "@/components/OrderVerifier";
 
 export const metadata = {
   title: "Order Confirmed | Tour de Fore",
@@ -17,6 +19,9 @@ export default function ShopSuccessPage() {
           You&apos;ll get a confirmation email shortly. Thanks for repping TDF.
         </p>
       </div>
+      <Suspense>
+        <OrderVerifier />
+      </Suspense>
     </main>
   );
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter, Instrument_Serif, Caveat, Permanent_Marker, Lilita_One, Bebas_Neue, Pacifico, Rye, Lobster } from "next/font/google";
+import { Space_Grotesk, Inter, Instrument_Serif, Caveat, Permanent_Marker, Lilita_One, Bebas_Neue, Pacifico, Rye, Lobster, Alfa_Slab_One } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import DrunkMode from "@/components/DrunkMode";
@@ -77,6 +77,13 @@ const lobster = Lobster({
   display: "swap",
 });
 
+const alfaSlabOne = Alfa_Slab_One({
+  variable: "--font-slab-cold",
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Tour de Fore | An Annual Golf Odyssey",
   description:
@@ -138,7 +145,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${spaceGrotesk.variable} ${inter.variable} ${instrumentSerif.variable} ${caveat.variable} ${permanentMarker.variable} ${lilitaOne.variable} ${bebasNeue.variable} ${pacifico.variable} ${rye.variable} ${lobster.variable} antialiased`}
+        className={`${spaceGrotesk.variable} ${inter.variable} ${instrumentSerif.variable} ${caveat.variable} ${permanentMarker.variable} ${lilitaOne.variable} ${bebasNeue.variable} ${pacifico.variable} ${rye.variable} ${lobster.variable} ${alfaSlabOne.variable} antialiased`}
       >
         <a href="#main-content" className="skip-to-content">
           Skip to content

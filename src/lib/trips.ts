@@ -50,6 +50,7 @@ export interface Trip {
   upcoming?: boolean;
   lodgingAddress?: string;
   lodgingBookingUrl?: string;
+  lodgingImage?: string;
 }
 
 const SQ = "https://images.squarespace-cdn.com/content/v1/62cb87cca6b36f353a2575d5";
@@ -66,6 +67,7 @@ export const trips: Trip[] = [
     upcoming: true,
     lodgingAddress: "1489 Shoreline Dr, Kohler, WI",
     lodgingBookingUrl: "https://www.airbnb.com/trips/shared/874073c7-812c-457d-97c4-feec6f41e3e9",
+    lodgingImage: "/photos/2026/kohler-lodging.png",
     heroImage: "/photos/2026/whistling-straits-hero.jpg",
     courses: [
       { name: "Erin Hills", url: "https://erinhills.com", image: "https://erinhills.com/wp-content/smush-webp/2025/01/EH-Web-Images_Home-Golf-2-768x512.jpg.webp", description: "Former U.S. Open host set on dramatic glacial terrain with sweeping views of the Kettle Moraine.", holes: 18 },
@@ -475,6 +477,7 @@ export const trips: Trip[] = [
     dates: "June 2 \u2013 23, 2022",
     heroImage: `${SQ}/ff8d47e6-8753-45f8-b511-812d49db7bcd/IMG_0729.jpeg`,
     lodgingBookingUrl: "https://www.airbnb.com/rooms/42715072",
+    lodgingImage: "/photos/2022/boise-lodging.png",
     courses: [
       { name: "Falcon Crest Golf Club", url: "https://falconcrestgolf.com", image: "https://golfcoursegurus.com/photos/idaho/falconcrest/large/Falcon-Crest-18th-tee.jpg", description: "A desert canyon course cut into the rolling foothills south of Boise.", holes: 18 },
       { name: "Quail Hollow Golf Course", url: "https://quailhollowboise.com", image: "https://golf-pass-brightspot.s3.amazonaws.com/d9/56/c33878e5da4fc805683db81dc69c/90495.jpg", description: "A challenging layout in the Boise foothills with panoramic valley views.", holes: 18 },
