@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
           product_data: {
             name: product.name,
             description: `${item.color}${item.size ? ` / ${item.size}` : ""}`,
-            images: [product.thumbnailUrl],
+            images: [product.colorPreviews[item.color] || product.thumbnailUrl],
           },
           unit_amount: product.price,
         },
