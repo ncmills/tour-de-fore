@@ -204,8 +204,8 @@ export async function createPrintfulOrder(
 
   if (!res.ok) {
     const err = await res.text();
-    console.error("Printful order creation failed:", err);
-    return null;
+    console.error("Printful order creation failed:", res.status, err);
+    throw new Error(`Printful ${res.status}: ${err}`);
   }
 
   const data = await res.json();

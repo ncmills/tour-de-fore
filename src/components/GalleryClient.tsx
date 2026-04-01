@@ -1,16 +1,12 @@
 "use client";
 
-import { useMemo, useRef, useState, useEffect } from "react";
+import { useMemo } from "react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import type {
   GeneratedPlan,
   ThreePlanResult,
   TripTier,
-  PlanCourse,
-  PlanDining,
-  PlanBar,
-  PlanLodging,
 } from "@/lib/plan-types";
 import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
@@ -19,7 +15,7 @@ import HomeButton from "./HomeButton";
 
 interface GalleryCard {
   id: string;
-  type: "lodging" | "course" | "dining" | "bar";
+  type: "lodging" | "course" | "dining" | "bar" | "transport";
   name: string;
   line1: string;
   line2?: string;
@@ -33,6 +29,7 @@ const typeIcons: Record<GalleryCard["type"], string> = {
   course: "\u26f3",
   dining: "\ud83c\udf7d\ufe0f",
   bar: "\ud83c\udf7a",
+  transport: "\ud83d\ude90",
 };
 
 const typeLabels: Record<GalleryCard["type"], string> = {
@@ -40,6 +37,7 @@ const typeLabels: Record<GalleryCard["type"], string> = {
   course: "Course",
   dining: "Dining",
   bar: "Bar",
+  transport: "Transport",
 };
 
 const tierLabels: Record<string, string> = {
@@ -63,23 +61,37 @@ export default function GalleryClient({
   tier: TripTier;
   dest: string;
 }) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [activeIdx, setActiveIdx] = useState(0);
-
   const selectedTierKey = tier === "demon-king" ? "demonKing" : tier;
 
-  /* Build a single deduped array of cards across all tiers, interleaved by type */
-  const cards = useMemo(() => {
-    const all: GalleryCard[] = [];
-    const seen = new Set<string>();
+  /* Category display order */
+  const categoryOrder: GalleryCard["type"][] = ["lodging", "course", "dining", "bar", "transport"];
 
+  /* Plural labels for category headers */
+  const categoryHeaders: Record<GalleryCard["type"], string> = {
+    lodging: "Lodging",
+    course: "Golf Courses",
+    dining: "Dining",
+    bar: "Nightlife",
+    transport: "Transportation",
+  };
+
+  /* Build cards grouped by type */
+  const cardsByType = useMemo(() => {
+    const seen = new Set<string>();
     const tiers = Object.entries(allPlans) as [string, GeneratedPlan][];
+    const groups: Record<GalleryCard["type"], GalleryCard[]> = {
+      lodging: [],
+      course: [],
+      dining: [],
+      bar: [],
+      transport: [],
+    };
 
     // Collect lodging
     for (const [key, p] of tiers) {
       if (!p?.lodging || seen.has(p.lodging.name)) continue;
       seen.add(p.lodging.name);
-      all.push({
+      groups.lodging.push({
         id: `lodging-${p.lodging.name}`,
         type: "lodging",
         name: p.lodging.name,
@@ -96,7 +108,7 @@ export default function GalleryClient({
       for (const c of p?.courses || []) {
         if (seen.has(c.name)) continue;
         seen.add(c.name);
-        all.push({
+        groups.course.push({
           id: `course-${c.name}`,
           type: "course",
           name: c.name,
@@ -113,7 +125,7 @@ export default function GalleryClient({
       for (const d of p?.dining || []) {
         if (seen.has(d.name)) continue;
         seen.add(d.name);
-        all.push({
+        groups.dining.push({
           id: `dining-${d.name}`,
           type: "dining",
           name: d.name,
@@ -131,7 +143,7 @@ export default function GalleryClient({
       for (const b of p?.bars || []) {
         if (seen.has(b.name)) continue;
         seen.add(b.name);
-        all.push({
+        groups.bar.push({
           id: `bar-${b.name}`,
           type: "bar",
           name: b.name,
@@ -143,46 +155,28 @@ export default function GalleryClient({
       }
     }
 
-    // Interleave: sort so selected-tier items come first within each type, then shuffle types together
-    const byType: Record<string, GalleryCard[]> = { lodging: [], course: [], dining: [], bar: [] };
-    for (const c of all) byType[c.type].push(c);
+    // Collect transport — static options since plans use a single transport string
+    const transportOptions = [
+      { id: "transport-rental-car", name: "Rental Car", line1: "~$50/day per person", line2: "Split across the crew", line3: "Most flexible option — great for groups that want to come and go on their own schedule." },
+      { id: "transport-party-bus", name: "Party Bus", line1: "~$200/day total", line2: "Fits 12-20", line3: "The ultimate crew mover. Handles golf shuttles, bar crawls, and everything in between." },
+      { id: "transport-limo-service", name: "Limo Service", line1: "~$300/day total", line2: "Premium experience", line3: "Roll up to the course in style. Great for special occasions or the Demon King tier." },
+      { id: "transport-airport-shuttle", name: "Airport Shuttle", line1: "~$25/person", line2: "One-way to/from airport", line3: "Simple airport transfers. Book in advance for group rates." },
+    ];
+    for (const t of transportOptions) {
+      groups.transport.push({
+        ...t,
+        type: "transport",
+        isSelectedTier: true,
+      });
+    }
 
-    // Sort each bucket: selected tier first
-    for (const arr of Object.values(byType)) {
+    // Sort each group: selected tier first
+    for (const arr of Object.values(groups)) {
       arr.sort((a, b) => (a.isSelectedTier === b.isSelectedTier ? 0 : a.isSelectedTier ? -1 : 1));
     }
 
-    // Interleave round-robin
-    const result: GalleryCard[] = [];
-    const buckets = [byType.lodging, byType.course, byType.dining, byType.bar];
-    let idx = 0;
-    let added = true;
-    while (added) {
-      added = false;
-      for (const bucket of buckets) {
-        if (idx < bucket.length) {
-          result.push(bucket[idx]);
-          added = true;
-        }
-      }
-      idx++;
-    }
-
-    return result;
+    return groups;
   }, [allPlans, selectedTierKey]);
-
-  /* Track scroll position for dots */
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const onScroll = () => {
-      const cardW = 316; // 300 + 16 gap
-      const idx = Math.round(el.scrollLeft / cardW);
-      setActiveIdx(Math.min(idx, cards.length - 1));
-    };
-    el.addEventListener("scroll", onScroll, { passive: true });
-    return () => el.removeEventListener("scroll", onScroll);
-  }, [cards.length]);
 
   return (
     <div
@@ -232,239 +226,208 @@ export default function GalleryClient({
         </p>
       </motion.div>
 
-      {/* Carousel */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
-        <div
-          ref={scrollRef}
-          style={{
-            display: "flex",
-            gap: 16,
-            overflowX: "auto",
-            scrollSnapType: "x mandatory",
-            WebkitOverflowScrolling: "touch",
-            padding: "1rem clamp(1.5rem, 6vw, 6rem)",
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-          }}
-          className="gallery-carousel"
-        >
-          {cards.map((card, i) => (
-            <motion.div
-              key={card.id}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4, delay: Math.min(i * 0.05, 0.5) }}
-              style={{
-                flex: "0 0 300px",
-                minHeight: 380,
-                scrollSnapAlign: "center",
-                background: "#111",
-                border: card.isSelectedTier
-                  ? "1px solid rgba(234,88,12,0.4)"
-                  : "1px solid #222",
-                borderRadius: 12,
-                padding: "1.5rem",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                position: "relative",
-                boxShadow: card.isSelectedTier
-                  ? "0 0 12px rgba(234,88,12,0.2)"
-                  : "0 2px 12px rgba(0,0,0,0.4)",
-                transition: "border-color 0.3s, box-shadow 0.3s",
-              }}
-            >
-              {/* Type icon top-right */}
-              <span
+      {/* Category sections */}
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "2rem", paddingBottom: "1rem" }}>
+        {categoryOrder.map((catType) => {
+          const cards = cardsByType[catType];
+          if (cards.length === 0) return null;
+          return (
+            <div key={catType}>
+              {/* Category header */}
+              <div
                 style={{
-                  position: "absolute",
-                  top: 12,
-                  right: 14,
-                  fontSize: "1.4rem",
-                  opacity: 0.7,
+                  padding: "0 clamp(1.5rem, 6vw, 6rem)",
+                  marginBottom: "0.75rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
                 }}
-                title={typeLabels[card.type]}
               >
-                {typeIcons[card.type]}
-              </span>
-
-              {/* Tier badge if not selected tier */}
-              {card.badge && (
-                <span
-                  style={{
-                    position: "absolute",
-                    top: 12,
-                    left: 14,
-                    fontSize: "0.6rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    color: "rgba(255,255,255,0.4)",
-                    background: "rgba(255,255,255,0.06)",
-                    padding: "3px 8px",
-                    borderRadius: 4,
-                  }}
-                >
-                  {card.badge}
-                </span>
-              )}
-
-              {/* Card content */}
-              <div style={{ marginTop: card.badge ? 36 : 8 }}>
-                {/* Type label */}
-                <p
-                  style={{
-                    fontSize: "0.65rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.12em",
-                    textTransform: "uppercase",
-                    color: card.isSelectedTier ? "rgba(234,88,12,0.7)" : "rgba(255,255,255,0.25)",
-                    marginBottom: "0.4rem",
-                    fontFamily: "var(--font-inter), sans-serif",
-                  }}
-                >
-                  {typeLabels[card.type]}
-                </p>
-
-                {/* Name */}
-                <h3
+                <span style={{ fontSize: "1.3rem" }}>{typeIcons[catType]}</span>
+                <h2
                   style={{
                     fontFamily: "var(--font-plan-block), sans-serif",
-                    fontSize: "1.25rem",
+                    fontSize: "1.15rem",
                     fontWeight: 700,
                     color: "#fff",
-                    margin: "0 0 0.6rem 0",
-                    lineHeight: 1.2,
-                    paddingRight: "2rem",
+                    margin: 0,
+                    letterSpacing: "0.02em",
                   }}
                 >
-                  {card.name}
-                </h3>
-
-                {/* Line 1 — primary detail */}
-                {card.line1 && (
-                  <p
-                    style={{
-                      fontSize: "0.85rem",
-                      color: "rgba(255,255,255,0.6)",
-                      margin: "0 0 0.3rem 0",
-                      fontFamily: "var(--font-inter), sans-serif",
-                    }}
-                  >
-                    {card.line1}
-                  </p>
-                )}
-
-                {/* Line 2 — secondary */}
-                {card.line2 && (
-                  <p
-                    style={{
-                      fontSize: "0.8rem",
-                      color: "rgba(255,255,255,0.4)",
-                      margin: "0 0 0.3rem 0",
-                      fontFamily: "var(--font-inter), sans-serif",
-                    }}
-                  >
-                    {card.line2}
-                  </p>
-                )}
-              </div>
-
-              {/* Line 3 — description at bottom */}
-              {card.line3 && (
-                <p
+                  {categoryHeaders[catType]}
+                </h2>
+                <span
                   style={{
+                    fontFamily: "var(--font-inter), sans-serif",
                     fontSize: "0.75rem",
                     color: "rgba(255,255,255,0.3)",
-                    margin: 0,
-                    lineHeight: 1.5,
-                    fontFamily: "var(--font-inter), sans-serif",
-                    display: "-webkit-box",
-                    WebkitLineClamp: 4,
-                    WebkitBoxOrient: "vertical",
-                    overflow: "hidden",
+                    marginLeft: "0.25rem",
                   }}
                 >
-                  {card.line3}
-                </p>
-              )}
-            </motion.div>
-          ))}
-        </div>
+                  {cards.length}
+                </span>
+              </div>
 
-        {/* Prev / Counter / Next */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "1rem",
-            padding: "1rem 0",
-          }}
-        >
-          <button
-            onClick={() => {
-              const el = scrollRef.current;
-              if (!el) return;
-              const prev = Math.max(0, activeIdx - 1);
-              el.scrollTo({ left: prev * 316, behavior: "smooth" });
-            }}
-            aria-label="Previous card"
-            style={{
-              minWidth: 44,
-              minHeight: 44,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              background: "rgba(255,255,255,0.06)",
-              border: "1px solid rgba(255,255,255,0.15)",
-              borderRadius: 8,
-              color: activeIdx > 0 ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.2)",
-              fontSize: "1.1rem",
-              cursor: activeIdx > 0 ? "pointer" : "default",
-              transition: "all 0.2s",
-            }}
-          >
-            &#9664;
-          </button>
-          <span
-            style={{
-              fontFamily: "var(--font-inter), sans-serif",
-              fontSize: "0.85rem",
-              color: "rgba(255,255,255,0.5)",
-              letterSpacing: "0.06em",
-              minWidth: 60,
-              textAlign: "center",
-            }}
-          >
-            {activeIdx + 1} of {cards.length}
-          </span>
-          <button
-            onClick={() => {
-              const el = scrollRef.current;
-              if (!el) return;
-              const next = Math.min(cards.length - 1, activeIdx + 1);
-              el.scrollTo({ left: next * 316, behavior: "smooth" });
-            }}
-            aria-label="Next card"
-            style={{
-              minWidth: 44,
-              minHeight: 44,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              background: "rgba(255,255,255,0.06)",
-              border: "1px solid rgba(255,255,255,0.15)",
-              borderRadius: 8,
-              color: activeIdx < cards.length - 1 ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.2)",
-              fontSize: "1.1rem",
-              cursor: activeIdx < cards.length - 1 ? "pointer" : "default",
-              transition: "all 0.2s",
-            }}
-          >
-            &#9654;
-          </button>
-        </div>
+              {/* Horizontal scroll row */}
+              <div
+                style={{
+                  display: "flex",
+                  gap: 16,
+                  overflowX: "auto",
+                  scrollSnapType: "x mandatory",
+                  WebkitOverflowScrolling: "touch",
+                  padding: "0.5rem clamp(1.5rem, 6vw, 6rem)",
+                  scrollbarWidth: "none",
+                  msOverflowStyle: "none",
+                }}
+                className="gallery-carousel"
+              >
+                {cards.map((card, i) => (
+                  <motion.div
+                    key={card.id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.4, delay: Math.min(i * 0.05, 0.5) }}
+                    style={{
+                      flex: "0 0 300px",
+                      minHeight: 380,
+                      scrollSnapAlign: "center",
+                      background: "#111",
+                      border: card.isSelectedTier
+                        ? "1px solid rgba(234,88,12,0.4)"
+                        : "1px solid #222",
+                      borderRadius: 12,
+                      padding: "1.5rem",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+                      position: "relative",
+                      boxShadow: card.isSelectedTier
+                        ? "0 0 12px rgba(234,88,12,0.2)"
+                        : "0 2px 12px rgba(0,0,0,0.4)",
+                      transition: "border-color 0.3s, box-shadow 0.3s",
+                    }}
+                  >
+                    {/* Type icon top-right */}
+                    <span
+                      style={{
+                        position: "absolute",
+                        top: 12,
+                        right: 14,
+                        fontSize: "1.4rem",
+                        opacity: 0.7,
+                      }}
+                      title={typeLabels[card.type]}
+                    >
+                      {typeIcons[card.type]}
+                    </span>
+
+                    {/* Tier badge if not selected tier */}
+                    {card.badge && (
+                      <span
+                        style={{
+                          position: "absolute",
+                          top: 12,
+                          left: 14,
+                          fontSize: "0.6rem",
+                          fontWeight: 700,
+                          letterSpacing: "0.08em",
+                          textTransform: "uppercase",
+                          color: "rgba(255,255,255,0.4)",
+                          background: "rgba(255,255,255,0.06)",
+                          padding: "3px 8px",
+                          borderRadius: 4,
+                        }}
+                      >
+                        {card.badge}
+                      </span>
+                    )}
+
+                    {/* Card content */}
+                    <div style={{ marginTop: card.badge ? 36 : 8 }}>
+                      {/* Type label */}
+                      <p
+                        style={{
+                          fontSize: "0.65rem",
+                          fontWeight: 700,
+                          letterSpacing: "0.12em",
+                          textTransform: "uppercase",
+                          color: card.isSelectedTier ? "rgba(234,88,12,0.7)" : "rgba(255,255,255,0.25)",
+                          marginBottom: "0.4rem",
+                          fontFamily: "var(--font-inter), sans-serif",
+                        }}
+                      >
+                        {typeLabels[card.type]}
+                      </p>
+
+                      {/* Name */}
+                      <h3
+                        style={{
+                          fontFamily: "var(--font-plan-block), sans-serif",
+                          fontSize: "1.25rem",
+                          fontWeight: 700,
+                          color: "#fff",
+                          margin: "0 0 0.6rem 0",
+                          lineHeight: 1.2,
+                          paddingRight: "2rem",
+                        }}
+                      >
+                        {card.name}
+                      </h3>
+
+                      {/* Line 1 — primary detail */}
+                      {card.line1 && (
+                        <p
+                          style={{
+                            fontSize: "0.85rem",
+                            color: "rgba(255,255,255,0.6)",
+                            margin: "0 0 0.3rem 0",
+                            fontFamily: "var(--font-inter), sans-serif",
+                          }}
+                        >
+                          {card.line1}
+                        </p>
+                      )}
+
+                      {/* Line 2 — secondary */}
+                      {card.line2 && (
+                        <p
+                          style={{
+                            fontSize: "0.8rem",
+                            color: "rgba(255,255,255,0.4)",
+                            margin: "0 0 0.3rem 0",
+                            fontFamily: "var(--font-inter), sans-serif",
+                          }}
+                        >
+                          {card.line2}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Line 3 — description at bottom */}
+                    {card.line3 && (
+                      <p
+                        style={{
+                          fontSize: "0.75rem",
+                          color: "rgba(255,255,255,0.3)",
+                          margin: 0,
+                          lineHeight: 1.5,
+                          fontFamily: "var(--font-inter), sans-serif",
+                          display: "-webkit-box",
+                          WebkitLineClamp: 4,
+                          WebkitBoxOrient: "vertical",
+                          overflow: "hidden",
+                        }}
+                      >
+                        {card.line3}
+                      </p>
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       {/* Bottom CTA */}

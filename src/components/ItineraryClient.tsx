@@ -9,10 +9,29 @@ import PlanBreadcrumb from "./PlanBreadcrumb";
 
 // ── Helpers ──
 
+/** Parse a dollar string like "$89" or "$2,450" into a number.
+ *  For ranges like "$800-$1,200", returns the midpoint. */
 function parseDollars(s: string | undefined): number {
   if (!s) return 0;
+  // Handle ranges like "$800-$1,200" or "$800 - $1,200"
+  const rangeMatch = s.match(/\$?\s*([\d,]+(?:\.\d+)?)\s*[-–—]\s*\$?\s*([\d,]+(?:\.\d+)?)/);
+  if (rangeMatch) {
+    const lo = parseFloat(rangeMatch[1].replace(/,/g, "")) || 0;
+    const hi = parseFloat(rangeMatch[2].replace(/,/g, "")) || 0;
+    return Math.round((lo + hi) / 2);
+  }
   const m = s.replace(/[^0-9.]/g, "");
   return parseFloat(m) || 0;
+}
+
+/** Map a dining price-range string to a per-person cost estimate */
+function diningPricePerPerson(priceRange: string | undefined): number {
+  const raw = (priceRange || "").replace(/["\s]/g, "");
+  if (raw === "$$$$") return 150;
+  if (raw === "$$$") return 100;
+  if (raw === "$$") return 60;
+  if (raw === "$") return 30;
+  return 50;
 }
 
 function formatDollars(n: number): string {
@@ -115,6 +134,7 @@ export default function ItineraryClient({
   const [emailError, setEmailError] = useState("");
 
   const numDays = plan.schedule?.length || plan.numberOfDays || 3;
+  const numNights = Math.max(numDays - 1, 1);
   const groupSize = plan.groupSize || 12;
 
   // Build selected course/dining/bar lists from selectedOptions or fall back to plan defaults
@@ -169,7 +189,7 @@ export default function ItineraryClient({
   // Lodging info
   const lodgingName = selectedLodgingName;
   const lodgingCostPerNight = parseDollars(plan.lodging.costPerNight);
-  const lodgingTotal = lodgingCostPerNight * numDays;
+  const lodgingTotal = lodgingCostPerNight * numNights;
   const lodgingPerPerson = Math.round(lodgingTotal / groupSize);
 
   // Golf total
@@ -182,15 +202,43 @@ export default function ItineraryClient({
     return total;
   }, [dayItineraries]);
 
-  // Dining estimate from budget breakdown
+  // Dining estimate: sum per-person cost for each day's selected restaurant
   const diningEstimate = useMemo(() => {
-    const item = plan.estimatedBudget?.breakdown?.find(
-      (b) => b.category.toLowerCase().includes("dining") || b.category.toLowerCase().includes("food")
-    );
-    return item ? parseDollars(item.perPerson) : Math.round(numDays * 65);
-  }, [plan, numDays]);
+    let total = 0;
+    for (const day of dayItineraries) {
+      total += day.dinner ? diningPricePerPerson(day.dinner.priceRange) : 50;
+    }
+    return total;
+  }, [dayItineraries]);
 
-  const grandTotal = lodgingPerPerson + golfTotal + diningEstimate;
+  // Nightlife estimate: ~$40/person/night for bar costs
+  const nightlifeEstimate = useMemo(() => {
+    let total = 0;
+    for (const day of dayItineraries) {
+      total += day.bar ? 40 : 0;
+    }
+    return total;
+  }, [dayItineraries]);
+
+  // Transport cost
+  const selectedTransport = selectedOptions?.transport?.[0] || "rental-car";
+  const transportCost = useMemo(() => {
+    if (selectedTransport === "rental-car") return 50 * numDays;
+    if (selectedTransport === "party-bus") return Math.round((200 * numDays) / groupSize);
+    if (selectedTransport === "limo-service") return Math.round((300 * numDays) / groupSize);
+    if (selectedTransport === "airport-shuttle") return 25;
+    return 0; // "none"
+  }, [selectedTransport, numDays, groupSize]);
+
+  const transportLabel = useMemo(() => {
+    if (selectedTransport === "rental-car") return "Transport (Rental Car)";
+    if (selectedTransport === "party-bus") return "Transport (Party Bus)";
+    if (selectedTransport === "limo-service") return "Transport (Limo Service)";
+    if (selectedTransport === "airport-shuttle") return "Transport (Airport Shuttle)";
+    return "Transport";
+  }, [selectedTransport]);
+
+  const grandTotal = lodgingPerPerson + golfTotal + diningEstimate + nightlifeEstimate + transportCost;
 
   // Email sending
   const sendToCrewEmails = async () => {
@@ -292,6 +340,54 @@ export default function ItineraryClient({
       </div>
 
       <div style={{ maxWidth: 700, margin: "0 auto" }}>
+
+        {/* ── Lodging Section ── */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          style={{
+            marginBottom: "2.5rem",
+          }}
+        >
+          <h2 style={{
+            fontFamily: "var(--font-plan-block), sans-serif",
+            fontSize: "1.5rem",
+            textTransform: "uppercase",
+            letterSpacing: "0.06em",
+            color: "#fff",
+            marginBottom: "1rem",
+          }}>
+            Lodging
+          </h2>
+          <div style={{
+            background: "#111",
+            border: "1px solid #222",
+            borderRadius: 10,
+            padding: "1.25rem",
+          }}>
+            <p style={{ fontSize: "1.1rem", fontWeight: 600, marginBottom: "0.35rem" }}>{lodgingName}</p>
+            <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.5)", marginBottom: "0.15rem" }}>{plan.lodging.type}</p>
+            {plan.lodging.address && (
+              <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.3)", marginBottom: "0.5rem" }}>{plan.lodging.address}</p>
+            )}
+            <div style={{ display: "flex", gap: "1.5rem", marginTop: "0.5rem" }}>
+              <div>
+                <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.08em", display: "block" }}>Per Night</span>
+                <span style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1rem", color: "#fff" }}>{plan.lodging.costPerNight}</span>
+              </div>
+              <div>
+                <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.08em", display: "block" }}>Total ({numNights} night{numNights !== 1 ? "s" : ""})</span>
+                <span style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1rem", color: "#fff" }}>{formatDollars(lodgingTotal)}</span>
+              </div>
+            </div>
+            {plan.lodging.rationale && (
+              <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)", marginTop: "0.6rem", fontStyle: "italic" }}>
+                {plan.lodging.rationale}
+              </p>
+            )}
+          </div>
+        </motion.section>
 
         {/* ── Day-by-Day Breakdown ── */}
         {dayItineraries.map((day, di) => (
@@ -400,56 +496,6 @@ export default function ItineraryClient({
           </motion.section>
         ))}
 
-        {/* ── Lodging Section ── */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 * numDays + 0.4 }}
-          style={{
-            marginBottom: "2.5rem",
-            borderTop: "1px solid rgba(255,255,255,0.06)",
-            paddingTop: "2rem",
-          }}
-        >
-          <h2 style={{
-            fontFamily: "var(--font-plan-block), sans-serif",
-            fontSize: "1.5rem",
-            textTransform: "uppercase",
-            letterSpacing: "0.06em",
-            color: "#fff",
-            marginBottom: "1rem",
-          }}>
-            Lodging
-          </h2>
-          <div style={{
-            background: "#111",
-            border: "1px solid #222",
-            borderRadius: 10,
-            padding: "1.25rem",
-          }}>
-            <p style={{ fontSize: "1.1rem", fontWeight: 600, marginBottom: "0.35rem" }}>{lodgingName}</p>
-            <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.5)", marginBottom: "0.15rem" }}>{plan.lodging.type}</p>
-            {plan.lodging.address && (
-              <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.3)", marginBottom: "0.5rem" }}>{plan.lodging.address}</p>
-            )}
-            <div style={{ display: "flex", gap: "1.5rem", marginTop: "0.5rem" }}>
-              <div>
-                <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.08em", display: "block" }}>Per Night</span>
-                <span style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1rem", color: "#fff" }}>{plan.lodging.costPerNight}</span>
-              </div>
-              <div>
-                <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.08em", display: "block" }}>Total ({numDays} nights)</span>
-                <span style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1rem", color: "#fff" }}>{formatDollars(lodgingTotal)}</span>
-              </div>
-            </div>
-            {plan.lodging.rationale && (
-              <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)", marginTop: "0.6rem", fontStyle: "italic" }}>
-                {plan.lodging.rationale}
-              </p>
-            )}
-          </div>
-        </motion.section>
-
         {/* ── Pricing Breakdown ── */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -480,6 +526,12 @@ export default function ItineraryClient({
             <PriceRow label="Lodging" amount={`${formatDollars(lodgingPerPerson)}/pp`} />
             <PriceRow label="Golf" amount={`${formatDollars(golfTotal)}/pp`} />
             <PriceRow label="Dining (est.)" amount={`${formatDollars(diningEstimate)}/pp`} />
+            {nightlifeEstimate > 0 && (
+              <PriceRow label="Nightlife (est.)" amount={`${formatDollars(nightlifeEstimate)}/pp`} />
+            )}
+            {transportCost > 0 && (
+              <PriceRow label={transportLabel} amount={`${formatDollars(transportCost)}/pp`} />
+            )}
             <div style={{ marginTop: "0.5rem", paddingTop: "0.75rem", borderTop: "1px solid rgba(255,255,255,0.12)" }}>
               <PriceRow label="Grand Total" amount={`${formatDollars(grandTotal)}/pp`} bold />
             </div>

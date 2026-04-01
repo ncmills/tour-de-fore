@@ -37,11 +37,29 @@ const ACTIVITIES = ["ATV", "Fishing", "Spa", "Brewery Tour", "Shooting", "Casino
 
 // ── Helpers ──
 
-/** Parse a dollar string like "$89" or "$2,450" into a number */
+/** Parse a dollar string like "$89" or "$2,450" into a number.
+ *  For ranges like "$800-$1,200", returns the midpoint. */
 function parseDollars(s: string | undefined): number {
   if (!s) return 0;
+  // Handle ranges like "$800-$1,200" or "$800 - $1,200"
+  const rangeMatch = s.match(/\$?\s*([\d,]+(?:\.\d+)?)\s*[-–—]\s*\$?\s*([\d,]+(?:\.\d+)?)/);
+  if (rangeMatch) {
+    const lo = parseFloat(rangeMatch[1].replace(/,/g, "")) || 0;
+    const hi = parseFloat(rangeMatch[2].replace(/,/g, "")) || 0;
+    return Math.round((lo + hi) / 2);
+  }
   const m = s.replace(/[^0-9.]/g, "");
   return parseFloat(m) || 0;
+}
+
+/** Map a dining price-range string to a per-person cost estimate */
+function diningPricePerPerson(priceRange: string | undefined): number {
+  const raw = (priceRange || "").replace(/["\s]/g, "");
+  if (raw === "$$$$") return 150;
+  if (raw === "$$$") return 100;
+  if (raw === "$$") return 60;
+  if (raw === "$") return 30;
+  return 50;
 }
 
 const TAG_COLORS: Record<string, { bg: string; text: string }> = {
@@ -243,8 +261,11 @@ export default function TripBuilderClient({
   // Activity options
   const activityOptions: Option[] = ACTIVITIES.map((a) => ({ id: a, name: a }));
 
-  // Number of days
+
+
+  // Number of days and nights (3-day trip = 2 nights of lodging)
   const numDays = plan.schedule?.length || plan.numberOfDays || 3;
+  const numNights = Math.max(numDays - 1, 1);
 
   // Initialize day selections
   const [lodging, setLodging] = useState(plan.lodging.name);
@@ -266,6 +287,7 @@ export default function TripBuilderClient({
     return init;
   });
 
+  const [transport, setTransport] = useState("rental-car");
   const [saving, setSaving] = useState(false);
   const [expandedDay, setExpandedDay] = useState<number | null>(0);
   const [autoSaved, setAutoSaved] = useState(false);
@@ -286,6 +308,7 @@ export default function TripBuilderClient({
         dining: days.map((d) => d.dinner).filter(Boolean),
         bars: days.map((d) => d.bar).filter(Boolean),
         activities: days.filter((d) => d.round2IsActivity && d.activity).map((d) => d.activity),
+        transport: [transport],
       };
       fetch("/api/save-selections", {
         method: "POST",
@@ -298,7 +321,7 @@ export default function TripBuilderClient({
       }).catch(() => {});
     }, 2000);
     return () => { if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current); };
-  }, [days, lodging, planId, dest, tier]);
+  }, [days, lodging, transport, planId, dest, tier]);
 
   const saveAndView = async () => {
     setSaving(true);
@@ -308,6 +331,7 @@ export default function TripBuilderClient({
       dining: days.map((d) => d.dinner).filter(Boolean),
       bars: days.map((d) => d.bar).filter(Boolean),
       activities: days.filter((d) => d.round2IsActivity && d.activity).map((d) => d.activity),
+      transport: [transport],
     };
     try {
       await fetch("/api/save-selections", {
@@ -362,13 +386,31 @@ export default function TripBuilderClient({
 
   const groupSize = plan.groupSize || 12;
 
-  // Price per person: base + delta from courses + delta from lodging
+  // Transport options
+  const transportOptions: Option[] = useMemo(() => [
+    { id: "rental-car", name: "Rental Car", price: `~$${50 * numDays}/pp`, detail: "Most flexible — split across crew" },
+    { id: "party-bus", name: "Party Bus", price: `~$${Math.round((200 * numDays) / groupSize)}/pp`, detail: "Golf shuttles + bar crawls covered" },
+    { id: "limo-service", name: "Limo Service", price: `~$${Math.round((300 * numDays) / groupSize)}/pp`, detail: "Premium transport for the crew" },
+    { id: "airport-shuttle", name: "Airport Shuttle", price: "~$25/pp", detail: "One-way airport transfer" },
+    { id: "none", name: "No Transport Needed", price: "$0", detail: "We have our own rides" },
+  ], [numDays, groupSize]);
+
+  // Transport cost per person
+  const transportCostPerPerson = useMemo(() => {
+    if (transport === "rental-car") return 50 * numDays;
+    if (transport === "party-bus") return Math.round((200 * numDays) / groupSize);
+    if (transport === "limo-service") return Math.round((300 * numDays) / groupSize);
+    if (transport === "airport-shuttle") return 25;
+    return 0; // "none"
+  }, [transport, numDays, groupSize]);
+
+  // Price per person: base + delta from courses + delta from lodging + transport
   const currentPricePerPerson = useMemo(() => {
     const courseDelta = currentCourseFeeTotal - defaultCourseFeeTotal;
     const lodgingDeltaPerNight = currentLodgingCost - defaultLodgingCost;
-    const lodgingDelta = (lodgingDeltaPerNight * numDays) / groupSize;
-    return Math.round(basePrice + courseDelta + lodgingDelta);
-  }, [basePrice, currentCourseFeeTotal, defaultCourseFeeTotal, currentLodgingCost, defaultLodgingCost, numDays, groupSize]);
+    const lodgingDelta = (lodgingDeltaPerNight * numNights) / groupSize;
+    return Math.round(basePrice + courseDelta + lodgingDelta + transportCostPerPerson);
+  }, [basePrice, currentCourseFeeTotal, defaultCourseFeeTotal, currentLodgingCost, defaultLodgingCost, numDays, groupSize, transportCostPerPerson]);
 
   const priceDelta = currentPricePerPerson - basePrice;
 
@@ -446,14 +488,16 @@ export default function TripBuilderClient({
     let cheapest = allDining[0];
     let bestRated = allDining[0];
     for (const d of allDining) {
-      if (parseDollars(d.price) > 0 && parseDollars(d.price) < (parseDollars(cheapest.price) || Infinity)) cheapest = d;
+      const cost = diningPricePerPerson(d.price);
+      const cheapCost = diningPricePerPerson(cheapest.price);
+      if (cost > 0 && cost < cheapCost) cheapest = d;
       if ((d.rating || 0) > (bestRated.rating || 0)) bestRated = d;
     }
 
     for (const d of allDining) {
       const t: Tag[] = [];
       if (d.recommended) t.push({ label: "TDF PICK", color: "red" });
-      if (d.id === cheapest.id && parseDollars(d.price) > 0) t.push({ label: "BUDGET PICK", color: "green" });
+      if (d.id === cheapest.id) t.push({ label: "BUDGET PICK", color: "green" });
       if (d.id === bestRated.id && (bestRated.rating || 0) > 0) t.push({ label: "BEST RATED", color: "gold" });
       if (t.length > 0) tags[d.id] = t;
     }
@@ -564,6 +608,18 @@ export default function TripBuilderClient({
           <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
             {allLodging.map((o) => (
               <OptionCard key={o.id} option={o} selected={lodging === o.id} onSelect={() => setLodging(o.id)} tags={lodgingTagMap[o.id]} />
+            ))}
+          </div>
+        </section>
+
+        {/* ── Transportation ── */}
+        <section style={{ marginBottom: "3rem" }}>
+          <h2 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1.5rem", textTransform: "uppercase", letterSpacing: "0.06em", color: "#fff", marginBottom: "1rem" }}>
+            Transportation
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+            {transportOptions.map((o) => (
+              <OptionCard key={o.id} option={o} selected={transport === o.id} onSelect={() => setTransport(o.id)} />
             ))}
           </div>
         </section>

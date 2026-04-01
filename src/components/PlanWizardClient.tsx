@@ -319,6 +319,8 @@ export default function PlanWizardClient() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
   const [overlayError, setOverlayError] = useState("");
+  const [overlayLimitReached, setOverlayLimitReached] = useState(false);
+  const [subscribing, setSubscribing] = useState(false);
   const [loadingMsg, setLoadingMsg] = useState(0);
   const [error, setError] = useState("");
   const isScrolling = useRef(false);
@@ -448,6 +450,11 @@ export default function PlanWizardClient() {
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
+        if (data.limitReached) {
+          setOverlayLimitReached(true);
+          setOverlayError(data.error || "You've used your free plan this month.");
+          return;
+        }
         throw new Error(data.error || "Failed to generate plan");
       }
 
@@ -471,21 +478,78 @@ export default function PlanWizardClient() {
           {overlayError ? (
             <motion.div key="error" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center gap-6">
               <Logo className="w-12 h-12 opacity-40" />
-              <p className="font-body text-red-400 text-base max-w-sm">{overlayError}</p>
-              <div className="flex flex-wrap gap-4 justify-center">
-                <button
-                  onClick={() => { setOverlayError(""); setIsGenerating(false); }}
-                  className="font-body text-sm text-text-muted underline py-3 px-4"
-                >
-                  Try again
-                </button>
-                <button
-                  onClick={() => { window.location.href = "/?skip=1"; }}
-                  className="font-body text-sm text-text-muted underline py-3 px-4"
-                >
-                  Go home
-                </button>
-              </div>
+              {overlayLimitReached ? (
+                <>
+                  <p className="font-body text-base max-w-sm" style={{ color: "rgba(255,255,255,0.6)" }}>
+                    You&apos;ve used your free plan this month.
+                  </p>
+                  <button
+                    onClick={async () => {
+                      setSubscribing(true);
+                      try {
+                        const res = await fetch("/api/subscribe", {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({ returnUrl: window.location.href }),
+                        });
+                        const data = await res.json();
+                        if (data.url) {
+                          window.location.href = data.url;
+                        } else {
+                          setOverlayError(data.error || "Failed to start checkout.");
+                          setOverlayLimitReached(false);
+                        }
+                      } catch {
+                        setOverlayError("Something went wrong. Try again.");
+                        setOverlayLimitReached(false);
+                      } finally {
+                        setSubscribing(false);
+                      }
+                    }}
+                    disabled={subscribing}
+                    style={{
+                      padding: "12px 28px",
+                      fontSize: "0.9rem",
+                      fontWeight: 600,
+                      fontFamily: "var(--font-inter), sans-serif",
+                      background: "rgba(180,130,40,0.15)",
+                      border: "1px solid rgba(180,130,40,0.35)",
+                      borderRadius: 8,
+                      color: "rgba(212,168,67,0.9)",
+                      cursor: subscribing ? "wait" : "pointer",
+                      transition: "all 0.2s",
+                      letterSpacing: "0.02em",
+                    }}
+                  >
+                    {subscribing ? "Loading..." : "Go VIP \u2014 $19.99/mo for unlimited plans"}
+                  </button>
+                  <button
+                    onClick={() => { window.location.href = "/?skip=1"; }}
+                    className="font-body text-sm text-text-muted underline py-2 px-4"
+                    style={{ opacity: 0.5 }}
+                  >
+                    Go home
+                  </button>
+                </>
+              ) : (
+                <>
+                  <p className="font-body text-red-400 text-base max-w-sm">{overlayError}</p>
+                  <div className="flex flex-wrap gap-4 justify-center">
+                    <button
+                      onClick={() => { setOverlayError(""); setIsGenerating(false); }}
+                      className="font-body text-sm text-text-muted underline py-3 px-4"
+                    >
+                      Try again
+                    </button>
+                    <button
+                      onClick={() => { window.location.href = "/?skip=1"; }}
+                      className="font-body text-sm text-text-muted underline py-3 px-4"
+                    >
+                      Go home
+                    </button>
+                  </div>
+                </>
+              )}
             </motion.div>
           ) : confirmed ? (
             <motion.div

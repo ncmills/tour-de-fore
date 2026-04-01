@@ -5,7 +5,7 @@ import { getSessionEmail } from "@/lib/auth";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "sk_test_placeholder");
 
 /**
- * Creates a Stripe Checkout session for the $199/year "Become a Devil" subscription.
+ * Creates a Stripe Checkout session for the $19.99/month VIP subscription.
  */
 export async function POST(req: NextRequest) {
   try {
@@ -26,11 +26,11 @@ export async function POST(req: NextRequest) {
           price_data: {
             currency: "usd",
             product_data: {
-              name: "Tour de Fore — Devil Membership",
-              description: "Unlimited trip plans with full venue names, booking links, and detailed itineraries for 1 year.",
+              name: "Tour de Fore — VIP Membership",
+              description: "Unlimited trip plans with full venue names, booking links, and detailed itineraries every month.",
             },
-            unit_amount: 19900, // $199
-            recurring: { interval: "year" },
+            unit_amount: 1999, // $19.99
+            recurring: { interval: "month" },
           },
           quantity: 1,
         },

@@ -22,12 +22,13 @@ interface AccountStatus {
   plansUsed: number;
   plansLimit: number;
   unlimited: boolean;
+  subscribed?: boolean;
 }
 
 export default function MyTripsClient({
   email: initialEmail,
   name: initialName,
-  plannedTrips,
+  plannedTrips: initialTrips,
 }: {
   email: string;
   name: string;
@@ -37,6 +38,13 @@ export default function MyTripsClient({
   const [editingName, setEditingName] = useState(false);
   const [savingName, setSavingName] = useState(false);
   const [email, setEmail] = useState(initialEmail);
+
+  // Trips (mutable for deletion)
+  const [trips, setTrips] = useState(initialTrips);
+
+  // Delete modal state
+  const [deletingTripId, setDeletingTripId] = useState<string | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   // Change email state
   const [showEmailForm, setShowEmailForm] = useState(false);
@@ -57,7 +65,7 @@ export default function MyTripsClient({
   // Trip names (editable)
   const [tripNames, setTripNames] = useState<Record<string, string>>(() => {
     const map: Record<string, string> = {};
-    plannedTrips.forEach((t) => {
+    initialTrips.forEach((t) => {
       map[t.id] = t.tripName || `${t.city}${t.state ? `, ${t.state}` : ""} Trip`;
     });
     return map;
@@ -177,13 +185,50 @@ export default function MyTripsClient({
     setPasswordSaving(false);
   };
 
+  const handleDeleteTrip = async () => {
+    if (!deletingTripId) return;
+    setDeleteLoading(true);
+    try {
+      const res = await fetch(`/api/plans/${deletingTripId}`, { method: "DELETE" });
+      if (res.ok) {
+        setTrips((prev) => prev.filter((t) => t.id !== deletingTripId));
+        const updated = { ...tripNames };
+        delete updated[deletingTripId];
+        setTripNames(updated);
+      }
+    } catch {
+      // silently fail
+    }
+    setDeleteLoading(false);
+    setDeletingTripId(null);
+  };
+
+  const isVip = accountStatus?.unlimited || accountStatus?.subscribed;
+
   const remaining = accountStatus
-    ? accountStatus.unlimited
+    ? isVip
       ? null
       : accountStatus.plansLimit - accountStatus.plansUsed
     : null;
 
   const canPlan = accountStatus?.canPlan ?? true;
+
+  const [upgrading, setUpgrading] = useState(false);
+  const handleUpgrade = async () => {
+    setUpgrading(true);
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ returnUrl: window.location.href }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch { /* ignore */ }
+    setUpgrading(false);
+  };
 
   // ── Styles ──
   const inputStyle: React.CSSProperties = {
@@ -408,13 +453,13 @@ export default function MyTripsClient({
               marginBottom: "1.5rem",
               padding: "0.85rem 1.25rem",
               borderRadius: 10,
-              background: accountStatus.unlimited
+              background: isVip
                 ? "rgba(212,168,67,0.08)"
                 : canPlan
                   ? "rgba(74,222,128,0.06)"
                   : "rgba(220,38,38,0.06)",
               border: `1px solid ${
-                accountStatus.unlimited
+                isVip
                   ? "rgba(212,168,67,0.25)"
                   : canPlan
                     ? "rgba(74,222,128,0.2)"
@@ -432,7 +477,7 @@ export default function MyTripsClient({
                 width: 8,
                 height: 8,
                 borderRadius: "50%",
-                background: accountStatus.unlimited
+                background: isVip
                   ? "rgba(212,168,67,0.8)"
                   : canPlan
                     ? "rgba(74,222,128,0.8)"
@@ -441,14 +486,14 @@ export default function MyTripsClient({
                 flexShrink: 0,
               }} />
               <span style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-inter), sans-serif" }}>
-                {accountStatus.unlimited
+                {isVip
                   ? "Unlimited plans"
                   : canPlan
                     ? `You can plan ${remaining} more trip${remaining !== 1 ? "s" : ""} this month`
                     : "You've reached your plan limit this month"}
               </span>
             </div>
-            {accountStatus.unlimited && (
+            {isVip ? (
               <span style={{
                 fontSize: "0.6rem",
                 fontWeight: 700,
@@ -462,6 +507,26 @@ export default function MyTripsClient({
               }}>
                 VIP
               </span>
+            ) : !canPlan && (
+              <button
+                onClick={handleUpgrade}
+                disabled={upgrading}
+                style={{
+                  fontSize: "0.75rem",
+                  fontWeight: 600,
+                  color: "rgba(212,168,67,0.7)",
+                  background: "none",
+                  border: "none",
+                  cursor: upgrading ? "wait" : "pointer",
+                  fontFamily: "var(--font-inter), sans-serif",
+                  textDecoration: "underline",
+                  textUnderlineOffset: "2px",
+                  padding: 0,
+                  transition: "color 0.15s",
+                }}
+              >
+                {upgrading ? "..." : "Upgrade"}
+              </button>
             )}
           </motion.div>
         )}
@@ -524,7 +589,7 @@ export default function MyTripsClient({
             )}
           </h2>
 
-          {plannedTrips.length === 0 ? (
+          {trips.length === 0 ? (
             <div style={{
               textAlign: "center",
               padding: "3rem 2rem",
@@ -541,7 +606,7 @@ export default function MyTripsClient({
             </div>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-              {plannedTrips.map((trip, i) => {
+              {trips.map((trip, i) => {
                 const isEditing = editingTripId === trip.id;
                 const tripName = tripNames[trip.id] || `${trip.city}${trip.state ? `, ${trip.state}` : ""} Trip`;
 
@@ -623,6 +688,25 @@ export default function MyTripsClient({
                           >
                             View &rarr;
                           </Link>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); setDeletingTripId(trip.id); }}
+                            title="Delete trip"
+                            style={{
+                              background: "none",
+                              border: "1px solid rgba(255,255,255,0.08)",
+                              borderRadius: 6,
+                              color: "rgba(255,255,255,0.25)",
+                              cursor: "pointer",
+                              padding: "4px 7px",
+                              fontSize: "0.8rem",
+                              lineHeight: 1,
+                              transition: "all 0.15s",
+                            }}
+                            onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(220,38,38,0.5)"; e.currentTarget.style.color = "rgba(220,38,38,0.8)"; }}
+                            onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; e.currentTarget.style.color = "rgba(255,255,255,0.25)"; }}
+                          >
+                            &#128465;
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -633,6 +717,77 @@ export default function MyTripsClient({
           )}
         </motion.section>
       </div>
+
+      {/* ── Delete Confirmation Modal ── */}
+      {deletingTripId && (
+        <div
+          onClick={() => { if (!deleteLoading) setDeletingTripId(null); }}
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.75)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 9999,
+            padding: "1rem",
+          }}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: "#111",
+              border: "1px solid rgba(255,255,255,0.12)",
+              borderRadius: 14,
+              padding: "2rem",
+              maxWidth: 420,
+              width: "100%",
+              textAlign: "center",
+            }}
+          >
+            <div style={{ fontSize: "2rem", marginBottom: "0.75rem" }}>&#9888;&#65039;</div>
+            <h3 style={{ fontFamily: "var(--font-inter), sans-serif", fontSize: "1.1rem", fontWeight: 600, marginBottom: "0.75rem" }}>
+              Delete this trip?
+            </h3>
+            <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.85rem", lineHeight: 1.5, fontFamily: "var(--font-inter), sans-serif", marginBottom: "1.5rem" }}>
+              Deleting this trip will NOT reset your monthly plan limit. You will not be able to plan another trip this month.
+            </p>
+            <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center" }}>
+              <button
+                onClick={() => setDeletingTripId(null)}
+                disabled={deleteLoading}
+                style={{
+                  ...smallBtnStyle,
+                  padding: "10px 20px",
+                  fontSize: "0.85rem",
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDeleteTrip}
+                disabled={deleteLoading}
+                style={{
+                  padding: "10px 20px",
+                  fontSize: "0.85rem",
+                  fontWeight: 600,
+                  border: "1px solid rgba(220,38,38,0.6)",
+                  borderRadius: 6,
+                  background: "rgba(220,38,38,0.85)",
+                  color: "#fff",
+                  cursor: deleteLoading ? "wait" : "pointer",
+                  fontFamily: "var(--font-inter), sans-serif",
+                  transition: "all 0.15s",
+                }}
+              >
+                {deleteLoading ? "Deleting..." : "Delete Trip"}
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </main>
   );
 }

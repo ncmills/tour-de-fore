@@ -52,17 +52,54 @@ export async function POST(req: NextRequest) {
       try {
         const customerEmail = session.customer_details?.email || "";
 
-        // Fetch full session via raw API (SDK doesn't return collected_information)
+        // Fetch full session with expand to get shipping details
         const stripeKey = (process.env.STRIPE_SECRET_KEY || "").trim();
-        const rawRes = await fetch(`https://api.stripe.com/v1/checkout/sessions/${session.id}`, {
-          headers: { Authorization: `Basic ${Buffer.from(stripeKey + ":").toString("base64")}` },
-        });
+        const rawRes = await fetch(
+          `https://api.stripe.com/v1/checkout/sessions/${session.id}?expand[]=collected_information&expand[]=shipping_details`,
+          {
+            headers: {
+              Authorization: `Basic ${Buffer.from(stripeKey + ":").toString("base64")}`,
+              "Stripe-Version": "2025-03-31.basil",
+            },
+          }
+        );
         const rawSession = await rawRes.json();
-        const shipping = (rawSession.collected_information?.shipping_details || rawSession.shipping_details || rawSession.shipping) as { name?: string; address?: { line1?: string; line2?: string; city?: string; state?: string; country?: string; postal_code?: string } } | undefined;
+        const shipping = (
+          rawSession.collected_information?.shipping_details ||
+          rawSession.shipping_details ||
+          rawSession.shipping ||
+          rawSession.customer_details?.address
+        ) as { name?: string; address?: { line1?: string; line2?: string; city?: string; state?: string; country?: string; postal_code?: string } } | undefined;
         const itemsJson = session.metadata?.items || rawSession.metadata?.items;
 
         if (!shipping?.address) {
-          console.error("Shop order webhook: no shipping address found on session", session.id, "rawSession keys:", Object.keys(rawSession).join(","));
+          console.error("Shop order webhook: no shipping address found on session", session.id, "rawSession keys:", Object.keys(rawSession).join(","), "collected_information:", JSON.stringify(rawSession.collected_information));
+
+          // Still store the order so paid orders don't silently disappear
+          if (itemsJson) {
+            const orderId = session.id;
+            try {
+              const rawItems = JSON.parse(itemsJson) as ({ syncVariantId?: number; quantity?: number; productId?: string; color?: string; size?: string; s?: number; q?: number; p?: string; c?: string; z?: string })[];
+              const items = rawItems.map(i => ({
+                productId: i.productId ?? i.p ?? "",
+                color: i.color ?? i.c ?? "",
+                size: i.size ?? i.z,
+                quantity: i.quantity ?? i.q ?? 1,
+              }));
+              await storeOrder({
+                id: orderId,
+                email: customerEmail,
+                items,
+                stripeSessionId: session.id,
+                printfulOrderId: null,
+                status: "needs_attention",
+                createdAt: new Date().toISOString(),
+              });
+              console.error(`Shop order ${orderId} stored with status needs_attention — missing shipping address`);
+            } catch (storeErr) {
+              console.error("Failed to store needs_attention order:", storeErr);
+            }
+          }
         }
 
         if (shipping?.address && itemsJson) {
@@ -98,6 +135,21 @@ export async function POST(req: NextRequest) {
           }
 
           console.log("Printful result:", printfulResult ? `ID ${printfulResult.id} Status ${printfulResult.status}` : "FAILED (null)");
+
+          // Alert email if Printful creation failed
+          if (!printfulResult && process.env.RESEND_API_KEY) {
+            try {
+              const resendAlert = new Resend(process.env.RESEND_API_KEY);
+              await resendAlert.emails.send({
+                from: "Tour de Fore <noreply@tourdefore.com>",
+                to: "info@tourdefore.com",
+                subject: "ALERT: Printful order creation failed",
+                html: `<p>A shop order was paid but Printful order creation failed.</p><p><strong>Session ID:</strong> ${session.id}</p><p><strong>Customer email:</strong> ${customerEmail || "unknown"}</p><p>Check logs and retry manually.</p>`,
+              });
+            } catch (alertErr) {
+              console.error("Printful failure alert email failed:", alertErr);
+            }
+          }
 
           // Store order in Redis (use session ID for idempotency)
           const orderId = session.id;
@@ -177,7 +229,7 @@ export async function POST(req: NextRequest) {
     if (email && session.subscription) {
       const subId = typeof session.subscription === "string" ? session.subscription : session.subscription.id;
       const expiresAt = new Date();
-      expiresAt.setFullYear(expiresAt.getFullYear() + 1);
+      expiresAt.setMonth(expiresAt.getMonth() + 1);
       await setSubscription(email, subId, expiresAt);
       console.log(`Subscription activated for ${email} (${subId})`);
     }
@@ -192,7 +244,7 @@ export async function POST(req: NextRequest) {
     const subId = typeof rawSub === "string" ? rawSub : rawSub?.id;
     if (email && subId) {
       const expiresAt = new Date();
-      expiresAt.setFullYear(expiresAt.getFullYear() + 1);
+      expiresAt.setMonth(expiresAt.getMonth() + 1);
       await setSubscription(email, subId, expiresAt);
       console.log(`Subscription renewed for ${email}`);
     }

@@ -23,6 +23,7 @@ import {
   canGenerateFreePlan,
   recordFreePlanGeneration,
   addPlanToUser,
+  isSubscribed,
 } from "@/lib/auth";
 
 async function generatePlansForDestination(
@@ -68,12 +69,15 @@ export async function POST(req: NextRequest) {
     const UNLIMITED_EMAILS = ["nicholauscmills@gmail.com"];
 
     if (email && !UNLIMITED_EMAILS.includes(email)) {
-      const canGenerate = await canGenerateFreePlan(email);
-      if (!canGenerate) {
-        return NextResponse.json({
-          error: "You've used your free plan this month. Check back next month!",
-          limitReached: true,
-        }, { status: 429 });
+      const subscribed = await isSubscribed(email);
+      if (!subscribed) {
+        const canGenerate = await canGenerateFreePlan(email);
+        if (!canGenerate) {
+          return NextResponse.json({
+            error: "You've used your free plan this month. Check back next month!",
+            limitReached: true,
+          }, { status: 429 });
+        }
       }
     }
 
