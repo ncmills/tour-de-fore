@@ -21,6 +21,11 @@ export async function generateMetadata({ params }: Props) {
     title: `${label} Golf Courses Across America | Tour de Fore`,
     description: `Browse all ${label.toLowerCase()} tier golf courses in our database of 133+ destinations. Find the perfect course for your next group golf trip.`,
     alternates: { canonical: `https://tourdefore.com/golf-trips/courses/${tier}` },
+    openGraph: {
+      title: `${label} Golf Courses Across America | Tour de Fore`,
+      description: `Browse all ${label.toLowerCase()} tier golf courses in our database of 133+ destinations.`,
+      images: ["/icon-fancy.png"],
+    },
   };
 }
 
@@ -51,6 +56,7 @@ export default async function TierCoursesPage({ params }: Props) {
         </h1>
         <p style={{ color: "rgba(255,255,255,0.4)", marginBottom: "3rem" }}>{courses.length} courses across America</p>
 
+        <h2 style={{ fontSize: 0, width: 0, height: 0, overflow: "hidden", position: "absolute" }}>Browse {label} Courses by Tier</h2>
         <div style={{ display: "flex", gap: "0.5rem", marginBottom: "2rem", flexWrap: "wrap" }}>
           {TIERS.map((t) => (
             <Link key={t} href={`/golf-trips/courses/${t}`} style={{ padding: "6px 16px", borderRadius: 4, fontSize: "0.75rem", fontWeight: 600, textDecoration: "none", background: tier === t ? tierColor(t) : "rgba(255,255,255,0.05)", color: tier === t ? "#fff" : "rgba(255,255,255,0.4)", border: tier === t ? "none" : "1px solid rgba(255,255,255,0.1)" }}>

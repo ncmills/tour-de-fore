@@ -29,12 +29,14 @@ export async function rateLimit(
 }
 
 /**
- * Get client IP from request headers (works behind Vercel/Cloudflare)
+ * Get client IP from request headers (works behind Vercel/Cloudflare).
+ * Prefer Vercel's trusted header over spoofable x-forwarded-for.
  */
 export function getClientIp(req: Request): string {
   return (
-    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("x-vercel-forwarded-for")?.split(",")[0]?.trim() ||
     req.headers.get("x-real-ip") ||
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
     "unknown"
   );
 }

@@ -203,23 +203,27 @@ interface PrintfulRecipient {
 }
 
 // Check if a Printful order already exists with a given external_id
+// Returns { id, status } if found, null if confirmed not found, throws on network error
 export async function checkPrintfulOrderExists(externalId: string): Promise<{ id: number; status: string } | null> {
   if (!PRINTFUL_TOKEN) return null;
 
-  try {
-    const res = await fetch(`${PRINTFUL_API}/orders/@${externalId}`, {
-      headers: { Authorization: `Bearer ${PRINTFUL_TOKEN}` },
-    });
-    if (res.ok) {
-      const data = await res.json();
-      if (data.result?.id) {
-        return { id: data.result.id, status: data.result.status };
-      }
+  const res = await fetch(`${PRINTFUL_API}/orders/@${externalId}`, {
+    headers: { Authorization: `Bearer ${PRINTFUL_TOKEN}` },
+    signal: AbortSignal.timeout(8000),
+  });
+
+  if (res.ok) {
+    const data = await res.json();
+    if (data.result?.id) {
+      return { id: data.result.id, status: data.result.status };
     }
-  } catch {
-    // Not found or API error — safe to proceed
   }
-  return null;
+
+  // 404 means order truly doesn't exist — safe to create
+  if (res.status === 404) return null;
+
+  // Any other error (500, 429, network) — throw so caller can decide to retry or halt
+  throw new Error(`Printful order check failed for ${externalId}: ${res.status}`);
 }
 
 export async function createPrintfulOrder(
@@ -230,6 +234,21 @@ export async function createPrintfulOrder(
   if (!PRINTFUL_TOKEN) {
     console.error("PRINTFUL_API_TOKEN not set");
     return null;
+  }
+
+  // Distributed lock: prevent concurrent creation of the same order
+  if (externalId) {
+    const { getRedis } = await import("./redis");
+    const redis = getRedis();
+    const lockKey = `order-lock:${externalId}`;
+    const acquired = await redis.set(lockKey, "1", "EX", 60, "NX");
+    if (!acquired) {
+      // Another process is creating this order — check if it exists
+      const existing = await checkPrintfulOrderExists(externalId);
+      if (existing) return existing;
+      console.log(`Order lock held for ${externalId} but order not yet in Printful — skipping`);
+      return null;
+    }
   }
 
   // Dedup: check if this order already exists in Printful

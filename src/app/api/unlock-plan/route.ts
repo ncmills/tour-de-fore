@@ -90,13 +90,18 @@ export async function PUT(req: NextRequest) {
 
     // Verify payment — check if webhook marked it as paid, or verify with Stripe
     if (!stored.paid) {
-      // Give webhook a moment to process, then check Stripe directly
-      const sessions = await stripe.checkout.sessions.list({
-        limit: 5,
-      });
-      const paidSession = sessions.data.find(
-        (s) => s.metadata?.planId === planId && s.payment_status === "paid"
-      );
+      // Retry a few times to give webhook time to process
+      let paidSession: Stripe.Checkout.Session | undefined;
+      for (let attempt = 0; attempt < 3; attempt++) {
+        const sessions = await stripe.checkout.sessions.list({
+          limit: 20,
+        });
+        paidSession = sessions.data.find(
+          (s) => s.metadata?.planId === planId && s.payment_status === "paid"
+        );
+        if (paidSession) break;
+        if (attempt < 2) await new Promise((r) => setTimeout(r, 1500));
+      }
       if (!paidSession) {
         return NextResponse.json({ error: "Payment not verified" }, { status: 402 });
       }

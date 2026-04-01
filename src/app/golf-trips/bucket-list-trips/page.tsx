@@ -8,6 +8,11 @@ export const metadata = {
   title: "Bucket List Golf Trips — Top Courses in America | Tour de Fore",
   description: "Play the best courses in America. Destinations with bucket-list tier golf courses, top 100 public courses, and tournament hosts.",
   alternates: { canonical: "https://tourdefore.com/golf-trips/bucket-list-trips" },
+  openGraph: {
+    title: "Bucket List Golf Trips — Top Courses in America | Tour de Fore",
+    description: "Play the best courses in America. Destinations with bucket-list tier golf courses, top 100 public courses, and tournament hosts.",
+    images: ["/icon-fancy.png"],
+  },
 };
 
 export default function BucketListPage() {
@@ -29,6 +34,7 @@ export default function BucketListPage() {
         </h1>
         <p style={{ color: "rgba(255,255,255,0.4)", marginBottom: "3rem" }}>Destinations with the most elite courses in America. {bucketDests.length} destinations.</p>
 
+        <h2 style={{ fontSize: "1.1rem", fontWeight: 600, marginBottom: "1rem", color: "rgba(255,255,255,0.6)" }}>Destinations with Bucket List Courses</h2>
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
           {bucketDests.map(({ dest: d, bucketCourses }) => (
             <div key={d.id} style={{ background: "#111", border: "1px solid #222", borderRadius: 12, padding: "1.5rem" }}>

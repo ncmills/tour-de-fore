@@ -26,6 +26,17 @@ export async function POST(req: NextRequest) {
 
   console.log("Webhook received:", event.type, event.id);
 
+  // Idempotency: skip already-processed events
+  const { getRedis } = await import("@/lib/redis");
+  const redis = getRedis();
+  const idempotencyKey = `webhook:processed:${event.id}`;
+  const alreadyProcessed = await redis.get(idempotencyKey);
+  if (alreadyProcessed) {
+    console.log("Webhook already processed:", event.id);
+    return NextResponse.json({ received: true });
+  }
+  await redis.set(idempotencyKey, "1", "EX", 60 * 60 * 48); // 48h TTL
+
   // Handle checkout completion (one-time plan purchases — legacy)
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
@@ -97,6 +108,24 @@ export async function POST(req: NextRequest) {
                 createdAt: new Date().toISOString(),
               });
               console.error(`Shop order ${orderId} stored with status needs_attention — missing shipping address`);
+
+              // Notify customer about the issue
+              if (customerEmail && process.env.RESEND_API_KEY) {
+                try {
+                  const resendNotify = new Resend(process.env.RESEND_API_KEY);
+                  await resendNotify.emails.send({
+                    from: "Tour de Fore <noreply@tourdefore.com>",
+                    to: customerEmail,
+                    subject: "Action Needed: Your TDF Pro Shop Order",
+                    html: `
+                      <div style="font-family: -apple-system, sans-serif; max-width: 520px; margin: 0 auto; padding: 40px 30px; text-align: center;">
+                        <h1 style="font-size: 22px; color: #c87941;">Tour de Fore</h1>
+                        <p style="color: #555; line-height: 1.6;">We received your payment but couldn't find a shipping address for your order. Please reply to this email or contact us at <a href="mailto:info@tourdefore.com" style="color: #c87941;">info@tourdefore.com</a> with your shipping address so we can get your gear on its way.</p>
+                      </div>
+                    `,
+                  });
+                } catch { /* non-critical */ }
+              }
             } catch (storeErr) {
               console.error("Failed to store needs_attention order:", storeErr);
             }
@@ -121,10 +150,25 @@ export async function POST(req: NextRequest) {
             }
           }
 
-          // Filter out items with unresolved variant IDs
+          // Check for unresolved variant IDs — don't partially fulfill
           const validItems = items.filter((i) => i.syncVariantId && i.syncVariantId > 0);
           if (validItems.length < items.length) {
-            console.error(`Webhook: ${items.length - validItems.length} item(s) had unresolved syncVariantId — skipped`);
+            const droppedCount = items.length - validItems.length;
+            console.error(`Webhook: ${droppedCount} item(s) had unresolved syncVariantId`);
+
+            // Alert admin about dropped items
+            if (process.env.RESEND_API_KEY) {
+              try {
+                const resendDrop = new Resend(process.env.RESEND_API_KEY);
+                const droppedItems = items.filter((i) => !i.syncVariantId || i.syncVariantId <= 0);
+                await resendDrop.emails.send({
+                  from: "Tour de Fore <noreply@tourdefore.com>",
+                  to: "info@tourdefore.com",
+                  subject: `ALERT: ${droppedCount} item(s) dropped from order — variant not found`,
+                  html: `<p>Customer paid for items but variant IDs could not be resolved.</p><p><strong>Session:</strong> ${session.id}</p><p><strong>Customer:</strong> ${customerEmail}</p><p><strong>Dropped items:</strong></p><pre>${JSON.stringify(droppedItems, null, 2)}</pre><p>Manually fulfill or refund these items.</p>`,
+                });
+              } catch { /* non-critical */ }
+            }
           }
 
           // Create Printful order
@@ -240,18 +284,27 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Subscription payment
+    // Subscription payment — use Stripe's actual period end
     const email = session.metadata?.email || session.customer_email;
     if (email && session.subscription) {
       const subId = typeof session.subscription === "string" ? session.subscription : session.subscription.id;
-      const expiresAt = new Date();
-      expiresAt.setMonth(expiresAt.getMonth() + 1);
-      await setSubscription(email, subId, expiresAt);
-      console.log(`Subscription activated for ${email} (${subId})`);
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const sub = await stripe.subscriptions.retrieve(subId) as any;
+        const expiresAt = new Date((sub.current_period_end ?? sub.data?.current_period_end) * 1000);
+        await setSubscription(email, subId, expiresAt);
+        console.log(`Subscription activated for ${email} (${subId}) until ${expiresAt.toISOString()}`);
+      } catch {
+        // Fallback if subscription retrieval fails
+        const expiresAt = new Date();
+        expiresAt.setMonth(expiresAt.getMonth() + 1);
+        await setSubscription(email, subId, expiresAt);
+        console.log(`Subscription activated for ${email} (${subId}) with fallback expiry`);
+      }
     }
   }
 
-  // Handle subscription renewal
+  // Handle subscription renewal — use invoice period end
   if (event.type === "invoice.paid") {
     const invoice = event.data.object as Stripe.Invoice;
     const email = invoice.customer_email;
@@ -259,10 +312,12 @@ export async function POST(req: NextRequest) {
     const rawSub = (invoice as any).subscription;
     const subId = typeof rawSub === "string" ? rawSub : rawSub?.id;
     if (email && subId) {
-      const expiresAt = new Date();
-      expiresAt.setMonth(expiresAt.getMonth() + 1);
+      // Use invoice line item period end for accurate expiry
+      const periodEnd = invoice.lines?.data?.[0]?.period?.end;
+      const expiresAt = periodEnd ? new Date(periodEnd * 1000) : new Date();
+      if (!periodEnd) expiresAt.setMonth(expiresAt.getMonth() + 1);
       await setSubscription(email, subId, expiresAt);
-      console.log(`Subscription renewed for ${email}`);
+      console.log(`Subscription renewed for ${email} until ${expiresAt.toISOString()}`);
     }
   }
 

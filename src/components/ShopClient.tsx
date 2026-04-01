@@ -170,18 +170,18 @@ export default function ShopClient() {
                 You&rsquo;re on the list. We&rsquo;ll be in touch.
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} className="flex gap-3 max-w-md mx-auto">
+              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
                 <input
                   type="email"
                   placeholder="your@email.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="flex-1 bg-bg border border-border rounded-lg px-5 py-3.5 text-text font-body text-sm placeholder:text-text-dim focus:border-accent focus:outline-none transition-colors"
+                  className="flex-1 min-w-0 bg-bg border border-border rounded-lg px-5 py-3.5 text-text font-body text-sm placeholder:text-text-dim focus:border-accent focus:outline-none transition-colors"
                 />
                 <button
                   type="submit"
-                  className="btn-primary px-6 py-3.5 whitespace-nowrap"
+                  className="btn-primary px-6 py-3.5 whitespace-nowrap flex-shrink-0"
                 >
                   Notify Me
                 </button>

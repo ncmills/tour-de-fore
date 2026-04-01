@@ -14,6 +14,27 @@ export async function POST(req: Request) {
     }
 
     await setPassword(email, password);
+
+    // Send confirmation email
+    if (process.env.RESEND_API_KEY) {
+      try {
+        const { Resend } = await import("resend");
+        const resend = new Resend(process.env.RESEND_API_KEY);
+        await resend.emails.send({
+          from: "Tour de Fore <noreply@tourdefore.com>",
+          to: email,
+          subject: "Your Password Was Changed",
+          html: `
+            <div style="font-family: -apple-system, sans-serif; max-width: 500px; margin: 0 auto; padding: 40px 30px; text-align: center;">
+              <h1 style="font-size: 24px; font-weight: 300; color: #c87941; margin: 0 0 24px;">Tour de Fore</h1>
+              <p style="color: #555; margin-bottom: 16px;">Your password was successfully changed.</p>
+              <p style="color: #999; font-size: 13px;">If you didn't make this change, contact us immediately at <a href="mailto:info@tourdefore.com" style="color: #c87941;">info@tourdefore.com</a>.</p>
+            </div>
+          `,
+        });
+      } catch { /* non-critical */ }
+    }
+
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("Set password error:", err);

@@ -7,9 +7,15 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "sk_test_placeholder"
 });
 
 function parseBudgetToNumber(budget: string): number {
-  // Extract first number from strings like "$1,200-$1,800"
-  const match = budget.replace(/,/g, "").match(/\d+/);
-  return match ? parseInt(match[0]) : 1000;
+  // Extract numbers from strings like "$1,200-$1,800" and use midpoint
+  const cleaned = budget.replace(/,/g, "");
+  const matches = cleaned.match(/\d+/g);
+  if (!matches || matches.length === 0) return 1000;
+  if (matches.length === 1) return parseInt(matches[0]);
+  // Use midpoint of range
+  const low = parseInt(matches[0]);
+  const high = parseInt(matches[1]);
+  return Math.round((low + high) / 2);
 }
 
 export async function POST(req: NextRequest) {

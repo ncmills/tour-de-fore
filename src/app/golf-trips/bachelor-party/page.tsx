@@ -7,6 +7,11 @@ export const metadata = {
   title: "Bachelor Party Golf Trips — Best Destinations | Tour de Fore",
   description: "Plan the ultimate bachelor party golf trip. Top destinations with the best nightlife, courses, and group-friendly lodging.",
   alternates: { canonical: "https://tourdefore.com/golf-trips/bachelor-party" },
+  openGraph: {
+    title: "Bachelor Party Golf Trips — Best Destinations | Tour de Fore",
+    description: "Plan the ultimate bachelor party golf trip. Top destinations with the best nightlife, courses, and group-friendly lodging.",
+    images: ["/icon-fancy.png"],
+  },
 };
 
 export default function BachelorPartyPage() {
@@ -29,6 +34,7 @@ export default function BachelorPartyPage() {
         </h1>
         <p style={{ color: "rgba(255,255,255,0.4)", marginBottom: "3rem" }}>Top destinations with the best nightlife, courses, and group vibes.</p>
 
+        <h2 style={{ fontSize: "1.1rem", fontWeight: 600, marginBottom: "1rem", color: "rgba(255,255,255,0.6)" }}>Top {ranked.length} Bachelor Party Destinations</h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(300px, 100%), 1fr))", gap: "1rem" }}>
           {ranked.map(({ dest: d }, i) => (
             <Link key={d.id} href={`/golf-trips/${d.id}`} style={{ display: "block", padding: "1.25rem", background: "#111", border: "1px solid #222", borderRadius: 10, textDecoration: "none", color: "#fff" }}>

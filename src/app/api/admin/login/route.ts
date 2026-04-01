@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSession } from "@/lib/auth";
 
-const ADMIN_SECRET = process.env.ADMIN_SECRET || "tdf-admin-2026";
+const ADMIN_SECRET = process.env.ADMIN_SECRET;
 
 /**
  * Admin login — creates a session for any email without magic link.
@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
   const email = req.nextUrl.searchParams.get("email");
   const secret = req.nextUrl.searchParams.get("secret");
 
-  if (secret !== ADMIN_SECRET || !email) {
+  if (!ADMIN_SECRET || secret !== ADMIN_SECRET || !email) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
   response.cookies.set("tdf-session", sessionId, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    sameSite: "strict",
     maxAge: 60 * 60 * 24 * 30,
     path: "/",
   });

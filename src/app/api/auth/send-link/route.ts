@@ -1,12 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { createMagicToken } from "@/lib/auth";
+import { rateLimit } from "@/lib/rate-limit";
 
 export async function POST(req: NextRequest) {
   try {
     const { email, returnTo, wizardState } = await req.json();
     if (!email || !email.includes("@")) {
       return NextResponse.json({ error: "Valid email required" }, { status: 400 });
+    }
+
+    // Rate limit: 3 magic links per email per 15 minutes
+    const normalizedEmail = email.toLowerCase().trim();
+    const rl = await rateLimit(`magic:${normalizedEmail}`, 3, 900);
+    if (!rl.allowed) {
+      return NextResponse.json({ error: "Too many login attempts. Try again in a few minutes." }, { status: 429 });
     }
 
     const token = await createMagicToken(email, wizardState);

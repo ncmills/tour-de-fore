@@ -31,6 +31,11 @@ export async function generateMetadata({ params }: Props) {
     title: `Golf Trips with ${label} — Best Destinations | Tour de Fore`,
     description: `Find the best golf trip destinations that offer ${label.toLowerCase()}. Plan a group golf getaway with ${label.toLowerCase()} included.`,
     alternates: { canonical: `https://tourdefore.com/golf-trips/activities/${type}` },
+    openGraph: {
+      title: `Golf Trips with ${label} — Best Destinations | Tour de Fore`,
+      description: `Find the best golf trip destinations that offer ${label.toLowerCase()}.`,
+      images: ["/icon-fancy.png"],
+    },
   };
 }
 

@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { getPlan } from "@/lib/kv";
-import { getSessionEmail } from "@/lib/auth";
+import { getSessionEmail, getUserPlans } from "@/lib/auth";
 import PlanResultClient from "@/components/PlanResultClient";
 import PlanSelectionClient from "@/components/PlanSelectionClient";
 import PlanGate from "@/components/PlanGate";
@@ -67,6 +67,12 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
     );
   }
 
+  // Verify plan ownership — organizer or plan is in user's plans
+  const isOrganizer = stored.inputs?.organizerEmail?.toLowerCase() === sessionEmail?.toLowerCase();
+  const userPlans = sessionEmail ? await getUserPlans(sessionEmail) : [];
+  const ownsThisPlan = isOrganizer || userPlans.includes(id);
+  const isPaid = stored.paid && ownsThisPlan;
+
   // No dest: show destination cards
   if (!dest) {
     return (
@@ -74,9 +80,9 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
         <PlanSelectionClient
           planId={id}
           freePreviews={stored.freePreviews || null}
-          paid={true}
+          paid={isPaid}
           paidDestination={stored.paidDestination}
-          legacyDestinations={stored.destinations}
+          legacyDestinations={isPaid ? stored.destinations : undefined}
         />
       </Suspense>
     );
@@ -84,8 +90,8 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
 
   const destLevel = dest as PriceLevel;
 
-  // Show full plan
-  if (stored.destinations?.[destLevel]) {
+  // Show full plan (only if user owns it and it's paid)
+  if (isPaid && stored.destinations?.[destLevel]) {
     const rec = stored.destinations[destLevel];
     const selectedTier = tier || "devil";
     const plan = getTierPlan(rec.plans, selectedTier);
@@ -105,8 +111,8 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
     );
   }
 
-  // Legacy plans
-  if (stored.plans) {
+  // Legacy plans (only if user owns it)
+  if (isPaid && stored.plans) {
     const selectedTier = tier || "devil";
     const plan = getTierPlan(stored.plans, selectedTier);
     if (!plan) notFound();
@@ -117,10 +123,10 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
     );
   }
 
-  // Fallback
+  // Fallback — show selection with appropriate paid status
   return (
     <Suspense>
-      <PlanSelectionClient planId={id} freePreviews={stored.freePreviews || null} paid={true} />
+      <PlanSelectionClient planId={id} freePreviews={stored.freePreviews || null} paid={isPaid} />
     </Suspense>
   );
 }

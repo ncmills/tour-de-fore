@@ -59,7 +59,7 @@ export default function SetPasswordClient() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             autoComplete="new-password"
-            style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.75rem 0", color: "#fff", fontSize: "1rem", outline: "none", textAlign: "center" }}
+            style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.875rem 0.5rem", color: "#fff", fontSize: "1rem", outline: "none", textAlign: "center", minHeight: 44 }}
           />
           <input
             type="password"
@@ -68,7 +68,7 @@ export default function SetPasswordClient() {
             onChange={(e) => setConfirm(e.target.value)}
             onKeyDown={(e) => { if (e.key === "Enter") handleSubmit(); }}
             autoComplete="new-password"
-            style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.75rem 0", color: "#fff", fontSize: "1rem", outline: "none", textAlign: "center" }}
+            style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.875rem 0.5rem", color: "#fff", fontSize: "1rem", outline: "none", textAlign: "center", minHeight: 44 }}
           />
         </div>
 

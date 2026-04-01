@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
   const isCron = req.headers.get("x-vercel-cron") === "true"
     || cronSecret === process.env.CRON_SECRET;
 
-  if (!isCron && process.env.NODE_ENV === "production") {
+  if (!isCron) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

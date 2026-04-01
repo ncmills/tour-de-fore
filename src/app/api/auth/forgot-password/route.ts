@@ -12,7 +12,8 @@ export async function POST(req: NextRequest) {
     const normalizedEmail = email.toLowerCase().trim();
     const hasPw = await hasPassword(normalizedEmail);
     if (!hasPw) {
-      return NextResponse.json({ error: "No account found with that email" }, { status: 404 });
+      // Always return 200 to prevent email enumeration
+      return NextResponse.json({ ok: true });
     }
 
     const token = await createMagicToken(normalizedEmail);

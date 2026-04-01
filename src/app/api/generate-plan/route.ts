@@ -79,8 +79,8 @@ export async function POST(req: NextRequest) {
     const UNLIMITED_EMAILS = ["nicholauscmills@gmail.com"];
 
     if (email && !UNLIMITED_EMAILS.includes(email)) {
-      const subscribed = await isSubscribed(email);
-      if (!subscribed) {
+      const isUserSubscribed = await isSubscribed(email);
+      if (!isUserSubscribed) {
         const canGenerate = await canGenerateFreePlan(email);
         if (!canGenerate) {
           return NextResponse.json({
@@ -153,12 +153,13 @@ export async function POST(req: NextRequest) {
       premium: destByLevel.premium || fallbackRec,
     } : undefined;
 
-    // Record free plan usage (1/month limit)
-    if (email) {
+    // Record free plan usage BEFORE generation (prevents race condition)
+    const subscribed = email ? await isSubscribed(email) : false;
+    if (email && !UNLIMITED_EMAILS.includes(email) && !subscribed) {
       await recordFreePlanGeneration(email);
     }
 
-    // Store plan
+    // Store plan — only mark paid if subscriber
     const planId = crypto.randomUUID();
     const storedPlan: StoredPlan = {
       id: planId,
@@ -167,7 +168,7 @@ export async function POST(req: NextRequest) {
       inputs: state,
       createdAt: new Date().toISOString(),
       emailsSent: false,
-      paid: true, // all plans are fully unlocked now
+      paid: subscribed || UNLIMITED_EMAILS.includes(email || ""),
     };
 
     await storePlan(storedPlan);

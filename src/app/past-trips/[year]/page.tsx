@@ -17,6 +17,12 @@ export async function generateMetadata({ params }: { params: Promise<{ year: str
   return {
     title: `${dest} ${yearStr} | Tour de Fore`,
     description: `Tour de Fore ${yearStr} trip to ${dest} — courses, nightlife, and memories from the annual golf odyssey.`,
+    alternates: { canonical: `https://tourdefore.com/past-trips/${yearStr}` },
+    openGraph: {
+      title: `${dest} ${yearStr} | Tour de Fore`,
+      description: `Tour de Fore ${yearStr} trip to ${dest} — courses, nightlife, and memories from the annual golf odyssey.`,
+      images: ["/icon-fancy.png"],
+    },
   };
 }
 

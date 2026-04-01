@@ -7,6 +7,11 @@ export const metadata = {
   title: "Budget Golf Trips Under $2K Per Person | Tour de Fore",
   description: "Affordable group golf trips with great courses, lodging, and dining. Find destinations where you can golf for under $2,000 per person.",
   alternates: { canonical: "https://tourdefore.com/golf-trips/budget-trips" },
+  openGraph: {
+    title: "Budget Golf Trips Under $2K Per Person | Tour de Fore",
+    description: "Affordable group golf trips with great courses, lodging, and dining. Find destinations where you can golf for under $2,000 per person.",
+    images: ["/icon-fancy.png"],
+  },
 };
 
 export default function BudgetTripsPage() {
@@ -29,6 +34,7 @@ export default function BudgetTripsPage() {
         </h1>
         <p style={{ color: "rgba(255,255,255,0.4)", marginBottom: "3rem" }}>Great golf doesn&apos;t have to break the bank. {budgetDests.length} affordable destinations.</p>
 
+        <h2 style={{ fontSize: "1.1rem", fontWeight: 600, marginBottom: "1rem", color: "rgba(255,255,255,0.6)" }}>Most Affordable Golf Destinations</h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(300px, 100%), 1fr))", gap: "1rem" }}>
           {budgetDests.map(({ dest: d, cheapestFee, cheapestLodging }) => (
             <Link key={d.id} href={`/golf-trips/${d.id}`} style={{ display: "block", padding: "1.25rem", background: "#111", border: "1px solid #222", borderRadius: 10, textDecoration: "none", color: "#fff" }}>
