@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Tour de Fore — AI Golf Trip Planner";
+export const alt = "TDF Pro Shop — Tour de Fore";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -21,7 +21,6 @@ export default async function Image() {
           position: "relative",
         }}
       >
-        {/* Subtle top/bottom border accent */}
         <div
           style={{
             position: "absolute",
@@ -45,50 +44,46 @@ export default async function Image() {
           }}
         />
 
-        {/* Logo */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="https://tourdefore.com/icon-fancy.png"
           alt=""
-          width={120}
-          height={120}
-          style={{ marginBottom: 24 }}
+          width={100}
+          height={100}
+          style={{ marginBottom: 20 }}
         />
 
-        {/* Title */}
         <div
           style={{
-            fontSize: 72,
+            fontSize: 44,
             fontWeight: 800,
             color: "#EA580C",
-            letterSpacing: "0.08em",
-            marginBottom: 12,
+            letterSpacing: "0.06em",
+            marginBottom: 8,
           }}
         >
           TOUR DE FORE
         </div>
 
-        {/* Subtitle */}
         <div
           style={{
-            fontSize: 28,
-            color: "rgba(255,255,255,0.7)",
-            letterSpacing: "0.12em",
+            fontSize: 52,
+            fontWeight: 700,
+            color: "#fff",
+            marginBottom: 12,
           }}
         >
-          AI-POWERED GOLF TRIP PLANNER
+          TDF Pro Shop
         </div>
 
-        {/* Tagline */}
         <div
           style={{
-            fontSize: 18,
-            color: "rgba(255,255,255,0.35)",
-            marginTop: 20,
-            letterSpacing: "0.1em",
+            fontSize: 22,
+            color: "rgba(255,255,255,0.45)",
+            letterSpacing: "0.08em",
           }}
         >
-          133 DESTINATIONS · COURSES · LODGING · NIGHTLIFE
+          POLOS · QUARTER-ZIPS · HATS · CAPS
         </div>
       </div>
     ),

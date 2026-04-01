@@ -95,8 +95,11 @@ export const metadata: Metadata = {
     ],
   },
   icons: {
-    icon: "/icon-fancy.png",
-    apple: "/icon-fancy.png",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon-fancy.png", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
   },
   twitter: {
     card: "summary_large_image",

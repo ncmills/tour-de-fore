@@ -34,7 +34,6 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      images: ["/icon-fancy.png"],
     },
   };
 }

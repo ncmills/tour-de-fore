@@ -14,7 +14,6 @@ export const metadata: Metadata = {
     title: "Golf Trip Destinations — 133 Cities | Tour de Fore",
     description:
       "Browse 133 hand-picked golf trip destinations across 7 regions.",
-    images: ["/icon-fancy.png"],
   },
 };
 
