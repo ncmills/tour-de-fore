@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getSessionEmail, canGenerateFreePlan, getFreePlanCount, isSubscribed } from "@/lib/auth";
 
-const UNLIMITED_EMAILS = ["nicholauscmills@gmail.com"];
+const UNLIMITED_EMAILS = ["nicholauscmills@gmail.com", "matt@sixtenmgmt.com"];
 const FREE_PLAN_LIMIT = 1;
 
 export async function GET() {

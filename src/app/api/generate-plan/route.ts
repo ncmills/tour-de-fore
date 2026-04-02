@@ -155,7 +155,7 @@ export async function POST(req: NextRequest) {
   }
 
   const email = state.organizerEmail;
-  const UNLIMITED_EMAILS = ["nicholauscmills@gmail.com"];
+  const UNLIMITED_EMAILS = ["nicholauscmills@gmail.com", "matt@sixtenmgmt.com"];
   const isAdminHeader = req.headers.get("x-admin-secret") === process.env.ADMIN_SECRET;
   const isUnlimited = isAdminHeader || (!!email && UNLIMITED_EMAILS.includes(email));
 
