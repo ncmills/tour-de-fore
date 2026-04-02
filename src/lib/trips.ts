@@ -641,6 +641,7 @@ export const trips: Trip[] = [
     dates: "June 24 \u2013 26, 2021",
     heroImage: `${SQ}/668ee548-a6f4-4b37-9d7a-18d5fb6a54e3/IMG_0519.jpeg`,
     lodgingBookingUrl: "https://www.airbnb.com/rooms/49259696",
+    lodgingImage: "/photos/2021/st-george-lodging.png",
     courses: [
       { name: "Sunriver Golf Course", image: "https://sunriverres.wpenginepowered.com/wp-content/uploads/2024/06/SRR_Meadows-Golf_Fall-2022_Wicked_ARR_DJI_0014.jpg", description: "A stunning desert links course carved through red sandstone with views of Snow Canyon.", holes: 18 },
       { name: "Sunbrooke Golf Course", url: "https://www.sunbrookgolf.com", image: "https://cdn.greaterzion.com/wp-content/uploads/2019/04/22154748/golf-course-sunbrook1.jpg", description: "Three distinct nines weaving through black lava fields and red rock in a spectacular setting.", holes: 18 },

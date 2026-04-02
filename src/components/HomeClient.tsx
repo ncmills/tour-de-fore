@@ -237,9 +237,11 @@ export default function HomeClient() {
                   fontWeight: 700,
                   textTransform: "uppercase",
                   letterSpacing: "0.1em",
-                  color: "#ff6a28",
-                  textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3), 0 0 80px rgba(200,30,0,0.15)",
-                  WebkitTextStroke: "0.3px rgba(255,140,60,0.4)",
+                  color: isMobile ? "#ff8040" : "#ff6a28",
+                  textShadow: isMobile
+                    ? "0 0 4px rgba(255,106,40,0.5), 0 0 10px rgba(255,60,20,0.25)"
+                    : "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3), 0 0 80px rgba(200,30,0,0.15)",
+                  WebkitTextStroke: isMobile ? undefined : "0.3px rgba(255,140,60,0.4)",
                 }}
               >
                 {stat}
@@ -299,7 +301,7 @@ export default function HomeClient() {
               alignItems: "center",
               justifyContent: "center",
               gap: isMobile ? "0.8rem" : "1rem 2.5rem",
-              paddingTop: isMobile ? "clamp(340px, 68vh, 480px)" : "clamp(420px, 60vh, 560px)",
+              paddingTop: isMobile ? "clamp(300px, 58vh, 420px)" : "clamp(380px, 52vh, 500px)",
               paddingLeft: "1.5rem",
               paddingRight: "1.5rem",
             }}
