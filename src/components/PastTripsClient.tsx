@@ -200,9 +200,6 @@ export default function PastTripsClient() {
         }}>
           The trips that built the planner.
         </p>
-        <p className="neon-stats" style={{ color: "#ff6a28", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", fontFamily: "var(--font-plan-block), sans-serif", fontWeight: 700, marginTop: "0.75rem", textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3)" }}>
-          108 holes. 3 days. Legends every time.
-        </p>
       </motion.div>
 
       {/* Year grid */}

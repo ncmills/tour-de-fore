@@ -69,13 +69,13 @@ export default function PlanLandingClient({ onFirstTime }: { onFirstTime: () => 
       <HomeButton />
 
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} style={{ maxWidth: 500, width: "100%" }}>
-        <img src="/logo-est2021.png" alt="Tour de Fore Est. 2021" style={{ width: "clamp(140px, 50vw, 240px)", height: "clamp(140px, 50vw, 240px)", margin: "0 auto 0.75rem", objectFit: "contain" }} />
-        <h1 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "0.5rem" }}>
-          Plan a Trip
-        </h1>
-        <p className="neon-stats" style={{ color: "#ff6a28", fontSize: "clamp(0.8rem, 2vw, 1rem)", fontFamily: "var(--font-plan-block), sans-serif", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3)", marginBottom: "1.5rem" }}>
+        <img src="/logo-est2021.png" alt="Tour de Fore Est. 2021" style={{ width: "clamp(140px, 50vw, 240px)", height: "clamp(140px, 50vw, 240px)", margin: "0 auto 0.5rem", objectFit: "contain" }} />
+        <p className="neon-stats" style={{ color: "#ff6a28", fontSize: "clamp(0.8rem, 2vw, 1rem)", fontFamily: "var(--font-plan-block), sans-serif", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3)", marginBottom: "0.5rem" }}>
           Stop planning in a group chat. Start planning like a devil.
         </p>
+        <h1 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "1.5rem" }}>
+          Plan a Trip
+        </h1>
 
         {mode === "choose" && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ display: "flex", flexDirection: "column", gap: "1rem", maxWidth: 360, margin: "0 auto" }}>
@@ -117,13 +117,6 @@ export default function PlanLandingClient({ onFirstTime }: { onFirstTime: () => 
           </motion.div>
         )}
 
-        {mode === "choose" && (
-          <div style={{ marginTop: "2.5rem", padding: "1.25rem 2rem", background: "rgba(234,88,12,0.08)", border: "1px solid rgba(234,88,12,0.25)", borderRadius: 8, maxWidth: 360, margin: "2.5rem auto 0" }}>
-            <p className="neon-stats" style={{ color: "#ff6a28", fontSize: "0.9rem", fontFamily: "var(--font-plan-block), sans-serif", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", lineHeight: 1.4, textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3)" }}>
-              The golf trip your group keeps talking about? Plan it.
-            </p>
-          </div>
-        )}
 
         {mode === "login" && (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} style={{ maxWidth: 360, margin: "0 auto" }}>

@@ -92,7 +92,7 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
             exit={{ opacity: 0, transition: { duration: 0.15 } }}
             transition={{ delay: 1.0, duration: 0.4 }}
             style={{
-              marginBottom: "clamp(17px, 2.6vh, 34px)",
+              marginBottom: "clamp(12px, 2vh, 24px)",
               display: "flex",
               alignItems: "center",
             }}

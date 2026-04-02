@@ -182,14 +182,14 @@ export default function HomeClient() {
                   animate={{ clipPath: "inset(0 -5px 0 -5px)" }}
                   transition={{ duration: 1.4, delay: 0.3, ease: [0.25, 0.0, 0.35, 1.0] }}
                 >
-                  all the devils are here
+                  hell is empty
                 </motion.p>
                 <motion.p
                   style={{ ...textStyle, clipPath: "inset(0 105% 0 -5px)" }}
                   animate={{ clipPath: "inset(0 -5px 0 -5px)" }}
                   transition={{ duration: 1.6, delay: 1.2, ease: [0.25, 0.0, 0.35, 1.0] }}
                 >
-                  Plan the trip. Play the rounds. Blame the wind.
+                  all the devils are here
                 </motion.p>
                 <motion.p
                   style={{ ...textStyle, fontSize: "clamp(0.7rem, 1.8vw, 1rem)", letterSpacing: "0.12em", clipPath: "inset(0 105% 0 -5px)", opacity: 0.7, marginTop: "0.75em" }}
@@ -238,7 +238,7 @@ export default function HomeClient() {
                 ? "0 0 4px rgba(255,106,40,0.5), 0 0 10px rgba(255,60,20,0.25)"
                 : "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3), 0 0 80px rgba(200,30,0,0.15)",
               WebkitTextStroke: isMobile ? undefined : "0.3px rgba(255,140,60,0.4)",
-              marginBottom: isMobile ? "clamp(1rem, 3vw, 1.5rem)" : "clamp(1.2rem, 2.5vw, 2rem)",
+              marginBottom: isMobile ? "clamp(0.8rem, 2.4vw, 1.2rem)" : "clamp(1rem, 2vw, 1.6rem)",
             }}
           >
             Plan smarter. Play more. Remember less.
@@ -249,7 +249,7 @@ export default function HomeClient() {
             width={4504}
             height={3776}
             priority
-            style={{ width: isMobile ? "clamp(195px, 58vw, 286px)" : "clamp(260px, 29vw, 442px)", height: "auto", filter: "brightness(0)" }}
+            style={{ width: isMobile ? "clamp(195px, 58vw, 286px)" : "clamp(260px, 29vw, 442px)", height: "auto", filter: "brightness(0)", marginBottom: isMobile ? "clamp(0.8rem, 2.4vw, 1.2rem)" : "clamp(1rem, 2vw, 1.6rem)" }}
           />
         </motion.div>
       </div>
@@ -273,7 +273,7 @@ export default function HomeClient() {
             textDecoration: "none",
           }}
         >
-          <img src="/devil-avatar.png" alt="Tour de Fore member login" style={{ width: isMobile ? 48 : 81, height: isMobile ? 48 : 81 }} />
+          <img src="/devil-avatar.png" alt="Tour de Fore member login" style={{ width: isMobile ? 48 : 81, height: isMobile ? 38 : 65 }} />
           <span style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.9)", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "var(--font-inter), sans-serif", marginTop: "-8px" }}>Login</span>
         </motion.a>
       )}
@@ -296,7 +296,7 @@ export default function HomeClient() {
               alignItems: "center",
               justifyContent: "center",
               gap: isMobile ? "0.8rem" : "1rem 2.5rem",
-              paddingTop: isMobile ? "clamp(320px, 62vh, 450px)" : "clamp(410px, 56vh, 540px)",
+              paddingTop: isMobile ? "clamp(256px, 50vh, 360px)" : "clamp(328px, 45vh, 432px)",
               paddingLeft: "1.5rem",
               paddingRight: "1.5rem",
             }}
