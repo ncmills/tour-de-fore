@@ -263,8 +263,8 @@ export async function POST(req: NextRequest) {
   return new Response(stream, {
     headers: {
       "Content-Type": "application/x-ndjson",
-      "Cache-Control": "no-cache",
-      "Transfer-Encoding": "chunked",
+      "Cache-Control": "no-cache, no-transform",
+      "X-Content-Type-Options": "nosniff",
     },
   });
 }

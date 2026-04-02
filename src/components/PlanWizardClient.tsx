@@ -475,15 +475,20 @@ export default function PlanWizardClient() {
       });
 
       // Non-streaming error responses (rate limit, validation, etc.)
+      // Check content-type; also treat any 2xx with a body as potential NDJSON
+      // since Vercel/CDN proxies can strip custom content-type headers
       const contentType = res.headers.get("content-type") || "";
-      if (!contentType.includes("ndjson")) {
-        const data = await res.json().catch(() => ({}));
+      const isNdjson = contentType.includes("ndjson") || (res.ok && res.body);
+      if (!isNdjson) {
+        const text = await res.text();
+        let data: Record<string, unknown> = {};
+        try { data = JSON.parse(text); } catch { /* not JSON */ }
         if (data.limitReached) {
           setOverlayLimitReached(true);
-          setOverlayError(data.error || "You've used your free plan this month.");
+          setOverlayError((data.error as string) || "You've used your free plan this month.");
           return;
         }
-        throw new Error(data.error || "Failed to generate plan");
+        throw new Error((data.error as string) || "Failed to generate plan");
       }
 
       // Stream the response — read NDJSON lines
