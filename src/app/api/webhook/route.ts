@@ -142,11 +142,15 @@ export async function POST(req: NextRequest) {
             size: i.size ?? i.z,
           }));
 
-          // Resolve any missing syncVariantIds from the catalog
+          // Resolve missing syncVariantIds AND re-validate existing ones against live catalog
           for (const item of items) {
-            if (!item.syncVariantId && item.productId && item.color) {
+            if (item.productId && item.color) {
               const variant = await findVariant(item.productId, item.color, item.size);
-              if (variant) item.syncVariantId = variant.syncVariantId;
+              if (variant) {
+                item.syncVariantId = variant.syncVariantId; // always use latest ID
+              } else if (item.syncVariantId) {
+                console.warn(`Webhook: variant ${item.syncVariantId} for ${item.productId}/${item.color}/${item.size} not found in current catalog — may have been removed`);
+              }
             }
           }
 
@@ -281,6 +285,25 @@ export async function POST(req: NextRequest) {
         }
       } catch (shopErr) {
         console.error("Shop order processing failed:", shopErr);
+        // ALWAYS alert on shop order failure — never let a paid order fail silently
+        if (process.env.RESEND_API_KEY) {
+          try {
+            const resendFail = new Resend(process.env.RESEND_API_KEY);
+            const customerEmail = session.customer_details?.email || "unknown";
+            const errDetail = shopErr instanceof Error ? shopErr.message : String(shopErr);
+            await resendFail.emails.send({
+              from: "Tour de Fore <noreply@tourdefore.com>",
+              to: "info@tourdefore.com",
+              subject: "CRITICAL: Shop order failed — paid but not fulfilled",
+              html: `<p><strong>A customer paid but their order was NOT created in Printful.</strong></p>
+                <p><strong>Session:</strong> ${session.id}</p>
+                <p><strong>Customer:</strong> ${customerEmail}</p>
+                <p><strong>Items:</strong> ${session.metadata?.items || "unknown"}</p>
+                <p><strong>Error:</strong> ${errDetail}</p>
+                <p>Action required: manually create this order in Printful or refund the customer.</p>`,
+            });
+          } catch { /* email send itself failed — nothing more we can do */ }
+        }
       }
     }
 

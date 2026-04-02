@@ -55,11 +55,16 @@ export async function GET(req: NextRequest) {
         size: i.size ?? i.z,
       }));
 
-      // Resolve missing syncVariantIds
+      // Resolve AND re-validate syncVariantIds against live catalog
       for (const item of items) {
-        if (!item.syncVariantId && item.productId && item.color) {
+        if (item.productId && item.color) {
           const variant = await findVariant(item.productId, item.color, item.size);
-          if (variant) item.syncVariantId = variant.syncVariantId;
+          if (variant) {
+            item.syncVariantId = variant.syncVariantId;
+          } else if (item.syncVariantId) {
+            console.warn(`Cron: variant ${item.syncVariantId} for ${item.productId}/${item.color}/${item.size} not in catalog`);
+            item.syncVariantId = 0; // mark invalid so it gets caught by validItems filter
+          }
         }
       }
 
@@ -142,6 +147,22 @@ export async function GET(req: NextRequest) {
     }
   } catch (err) {
     return NextResponse.json({ error: err instanceof Error ? err.message : "Sync failed" }, { status: 500 });
+  }
+
+  // Alert on any failures that need manual attention
+  const failures = results.filter(r => r.status === "printful_error" || r.status === "needs_attention");
+  if (failures.length > 0 && process.env.RESEND_API_KEY) {
+    try {
+      const resend = new Resend(process.env.RESEND_API_KEY);
+      await resend.emails.send({
+        from: "Tour de Fore <noreply@tourdefore.com>",
+        to: "info@tourdefore.com",
+        subject: `ALERT: ${failures.length} order(s) need attention`,
+        html: `<p>The cron sync found paid orders that could not be fulfilled:</p>
+          <pre>${JSON.stringify(failures, null, 2)}</pre>
+          <p>Check Stripe dashboard and manually create Printful orders or refund.</p>`,
+      });
+    } catch { /* non-critical */ }
   }
 
   return NextResponse.json({ checked: results.length, rescued: results.filter(r => r.status === "rescued").length, results });
