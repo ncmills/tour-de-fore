@@ -262,7 +262,7 @@ export default function HomeClient() {
       {/* Login / My Account icon top-right */}
       {showLinks && (
         <motion.a
-          href={isLoggedIn ? "/my-trips" : "/plan-a-trip"}
+          href={isLoggedIn ? "/my-trips" : "/login"}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2, duration: 0.8 }}

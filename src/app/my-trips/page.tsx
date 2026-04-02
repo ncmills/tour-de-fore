@@ -12,7 +12,7 @@ export default async function MyTripsPage() {
   const email = await getSessionEmail();
 
   if (!email) {
-    redirect("/?skip=1");
+    redirect("/login");
   }
 
   const [planIds, name] = await Promise.all([
