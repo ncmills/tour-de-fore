@@ -83,7 +83,7 @@ export async function POST(req: NextRequest) {
         zip: shippingAddress.postal_code || "",
         email: customerEmail,
       },
-      `tdf-${sessionId}`
+      `tdf-${sessionId.slice(-56)}`
     );
 
     await storeOrder({

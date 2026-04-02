@@ -110,7 +110,7 @@ export async function GET(req: NextRequest) {
             zip: shippingAddress.postal_code || "",
             email: customerEmail,
           },
-          `tdf-${session.id}`
+          `tdf-${session.id.slice(-56)}`
         );
 
         await storeOrder({
