@@ -156,25 +156,48 @@ function DestinationCard({
           </div>
         )}
 
-        <Link
-          href={`/plan/gallery?planId=${planId}&dest=${priceKey}&tier=devil`}
-          onClick={trackClick}
-          style={{
-            display: "block",
-            padding: "0.85rem",
-            background: isMid ? "rgba(220,38,38,0.9)" : "rgba(255,255,255,0.08)",
-            border: isMid ? "none" : "1px solid rgba(255,255,255,0.15)",
-            borderRadius: 8,
-            textAlign: "center",
-            fontSize: "0.85rem",
-            fontWeight: 700,
-            color: isMid ? "#fff" : "rgba(255,255,255,0.7)",
-            textDecoration: "none",
-            letterSpacing: "0.03em",
-          }}
-        >
-          View All Options →
-        </Link>
+        {isUnlocked ? (
+          <Link
+            href={`/plan/gallery?planId=${planId}&dest=${priceKey}&tier=devil`}
+            onClick={trackClick}
+            style={{
+              display: "block",
+              padding: "0.85rem",
+              background: isMid ? "rgba(220,38,38,0.9)" : "rgba(255,255,255,0.08)",
+              border: isMid ? "none" : "1px solid rgba(255,255,255,0.15)",
+              borderRadius: 8,
+              textAlign: "center",
+              fontSize: "0.85rem",
+              fontWeight: 700,
+              color: isMid ? "#fff" : "rgba(255,255,255,0.7)",
+              textDecoration: "none",
+              letterSpacing: "0.03em",
+            }}
+          >
+            View All Options →
+          </Link>
+        ) : (
+          <button
+            onClick={handleUnlock}
+            disabled={unlocking}
+            style={{
+              display: "block",
+              width: "100%",
+              padding: "0.85rem",
+              background: isMid ? "rgba(220,38,38,0.9)" : "rgba(255,255,255,0.08)",
+              border: isMid ? "none" : "1px solid rgba(255,255,255,0.15)",
+              borderRadius: 8,
+              textAlign: "center",
+              fontSize: "0.85rem",
+              fontWeight: 700,
+              color: isMid ? "#fff" : "rgba(255,255,255,0.7)",
+              letterSpacing: "0.03em",
+              cursor: unlocking ? "wait" : "pointer",
+            }}
+          >
+            {unlocking ? "Loading..." : "Unlock Full Plan →"}
+          </button>
+        )}
       </div>
     </motion.div>
   );

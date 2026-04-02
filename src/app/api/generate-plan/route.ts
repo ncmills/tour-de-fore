@@ -39,20 +39,32 @@ function tryParseJSON(jsonStr: string): unknown | null {
   // Direct parse
   try { return JSON.parse(s); } catch { /* fall through */ }
 
+  // Strip trailing text after the last } (Haiku sometimes appends commentary)
+  const lastBrace = s.lastIndexOf("}");
+  if (lastBrace > 0 && lastBrace < s.length - 1) {
+    const trimmed = s.slice(0, lastBrace + 1);
+    try { return JSON.parse(trimmed); } catch { /* fall through */ }
+  }
+
   // Try to repair truncated JSON by closing open brackets/braces
   let repaired = s;
-  const opens = (repaired.match(/[\[{]/g) || []).length;
-  const closes = (repaired.match(/[\]}]/g) || []).length;
-  if (opens > closes) {
-    // Remove trailing comma or partial value
-    repaired = repaired.replace(/,\s*$/, "");
-    // Close remaining brackets/braces
-    const stack: string[] = [];
-    for (const ch of repaired) {
-      if (ch === "{") stack.push("}");
-      else if (ch === "[") stack.push("]");
-      else if (ch === "}" || ch === "]") stack.pop();
-    }
+  // Remove trailing partial key-value (e.g., `"key": "unclosed` or `"key":`)
+  repaired = repaired.replace(/,\s*"[^"]*"?\s*:?\s*"?[^"]*$/, "");
+  repaired = repaired.replace(/,\s*$/, "");
+
+  const stack: string[] = [];
+  let inString = false;
+  let escape = false;
+  for (const ch of repaired) {
+    if (escape) { escape = false; continue; }
+    if (ch === "\\") { escape = true; continue; }
+    if (ch === '"') { inString = !inString; continue; }
+    if (inString) continue;
+    if (ch === "{") stack.push("}");
+    else if (ch === "[") stack.push("]");
+    else if (ch === "}" || ch === "]") stack.pop();
+  }
+  if (stack.length > 0) {
     repaired += stack.reverse().join("");
     try { return JSON.parse(repaired); } catch { /* fall through */ }
   }
@@ -70,6 +82,7 @@ async function generateSingleTier(
   const message = await client.messages.create({
     model: "claude-haiku-4-5-20251001",
     max_tokens: 8000,
+    temperature: 0.3,
     system: buildSystemPrompt(destinationContext),
     messages: [{ role: "user", content: buildUserMessage(state, tier) }],
   });
@@ -88,9 +101,9 @@ async function generateSingleTier(
 
   console.error(`JSON parse failed for ${tier} attempt=${attempt} (${message.usage.output_tokens} tokens, stop: ${message.stop_reason}). First 500 chars: ${textBlock.text.trim().slice(0, 500)}`);
 
-  // Retry once
-  if (attempt < 2) {
-    console.log(`Retrying ${tier} tier...`);
+  // Retry up to 3 attempts
+  if (attempt < 3) {
+    console.log(`Retrying ${tier} tier (attempt ${attempt + 1})...`);
     return generateSingleTier(client, state, destinationContext, tier, attempt + 1);
   }
 
@@ -166,8 +179,8 @@ export async function POST(req: NextRequest) {
   }
 
   // Load popularity scores + pick destinations (fast, pure data)
-  const popularity = await getAllPopularityScores();
-  setPopularityScores(popularity);
+  const { scores: popularity, viewCounts } = await getAllPopularityScores();
+  setPopularityScores(popularity, viewCounts);
 
   const picks = getThreeDestinations(state);
   if (picks.length === 0) {
