@@ -16,9 +16,12 @@ export async function generateMetadata({ params }: Props) {
   const city = preview?.city || dest?.city || "Unknown";
   const state = preview?.state || dest?.state || "";
 
+  const title = `${city}, ${state} Golf Trip | Tour de Fore`;
+  const description = `${stored.inputs.groupSize} people, ${stored.inputs.numberOfDays} days — courses, lodging, restaurants, and the full itinerary.`;
   return {
-    title: `${city}, ${state} Golf Trip | Tour de Fore`,
-    description: `${stored.inputs.groupSize} people, ${stored.inputs.numberOfDays} days — courses, lodging, restaurants, and the full itinerary.`,
+    title,
+    description,
+    openGraph: { title, description, images: ["/icon-fancy.png"] },
   };
 }
 

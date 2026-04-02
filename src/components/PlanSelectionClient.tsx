@@ -47,6 +47,7 @@ function DestinationCard({
   const handleUnlock = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    if (unlocking) return;
     setUnlocking(true);
     try {
       const res = await fetch("/api/unlock-plan", {

@@ -400,7 +400,9 @@ export default function TripBuilderClient({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ planId, dest, tier, selectedOptions }),
       });
-    } catch { /* silent */ }
+    } catch (err) {
+      console.error("Failed to save selections:", err);
+    }
     window.location.href = `/plan/itinerary?planId=${planId}&dest=${dest}&tier=${tier}`;
   };
 

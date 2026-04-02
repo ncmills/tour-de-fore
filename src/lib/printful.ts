@@ -243,10 +243,13 @@ export async function createPrintfulOrder(
     const lockKey = `order-lock:${externalId}`;
     const acquired = await redis.set(lockKey, "1", "EX", 60, "NX");
     if (!acquired) {
-      // Another process is creating this order — check if it exists
-      const existing = await checkPrintfulOrderExists(externalId);
-      if (existing) return existing;
-      console.log(`Order lock held for ${externalId} but order not yet in Printful — skipping`);
+      // Another process is creating this order — poll until it appears or timeout
+      for (let i = 0; i < 10; i++) {
+        const existing = await checkPrintfulOrderExists(externalId);
+        if (existing) return existing;
+        await new Promise((r) => setTimeout(r, 1000));
+      }
+      console.warn(`Order lock timeout for ${externalId} — order not found after 10s`);
       return null;
     }
   }

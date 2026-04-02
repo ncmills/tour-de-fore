@@ -14,9 +14,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const trip = getTripBySlug(slug);
   if (!trip) return {};
+  const title = `${trip.year} \u2014 ${trip.location}, ${trip.state} | Tour de Fore`;
+  const description = trip.tagline || `Tour de Fore ${trip.year} golf trip to ${trip.location}, ${trip.state}.`;
   return {
-    title: `${trip.year} \u2014 ${trip.location}, ${trip.state} | Tour de Fore`,
-    description: trip.tagline,
+    title,
+    description,
+    alternates: { canonical: `https://tourdefore.com/trip/${slug}` },
+    openGraph: { title, description, images: ["/icon-fancy.png"] },
   };
 }
 

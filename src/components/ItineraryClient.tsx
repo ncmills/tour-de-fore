@@ -217,8 +217,9 @@ export default function ItineraryClient({
       ) || plan.courses.find((c) => c.day === dayNum && c.session === "AM");
 
       // Afternoon: check if there's an activity selected for this day
-      const hasActivity = selectedOptions?.activities && selectedOptions.activities.length > 0;
-      const activityForDay = hasActivity ? selectedOptions!.activities[d % selectedOptions!.activities.length] : null;
+      const activities = selectedOptions?.activities ?? [];
+      const hasActivity = activities.length > 0;
+      const activityForDay = hasActivity ? activities[d % activities.length] : null;
 
       // PM course
       const pmCourse = activityForDay

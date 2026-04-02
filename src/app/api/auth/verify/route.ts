@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
     const setPasswordReturn = returnTo || "/my-trips";
     redirectUrl = `/set-password?returnTo=${encodeURIComponent(setPasswordReturn)}`;
   } else {
-    redirectUrl = returnTo && returnTo.startsWith("/") ? returnTo : "/my-trips";
+    redirectUrl = returnTo && returnTo.startsWith("/") && !returnTo.startsWith("//") ? returnTo : "/my-trips";
   }
 
   const response = NextResponse.redirect(new URL(redirectUrl, req.url));

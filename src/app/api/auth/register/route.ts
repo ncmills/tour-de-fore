@@ -1,8 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSession, setPassword, setUserName, setEmailVerified, hasPassword } from "@/lib/auth";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
 
 export async function POST(req: NextRequest) {
   try {
+    // Rate limit: 5 registrations per IP per hour
+    const rl = await rateLimit(`register:${getClientIp(req)}`, 5, 3600);
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { error: "Too many registrations. Try again later." },
+        { status: 429, headers: { "Retry-After": String(rl.resetIn) } }
+      );
+    }
+
     const { email, password, name } = await req.json();
     if (!email || !email.includes("@")) {
       return NextResponse.json({ error: "Valid email required" }, { status: 400 });
