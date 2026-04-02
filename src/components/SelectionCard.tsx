@@ -52,7 +52,7 @@ export default function SelectionCard({ label, sublabel, selected, onClick, comp
         <span style={{
           display: "block",
           fontSize: "0.84rem",
-          color: selected ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.3)",
+          color: selected ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.5)",
           marginTop: "0.25rem",
           fontFamily: "var(--font-inter), sans-serif",
           transition: "color 0.2s",

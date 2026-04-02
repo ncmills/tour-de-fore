@@ -244,7 +244,8 @@ export default function MyTripsClient({
   };
 
   const smallBtnStyle: React.CSSProperties = {
-    padding: "6px 14px",
+    padding: "8px 16px",
+    minHeight: 44,
     fontSize: "0.75rem",
     fontWeight: 600,
     border: "1px solid rgba(255,255,255,0.15)",

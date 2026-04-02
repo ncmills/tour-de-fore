@@ -80,11 +80,10 @@ export default function PastTripsClient() {
       <MulliganButton />
       <HomeButton />
 
-      {/* TV Video — sticky at top */}
+      {/* TV Video — scrolls with page */}
       <div style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 100,
+        position: "relative",
+        zIndex: 1,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -201,7 +200,7 @@ export default function PastTripsClient() {
         }}>
           leaving a trail of quadruple bogies and missed putts
         </p>
-        <p style={{ color: "rgba(255,255,255,0.25)", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", fontFamily: "monospace", marginTop: "0.75rem" }}>
+        <p style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", fontFamily: "monospace", marginTop: "0.75rem" }}>
           {trips.length} trips · {trips.reduce((s, t) => s + t.courses.length, 0)} courses · countless beers
         </p>
       </motion.div>
@@ -211,7 +210,7 @@ export default function PastTripsClient() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.6 }}
-        style={{ padding: "1.5rem clamp(1.5rem, 6vw, 6rem) 6rem" }}
+        style={{ padding: isMobile ? "1.5rem 1.5rem 8rem" : "1.5rem clamp(1.5rem, 6vw, 6rem) 6rem" }}
       >
         {allTrips.map((trip, i) => (
           <Link
@@ -283,7 +282,7 @@ export default function PastTripsClient() {
                   {trip.location}, {trip.state}
                 </p>
                 {trip.courses.length > 0 && (
-                  <p style={{ fontSize: "0.75rem", letterSpacing: "0.06em", color: "rgba(255,255,255,0.25)", lineHeight: 1.8, fontFamily: "monospace" }}>
+                  <p style={{ fontSize: "0.75rem", letterSpacing: "0.06em", color: "rgba(255,255,255,0.45)", lineHeight: 1.8, fontFamily: "monospace" }}>
                     {trip.courses.map((c) => c.name).join("  ·  ")}
                   </p>
                 )}

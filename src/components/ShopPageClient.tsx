@@ -19,10 +19,12 @@ function ProductCard({
   product,
   onAdd,
   cartCount,
+  onImageClick,
 }: {
   product: ShopProduct;
   onAdd: (color: string, size?: string) => void;
   cartCount: number;
+  onImageClick: (src: string) => void;
 }) {
   const [color, setColor] = useState(product.colors[0]);
   const [size, setSize] = useState(product.sizes[0] || undefined);
@@ -41,16 +43,20 @@ function ProductCard({
         boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
       }}
     >
-      {/* Product image from Printful */}
-      <div style={{
-        background: "#fff",
-        padding: "1.5rem",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        borderRadius: "16px 16px 0 0",
-        minHeight: 200,
-      }}>
+      {/* Product image from Printful — click to enlarge */}
+      <div
+        onClick={() => onImageClick(product.colorPreviews[color] || product.previewUrl)}
+        style={{
+          background: "#fff",
+          padding: "1.5rem",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          borderRadius: "16px 16px 0 0",
+          minHeight: 200,
+          cursor: "zoom-in",
+        }}
+      >
         <img
           src={product.colorPreviews[color] || product.previewUrl}
           alt={product.name}
@@ -76,19 +82,20 @@ function ProductCard({
 
         {/* Color selector */}
         <div style={{ marginBottom: "0.75rem" }}>
-          <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Color</span>
+          <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.5)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Color</span>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginTop: "0.35rem" }}>
             {product.colors.map((c) => (
               <button
                 key={c}
                 onClick={() => setColor(c)}
                 style={{
-                  padding: "4px 10px",
+                  padding: "8px 12px",
+                  minHeight: 44,
                   borderRadius: 4,
                   border: color === c ? "1px solid #D4A843" : "1px solid rgba(255,255,255,0.1)",
                   background: color === c ? "rgba(212,168,67,0.15)" : "transparent",
                   color: color === c ? "#D4A843" : "rgba(255,255,255,0.5)",
-                  fontSize: "0.7rem",
+                  fontSize: "0.75rem",
                   cursor: "pointer",
                   transition: "all 0.15s",
                 }}
@@ -102,22 +109,23 @@ function ProductCard({
         {/* Size selector */}
         {product.sizes.length > 0 && (
           <div style={{ marginBottom: "1rem" }}>
-            <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Size</span>
+            <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.5)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Size</span>
             <div style={{ display: "flex", gap: "0.4rem", marginTop: "0.35rem" }}>
               {product.sizes.map((s) => (
                 <button
                   key={s}
                   onClick={() => setSize(s)}
                   style={{
-                    padding: "4px 12px",
+                    padding: "8px 12px",
+                    minHeight: 44,
                     borderRadius: 4,
                     border: size === s ? "1px solid #D4A843" : "1px solid rgba(255,255,255,0.1)",
                     background: size === s ? "rgba(212,168,67,0.15)" : "transparent",
                     color: size === s ? "#D4A843" : "rgba(255,255,255,0.5)",
-                    fontSize: "0.7rem",
+                    fontSize: "0.75rem",
                     cursor: "pointer",
                     transition: "all 0.15s",
-                    minWidth: 36,
+                    minWidth: 44,
                   }}
                 >
                   {s}
@@ -169,6 +177,7 @@ export default function ShopPageClient({ onBack }: { onBack?: () => void }) {
   const [cartOpen, setCartOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
 
   useEffect(() => {
     fetch("/api/products")
@@ -248,8 +257,8 @@ export default function ShopPageClient({ onBack }: { onBack?: () => void }) {
         <img src="/proshop-photo.png" alt="Tour de Fore pro shop merchandise display" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
       </div>
 
-      {/* Cart button */}
-      <div className="shop-cart-btn" style={{ position: "fixed", top: "1.2rem", right: "clamp(1.5rem, 6vw, 4rem)", zIndex: 100 }}>
+      {/* Cart button — offset right to avoid HomeButton overlap */}
+      <div className="shop-cart-btn" style={{ position: "fixed", top: "1.2rem", right: "clamp(6rem, 12vw, 10rem)", zIndex: 100 }}>
         <button
           onClick={() => setCartOpen(true)}
           style={{
@@ -298,6 +307,7 @@ export default function ShopPageClient({ onBack }: { onBack?: () => void }) {
                 product={product}
                 onAdd={(color, size) => addToCart(product, color, size)}
                 cartCount={cart.filter((c) => c.productId === product.id).reduce((s, c) => s + c.quantity, 0)}
+                onImageClick={(src) => setLightboxSrc(src)}
               />
             </motion.div>
           ))}
@@ -314,15 +324,15 @@ export default function ShopPageClient({ onBack }: { onBack?: () => void }) {
       <AnimatePresence>
         {cartOpen && (
           <>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setCartOpen(false)} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)", zIndex: 200 }} />
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setCartOpen(false)} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)", zIndex: 10001 }} />
             <motion.div
               initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }}
               transition={{ ease: [0.25, 0.1, 0.25, 1] }}
-              style={{ position: "fixed", top: 0, right: 0, bottom: 0, width: "min(420px, 100vw)", background: "#0f1a0f", borderLeft: "1px solid rgba(212,168,67,0.15)", zIndex: 201, display: "flex", flexDirection: "column", padding: "2rem" }}
+              style={{ position: "fixed", top: 0, right: 0, bottom: 0, width: "min(420px, 100vw)", background: "#0f1a0f", borderLeft: "1px solid rgba(212,168,67,0.15)", zIndex: 10002, display: "flex", flexDirection: "column", padding: "2rem" }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem" }}>
                 <h2 style={{ fontFamily: "var(--font-shop-circus), serif", fontSize: "1.2rem", color: "#D4A843", letterSpacing: "0.06em" }}>Your Cart</h2>
-                <button onClick={() => setCartOpen(false)} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer", fontSize: "1.2rem" }}>✕</button>
+                <button onClick={() => setCartOpen(false)} aria-label="Close cart" style={{ background: "none", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer", fontSize: "1.2rem", minWidth: 44, minHeight: 44, display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
               </div>
 
               {cart.length === 0 ? (
@@ -377,6 +387,67 @@ export default function ShopPageClient({ onBack }: { onBack?: () => void }) {
               )}
             </motion.div>
           </>
+        )}
+      </AnimatePresence>
+
+      {/* Image lightbox */}
+      <AnimatePresence>
+        {lightboxSrc && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setLightboxSrc(null)}
+            onKeyDown={(e) => { if (e.key === "Escape") setLightboxSrc(null); }}
+            tabIndex={0}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 10003,
+              background: "rgba(0,0,0,0.85)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "zoom-out",
+              padding: "2rem",
+            }}
+          >
+            <motion.img
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              src={lightboxSrc}
+              alt="Product enlarged"
+              style={{
+                maxWidth: "90vw",
+                maxHeight: "85vh",
+                objectFit: "contain",
+                borderRadius: 12,
+                boxShadow: "0 20px 60px rgba(0,0,0,0.6)",
+              }}
+            />
+            <button
+              onClick={() => setLightboxSrc(null)}
+              style={{
+                position: "absolute",
+                top: "1.5rem",
+                right: "1.5rem",
+                background: "rgba(255,255,255,0.1)",
+                border: "1px solid rgba(255,255,255,0.3)",
+                borderRadius: "50%",
+                width: 40,
+                height: 40,
+                color: "#fff",
+                fontSize: "1.2rem",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              ✕
+            </button>
+          </motion.div>
         )}
       </AnimatePresence>
     </main>

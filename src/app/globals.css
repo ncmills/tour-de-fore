@@ -177,7 +177,8 @@ h1, h2, h3, h4 {
   outline-offset: 2px;
 }
 .wizard-input:focus-visible {
-  outline: none !important;
+  outline: 2px solid rgba(234, 88, 12, 0.6) !important;
+  outline-offset: 2px;
 }
 
 /* ── Custom select arrow ── */
@@ -372,9 +373,10 @@ body.menu-open {
     font-size: 0.65rem !important;
   }
 
-  /* Shop cart button — move below HomeButton on mobile to avoid overlap */
+  /* Shop cart button — reposition on mobile to avoid nav + title overlap */
   .shop-cart-btn {
-    top: 4.5rem !important;
+    top: 1.2rem !important;
+    right: clamp(4.5rem, 10vw, 6rem) !important;
   }
 }
 

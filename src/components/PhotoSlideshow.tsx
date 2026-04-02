@@ -86,6 +86,7 @@ export default function PhotoSlideshow({ images, interval = 4500 }: PhotoSlidesh
         <>
           <button
             onClick={prev}
+            aria-label="Previous photo"
             style={{
               position: "absolute", left: "1rem", top: "50%", transform: "translateY(-50%)", zIndex: 10,
               background: "rgba(0,0,0,0.5)", border: "none", borderRadius: "50%",
@@ -100,6 +101,7 @@ export default function PhotoSlideshow({ images, interval = 4500 }: PhotoSlidesh
           </button>
           <button
             onClick={next}
+            aria-label="Next photo"
             style={{
               position: "absolute", right: "1rem", top: "50%", transform: "translateY(-50%)", zIndex: 10,
               background: "rgba(0,0,0,0.5)", border: "none", borderRadius: "50%",
