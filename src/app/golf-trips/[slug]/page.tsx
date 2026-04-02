@@ -183,12 +183,15 @@ export default async function DestinationPage({
         </p>
 
         <p
+          className="neon-stats"
           style={{
             fontSize: "0.85rem",
-            color: "rgba(255,255,255,0.4)",
+            color: "#ff6a28",
             fontFamily: "var(--font-plan-block), sans-serif",
+            fontWeight: 700,
             textTransform: "uppercase",
             letterSpacing: "0.08em",
+            textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3)",
             marginBottom: "1.5rem",
           }}
         >

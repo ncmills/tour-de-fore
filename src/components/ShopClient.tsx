@@ -112,7 +112,7 @@ export default function ShopClient() {
             </h1>
           </FadeIn>
           <FadeIn delay={0.1}>
-            <p className="text-text-muted text-base md:text-lg font-body max-w-md leading-[1.8]">
+            <p className="neon-stats max-w-md" style={{ fontFamily: "var(--font-plan-block), sans-serif", color: "#ff6a28", fontSize: "clamp(0.75rem, 1.5vw, 0.95rem)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3)" }}>
               Look good. Play bad. Drink well.
             </p>
           </FadeIn>

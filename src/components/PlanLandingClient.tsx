@@ -73,7 +73,7 @@ export default function PlanLandingClient({ onFirstTime }: { onFirstTime: () => 
         <h1 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "0.5rem" }}>
           Plan a Trip
         </h1>
-        <p style={{ color: "rgba(255,255,255,0.45)", fontSize: "clamp(0.85rem, 2vw, 1.05rem)", fontFamily: "var(--font-accent), serif", fontStyle: "italic", marginBottom: "1.5rem" }}>
+        <p className="neon-stats" style={{ color: "#ff6a28", fontSize: "clamp(0.8rem, 2vw, 1rem)", fontFamily: "var(--font-plan-block), sans-serif", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3)", marginBottom: "1.5rem" }}>
           Stop planning in a group chat. Start planning like a devil.
         </p>
 
@@ -112,14 +112,14 @@ export default function PlanLandingClient({ onFirstTime }: { onFirstTime: () => 
               }}
             >
               <span style={{ display: "block", fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1.3rem", textTransform: "uppercase", letterSpacing: "0.06em", color: "#EA580C", marginBottom: "0.3rem" }}>Plan New Trip</span>
-              <span style={{ display: "block", fontSize: "0.8rem", color: "rgba(255,255,255,0.4)" }}>Tell us where. We&apos;ll handle the rest.</span>
+              <span style={{ display: "block", fontSize: "0.75rem", color: "#ff6a28", fontFamily: "var(--font-plan-block), sans-serif", textTransform: "uppercase", letterSpacing: "0.06em", textShadow: "0 0 6px rgba(255,106,40,0.6), 0 0 14px rgba(255,60,20,0.3)" }}>Tell us where. We&apos;ll handle the rest.</span>
             </motion.button>
           </motion.div>
         )}
 
         {mode === "choose" && (
           <div style={{ marginTop: "2.5rem", padding: "1.25rem 2rem", background: "rgba(234,88,12,0.08)", border: "1px solid rgba(234,88,12,0.25)", borderRadius: 8, maxWidth: 360, margin: "2.5rem auto 0" }}>
-            <p style={{ color: "#EA580C", fontSize: "1rem", fontFamily: "var(--font-plan-block), sans-serif", textTransform: "uppercase", letterSpacing: "0.06em", lineHeight: 1.4 }}>
+            <p className="neon-stats" style={{ color: "#ff6a28", fontSize: "0.9rem", fontFamily: "var(--font-plan-block), sans-serif", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", lineHeight: 1.4, textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3)" }}>
               The golf trip your group keeps talking about? Plan it.
             </p>
           </div>

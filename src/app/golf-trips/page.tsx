@@ -95,7 +95,7 @@ export default function GolfTripsIndex() {
             marginBottom: "3rem",
           }}
         >
-          Where legends are made and handicaps are lies. Each destination is loaded with
+          <span className="neon-stats" style={{ color: "#ff6a28", fontFamily: "var(--font-plan-block), sans-serif", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3)" }}>Where legends are made and handicaps are lies.</span>{" "}Each destination is loaded with
           courses, lodging, restaurants, nightlife, and activities for the ultimate
           group golf trip.
         </p>

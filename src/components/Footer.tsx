@@ -22,7 +22,7 @@ export default function Footer() {
                 Tour de Fore
               </h3>
             </div>
-            <p className="font-accent text-base italic text-text-dim max-w-xs">
+            <p className="neon-stats" style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "0.7rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#ff6a28", textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3)", maxWidth: "20rem" }}>
               6 years. 7 trips. 600+ beers. Now it&apos;s your turn.
             </p>
           </div>

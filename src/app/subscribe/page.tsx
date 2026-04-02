@@ -49,7 +49,7 @@ export default function SubscribePage() {
           }}>
             Become a Devil
           </h1>
-          <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "1.1rem", marginBottom: "2rem", maxWidth: 500, margin: "0 auto 2rem" }}>
+          <p className="neon-stats" style={{ color: "#ff6a28", fontSize: "clamp(0.85rem, 2.5vw, 1.05rem)", fontFamily: "var(--font-plan-block), sans-serif", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3)", marginBottom: "2rem", maxWidth: 500, margin: "0 auto 2rem" }}>
             Free gets you the shape. Devils get the details.
           </p>
         </motion.div>
@@ -68,7 +68,7 @@ export default function SubscribePage() {
           }}
         >
           <div style={{ fontSize: "clamp(3rem, 8vw, 5rem)", fontWeight: 800, color: "#fff" }}>$199</div>
-          <p style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.5)", marginBottom: "2rem" }}>Unlimited trips. Unlimited excuses to your wife.</p>
+          <p className="neon-stats" style={{ fontSize: "clamp(0.75rem, 2vw, 0.9rem)", color: "#ff6a28", fontFamily: "var(--font-plan-block), sans-serif", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3)", marginBottom: "2rem" }}>Unlimited trips. Unlimited excuses to your wife.</p>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(250px, 100%), 1fr))", gap: "1rem", textAlign: "left", marginBottom: "2rem" }}>
             {perks.map(({ icon, label, desc }) => (

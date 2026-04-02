@@ -13,12 +13,12 @@ const HYPE_VIDEO = "/hype-audio.mp4"; // has audio; TubeTv starts muted, user ca
 const textStyle: React.CSSProperties = {
   fontFamily: "var(--font-scrawl), cursive",
   fontSize: "clamp(1.3rem, 3.5vw, 3.5rem)",
-  color: "rgba(255,255,255,0.9)",
+  color: "#ff6a28",
   lineHeight: 1,
   margin: 0,
   padding: 0,
   textAlign: "center",
-  textShadow: "0 0 8px rgba(255,60,20,0.4), 0 0 20px rgba(255,60,20,0.15)",
+  textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3)",
 };
 
 type Phase = "text" | "tv" | "done";
@@ -182,7 +182,7 @@ export default function HomeClient() {
                   animate={{ clipPath: "inset(0 -5px 0 -5px)" }}
                   transition={{ duration: 1.4, delay: 0.3, ease: [0.25, 0.0, 0.35, 1.0] }}
                 >
-                  hell is empty
+                  all the devils are here
                 </motion.p>
                 <motion.p
                   style={{ ...textStyle, clipPath: "inset(0 105% 0 -5px)" }}
@@ -192,7 +192,7 @@ export default function HomeClient() {
                   Plan the trip. Play the rounds. Blame the wind.
                 </motion.p>
                 <motion.p
-                  style={{ ...textStyle, fontSize: "clamp(0.7rem, 1.8vw, 1rem)", letterSpacing: "0.12em", clipPath: "inset(0 105% 0 -5px)", opacity: 0.6 }}
+                  style={{ ...textStyle, fontSize: "clamp(0.7rem, 1.8vw, 1rem)", letterSpacing: "0.12em", clipPath: "inset(0 105% 0 -5px)", opacity: 0.7, marginTop: "0.75em" }}
                   animate={{ clipPath: "inset(0 -5px 0 -5px)" }}
                   transition={{ duration: 1.4, delay: 2.0, ease: [0.25, 0.0, 0.35, 1.0] }}
                 >

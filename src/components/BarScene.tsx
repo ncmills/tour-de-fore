@@ -55,6 +55,33 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
       <MulliganButton />
       <HomeButton />
 
+      {/* Tagline — top of page, above bartender */}
+      <motion.p
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.3 }}
+        className="neon-stats"
+        style={{
+          position: "absolute",
+          top: "clamp(1.5rem, 4vh, 3rem)",
+          left: "50%",
+          transform: "translateX(-50%)",
+          zIndex: 10,
+          fontFamily: "var(--font-plan-block), sans-serif",
+          fontSize: "clamp(0.6rem, 2vw, 0.85rem)",
+          fontWeight: 700,
+          textTransform: "uppercase",
+          letterSpacing: "0.12em",
+          color: "#ff6a28",
+          textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3)",
+          textAlign: "center",
+          whiteSpace: "nowrap",
+          pointerEvents: "none",
+        }}
+      >
+        Rep the crew on and off the course.
+      </motion.p>
+
       {/* Bar scene — photo background */}
       <img
         src="/bar-photo.png"
