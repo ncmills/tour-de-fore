@@ -290,7 +290,7 @@ export default function ShopPageClient({ onBack }: { onBack?: () => void }) {
             Pro Shop
           </h1>
           <p style={{ fontFamily: "var(--font-shop-script), cursive", color: "rgba(255,255,255,0.45)", fontSize: "clamp(1rem, 2vw, 1.3rem)" }}>
-            Spend like you just drank 97 beers over 108 holes and missed every putt.
+            Gear for devils who play 108 holes and live to tell about it.
           </p>
         </motion.div>
 
@@ -315,7 +315,7 @@ export default function ShopPageClient({ onBack }: { onBack?: () => void }) {
 
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }} style={{ textAlign: "center", marginTop: "3rem", padding: "1.5rem", borderTop: "1px solid rgba(212,168,67,0.1)" }}>
           <p style={{ fontFamily: "var(--font-shop-circus), serif", color: "rgba(255,255,255,0.25)", fontSize: "0.75rem", letterSpacing: "0.1em" }}>
-            ALL SALES SUPPORT THE ANNUAL TOUR DE FORE ODYSSEY
+            LOOK GOOD. PLAY BAD. DRINK WELL.
           </p>
         </motion.div>
       </div>

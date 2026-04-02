@@ -95,7 +95,7 @@ export default function GolfTripsIndex() {
             marginBottom: "3rem",
           }}
         >
-          133 hand-picked cities across 7 regions. Each destination is loaded with
+          Where legends are made and handicaps are lies. Each destination is loaded with
           courses, lodging, restaurants, nightlife, and activities for the ultimate
           group golf trip.
         </p>

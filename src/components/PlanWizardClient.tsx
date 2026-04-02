@@ -975,7 +975,7 @@ export default function PlanWizardClient() {
 
       {/* STEP 7: Account + Generate */}
       {currentQ === 6 && (
-        <Question number={7} total={totalQuestions} title="Almost there" subtitle="Let's Plan" id={questionIds[6]} typedSteps={typedSteps}>
+        <Question number={7} total={totalQuestions} title="Your annual tradition starts now" subtitle="Let's Plan" id={questionIds[6]} typedSteps={typedSteps}>
           {/* Toggle: New Account vs Sign In */}
           <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", marginBottom: "2rem" }}>
             <button

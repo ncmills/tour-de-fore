@@ -189,7 +189,14 @@ export default function HomeClient() {
                   animate={{ clipPath: "inset(0 -5px 0 -5px)" }}
                   transition={{ duration: 1.6, delay: 1.2, ease: [0.25, 0.0, 0.35, 1.0] }}
                 >
-                  all the devils are here
+                  Plan the trip. Play the rounds. Blame the wind.
+                </motion.p>
+                <motion.p
+                  style={{ ...textStyle, fontSize: "clamp(0.7rem, 1.8vw, 1rem)", letterSpacing: "0.12em", clipPath: "inset(0 105% 0 -5px)", opacity: 0.6 }}
+                  animate={{ clipPath: "inset(0 -5px 0 -5px)" }}
+                  transition={{ duration: 1.4, delay: 2.0, ease: [0.25, 0.0, 0.35, 1.0] }}
+                >
+                  Built by golfers. Powered by AI. Fueled by beer.
                 </motion.p>
               </div>
             </motion.div>
@@ -248,6 +255,16 @@ export default function HomeClient() {
               </span>
             ))}
           </div>
+          <p style={{
+            fontFamily: "var(--font-accent), serif",
+            fontStyle: "italic",
+            fontSize: "clamp(0.75rem, 1.5vw, 0.95rem)",
+            color: "rgba(255,255,255,0.35)",
+            letterSpacing: "0.06em",
+            marginBottom: isMobile ? "0.75rem" : "1rem",
+          }}>
+            Plan smarter. Play more. Remember less.
+          </p>
           <Image
             src="/logo-full.png"
             alt="Tour de Fore"

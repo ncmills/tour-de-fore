@@ -23,7 +23,7 @@ export default function Footer() {
               </h3>
             </div>
             <p className="font-accent text-base italic text-text-dim max-w-xs">
-              Hell is empty, and all the devils are here.
+              6 years. 7 trips. 600+ beers. Now it&apos;s your turn.
             </p>
           </div>
 

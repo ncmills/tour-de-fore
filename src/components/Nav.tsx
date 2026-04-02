@@ -246,7 +246,7 @@ export default function Nav() {
               Tour de Fore
             </Link>
             <p className="font-accent text-base text-text-muted italic mb-12">
-              Hell is empty, and all the devils are here
+              We planned ours. Now we&apos;ll plan yours.
             </p>
 
             <motion.div

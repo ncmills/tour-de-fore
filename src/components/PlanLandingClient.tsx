@@ -70,9 +70,12 @@ export default function PlanLandingClient({ onFirstTime }: { onFirstTime: () => 
 
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} style={{ maxWidth: 500, width: "100%" }}>
         <img src="/logo-est2021.png" alt="Tour de Fore Est. 2021" style={{ width: "clamp(140px, 50vw, 240px)", height: "clamp(140px, 50vw, 240px)", margin: "0 auto 0.75rem", objectFit: "contain" }} />
-        <h1 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "1.5rem" }}>
+        <h1 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "0.5rem" }}>
           Plan a Trip
         </h1>
+        <p style={{ color: "rgba(255,255,255,0.45)", fontSize: "clamp(0.85rem, 2vw, 1.05rem)", fontFamily: "var(--font-accent), serif", fontStyle: "italic", marginBottom: "1.5rem" }}>
+          Stop planning in a group chat. Start planning like a devil.
+        </p>
 
         {mode === "choose" && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ display: "flex", flexDirection: "column", gap: "1rem", maxWidth: 360, margin: "0 auto" }}>
@@ -109,9 +112,15 @@ export default function PlanLandingClient({ onFirstTime }: { onFirstTime: () => 
               }}
             >
               <span style={{ display: "block", fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1.3rem", textTransform: "uppercase", letterSpacing: "0.06em", color: "#EA580C", marginBottom: "0.3rem" }}>Plan New Trip</span>
-              <span style={{ display: "block", fontSize: "0.8rem", color: "rgba(255,255,255,0.4)" }}>Build a custom golf trip with AI</span>
+              <span style={{ display: "block", fontSize: "0.8rem", color: "rgba(255,255,255,0.4)" }}>Tell us where. We&apos;ll handle the rest.</span>
             </motion.button>
           </motion.div>
+        )}
+
+        {mode === "choose" && (
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.85rem", fontFamily: "var(--font-accent), serif", fontStyle: "italic", marginTop: "2rem" }}>
+            The golf trip your group keeps talking about? Plan it.
+          </p>
         )}
 
         {mode === "login" && (

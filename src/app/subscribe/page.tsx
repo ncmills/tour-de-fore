@@ -50,7 +50,7 @@ export default function SubscribePage() {
             Become a Devil
           </h1>
           <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "1.1rem", marginBottom: "2rem", maxWidth: 500, margin: "0 auto 2rem" }}>
-            Free plans show you the shape of the trip. Devils see the specifics — real names, real links, real bookings.
+            Free gets you the shape. Devils get the details.
           </p>
         </motion.div>
 
@@ -68,7 +68,7 @@ export default function SubscribePage() {
           }}
         >
           <div style={{ fontSize: "clamp(3rem, 8vw, 5rem)", fontWeight: 800, color: "#fff" }}>$199</div>
-          <p style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.5)", marginBottom: "2rem" }}>per year · unlimited plans</p>
+          <p style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.5)", marginBottom: "2rem" }}>Unlimited trips. Unlimited excuses to your wife.</p>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(250px, 100%), 1fr))", gap: "1rem", textAlign: "left", marginBottom: "2rem" }}>
             {perks.map(({ icon, label, desc }) => (

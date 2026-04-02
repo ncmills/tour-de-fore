@@ -198,10 +198,10 @@ export default function PastTripsClient() {
           margin: "0 auto",
           lineHeight: 1.8,
         }}>
-          leaving a trail of quadruple bogies and missed putts
+          The trips that built the planner.
         </p>
         <p style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", fontFamily: "monospace", marginTop: "0.75rem" }}>
-          {trips.length} trips · {trips.reduce((s, t) => s + t.courses.length, 0)} courses · countless beers
+          108 holes. 3 days. Legends every time.
         </p>
       </motion.div>
 

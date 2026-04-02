@@ -25,7 +25,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const dest = allDestinations.find((d) => d.id === slug);
   if (!dest) return {};
-  const title = `${dest.city}, ${dest.state} Golf Trip — Courses, Lodging & Nightlife | Tour de Fore`;
+  const title = `${dest.city} Golf Trip: Courses, Lodging, Nightlife & a Budget That Works | Tour de Fore`;
   const description = dest.description.slice(0, 155);
   return {
     title,
@@ -155,7 +155,7 @@ export default async function DestinationPage({
             marginBottom: "0.5rem",
           }}
         >
-          Plan a Golf Trip to {dest.city}, {dest.state}
+          Plan Your {dest.city} Golf Trip in 60 Seconds
         </h1>
 
         <p

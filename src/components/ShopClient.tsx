@@ -113,8 +113,7 @@ export default function ShopClient() {
           </FadeIn>
           <FadeIn delay={0.1}>
             <p className="text-text-muted text-base md:text-lg font-body max-w-md leading-[1.8]">
-              Gear for the kind of golfer who plays 36 a day
-              and tips like they won the tournament.
+              Look good. Play bad. Drink well.
             </p>
           </FadeIn>
         </div>
