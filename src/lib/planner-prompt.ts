@@ -62,7 +62,7 @@ You MUST use the real data below to build the trip plan. Use actual venue names,
 ${destinationContext}
 
 ## Output Format — SINGLE TIER
-You MUST respond with valid JSON only — no markdown, no explanation, no preamble. Just the JSON object.
+CRITICAL: You MUST respond with ONLY valid JSON. No markdown fences, no explanation, no preamble, no trailing text. Start with { and end with }. Every string value must be properly escaped. Do not truncate — complete the entire JSON object.
 
 You will be told which tier to generate. Generate ONE COMPLETE trip plan for that tier. The plan must be a COMPLETE, standalone plan with all details.
 

@@ -79,12 +79,17 @@ async function generateSingleTier(
   tier: "imp" | "devil" | "demonKing",
   attempt = 1
 ): Promise<GeneratedPlan> {
+  // On final attempt: increase tokens and drop temperature for more deterministic output
+  const isLastAttempt = attempt >= 3;
   const message = await client.messages.create({
     model: "claude-haiku-4-5-20251001",
-    max_tokens: 8000,
-    temperature: 0.3,
+    max_tokens: isLastAttempt ? 10000 : 8000,
+    temperature: isLastAttempt ? 0.1 : 0.3,
     system: buildSystemPrompt(destinationContext),
-    messages: [{ role: "user", content: buildUserMessage(state, tier) }],
+    messages: [
+      { role: "user", content: buildUserMessage(state, tier) },
+      ...(attempt > 1 ? [{ role: "assistant" as const, content: "{" }] : []),
+    ],
   });
 
   console.log(`Claude [${tier}] attempt=${attempt}: model=${message.model} in=${message.usage.input_tokens} out=${message.usage.output_tokens} stop=${message.stop_reason}`);
@@ -96,7 +101,9 @@ async function generateSingleTier(
     console.warn(`${tier} hit max_tokens at ${message.usage.output_tokens} tokens`);
   }
 
-  const parsed = tryParseJSON(textBlock.text);
+  // On retries, we prefill "{" as assistant message — prepend it back
+  const rawText = attempt > 1 ? "{" + textBlock.text : textBlock.text;
+  const parsed = tryParseJSON(rawText);
   if (parsed) return parsed as GeneratedPlan;
 
   console.error(`JSON parse failed for ${tier} attempt=${attempt} (${message.usage.output_tokens} tokens, stop: ${message.stop_reason}). First 500 chars: ${textBlock.text.trim().slice(0, 500)}`);

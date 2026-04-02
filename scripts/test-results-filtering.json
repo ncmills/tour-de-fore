@@ -1,0 +1,7635 @@
+[
+  {
+    "name": "Southwest × spring",
+    "suite": "Region × Season",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "preferredSeason": "Spring",
+      "flexible": true,
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "spring",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Laughlin",
+        "state": "NV",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "San Antonio",
+        "state": "TX",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Las Vegas",
+        "state": "NV",
+        "priceLevel": "premium",
+        "score": 91
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Southwest × summer",
+    "suite": "Region × Season",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "preferredSeason": "Summer",
+      "flexible": true,
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "summer",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Whitefish",
+        "state": "MT",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Reno",
+        "state": "NV",
+        "priceLevel": "mid",
+        "score": 88
+      },
+      {
+        "city": "Santa Fe",
+        "state": "NM",
+        "priceLevel": "premium",
+        "score": 89
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Southwest × fall",
+    "suite": "Region × Season",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "preferredSeason": "Fall",
+      "flexible": true,
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Lake Havasu City",
+        "state": "AZ",
+        "priceLevel": "budget",
+        "score": 89
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Las Vegas",
+        "state": "NV",
+        "priceLevel": "premium",
+        "score": 91
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Pacific NW × spring",
+    "suite": "Region × Season",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "preferredSeason": "Spring",
+      "flexible": true,
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "spring",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": true,
+    "candidateCount": 0,
+    "pickCount": 0,
+    "picks": [],
+    "passed": true
+  },
+  {
+    "name": "Pacific NW × summer",
+    "suite": "Region × Season",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "preferredSeason": "Summer",
+      "flexible": true,
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "summer",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Leavenworth",
+        "state": "WA",
+        "priceLevel": "budget",
+        "score": 89
+      },
+      {
+        "city": "Whitefish",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Seattle",
+        "state": "WA",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Pacific NW × fall",
+    "suite": "Region × Season",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "preferredSeason": "Fall",
+      "flexible": true,
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Walla Walla",
+        "state": "WA",
+        "priceLevel": "budget",
+        "score": 90
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Bend",
+        "state": "OR",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Mountain West × spring",
+    "suite": "Region × Season",
+    "wizardOverrides": {
+      "region": "Mountain West",
+      "preferredSeason": "Spring",
+      "flexible": true,
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "Mountain West",
+      "season": "spring",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 2,
+    "pickCount": 2,
+    "picks": [
+      {
+        "city": "Fort Collins",
+        "state": "CO",
+        "priceLevel": "budget",
+        "score": 89
+      },
+      {
+        "city": "Colorado Springs",
+        "state": "CO",
+        "priceLevel": "premium",
+        "score": 92
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Mountain West × summer",
+    "suite": "Region × Season",
+    "wizardOverrides": {
+      "region": "Mountain West",
+      "preferredSeason": "Summer",
+      "flexible": true,
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "Mountain West",
+      "season": "summer",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Missoula",
+        "state": "MT",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Whitefish",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Bend",
+        "state": "OR",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Mountain West × fall",
+    "suite": "Region × Season",
+    "wizardOverrides": {
+      "region": "Mountain West",
+      "preferredSeason": "Fall",
+      "flexible": true,
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "Mountain West",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Laughlin",
+        "state": "NV",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Park City",
+        "state": "UT",
+        "priceLevel": "premium",
+        "score": 92
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Midwest × spring",
+    "suite": "Region × Season",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "preferredSeason": "Spring",
+      "flexible": true,
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "spring",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "St. Louis",
+        "state": "MO",
+        "priceLevel": "budget",
+        "score": 86
+      },
+      {
+        "city": "Cincinnati",
+        "state": "OH",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Charleston",
+        "state": "SC",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Midwest × summer",
+    "suite": "Region × Season",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "preferredSeason": "Summer",
+      "flexible": true,
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "summer",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Milwaukee",
+        "state": "WI",
+        "priceLevel": "budget",
+        "score": 88
+      },
+      {
+        "city": "Whitefish",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Kohler",
+        "state": "WI",
+        "priceLevel": "premium",
+        "score": 90
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Midwest × fall",
+    "suite": "Region × Season",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "preferredSeason": "Fall",
+      "flexible": true,
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "St. Louis",
+        "state": "MO",
+        "priceLevel": "budget",
+        "score": 86
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Southeast × spring",
+    "suite": "Region × Season",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "preferredSeason": "Spring",
+      "flexible": true,
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "spring",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Grand Rapids",
+        "state": "MI",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Sarasota",
+        "state": "FL",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Sea Island / St. Simons",
+        "state": "GA",
+        "priceLevel": "premium",
+        "score": 89
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Southeast × summer",
+    "suite": "Region × Season",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "preferredSeason": "Summer",
+      "flexible": true,
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "summer",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Asheville",
+        "state": "NC",
+        "priceLevel": "mid",
+        "score": 92
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Southeast × fall",
+    "suite": "Region × Season",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "preferredSeason": "Fall",
+      "flexible": true,
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Virginia Beach",
+        "state": "VA",
+        "priceLevel": "budget",
+        "score": 91
+      },
+      {
+        "city": "Naples",
+        "state": "FL",
+        "priceLevel": "mid",
+        "score": 92
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Northeast × spring",
+    "suite": "Region × Season",
+    "wizardOverrides": {
+      "region": "Northeast",
+      "preferredSeason": "Spring",
+      "flexible": true,
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "Northeast",
+      "season": "spring",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Grand Rapids",
+        "state": "MI",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Ocean City",
+        "state": "MD",
+        "priceLevel": "mid",
+        "score": 91
+      },
+      {
+        "city": "Williamsburg",
+        "state": "VA",
+        "priceLevel": "premium",
+        "score": 84
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Northeast × summer",
+    "suite": "Region × Season",
+    "wizardOverrides": {
+      "region": "Northeast",
+      "preferredSeason": "Summer",
+      "flexible": true,
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "Northeast",
+      "season": "summer",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Poconos",
+        "state": "PA",
+        "priceLevel": "budget",
+        "score": 86
+      },
+      {
+        "city": "Ocean City",
+        "state": "MD",
+        "priceLevel": "mid",
+        "score": 91
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Northeast × fall",
+    "suite": "Region × Season",
+    "wizardOverrides": {
+      "region": "Northeast",
+      "preferredSeason": "Fall",
+      "flexible": true,
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "Northeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Bretton Woods",
+        "state": "NH",
+        "priceLevel": "budget",
+        "score": 86
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Cape Cod",
+        "state": "MA",
+        "priceLevel": "premium",
+        "score": 87
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "South Central × spring",
+    "suite": "Region × Season",
+    "wizardOverrides": {
+      "region": "South Central",
+      "preferredSeason": "Spring",
+      "flexible": true,
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "South Central",
+      "season": "spring",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Laughlin",
+        "state": "NV",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Louisville",
+        "state": "KY",
+        "priceLevel": "mid",
+        "score": 91
+      },
+      {
+        "city": "Austin",
+        "state": "TX",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "South Central × summer",
+    "suite": "Region × Season",
+    "wizardOverrides": {
+      "region": "South Central",
+      "preferredSeason": "Summer",
+      "flexible": true,
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "South Central",
+      "season": "summer",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Lake of the Ozarks",
+        "state": "MO",
+        "priceLevel": "mid",
+        "score": 78
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "South Central × fall",
+    "suite": "Region × Season",
+    "wizardOverrides": {
+      "region": "South Central",
+      "preferredSeason": "Fall",
+      "flexible": true,
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "South Central",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Laughlin",
+        "state": "NV",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Galveston",
+        "state": "TX",
+        "priceLevel": "mid",
+        "score": 87
+      },
+      {
+        "city": "Austin",
+        "state": "TX",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Southwest × group=4",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "groupSize": 4
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 4,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Flagstaff",
+        "state": "AZ",
+        "priceLevel": "budget",
+        "score": 92
+      },
+      {
+        "city": "Santa Fe",
+        "state": "NM",
+        "priceLevel": "mid",
+        "score": 89
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Southwest × group=8",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "groupSize": 8
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 8,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Mesquite",
+        "state": "NV",
+        "priceLevel": "budget",
+        "score": 85
+      },
+      {
+        "city": "St. George",
+        "state": "UT",
+        "priceLevel": "mid",
+        "score": 87
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Southwest × group=12",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Lake Havasu City",
+        "state": "AZ",
+        "priceLevel": "budget",
+        "score": 89
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Las Vegas",
+        "state": "NV",
+        "priceLevel": "premium",
+        "score": 91
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Southwest × group=20",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "groupSize": 20
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 20,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Scottsdale",
+        "state": "AZ",
+        "priceLevel": "mid",
+        "score": 74
+      },
+      {
+        "city": "Las Vegas",
+        "state": "NV",
+        "priceLevel": "premium",
+        "score": 91
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Southwest × group=32",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "groupSize": 32
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 32,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": true,
+    "candidateCount": 0,
+    "pickCount": 0,
+    "picks": [],
+    "passed": true
+  },
+  {
+    "name": "Pacific NW × group=4",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "groupSize": 4
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "fall",
+      "groupSize": 4,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Walla Walla",
+        "state": "WA",
+        "priceLevel": "budget",
+        "score": 90
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Sun Valley / Ketchum",
+        "state": "ID",
+        "priceLevel": "premium",
+        "score": 89
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Pacific NW × group=8",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "groupSize": 8
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "fall",
+      "groupSize": 8,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Eugene",
+        "state": "OR",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Sun Valley / Ketchum",
+        "state": "ID",
+        "priceLevel": "premium",
+        "score": 89
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Pacific NW × group=12",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Walla Walla",
+        "state": "WA",
+        "priceLevel": "budget",
+        "score": 90
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Bend",
+        "state": "OR",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Pacific NW × group=20",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "groupSize": 20
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "fall",
+      "groupSize": 20,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Portland",
+        "state": "OR",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Seattle",
+        "state": "WA",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Pacific NW × group=32",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "groupSize": 32
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "fall",
+      "groupSize": 32,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": true,
+    "candidateCount": 0,
+    "pickCount": 0,
+    "picks": [],
+    "passed": true
+  },
+  {
+    "name": "Mountain West × group=4",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Mountain West",
+      "groupSize": 4
+    },
+    "filterOptions": {
+      "region": "Mountain West",
+      "season": "fall",
+      "groupSize": 4,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Laughlin",
+        "state": "NV",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Durango",
+        "state": "CO",
+        "priceLevel": "mid",
+        "score": 84
+      },
+      {
+        "city": "Vail",
+        "state": "CO",
+        "priceLevel": "premium",
+        "score": 92
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Mountain West × group=8",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Mountain West",
+      "groupSize": 8
+    },
+    "filterOptions": {
+      "region": "Mountain West",
+      "season": "fall",
+      "groupSize": 8,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Laughlin",
+        "state": "NV",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Durango",
+        "state": "CO",
+        "priceLevel": "mid",
+        "score": 84
+      },
+      {
+        "city": "Vail",
+        "state": "CO",
+        "priceLevel": "premium",
+        "score": 92
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Mountain West × group=12",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Mountain West",
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "Mountain West",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Laughlin",
+        "state": "NV",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Park City",
+        "state": "UT",
+        "priceLevel": "premium",
+        "score": 92
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Mountain West × group=20",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Mountain West",
+      "groupSize": 20
+    },
+    "filterOptions": {
+      "region": "Mountain West",
+      "season": "fall",
+      "groupSize": 20,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 2,
+    "pickCount": 2,
+    "picks": [
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Vail",
+        "state": "CO",
+        "priceLevel": "premium",
+        "score": 92
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Mountain West × group=32",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Mountain West",
+      "groupSize": 32
+    },
+    "filterOptions": {
+      "region": "Mountain West",
+      "season": "fall",
+      "groupSize": 32,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": true,
+    "candidateCount": 0,
+    "pickCount": 0,
+    "picks": [],
+    "passed": true
+  },
+  {
+    "name": "Midwest × group=4",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "groupSize": 4
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 4,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Des Moines",
+        "state": "IA",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Kohler",
+        "state": "WI",
+        "priceLevel": "premium",
+        "score": 90
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Midwest × group=8",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "groupSize": 8
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 8,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Columbus",
+        "state": "OH",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Midwest × group=12",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "St. Louis",
+        "state": "MO",
+        "priceLevel": "budget",
+        "score": 86
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Midwest × group=20",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "groupSize": 20
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 20,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": true,
+    "candidateCount": 0,
+    "pickCount": 0,
+    "picks": [],
+    "passed": true
+  },
+  {
+    "name": "Midwest × group=32",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "groupSize": 32
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 32,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": true,
+    "candidateCount": 0,
+    "pickCount": 0,
+    "picks": [],
+    "passed": true
+  },
+  {
+    "name": "Southeast × group=4",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "groupSize": 4
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 4,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Chattanooga",
+        "state": "TN",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Hilton Head",
+        "state": "SC",
+        "priceLevel": "premium",
+        "score": 85
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Southeast × group=8",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "groupSize": 8
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 8,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Orlando",
+        "state": "FL",
+        "priceLevel": "budget",
+        "score": 92
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Hilton Head",
+        "state": "SC",
+        "priceLevel": "premium",
+        "score": 85
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Southeast × group=12",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Virginia Beach",
+        "state": "VA",
+        "priceLevel": "budget",
+        "score": 91
+      },
+      {
+        "city": "Naples",
+        "state": "FL",
+        "priceLevel": "mid",
+        "score": 92
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Southeast × group=20",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "groupSize": 20
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 20,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Gulf Shores",
+        "state": "AL",
+        "priceLevel": "budget",
+        "score": 86
+      },
+      {
+        "city": "Lake Placid",
+        "state": "NY",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Hilton Head",
+        "state": "SC",
+        "priceLevel": "premium",
+        "score": 85
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Southeast × group=32",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "groupSize": 32
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 32,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": true,
+    "candidateCount": 0,
+    "pickCount": 0,
+    "picks": [],
+    "passed": true
+  },
+  {
+    "name": "Northeast × group=4",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Northeast",
+      "groupSize": 4
+    },
+    "filterOptions": {
+      "region": "Northeast",
+      "season": "fall",
+      "groupSize": 4,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Burlington",
+        "state": "VT",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Bar Harbor",
+        "state": "ME",
+        "priceLevel": "mid",
+        "score": 86
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Northeast × group=8",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Northeast",
+      "groupSize": 8
+    },
+    "filterOptions": {
+      "region": "Northeast",
+      "season": "fall",
+      "groupSize": 8,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Bretton Woods",
+        "state": "NH",
+        "priceLevel": "budget",
+        "score": 86
+      },
+      {
+        "city": "Hudson Valley",
+        "state": "NY",
+        "priceLevel": "mid",
+        "score": 82
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Northeast × group=12",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Northeast",
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "Northeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Bretton Woods",
+        "state": "NH",
+        "priceLevel": "budget",
+        "score": 86
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Cape Cod",
+        "state": "MA",
+        "priceLevel": "premium",
+        "score": 87
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Northeast × group=20",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Northeast",
+      "groupSize": 20
+    },
+    "filterOptions": {
+      "region": "Northeast",
+      "season": "fall",
+      "groupSize": 20,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Poconos",
+        "state": "PA",
+        "priceLevel": "budget",
+        "score": 86
+      },
+      {
+        "city": "Ocean City",
+        "state": "MD",
+        "priceLevel": "mid",
+        "score": 91
+      },
+      {
+        "city": "Nashville",
+        "state": "TN",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Northeast × group=32",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "Northeast",
+      "groupSize": 32
+    },
+    "filterOptions": {
+      "region": "Northeast",
+      "season": "fall",
+      "groupSize": 32,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": true,
+    "candidateCount": 0,
+    "pickCount": 0,
+    "picks": [],
+    "passed": true
+  },
+  {
+    "name": "South Central × group=4",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "South Central",
+      "groupSize": 4
+    },
+    "filterOptions": {
+      "region": "South Central",
+      "season": "fall",
+      "groupSize": 4,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Laughlin",
+        "state": "NV",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Houston",
+        "state": "TX",
+        "priceLevel": "mid",
+        "score": 85
+      },
+      {
+        "city": "New Orleans",
+        "state": "LA",
+        "priceLevel": "premium",
+        "score": 90
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "South Central × group=8",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "South Central",
+      "groupSize": 8
+    },
+    "filterOptions": {
+      "region": "South Central",
+      "season": "fall",
+      "groupSize": 8,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Laughlin",
+        "state": "NV",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Branson",
+        "state": "MO",
+        "priceLevel": "mid",
+        "score": 89
+      },
+      {
+        "city": "New Orleans",
+        "state": "LA",
+        "priceLevel": "premium",
+        "score": 90
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "South Central × group=12",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "South Central",
+      "groupSize": 12
+    },
+    "filterOptions": {
+      "region": "South Central",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Laughlin",
+        "state": "NV",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Galveston",
+        "state": "TX",
+        "priceLevel": "mid",
+        "score": 87
+      },
+      {
+        "city": "Austin",
+        "state": "TX",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "South Central × group=20",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "South Central",
+      "groupSize": 20
+    },
+    "filterOptions": {
+      "region": "South Central",
+      "season": "fall",
+      "groupSize": 20,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Nashville",
+        "state": "TN",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "New Orleans",
+        "state": "LA",
+        "priceLevel": "mid",
+        "score": 90
+      },
+      {
+        "city": "Horseshoe Bay",
+        "state": "TX",
+        "priceLevel": "premium",
+        "score": 68
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "South Central × group=32",
+    "suite": "Region × Group Size",
+    "wizardOverrides": {
+      "region": "South Central",
+      "groupSize": 32
+    },
+    "filterOptions": {
+      "region": "South Central",
+      "season": "fall",
+      "groupSize": 32,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "expectedZero": true,
+    "candidateCount": 0,
+    "pickCount": 0,
+    "picks": [],
+    "passed": true
+  },
+  {
+    "name": "Month: January → season=none",
+    "suite": "Specific Months",
+    "wizardOverrides": {
+      "flexible": false,
+      "tripMonth": "January",
+      "tripYear": "2026",
+      "destinationType": "region",
+      "region": ""
+    },
+    "filterOptions": {
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "St. George",
+        "state": "UT",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Lake Placid",
+        "state": "NY",
+        "priceLevel": "mid",
+        "score": 98
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "premium",
+        "score": 99
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Month: February → season=none",
+    "suite": "Specific Months",
+    "wizardOverrides": {
+      "flexible": false,
+      "tripMonth": "February",
+      "tripYear": "2026",
+      "destinationType": "region",
+      "region": ""
+    },
+    "filterOptions": {
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "St. George",
+        "state": "UT",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Lake Placid",
+        "state": "NY",
+        "priceLevel": "mid",
+        "score": 98
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "premium",
+        "score": 99
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Month: March → season=spring",
+    "suite": "Specific Months",
+    "wizardOverrides": {
+      "flexible": false,
+      "tripMonth": "March",
+      "tripYear": "2026",
+      "destinationType": "region",
+      "region": ""
+    },
+    "filterOptions": {
+      "season": "spring",
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Lexington",
+        "state": "KY",
+        "priceLevel": "budget",
+        "score": 89
+      },
+      {
+        "city": "Louisville",
+        "state": "KY",
+        "priceLevel": "mid",
+        "score": 97
+      },
+      {
+        "city": "Sedona",
+        "state": "AZ",
+        "priceLevel": "premium",
+        "score": 91
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Month: April → season=spring",
+    "suite": "Specific Months",
+    "wizardOverrides": {
+      "flexible": false,
+      "tripMonth": "April",
+      "tripYear": "2026",
+      "destinationType": "region",
+      "region": ""
+    },
+    "filterOptions": {
+      "season": "spring",
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Lexington",
+        "state": "KY",
+        "priceLevel": "budget",
+        "score": 89
+      },
+      {
+        "city": "Louisville",
+        "state": "KY",
+        "priceLevel": "mid",
+        "score": 97
+      },
+      {
+        "city": "Sedona",
+        "state": "AZ",
+        "priceLevel": "premium",
+        "score": 91
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Month: May → season=spring",
+    "suite": "Specific Months",
+    "wizardOverrides": {
+      "flexible": false,
+      "tripMonth": "May",
+      "tripYear": "2026",
+      "destinationType": "region",
+      "region": ""
+    },
+    "filterOptions": {
+      "season": "spring",
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Lexington",
+        "state": "KY",
+        "priceLevel": "budget",
+        "score": 89
+      },
+      {
+        "city": "Louisville",
+        "state": "KY",
+        "priceLevel": "mid",
+        "score": 97
+      },
+      {
+        "city": "Sedona",
+        "state": "AZ",
+        "priceLevel": "premium",
+        "score": 91
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Month: June → season=summer",
+    "suite": "Specific Months",
+    "wizardOverrides": {
+      "flexible": false,
+      "tripMonth": "June",
+      "tripYear": "2026",
+      "destinationType": "region",
+      "region": ""
+    },
+    "filterOptions": {
+      "season": "summer",
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Duluth",
+        "state": "MN",
+        "priceLevel": "budget",
+        "score": 99
+      },
+      {
+        "city": "Saratoga Springs",
+        "state": "NY",
+        "priceLevel": "mid",
+        "score": 96
+      },
+      {
+        "city": "Sun Valley / Ketchum",
+        "state": "ID",
+        "priceLevel": "premium",
+        "score": 95
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Month: July → season=summer",
+    "suite": "Specific Months",
+    "wizardOverrides": {
+      "flexible": false,
+      "tripMonth": "July",
+      "tripYear": "2026",
+      "destinationType": "region",
+      "region": ""
+    },
+    "filterOptions": {
+      "season": "summer",
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Duluth",
+        "state": "MN",
+        "priceLevel": "budget",
+        "score": 99
+      },
+      {
+        "city": "Saratoga Springs",
+        "state": "NY",
+        "priceLevel": "mid",
+        "score": 96
+      },
+      {
+        "city": "Sun Valley / Ketchum",
+        "state": "ID",
+        "priceLevel": "premium",
+        "score": 95
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Month: August → season=summer",
+    "suite": "Specific Months",
+    "wizardOverrides": {
+      "flexible": false,
+      "tripMonth": "August",
+      "tripYear": "2026",
+      "destinationType": "region",
+      "region": ""
+    },
+    "filterOptions": {
+      "season": "summer",
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Duluth",
+        "state": "MN",
+        "priceLevel": "budget",
+        "score": 99
+      },
+      {
+        "city": "Saratoga Springs",
+        "state": "NY",
+        "priceLevel": "mid",
+        "score": 96
+      },
+      {
+        "city": "Sun Valley / Ketchum",
+        "state": "ID",
+        "priceLevel": "premium",
+        "score": 95
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Month: September → season=fall",
+    "suite": "Specific Months",
+    "wizardOverrides": {
+      "flexible": false,
+      "tripMonth": "September",
+      "tripYear": "2026",
+      "destinationType": "region",
+      "region": ""
+    },
+    "filterOptions": {
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "St. George",
+        "state": "UT",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Ocean City",
+        "state": "MD",
+        "priceLevel": "mid",
+        "score": 95
+      },
+      {
+        "city": "Fredericksburg",
+        "state": "TX",
+        "priceLevel": "premium",
+        "score": 95
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Month: October → season=fall",
+    "suite": "Specific Months",
+    "wizardOverrides": {
+      "flexible": false,
+      "tripMonth": "October",
+      "tripYear": "2026",
+      "destinationType": "region",
+      "region": ""
+    },
+    "filterOptions": {
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "St. George",
+        "state": "UT",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Ocean City",
+        "state": "MD",
+        "priceLevel": "mid",
+        "score": 95
+      },
+      {
+        "city": "Fredericksburg",
+        "state": "TX",
+        "priceLevel": "premium",
+        "score": 95
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Month: November → season=fall",
+    "suite": "Specific Months",
+    "wizardOverrides": {
+      "flexible": false,
+      "tripMonth": "November",
+      "tripYear": "2026",
+      "destinationType": "region",
+      "region": ""
+    },
+    "filterOptions": {
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "St. George",
+        "state": "UT",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Ocean City",
+        "state": "MD",
+        "priceLevel": "mid",
+        "score": 95
+      },
+      {
+        "city": "Fredericksburg",
+        "state": "TX",
+        "priceLevel": "premium",
+        "score": 95
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Month: December → season=none",
+    "suite": "Specific Months",
+    "wizardOverrides": {
+      "flexible": false,
+      "tripMonth": "December",
+      "tripYear": "2026",
+      "destinationType": "region",
+      "region": ""
+    },
+    "filterOptions": {
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "St. George",
+        "state": "UT",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Lake Placid",
+        "state": "NY",
+        "priceLevel": "mid",
+        "score": 98
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "premium",
+        "score": 99
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Fishing × Southwest",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "activities": [
+        "Fishing"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Fishing"
+      ]
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Payson",
+        "state": "AZ",
+        "priceLevel": "mid",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Fishing × Pacific NW",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "activities": [
+        "Fishing"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Fishing"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Durango",
+        "state": "CO",
+        "priceLevel": "budget",
+        "score": 102
+      },
+      {
+        "city": "Sun Valley / Ketchum",
+        "state": "ID",
+        "priceLevel": "mid",
+        "score": 97
+      },
+      {
+        "city": "Seattle",
+        "state": "WA",
+        "priceLevel": "premium",
+        "score": 102
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Fishing × Mountain West",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Mountain West",
+      "activities": [
+        "Fishing"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Mountain West",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Fishing"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "budget",
+        "score": 102
+      },
+      {
+        "city": "Seattle",
+        "state": "WA",
+        "priceLevel": "mid",
+        "score": 102
+      },
+      {
+        "city": "Vail",
+        "state": "CO",
+        "priceLevel": "premium",
+        "score": 100
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Fishing × Midwest",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "activities": [
+        "Fishing"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Fishing"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Durango",
+        "state": "CO",
+        "priceLevel": "budget",
+        "score": 102
+      },
+      {
+        "city": "Kohler",
+        "state": "WI",
+        "priceLevel": "mid",
+        "score": 98
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "premium",
+        "score": 102
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Fishing × Southeast",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "activities": [
+        "Fishing"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Fishing"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Savannah",
+        "state": "GA",
+        "priceLevel": "budget",
+        "score": 100
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "mid",
+        "score": 102
+      },
+      {
+        "city": "Sea Island / St. Simons",
+        "state": "GA",
+        "priceLevel": "premium",
+        "score": 97
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Fishing × Northeast",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Northeast",
+      "activities": [
+        "Fishing"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Northeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Fishing"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Bar Harbor",
+        "state": "ME",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "mid",
+        "score": 102
+      },
+      {
+        "city": "Cape Cod",
+        "state": "MA",
+        "priceLevel": "premium",
+        "score": 95
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Fishing × South Central",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "South Central",
+      "activities": [
+        "Fishing"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "South Central",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Fishing"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Shreveport-Bossier City",
+        "state": "LA",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Galveston",
+        "state": "TX",
+        "priceLevel": "mid",
+        "score": 95
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "premium",
+        "score": 102
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "ATV × Southwest",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "activities": [
+        "ATV"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "ATV"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "St. George",
+        "state": "UT",
+        "priceLevel": "budget",
+        "score": 95
+      },
+      {
+        "city": "Durango",
+        "state": "CO",
+        "priceLevel": "mid",
+        "score": 102
+      },
+      {
+        "city": "Scottsdale",
+        "state": "AZ",
+        "priceLevel": "premium",
+        "score": 102
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "ATV × Pacific NW",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "activities": [
+        "ATV"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "ATV"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Walla Walla",
+        "state": "WA",
+        "priceLevel": "budget",
+        "score": 90
+      },
+      {
+        "city": "Durango",
+        "state": "CO",
+        "priceLevel": "mid",
+        "score": 102
+      },
+      {
+        "city": "Seattle",
+        "state": "WA",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "ATV × Mountain West",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Mountain West",
+      "activities": [
+        "ATV"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Mountain West",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "ATV"
+      ]
+    },
+    "candidateCount": 2,
+    "pickCount": 2,
+    "picks": [
+      {
+        "city": "Deadwood",
+        "state": "SD",
+        "priceLevel": "budget",
+        "score": 100
+      },
+      {
+        "city": "Durango",
+        "state": "CO",
+        "priceLevel": "premium",
+        "score": 102
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "ATV × Midwest",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "activities": [
+        "ATV"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "ATV"
+      ]
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Galena",
+        "state": "IL",
+        "priceLevel": "mid",
+        "score": 100
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "ATV × Southeast",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "activities": [
+        "ATV"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "ATV"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Galena",
+        "state": "IL",
+        "priceLevel": "budget",
+        "score": 100
+      },
+      {
+        "city": "Sarasota",
+        "state": "FL",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Sea Island / St. Simons",
+        "state": "GA",
+        "priceLevel": "premium",
+        "score": 89
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "ATV × Northeast",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Northeast",
+      "activities": [
+        "ATV"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Northeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "ATV"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Galena",
+        "state": "IL",
+        "priceLevel": "budget",
+        "score": 100
+      },
+      {
+        "city": "Cape May",
+        "state": "NJ",
+        "priceLevel": "mid",
+        "score": 89
+      },
+      {
+        "city": "Lake Placid",
+        "state": "NY",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "ATV × South Central",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "South Central",
+      "activities": [
+        "ATV"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "South Central",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "ATV"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Little Rock",
+        "state": "AR",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Tulsa",
+        "state": "OK",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Scottsdale",
+        "state": "AZ",
+        "priceLevel": "premium",
+        "score": 102
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Casino × Southwest",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "activities": [
+        "Casino"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Casino"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Mesquite",
+        "state": "NV",
+        "priceLevel": "budget",
+        "score": 93
+      },
+      {
+        "city": "Tulsa",
+        "state": "OK",
+        "priceLevel": "mid",
+        "score": 102
+      },
+      {
+        "city": "Las Vegas",
+        "state": "NV",
+        "priceLevel": "premium",
+        "score": 99
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Casino × Pacific NW",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "activities": [
+        "Casino"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Casino"
+      ]
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Spokane",
+        "state": "WA",
+        "priceLevel": "mid",
+        "score": 102
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Casino × Mountain West",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Mountain West",
+      "activities": [
+        "Casino"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Mountain West",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Casino"
+      ]
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Deadwood",
+        "state": "SD",
+        "priceLevel": "mid",
+        "score": 100
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Casino × Midwest",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "activities": [
+        "Casino"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Casino"
+      ]
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "French Lick",
+        "state": "IN",
+        "priceLevel": "mid",
+        "score": 91
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Casino × Southeast",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "activities": [
+        "Casino"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Casino"
+      ]
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Biloxi",
+        "state": "MS",
+        "priceLevel": "mid",
+        "score": 96
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Casino × Northeast",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Northeast",
+      "activities": [
+        "Casino"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Northeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Casino"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Atlantic City",
+        "state": "NJ",
+        "priceLevel": "budget",
+        "score": 102
+      },
+      {
+        "city": "Saratoga Springs",
+        "state": "NY",
+        "priceLevel": "mid",
+        "score": 100
+      },
+      {
+        "city": "Biloxi",
+        "state": "MS",
+        "priceLevel": "premium",
+        "score": 96
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Casino × South Central",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "South Central",
+      "activities": [
+        "Casino"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "South Central",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Casino"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Laughlin",
+        "state": "NV",
+        "priceLevel": "budget",
+        "score": 102
+      },
+      {
+        "city": "Oklahoma City",
+        "state": "OK",
+        "priceLevel": "mid",
+        "score": 99
+      },
+      {
+        "city": "Louisville",
+        "state": "KY",
+        "priceLevel": "premium",
+        "score": 99
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Spa × Southwest",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "activities": [
+        "Spa"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Spa"
+      ]
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Scottsdale",
+        "state": "AZ",
+        "priceLevel": "mid",
+        "score": 102
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Spa × Pacific NW",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "activities": [
+        "Spa"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Spa"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Boise",
+        "state": "ID",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Glenwood Springs",
+        "state": "CO",
+        "priceLevel": "mid",
+        "score": 98
+      },
+      {
+        "city": "Bend",
+        "state": "OR",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Spa × Mountain West",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Mountain West",
+      "activities": [
+        "Spa"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Mountain West",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Spa"
+      ]
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Glenwood Springs",
+        "state": "CO",
+        "priceLevel": "mid",
+        "score": 98
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Spa × Midwest",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "activities": [
+        "Spa"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Spa"
+      ]
+    },
+    "candidateCount": 2,
+    "pickCount": 2,
+    "picks": [
+      {
+        "city": "French Lick",
+        "state": "IN",
+        "priceLevel": "budget",
+        "score": 91
+      },
+      {
+        "city": "Kohler",
+        "state": "WI",
+        "priceLevel": "premium",
+        "score": 98
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Spa × Southeast",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "activities": [
+        "Spa"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Spa"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Saratoga Springs",
+        "state": "NY",
+        "priceLevel": "budget",
+        "score": 100
+      },
+      {
+        "city": "Sea Island / St. Simons",
+        "state": "GA",
+        "priceLevel": "mid",
+        "score": 97
+      },
+      {
+        "city": "Pinehurst",
+        "state": "NC",
+        "priceLevel": "premium",
+        "score": 86
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Spa × Northeast",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Northeast",
+      "activities": [
+        "Spa"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Northeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Spa"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Catskills",
+        "state": "NY",
+        "priceLevel": "budget",
+        "score": 87
+      },
+      {
+        "city": "Bretton Woods",
+        "state": "NH",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Kohler",
+        "state": "WI",
+        "priceLevel": "premium",
+        "score": 98
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Spa × South Central",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "South Central",
+      "activities": [
+        "Spa"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "South Central",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Spa"
+      ]
+    },
+    "candidateCount": 2,
+    "pickCount": 2,
+    "picks": [
+      {
+        "city": "Hot Springs",
+        "state": "AR",
+        "priceLevel": "budget",
+        "score": 100
+      },
+      {
+        "city": "Horseshoe Bay",
+        "state": "TX",
+        "priceLevel": "premium",
+        "score": 86
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Brewery × Southwest",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "activities": [
+        "Brewery"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Brewery"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Flagstaff",
+        "state": "AZ",
+        "priceLevel": "budget",
+        "score": 100
+      },
+      {
+        "city": "Albuquerque",
+        "state": "NM",
+        "priceLevel": "mid",
+        "score": 97
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "premium",
+        "score": 102
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Brewery × Pacific NW",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "activities": [
+        "Brewery"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Brewery"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Boise",
+        "state": "ID",
+        "priceLevel": "budget",
+        "score": 102
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 102
+      },
+      {
+        "city": "Bend",
+        "state": "OR",
+        "priceLevel": "premium",
+        "score": 102
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Brewery × Mountain West",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Mountain West",
+      "activities": [
+        "Brewery"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Mountain West",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Brewery"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Rapid City",
+        "state": "SD",
+        "priceLevel": "budget",
+        "score": 98
+      },
+      {
+        "city": "Bend",
+        "state": "OR",
+        "priceLevel": "mid",
+        "score": 102
+      },
+      {
+        "city": "Vail",
+        "state": "CO",
+        "priceLevel": "premium",
+        "score": 100
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Brewery × Midwest",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "activities": [
+        "Brewery"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Brewery"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Omaha",
+        "state": "NE",
+        "priceLevel": "budget",
+        "score": 100
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 102
+      },
+      {
+        "city": "Harbor Springs / Petoskey",
+        "state": "MI",
+        "priceLevel": "premium",
+        "score": 100
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Brewery × Southeast",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "activities": [
+        "Brewery"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Brewery"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Savannah",
+        "state": "GA",
+        "priceLevel": "budget",
+        "score": 100
+      },
+      {
+        "city": "Charleston",
+        "state": "SC",
+        "priceLevel": "mid",
+        "score": 102
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "premium",
+        "score": 102
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Brewery × Northeast",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Northeast",
+      "activities": [
+        "Brewery"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Northeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Brewery"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Cooperstown",
+        "state": "NY",
+        "priceLevel": "budget",
+        "score": 90
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "mid",
+        "score": 102
+      },
+      {
+        "city": "Cape Cod",
+        "state": "MA",
+        "priceLevel": "premium",
+        "score": 95
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Brewery × South Central",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "South Central",
+      "activities": [
+        "Brewery"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "South Central",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Brewery"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Galveston",
+        "state": "TX",
+        "priceLevel": "budget",
+        "score": 95
+      },
+      {
+        "city": "Houston",
+        "state": "TX",
+        "priceLevel": "mid",
+        "score": 93
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "premium",
+        "score": 102
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Shooting × Southwest",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "activities": [
+        "Shooting"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Shooting"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Lake Havasu City",
+        "state": "AZ",
+        "priceLevel": "budget",
+        "score": 97
+      },
+      {
+        "city": "San Antonio",
+        "state": "TX",
+        "priceLevel": "mid",
+        "score": 102
+      },
+      {
+        "city": "Las Vegas",
+        "state": "NV",
+        "priceLevel": "premium",
+        "score": 99
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Shooting × Pacific NW",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "activities": [
+        "Shooting"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Shooting"
+      ]
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Sun Valley / Ketchum",
+        "state": "ID",
+        "priceLevel": "mid",
+        "score": 97
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Shooting × Mountain West",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Mountain West",
+      "activities": [
+        "Shooting"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Mountain West",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Shooting"
+      ]
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Colorado Springs",
+        "state": "CO",
+        "priceLevel": "mid",
+        "score": 100
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Shooting × Midwest",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "activities": [
+        "Shooting"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Shooting"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Kansas City",
+        "state": "MO",
+        "priceLevel": "budget",
+        "score": 84
+      },
+      {
+        "city": "Brainerd",
+        "state": "MN",
+        "priceLevel": "mid",
+        "score": 83
+      },
+      {
+        "city": "Charleston",
+        "state": "SC",
+        "priceLevel": "premium",
+        "score": 102
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Shooting × Southeast",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "activities": [
+        "Shooting"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Shooting"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Atlantic City",
+        "state": "NJ",
+        "priceLevel": "budget",
+        "score": 102
+      },
+      {
+        "city": "Pinehurst",
+        "state": "NC",
+        "priceLevel": "mid",
+        "score": 86
+      },
+      {
+        "city": "Sea Island / St. Simons",
+        "state": "GA",
+        "priceLevel": "premium",
+        "score": 97
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Shooting × Northeast",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Northeast",
+      "activities": [
+        "Shooting"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Northeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Shooting"
+      ]
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Atlantic City",
+        "state": "NJ",
+        "priceLevel": "mid",
+        "score": 102
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Shooting × South Central",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "South Central",
+      "activities": [
+        "Shooting"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "South Central",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Shooting"
+      ]
+    },
+    "candidateCount": 2,
+    "pickCount": 2,
+    "picks": [
+      {
+        "city": "Dallas-Fort Worth",
+        "state": "TX",
+        "priceLevel": "budget",
+        "score": 100
+      },
+      {
+        "city": "San Antonio",
+        "state": "TX",
+        "priceLevel": "premium",
+        "score": 102
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Water Sports × Southwest",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "activities": [
+        "Water Sports"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Water Sports"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Lake Havasu City",
+        "state": "AZ",
+        "priceLevel": "budget",
+        "score": 97
+      },
+      {
+        "city": "Scottsdale",
+        "state": "AZ",
+        "priceLevel": "mid",
+        "score": 102
+      },
+      {
+        "city": "Galveston",
+        "state": "TX",
+        "priceLevel": "premium",
+        "score": 95
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Water Sports × Pacific NW",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "activities": [
+        "Water Sports"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Water Sports"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Hood River",
+        "state": "OR",
+        "priceLevel": "budget",
+        "score": 97
+      },
+      {
+        "city": "Durango",
+        "state": "CO",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Portland",
+        "state": "OR",
+        "priceLevel": "premium",
+        "score": 102
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Water Sports × Mountain West",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Mountain West",
+      "activities": [
+        "Water Sports"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Mountain West",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Water Sports"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Fort Collins",
+        "state": "CO",
+        "priceLevel": "budget",
+        "score": 89
+      },
+      {
+        "city": "Glenwood Springs",
+        "state": "CO",
+        "priceLevel": "mid",
+        "score": 90
+      },
+      {
+        "city": "Scottsdale",
+        "state": "AZ",
+        "priceLevel": "premium",
+        "score": 102
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Water Sports × Midwest",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "activities": [
+        "Water Sports"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Water Sports"
+      ]
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Lake Geneva",
+        "state": "WI",
+        "priceLevel": "mid",
+        "score": 97
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Water Sports × Southeast",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "activities": [
+        "Water Sports"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Water Sports"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Gulf Shores",
+        "state": "AL",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Outer Banks",
+        "state": "NC",
+        "priceLevel": "mid",
+        "score": 88
+      },
+      {
+        "city": "Lake Geneva",
+        "state": "WI",
+        "priceLevel": "premium",
+        "score": 97
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Water Sports × Northeast",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "Northeast",
+      "activities": [
+        "Water Sports"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Northeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Water Sports"
+      ]
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Catskills",
+        "state": "NY",
+        "priceLevel": "mid",
+        "score": 87
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Water Sports × South Central",
+    "suite": "Activities × Region",
+    "wizardOverrides": {
+      "region": "South Central",
+      "activities": [
+        "Water Sports"
+      ],
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "South Central",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4,
+      "activities": [
+        "Water Sports"
+      ]
+    },
+    "candidateCount": 2,
+    "pickCount": 2,
+    "picks": [
+      {
+        "city": "Galveston",
+        "state": "TX",
+        "priceLevel": "budget",
+        "score": 95
+      },
+      {
+        "city": "Horseshoe Bay",
+        "state": "TX",
+        "priceLevel": "premium",
+        "score": 86
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "[Fishing+Brewery] × Southwest",
+    "suite": "Activity Combos",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "activities": [
+        "Fishing",
+        "Brewery"
+      ]
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "activities": [
+        "Fishing",
+        "Brewery"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Flagstaff",
+        "state": "AZ",
+        "priceLevel": "budget",
+        "score": 100
+      },
+      {
+        "city": "Reno",
+        "state": "NV",
+        "priceLevel": "mid",
+        "score": 96
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "premium",
+        "score": 110
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "[Fishing+Brewery] × Pacific NW",
+    "suite": "Activity Combos",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "activities": [
+        "Fishing",
+        "Brewery"
+      ]
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "activities": [
+        "Fishing",
+        "Brewery"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Eugene",
+        "state": "OR",
+        "priceLevel": "budget",
+        "score": 102
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 110
+      },
+      {
+        "city": "Seattle",
+        "state": "WA",
+        "priceLevel": "premium",
+        "score": 110
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "[Fishing+Brewery] × Southeast",
+    "suite": "Activity Combos",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "activities": [
+        "Fishing",
+        "Brewery"
+      ]
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "activities": [
+        "Fishing",
+        "Brewery"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Chattanooga",
+        "state": "TN",
+        "priceLevel": "budget",
+        "score": 102
+      },
+      {
+        "city": "Sarasota",
+        "state": "FL",
+        "priceLevel": "mid",
+        "score": 110
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "premium",
+        "score": 110
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "[Fishing+Brewery] × Midwest",
+    "suite": "Activity Combos",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "activities": [
+        "Fishing",
+        "Brewery"
+      ]
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "activities": [
+        "Fishing",
+        "Brewery"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Kansas City",
+        "state": "MO",
+        "priceLevel": "budget",
+        "score": 92
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 110
+      },
+      {
+        "city": "Lake Geneva",
+        "state": "WI",
+        "priceLevel": "premium",
+        "score": 97
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "[Casino+Spa] × Southwest",
+    "suite": "Activity Combos",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "activities": [
+        "Casino",
+        "Spa"
+      ]
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "activities": [
+        "Casino",
+        "Spa"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Hot Springs",
+        "state": "AR",
+        "priceLevel": "budget",
+        "score": 108
+      },
+      {
+        "city": "Santa Fe",
+        "state": "NM",
+        "priceLevel": "mid",
+        "score": 97
+      },
+      {
+        "city": "Las Vegas",
+        "state": "NV",
+        "priceLevel": "premium",
+        "score": 99
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "[Casino+Spa] × Pacific NW",
+    "suite": "Activity Combos",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "activities": [
+        "Casino",
+        "Spa"
+      ]
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "activities": [
+        "Casino",
+        "Spa"
+      ]
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Spokane",
+        "state": "WA",
+        "priceLevel": "mid",
+        "score": 102
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "[Casino+Spa] × Southeast",
+    "suite": "Activity Combos",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "activities": [
+        "Casino",
+        "Spa"
+      ]
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "activities": [
+        "Casino",
+        "Spa"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Saratoga Springs",
+        "state": "NY",
+        "priceLevel": "budget",
+        "score": 108
+      },
+      {
+        "city": "Sea Island / St. Simons",
+        "state": "GA",
+        "priceLevel": "mid",
+        "score": 97
+      },
+      {
+        "city": "Pinehurst",
+        "state": "NC",
+        "priceLevel": "premium",
+        "score": 86
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "[Casino+Spa] × Midwest",
+    "suite": "Activity Combos",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "activities": [
+        "Casino",
+        "Spa"
+      ]
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "activities": [
+        "Casino",
+        "Spa"
+      ]
+    },
+    "candidateCount": 2,
+    "pickCount": 2,
+    "picks": [
+      {
+        "city": "French Lick",
+        "state": "IN",
+        "priceLevel": "budget",
+        "score": 99
+      },
+      {
+        "city": "Kohler",
+        "state": "WI",
+        "priceLevel": "premium",
+        "score": 98
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "[ATV+Shooting+Fishing] × Southwest",
+    "suite": "Activity Combos",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "activities": [
+        "ATV",
+        "Shooting",
+        "Fishing"
+      ]
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "activities": [
+        "ATV",
+        "Shooting",
+        "Fishing"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "St. George",
+        "state": "UT",
+        "priceLevel": "budget",
+        "score": 103
+      },
+      {
+        "city": "Durango",
+        "state": "CO",
+        "priceLevel": "mid",
+        "score": 110
+      },
+      {
+        "city": "Scottsdale",
+        "state": "AZ",
+        "priceLevel": "premium",
+        "score": 110
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "[ATV+Shooting+Fishing] × Pacific NW",
+    "suite": "Activity Combos",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "activities": [
+        "ATV",
+        "Shooting",
+        "Fishing"
+      ]
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "activities": [
+        "ATV",
+        "Shooting",
+        "Fishing"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Durango",
+        "state": "CO",
+        "priceLevel": "budget",
+        "score": 110
+      },
+      {
+        "city": "Sun Valley / Ketchum",
+        "state": "ID",
+        "priceLevel": "mid",
+        "score": 105
+      },
+      {
+        "city": "Seattle",
+        "state": "WA",
+        "priceLevel": "premium",
+        "score": 102
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "[ATV+Shooting+Fishing] × Southeast",
+    "suite": "Activity Combos",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "activities": [
+        "ATV",
+        "Shooting",
+        "Fishing"
+      ]
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "activities": [
+        "ATV",
+        "Shooting",
+        "Fishing"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Atlantic City",
+        "state": "NJ",
+        "priceLevel": "budget",
+        "score": 110
+      },
+      {
+        "city": "Naples",
+        "state": "FL",
+        "priceLevel": "mid",
+        "score": 100
+      },
+      {
+        "city": "Hilton Head",
+        "state": "SC",
+        "priceLevel": "premium",
+        "score": 93
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "[ATV+Shooting+Fishing] × Midwest",
+    "suite": "Activity Combos",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "activities": [
+        "ATV",
+        "Shooting",
+        "Fishing"
+      ]
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "activities": [
+        "ATV",
+        "Shooting",
+        "Fishing"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Durango",
+        "state": "CO",
+        "priceLevel": "budget",
+        "score": 110
+      },
+      {
+        "city": "Brainerd",
+        "state": "MN",
+        "priceLevel": "mid",
+        "score": 91
+      },
+      {
+        "city": "Kohler",
+        "state": "WI",
+        "priceLevel": "premium",
+        "score": 98
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "[Brewery+Water Sports] × Southwest",
+    "suite": "Activity Combos",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "activities": [
+        "Brewery",
+        "Water Sports"
+      ]
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "activities": [
+        "Brewery",
+        "Water Sports"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Lake Havasu City",
+        "state": "AZ",
+        "priceLevel": "budget",
+        "score": 97
+      },
+      {
+        "city": "Galveston",
+        "state": "TX",
+        "priceLevel": "mid",
+        "score": 103
+      },
+      {
+        "city": "Scottsdale",
+        "state": "AZ",
+        "priceLevel": "premium",
+        "score": 102
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "[Brewery+Water Sports] × Pacific NW",
+    "suite": "Activity Combos",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "activities": [
+        "Brewery",
+        "Water Sports"
+      ]
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "activities": [
+        "Brewery",
+        "Water Sports"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Hood River",
+        "state": "OR",
+        "priceLevel": "budget",
+        "score": 105
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 102
+      },
+      {
+        "city": "Portland",
+        "state": "OR",
+        "priceLevel": "premium",
+        "score": 110
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "[Brewery+Water Sports] × Southeast",
+    "suite": "Activity Combos",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "activities": [
+        "Brewery",
+        "Water Sports"
+      ]
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "activities": [
+        "Brewery",
+        "Water Sports"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Gulf Shores",
+        "state": "AL",
+        "priceLevel": "budget",
+        "score": 102
+      },
+      {
+        "city": "Nashville",
+        "state": "TN",
+        "priceLevel": "mid",
+        "score": 102
+      },
+      {
+        "city": "Lake Geneva",
+        "state": "WI",
+        "priceLevel": "premium",
+        "score": 105
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "[Brewery+Water Sports] × Midwest",
+    "suite": "Activity Combos",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "activities": [
+        "Brewery",
+        "Water Sports"
+      ]
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "activities": [
+        "Brewery",
+        "Water Sports"
+      ]
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Columbus",
+        "state": "OH",
+        "priceLevel": "budget",
+        "score": 102
+      },
+      {
+        "city": "Madison",
+        "state": "WI",
+        "priceLevel": "mid",
+        "score": 102
+      },
+      {
+        "city": "Sarasota",
+        "state": "FL",
+        "priceLevel": "premium",
+        "score": 110
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Cheap & fun × Southwest",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "courseQuality": "Cheap & fun"
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Cheap & fun"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Lake Havasu City",
+        "state": "AZ",
+        "priceLevel": "budget",
+        "score": 89
+      },
+      {
+        "city": "St. George",
+        "state": "UT",
+        "priceLevel": "mid",
+        "score": 87
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Cheap & fun × Pacific NW",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "courseQuality": "Cheap & fun"
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Cheap & fun"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Walla Walla",
+        "state": "WA",
+        "priceLevel": "budget",
+        "score": 80
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Seattle",
+        "state": "WA",
+        "priceLevel": "premium",
+        "score": 84
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Cheap & fun × Mountain West",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "Mountain West",
+      "courseQuality": "Cheap & fun"
+    },
+    "filterOptions": {
+      "region": "Mountain West",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Cheap & fun"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Laughlin",
+        "state": "NV",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Colorado Springs",
+        "state": "CO",
+        "priceLevel": "mid",
+        "score": 82
+      },
+      {
+        "city": "Park City",
+        "state": "UT",
+        "priceLevel": "premium",
+        "score": 72
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Cheap & fun × Midwest",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "courseQuality": "Cheap & fun"
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Cheap & fun"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Indianapolis",
+        "state": "IN",
+        "priceLevel": "budget",
+        "score": 92
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Lake Geneva",
+        "state": "WI",
+        "priceLevel": "premium",
+        "score": 89
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Cheap & fun × Southeast",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "courseQuality": "Cheap & fun"
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Cheap & fun"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Madison",
+        "state": "WI",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Nashville",
+        "state": "TN",
+        "priceLevel": "mid",
+        "score": 84
+      },
+      {
+        "city": "Destin",
+        "state": "FL",
+        "priceLevel": "premium",
+        "score": 91
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Cheap & fun × Northeast",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "Northeast",
+      "courseQuality": "Cheap & fun"
+    },
+    "filterOptions": {
+      "region": "Northeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Cheap & fun"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Madison",
+        "state": "WI",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Saratoga Springs",
+        "state": "NY",
+        "priceLevel": "mid",
+        "score": 92
+      },
+      {
+        "city": "Portland",
+        "state": "ME",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Cheap & fun × South Central",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "South Central",
+      "courseQuality": "Cheap & fun"
+    },
+    "filterOptions": {
+      "region": "South Central",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Cheap & fun"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Laughlin",
+        "state": "NV",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Dallas-Fort Worth",
+        "state": "TX",
+        "priceLevel": "mid",
+        "score": 82
+      },
+      {
+        "city": "Austin",
+        "state": "TX",
+        "priceLevel": "premium",
+        "score": 84
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Mix of public & resort × Southwest",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "courseQuality": "Mix of public & resort"
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Lake Havasu City",
+        "state": "AZ",
+        "priceLevel": "budget",
+        "score": 89
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Las Vegas",
+        "state": "NV",
+        "priceLevel": "premium",
+        "score": 91
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Mix of public & resort × Pacific NW",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "courseQuality": "Mix of public & resort"
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Walla Walla",
+        "state": "WA",
+        "priceLevel": "budget",
+        "score": 90
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Bend",
+        "state": "OR",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Mix of public & resort × Mountain West",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "Mountain West",
+      "courseQuality": "Mix of public & resort"
+    },
+    "filterOptions": {
+      "region": "Mountain West",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Laughlin",
+        "state": "NV",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Park City",
+        "state": "UT",
+        "priceLevel": "premium",
+        "score": 92
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Mix of public & resort × Midwest",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "courseQuality": "Mix of public & resort"
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "St. Louis",
+        "state": "MO",
+        "priceLevel": "budget",
+        "score": 86
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Mix of public & resort × Southeast",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "courseQuality": "Mix of public & resort"
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Virginia Beach",
+        "state": "VA",
+        "priceLevel": "budget",
+        "score": 91
+      },
+      {
+        "city": "Naples",
+        "state": "FL",
+        "priceLevel": "mid",
+        "score": 92
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Mix of public & resort × Northeast",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "Northeast",
+      "courseQuality": "Mix of public & resort"
+    },
+    "filterOptions": {
+      "region": "Northeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Bretton Woods",
+        "state": "NH",
+        "priceLevel": "budget",
+        "score": 86
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Cape Cod",
+        "state": "MA",
+        "priceLevel": "premium",
+        "score": 87
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Mix of public & resort × South Central",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "South Central",
+      "courseQuality": "Mix of public & resort"
+    },
+    "filterOptions": {
+      "region": "South Central",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Mix of public & resort"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Laughlin",
+        "state": "NV",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Galveston",
+        "state": "TX",
+        "priceLevel": "mid",
+        "score": 87
+      },
+      {
+        "city": "Austin",
+        "state": "TX",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Bucket list only × Southwest",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "courseQuality": "Bucket list only"
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Bucket list only"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Laughlin",
+        "state": "NV",
+        "priceLevel": "budget",
+        "score": 74
+      },
+      {
+        "city": "San Antonio",
+        "state": "TX",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Scottsdale",
+        "state": "AZ",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Bucket list only × Pacific NW",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "courseQuality": "Bucket list only"
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Bucket list only"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Eugene",
+        "state": "OR",
+        "priceLevel": "budget",
+        "score": 74
+      },
+      {
+        "city": "Spokane",
+        "state": "WA",
+        "priceLevel": "mid",
+        "score": 74
+      },
+      {
+        "city": "Park City",
+        "state": "UT",
+        "priceLevel": "premium",
+        "score": 92
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Bucket list only × Mountain West",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "Mountain West",
+      "courseQuality": "Bucket list only"
+    },
+    "filterOptions": {
+      "region": "Mountain West",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Bucket list only"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Rapid City",
+        "state": "SD",
+        "priceLevel": "budget",
+        "score": 70
+      },
+      {
+        "city": "Durango",
+        "state": "CO",
+        "priceLevel": "mid",
+        "score": 84
+      },
+      {
+        "city": "Scottsdale",
+        "state": "AZ",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Bucket list only × Midwest",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "courseQuality": "Bucket list only"
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Bucket list only"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Des Moines",
+        "state": "IA",
+        "priceLevel": "budget",
+        "score": 74
+      },
+      {
+        "city": "Atlantic City",
+        "state": "NJ",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Brainerd",
+        "state": "MN",
+        "priceLevel": "premium",
+        "score": 83
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Bucket list only × Southeast",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "courseQuality": "Bucket list only"
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Bucket list only"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Virginia Beach",
+        "state": "VA",
+        "priceLevel": "budget",
+        "score": 81
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Hilton Head",
+        "state": "SC",
+        "priceLevel": "premium",
+        "score": 85
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Bucket list only × Northeast",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "Northeast",
+      "courseQuality": "Bucket list only"
+    },
+    "filterOptions": {
+      "region": "Northeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Bucket list only"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Poconos",
+        "state": "PA",
+        "priceLevel": "budget",
+        "score": 86
+      },
+      {
+        "city": "Stowe",
+        "state": "VT",
+        "priceLevel": "mid",
+        "score": 79
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Bucket list only × South Central",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "South Central",
+      "courseQuality": "Bucket list only"
+    },
+    "filterOptions": {
+      "region": "South Central",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Bucket list only"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Hot Springs",
+        "state": "AR",
+        "priceLevel": "budget",
+        "score": 82
+      },
+      {
+        "city": "Houston",
+        "state": "TX",
+        "priceLevel": "mid",
+        "score": 85
+      },
+      {
+        "city": "Scottsdale",
+        "state": "AZ",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Whatever fits budget × Southwest",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "courseQuality": "Whatever fits budget"
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Whatever fits budget"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Flagstaff",
+        "state": "AZ",
+        "priceLevel": "budget",
+        "score": 92
+      },
+      {
+        "city": "Santa Fe",
+        "state": "NM",
+        "priceLevel": "mid",
+        "score": 89
+      },
+      {
+        "city": "Durango",
+        "state": "CO",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Whatever fits budget × Pacific NW",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "courseQuality": "Whatever fits budget"
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Whatever fits budget"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Eugene",
+        "state": "OR",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Durango",
+        "state": "CO",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Bend",
+        "state": "OR",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Whatever fits budget × Mountain West",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "Mountain West",
+      "courseQuality": "Whatever fits budget"
+    },
+    "filterOptions": {
+      "region": "Mountain West",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Whatever fits budget"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Missoula",
+        "state": "MT",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Scottsdale",
+        "state": "AZ",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Whatever fits budget × Midwest",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "courseQuality": "Whatever fits budget"
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Whatever fits budget"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Des Moines",
+        "state": "IA",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Durango",
+        "state": "CO",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Lake Geneva",
+        "state": "WI",
+        "priceLevel": "premium",
+        "score": 89
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Whatever fits budget × Southeast",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "courseQuality": "Whatever fits budget"
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Whatever fits budget"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Myrtle Beach",
+        "state": "SC",
+        "priceLevel": "budget",
+        "score": 89
+      },
+      {
+        "city": "Naples",
+        "state": "FL",
+        "priceLevel": "mid",
+        "score": 92
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Whatever fits budget × Northeast",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "Northeast",
+      "courseQuality": "Whatever fits budget"
+    },
+    "filterOptions": {
+      "region": "Northeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Whatever fits budget"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Hershey",
+        "state": "PA",
+        "priceLevel": "budget",
+        "score": 86
+      },
+      {
+        "city": "Bar Harbor",
+        "state": "ME",
+        "priceLevel": "mid",
+        "score": 86
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Whatever fits budget × South Central",
+    "suite": "Course Quality",
+    "wizardOverrides": {
+      "region": "South Central",
+      "courseQuality": "Whatever fits budget"
+    },
+    "filterOptions": {
+      "region": "South Central",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "courseQuality": "Whatever fits budget"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Hot Springs",
+        "state": "AR",
+        "priceLevel": "budget",
+        "score": 92
+      },
+      {
+        "city": "Louisville",
+        "state": "KY",
+        "priceLevel": "mid",
+        "score": 91
+      },
+      {
+        "city": "Scottsdale",
+        "state": "AZ",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "$2K per person × Southwest",
+    "suite": "Budget Levels",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "budget": "$2K per person"
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "budget": "$2K per person"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Payson",
+        "state": "AZ",
+        "priceLevel": "budget",
+        "score": 92
+      },
+      {
+        "city": "Santa Fe",
+        "state": "NM",
+        "priceLevel": "mid",
+        "score": 96
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "premium",
+        "score": 104
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "$2K per person × Pacific NW",
+    "suite": "Budget Levels",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "budget": "$2K per person"
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "budget": "$2K per person"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Eugene",
+        "state": "OR",
+        "priceLevel": "budget",
+        "score": 95
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 104
+      },
+      {
+        "city": "Portland",
+        "state": "OR",
+        "priceLevel": "premium",
+        "score": 98
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "$2K per person × Southeast",
+    "suite": "Budget Levels",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "budget": "$2K per person"
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "budget": "$2K per person"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Tulsa",
+        "state": "OK",
+        "priceLevel": "budget",
+        "score": 102
+      },
+      {
+        "city": "Asheville",
+        "state": "NC",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "St. Augustine",
+        "state": "FL",
+        "priceLevel": "premium",
+        "score": 92
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "$2K per person × Midwest",
+    "suite": "Budget Levels",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "budget": "$2K per person"
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "budget": "$2K per person"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Columbus",
+        "state": "OH",
+        "priceLevel": "budget",
+        "score": 98
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 104
+      },
+      {
+        "city": "Lake Geneva",
+        "state": "WI",
+        "priceLevel": "premium",
+        "score": 91
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "$4K per person × Southwest",
+    "suite": "Budget Levels",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "budget": "$4K per person"
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "budget": "$4K per person"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Lake Havasu City",
+        "state": "AZ",
+        "priceLevel": "budget",
+        "score": 80
+      },
+      {
+        "city": "Vail",
+        "state": "CO",
+        "priceLevel": "mid",
+        "score": 95
+      },
+      {
+        "city": "Las Vegas",
+        "state": "NV",
+        "priceLevel": "premium",
+        "score": 100
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "$4K per person × Pacific NW",
+    "suite": "Budget Levels",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "budget": "$4K per person"
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "budget": "$4K per person"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Hood River",
+        "state": "OR",
+        "priceLevel": "budget",
+        "score": 80
+      },
+      {
+        "city": "Leavenworth",
+        "state": "WA",
+        "priceLevel": "mid",
+        "score": 81
+      },
+      {
+        "city": "Vail",
+        "state": "CO",
+        "priceLevel": "premium",
+        "score": 95
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "$4K per person × Southeast",
+    "suite": "Budget Levels",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "budget": "$4K per person"
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "budget": "$4K per person"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Lexington",
+        "state": "KY",
+        "priceLevel": "budget",
+        "score": 78
+      },
+      {
+        "city": "Charleston",
+        "state": "SC",
+        "priceLevel": "mid",
+        "score": 91
+      },
+      {
+        "city": "Kohler",
+        "state": "WI",
+        "priceLevel": "premium",
+        "score": 96
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "$4K per person × Midwest",
+    "suite": "Budget Levels",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "budget": "$4K per person"
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "budget": "$4K per person"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Columbus",
+        "state": "OH",
+        "priceLevel": "budget",
+        "score": 86
+      },
+      {
+        "city": "Vail",
+        "state": "CO",
+        "priceLevel": "mid",
+        "score": 95
+      },
+      {
+        "city": "Kohler",
+        "state": "WI",
+        "priceLevel": "premium",
+        "score": 96
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "$6K per person × Southwest",
+    "suite": "Budget Levels",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "budget": "$6K per person"
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "budget": "$6K per person"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Mesquite",
+        "state": "NV",
+        "priceLevel": "budget",
+        "score": 75
+      },
+      {
+        "city": "St. George",
+        "state": "UT",
+        "priceLevel": "mid",
+        "score": 77
+      },
+      {
+        "city": "Vail",
+        "state": "CO",
+        "priceLevel": "premium",
+        "score": 87
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "$6K per person × Pacific NW",
+    "suite": "Budget Levels",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "budget": "$6K per person"
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "budget": "$6K per person"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Boise",
+        "state": "ID",
+        "priceLevel": "budget",
+        "score": 84
+      },
+      {
+        "city": "Gig Harbor",
+        "state": "WA",
+        "priceLevel": "mid",
+        "score": 82
+      },
+      {
+        "city": "Vail",
+        "state": "CO",
+        "priceLevel": "premium",
+        "score": 87
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "$6K per person × Southeast",
+    "suite": "Budget Levels",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "budget": "$6K per person"
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "budget": "$6K per person"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Pawleys Island",
+        "state": "SC",
+        "priceLevel": "budget",
+        "score": 83
+      },
+      {
+        "city": "Nashville",
+        "state": "TN",
+        "priceLevel": "mid",
+        "score": 85
+      },
+      {
+        "city": "Kohler",
+        "state": "WI",
+        "priceLevel": "premium",
+        "score": 87
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "$6K per person × Midwest",
+    "suite": "Budget Levels",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "budget": "$6K per person"
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "budget": "$6K per person"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Des Moines",
+        "state": "IA",
+        "priceLevel": "budget",
+        "score": 84
+      },
+      {
+        "city": "Grand Rapids",
+        "state": "MI",
+        "priceLevel": "mid",
+        "score": 84
+      },
+      {
+        "city": "Vail",
+        "state": "CO",
+        "priceLevel": "premium",
+        "score": 87
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Fat pockets × Southwest",
+    "suite": "Budget Levels",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "budget": "Fat pockets"
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "budget": "Fat pockets"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Lake Havasu City",
+        "state": "AZ",
+        "priceLevel": "budget",
+        "score": 89
+      },
+      {
+        "city": "Durango",
+        "state": "CO",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Scottsdale",
+        "state": "AZ",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Fat pockets × Pacific NW",
+    "suite": "Budget Levels",
+    "wizardOverrides": {
+      "region": "Pacific NW",
+      "budget": "Fat pockets"
+    },
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "budget": "Fat pockets"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Walla Walla",
+        "state": "WA",
+        "priceLevel": "budget",
+        "score": 90
+      },
+      {
+        "city": "Durango",
+        "state": "CO",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Seattle",
+        "state": "WA",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Fat pockets × Southeast",
+    "suite": "Budget Levels",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "budget": "Fat pockets"
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "budget": "Fat pockets"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Pawleys Island",
+        "state": "SC",
+        "priceLevel": "budget",
+        "score": 92
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Sea Island / St. Simons",
+        "state": "GA",
+        "priceLevel": "premium",
+        "score": 89
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Fat pockets × Midwest",
+    "suite": "Budget Levels",
+    "wizardOverrides": {
+      "region": "Midwest",
+      "budget": "Fat pockets"
+    },
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3,
+      "budget": "Fat pockets"
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Columbus",
+        "state": "OH",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Durango",
+        "state": "CO",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Harbor Springs / Petoskey",
+        "state": "MI",
+        "priceLevel": "premium",
+        "score": 92
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "City: Scottsdale",
+    "suite": "Specific Cities",
+    "wizardOverrides": {
+      "destinationType": "specific",
+      "destination": "Scottsdale"
+    },
+    "filterOptions": {
+      "specificCity": "Scottsdale",
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Scottsdale",
+        "state": "AZ",
+        "priceLevel": "mid",
+        "score": 101
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "City: Pinehurst",
+    "suite": "Specific Cities",
+    "wizardOverrides": {
+      "destinationType": "specific",
+      "destination": "Pinehurst"
+    },
+    "filterOptions": {
+      "specificCity": "Pinehurst",
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Pinehurst",
+        "state": "NC",
+        "priceLevel": "mid",
+        "score": 82
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "City: Austin",
+    "suite": "Specific Cities",
+    "wizardOverrides": {
+      "destinationType": "specific",
+      "destination": "Austin"
+    },
+    "filterOptions": {
+      "specificCity": "Austin",
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Austin",
+        "state": "TX",
+        "priceLevel": "mid",
+        "score": 100
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "City: Bandon",
+    "suite": "Specific Cities",
+    "wizardOverrides": {
+      "destinationType": "specific",
+      "destination": "Bandon"
+    },
+    "filterOptions": {
+      "specificCity": "Bandon",
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Bandon",
+        "state": "OR",
+        "priceLevel": "mid",
+        "score": 86
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "City: Myrtle Beach",
+    "suite": "Specific Cities",
+    "wizardOverrides": {
+      "destinationType": "specific",
+      "destination": "Myrtle Beach"
+    },
+    "filterOptions": {
+      "specificCity": "Myrtle Beach",
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Myrtle Beach",
+        "state": "SC",
+        "priceLevel": "mid",
+        "score": 93
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "City: Las Vegas",
+    "suite": "Specific Cities",
+    "wizardOverrides": {
+      "destinationType": "specific",
+      "destination": "Las Vegas"
+    },
+    "filterOptions": {
+      "specificCity": "Las Vegas",
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Las Vegas",
+        "state": "NV",
+        "priceLevel": "mid",
+        "score": 98
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "City: Branson",
+    "suite": "Specific Cities",
+    "wizardOverrides": {
+      "destinationType": "specific",
+      "destination": "Branson"
+    },
+    "filterOptions": {
+      "specificCity": "Branson",
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Branson",
+        "state": "MO",
+        "priceLevel": "mid",
+        "score": 95
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "City: Bend",
+    "suite": "Specific Cities",
+    "wizardOverrides": {
+      "destinationType": "specific",
+      "destination": "Bend"
+    },
+    "filterOptions": {
+      "specificCity": "Bend",
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Bend",
+        "state": "OR",
+        "priceLevel": "mid",
+        "score": 100
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "City: Hilton Head",
+    "suite": "Specific Cities",
+    "wizardOverrides": {
+      "destinationType": "specific",
+      "destination": "Hilton Head"
+    },
+    "filterOptions": {
+      "specificCity": "Hilton Head",
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Hilton Head",
+        "state": "SC",
+        "priceLevel": "mid",
+        "score": 89
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "City: Charleston",
+    "suite": "Specific Cities",
+    "wizardOverrides": {
+      "destinationType": "specific",
+      "destination": "Charleston"
+    },
+    "filterOptions": {
+      "specificCity": "Charleston",
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Charleston",
+        "state": "SC",
+        "priceLevel": "mid",
+        "score": 98
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "City: Traverse City",
+    "suite": "Specific Cities",
+    "wizardOverrides": {
+      "destinationType": "specific",
+      "destination": "Traverse City"
+    },
+    "filterOptions": {
+      "specificCity": "Traverse City",
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "mid",
+        "score": 99
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "City: Pebble Beach",
+    "suite": "Specific Cities",
+    "wizardOverrides": {
+      "destinationType": "specific",
+      "destination": "Pebble Beach"
+    },
+    "filterOptions": {
+      "specificCity": "Pebble Beach",
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Scottsdale",
+        "state": "AZ",
+        "priceLevel": "mid",
+        "score": 101
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Pacific NW + spring + group=20",
+    "suite": "Edge Cases",
+    "wizardOverrides": {},
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "spring",
+      "groupSize": 20,
+      "numberOfDays": 3
+    },
+    "expectedZero": true,
+    "candidateCount": 0,
+    "pickCount": 0,
+    "picks": [],
+    "passed": true
+  },
+  {
+    "name": "Midwest + fall + group=20",
+    "suite": "Edge Cases",
+    "wizardOverrides": {},
+    "filterOptions": {
+      "region": "Midwest",
+      "season": "fall",
+      "groupSize": 20,
+      "numberOfDays": 3
+    },
+    "expectedZero": true,
+    "candidateCount": 0,
+    "pickCount": 0,
+    "picks": [],
+    "passed": true
+  },
+  {
+    "name": "Southwest + summer + group=20",
+    "suite": "Edge Cases",
+    "wizardOverrides": {},
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "summer",
+      "groupSize": 20,
+      "numberOfDays": 3
+    },
+    "expectedZero": true,
+    "candidateCount": 0,
+    "pickCount": 0,
+    "picks": [],
+    "passed": true
+  },
+  {
+    "name": "Northeast + spring + group=16",
+    "suite": "Edge Cases",
+    "wizardOverrides": {},
+    "filterOptions": {
+      "region": "Northeast",
+      "season": "spring",
+      "groupSize": 16,
+      "numberOfDays": 3
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Grand Rapids",
+        "state": "MI",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Poconos",
+        "state": "PA",
+        "priceLevel": "mid",
+        "score": 86
+      },
+      {
+        "city": "Hudson Valley",
+        "state": "NY",
+        "priceLevel": "premium",
+        "score": 82
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "South Central + spring + group=24",
+    "suite": "Edge Cases",
+    "wizardOverrides": {},
+    "filterOptions": {
+      "region": "South Central",
+      "season": "spring",
+      "groupSize": 24,
+      "numberOfDays": 3
+    },
+    "expectedZero": true,
+    "candidateCount": 0,
+    "pickCount": 0,
+    "picks": [],
+    "passed": true
+  },
+  {
+    "name": "All filters maxed",
+    "suite": "Edge Cases",
+    "wizardOverrides": {},
+    "filterOptions": {
+      "region": "Pacific NW",
+      "season": "spring",
+      "groupSize": 32,
+      "numberOfDays": 5,
+      "activities": [
+        "Casino"
+      ],
+      "courseQuality": "Bucket list only"
+    },
+    "expectedZero": true,
+    "candidateCount": 0,
+    "pickCount": 0,
+    "picks": [],
+    "passed": true
+  },
+  {
+    "name": "No region, no season, group=4",
+    "suite": "Edge Cases",
+    "wizardOverrides": {},
+    "filterOptions": {
+      "groupSize": 4,
+      "numberOfDays": 3
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Boise",
+        "state": "ID",
+        "priceLevel": "budget",
+        "score": 100
+      },
+      {
+        "city": "Orlando",
+        "state": "FL",
+        "priceLevel": "mid",
+        "score": 96
+      },
+      {
+        "city": "Kennebunkport",
+        "state": "ME",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "No region, fall, group=12",
+    "suite": "Edge Cases",
+    "wizardOverrides": {},
+    "filterOptions": {
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "expectedZero": false,
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "St. George",
+        "state": "UT",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Ocean City",
+        "state": "MD",
+        "priceLevel": "mid",
+        "score": 95
+      },
+      {
+        "city": "Fredericksburg",
+        "state": "TX",
+        "priceLevel": "premium",
+        "score": 95
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Southeast + summer + group=4",
+    "suite": "Edge Cases",
+    "wizardOverrides": {},
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "summer",
+      "groupSize": 4,
+      "numberOfDays": 5
+    },
+    "expectedZero": false,
+    "candidateCount": 1,
+    "pickCount": 1,
+    "picks": [
+      {
+        "city": "Asheville",
+        "state": "NC",
+        "priceLevel": "mid",
+        "score": 92
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "Mountain West + fall + group=8 + ATV",
+    "suite": "Edge Cases",
+    "wizardOverrides": {},
+    "filterOptions": {
+      "region": "Mountain West",
+      "season": "fall",
+      "groupSize": 8,
+      "numberOfDays": 4,
+      "activities": [
+        "ATV"
+      ]
+    },
+    "expectedZero": false,
+    "candidateCount": 2,
+    "pickCount": 2,
+    "picks": [
+      {
+        "city": "Deadwood",
+        "state": "SD",
+        "priceLevel": "budget",
+        "score": 100
+      },
+      {
+        "city": "Durango",
+        "state": "CO",
+        "priceLevel": "premium",
+        "score": 102
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "3 days × Southwest",
+    "suite": "numberOfDays",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "numberOfDays": 3
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Flagstaff",
+        "state": "AZ",
+        "priceLevel": "budget",
+        "score": 92
+      },
+      {
+        "city": "Durango",
+        "state": "CO",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Sedona",
+        "state": "AZ",
+        "priceLevel": "premium",
+        "score": 84
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "3 days × Southeast",
+    "suite": "numberOfDays",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "numberOfDays": 3
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Biloxi",
+        "state": "MS",
+        "priceLevel": "budget",
+        "score": 88
+      },
+      {
+        "city": "Asheville",
+        "state": "NC",
+        "priceLevel": "mid",
+        "score": 92
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "3 days × Mountain West",
+    "suite": "numberOfDays",
+    "wizardOverrides": {
+      "region": "Mountain West",
+      "numberOfDays": 3
+    },
+    "filterOptions": {
+      "region": "Mountain West",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 3
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Deadwood",
+        "state": "SD",
+        "priceLevel": "budget",
+        "score": 92
+      },
+      {
+        "city": "Durango",
+        "state": "CO",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Scottsdale",
+        "state": "AZ",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "4 days × Southwest",
+    "suite": "numberOfDays",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Lake Havasu City",
+        "state": "AZ",
+        "priceLevel": "budget",
+        "score": 89
+      },
+      {
+        "city": "Albuquerque",
+        "state": "NM",
+        "priceLevel": "mid",
+        "score": 89
+      },
+      {
+        "city": "Durango",
+        "state": "CO",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "4 days × Southeast",
+    "suite": "numberOfDays",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Myrtle Beach",
+        "state": "SC",
+        "priceLevel": "budget",
+        "score": 89
+      },
+      {
+        "city": "Naples",
+        "state": "FL",
+        "priceLevel": "mid",
+        "score": 92
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "4 days × Mountain West",
+    "suite": "numberOfDays",
+    "wizardOverrides": {
+      "region": "Mountain West",
+      "numberOfDays": 4
+    },
+    "filterOptions": {
+      "region": "Mountain West",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 4
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Missoula",
+        "state": "MT",
+        "priceLevel": "budget",
+        "score": 94
+      },
+      {
+        "city": "Bozeman",
+        "state": "MT",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Scottsdale",
+        "state": "AZ",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "5 days × Southwest",
+    "suite": "numberOfDays",
+    "wizardOverrides": {
+      "region": "Southwest",
+      "numberOfDays": 5
+    },
+    "filterOptions": {
+      "region": "Southwest",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 5
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Payson",
+        "state": "AZ",
+        "priceLevel": "budget",
+        "score": 86
+      },
+      {
+        "city": "Durango",
+        "state": "CO",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Las Vegas",
+        "state": "NV",
+        "priceLevel": "premium",
+        "score": 91
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "5 days × Southeast",
+    "suite": "numberOfDays",
+    "wizardOverrides": {
+      "region": "Southeast",
+      "numberOfDays": 5
+    },
+    "filterOptions": {
+      "region": "Southeast",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 5
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Virginia Beach",
+        "state": "VA",
+        "priceLevel": "budget",
+        "score": 91
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
+        "priceLevel": "mid",
+        "score": 94
+      },
+      {
+        "city": "Hilton Head",
+        "state": "SC",
+        "priceLevel": "premium",
+        "score": 85
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "5 days × Mountain West",
+    "suite": "numberOfDays",
+    "wizardOverrides": {
+      "region": "Mountain West",
+      "numberOfDays": 5
+    },
+    "filterOptions": {
+      "region": "Mountain West",
+      "season": "fall",
+      "groupSize": 12,
+      "numberOfDays": 5
+    },
+    "candidateCount": 3,
+    "pickCount": 3,
+    "picks": [
+      {
+        "city": "Fort Collins",
+        "state": "CO",
+        "priceLevel": "budget",
+        "score": 89
+      },
+      {
+        "city": "Glenwood Springs",
+        "state": "CO",
+        "priceLevel": "mid",
+        "score": 90
+      },
+      {
+        "city": "Scottsdale",
+        "state": "AZ",
+        "priceLevel": "premium",
+        "score": 94
+      }
+    ],
+    "passed": true
+  }
+]
