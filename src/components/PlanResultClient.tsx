@@ -172,9 +172,10 @@ function HoverCard({
 }
 
 function ExternalLink({ href, label }: { href: string; label: string }) {
+  const safeHref = href.startsWith("http") ? href : `https://${href}`;
   return (
     <a
-      href={href}
+      href={safeHref}
       target="_blank"
       rel="noopener noreferrer"
       style={{

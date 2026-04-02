@@ -32,6 +32,7 @@ export default function HomeClient() {
   const [logoVisible, setLogoVisible] = useState(skip);
   const [logoUninverted, setLogoUninverted] = useState(skip);
   const [isMobile, setIsMobile] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   // hoveredSubtitle/typedText removed — using permanent tagline
   const [ambientOn, setAmbientOn] = useState(false);
   const bgVideoRef = useRef<HTMLVideoElement>(null);
@@ -63,6 +64,10 @@ export default function HomeClient() {
     check();
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
+  }, []);
+
+  useEffect(() => {
+    fetch("/api/account-status").then(r => { if (r.ok) setIsLoggedIn(true); }).catch(() => {});
   }, []);
 
   // After text animations finish, show TV
@@ -254,10 +259,10 @@ export default function HomeClient() {
         </motion.div>
       </div>
 
-      {/* Login icon top-right */}
+      {/* Login / My Account icon top-right */}
       {showLinks && (
         <motion.a
-          href="/plan-a-trip"
+          href={isLoggedIn ? "/my-trips" : "/plan-a-trip"}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2, duration: 0.8 }}
@@ -274,7 +279,7 @@ export default function HomeClient() {
           }}
         >
           <img src="/devil-avatar.png" alt="Tour de Fore member login" style={{ width: isMobile ? 48 : 81, height: isMobile ? 38 : 65 }} />
-          <span style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.9)", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "var(--font-inter), sans-serif", marginTop: "-8px" }}>Login</span>
+          <span style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.9)", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "var(--font-inter), sans-serif", marginTop: "-8px" }}>{isLoggedIn ? "My Account" : "Login"}</span>
         </motion.a>
       )}
 
@@ -296,7 +301,7 @@ export default function HomeClient() {
               alignItems: "center",
               justifyContent: "center",
               gap: isMobile ? "0.8rem" : "1rem 2.5rem",
-              paddingTop: isMobile ? "clamp(256px, 50vh, 360px)" : "clamp(328px, 45vh, 432px)",
+              paddingTop: isMobile ? "clamp(304px, 52vh, 408px)" : "clamp(376px, 47vh, 480px)",
               paddingLeft: "1.5rem",
               paddingRight: "1.5rem",
             }}
