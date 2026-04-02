@@ -127,7 +127,7 @@ export default function PastTripsClient() {
                     style={{
                       position: "absolute", bottom: "clamp(8px, 2vh, 16px)", right: "clamp(8px, 2vw, 16px)", zIndex: 20,
                       background: "rgba(0,0,0,0.7)", border: "1px solid rgba(255,255,255,0.4)", borderRadius: "6px",
-                      padding: "6px 12px", cursor: "pointer", color: "#fff", display: "flex", alignItems: "center", gap: "6px",
+                      padding: "8px 12px", minHeight: 44, cursor: "pointer", color: "#fff", display: "flex", alignItems: "center", gap: "6px",
                       backdropFilter: "blur(4px)", transition: "background 0.2s, border-color 0.2s",
                     }}
                     onMouseEnter={e => { e.currentTarget.style.background = "rgba(0,0,0,0.9)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.7)"; }}

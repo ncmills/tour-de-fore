@@ -425,25 +425,26 @@ export default async function DestinationPage({
             paddingTop: "1.5rem",
             display: "flex",
             flexWrap: "wrap",
-            gap: "1.5rem",
+            gap: "1rem 1.5rem",
             fontSize: "0.9rem",
+            alignItems: "center",
           }}
         >
           <a
             href={`/golf-trips/region/${regionSlugStr}`}
-            style={{ color: "#EA580C", textDecoration: "none" }}
+            style={{ color: "#EA580C", textDecoration: "none", padding: "10px 0", minHeight: 44, display: "inline-flex", alignItems: "center" }}
           >
             More {dest.region} trips &rarr;
           </a>
           <a
             href={`/golf-trips/state/${stateSlugStr}`}
-            style={{ color: "#EA580C", textDecoration: "none" }}
+            style={{ color: "#EA580C", textDecoration: "none", padding: "10px 0", minHeight: 44, display: "inline-flex", alignItems: "center" }}
           >
             All {stateName} trips &rarr;
           </a>
           <a
             href="/golf-trips"
-            style={{ color: "#A1A1AA", textDecoration: "none" }}
+            style={{ color: "#A1A1AA", textDecoration: "none", padding: "10px 0", minHeight: 44, display: "inline-flex", alignItems: "center" }}
           >
             All destinations
           </a>

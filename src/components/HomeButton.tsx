@@ -15,6 +15,8 @@ export default function HomeButton({ side = "right" }: { side?: "left" | "right"
         alignItems: "center",
         gap: "6px",
         textDecoration: "none",
+        minHeight: 44,
+        minWidth: 44,
       }}
     >
       <span

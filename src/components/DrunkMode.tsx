@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function DrunkMode() {
   const [drunk, setDrunk] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const goDrunk = () => setDrunk(true);
@@ -16,8 +18,23 @@ export default function DrunkMode() {
     };
   }, []);
 
+  // Sober up on route change or browser back
   useEffect(() => {
     if (!drunk) return;
+    // Route changed — sober up
+    setDrunk(false);
+    window.dispatchEvent(new CustomEvent("tdf-sober"));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!drunk) return;
+
+    const handlePopState = () => {
+      setDrunk(false);
+      window.dispatchEvent(new CustomEvent("tdf-sober"));
+    };
+    window.addEventListener("popstate", handlePopState);
 
     // Create a fixed overlay that applies blur + sway via backdrop-filter
     // This doesn't break position:fixed on anything underneath
@@ -94,11 +111,51 @@ export default function DrunkMode() {
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("popstate", handlePopState);
       document.getElementById("tdf-drunk-style")?.remove();
       document.getElementById("tdf-drunk-overlay")?.remove();
       document.getElementById("tdf-drunk-cursor-layer")?.remove();
     };
   }, [drunk]);
 
-  return null;
+  if (!drunk) return null;
+
+  // Global floating "drink water" button — always visible when drunk
+  return (
+    <button
+      onClick={() => {
+        setDrunk(false);
+        window.dispatchEvent(new CustomEvent("tdf-sober"));
+      }}
+      style={{
+        position: "fixed",
+        bottom: "clamp(1.2rem, 3vw, 2rem)",
+        left: "50%",
+        transform: "translateX(-50%)",
+        zIndex: 9999999,
+        pointerEvents: "auto",
+        background: "rgba(0,0,0,0.7)",
+        backdropFilter: "blur(8px)",
+        border: "2px solid rgba(59,130,246,0.7)",
+        borderRadius: 30,
+        padding: "10px 24px",
+        cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+        gap: "8px",
+        boxShadow: "0 0 20px rgba(59,130,246,0.4), 0 4px 20px rgba(0,0,0,0.5)",
+        transition: "transform 0.2s",
+      }}
+    >
+      <span style={{ fontSize: "1.3rem" }}>💧</span>
+      <span style={{
+        fontFamily: "var(--font-scrawl), cursive",
+        fontSize: "1rem",
+        color: "rgba(255,255,255,0.85)",
+        letterSpacing: "0.05em",
+      }}>
+        drink water
+      </span>
+    </button>
+  );
 }

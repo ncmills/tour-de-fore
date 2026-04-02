@@ -157,7 +157,7 @@ export default function GolfTripsIndex() {
           <h2 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1.5rem", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "1.5rem" }}>Browse by Activity</h2>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
             {["fishing", "casino", "brewery", "spa", "hiking", "atv", "shooting", "water-sports", "winery", "rafting"].map((a) => (
-              <a key={a} href={`/golf-trips/activities/${a}`} style={{ padding: "6px 16px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 6, textDecoration: "none", color: "rgba(255,255,255,0.6)", fontSize: "0.8rem" }}>{a.replace(/-/g, " ")}</a>
+              <a key={a} href={`/golf-trips/activities/${a}`} style={{ padding: "10px 16px", minHeight: 44, display: "inline-flex", alignItems: "center", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 6, textDecoration: "none", color: "rgba(255,255,255,0.6)", fontSize: "0.8rem" }}>{a.replace(/-/g, " ")}</a>
             ))}
           </div>
         </div>
