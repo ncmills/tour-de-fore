@@ -29,11 +29,43 @@ import {
   isSubscribed,
 } from "@/lib/auth";
 
+function tryParseJSON(jsonStr: string): unknown | null {
+  // Strip markdown fences
+  let s = jsonStr.trim();
+  if (s.startsWith("```")) {
+    s = s.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "");
+  }
+
+  // Direct parse
+  try { return JSON.parse(s); } catch { /* fall through */ }
+
+  // Try to repair truncated JSON by closing open brackets/braces
+  let repaired = s;
+  const opens = (repaired.match(/[\[{]/g) || []).length;
+  const closes = (repaired.match(/[\]}]/g) || []).length;
+  if (opens > closes) {
+    // Remove trailing comma or partial value
+    repaired = repaired.replace(/,\s*$/, "");
+    // Close remaining brackets/braces
+    const stack: string[] = [];
+    for (const ch of repaired) {
+      if (ch === "{") stack.push("}");
+      else if (ch === "[") stack.push("]");
+      else if (ch === "}" || ch === "]") stack.pop();
+    }
+    repaired += stack.reverse().join("");
+    try { return JSON.parse(repaired); } catch { /* fall through */ }
+  }
+
+  return null;
+}
+
 async function generateSingleTier(
   client: Anthropic,
   state: Parameters<typeof buildUserMessage>[0],
   destinationContext: string,
-  tier: "imp" | "devil" | "demonKing"
+  tier: "imp" | "devil" | "demonKing",
+  attempt = 1
 ): Promise<GeneratedPlan> {
   const message = await client.messages.create({
     model: "claude-haiku-4-5-20251001",
@@ -42,7 +74,7 @@ async function generateSingleTier(
     messages: [{ role: "user", content: buildUserMessage(state, tier) }],
   });
 
-  console.log(`Claude [${tier}]: model=${message.model} in=${message.usage.input_tokens} out=${message.usage.output_tokens} stop=${message.stop_reason}`);
+  console.log(`Claude [${tier}] attempt=${attempt}: model=${message.model} in=${message.usage.input_tokens} out=${message.usage.output_tokens} stop=${message.stop_reason}`);
 
   const textBlock = message.content.find((b) => b.type === "text");
   if (!textBlock || textBlock.type !== "text") throw new Error(`No text response for ${tier}`);
@@ -51,17 +83,18 @@ async function generateSingleTier(
     console.warn(`${tier} hit max_tokens at ${message.usage.output_tokens} tokens`);
   }
 
-  let jsonStr = textBlock.text.trim();
-  if (jsonStr.startsWith("```")) {
-    jsonStr = jsonStr.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "");
+  const parsed = tryParseJSON(textBlock.text);
+  if (parsed) return parsed as GeneratedPlan;
+
+  console.error(`JSON parse failed for ${tier} attempt=${attempt} (${message.usage.output_tokens} tokens, stop: ${message.stop_reason}). First 500 chars: ${textBlock.text.trim().slice(0, 500)}`);
+
+  // Retry once
+  if (attempt < 2) {
+    console.log(`Retrying ${tier} tier...`);
+    return generateSingleTier(client, state, destinationContext, tier, attempt + 1);
   }
 
-  try {
-    return JSON.parse(jsonStr);
-  } catch {
-    console.error(`JSON parse failed for ${tier} (${message.usage.output_tokens} tokens, stop: ${message.stop_reason}). First 500 chars: ${jsonStr.slice(0, 500)}`);
-    throw new Error(`Plan generation failed for ${tier} tier (${message.usage.output_tokens} tokens)`);
-  }
+  throw new Error(`Plan generation failed for ${tier} tier after ${attempt} attempts`);
 }
 
 async function generatePlansForDestination(
