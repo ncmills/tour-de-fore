@@ -2,11 +2,30 @@ import { Destination, Region, Season, CourseTier, ActivityType } from "./types";
 import { allDestinations } from "./index";
 import type { PriceLevel } from "@/lib/plan-types";
 
+// ── Simple deterministic hash for input-sensitive tie-breaking ──
+function simpleHash(str: string): number {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & 0x7FFFFFFF; // keep positive 31-bit
+  }
+  return hash;
+}
+
 // ── Popularity cache (injected from server-side before picking) ──
 let _popularityScores: Map<string, number> = new Map();
+let _viewCounts: Map<string, number> = new Map();
 
-export function setPopularityScores(scores: Map<string, number>) {
+export function setPopularityScores(scores: Map<string, number>, viewCounts?: Map<string, number>) {
   _popularityScores = scores;
+  _viewCounts = viewCounts || new Map();
+}
+
+// ── Pre-computed region sizes for diversity scoring ──
+const _regionSizes = new Map<string, number>();
+for (const d of allDestinations) {
+  _regionSizes.set(d.region, (_regionSizes.get(d.region) || 0) + 1);
 }
 
 // ── Filter destinations by wizard inputs ──
@@ -24,6 +43,12 @@ interface FilterOptions {
 
 function budgetToRange(budget: string): [number, number] {
   switch (budget) {
+    // Wizard values (current UI)
+    case "$2K per person": return [0, 2000];
+    case "$4K per person": return [0, 4000];
+    case "$6K per person": return [0, 6000];
+    case "Fat pockets": return [0, 99999];
+    // Legacy audit-engine values
     case "Under $500": return [0, 500];
     case "$500–$1K": return [500, 1000];
     case "$1K–$2K": return [1000, 2000];
@@ -172,38 +197,45 @@ function scoreDestination(d: Destination, options: FilterOptions): number {
   const matchingCourses = d.courses.filter((c) => desiredTiers.includes(c.tier));
   score += Math.min(matchingCourses.length, 3) * 10;
 
-  // Budget fit
+  // Budget fit — gradient scoring instead of binary cliff
   const estimatedPerPerson = computePriceIndex(d, options.groupSize || 12, options.numberOfDays || 3);
-  if (estimatedPerPerson >= budgetRange[0] && estimatedPerPerson <= budgetRange[1]) {
-    score += 20;
+  if (budgetRange[1] < 99999) {
+    const midBudget = (budgetRange[0] + budgetRange[1]) / 2;
+    const distance = Math.abs(estimatedPerPerson - midBudget) / Math.max(midBudget, 1);
+    score += Math.round(Math.max(0, 20 - distance * 30));
+  } else {
+    score += 10; // "Money is no object" — slight baseline, no strong preference
   }
 
-  // Has enough courses (3+ is the threshold, bonus for variety not quantity)
-  if (d.courses.length >= 3) score += 10;
-  if (d.courses.length >= 5) score += 5;
+  // Has enough courses (flat bonus, no double-stacking)
+  if (d.courses.length >= 3) score += 8;
 
-  // Bar/nightlife — walkable bars are key to TDF philosophy
+  // Bar/nightlife — capped to prevent data-richness domination
   const walkableBars = d.bars.filter((b) => b.walkableFromDowntown).length;
-  score += walkableBars * 4;
-  score += Math.min(d.bars.filter((b) => b.lateNight).length, 3) * 2;
+  score += Math.min(walkableBars, 3) * 3;
+  score += Math.min(d.bars.filter((b) => b.lateNight).length, 2) * 2;
 
   // Dining options
-  score += Math.min(d.dining.length, 4) * 2;
+  score += Math.min(d.dining.length, 3) * 2;
 
   // Activity options
-  score += Math.min(d.activities.length, 4) * 3;
+  score += Math.min(d.activities.length, 3) * 3;
 
   // Airport convenience
   if (d.nearestAirport.driveMinutes <= 30) score += 5;
   else if (d.nearestAirport.driveMinutes <= 60) score += 3;
 
-  // Arrival day activity bonus (TDF tradition)
+  // Arrival day activity bonus (TDF tradition) — reduced from 8 to avoid penalizing resort destinations
   const arrivalActivities = d.activities.filter((a) =>
     a.bestFor === "arrival day" && a.groupFriendly
   );
-  if (arrivalActivities.length > 0) score += 8;
+  if (arrivalActivities.length > 0) score += 5;
 
-  // Activity match bonus
+  // Activity type diversity — credit destinations with varied activity types
+  const uniqueActivityTypes = new Set(d.activities.map((a) => a.type));
+  score += Math.min(uniqueActivityTypes.size, 4) * 2;
+
+  // Activity match bonus (capped at 3 matches to avoid runaway scoring)
   if (options.activities && options.activities.length > 0) {
     const requestedTypes = options.activities
       .map(wizardActivityToType)
@@ -211,13 +243,22 @@ function scoreDestination(d: Destination, options: FilterOptions): number {
     const matchCount = requestedTypes.filter((type) =>
       d.activities.some((a) => a.type === type)
     ).length;
-    score += matchCount * 8;
+    score += Math.min(matchCount, 3) * 8;
   }
 
-  // Popularity bonus from user feedback (learning engine)
-  // Max +15 points for destinations users consistently choose
+  // Popularity bonus — requires minimum impressions to avoid cold-start bias
   const popularity = _popularityScores.get(d.id) || 0;
-  score += Math.round(popularity * 15);
+  const viewCount = _viewCounts.get(d.id) || 0;
+  if (viewCount >= 10) {
+    score += Math.round(popularity * 10);
+  }
+
+  // Regional diversity bonus (when no region specified, boost underrepresented regions)
+  if (!options.region) {
+    const regionSize = _regionSizes.get(d.region) || 1;
+    const avgRegionSize = allDestinations.length / 7;
+    score += Math.round((avgRegionSize / regionSize) * 5);
+  }
 
   return score;
 }
@@ -310,14 +351,38 @@ export function pickThreeDestinations(
   const midPool = byPrice.slice(thirdSize, thirdSize * 2);
   const premiumPool = byPrice.slice(thirdSize * 2);
 
-  // Pick the highest-scored from each pool
-  const pickBest = (pool: typeof byPrice) =>
-    pool.reduce((best, curr) => (curr.score > best.score ? curr : best));
+  // Pick from top candidates in a pool using input-sensitive selection
+  // This ensures different user inputs produce different picks among similarly-scored destinations
+  const inputHash = simpleHash(JSON.stringify(options));
+  const pickBest = (pool: typeof byPrice, excludeRegions?: Set<string>) => {
+    const filtered = excludeRegions
+      ? pool.filter((d) => !excludeRegions.has(d.destination.region))
+      : pool;
+    const candidates = filtered.length > 0 ? filtered : pool;
+    // Sort by score descending
+    const sorted = [...candidates].sort((a, b) => b.score - a.score);
+    // Consider top candidates within 85% of best score for more variety
+    const bestScore = sorted[0].score;
+    const threshold = bestScore * 0.85;
+    const topCandidates = sorted.filter((d) => d.score >= threshold);
+    // Use input hash to deterministically select among top candidates
+    return topCandidates[inputHash % topCandidates.length];
+  };
+
+  // When no region is specified, enforce regional diversity across the 3 picks
+  const enforceRegionDiversity = !options.region;
+  const usedRegions = new Set<string>();
 
   const budgetPick = pickBest(budgetPool);
-  const premiumPick = pickBest(premiumPool.length > 0 ? premiumPool : midPool);
+  if (enforceRegionDiversity) usedRegions.add(budgetPick.destination.region);
 
-  // For mid: pick best from mid pool, excluding budget/premium picks
+  const premiumPick = pickBest(
+    premiumPool.length > 0 ? premiumPool : midPool,
+    enforceRegionDiversity ? usedRegions : undefined
+  );
+  if (enforceRegionDiversity) usedRegions.add(premiumPick.destination.region);
+
+  // For mid: pick best from mid pool, excluding budget/premium picks and used regions
   const midCandidates = midPool.filter(
     (d) =>
       d.destination.id !== budgetPick.destination.id &&
@@ -326,33 +391,31 @@ export function pickThreeDestinations(
 
   let midPick: typeof budgetPick;
   if (midCandidates.length > 0) {
-    midPick = pickBest(midCandidates);
+    midPick = pickBest(midCandidates, enforceRegionDiversity ? usedRegions : undefined);
   } else {
-    // Fallback: pick from all remaining
     const remaining = byPrice.filter(
       (d) =>
         d.destination.id !== budgetPick.destination.id &&
         d.destination.id !== premiumPick.destination.id
     );
-    midPick = remaining.length > 0 ? pickBest(remaining) : budgetPick;
+    midPick = remaining.length > 0
+      ? pickBest(remaining, enforceRegionDiversity ? usedRegions : undefined)
+      : budgetPick;
   }
 
-  // Now decide: 2 from primary region + 1 neighbor, or all 3 from primary
+  // When region IS specified, try swapping mid with a neighbor region pick
   const result: PickedDestination[] = [
     { ...budgetPick, priceLevel: "budget" },
     { ...midPick, priceLevel: "mid" },
     { ...premiumPick, priceLevel: "premium" },
   ];
 
-  // Try to swap one slot (preferably the mid) with a good neighbor
-  if (scoredNeighbors.length > 0) {
+  if (options.region && scoredNeighbors.length > 0) {
     const bestNeighbor = scoredNeighbors.reduce((best, curr) =>
       curr.score > best.score ? curr : best
     );
 
-    // Only swap if the neighbor scores reasonably well (within 80% of mid pick)
     if (bestNeighbor.score >= midPick.score * 0.8) {
-      // Determine neighbor's price level
       let neighborLevel: PriceLevel;
       if (bestNeighbor.priceIndex <= budgetPick.priceIndex * 1.1) {
         neighborLevel = "budget";
@@ -362,7 +425,6 @@ export function pickThreeDestinations(
         neighborLevel = "mid";
       }
 
-      // Replace the matching tier slot with the neighbor
       const slotIndex = result.findIndex((r) => r.priceLevel === neighborLevel);
       if (slotIndex >= 0) {
         result[slotIndex] = {
@@ -383,7 +445,6 @@ export function pickThreeDestinations(
     }
   }
 
-  // If we lost a slot due to dedup, fill from remaining
   if (deduped.length < 3) {
     const allCandidates = [...scoredPrimary, ...scoredNeighbors]
       .filter((d) => !seen.has(d.destination.id))
