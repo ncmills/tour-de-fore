@@ -255,12 +255,14 @@ export default function HomeClient() {
               </span>
             ))}
           </div>
-          <p style={{
-            fontFamily: "var(--font-accent), serif",
-            fontStyle: "italic",
-            fontSize: "clamp(0.75rem, 1.5vw, 0.95rem)",
-            color: "rgba(255,255,255,0.35)",
-            letterSpacing: "0.06em",
+          <p className="neon-stats" style={{
+            fontFamily: "var(--font-plan-block), sans-serif",
+            fontSize: isMobile ? "clamp(0.65rem, 2.8vw, 0.85rem)" : "clamp(0.8rem, 1.2vw, 1rem)",
+            fontWeight: 700,
+            textTransform: "uppercase",
+            letterSpacing: "0.14em",
+            color: "#D4A843",
+            textShadow: "0 0 6px rgba(212,168,67,0.5), 0 0 18px rgba(212,168,67,0.25)",
             marginBottom: isMobile ? "0.75rem" : "1rem",
           }}>
             Plan smarter. Play more. Remember less.

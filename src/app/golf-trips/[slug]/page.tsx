@@ -182,6 +182,19 @@ export default async function DestinationPage({
           {dest.description}
         </p>
 
+        <p
+          style={{
+            fontSize: "0.85rem",
+            color: "rgba(255,255,255,0.4)",
+            fontFamily: "var(--font-plan-block), sans-serif",
+            textTransform: "uppercase",
+            letterSpacing: "0.08em",
+            marginBottom: "1.5rem",
+          }}
+        >
+          The best courses, bars, and rentals in {dest.city} — curated for groups.
+        </p>
+
         {/* Quick stats */}
         <div
           style={{

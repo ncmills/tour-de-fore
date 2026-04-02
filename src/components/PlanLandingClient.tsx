@@ -118,9 +118,11 @@ export default function PlanLandingClient({ onFirstTime }: { onFirstTime: () => 
         )}
 
         {mode === "choose" && (
-          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.85rem", fontFamily: "var(--font-accent), serif", fontStyle: "italic", marginTop: "2rem" }}>
-            The golf trip your group keeps talking about? Plan it.
-          </p>
+          <div style={{ marginTop: "2.5rem", padding: "1.25rem 2rem", background: "rgba(234,88,12,0.08)", border: "1px solid rgba(234,88,12,0.25)", borderRadius: 8, maxWidth: 360, margin: "2.5rem auto 0" }}>
+            <p style={{ color: "#EA580C", fontSize: "1rem", fontFamily: "var(--font-plan-block), sans-serif", textTransform: "uppercase", letterSpacing: "0.06em", lineHeight: 1.4 }}>
+              The golf trip your group keeps talking about? Plan it.
+            </p>
+          </div>
         )}
 
         {mode === "login" && (
