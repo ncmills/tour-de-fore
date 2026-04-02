@@ -224,47 +224,23 @@ export default function HomeClient() {
               : {}
           }
         >
-          {/* Neon stats above logo */}
-          <div
+          {/* Tagline above logo */}
+          <p
             className="neon-stats"
             style={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              gap: isMobile ? "0.4rem 1rem" : "0.5rem 1.5rem",
+              fontFamily: "var(--font-plan-block), sans-serif",
+              fontSize: isMobile ? "clamp(1rem, 4.3vw, 1.3rem)" : "clamp(1.25rem, 1.9vw, 1.75rem)",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.1em",
+              color: isMobile ? "#ff8040" : "#ff6a28",
+              textShadow: isMobile
+                ? "0 0 4px rgba(255,106,40,0.5), 0 0 10px rgba(255,60,20,0.25)"
+                : "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3), 0 0 80px rgba(200,30,0,0.15)",
+              WebkitTextStroke: isMobile ? undefined : "0.3px rgba(255,140,60,0.4)",
               marginBottom: isMobile ? "clamp(1rem, 3vw, 1.5rem)" : "clamp(1.2rem, 2.5vw, 2rem)",
             }}
           >
-            {["600+ beers", "108+ holes", "12+ guys", "4+ courses", "3+ days", "1 small town"].map((stat) => (
-              <span
-                key={stat}
-                style={{
-                  fontFamily: "var(--font-plan-block), sans-serif",
-                  fontSize: isMobile ? "clamp(1rem, 4.3vw, 1.3rem)" : "clamp(1.25rem, 1.9vw, 1.75rem)",
-                  fontWeight: 700,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.1em",
-                  color: isMobile ? "#ff8040" : "#ff6a28",
-                  textShadow: isMobile
-                    ? "0 0 4px rgba(255,106,40,0.5), 0 0 10px rgba(255,60,20,0.25)"
-                    : "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3), 0 0 80px rgba(200,30,0,0.15)",
-                  WebkitTextStroke: isMobile ? undefined : "0.3px rgba(255,140,60,0.4)",
-                }}
-              >
-                {stat}
-              </span>
-            ))}
-          </div>
-          <p className="neon-stats" style={{
-            fontFamily: "var(--font-plan-block), sans-serif",
-            fontSize: isMobile ? "clamp(0.65rem, 2.8vw, 0.85rem)" : "clamp(0.8rem, 1.2vw, 1rem)",
-            fontWeight: 700,
-            textTransform: "uppercase",
-            letterSpacing: "0.14em",
-            color: "#D4A843",
-            textShadow: "0 0 6px rgba(212,168,67,0.5), 0 0 18px rgba(212,168,67,0.25)",
-            marginBottom: isMobile ? "0.75rem" : "1rem",
-          }}>
             Plan smarter. Play more. Remember less.
           </p>
           <Image
@@ -320,7 +296,7 @@ export default function HomeClient() {
               alignItems: "center",
               justifyContent: "center",
               gap: isMobile ? "0.8rem" : "1rem 2.5rem",
-              paddingTop: isMobile ? "clamp(300px, 58vh, 420px)" : "clamp(380px, 52vh, 500px)",
+              paddingTop: isMobile ? "clamp(320px, 62vh, 450px)" : "clamp(410px, 56vh, 540px)",
               paddingLeft: "1.5rem",
               paddingRight: "1.5rem",
             }}
