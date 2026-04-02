@@ -474,12 +474,8 @@ export default function PlanWizardClient() {
         body: JSON.stringify(state),
       });
 
-      // Non-streaming error responses (rate limit, validation, etc.)
-      // Check content-type; also treat any 2xx with a body as potential NDJSON
-      // since Vercel/CDN proxies can strip custom content-type headers
-      const contentType = res.headers.get("content-type") || "";
-      const isNdjson = contentType.includes("ndjson") || (res.ok && res.body);
-      if (!isNdjson) {
+      // Non-OK responses are always plain JSON (rate limit, validation, etc.)
+      if (!res.ok) {
         const text = await res.text();
         let data: Record<string, unknown> = {};
         try { data = JSON.parse(text); } catch { /* not JSON */ }
@@ -492,7 +488,8 @@ export default function PlanWizardClient() {
       }
 
       // Stream the response — read NDJSON lines
-      const reader = res.body!.getReader();
+      if (!res.body) throw new Error("No response body");
+      const reader = res.body.getReader();
       const decoder = new TextDecoder();
       let buffer = "";
       let result: { planId?: string } | null = null;
