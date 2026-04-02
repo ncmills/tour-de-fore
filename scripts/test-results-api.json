@@ -2,23 +2,23 @@
   {
     "name": "Region: Southwest",
     "passed": true,
-    "duration": 59243,
-    "planId": "009d31f3-7fc6-4227-9998-e20ae6f38452",
+    "duration": 63460,
+    "planId": "f6cda0e5-f315-4be9-b2dc-bef93f3525d9",
     "destinations": [
-      "Payson",
-      "Phoenix / Mesa",
+      "Lake Havasu City",
+      "St. George",
       "Vail"
     ],
-    "messageCount": 15
+    "messageCount": 16
   },
   {
     "name": "Region: Pacific NW",
     "passed": true,
-    "duration": 62637,
-    "planId": "792e8e94-46ca-47cd-af03-8cfcebbd90bf",
+    "duration": 61922,
+    "planId": "213a8fb5-cfa2-4a26-9f0c-8c8ddc04660b",
     "destinations": [
+      "Cannon Beach / Seaside",
       "Leavenworth",
-      "Gig Harbor",
       "Vail"
     ],
     "messageCount": 16
@@ -26,168 +26,188 @@
   {
     "name": "Region: Mountain West",
     "passed": true,
-    "duration": 63723,
-    "planId": "5f6e4288-91ae-44b2-9663-c5119ef2377e",
+    "duration": 65616,
+    "planId": "158bb2e9-2f0f-42d3-aae7-ead136e631a7",
     "destinations": [
       "Deadwood",
       "Colorado Springs",
       "Las Vegas"
     ],
-    "messageCount": 16
+    "messageCount": 17
   },
   {
     "name": "Region: Midwest",
     "passed": true,
-    "duration": 58044,
-    "planId": "79fad756-6ff5-4c96-96e6-dc3a69c0299c",
+    "duration": 59340,
+    "planId": "3ee28ca2-d7d9-4145-8d69-1e525c17bfb6",
     "destinations": [
       "Kansas City",
-      "Vail",
-      "Kohler"
+      "Door County",
+      "Kiawah Island"
     ],
     "messageCount": 15
   },
   {
     "name": "Region: Southeast",
     "passed": true,
-    "duration": 54485,
-    "planId": "92208792-4b26-4ff1-9ff0-0f6fafbba1d4",
+    "duration": 59663,
+    "planId": "2b7a3704-eba2-4225-bb44-b092753a7a15",
     "destinations": [
       "Chattanooga",
       "Kohler",
       "Kiawah Island"
     ],
-    "messageCount": 14
+    "messageCount": 15
   },
   {
     "name": "Region: Northeast",
     "passed": true,
-    "duration": 60868,
-    "planId": "a8927b14-5de5-4e19-9bbe-cfc5d4639393",
+    "duration": 56354,
+    "planId": "46d62449-4fe6-4d19-b25f-80b380fe842b",
     "destinations": [
-      "Finger Lakes",
-      "Berkshires",
-      "Kohler"
-    ],
-    "messageCount": 16
-  },
-  {
-    "name": "Region: South Central",
-    "passed": true,
-    "duration": 60624,
-    "planId": "aea9bed7-4cda-4564-aa95-d0c1263d2551",
-    "destinations": [
-      "Shreveport-Bossier City",
-      "Houston",
-      "Las Vegas"
-    ],
-    "messageCount": 16
-  },
-  {
-    "name": "Spring + Southeast",
-    "passed": false,
-    "duration": 13295,
-    "error": "Failed to generate plan. Please try again. Error: Plan generation failed for imp tier after 3 attempts",
-    "messageCount": 5
-  },
-  {
-    "name": "Summer + Pacific NW",
-    "passed": true,
-    "duration": 55215,
-    "planId": "8f0d0982-d2c2-4275-96e2-015325dcee59",
-    "destinations": [
-      "Leavenworth",
-      "Gig Harbor",
-      "Vail"
+      "Burlington",
+      "Cape May",
+      "Kiawah Island"
     ],
     "messageCount": 15
   },
   {
-    "name": "Fall + Midwest",
-    "passed": false,
-    "duration": 19394,
-    "error": "Failed to generate plan. Please try again. eI: 429 {\"type\":\"error\",\"error\":{\"type\":\"rate_limit_error\",\"message\":\"This request would exceed your organization's rate limit of 90,000 output tokens per minute (org: 09defbec-fe86-414e-93cc-7d0f1d0e1964, model: claude-haiku-4-5-20251001). For details, refer to: https://docs.claude.com/en/api/rate-limits. You can see the response headers for current usage. Please reduce the prompt length or the maximum tokens requested, or try again later. You may also contact sales at https://claude.com/contact-sales to discuss your options for a rate limit increase.\"},\"request_id\":\"req_011CZfQZb9LesEnBCDmaakPh\"}",
-    "messageCount": 6
+    "name": "Region: South Central",
+    "passed": true,
+    "duration": 56792,
+    "planId": "be58d581-95cc-444e-8333-8842fe046c91",
+    "destinations": [
+      "Shreveport-Bossier City",
+      "Galveston",
+      "Kiawah Island"
+    ],
+    "messageCount": 15
   },
   {
-    "name": "Group=4 + Southwest",
+    "name": "Spring + Southeast",
     "passed": true,
-    "duration": 61403,
-    "planId": "7bc3070f-fda0-4a9e-96a9-ea136092035e",
+    "duration": 57928,
+    "planId": "be80edf7-6bd1-4d87-92f9-85ad4b0d0150",
     "destinations": [
-      "Laughlin",
-      "Santa Fe",
+      "Lexington",
+      "Asheville",
+      "Kohler"
+    ],
+    "messageCount": 15
+  },
+  {
+    "name": "Summer + Pacific NW",
+    "passed": true,
+    "duration": 64255,
+    "planId": "5d56708e-05af-4864-9105-47bc5133205e",
+    "destinations": [
+      "Cannon Beach / Seaside",
+      "Leavenworth",
       "Vail"
     ],
     "messageCount": 16
   },
   {
+    "name": "Fall + Midwest",
+    "passed": true,
+    "duration": 60440,
+    "planId": "fe87d3fe-3136-4369-a9cb-330f8fd1406a",
+    "destinations": [
+      "Kansas City",
+      "Door County",
+      "Kiawah Island"
+    ],
+    "messageCount": 16
+  },
+  {
+    "name": "Group=4 + Southwest",
+    "passed": true,
+    "duration": 48205,
+    "planId": "1081b216-e153-4153-b2ec-b3986ce46d4c",
+    "destinations": [
+      "Laughlin",
+      "Phoenix / Mesa",
+      "Vail"
+    ],
+    "messageCount": 13
+  },
+  {
     "name": "Group=20 + Southeast",
-    "passed": false,
-    "duration": 19692,
-    "error": "Failed to generate plan. Please try again. Error: Plan generation failed for imp tier after 3 attempts",
-    "messageCount": 6
+    "passed": true,
+    "duration": 64589,
+    "planId": "6bed418c-8b42-4a11-9c7e-0cb59e465b91",
+    "destinations": [
+      "Orlando",
+      "Austin",
+      "Kiawah Island"
+    ],
+    "messageCount": 16
   },
   {
     "name": "Group=8 + Northeast",
     "passed": true,
-    "duration": 55549,
-    "planId": "897cdcfe-22d9-49e3-943d-8b1c6ecd16ea",
+    "duration": 57924,
+    "planId": "ca2e5535-6f15-4005-b392-9d8388dbdef7",
     "destinations": [
-      "Burlington",
-      "Saratoga Springs",
-      "Kohler"
+      "Atlantic City",
+      "Finger Lakes",
+      "Sea Island / St. Simons"
     ],
     "messageCount": 15
   },
   {
     "name": "Cheap & fun + South Central",
     "passed": true,
-    "duration": 105370,
-    "planId": "3b94a256-af31-454c-8aeb-30903d5dab45",
+    "duration": 61658,
+    "planId": "68b9d04d-c2d7-4054-8e64-7a2ff91df423",
     "destinations": [
       "Oklahoma City",
-      "Dallas-Fort Worth",
-      "Destin"
+      "Louisville",
+      "Kiawah Island"
     ],
-    "messageCount": 25
+    "messageCount": 16
   },
   {
     "name": "Mix + Mountain West",
     "passed": true,
-    "duration": 83632,
-    "planId": "eb830388-b132-4447-8b9f-6f30b4196b43",
+    "duration": 56519,
+    "planId": "74eae989-4acc-47ed-8c82-a921412a16b6",
     "destinations": [
       "Deadwood",
       "Colorado Springs",
       "Las Vegas"
     ],
-    "messageCount": 20
+    "messageCount": 15
   },
   {
     "name": "Bucket list + Southeast",
-    "passed": false,
-    "duration": 26155,
-    "error": "Failed to generate plan. Please try again. Error: Plan generation failed for imp tier after 3 attempts",
-    "messageCount": 8
+    "passed": true,
+    "duration": 61282,
+    "planId": "2abc9285-ae08-4e1d-adec-b317ba106534",
+    "destinations": [
+      "Orlando",
+      "Sarasota",
+      "Kohler"
+    ],
+    "messageCount": 16
   },
   {
     "name": "Whatever + Pacific NW",
     "passed": true,
-    "duration": 56328,
-    "planId": "51f80493-d495-472b-a2ca-c4008cd3061a",
+    "duration": 60813,
+    "planId": "62263bf1-6a2c-48b7-8c57-a639765b0a79",
     "destinations": [
-      "Hood River",
-      "Gig Harbor",
-      "Big Sky"
+      "Cannon Beach / Seaside",
+      "Leavenworth",
+      "Jackson"
     ],
-    "messageCount": 15
+    "messageCount": 16
   },
   {
     "name": "Fishing + Southeast",
     "passed": true,
-    "duration": 57144,
-    "planId": "d10c6fe9-5e4f-4fc0-b9d0-b2c3e44fab18",
+    "duration": 58941,
+    "planId": "5ab46eba-5d7d-44f3-8df5-d4ac4e51d229",
     "destinations": [
       "Pawleys Island",
       "Naples",
@@ -197,81 +217,86 @@
   },
   {
     "name": "Casino + Southwest",
-    "passed": false,
-    "duration": 58545,
-    "error": "Failed to generate plan. Please try again. Error: Plan generation failed for imp tier after 3 attempts",
-    "messageCount": 14
+    "passed": true,
+    "duration": 57662,
+    "planId": "030d5c95-de07-48c6-b6f6-cda5df1f517d",
+    "destinations": [
+      "Mesquite",
+      "Louisville",
+      "Las Vegas"
+    ],
+    "messageCount": 15
   },
   {
     "name": "[Brewery,Water] + Pacific NW",
     "passed": true,
-    "duration": 83799,
-    "planId": "637037a7-8808-4a85-b2be-216122da10c5",
+    "duration": 69268,
+    "planId": "55875642-6cd8-4eff-8401-43bd3cebd032",
     "destinations": [
-      "Boise",
-      "Gig Harbor",
+      "Eugene",
+      "Leavenworth",
       "Vail"
     ],
-    "messageCount": 20
+    "messageCount": 17
   },
   {
     "name": "[ATV,Shooting] + South Central",
     "passed": true,
-    "duration": 61802,
-    "planId": "f06e078e-1b19-4812-bcce-ea97178bf40d",
+    "duration": 59720,
+    "planId": "b80af6b4-8c6e-4eac-ac87-9992abd2d346",
     "destinations": [
       "San Antonio",
       "San Antonio",
       "Dallas-Fort Worth"
     ],
-    "messageCount": 16
+    "messageCount": 15
   },
   {
     "name": "Budget $2K + Midwest",
     "passed": true,
-    "duration": 87766,
-    "planId": "9155afe7-4202-4568-82e5-f5464d4b73c9",
+    "duration": 59162,
+    "planId": "a206601c-31c5-44cb-adae-ab4abc29fe5e",
     "destinations": [
       "Milwaukee",
       "Bozeman",
-      "Lake Geneva"
+      "Brainerd"
     ],
-    "messageCount": 21
+    "messageCount": 15
   },
   {
     "name": "Fat pockets + Southwest",
     "passed": true,
-    "duration": 67643,
-    "planId": "44d57c83-ccac-487f-8b2c-7b384059d479",
+    "duration": 62288,
+    "planId": "65cc0f1b-6947-40f2-9285-32a654dd8858",
     "destinations": [
-      "Flagstaff",
+      "Lake Havasu City",
       "Bozeman",
       "Las Vegas"
     ],
-    "messageCount": 17
+    "messageCount": 16
   },
   {
     "name": "City: Scottsdale",
     "passed": true,
-    "duration": 75951,
-    "planId": "8397a1da-1cde-457b-8213-0dedb9cd38b2",
+    "duration": 56079,
+    "planId": "64561e3b-dacc-4d19-a788-76bdbd341264",
     "destinations": [
       "Scottsdale",
       "Scottsdale",
       "Scottsdale"
     ],
-    "messageCount": 19
+    "messageCount": 15
   },
   {
     "name": "City: Charleston",
     "passed": true,
-    "duration": 60695,
-    "planId": "aca98ab0-9686-41e2-8bca-3b05f8d280cb",
+    "duration": 56997,
+    "planId": "2c2cf19b-1a71-495e-aec8-1a2e55ce2ed5",
     "destinations": [
       "Charleston",
       "Charleston",
       "Charleston"
     ],
-    "messageCount": 16
+    "messageCount": 15
   }
 ]
