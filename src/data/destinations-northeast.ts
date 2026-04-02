@@ -86,6 +86,7 @@ export const northeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 10,
+        url: "https://www.willowbendcc.com",
         highlight:
           "Ultra-exclusive private club occasionally available through resort stay packages",
         googleRating: 4.7,
@@ -217,6 +218,18 @@ export const northeastDestinations: Destination[] = [
         reservationNeeded: true,
         googleRating: 4.7,
       },
+      {
+        name: "Brazilian Grill",
+        style: "steakhouse",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "All-you-can-eat Brazilian churrasco on Hyannis Main Street since 2000. Gaucho-carved beef, pork, lamb, and chicken plus a full buffet. Private Glass Room seats 20+.",
+        reservationNeeded: true,
+        googleRating: 4.7,
+        reviewCount: 575,
+        url: "https://braziliangrill.com/",
+      },
     ],
     bars: [
       {
@@ -254,6 +267,16 @@ export const northeastDestinations: Destination[] = [
     ],
     activities: [
       {
+        name: "Brazilian Grill Rodizio & Main Street Bar Crawl",
+        type: "brewery",
+        duration: "3-4 hours",
+        pricePerPerson: [40, 60],
+        groupFriendly: true,
+        highlight:
+          "Start with all-you-can-eat Brazilian churrasco at the Brazilian Grill on Main Street, then walk to Embargo, Cape Cod Beer, and The Quarterdeck for a low-key arrival-night bar crawl.",
+        bestFor: "arrival day",
+      },
+      {
         name: "Deep Sea Fishing Charter",
         type: "fishing",
         duration: "half day",
@@ -281,8 +304,8 @@ export const northeastDestinations: Destination[] = [
         pricePerPerson: [30, 60],
         groupFriendly: true,
         highlight:
-          "Hit 4-5 craft breweries across the mid-Cape including Devil's Purse, Hog Island, and Barnstable Brewing",
-        bestFor: "rest day",
+          "Hit 4-5 craft breweries across the mid-Cape including Devil's Purse, Hog Island, and Barnstable Brewing — the perfect arrival day group crawl",
+        bestFor: "arrival day",
       },
     ],
     partyBuses: [
@@ -383,6 +406,7 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "mountain",
         driveMinutes: 5,
+        url: "https://www.lakeplacidclub.com",
         highlight:
           "Shorter companion course at LPC — great for an afternoon round with forgiving fairways",
         googleRating: 4.3,
@@ -485,6 +509,17 @@ export const northeastDestinations: Destination[] = [
         capacity: "large-group",
         highlight:
           "Hearty Italian on Main Street — big portions, casual vibe, perfect post-round refuel",
+        reservationNeeded: true,
+        googleRating: 4.3,
+      },
+    
+      {
+        name: "Great Adirondack Steak & Seafood",
+        style: "steakhouse",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "Family tradition since 1987 serving steaks and seafood 365 days a year in the heart of the Adirondacks",
         reservationNeeded: true,
         googleRating: 4.3,
       },
@@ -672,6 +707,7 @@ export const northeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 10,
+        url: "https://www.kingsmill.com/golf",
         highlight:
           "Tom Clark design with wider fairways — great warm-up round or hangover-day option",
         googleRating: 4.2,
@@ -708,6 +744,7 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 5,
+        url: "https://www.colonialwilliamsburg.org/golf",
         highlight:
           "Rees Jones design — longer and more modern than the Gold with generous fairways through mature pines",
         googleRating: 4.5,
@@ -821,6 +858,17 @@ export const northeastDestinations: Destination[] = [
         reservationNeeded: false,
         googleRating: 4.6,
       },
+      {
+        name: "Opus 9 Steakhouse",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Williamsburg's premier chophouse in New Town. Prime cuts, extensive wine list, fireside dining, and private rooms for groups of 10-50. Rated 4.7 by 6,000+ OpenTable diners.",
+        reservationNeeded: true,
+        googleRating: 4.7,
+        url: "https://opus9steakhouse.com/",
+      },
     ],
     bars: [
       {
@@ -858,14 +906,27 @@ export const northeastDestinations: Destination[] = [
     ],
     activities: [
       {
+        name: "Axe Republic Throwing Experience",
+        type: "axe-throwing",
+        duration: "2-3 hours",
+        pricePerPerson: [30, 45],
+        groupFriendly: true,
+        highlight:
+          "Axe throwing, throwing stars, and knives in a group-friendly venue with food and drinks between rounds. Perfect competitive arrival-day activity for 12-16 guys.",
+        bestFor: "arrival day",
+        provider: "Axe Republic",
+        googleRating: 4.9,
+        reviewCount: 450,
+      },
+      {
         name: "Colonial Williamsburg Historic Tour",
         type: "hiking",
         duration: "half day",
         pricePerPerson: [20, 45],
         groupFriendly: true,
         highlight:
-          "Walk the 18th-century streets, hit the colonial taverns, and watch blacksmithing demos",
-        bestFor: "rest day",
+          "Walk the 18th-century streets, hit the colonial taverns, and watch blacksmithing demos — the ultimate arrival day history crawl",
+        bestFor: "arrival day",
       },
       {
         name: "Jamestown & Yorktown Battlefield Tour",
@@ -999,6 +1060,7 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 10,
+        url: "https://www.ballstonspacc.com",
         highlight:
           "Semi-private club with public tee times — tight, strategic layout that rewards shot-making",
         googleRating: 4.3,
@@ -1016,6 +1078,7 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.airwaymeadowsgolf.com",
         highlight:
           "Affordable local favorite with wide fairways — good warm-up or cool-down round",
         googleRating: 4.2,
@@ -1276,6 +1339,7 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.senecalakecc.com",
         highlight:
           "Charming semi-private track overlooking Seneca Lake — great views and honest golf",
         googleRating: 4.2,
@@ -1293,6 +1357,7 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 30,
+        url: "https://www.reservoircreekgolf.com",
         highlight:
           "Hidden gem near Watkins Glen — hilly terrain, well-maintained greens, very affordable",
         googleRating: 4.3,
@@ -1377,14 +1442,24 @@ export const northeastDestinations: Destination[] = [
         reservationNeeded: true,
         googleRating: 4.7,
       },
+      {
+        name: "Bella's Seneca Lake Steakhouse",
+        style: "steakhouse",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "The steakhouse of the Finger Lakes. Prime rib, Delmonico, and surf-and-turf between Geneva and Waterloo on Routes 5 & 20.",
+        reservationNeeded: true,
+        url: "https://www.senecalakesteak.com/",
+      },
     ],
     bars: [
       {
         name: "FLX Wienery",
         vibe: "brewpub",
         highlight:
-          "Casual craft beer and gourmet hot dogs in downtown Geneva — exactly what it sounds like",
-        lateNight: false,
+          "Casual craft beer and gourmet hot dogs in downtown Geneva — exactly what it sounds like. Open late on weekends.",
+        lateNight: true,
         walkableFromDowntown: true,
       },
       {
@@ -1403,8 +1478,29 @@ export const northeastDestinations: Destination[] = [
         lateNight: false,
         walkableFromDowntown: true,
       },
+      {
+        name: "Eddie O'Brien's Grille & Bar",
+        vibe: "sports-bar",
+        highlight:
+          "Geneva's late-night anchor on Exchange Street. Full bar, pub grub, and the only spot that consistently stays open past midnight on weekends.",
+        lateNight: true,
+        walkableFromDowntown: true,
+      },
     ],
     activities: [
+      {
+        name: "Drive the Glen at Watkins Glen International",
+        type: "go-karts",
+        duration: "2-3 hours",
+        pricePerPerson: [40, 40],
+        groupFriendly: true,
+        highlight:
+          "Drive your own car for three laps around the legendary 3.45-mile NASCAR and F1 road course behind an official pace car. Photo op at the start/finish line and gift shop visit. $40 flat per car.",
+        bestFor: "arrival day",
+        provider: "Watkins Glen International",
+        googleRating: 4.7,
+        reviewCount: 3500,
+      },
       {
         name: "Seneca Lake Wine Trail",
         type: "winery",
@@ -1412,8 +1508,8 @@ export const northeastDestinations: Destination[] = [
         pricePerPerson: [20, 60],
         groupFriendly: true,
         highlight:
-          "30+ wineries on Seneca Lake alone — world-class Riesling, plus cideries and distilleries mixed in",
-        bestFor: "rest day",
+          "30+ wineries on Seneca Lake alone — world-class Riesling, plus cideries and distilleries. The perfect arrival day group crawl.",
+        bestFor: "arrival day",
       },
       {
         name: "Watkins Glen State Park",
@@ -1559,6 +1655,7 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "mountain",
         driveMinutes: 20,
+        url: "https://www.buckhillgolf.com",
         highlight:
           "Historic 27-hole facility with Donald Ross roots and solid mountain views at a budget price",
         googleRating: 4.2,
@@ -1629,6 +1726,17 @@ export const northeastDestinations: Destination[] = [
           "Celebrity chef spot at Mount Airy Casino — over-the-top burgers, wings, and trash can nachos",
         reservationNeeded: false,
         googleRating: 4.2,
+      },
+    
+      {
+        name: "The Frogtown Chophouse",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Casual fine-dining chophouse in Swiftwater by a veteran chef-restaurateur team serving premium steaks",
+        reservationNeeded: true,
+        googleRating: 4.5,
       },
     ],
     bars: [
@@ -1781,6 +1889,7 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "mountain",
         driveMinutes: 5,
+        url: "https://www.taconicgolf.com",
         highlight:
           "Wayne Stiles classic set against Mount Greylock — one of the best public courses in New England",
         googleRating: 4.5,
@@ -1814,6 +1923,7 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.waubeeka.com",
         highlight:
           "Williamstown gem in the shadow of the Green Mountains — friendly layout with excellent fall foliage",
         googleRating: 4.3,
@@ -1830,6 +1940,7 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.wahconahcc.com",
         highlight:
           "Semi-private course in Dalton with tree-lined fairways and a classic New England feel",
         googleRating: 4.2,
@@ -1898,6 +2009,16 @@ export const northeastDestinations: Destination[] = [
           "Great Barrington lunch spot with creative sandwiches and house-made ice cream",
         reservationNeeded: false,
       },
+      {
+        name: "RARE 297 Steakhouse",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Premium steaks, sushi, and seafood inside the historic Hotel on North in Pittsfield. Private banquet hall seats up to 234. Bar open until 1am Fri-Sat. Opened 2024 and already the go-to steakhouse in the Berkshires.",
+        reservationNeeded: true,
+        url: "https://www.rare297.com/",
+      },
     ],
     bars: [
       {
@@ -1926,6 +2047,19 @@ export const northeastDestinations: Destination[] = [
       },
     ],
     activities: [
+      {
+        name: "Jiminy Peak Mountain Adventure Park",
+        type: "zipline",
+        duration: "2-3 hours",
+        pricePerPerson: [35, 70],
+        groupFriendly: true,
+        highlight:
+          "Alpine mountain coaster, Soaring Eagle zipline, aerial adventure park, and Eurobungy trampolines at a ski resort turned summer playground. Available for private group rental midweek. Perfect arrival-day competition.",
+        bestFor: "arrival day",
+        provider: "Jiminy Peak Mountain Resort",
+        googleRating: 4.3,
+        reviewCount: 1500,
+      },
       {
         name: "Tanglewood Music Festival",
         type: "brewery",
@@ -1963,8 +2097,8 @@ export const northeastDestinations: Destination[] = [
         pricePerPerson: [35, 70],
         groupFriendly: true,
         highlight:
-          "Summer mountain coaster, zip line, and aerial park at a ski resort",
-        bestFor: "rest day",
+          "Summer mountain coaster, zip line, and aerial park at a ski resort — group-friendly arrival day adrenaline",
+        bestFor: "arrival day",
         provider: "Jiminy Peak",
       },
       {
@@ -2054,21 +2188,22 @@ export const northeastDestinations: Destination[] = [
         reviewCount: 380,
       },
       {
-        name: "Copley Country Club",
+        name: "Green Mountain National Golf Course",
         tier: "solid",
-        greenFeeRange: [39, 65],
-        holes: 9,
-        par: 34,
-        yardage: 3000,
-        slope: 118,
-        rating: 68.5,
+        greenFeeRange: [49, 79],
+        holes: 18,
+        par: 71,
+        yardage: 6589,
+        slope: 127,
+        rating: 71.0,
         walkable: true,
         style: "mountain",
-        driveMinutes: 5,
+        driveMinutes: 30,
+        url: "https://www.greenmountainnational.com",
         highlight:
-          "Charming 9-hole course right in Stowe village — quick round with Vermont village charm",
-        googleRating: 4.3,
-        reviewCount: 180,
+          "Gene Bates design in Killington with rolling Green Mountain terrain, elevation changes, and gorgeous fall foliage views",
+        googleRating: 4.4,
+        reviewCount: 320,
       },
       {
         name: "Country Club of Vermont",
@@ -2082,6 +2217,7 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "mountain",
         driveMinutes: 20,
+        url: "https://www.ccvermont.com",
         highlight:
           "Waterbury semi-private course — solid value with rolling terrain and mountain views",
         googleRating: 4.3,
@@ -2159,6 +2295,17 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Wood-fired pizza and cocktails in Stowe Village — casual group dinner that always delivers",
         reservationNeeded: false,
+      },
+    
+      {
+        name: "Harrison's Restaurant",
+        style: "steakhouse",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "Rustic Vermont steakhouse with NY sirloin, bone-in ribeye, and Vermont Wagyu in a mountain-town setting",
+        reservationNeeded: true,
+        googleRating: 4.4,
       },
     ],
     bars: [
@@ -2300,6 +2447,7 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "coastal",
         driveMinutes: 15,
+        url: "https://www.purpoodockclub.com",
         highlight:
           "Cape Elizabeth beauty with ocean glimpses — semi-private with limited public tee times",
         googleRating: 4.5,
@@ -2353,6 +2501,7 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 20,
+        url: "https://www.valhallagolf.com",
         highlight:
           "Cumberland municipal course ranked among Maine's best public tracks — outstanding value",
         googleRating: 4.5,
@@ -2431,6 +2580,17 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Maine potato donuts in wild flavors — essential hangover cure breakfast",
         reservationNeeded: false,
+      },
+    
+      {
+        name: "The Grill Room & Bar",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Urban steakhouse with an open wood-fired grill, rustic high-ceilinged dining room, and group-friendly reservations",
+        reservationNeeded: true,
+        googleRating: 4.5,
       },
     ],
     bars: [
@@ -2583,6 +2743,7 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "coastal",
         driveMinutes: 10,
+        url: "https://www.webhannet.com",
         highlight:
           "Walter Travis links design with ocean views — tight, windy, and beautifully maintained since 1902",
         googleRating: 4.6,
@@ -2601,6 +2762,7 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "coastal",
         driveMinutes: 5,
+        url: "https://www.capearundelgolfclub.com",
         highlight:
           "The Bush family's home course — charming, walkable layout with Kennebunk River views",
         googleRating: 4.4,
@@ -2687,6 +2849,17 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Dock Square staple with pub fare, local seafood, and a fun bar scene downstairs",
         reservationNeeded: false,
+      },
+    
+      {
+        name: "The Lost Fire",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Named Maine's best steakhouse — Argentine-influenced USDA Prime cuts with a fire pit patio",
+        reservationNeeded: true,
+        googleRating: 4.6,
       },
     ],
     bars: [
@@ -2841,6 +3014,7 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.greenvalleycc.com",
         highlight:
           "Friendly public course in Portsmouth with solid conditioning and a good pace of play",
         googleRating: 4.3,
@@ -2858,6 +3032,7 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.montaupcc.com",
         highlight:
           "Semi-private Portsmouth course with challenging layout and Narragansett Bay views on the back nine",
         googleRating: 4.4,
@@ -2875,6 +3050,7 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "coastal",
         driveMinutes: 5,
+        url: "https://www.wanumetonomy.com",
         highlight:
           "Short but strategic Middletown course right on the island — ocean breezes make it play longer than the card",
         googleRating: 4.2,
@@ -2952,6 +3128,17 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "French fine dining in a Victorian mansion — the big-night splurge dinner",
         reservationNeeded: true,
+      },
+    
+      {
+        name: "22 Bowen's",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Classic wharf-side prime steakhouse with panoramic Newport Harbor views and private event space for groups",
+        reservationNeeded: true,
+        googleRating: 4.5,
       },
     ],
     bars: [
@@ -3382,6 +3569,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.hersheycc.com",
         highlight:
           "Maurice McCarthy design with Hershey resort pedigree — the best course in the area with tournament conditioning",
+        googleRating: 4.6,
+        reviewCount: 1375,
       },
       {
         name: "Hershey Country Club - West Course",
@@ -3398,6 +3587,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.hersheycc.com",
         highlight:
           "Shorter companion course with more forgiving fairways — great second-day round for the group",
+        googleRating: 4.5,
+        reviewCount: 539,
       },
       {
         name: "Hershey Links",
@@ -3411,8 +3602,11 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 10,
+        url: "https://www.hersheypa.com/things-to-do/golf",
         highlight:
           "Affordable links-inspired public course — good warmup round with open fairways",
+        googleRating: 4.3,
+        reviewCount: 255,
       },
       {
         name: "Iron Valley Golf Club",
@@ -3426,8 +3620,11 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 20,
+        url: "https://www.ironvalleygc.com",
         highlight:
           "Cornwall course with nice elevation changes and woods — punches above its weight for the price",
+        googleRating: 4.5,
+        reviewCount: 289,
       },
     ],
     lodging: [
@@ -3626,6 +3823,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.rumpointe.com",
         highlight:
           "Pete Dye/P.B. Dye design with Sinepuxent Bay views — the best public course near OC with true links character",
+        googleRating: 4.5,
+        reviewCount: 1094,
       },
       {
         name: "Lighthouse Sound Golf Course",
@@ -3642,6 +3841,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.lighthousesound.com",
         highlight:
           "Arthur Hills design through coastal marshland with Assawoman Bay views on nearly every hole",
+        googleRating: 4.6,
+        reviewCount: 1098,
       },
       {
         name: "Eagle's Landing Golf Course",
@@ -3658,6 +3859,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.eagleslandinggolf.com",
         highlight:
           "Clive Clark design with dramatic water carries and coastal wind — excellent value for the quality",
+        googleRating: 4.3,
+        reviewCount: 694,
       },
       {
         name: "Glen Riddle Golf Club - War Admiral",
@@ -3674,6 +3877,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.glenriddlegolf.com",
         highlight:
           "Rick Jacobson design through mature pines and wetlands — tournament conditioning at a public price",
+        googleRating: 4.5,
+        reviewCount: 853,
       },
     ],
     lodging: [
@@ -3738,6 +3943,17 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Build-your-own hot donuts — essential morning-after fuel for the group",
         reservationNeeded: false,
+      },
+    
+      {
+        name: "Ruth's Chris Steak House",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Four private dining rooms accommodating 5-150 guests with USDA Prime steaks sizzling on 500-degree plates",
+        reservationNeeded: true,
+        googleRating: 4.4,
       },
     ],
     bars: [
@@ -3878,23 +4094,29 @@ export const northeastDestinations: Destination[] = [
         walkable: false,
         style: "mountain",
         driveMinutes: 5,
+        url: "https://www.windhammountain.com/golf",
         highlight:
           "Ski-resort mountain course with dramatic elevation changes and Catskill views on every hole",
+        googleRating: 4.5,
+        reviewCount: 823,
       },
       {
-        name: "Rip Van Winkle Country Club",
+        name: "Sunny Hill Resort & Golf Course",
         tier: "solid",
-        greenFeeRange: [35, 59],
-        holes: 9,
-        par: 35,
-        yardage: 3100,
-        slope: 120,
-        rating: 68.5,
+        greenFeeRange: [39, 65],
+        holes: 18,
+        par: 71,
+        yardage: 6178,
+        slope: 121,
+        rating: 69.3,
         walkable: true,
         style: "mountain",
-        driveMinutes: 15,
+        driveMinutes: 20,
+        url: "https://www.sunnyhill.com",
         highlight:
-          "Charming 9-hole course in Palenville with mountain views — short but sweet with tight fairways",
+          "Classic Catskills resort course in Greenville with rolling mountain terrain, mature trees, and a throwback vibe that fits the region perfectly",
+        googleRating: 4.3,
+        reviewCount: 210,
       },
       {
         name: "Thunderhart Golf Course",
@@ -3908,8 +4130,11 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "mountain",
         driveMinutes: 25,
+        url: "https://www.thunderhartgolf.com",
         highlight:
           "Freehold public course with rolling terrain and a great layout for the price",
+        googleRating: 4.3,
+        reviewCount: 942,
       },
       {
         name: "Christman's Windham House Golf Course",
@@ -3923,8 +4148,11 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "mountain",
         driveMinutes: 10,
+        url: "https://www.christmansgolf.com",
         highlight:
           "Classic mountain resort course — old-school Catskills golf at a budget-friendly price",
+        googleRating: 4,
+        reviewCount: 130,
       },
     ],
     lodging: [
@@ -3990,6 +4218,16 @@ export const northeastDestinations: Destination[] = [
           "Catskill village restaurant with a daily-changing menu focused on local farms and foraging",
         reservationNeeded: true,
       },
+      {
+        name: "Lilly's Steaks & Cocktails",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Windham's premier steakhouse with perfectly aged beef, fresh seafood, and handcrafted cocktails. Private dining room available for groups.",
+        reservationNeeded: true,
+        url: "https://lillyssteaks.com",
+      },
     ],
     bars: [
       {
@@ -4018,6 +4256,19 @@ export const northeastDestinations: Destination[] = [
       },
     ],
     activities: [
+      {
+        name: "Hunter Mountain SkyRider Zipline Tour",
+        type: "zipline",
+        duration: "3-4 hours",
+        pricePerPerson: [100, 130],
+        groupFriendly: true,
+        highlight:
+          "Second-longest zipline in the world — 4.6 miles of twin ziplines soaring 600 feet above the Catskills at up to 50 mph. Groups of 12 max per session, 3-4 hour experience. Absolutely unforgettable arrival-day adrenaline.",
+        bestFor: "arrival day",
+        provider: "New York Zipline Adventure Tours",
+        googleRating: 4.7,
+        reviewCount: 2100,
+      },
       {
         name: "Kaaterskill Falls Hike",
         type: "hiking",
@@ -4057,8 +4308,8 @@ export const northeastDestinations: Destination[] = [
         pricePerPerson: [45, 75],
         groupFriendly: true,
         highlight:
-          "Longest zipline canopy tour in North America — 3+ hours soaring through the forest",
-        bestFor: "rest day",
+          "Longest zipline canopy tour in North America — 3+ hours soaring through the forest. The ultimate arrival day group rush.",
+        bestFor: "arrival day",
         provider: "Hunter Mountain",
       },
       {
@@ -4127,21 +4378,26 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.omnihotels.com/hotels/bretton-woods-mount-washington/golf",
         highlight:
           "Donald Ross design on the grounds of the grand hotel — Mount Washington as your backdrop on every hole",
+        googleRating: 4.5,
+        reviewCount: 1292,
       },
       {
-        name: "Mount Pleasant Golf Course",
+        name: "Waumbek Golf Club",
         tier: "solid",
-        greenFeeRange: [49, 79],
-        holes: 9,
-        par: 35,
-        yardage: 3025,
-        slope: 119,
-        rating: 68.0,
+        greenFeeRange: [40, 65],
+        holes: 18,
+        par: 70,
+        yardage: 6000,
+        slope: 120,
+        rating: 68.5,
         walkable: true,
-        style: "resort",
-        driveMinutes: 0,
+        style: "mountain",
+        driveMinutes: 15,
+        url: "https://www.waumbekgolf.com",
         highlight:
-          "Companion 9-hole course at the resort — shorter but scenic and a great warm-up",
+          "Classic White Mountains course in Jefferson with Presidential Range views — a well-maintained 18 that complements the resort rounds",
+        googleRating: 4.3,
+        reviewCount: 190,
       },
       {
         name: "Bethlehem Country Club",
@@ -4155,8 +4411,48 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "mountain",
         driveMinutes: 20,
+        url: "https://www.bethlehemcc.com",
         highlight:
           "Donald Ross design from 1898 — one of the oldest courses in NH with classic mountain golf charm",
+        googleRating: 4.3,
+        reviewCount: 160,
+      },
+      {
+        name: "Maplewood Country Club",
+        tier: "solid",
+        greenFeeRange: [40, 65],
+        holes: 18,
+        par: 72,
+        yardage: 6300,
+        slope: 123,
+        rating: 69.8,
+        walkable: true,
+        style: "mountain",
+        driveMinutes: 20,
+        url: "https://www.maplewoodgolfresort.com",
+        highlight:
+          "Donald Ross mountain layout in Bethlehem — 1903 design with stunning White Mountain panoramas and classic New England charm",
+        googleRating: 4.3,
+        reviewCount: 280,
+      },
+      {
+        name: "Waumbek Golf Club",
+        tier: "solid",
+        greenFeeRange: [35, 55],
+        holes: 18,
+        par: 71,
+        yardage: 6100,
+        slope: 120,
+        rating: 68.5,
+        walkable: true,
+        style: "mountain",
+        driveMinutes: 20,
+        url: "https://www.waumbekgolf.com",
+        highlight:
+          "New Hampshire's oldest 18-hole course (1895) — jaw-dropping Presidential Range views on every hole in Jefferson",
+        googleRating: 4.4,
+        reviewCount: 190,
+        hypeTag: "HIDDEN GEM",
       },
     ],
     lodging: [
@@ -4221,6 +4517,16 @@ export const northeastDestinations: Destination[] = [
           "Bethlehem farm-to-table spot with creative breakfast and lunch — perfect post-round fuel",
         reservationNeeded: false,
       },
+    
+      {
+        name: "The Main Dining Room at Mount Washington",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Grand hotel dining with jacket-required dress code — Presidential Range views and New England prime cuts. The splurge dinner.",
+        reservationNeeded: true,
+      },
     ],
     bars: [
       {
@@ -4229,23 +4535,33 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Speakeasy-style bar in the basement of the grand hotel — cocktails, live music, and old-world ambiance",
         lateNight: true,
-        walkableFromDowntown: false,
+        walkableFromDowntown: true,
+        googleRating: 4.6,
       },
       {
         name: "Stickney's Bar",
         vibe: "sports-bar",
         highlight:
-          "Casual resort bar with craft beer, pub games, and a friendly crowd",
+          "Casual resort bar with craft beer, pub games, and a friendly crowd — steps from your room",
         lateNight: true,
-        walkableFromDowntown: false,
+        walkableFromDowntown: true,
       },
       {
         name: "Rek-Lis Brewing Company",
         vibe: "brewpub",
         highlight:
-          "Bethlehem craft brewery with rotating IPAs and a mountain lodge taproom",
+          "Bethlehem craft brewery with rotating IPAs and a mountain lodge taproom — 20 min drive but worth the trip",
         lateNight: false,
         walkableFromDowntown: false,
+      },
+      {
+        name: "Schilling Beer Co",
+        vibe: "brewpub",
+        highlight:
+          "European-style brewery in a converted hydroelectric plant in Littleton — outstanding lagers and a scenic riverside setting",
+        lateNight: false,
+        walkableFromDowntown: false,
+        googleRating: 4.7,
       },
     ],
     activities: [
@@ -4263,13 +4579,15 @@ export const northeastDestinations: Destination[] = [
       {
         name: "Bretton Woods Canopy Tour",
         type: "zipline",
-        duration: "2-3 hours",
-        pricePerPerson: [65, 95],
+        duration: "3-4 hours",
+        pricePerPerson: [89, 99],
         groupFriendly: true,
         highlight:
-          "Zip lines through the White Mountain canopy with views of Mount Washington",
-        bestFor: "rest day",
+          "Nine ziplines, two sky bridges, and three rappels through the White Mountain canopy — longest zip over 1,000 ft with Mount Washington views. The ultimate arrival day group activity.",
+        bestFor: "arrival day",
         provider: "Bretton Woods",
+        googleRating: 4.8,
+        reviewCount: 620,
       },
       {
         name: "Ammonoosuc River Fly Fishing",
@@ -4357,6 +4675,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.kebovalleyclub.com",
         highlight:
           "8th oldest golf club in America — stunning mountain and ocean views from a Herbert Leeds design inside Acadia",
+        googleRating: 4.6,
+        reviewCount: 380,
       },
       {
         name: "Bar Harbor Golf Course",
@@ -4370,8 +4690,11 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 5,
+        url: "https://www.barharborgolfcourse.com",
         highlight:
           "Trenton course with great views of Cadillac Mountain — solid value round right outside town",
+        googleRating: 4.4,
+        reviewCount: 328,
       },
       {
         name: "Northeast Harbor Golf Club",
@@ -4385,8 +4708,11 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "coastal",
         driveMinutes: 20,
+        url: "https://www.nehgc.com",
         highlight:
           "Charming Seal Harbor course with ocean views — short but strategic, open to the public on select days",
+        googleRating: 4.2,
+        reviewCount: 600,
       },
     ],
     lodging: [
@@ -4452,6 +4778,16 @@ export const northeastDestinations: Destination[] = [
           "Waterfront lobster shack in Bernard — pick your lobster from the trap, eat on the dock",
         reservationNeeded: false,
       },
+      {
+        name: "Jack Russell's Steak House & Brewery",
+        style: "steakhouse",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "Family-owned steakhouse and brewery since 1997 on Eden Street. House-brewed ales, hand-cut steaks, and multiple dining rooms including upstairs seating. The group steakhouse dinner.",
+        reservationNeeded: true,
+        url: "https://www.steakbarharbor.com",
+      },
     ],
     bars: [
       {
@@ -4480,6 +4816,19 @@ export const northeastDestinations: Destination[] = [
       },
     ],
     activities: [
+      {
+        name: "Lobster Fishing & Seal Watching Cruise",
+        type: "fishing",
+        duration: "2-3 hours",
+        pricePerPerson: [40, 60],
+        groupFriendly: true,
+        highlight:
+          "Board the Miss Samantha (Maine's largest lobster passenger boat) to haul traps with a real lobsterman, then cruise to see seals basking on the rocks. Naturalist narrates the whole trip. Departs from downtown Bar Harbor pier.",
+        bestFor: "arrival day",
+        provider: "Bar Harbor Whale Watch Co.",
+        googleRating: 4.6,
+        reviewCount: 4500,
+      },
       {
         name: "Acadia National Park - Cadillac Mountain",
         type: "hiking",
@@ -4519,8 +4868,8 @@ export const northeastDestinations: Destination[] = [
         pricePerPerson: [55, 80],
         groupFriendly: true,
         highlight:
-          "Spot humpbacks, finbacks, and minke whales in the Gulf of Maine",
-        bestFor: "rest day",
+          "Spot humpbacks, finbacks, and minke whales in the Gulf of Maine — an unforgettable arrival day group experience",
+        bestFor: "arrival day",
         provider: "Bar Harbor Whale Watch Co.",
       },
       {
@@ -4589,6 +4938,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.vtnational.com",
         highlight:
           "Jack Nicklaus design with Lake Champlain and Adirondack views — the best public course in Vermont",
+        googleRating: 4.6,
+        reviewCount: 1077,
       },
       {
         name: "Links at Lang Farm",
@@ -4605,6 +4956,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.langfarmgolf.com",
         highlight:
           "Links-style course on former farmland in Essex — open layout with solid conditioning and great value",
+        googleRating: 4.4,
+        reviewCount: 948,
       },
       {
         name: "Rocky Ridge Golf Club",
@@ -4618,8 +4971,11 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.rockyridgevt.com",
         highlight:
           "St. George course with rolling terrain and Green Mountain views — reliable and affordable",
+        googleRating: 4.3,
+        reviewCount: 265,
       },
       {
         name: "Kwiniaska Golf Club",
@@ -4633,8 +4989,11 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 10,
+        url: "https://www.kwiniaska.com",
         highlight:
           "Shelburne course with Lake Champlain views — well-maintained semi-private club with public tee times",
+        googleRating: 4.4,
+        reviewCount: 618,
       },
     ],
     lodging: [
@@ -4708,6 +5067,17 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Winooski creative diner with a cult following — small but mighty with inventive dishes",
         reservationNeeded: true,
+      },
+    
+      {
+        name: "Guild Tavern",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Farm-to-table wood-fired grill featuring local beef over Vermont hardwood with a private dining room for groups",
+        reservationNeeded: true,
+        googleRating: 4.5,
       },
     ],
     bars: [
@@ -4853,6 +5223,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.otesaga.com/golf",
         highlight:
           "Devereux Emmet design on the shores of Otsego Lake — resort golf at The Otesaga with lake views on nearly every hole",
+        googleRating: 4.5,
+        reviewCount: 682,
       },
       {
         name: "Cooperstown Country Club",
@@ -4866,8 +5238,11 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 5,
+        url: "https://www.cooperstowncountryclub.com",
         highlight:
           "Affordable local course with well-maintained greens and classic upstate New York golf charm",
+        googleRating: 4.3,
+        reviewCount: 180,
       },
       {
         name: "Christman's Golf Course",
@@ -4881,8 +5256,11 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.christmansgolf.com",
         highlight:
           "Family-run course near Schuyler Lake — honest golf at rock-bottom prices",
+        googleRating: 4,
+        reviewCount: 120,
       },
     ],
     lodging: [
@@ -4947,6 +5325,17 @@ export const northeastDestinations: Destination[] = [
           "Pre-opera dinners at Glimmerglass during summer festival season — surprisingly great group dining",
         reservationNeeded: true,
       },
+    
+      {
+        name: "1909 Restaurant",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Elegant lakeside dining at The Otesaga Resort with craft cocktails, steaks, and seafood on a Glimmerglass veranda",
+        reservationNeeded: true,
+        googleRating: 4.5,
+      },
     ],
     bars: [
       {
@@ -4973,6 +5362,24 @@ export const northeastDestinations: Destination[] = [
         lateNight: false,
         walkableFromDowntown: false,
       },
+      {
+        name: "Doubleday Cafe",
+        vibe: "patio",
+        highlight:
+          "Main Street cafe-bar with full liquor, local brews on tap, burgers, and a classic downtown vibe — the walkable pre-dinner spot",
+        lateNight: false,
+        walkableFromDowntown: true,
+        googleRating: 4.3,
+      },
+      {
+        name: "Council Rock Brewery",
+        vibe: "brewpub",
+        highlight:
+          "Rotating craft beers with outstanding food and huge portions — the group brewery stop 7 min south of town",
+        lateNight: false,
+        walkableFromDowntown: false,
+        googleRating: 4.6,
+      },
     ],
     activities: [
       {
@@ -4982,8 +5389,8 @@ export const northeastDestinations: Destination[] = [
         pricePerPerson: [25, 35],
         groupFriendly: true,
         highlight:
-          "The reason Cooperstown exists — plaques, memorabilia, and baseball history that even non-fans enjoy",
-        bestFor: "rest day",
+          "The reason Cooperstown exists — plaques, memorabilia, and baseball history that even non-fans enjoy. The definitive arrival day group activity.",
+        bestFor: "arrival day",
         provider: "National Baseball Hall of Fame",
       },
       {
@@ -5027,6 +5434,16 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Swim, hike, and grill at the north end of Otsego Lake — perfect half-day with a group",
         bestFor: "morning before golf",
+      },
+      {
+        name: "Glimmerglass Queen Lake Tour",
+        type: "boat-rental",
+        duration: "1-2 hours",
+        pricePerPerson: [15, 25],
+        groupFriendly: true,
+        highlight:
+          "Narrated cruise on a 49-passenger vessel around Otsego Lake — historic estates, mountain views, and beers on deck",
+        bestFor: "arrival day",
       },
     ],
     partyBuses: [
@@ -5083,6 +5500,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.capemaynational.com",
         highlight:
           "Karl Litton/Robert Mullock design through wetlands and pines — consistently ranked among NJ's best public courses",
+        googleRating: 4.6,
+        reviewCount: 666,
       },
       {
         name: "Avalon Golf Club",
@@ -5096,8 +5515,11 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "coastal",
         driveMinutes: 20,
+        url: "https://www.avalonlinks.com",
         highlight:
           "Bob Hendricks design in Swainton with coastal wind and well-maintained greens — solid shore golf",
+        googleRating: 4.3,
+        reviewCount: 835,
       },
       {
         name: "Sand Barrens Golf Club",
@@ -5114,6 +5536,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.sandbarrensgolf.com",
         highlight:
           "27 holes through South Jersey pine barrens — waste bunkers and sandy soil give it a true links feel",
+        googleRating: 4.2,
+        reviewCount: 531,
       },
     ],
     lodging: [
@@ -5178,6 +5602,17 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Greek-influenced breakfast and lunch spot — best pancakes and omelets in Cape May",
         reservationNeeded: false,
+      },
+    
+      {
+        name: "Hemingway's Prime Steaks & Seafood",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Award-winning steakhouse in the Grand Hotel with locally sourced seafood and premium steaks",
+        reservationNeeded: true,
+        googleRating: 4.5,
       },
     ],
     bars: [
@@ -5311,8 +5746,11 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "coastal",
         driveMinutes: 10,
+        url: "https://www.shennecossettgolf.com",
         highlight:
           "Donald Ross design overlooking the Thames River and Long Island Sound — a public treasure with ocean views",
+        googleRating: 4.4,
+        reviewCount: 947,
       },
       {
         name: "Lake of Isles Golf Course",
@@ -5329,6 +5767,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.lakeofisles.com",
         highlight:
           "Rees Jones championship design at Foxwoods — top 100 you can play, with a world-class practice facility",
+        googleRating: 4.7,
+        reviewCount: 699,
       },
       {
         name: "Elmridge Golf Course",
@@ -5342,8 +5782,11 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 20,
+        url: "https://www.elmridgegolf.com",
         highlight:
           "27-hole Pawcatuck facility with three distinct nines — great value and good conditioning for the price",
+        googleRating: 4.4,
+        reviewCount: 568,
       },
     ],
     lodging: [
@@ -5407,6 +5850,17 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Yes, it's from the movie. Decent pizza, fun novelty stop — just embrace it",
         reservationNeeded: false,
+      },
+    
+      {
+        name: "Steak Loft Restaurant",
+        style: "steakhouse",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "A Mystic institution since 1973 with hand-cut steaks, salad bar, live entertainment, and full bar",
+        reservationNeeded: true,
+        googleRating: 4.3,
       },
     ],
     bars: [
@@ -5542,6 +5996,8 @@ export const northeastDestinations: Destination[] = [
         url: "https://www.garrisongolfclub.com",
         highlight:
           "Stunning Hudson River views from every hole — the course where they filmed The Irishman",
+        googleRating: 4.5,
+        reviewCount: 723,
       },
       {
         name: "Casperkill Golf Club",
@@ -5555,8 +6011,11 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.casperkillgolf.com",
         highlight:
           "Poughkeepsie course with rolling terrain and mature trees — solid public golf at a good price",
+        googleRating: 4.2,
+        reviewCount: 400,
       },
       {
         name: "Beekman Country Club",
@@ -5570,8 +6029,11 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 20,
+        url: "https://www.beekmancountryclub.com",
         highlight:
           "27-hole facility in Hopewell Junction — three distinct nines with good variety and solid conditioning",
+        googleRating: 4.3,
+        reviewCount: 773,
       },
     ],
     lodging: [
@@ -5637,6 +6099,18 @@ export const northeastDestinations: Destination[] = [
           "James Beard Award-winning restaurant in Hudson — wood-fired cooking and hyper-local ingredients",
         reservationNeeded: true,
       },
+      {
+        name: "Hudson Valley Steakhouse",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "USDA Prime dry-aged steaks hand-selected by the chef in Yorktown Heights. 40oz tomahawk for two, tableside Maine lobster, and private dining for up to 200. Worth the drive south.",
+        reservationNeeded: true,
+        googleRating: 4.6,
+        reviewCount: 250,
+        url: "https://hudsonvalleysteakhouse.com/",
+      },
     ],
     bars: [
       {
@@ -5666,6 +6140,19 @@ export const northeastDestinations: Destination[] = [
     ],
     activities: [
       {
+        name: "Tuthilltown Spirits Distillery Tour",
+        type: "distillery",
+        duration: "2-3 hours",
+        pricePerPerson: [30, 30],
+        groupFriendly: true,
+        highlight:
+          "New York's first whiskey distillery since Prohibition, in a 1788 gristmill on 30 acres. 45-min guided tour with 6-sample tasting kit and souvenir glass. Explore nature paths and find the secret waterfall. Book 2 days ahead.",
+        bestFor: "arrival day",
+        provider: "Tuthilltown Spirits",
+        googleRating: 4.5,
+        reviewCount: 1800,
+      },
+      {
         name: "Hudson Valley Distillery Trail",
         type: "distillery",
         duration: "half day",
@@ -5682,8 +6169,8 @@ export const northeastDestinations: Destination[] = [
         pricePerPerson: [20, 20],
         groupFriendly: true,
         highlight:
-          "500-acre outdoor sculpture park — massive art installations in rolling Hudson Valley hills",
-        bestFor: "rest day",
+          "500-acre outdoor sculpture park — massive art installations in rolling Hudson Valley hills. The perfect arrival day group walk.",
+        bestFor: "arrival day",
         provider: "Storm King Art Center",
       },
       {

@@ -139,6 +139,27 @@ export const southwestDestinations: Destination[] = [
         avgRating: 4.7,
         bedsBreakdown: "5 kings + 3 queens = 16 guys at 2/bed",
       },
+      {
+        type: "resort-house",
+        sleeps: [12, 16],
+        nightlyRange: [250, 500],
+        amenities: [
+          "resort pool",
+          "on-site golf",
+          "spa",
+          "multiple restaurants",
+          "fitness center",
+          "concierge",
+        ],
+        areaDescription:
+          "North Scottsdale resort corridor — Kierland, Grayhawk, or Talking Stick area",
+        searchUrl:
+          "https://www.marriott.com/search/findHotels.mi?t=scottsdale+az",
+        notes:
+          "Book 4+ rooms at Talking Stick Resort, JW Marriott Scottsdale, or Westin Kierland. Per-room pricing makes it competitive for groups. Resort pools and on-site dining simplify logistics.",
+        avgRating: 4.5,
+        bedsBreakdown: "8 rooms with 2 queens each = 16 guys at 2/bed",
+      },
     ],
     dining: [
       {
@@ -434,6 +455,27 @@ export const southwestDestinations: Destination[] = [
         avgRating: 4.7,
         bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
+      {
+        type: "cabin",
+        sleeps: [10, 14],
+        nightlyRange: [400, 1200],
+        amenities: [
+          "hot tub",
+          "red rock views",
+          "fireplace",
+          "wraparound deck",
+          "BBQ grill",
+          "stargazing",
+        ],
+        areaDescription:
+          "Uptown Sedona or Oak Creek Canyon — rustic-luxury cabins nestled in red rock and pine settings",
+        searchUrl:
+          "https://www.vrbo.com/search?destination=Sedona%2C+AZ&groupSize=12&propertyType=cabin",
+        notes:
+          "Large cabins in Oak Creek Canyon or up toward the Enchantment Resort area offer a completely different vibe from in-town houses. More secluded, better stargazing, and surrounded by red rocks. Inventory for 12+ is limited so book 4+ months out.",
+        avgRating: 4.7,
+        bedsBreakdown: "3 kings + 2 queens = 10 guys at 2/bed",
+      },
     ],
     dining: [
       {
@@ -689,6 +731,27 @@ export const southwestDestinations: Destination[] = [
         avgRating: 4.6,
         bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
+      {
+        type: "resort-house",
+        sleeps: [12, 16],
+        nightlyRange: [200, 450],
+        amenities: [
+          "resort pool",
+          "on-site golf",
+          "spa",
+          "fitness center",
+          "on-site dining",
+          "mountain views",
+        ],
+        areaDescription:
+          "Catalina Foothills or north Tucson resort corridor near Ventana Canyon and Sabino Canyon",
+        searchUrl:
+          "https://www.loewshotels.com/ventana-canyon",
+        notes:
+          "Loews Ventana Canyon, Omni Tucson National, or Westin La Paloma offer per-room rates that work for groups. On-site golf and pools make logistics easy. Less privacy than a house but zero setup hassle.",
+        avgRating: 4.5,
+        bedsBreakdown: "8 rooms with 2 queens each = 16 guys at 2/bed",
+      },
     ],
     dining: [
       {
@@ -941,6 +1004,7 @@ export const southwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 10,
+        url: "https://www.sunrivergolf.com",
         highlight:
           "Wide fairways and gentle layout — a great warm-up round or hangover-recovery course",
         googleRating: 4.2,
@@ -958,6 +1022,7 @@ export const southwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 5,
+        url: "https://www.southgategolf.com",
         highlight:
           "Short and affordable muni — good for an extra round or a quick morning scramble",
         googleRating: 4.0,
@@ -985,6 +1050,18 @@ export const southwestDestinations: Destination[] = [
           "Excellent VRBO inventory for big groups at reasonable prices. Entrada area homes are close to courses and have the best scenery. Book 2 months ahead for spring.",
         avgRating: 4.7,
         bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
+      },
+    
+      {
+        type: "resort-house",
+        sleeps: [8, 14],
+        nightlyRange: [300, 900],
+        amenities: ["pool", "hot tub", "golf course views", "full kitchen", "fire pit"],
+        areaDescription: "Entrada / Snow Canyon area",
+        searchUrl: "https://www.vrbo.com/search?destination=St.+George%2C+Utah&adults=14",
+        notes: "Vacation homes in the Entrada or Sunbrook communities offer golf course views, resort pool access, and proximity to Snow Canyon State Park.",
+        avgRating: 4.6,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -1027,6 +1104,16 @@ export const southwestDestinations: Destination[] = [
           "Wood-fired cooking with craft cocktails — the newer elevated dining spot in town",
         reservationNeeded: true,
         googleRating: 4.5,
+      },
+    
+      {
+        name: "Rib & Chop House",
+        style: "steakhouse",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "Rocky Mountain hospitality with Certified Angus Beef and award-winning baby back ribs at the Convention Center",
+        reservationNeeded: true,
       },
     ],
     bars: [
@@ -1188,6 +1275,7 @@ export const southwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 5,
+        url: "https://www.palmsgolfclub.com",
         highlight:
           "Wide-open and forgiving layout — the ideal warm-up or hangover round",
         googleRating: 4.2,
@@ -1204,6 +1292,7 @@ export const southwestDestinations: Destination[] = [
         walkable: false,
         style: "desert",
         driveMinutes: 5,
+        url: "https://www.falconridgegolfclub.com",
         highlight:
           "Hilly desert layout with canyon views and some dramatic forced carries",
         googleRating: 4.3,
@@ -1229,6 +1318,18 @@ export const southwestDestinations: Destination[] = [
           "Inventory is more limited than bigger cities but affordable large homes exist. Casino hotel rooms at CasaBlanca or Eureka are a viable alternative at $60-100/night per room.",
         avgRating: 4.5,
         bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
+      },
+    
+      {
+        type: "resort-house",
+        sleeps: [8, 14],
+        nightlyRange: [250, 800],
+        amenities: ["pool access", "golf views", "full kitchen", "garage", "patio"],
+        areaDescription: "Wolf Creek / CasaBlanca area",
+        searchUrl: "https://www.vrbo.com/search?destination=Mesquite%2C+Nevada&adults=14",
+        notes: "Golf community homes near Wolf Creek and CasaBlanca are affordable and put you steps from the first tee. Book early for spring season.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 2 queens = 10 guys at 2/bed",
       },
     ],
     dining: [
@@ -1444,6 +1545,18 @@ export const southwestDestinations: Destination[] = [
         avgRating: 4.6,
         bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
+    
+      {
+        type: "lodge",
+        sleeps: [8, 14],
+        nightlyRange: [400, 1200],
+        amenities: ["adobe architecture", "fire pit", "mountain views", "hot tub", "full kitchen"],
+        areaDescription: "Canyon Road / Eastside Santa Fe",
+        searchUrl: "https://www.airbnb.com/s/Santa-Fe--NM/homes?adults=14",
+        notes: "Adobe-style homes and casitas near Canyon Road offer walkable access to galleries, restaurants, and the plaza. The Santa Fe vibe is part of the trip.",
+        avgRating: 4.7,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
+      },
     ],
     dining: [
       {
@@ -1495,6 +1608,17 @@ export const southwestDestinations: Destination[] = [
           "Northern Italian in a cozy adobe space — handmade pasta and an excellent wine list",
         reservationNeeded: true,
         googleRating: 4.6,
+      },
+    
+      {
+        name: "Rio Chama Prime Steakhouse",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Upscale prime steakhouse near the Plaza serving hand-cut aged beef since 2001 with private dining available",
+        reservationNeeded: true,
+        googleRating: 4.5,
       },
     ],
     bars: [
@@ -1638,20 +1762,21 @@ export const southwestDestinations: Destination[] = [
     bestSeasons: ["summer", "fall"],
     courses: [
       {
-        name: "Elephant Rocks Golf Course",
-        tier: "solid",
-        greenFeeRange: [40, 75],
-        holes: 9,
-        par: 34,
-        yardage: 2871,
-        slope: 117,
-        rating: 34.0,
-        walkable: true,
+        name: "Pine Canyon Club (Public Play Available)",
+        tier: "premium",
+        greenFeeRange: [75, 150],
+        holes: 18,
+        par: 72,
+        yardage: 7014,
+        slope: 143,
+        rating: 73.2,
+        walkable: false,
         style: "mountain",
-        driveMinutes: 25,
+        driveMinutes: 10,
+        url: "https://www.pinecanyonflagstaff.com",
         highlight:
-          "Unique 9-hole course weaving through massive boulder formations near Williams — play it twice for 18",
-        googleRating: 4.5,
+          "Jay Morrish design through ponderosa pines with dramatic elevation changes and views of the San Francisco Peaks",
+        googleRating: 4.7,
       },
       {
         name: "Continental Country Club",
@@ -1682,6 +1807,7 @@ export const southwestDestinations: Destination[] = [
         walkable: false,
         style: "mountain",
         driveMinutes: 10,
+        url: "https://www.pinecanyonflagstaff.com",
         highlight:
           "Jay Morrish private club that occasionally opens to resort guests — stunning ponderosa pine routing",
         googleRating: 4.7,
@@ -1708,6 +1834,18 @@ export const southwestDestinations: Destination[] = [
           "Big cabin rentals are available but book fast in summer. Mountain lodge vibes are different from the desert trip — think fireplaces, pine trees, and cooler nights.",
         avgRating: 4.6,
         bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
+      },
+    
+      {
+        type: "house",
+        sleeps: [12, 18],
+        nightlyRange: [400, 1400],
+        amenities: ["hot tub", "fire pit", "mountain views", "game room", "full kitchen"],
+        areaDescription: "Continental Country Club / Kachina Village area",
+        searchUrl: "https://www.vrbo.com/search?destination=Flagstaff%2C+Arizona&adults=16",
+        notes: "Large homes near Continental CC or in the pines south of town give the group room to spread out. Flagstaff nights get cool even in summer — fire pits are key.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
       },
     ],
     dining: [
@@ -1750,6 +1888,17 @@ export const southwestDestinations: Destination[] = [
           "Local grass-fed beef burgers on English muffin buns with Belgian fries — a Flagstaff cult favorite",
         reservationNeeded: false,
         googleRating: 4.6,
+      },
+    
+      {
+        name: "Black Bart's Steakhouse",
+        style: "steakhouse",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "Western steakhouse with live musical revue performances, serving hand-cut steaks for 45+ years",
+        reservationNeeded: true,
+        googleRating: 4.3,
       },
     ],
     bars: [
@@ -2568,6 +2717,7 @@ export const southwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.phoenix.gov/parks/golf/courses/aguila",
         highlight:
           "No-frills Phoenix muni that is perfect for a warm-up round or a hangover special",
         googleRating: 4.2,
@@ -2843,6 +2993,24 @@ export const southwestDestinations: Destination[] = [
         googleRating: 4.5,
         reviewCount: 420,
       },
+      {
+        name: "Ladera Golf Course",
+        tier: "budget",
+        greenFeeRange: [25, 45],
+        holes: 18,
+        par: 72,
+        yardage: 7107,
+        slope: 129,
+        rating: 72.8,
+        walkable: true,
+        style: "desert",
+        driveMinutes: 15,
+        url: "https://www.laderagolf.com",
+        highlight:
+          "City-owned championship layout with Sandia Mountain views at muni prices — best value in Albuquerque",
+        googleRating: 4.2,
+        reviewCount: 380,
+      },
     ],
     lodging: [
       {
@@ -3049,6 +3217,7 @@ export const southwestDestinations: Destination[] = [
         walkable: true,
         style: "desert",
         driveMinutes: 5,
+        url: "https://www.londonbridgegolf.com",
         highlight:
           "Well-maintained desert muni with mountain views — the best value in town",
         googleRating: 4.3,
@@ -3066,27 +3235,29 @@ export const southwestDestinations: Destination[] = [
         walkable: true,
         style: "desert",
         driveMinutes: 5,
+        url: "https://www.londonbridgegolf.com",
         highlight:
           "Shorter sister course — wide open, forgiving, and perfect for a warm-up or hangover round",
         googleRating: 4.2,
         reviewCount: 290,
       },
       {
-        name: "Havasu Island Golf Course",
-        tier: "budget",
-        greenFeeRange: [25, 50],
-        holes: 9,
-        par: 36,
-        yardage: 3200,
-        slope: 113,
-        rating: 35.5,
+        name: "Havasu Springs Resort Golf Course",
+        tier: "solid",
+        greenFeeRange: [35, 65],
+        holes: 18,
+        par: 72,
+        yardage: 6305,
+        slope: 121,
+        rating: 69.8,
         walkable: true,
         style: "desert",
-        driveMinutes: 10,
+        driveMinutes: 35,
+        url: "https://www.havasusprings.com/golf",
         highlight:
-          "Quick 9-hole loop that leaves the afternoon free for lake activities",
-        googleRating: 4.0,
-        reviewCount: 150,
+          "Hidden gem 18-hole resort course on the Colorado River with waterfront holes and mountain views — worth the drive south",
+        googleRating: 4.2,
+        reviewCount: 210,
       },
       {
         name: "Emerald Canyon Golf Course",
@@ -3183,6 +3354,17 @@ export const southwestDestinations: Destination[] = [
         highlight:
           "Family-run Italian with generous portions and a loyal local following",
         reservationNeeded: true,
+      },
+    
+      {
+        name: "Shugrue's Restaurant & Bar",
+        style: "steakhouse",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "Fine dining with steaks and seafood overlooking the lake — a local institution for 30+ years",
+        reservationNeeded: true,
+        googleRating: 4.4,
       },
     ],
     bars: [
@@ -3316,6 +3498,7 @@ export const southwestDestinations: Destination[] = [
         walkable: false,
         style: "resort",
         driveMinutes: 10,
+        url: "https://www.mojaveresortgolf.com",
         highlight:
           "Best course in the Laughlin area — well-conditioned resort layout with mountain and river valley views",
         googleRating: 4.4,
@@ -3333,27 +3516,29 @@ export const southwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 5,
+        url: "https://www.emeraldrivergolf.com",
         highlight:
           "Flat and forgiving course right in Laughlin — cheap, walkable, and perfect for a warm-up round",
         googleRating: 4.2,
         reviewCount: 310,
       },
       {
-        name: "Rio Vista Golf Club",
+        name: "Desert Lakes Golf Course",
         tier: "solid",
-        greenFeeRange: [25, 55],
-        holes: 9,
-        par: 34,
-        yardage: 2900,
-        slope: 110,
-        rating: 34.0,
+        greenFeeRange: [35, 65],
+        holes: 18,
+        par: 71,
+        yardage: 6418,
+        slope: 119,
+        rating: 69.4,
         walkable: true,
         style: "desert",
         driveMinutes: 15,
+        url: "https://www.desertlakesgc.com",
         highlight:
-          "Quick 9-hole loop across the river in Bullhead City — budget-friendly twilight option",
-        googleRating: 4.0,
-        reviewCount: 120,
+          "Well-maintained 18-hole course in Bullhead City with lakes, mature trees, and mountain backdrop — solid value across the river",
+        googleRating: 4.1,
+        reviewCount: 240,
       },
       {
         name: "Chaparral Country Club",
@@ -3367,6 +3552,7 @@ export const southwestDestinations: Destination[] = [
         walkable: true,
         style: "desert",
         driveMinutes: 15,
+        url: "https://www.chaparralcc.com",
         highlight:
           "Semi-private course in Bullhead City with mature trees and a well-maintained layout",
         googleRating: 4.3,
@@ -3579,6 +3765,7 @@ export const southwestDestinations: Destination[] = [
         walkable: true,
         style: "mountain",
         driveMinutes: 5,
+        url: "https://www.paysongolfclub.com",
         highlight:
           "Public mountain course with ponderosa pines lining every fairway — gorgeous and affordable",
         googleRating: 4.4,
@@ -3596,6 +3783,7 @@ export const southwestDestinations: Destination[] = [
         walkable: false,
         style: "mountain",
         driveMinutes: 10,
+        url: "https://www.rimgolf.com",
         highlight:
           "Tom Weiskopf design perched below the Mogollon Rim — dramatic elevation changes through pristine pine forest",
         googleRating: 4.7,
@@ -3614,6 +3802,7 @@ export const southwestDestinations: Destination[] = [
         walkable: false,
         style: "mountain",
         driveMinutes: 10,
+        url: "https://www.chaparralpines.com",
         highlight:
           "Semi-private David Graham & Gary Panks design through thick pine and juniper forest — a hidden gem",
         googleRating: 4.6,

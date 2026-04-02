@@ -254,8 +254,29 @@ export const southeastDestinations: Destination[] = [
         lateNight: false,
         walkableFromDowntown: true,
       },
+      {
+        name: "The Bell Tree Tavern",
+        vibe: "sports-bar",
+        highlight:
+          "Southern Pines bar open until 2am on weekends. Craft beer, cocktails, and the only real late-night scene in the Sandhills. 10-minute drive from the village.",
+        lateNight: true,
+        walkableFromDowntown: false,
+        googleRating: 4.4,
+      },
     ],
     activities: [
+      {
+        name: "Pinehurst Resort Sporting Clays",
+        type: "shooting",
+        duration: "2-3 hours",
+        pricePerPerson: [150, 250],
+        groupFriendly: true,
+        highlight:
+          "Resort-run 50-target sporting clays through woodlands simulating dove, teal, and rabbit. Safety orientation, instruction, guns, ammo, and eye/ear protection all included. Groups up to 20.",
+        bestFor: "arrival day",
+        provider: "Pinehurst Resort",
+        googleRating: 4.6,
+      },
       {
         name: "Pinehurst Brewing Company",
         type: "brewery",
@@ -273,8 +294,8 @@ export const southeastDestinations: Destination[] = [
         pricePerPerson: [45, 75],
         groupFriendly: true,
         highlight:
-          "14-station sporting clays course plus five-stand. Guns and ammo available to rent.",
-        bestFor: "rest day",
+          "14-station sporting clays course plus five-stand. Guns and ammo available to rent. Perfect arrival day competition.",
+        bestFor: "arrival day",
       },
       {
         name: "Pinehurst Spa",
@@ -517,26 +538,58 @@ export const southeastDestinations: Destination[] = [
         reservationNeeded: true,
         googleRating: 4.4,
       },
+      {
+        name: "Jasmine Porch",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Sanctuary Hotel's fine dining — prime cuts, local seafood, and lowcountry sides with ocean views. The TDF steakhouse dinner.",
+        reservationNeeded: true,
+        googleRating: 4.5,
+      },
     ],
     bars: [
       {
         name: "The Ryder Cup Bar",
         vibe: "patio",
         highlight:
-          "Post-round beers overlooking the 18th of the Ocean Course and the Atlantic. Doesn't get better.",
+          "Post-round beers overlooking the 18th of the Ocean Course and the Atlantic. Walkable from resort lodging.",
         lateNight: false,
-        walkableFromDowntown: false,
+        walkableFromDowntown: true,
+        googleRating: 4.5,
       },
       {
         name: "The Loggerhead Bar",
         vibe: "cocktail",
         highlight:
-          "Sanctuary Hotel lobby bar. Craft cocktails in a sophisticated beach resort setting.",
-        lateNight: false,
-        walkableFromDowntown: false,
+          "Sanctuary Hotel lobby bar. Craft cocktails in a sophisticated beach resort setting. Walkable from Sanctuary and beach houses.",
+        lateNight: true,
+        walkableFromDowntown: true,
+        googleRating: 4.4,
+      },
+      {
+        name: "The Sandcastle Lounge",
+        vibe: "sports-bar",
+        highlight:
+          "Casual resort bar at West Beach Village with TVs, live music nights, and late-night drinks. The group hangout spot.",
+        lateNight: true,
+        walkableFromDowntown: true,
       },
     ],
     activities: [
+      {
+        name: "Kiawah Island Nature Tour",
+        type: "hiking",
+        duration: "2-3 hours",
+        pricePerPerson: [30, 50],
+        groupFriendly: true,
+        highlight:
+          "Guided nature tour through maritime forest and beach with Kiawah Conservancy naturalists — alligators, dolphins, and shorebirds. The perfect arrival day group activity.",
+        bestFor: "arrival day",
+        provider: "Kiawah Island Nature Programs",
+        googleRating: 4.7,
+      },
       {
         name: "Kiawah Island Kayak & Paddleboard",
         type: "kayaking",
@@ -830,6 +883,17 @@ export const southeastDestinations: Destination[] = [
         reservationNeeded: true,
         googleRating: 4.5,
       },
+    
+      {
+        name: "Bowdie's Chophouse",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Hand-cut prime steaks and seafood with private dining for up to 30 guests — the Hilton Head group dinner spot",
+        reservationNeeded: true,
+        googleRating: 4.6,
+      },
     ],
     bars: [
       {
@@ -852,17 +916,17 @@ export const southeastDestinations: Destination[] = [
         name: "One Hot Mama's",
         vibe: "sports-bar",
         highlight:
-          "Great late-night spot with TVs, pool tables, and strong drinks. Gets rowdy after 10pm.",
+          "Great late-night spot in Shelter Cove with TVs, pool tables, and strong drinks. Gets rowdy after 10pm.",
         lateNight: true,
-        walkableFromDowntown: false,
+        walkableFromDowntown: true,
       },
       {
         name: "The Jazz Corner",
         vibe: "cocktail",
         highlight:
-          "Live jazz every night. Upscale cocktails and a sophisticated vibe for the one classy evening.",
+          "Live jazz every night in the Arts Center Plaza. Upscale cocktails and a sophisticated vibe.",
         lateNight: true,
-        walkableFromDowntown: false,
+        walkableFromDowntown: true,
       },
     ],
     activities: [
@@ -1081,6 +1145,18 @@ export const southeastDestinations: Destination[] = [
         avgRating: 4.6,
         bedsBreakdown: "4 kings + 4 queens = 16 guys at 2/bed",
       },
+    
+      {
+        type: "resort-house",
+        sleeps: [10, 16],
+        nightlyRange: [350, 1200],
+        amenities: ["pool", "beach access", "full kitchen", "balcony", "parking"],
+        areaDescription: "Orange Beach / Perdido Key area",
+        searchUrl: "https://www.vrbo.com/search?destination=Orange+Beach%2C+Alabama&adults=16",
+        notes: "Orange Beach condos and resort homes are slightly upscale from Gulf Shores with better restaurant access and newer properties. Walkable to The Wharf entertainment district.",
+        avgRating: 4.5,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
+      },
     ],
     dining: [
       {
@@ -1132,6 +1208,17 @@ export const southeastDestinations: Destination[] = [
           "A Gulf Shores institution on the bayou. Oysters every way, fried seafood platters, and sweet tea.",
         reservationNeeded: false,
         googleRating: 4.3,
+      },
+    
+      {
+        name: "Voyagers",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Upscale steakhouse with dry-aged steaks broiled to perfection and fine wines in an elegant Gulf Coast atmosphere",
+        reservationNeeded: true,
+        googleRating: 4.5,
       },
     ],
     bars: [
@@ -1325,6 +1412,7 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 20,
+        url: "https://www.hendersongolfclub.com",
         highlight:
           "Mike Young design with rolling terrain and mature trees. Solid daily-fee option.",
         googleRating: 4.3,
@@ -1425,6 +1513,17 @@ export const southeastDestinations: Destination[] = [
         highlight:
           "South African-Italian sandwich shop. The Conquistador is the best sandwich you'll ever eat. No debate.",
         reservationNeeded: false,
+      },
+    
+      {
+        name: "Belford's Seafood and Steaks",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Heart of City Market with private rooms for groups — some of the South's finest steaks and seafood",
+        reservationNeeded: true,
+        googleRating: 4.4,
       },
     ],
     bars: [
@@ -1571,6 +1670,7 @@ export const southeastDestinations: Destination[] = [
         walkable: true,
         style: "links",
         driveMinutes: 15,
+        url: "https://www.kearneyhill.com",
         highlight:
           "P.B. Dye links-style muni with great bones. Rolling terrain, fescue, and the best value in Lexington.",
         googleRating: 4.3,
@@ -1589,6 +1689,7 @@ export const southeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 20,
+        url: "https://www.cherryblossomgolf.com",
         highlight:
           "Jack Ridge design in Georgetown. Wide fairways, mature trees, and excellent public-course conditioning.",
         googleRating: 4.4,
@@ -1606,6 +1707,7 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.uclubky.com",
         highlight:
           "UK's championship course. Hosted NCAA championships and SEC events. The area's best pure test of golf.",
         googleRating: 4.5,
@@ -1624,6 +1726,7 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 20,
+        url: "https://www.keenetrace.com",
         highlight:
           "Arthur Hills design through horse country. Rolling hills, creeks, and pristine conditioning. Semi-private, guest access available.",
         googleRating: 4.6,
@@ -1771,6 +1874,19 @@ export const southeastDestinations: Destination[] = [
     ],
     activities: [
       {
+        name: "Buffalo Trace Distillery Tour",
+        type: "distillery",
+        duration: "2-3 hours",
+        pricePerPerson: [0, 25],
+        groupFriendly: true,
+        highlight:
+          "Free tours and bourbon tastings at the legendary Buffalo Trace in Frankfort (40 min from Lexington). The National Historic Landmark distillery makes Pappy, Eagle Rare, and Blanton's. Book ahead — slots fill fast.",
+        bestFor: "arrival day",
+        provider: "Buffalo Trace Distillery",
+        googleRating: 4.8,
+        reviewCount: 12000,
+      },
+      {
         name: "Kentucky Bourbon Trail",
         type: "distillery",
         duration: "full day",
@@ -1898,6 +2014,7 @@ export const southeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 10,
+        url: "https://www.biltmoreforestcc.com",
         highlight:
           "Donald Ross design on the Biltmore Estate. Private but guest access available through the estate. Classic mountain parkland.",
         googleRating: 4.5,
@@ -1915,6 +2032,7 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "mountain",
         driveMinutes: 25,
+        url: "https://www.cliffsliving.com/golf",
         highlight:
           "Jack Nicklaus design in a private mountain community. Dramatic elevation changes and Appalachian views. Guest access through real estate or member.",
         googleRating: 4.7,
@@ -2026,6 +2144,17 @@ export const southeastDestinations: Destination[] = [
         highlight:
           "John Fleer's farm-to-table American cuisine on Pack Square. Seasonal menu showcasing Appalachian ingredients.",
         reservationNeeded: true,
+      },
+    
+      {
+        name: "Asheville Proper",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Live-fire dining in the historic Grove Arcade elevating the classic steakhouse with charred, flavorful steaks",
+        reservationNeeded: true,
+        googleRating: 4.5,
       },
     ],
     bars: [
@@ -2364,6 +2493,17 @@ export const southeastDestinations: Destination[] = [
         highlight:
           "Upscale dining in the stunning Alys Beach community on 30A. Worth the drive for the splurge night.",
         reservationNeeded: true,
+      },
+    
+      {
+        name: "Seagar's Prime Steaks & Seafood",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "The Emerald Coast's only AAA Four-Diamond steakhouse with private rooms for 2-60 guests and a 600-label wine list",
+        reservationNeeded: true,
+        googleRating: 4.7,
       },
     ],
     bars: [
@@ -2884,6 +3024,7 @@ export const southeastDestinations: Destination[] = [
         walkable: true,
         style: "coastal",
         driveMinutes: 25,
+        url: "https://www.caledoniagolfandfishclub.com",
         highlight: "Mike Strantz masterpiece draped in live oaks and Spanish moss. Best course on the Grand Strand.",
         googleRating: 4.8,
         reviewCount: 1100,
@@ -2902,6 +3043,7 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 20,
+        url: "https://www.tpc.com/myrtle-beach",
         highlight: "Tom Fazio design with immaculate conditioning. The PGA-branded flagship of the Strand.",
         googleRating: 4.5,
         reviewCount: 780,
@@ -2918,6 +3060,7 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.barefootgolf.com",
         highlight: "Pete Dye at his most diabolical. Waste bunkers, island greens, and pure challenge.",
         googleRating: 4.4,
         reviewCount: 650,
@@ -2935,6 +3078,7 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "coastal",
         driveMinutes: 20,
+        url: "https://www.tidewatergolf.com",
         highlight: "Perched above the Intracoastal Waterway with stunning marsh views. Consistently top-rated.",
         googleRating: 4.6,
         reviewCount: 920,
@@ -2952,6 +3096,7 @@ export const southeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 5,
+        url: "https://www.myrtlewoodgolf.com",
         highlight: "Best value on the Strand. Solid layout, great conditioning for the price, and right in town.",
         googleRating: 4.2,
         reviewCount: 1400,
@@ -3141,6 +3286,7 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "links",
         driveMinutes: 15,
+        url: "https://www.gaylordsprings.com",
         highlight: "Larry Nelson design along the Cumberland River. Resort-quality conditioning with water on 13 holes.",
         googleRating: 4.4,
       },
@@ -3156,6 +3302,7 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 25,
+        url: "https://www.hermitagegolf.com",
         highlight: "Former LPGA Tour venue. Long, challenging, and beautifully maintained municipal gem.",
         googleRating: 4.5,
       },
@@ -3171,6 +3318,7 @@ export const southeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 20,
+        url: "https://www.nashvillegolfclub.com",
         highlight: "Best value in Metro Nashville. Well-kept, fair layout with some nice elevation changes.",
         googleRating: 4.2,
       },
@@ -3186,6 +3334,7 @@ export const southeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 20,
+        url: "https://www.oldhickorycc.com",
         highlight: "Classic Nashville track with mature trees and tight fairways. Great afternoon round.",
         googleRating: 4.2,
       },
@@ -3372,6 +3521,7 @@ export const southeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 20,
+        url: "https://www.thehonorscourse.com",
         highlight: "Pete Dye design that hosts NCAA championships. Private but available through select packages.",
         googleRating: 4.8,
       },
@@ -3387,6 +3537,7 @@ export const southeastDestinations: Destination[] = [
         walkable: true,
         style: "mountain",
         driveMinutes: 50,
+        url: "https://www.sewanee.edu/golf",
         highlight: "Mountaintop course at the University of the South. Stunning views and absurd value.",
         googleRating: 4.5,
       },
@@ -3402,6 +3553,7 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 25,
+        url: "https://www.beartracegolf.com",
         highlight: "Jack Nicklaus design on Chickamauga Lake. State park course with championship pedigree.",
         googleRating: 4.4,
       },
@@ -3417,6 +3569,7 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "mountain",
         driveMinutes: 20,
+        url: "https://www.lookoutmountaingc.com",
         highlight: "Scenic mountain layout with dramatic elevation changes and valley views.",
         googleRating: 4.3,
       },
@@ -3479,6 +3632,17 @@ export const southeastDestinations: Destination[] = [
         capacity: "large-group",
         highlight: "Cash-only fried chicken joint that is absolutely worth it. Get the white beans too.",
         reservationNeeded: false,
+        googleRating: 4.5,
+      },
+    
+      {
+        name: "Hennen's Steaks and Seafood",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Certified Angus Beef hand-carved and aged to perfection on Chestnut Street — known for excellent group service",
+        reservationNeeded: true,
         googleRating: 4.5,
       },
     ],
@@ -3603,7 +3767,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "coastal",
         driveMinutes: 5,
+        url: "https://www.omnihotels.com/hotels/amelia-island/golf",
         highlight: "Pete Dye design with salt marsh views and tricky island green. The resort flagship.",
+        googleRating: 4.5,
+        reviewCount: 792,
       },
       {
         name: "Amelia Island Club at Long Point",
@@ -3617,7 +3784,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "coastal",
         driveMinutes: 10,
+        url: "https://www.ameliaislandclub.com",
         highlight: "Tom Fazio oceanside design. Dramatic dune-lined holes and ocean breezes.",
+        googleRating: 4.5,
+        reviewCount: 503,
       },
       {
         name: "Amelia National Golf & Country Club",
@@ -3631,7 +3801,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.amelianational.com",
         highlight: "Tom Fazio design open to public play. Lush conditioning and great value for the quality.",
+        googleRating: 4.5,
+        reviewCount: 309,
       },
     ],
     lodging: [
@@ -3686,6 +3859,17 @@ export const southeastDestinations: Destination[] = [
         highlight: "Old gas station turned legendary breakfast and burger spot. Cash only, pure character.",
         reservationNeeded: false,
       },
+      {
+        name: "Bob's Steak & Chop House",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight: "Prime steaks and chops inside the Omni resort. Indoor dining, lively bar, and outdoor patio with fireplaces. The big-night steakhouse dinner.",
+        reservationNeeded: true,
+        googleRating: 4.7,
+        reviewCount: 2700,
+        url: "https://www.bobs-steakandchop.com/bobs-steak-and-chop-house-location/amelia-island",
+      },
     ],
     bars: [
       {
@@ -3711,6 +3895,18 @@ export const southeastDestinations: Destination[] = [
       },
     ],
     activities: [
+      {
+        name: "Amelia Island Deep Sea Fishing",
+        type: "fishing",
+        duration: "half day",
+        pricePerPerson: [150, 250],
+        groupFriendly: true,
+        highlight: "Offshore charter on a 37-foot Carolina sport fisher out of Fernandina Beach marina. Split the group across 2-3 boats for redfish, kingfish, and cobia. Rods, tackle, and bait included.",
+        bestFor: "arrival day",
+        provider: "Pipe Dream Charters",
+        googleRating: 4.9,
+        reviewCount: 320,
+      },
       {
         name: "Amelia Island Kayak Tour",
         type: "kayaking",
@@ -3809,7 +4005,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 35,
+        url: "https://www.tpc.com/sawgrass",
         highlight: "Home of THE PLAYERS Championship. Island green at 17. The most iconic public tee time in golf.",
+        googleRating: 4.7,
+        reviewCount: 2333,
       },
       {
         name: "World Golf Village - King & Bear",
@@ -3823,7 +4022,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.worldgolfvillage.com/golf",
         highlight: "Arnold Palmer and Jack Nicklaus collaboration. The only course co-designed by the two legends.",
+        googleRating: 4.4,
+        reviewCount: 1180,
       },
       {
         name: "World Golf Village - Slammer & Squire",
@@ -3837,7 +4039,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.worldgolfvillage.com/golf",
         highlight: "Sam Snead and Gene Sarazen tribute course. Bobby Weed design with great variety.",
+        googleRating: 4.6,
+        reviewCount: 987,
       },
       {
         name: "St. Johns Golf & Country Club",
@@ -3851,7 +4056,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 20,
+        url: "https://www.stjohnsgolf.com",
         highlight: "Clyde Johnston design that punches above its price. Good value round to balance the splurge days.",
+        googleRating: 4.5,
+        reviewCount: 489,
       },
     ],
     lodging: [
@@ -3905,6 +4113,17 @@ export const southeastDestinations: Destination[] = [
         capacity: "medium",
         highlight: "Fresh catch in an intimate setting on St. George Street. Elevated but not fussy.",
         reservationNeeded: true,
+      },
+    
+      {
+        name: "Michael's St. Augustine",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Award-winning chef-driven steak and seafood at Vilano Beach with Wine Spectator Best of Award of Excellence",
+        reservationNeeded: true,
+        googleRating: 4.6,
       },
     ],
     bars: [
@@ -4028,7 +4247,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "resort",
         driveMinutes: 15,
+        url: "https://www.ritzcarlton.com/en/hotels/naples/golf",
         highlight: "Greg Norman design at The Ritz-Carlton. Home of the PGA TOUR QBE Shootout. Tour-level conditioning.",
+        googleRating: 4.4,
+        reviewCount: 961,
       },
       {
         name: "Lely Resort - Flamingo Island",
@@ -4042,7 +4264,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "resort",
         driveMinutes: 10,
+        url: "https://www.lelyresort.com/golf",
         highlight: "Robert Trent Jones Sr. design with water on every hole. Flamingos sometimes make cameos.",
+        googleRating: 4.5,
+        reviewCount: 414,
       },
       {
         name: "Lely Resort - Mustang Course",
@@ -4056,7 +4281,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "resort",
         driveMinutes: 10,
+        url: "https://www.lelyresort.com/golf",
         highlight: "Lee Trevino design with generous fairways and fun risk-reward par 5s.",
+        googleRating: 4.4,
+        reviewCount: 488,
       },
       {
         name: "Naples Beach Hotel Golf Club",
@@ -4070,7 +4298,10 @@ export const southeastDestinations: Destination[] = [
         walkable: true,
         style: "resort",
         driveMinutes: 5,
+        url: "https://www.naplesbeachhotel.com/golf",
         highlight: "Walking-friendly resort course steps from the beach. Good value warm-up round.",
+        googleRating: 4.3,
+        reviewCount: 494,
       },
     ],
     lodging: [
@@ -4124,6 +4355,17 @@ export const southeastDestinations: Destination[] = [
         capacity: "large-group",
         highlight: "Casual waterfront seafood at the Naples City Dock. Good for a laid-back group lunch.",
         reservationNeeded: false,
+      },
+    
+      {
+        name: "Shula's Steak House",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Private dining rooms with AV equipment for groups — premium steaks in Don Shula's legendary tradition",
+        reservationNeeded: true,
+        googleRating: 4.4,
       },
     ],
     bars: [
@@ -4248,7 +4490,10 @@ export const southeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 25,
+        url: "https://www.theconcessiongolfclub.com",
         highlight: "Jack Nicklaus and Tony Jacklin design. Hosted WGC Match Play. Top-20 course in the US. Limited access.",
+        googleRating: 4.8,
+        reviewCount: 3185,
       },
       {
         name: "University Park Country Club",
@@ -4262,7 +4507,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.universitypark-fl.com/golf",
         highlight: "27 holes of Ron Garl design. Three distinct nines with excellent conditioning and value.",
+        googleRating: 4.3,
+        reviewCount: 922,
       },
       {
         name: "The Links at Greenfield Plantation",
@@ -4276,7 +4524,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 20,
+        url: "https://www.greenfieldplantation.com",
         highlight: "Best value in the Sarasota area. Well-maintained with some nice water features.",
+        googleRating: 4.4,
+        reviewCount: 538,
       },
       {
         name: "Ritz-Carlton Members Club",
@@ -4290,7 +4541,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 20,
+        url: "https://www.ritzcarlton.com/en/hotels/sarasota/golf",
         highlight: "Tom Fazio design with resort access. Pristine conditioning and Ritz-level service.",
+        googleRating: 4.6,
+        reviewCount: 1066,
       },
     ],
     lodging: [
@@ -4344,6 +4598,17 @@ export const southeastDestinations: Destination[] = [
         capacity: "large-group",
         highlight: "Rosemary District brunch and lunch spot. Great eggs benedict and patio seating.",
         reservationNeeded: false,
+      },
+    
+      {
+        name: "Connors Steak & Seafood",
+        style: "steakhouse",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "Voted Best Steakhouse by Sarasota Magazine nearly every year since 2019 — wood-fired grills and convertible patio",
+        reservationNeeded: true,
+        googleRating: 4.5,
       },
     ],
     bars: [
@@ -4466,7 +4731,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "resort",
         driveMinutes: 30,
+        url: "https://www.championsgate.com/golf",
         highlight: "Greg Norman British Isles-inspired design. Pot bunkers, fescue, and links-style challenge in Florida.",
+        googleRating: 4.7,
+        reviewCount: 369,
       },
       {
         name: "Orange County National - Panther Lake",
@@ -4480,7 +4748,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 25,
+        url: "https://www.ocngolf.com",
         highlight: "Phil Ritson design used as PGA Tour Q-School venue. Big, bold, and beautifully conditioned.",
+        googleRating: 4.5,
+        reviewCount: 1182,
       },
       {
         name: "Reunion Resort - Watson Course",
@@ -4494,7 +4765,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "resort",
         driveMinutes: 30,
+        url: "https://www.reunionresort.com/golf",
         highlight: "Tom Watson design with rolling terrain and strategic bunkering. Best of Reunion's three courses.",
+        googleRating: 4.6,
+        reviewCount: 1015,
       },
       {
         name: "Shingle Creek Golf Club",
@@ -4508,7 +4782,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "resort",
         driveMinutes: 15,
+        url: "https://www.shinglecreekgolf.com",
         highlight: "David Harman design near the convention center. Great value with resort-quality conditioning.",
+        googleRating: 4.3,
+        reviewCount: 364,
       },
     ],
     lodging: [
@@ -4685,7 +4962,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 20,
+        url: "https://www.fallenoak.com",
         highlight: "Tom Fazio design ranked top-100 public. Beau Rivage resort course with immaculate conditioning. Must-play.",
+        googleRating: 4.8,
+        reviewCount: 1235,
       },
       {
         name: "Grand Bear Golf Course",
@@ -4699,7 +4979,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 30,
+        url: "https://www.grandbeargolf.com",
         highlight: "Jack Nicklaus design through Mississippi pinelands. Long, demanding, and beautifully routed.",
+        googleRating: 4.7,
+        reviewCount: 699,
       },
       {
         name: "The Oaks Golf Club",
@@ -4713,7 +4996,10 @@ export const southeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.theoaksgolfclub.com",
         highlight: "Best value on the Mississippi Gulf Coast. Well-maintained muni with mature oaks.",
+        googleRating: 4.4,
+        reviewCount: 627,
       },
     ],
     lodging: [
@@ -4767,6 +5053,17 @@ export const southeastDestinations: Destination[] = [
         capacity: "large-group",
         highlight: "Chargrilled oysters, po'boys, and gumbo. Multiple locations and always solid.",
         reservationNeeded: false,
+      },
+    
+      {
+        name: "Doe's Eat Place",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "James Beard Award-winning steakhouse at Margaritaville Resort — porterhouse named No. 1 of 100 Best Things to Eat",
+        reservationNeeded: true,
+        googleRating: 4.5,
       },
     ],
     bars: [
@@ -4890,7 +5187,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "coastal",
         driveMinutes: 60,
+        url: "https://www.baycreekresort.com/golf",
         highlight: "Jack Nicklaus design on the Eastern Shore across the Bay Bridge Tunnel. Worth the drive for the views alone.",
+        googleRating: 4.6,
+        reviewCount: 1417,
       },
       {
         name: "Bay Creek Resort - Palmer Course",
@@ -4904,7 +5204,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "coastal",
         driveMinutes: 60,
+        url: "https://www.baycreekresort.com/golf",
         highlight: "Arnold Palmer's final design. Stunning Chesapeake Bay setting with creative routing.",
+        googleRating: 4.5,
+        reviewCount: 1264,
       },
       {
         name: "Hells Point Golf Club",
@@ -4918,7 +5221,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.hellspoint.com",
         highlight: "Rees Jones design with water on 13 holes. Challenging and well-conditioned daily-fee track.",
+        googleRating: 4.2,
+        reviewCount: 380,
       },
       {
         name: "Cypress Point Country Club",
@@ -4932,7 +5238,10 @@ export const southeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 10,
+        url: "https://www.cypresspointcc.com",
         highlight: "Tom Clark design with mature pines and good variety. Solid value and walkable.",
+        googleRating: 4.4,
+        reviewCount: 697,
       },
     ],
     lodging: [
@@ -4986,6 +5295,17 @@ export const southeastDestinations: Destination[] = [
         capacity: "large-group",
         highlight: "Legendary breakfast spot in a converted doctor's office. Get there early or wait in line.",
         reservationNeeded: false,
+      },
+    
+      {
+        name: "Aberdeen Barn",
+        style: "steakhouse",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "Family-owned since 1966 with prime rib, quality steaks, and a banquet area for groups and private functions",
+        reservationNeeded: true,
+        googleRating: 4.4,
       },
     ],
     bars: [
@@ -5109,7 +5429,10 @@ export const southeastDestinations: Destination[] = [
         walkable: true,
         style: "coastal",
         driveMinutes: 5,
+        url: "https://www.caledoniagolfandfishclub.com",
         highlight: "Mike Strantz masterwork. Live oaks frame every hole, the 18th approach over the marsh is iconic.",
+        googleRating: 4.8,
+        reviewCount: 1800,
       },
       {
         name: "True Blue Golf Club",
@@ -5123,7 +5446,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "coastal",
         driveMinutes: 5,
+        url: "https://www.truebluegolf.com",
         highlight: "Strantz's sister course to Caledonia. Wider and wilder with massive waste bunkers.",
+        googleRating: 4.7,
+        reviewCount: 1500,
       },
       {
         name: "Pawleys Plantation Golf & Country Club",
@@ -5137,7 +5463,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "coastal",
         driveMinutes: 5,
+        url: "https://www.pawleysplantation.com",
         highlight: "Jack Nicklaus design through marsh and maritime forest. Dramatic back nine along the creek.",
+        googleRating: 4.5,
+        reviewCount: 620,
       },
       {
         name: "Litchfield Country Club",
@@ -5151,7 +5480,10 @@ export const southeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 5,
+        url: "https://www.litchfieldcc.com",
         highlight: "Willard Byrd design through ancient oaks. Classic lowcountry layout at a great price.",
+        googleRating: 4.3,
+        reviewCount: 380,
       },
     ],
     lodging: [
@@ -5206,27 +5538,56 @@ export const southeastDestinations: Destination[] = [
         highlight: "No-frills Mexican joint with huge portions and cold margaritas. The casual group spot.",
         reservationNeeded: false,
       },
+      {
+        name: "Austin's Ocean One",
+        style: "steakhouse",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight: "Litchfield Beach steakhouse with fresh seafood, prime cuts, and a big bar. The TDF-style group dinner spot.",
+        reservationNeeded: true,
+        googleRating: 4.4,
+      },
+      {
+        name: "Hot Fish Club",
+        style: "seafood",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight: "Iconic Murrells Inlet seafood house — fresh catch, marsh views, and 90+ years of lowcountry tradition.",
+        reservationNeeded: true,
+        googleRating: 4.5,
+        reviewCount: 3200,
+      },
     ],
     bars: [
       {
-        name: "SneakyBeagle Brewery",
-        vibe: "brewpub",
-        highlight: "Local craft brewery with a taproom and food trucks. The social hub of Pawleys.",
-        lateNight: false,
-        walkableFromDowntown: false,
-      },
-      {
         name: "The Rooftop at Frank's",
         vibe: "rooftop",
-        highlight: "Rooftop bar above Frank's restaurant. Craft cocktails and a more refined vibe.",
+        highlight: "Rooftop bar above Frank's restaurant. Craft cocktails, lowcountry sunsets, and a refined vibe. The post-dinner move.",
         lateNight: true,
-        walkableFromDowntown: false,
+        walkableFromDowntown: true,
+        googleRating: 4.5,
       },
       {
         name: "Creek Ratz",
         vibe: "patio",
         highlight: "Waterfront bar on the marsh creek. Live music, cold beer, and sunset views. Peak lowcountry.",
         lateNight: true,
+        walkableFromDowntown: true,
+        googleRating: 4.3,
+      },
+      {
+        name: "Quigley's Pint & Plate",
+        vibe: "sports-bar",
+        highlight: "Craft beer bar in Litchfield with 20+ taps, pub grub, and a big patio. Group-friendly and walkable from Litchfield rentals.",
+        lateNight: true,
+        walkableFromDowntown: true,
+        googleRating: 4.4,
+      },
+      {
+        name: "SneakyBeagle Brewery",
+        vibe: "brewpub",
+        highlight: "Local craft brewery with a taproom and rotating food trucks. The social hub of Pawleys.",
+        lateNight: false,
         walkableFromDowntown: false,
       },
     ],
@@ -5247,8 +5608,10 @@ export const southeastDestinations: Destination[] = [
         duration: "2-3 hours",
         pricePerPerson: [20, 25],
         groupFriendly: true,
-        highlight: "Sculpture garden and wildlife preserve on a former plantation. Surprisingly fascinating.",
-        bestFor: "morning before golf",
+        highlight: "Sculpture garden and wildlife preserve on a former plantation. Live oaks, American sculptures, and lowcountry wildlife — a perfect arrival day group activity.",
+        bestFor: "arrival day",
+        googleRating: 4.8,
+        reviewCount: 12000,
       },
       {
         name: "Marsh Kayak Tour",
@@ -5329,7 +5692,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "links",
         driveMinutes: 15,
+        url: "https://www.thecurrituckclub.com",
         highlight: "Rees Jones design in Corolla. Ocean breezes, natural dunes, and sound views. Best course on the OBX.",
+        googleRating: 4.6,
+        reviewCount: 620,
       },
       {
         name: "Kilmarlic Golf Club",
@@ -5343,7 +5709,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "coastal",
         driveMinutes: 20,
+        url: "https://www.kilmarlic.com",
         highlight: "Tom Steele design through maritime forest and wetlands. Secluded and beautiful.",
+        googleRating: 4.6,
+        reviewCount: 480,
       },
       {
         name: "Nags Head Golf Links",
@@ -5357,7 +5726,10 @@ export const southeastDestinations: Destination[] = [
         walkable: true,
         style: "links",
         driveMinutes: 5,
+        url: "https://www.nagsheadgolflinks.com",
         highlight: "Bob Moore design on Roanoke Sound. True links experience with ocean winds and sound views.",
+        googleRating: 4.5,
+        reviewCount: 520,
       },
       {
         name: "The Pointe Golf Club",
@@ -5371,7 +5743,10 @@ export const southeastDestinations: Destination[] = [
         walkable: true,
         style: "links",
         driveMinutes: 15,
+        url: "https://www.thepointegolfclub.com",
         highlight: "Russell Breeden design in Powells Point. Good value with sound-side views.",
+        googleRating: 4.3,
+        reviewCount: 280,
       },
     ],
     lodging: [
@@ -5426,21 +5801,32 @@ export const southeastDestinations: Destination[] = [
         highlight: "Beach-shack vibes with fresh shellfish and strong drinks. The casual group spot.",
         reservationNeeded: false,
       },
+    
+      {
+        name: "JK's Restaurant",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "In-house butcher hand-carves the finest cuts, grilled over a cast-iron mesquite wood-fired grill at Milepost 9",
+        reservationNeeded: true,
+        googleRating: 4.6,
+      },
     ],
     bars: [
       {
         name: "Brewing Station",
         vibe: "brewpub",
-        highlight: "Full brewery with a huge outdoor area and live music. The OBX social hub.",
+        highlight: "Full brewery with a huge outdoor area and live music. The OBX social hub in Kill Devil Hills.",
         lateNight: true,
-        walkableFromDowntown: false,
+        walkableFromDowntown: true,
       },
       {
         name: "Awful Arthur's Oyster Bar",
         vibe: "patio",
-        highlight: "Oceanfront oyster bar and deck. Raw bar, frozen drinks, and salt air.",
+        highlight: "Oceanfront oyster bar and deck on the Beach Road. Raw bar, frozen drinks, and salt air.",
         lateNight: true,
-        walkableFromDowntown: false,
+        walkableFromDowntown: true,
       },
       {
         name: "Chip's Wine & Beer Market",
@@ -5560,7 +5946,10 @@ export const southeastDestinations: Destination[] = [
         walkable: true,
         style: "links",
         driveMinutes: 5,
+        url: "https://www.seaisland.com/golf",
         highlight: "Tom Fazio design hosting the RSM Classic. Ocean-side links with sweeping marsh and Atlantic views.",
+        googleRating: 4.6,
+        reviewCount: 1230,
       },
       {
         name: "Sea Island Golf Club - Plantation Course",
@@ -5574,7 +5963,10 @@ export const southeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 5,
+        url: "https://www.seaisland.com/golf",
         highlight: "Rees Jones redesign through live oaks and lagoons. More traditional than Seaside and equally excellent.",
+        googleRating: 4.4,
+        reviewCount: 660,
       },
       {
         name: "Sea Island Golf Club - Retreat Course",
@@ -5588,7 +5980,10 @@ export const southeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 10,
+        url: "https://www.seaisland.com/golf",
         highlight: "Davis Love III and Mark Love design on St. Simons. Avenue of Oaks entrance is unforgettable.",
+        googleRating: 4.6,
+        reviewCount: 345,
       },
       {
         name: "The King and Prince Golf Course",
@@ -5602,7 +5997,10 @@ export const southeastDestinations: Destination[] = [
         walkable: true,
         style: "coastal",
         driveMinutes: 10,
+        url: "https://www.kingandprince.com/golf",
         highlight: "Joe Lee design on St. Simons. Great value round to balance the Sea Island splurge days.",
+        googleRating: 4.3,
+        reviewCount: 763,
       },
     ],
     lodging: [
@@ -5657,6 +6055,17 @@ export const southeastDestinations: Destination[] = [
         highlight: "Casual waterfront seafood on St. Simons. Fresh catch, hush puppies, and cold beer.",
         reservationNeeded: false,
       },
+      {
+        name: "Bennie's Red Barn",
+        style: "steakhouse",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight: "St. Simons tradition since 1954. Steaks grilled over an open oak flame in a classic old-school setting. Welcomes large groups and tour buses.",
+        reservationNeeded: true,
+        googleRating: 4.3,
+        reviewCount: 310,
+        url: "http://www.benniesredbarn.com/",
+      },
     ],
     bars: [
       {
@@ -5682,6 +6091,16 @@ export const southeastDestinations: Destination[] = [
       },
     ],
     activities: [
+      {
+        name: "Sea Strike Bowling & Pub",
+        type: "go-karts",
+        duration: "2-3 hours",
+        pricePerPerson: [25, 50],
+        groupFriendly: true,
+        highlight: "Six-lane bowling alley with pub food and drinks at Sea Island resort. Competitive, group-friendly, and no skill required. Book all six lanes for the crew.",
+        bestFor: "arrival day",
+        provider: "Sea Island Resort",
+      },
       {
         name: "Sea Island Shooting School",
         type: "shooting",
@@ -5780,7 +6199,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 5,
+        url: "https://www.reynoldslakeoconee.com/golf",
         highlight: "Rees Jones design that hosted the PGA Cup. Lakeside holes and dramatic bunkering.",
+        googleRating: 4.5,
+        reviewCount: 694,
       },
       {
         name: "Reynolds - The National Course",
@@ -5794,7 +6216,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 5,
+        url: "https://www.reynoldslakeoconee.com/golf",
         highlight: "Tom Fazio design. Augusta National-style conditioning with dramatic elevation and lake views.",
+        googleRating: 4.4,
+        reviewCount: 1031,
       },
       {
         name: "Reynolds - The Landing Course",
@@ -5808,7 +6233,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 5,
+        url: "https://www.reynoldslakeoconee.com/golf",
         highlight: "Bob Cupp design with the most lake-exposed routing. Five holes right on the water.",
+        googleRating: 4.5,
+        reviewCount: 1342,
       },
       {
         name: "Reynolds - The Creek Club",
@@ -5822,7 +6250,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 10,
+        url: "https://www.reynoldslakeoconee.com/golf",
         highlight: "Jim Engh design with creative green complexes and dramatic Georgia pines throughout.",
+        googleRating: 4.6,
+        reviewCount: 308,
       },
       {
         name: "Reynolds - Great Waters",
@@ -5836,7 +6267,10 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 10,
+        url: "https://www.reynoldslakeoconee.com/golf",
         highlight: "Jack Nicklaus design ranked top-100 public. Nine holes on Lake Oconee with a stunning island-green par 3.",
+        googleRating: 4.8,
+        reviewCount: 2086,
       },
     ],
     lodging: [
@@ -5896,16 +6330,23 @@ export const southeastDestinations: Destination[] = [
       {
         name: "Ritz-Carlton Lobby Lounge",
         vibe: "whiskey-bar",
-        highlight: "Fireside bourbon and cigars at the Ritz. The sophisticated post-round gathering.",
-        lateNight: false,
-        walkableFromDowntown: false,
+        highlight: "Fireside bourbon and cigars at the Ritz. Walkable from resort lodging — the sophisticated post-round gathering.",
+        lateNight: true,
+        walkableFromDowntown: true,
       },
       {
         name: "The Lake Club Bar",
         vibe: "patio",
-        highlight: "Lakeside bar with sunset views over Oconee. Craft cocktails and total relaxation.",
+        highlight: "Lakeside bar with sunset views over Oconee. Craft cocktails and total relaxation. Walkable from Lake Club villas.",
         lateNight: false,
-        walkableFromDowntown: false,
+        walkableFromDowntown: true,
+      },
+      {
+        name: "Oconee Cove",
+        vibe: "cocktail",
+        highlight: "Speakeasy-style bar at the Ritz-Carlton with elevated cocktails and a moody atmosphere. Walkable from resort lodging.",
+        lateNight: false,
+        walkableFromDowntown: true,
       },
       {
         name: "Yesterday Cafe (Greensboro)",
@@ -5942,8 +6383,8 @@ export const southeastDestinations: Destination[] = [
         duration: "2-3 hours",
         pricePerPerson: [75, 150],
         groupFriendly: true,
-        highlight: "Sporting clays course on the resort property. Competitive and group-friendly.",
-        bestFor: "rest day",
+        highlight: "Sporting clays course on the resort property. Competitive and group-friendly — perfect arrival day group activity.",
+        bestFor: "arrival day",
         provider: "Reynolds Lake Oconee",
       },
       {

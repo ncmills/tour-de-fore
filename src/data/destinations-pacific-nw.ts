@@ -506,6 +506,24 @@ export const pacificNWDestinations: Destination[] = [
         googleRating: 4.7,
         reviewCount: 1600,
       },
+      {
+        name: "Bandon Crossings Golf Course",
+        tier: "solid",
+        greenFeeRange: [49, 89],
+        holes: 18,
+        par: 72,
+        yardage: 6866,
+        slope: 130,
+        rating: 72.6,
+        walkable: true,
+        style: "parkland",
+        driveMinutes: 10,
+        url: "https://www.bandoncrossings.com",
+        highlight:
+          "Affordable public course 10 min from the resort — great warm-up round or budget-friendly complement to the Dunes experience",
+        googleRating: 4.5,
+        reviewCount: 620,
+      },
     ],
     lodging: [
       {
@@ -580,15 +598,26 @@ export const pacificNWDestinations: Destination[] = [
         reservationNeeded: false,
         googleRating: 4.5,
       },
+    
+      {
+        name: "Ghost Tree Grill",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Pacific NW steakhouse and raw bar at Bandon Dunes Resort with sweeping ocean views and cedar-clad dining room",
+        reservationNeeded: true,
+        googleRating: 4.6,
+      },
     ],
     bars: [
       {
         name: "McKee's Pub",
         vibe: "sports-bar",
         highlight:
-          "The only bar that matters — on-resort, full of golfers, and the energy is always high",
-        lateNight: false,
-        walkableFromDowntown: false,
+          "The only bar that matters — on-resort, full of golfers, and the energy is always high. Open late.",
+        lateNight: true,
+        walkableFromDowntown: true,
       },
       {
         name: "The Bunker Bar (Bandon Dunes)",
@@ -736,6 +765,42 @@ export const pacificNWDestinations: Destination[] = [
         googleRating: 4.3,
         reviewCount: 410,
       },
+      {
+        name: "Lost Tracks Golf Club",
+        tier: "solid",
+        greenFeeRange: [55, 85],
+        holes: 18,
+        par: 72,
+        yardage: 7003,
+        slope: 130,
+        rating: 72.2,
+        walkable: true,
+        style: "desert",
+        driveMinutes: 15,
+        url: "https://www.losttracks.com",
+        highlight:
+          "Brian Whitcomb design through high desert lava flows — unique volcanic landscape 15 min north toward Bend",
+        googleRating: 4.5,
+        reviewCount: 680,
+      },
+      {
+        name: "Widgi Creek Golf Club",
+        tier: "solid",
+        greenFeeRange: [50, 90],
+        holes: 18,
+        par: 72,
+        yardage: 6906,
+        slope: 132,
+        rating: 72.5,
+        walkable: false,
+        style: "resort",
+        driveMinutes: 12,
+        url: "https://www.widgi.com",
+        highlight:
+          "Robert Muir Graves design with Cascade Mountain views — solid resort course between Sunriver and Bend",
+        googleRating: 4.3,
+        reviewCount: 520,
+      },
     ],
     lodging: [
       {
@@ -758,6 +823,18 @@ export const pacificNWDestinations: Destination[] = [
           "Tons of large homes available in the resort community. Many come with complimentary bikes and pool passes. The compound feel is perfect for groups.",
         avgRating: 4.6,
         bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
+      },
+    
+      {
+        type: "cabin",
+        sleeps: [8, 14],
+        nightlyRange: [300, 1000],
+        amenities: ["hot tub", "fire pit", "BBQ", "mountain views", "game room"],
+        areaDescription: "Sunriver Village / River area",
+        searchUrl: "https://www.airbnb.com/s/Sunriver--OR/homes?adults=14",
+        notes: "Smaller cabins closer to the Village are more affordable and walkable to restaurants and bars. Great for groups that don't need the big compound.",
+        avgRating: 4.5,
+        bedsBreakdown: "3 kings + 3 queens = 12 guys at 2/bed",
       },
     ],
     dining: [
@@ -790,6 +867,17 @@ export const pacificNWDestinations: Destination[] = [
         reservationNeeded: false,
         googleRating: 4.2,
       },
+    
+      {
+        name: "Brickhouse (Bend)",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "USDA Prime steaks grilled over open flame with an award-winning wine list — 20 minutes north in downtown Bend",
+        reservationNeeded: true,
+        googleRating: 4.5,
+      },
     ],
     bars: [
       {
@@ -806,6 +894,13 @@ export const pacificNWDestinations: Destination[] = [
         lateNight: false,
         walkableFromDowntown: true,
       },
+      {
+        name: "Twisted River Tavern",
+        vibe: "patio",
+        highlight: "Village tavern with craft cocktails, live music nights, and a heated patio — the post-dinner spot",
+        lateNight: true,
+        walkableFromDowntown: true,
+      },
     ],
     activities: [
       {
@@ -814,8 +909,8 @@ export const pacificNWDestinations: Destination[] = [
         duration: "2-3 hours",
         pricePerPerson: [25, 50],
         groupFriendly: true,
-        highlight: "Gentle float on the Deschutes with tube rentals right in the resort",
-        bestFor: "rest day",
+        highlight: "Gentle float on the Deschutes with tube rentals right in the resort — perfect first-day group activity",
+        bestFor: "arrival day",
         provider: "Sunriver Marina",
       },
       {
@@ -837,6 +932,19 @@ export const pacificNWDestinations: Destination[] = [
         highlight:
           "Paulina Falls and obsidian flows 20 minutes away — dramatic volcanic scenery",
         bestFor: "rest day",
+      },
+      {
+        name: "Sunriver Nature Center & Observatory",
+        type: "hiking",
+        duration: "2-3 hours",
+        pricePerPerson: [10, 20],
+        groupFriendly: true,
+        highlight:
+          "Nature exhibits, botanical garden, and one of Oregon's best stargazing observatories — group rates available for private evening viewings",
+        bestFor: "arrival day",
+        provider: "Sunriver Nature Center",
+        googleRating: 4.7,
+        reviewCount: 850,
       },
     ],
     partyBuses: [
@@ -1291,6 +1399,18 @@ export const pacificNWDestinations: Destination[] = [
         avgRating: 4.5,
         bedsBreakdown: "4 kings + 2 queens = 12 guys at 2/bed",
       },
+    
+      {
+        type: "cabin",
+        sleeps: [10, 16],
+        nightlyRange: [350, 1100],
+        amenities: ["hot tub", "river access", "mountain views", "fire pit", "full kitchen"],
+        areaDescription: "Bogus Basin Road / East Boise foothills",
+        searchUrl: "https://www.airbnb.com/s/Boise--ID/homes?adults=14",
+        notes: "Mountain cabins in the foothills above Boise offer a different vibe than downtown homes. Close to Bogus Basin and the Boise River Greenbelt.",
+        avgRating: 4.6,
+        bedsBreakdown: "4 kings + 3 queens = 14 guys at 2/bed",
+      },
     ],
     dining: [
       {
@@ -1499,21 +1619,26 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.indiancreekgolf.com",
         highlight:
           "Charming course right in Hood River with Mt. Hood and Mt. Adams views from nearly every hole",
+        googleRating: 4.4,
+        reviewCount: 906,
       },
       {
-        name: "Windham Golf Course",
-        tier: "budget",
-        greenFeeRange: [25, 45],
-        holes: 9,
-        par: 35,
-        yardage: 2906,
-        slope: 112,
-        rating: 66.0,
+        name: "The Dalles Golf & Country Club",
+        tier: "solid",
+        greenFeeRange: [35, 55],
+        holes: 18,
+        par: 72,
+        yardage: 5900,
+        slope: 118,
+        rating: 67.9,
         walkable: true,
         style: "parkland",
-        driveMinutes: 30,
+        driveMinutes: 25,
+        url: "https://www.thedallesgolf.com",
         highlight:
-          "Affordable 9-hole track in the Gorge — play it twice for a relaxed 18 with mountain views",
+          "Charming 18-hole course in The Dalles with Columbia Gorge views and a welcoming clubhouse — great second-day round",
+        googleRating: 4.2,
+        reviewCount: 680,
       },
       {
         name: "Elk Ridge Golf Course",
@@ -1527,8 +1652,29 @@ export const pacificNWDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 45,
+        url: "https://www.elkridgegolf.com",
         highlight:
           "Well-maintained 18 in Goldendale, WA with views of Mt. Adams — worth the drive across the river",
+        googleRating: 4.2,
+        reviewCount: 830,
+      },
+      {
+        name: "Skamania Lodge Golf Course",
+        tier: "premium",
+        greenFeeRange: [65, 110],
+        holes: 18,
+        par: 70,
+        yardage: 5900,
+        slope: 128,
+        rating: 69.8,
+        walkable: true,
+        style: "mountain",
+        driveMinutes: 30,
+        url: "https://www.skamania.com/golf",
+        highlight:
+          "Stunning Gorge-view course at Skamania Lodge — shorter but challenging mountain layout with Columbia River panoramas",
+        googleRating: 4.4,
+        reviewCount: 520,
       },
     ],
     lodging: [
@@ -1617,6 +1763,17 @@ export const pacificNWDestinations: Destination[] = [
         capacity: "medium",
         highlight: "Wood-fired pizza and local wines in a cozy downtown space",
         reservationNeeded: false,
+      },
+    
+      {
+        name: "The Mesquitery",
+        style: "steakhouse",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "Wood-fired American steakhouse in downtown Hood River serving mesquite-grilled steaks and seafood",
+        reservationNeeded: true,
+        googleRating: 4.3,
       },
     ],
     bars: [
@@ -1774,6 +1931,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.pumpkinridge.com",
         highlight:
           "Former US Amateur host carved through old-growth forest — PNW golf at its most pristine",
+        googleRating: 4.7,
+        reviewCount: 2733,
       },
       {
         name: "Reserve Vineyards & Golf Club (South Course)",
@@ -1790,6 +1949,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.reservegolf.com",
         highlight:
           "John Fought design with tour-quality conditioning and excellent practice facilities",
+        googleRating: 4.6,
+        reviewCount: 798,
       },
       {
         name: "Langdon Farms Golf Club",
@@ -1806,6 +1967,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.langdonfarms.com",
         highlight:
           "Links-style layout with a massive red barn clubhouse and views of Mt. Hood",
+        googleRating: 4.4,
+        reviewCount: 690,
       },
       {
         name: "Heron Lakes Golf Club (Great Blue Course)",
@@ -1822,6 +1985,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.heronlakesgolf.com",
         highlight:
           "Robert Trent Jones II design — best public course value inside Portland city limits",
+        googleRating: 4.5,
+        reviewCount: 839,
       },
     ],
     lodging: [
@@ -2081,6 +2246,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.chambersbaygolf.com",
         highlight:
           "2015 US Open venue — walking-only links carved from a gravel quarry on Puget Sound",
+        googleRating: 4.9,
+        reviewCount: 1929,
       },
       {
         name: "The Home Course",
@@ -2097,6 +2264,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.thehomecourse.com",
         highlight:
           "Stunning links-style muni near Chambers Bay — best value in Washington state golf",
+        googleRating: 4.2,
+        reviewCount: 291,
       },
       {
         name: "Washington National Golf Club",
@@ -2113,6 +2282,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.washingtonnational.com",
         highlight:
           "John Fought design with views of Mt. Rainier from nearly every hole",
+        googleRating: 4.6,
+        reviewCount: 466,
       },
       {
         name: "Newcastle Golf Club (Coal Creek Course)",
@@ -2129,6 +2300,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.newcastlegolf.com",
         highlight:
           "Perched above Lake Washington with panoramic views of the Seattle skyline and Cascades",
+        googleRating: 4.6,
+        reviewCount: 385,
       },
       {
         name: "Trophy Lake Golf & Casting Club",
@@ -2145,6 +2318,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.trophylakegolf.com",
         highlight:
           "Hidden gem on the Kitsap Peninsula with a fly-fishing pond and excellent conditioning",
+        googleRating: 4.4,
+        reviewCount: 716,
       },
     ],
     lodging: [
@@ -2405,6 +2580,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.circlingraven.com",
         highlight:
           "Gene Bates design through Coeur d'Alene tribal land — consistently rated top public course in Idaho",
+        googleRating: 4.8,
+        reviewCount: 1200,
       },
       {
         name: "Indian Canyon Golf Course",
@@ -2421,6 +2598,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.spokanecity.org/indian-canyon",
         highlight:
           "Historic muni perched on a basalt canyon rim — routinely named one of the best municipal courses in America",
+        googleRating: 4.3,
+        reviewCount: 832,
       },
       {
         name: "The Creek at Qualchan Golf Course",
@@ -2437,6 +2616,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.spokanecity.org/qualchan",
         highlight:
           "Best-conditioned Spokane muni with Latah Creek winding through the layout",
+        googleRating: 4.3,
+        reviewCount: 482,
       },
       {
         name: "MeadowWood Golf Course",
@@ -2453,6 +2634,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.meadowwoodgolf.com",
         highlight:
           "Robert Muir Graves design in Liberty Lake — long, well-maintained, and affordable",
+        googleRating: 4.3,
+        reviewCount: 173,
       },
     ],
     lodging: [
@@ -2699,6 +2882,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.sunvalley.com/golf",
         highlight:
           "Robert Trent Jones Jr. design winding through aspens and cottonwoods with Baldy Mountain views",
+        googleRating: 4.6,
+        reviewCount: 1266,
       },
       {
         name: "Sun Valley Resort (White Clouds Course)",
@@ -2715,6 +2900,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.sunvalley.com/golf",
         highlight:
           "More forgiving resort course with wide fairways and the same stunning mountain backdrop",
+        googleRating: 4.3,
+        reviewCount: 383,
       },
       {
         name: "Bigwood Golf Course",
@@ -2731,6 +2918,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.bigwoodgolf.com",
         highlight:
           "Tight mountain course right in Ketchum — beautiful but bring your A game off the tee",
+        googleRating: 4.2,
+        reviewCount: 860,
       },
     ],
     lodging: [
@@ -2812,6 +3001,17 @@ export const pacificNWDestinations: Destination[] = [
           "New American fine dining in a converted church — Sun Valley's best splurge dinner",
         reservationNeeded: true,
       },
+    
+      {
+        name: "The Sawtooth Club",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Ketchum's premier steakhouse serving specially-aged grass-fed filet mignon in a rustic-elegant Main Street setting",
+        reservationNeeded: true,
+        googleRating: 4.6,
+      },
     ],
     bars: [
       {
@@ -2879,8 +3079,8 @@ export const pacificNWDestinations: Destination[] = [
         pricePerPerson: [40, 80],
         groupFriendly: true,
         highlight:
-          "Sporting clays and trap shooting with mountain views",
-        bestFor: "morning before golf",
+          "Sporting clays and trap shooting with mountain views — a great arrival day group competition",
+        bestFor: "arrival day",
         provider: "Sun Valley Gun Club",
       },
       {
@@ -2953,21 +3153,26 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.theidahoclub.com",
         highlight:
           "Jack Nicklaus design through towering pines with views of Lake Pend Oreille and the Cabinet Mountains",
+        googleRating: 4.7,
+        reviewCount: 380,
       },
       {
-        name: "Elks Golf Course",
-        tier: "budget",
-        greenFeeRange: [25, 45],
-        holes: 9,
-        par: 34,
-        yardage: 2800,
-        slope: 110,
-        rating: 65.0,
+        name: "Mirror Lake Golf Course",
+        tier: "solid",
+        greenFeeRange: [35, 60],
+        holes: 18,
+        par: 72,
+        yardage: 6611,
+        slope: 123,
+        rating: 70.0,
         walkable: true,
         style: "parkland",
-        driveMinutes: 5,
+        driveMinutes: 30,
+        url: "https://www.mirrorlakegolf.com",
         highlight:
-          "Charming 9-hole walking course right in Sandpoint — play it twice for a fun casual 18",
+          "Well-kept 18 in Bonners Ferry with mountain views, mature pines, and a friendly small-town vibe",
+        googleRating: 4.5,
+        reviewCount: 749,
       },
       {
         name: "Hidden Lakes Golf Resort",
@@ -2984,6 +3189,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.hiddenlakesgolf.com",
         highlight:
           "Well-kept resort course with mountain views and a relaxed pace of play",
+        googleRating: 4.3,
+        reviewCount: 243,
       },
       {
         name: "Priest Lake Golf Course",
@@ -2997,8 +3204,11 @@ export const pacificNWDestinations: Destination[] = [
         walkable: true,
         style: "mountain",
         driveMinutes: 45,
+        url: "https://www.priestlakegolf.com",
         highlight:
           "Scenic mountain course near Priest Lake — worth the drive for the setting alone",
+        googleRating: 4.3,
+        reviewCount: 559,
       },
     ],
     lodging: [
@@ -3080,6 +3290,17 @@ export const pacificNWDestinations: Destination[] = [
         highlight:
           "Local wines with small plates in a charming downtown tasting room",
         reservationNeeded: false,
+      },
+    
+      {
+        name: "The Hydra Steakhouse",
+        style: "steakhouse",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "Family-owned since 1975 with hand-cut steaks, fresh seafood, and a massive salad bar — a four-generation tradition",
+        reservationNeeded: true,
+        googleRating: 4.4,
       },
     ],
     bars: [
@@ -3222,6 +3443,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.winevalleygolfclub.com",
         highlight:
           "Dan Hixson links design through rolling wheat fields — one of the best public courses in Washington",
+        googleRating: 4.5,
+        reviewCount: 1282,
       },
       {
         name: "Veterans Memorial Golf Course",
@@ -3238,6 +3461,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.wallawallawa.gov/veterans-memorial-golf",
         highlight:
           "Well-maintained muni with mature trees and Blue Mountain views — great value for the money",
+        googleRating: 4.3,
+        reviewCount: 853,
       },
       {
         name: "Walla Walla Country Club",
@@ -3251,8 +3476,11 @@ export const pacificNWDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 5,
+        url: "https://www.wallawallacountryclub.com",
         highlight:
           "Semi-private course that welcomes outside play — classic parkland layout in wine country",
+        googleRating: 4.3,
+        reviewCount: 292,
       },
     ],
     lodging: [
@@ -3334,6 +3562,17 @@ export const pacificNWDestinations: Destination[] = [
         highlight:
           "Beloved Italian spot with housemade pasta and a lively vibe — Walla Walla staple",
         reservationNeeded: true,
+      },
+    
+      {
+        name: "Walla Walla Steak Co.",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Wine Enthusiast's 100 Best Wine Restaurants — locally sourced steaks with an extensive Walla Walla Valley wine list",
+        reservationNeeded: true,
+        googleRating: 4.7,
       },
     ],
     bars: [
@@ -3482,6 +3721,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.tokatee.com",
         highlight:
           "Stunning McKenzie River Valley course with Cascade Mountain views — regularly rated top public course in Oregon",
+        googleRating: 4.5,
+        reviewCount: 883,
       },
       {
         name: "Shadow Hills Country Club",
@@ -3498,6 +3739,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.shadowhillscc.com",
         highlight:
           "Semi-private club welcoming outside play with well-conditioned fairways and reasonable rates",
+        googleRating: 4.3,
+        reviewCount: 584,
       },
       {
         name: "Emerald Valley Golf Club",
@@ -3514,6 +3757,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.emeraldvalleygolf.com",
         highlight:
           "Mature parkland layout with excellent conditioning and views of the Coast Range foothills",
+        googleRating: 4.3,
+        reviewCount: 263,
       },
       {
         name: "Fiddler's Green Golf Course",
@@ -3527,8 +3772,11 @@ export const pacificNWDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 10,
+        url: "https://www.fiddlersgreengolf.com",
         highlight:
           "Best bang-for-buck in Eugene with a driving range and a relaxed pace",
+        googleRating: 4,
+        reviewCount: 450,
       },
     ],
     lodging: [
@@ -3618,6 +3866,17 @@ export const pacificNWDestinations: Destination[] = [
         highlight:
           "Texas-style BBQ with brisket, ribs, and a solid beer selection in a fun atmosphere",
         reservationNeeded: false,
+      },
+    
+      {
+        name: "Kennedy's Steakhouse",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Supper-club sophistication with 28-day wet-aged steaks and a private McKenzie room for groups",
+        reservationNeeded: true,
+        googleRating: 4.4,
       },
     ],
     bars: [
@@ -3774,6 +4033,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.leavenworthgolf.com",
         highlight:
           "Mountain course right in the village with Cascade peaks on every hole — short but scenic",
+        googleRating: 4.2,
+        reviewCount: 811,
       },
       {
         name: "Kahler Glen Golf & Ski Resort",
@@ -3790,6 +4051,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.kahlerglen.com",
         highlight:
           "Beautiful Lake Wenatchee course surrounded by national forest with mountain views in every direction",
+        googleRating: 4.2,
+        reviewCount: 181,
       },
       {
         name: "Highlander Golf Course",
@@ -3806,6 +4069,26 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.highlandergolf.com",
         highlight:
           "Well-maintained East Wenatchee course with Columbia River views and excellent value",
+        googleRating: 4.3,
+        reviewCount: 643,
+      },
+      {
+        name: "Desert Canyon Golf Resort",
+        tier: "premium",
+        greenFeeRange: [75, 130],
+        holes: 18,
+        par: 72,
+        yardage: 7293,
+        slope: 138,
+        rating: 74.8,
+        walkable: false,
+        style: "desert",
+        driveMinutes: 40,
+        url: "https://www.desertcanyon.com",
+        highlight:
+          "Jack Frei design carved into Columbia River basalt cliffs — dramatic desert canyon golf with 800-ft elevation changes",
+        googleRating: 4.5,
+        reviewCount: 450,
       },
     ],
     lodging: [
@@ -3887,6 +4170,17 @@ export const pacificNWDestinations: Destination[] = [
         highlight:
           "Pacific NW farm-to-table brunch and lunch with excellent coffee and mountain views",
         reservationNeeded: false,
+      },
+    
+      {
+        name: "Mozart's Restaurant",
+        style: "steakhouse",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "Family-run European fine dining for 25+ years serving rib-eye, filet mignon, and New York strip in Bavarian village",
+        reservationNeeded: true,
+        googleRating: 4.5,
       },
     ],
     bars: [
@@ -4038,21 +4332,26 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.gearhartgolflinks.com",
         highlight:
           "Established 1892 — one of the oldest courses in the West with true links turf and ocean breezes",
+        googleRating: 4.5,
+        reviewCount: 893,
       },
       {
-        name: "The Highlands at Gearhart",
-        tier: "solid",
-        greenFeeRange: [30, 55],
-        holes: 9,
-        par: 34,
-        yardage: 2647,
+        name: "Seaside Golf Course",
+        tier: "budget",
+        greenFeeRange: [30, 50],
+        holes: 18,
+        par: 70,
+        yardage: 5820,
         slope: 116,
-        rating: 65.2,
+        rating: 67.4,
         walkable: true,
-        style: "links",
+        style: "coastal",
         driveMinutes: 10,
+        url: "https://www.seasidegolfcourse.com",
         highlight:
-          "Companion 9-hole course at Gearhart — play it as a warm-up or double it for a relaxed 18",
+          "Fun, walkable 18-hole course right in Seaside with ocean breezes and mountain views — relaxed pace and great for a second-day round",
+        googleRating: 4.3,
+        reviewCount: 439,
       },
       {
         name: "Astoria Golf & Country Club",
@@ -4066,8 +4365,11 @@ export const pacificNWDestinations: Destination[] = [
         walkable: true,
         style: "coastal",
         driveMinutes: 25,
+        url: "https://www.astoriagolf.com",
         highlight:
           "Scenic coastal course near the Columbia River with views of the Astoria-Megler Bridge",
+        googleRating: 4.3,
+        reviewCount: 673,
       },
     ],
     lodging: [
@@ -4149,6 +4451,17 @@ export const pacificNWDestinations: Destination[] = [
         highlight:
           "Oregon coast breakfast chain institution — massive pancakes and a group-friendly layout",
         reservationNeeded: false,
+      },
+    
+      {
+        name: "Driftwood Restaurant & Lounge",
+        style: "steakhouse",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "Long-standing steakhouse and seafood spot with a full bar, outdoor deck, and classic Oregon coast atmosphere",
+        reservationNeeded: true,
+        googleRating: 4.2,
       },
     ],
     bars: [
@@ -4288,6 +4601,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.chambersbaygolf.com",
         highlight:
           "2015 US Open host — links-style course on Puget Sound built on a reclaimed gravel mine",
+        googleRating: 4.8,
+        reviewCount: 2088,
       },
       {
         name: "Gold Mountain Golf Club (Olympic Course)",
@@ -4304,6 +4619,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.goldmountaingolf.com",
         highlight:
           "Consistently rated a top public course in WA — John Harbottle design through the Kitsap Peninsula forest",
+        googleRating: 4.4,
+        reviewCount: 1470,
       },
       {
         name: "Gold Mountain Golf Club (Cascade Course)",
@@ -4320,6 +4637,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.goldmountaingolf.com",
         highlight:
           "Companion course at Gold Mountain — excellent value with mature trees and rolling terrain",
+        googleRating: 4.5,
+        reviewCount: 509,
       },
       {
         name: "Trophy Lake Golf & Casting Club",
@@ -4336,6 +4655,8 @@ export const pacificNWDestinations: Destination[] = [
         url: "https://www.trophylakegolf.com",
         highlight:
           "Long challenging layout near the harbor with water features and mountain views",
+        googleRating: 4.4,
+        reviewCount: 420,
       },
     ],
     lodging: [

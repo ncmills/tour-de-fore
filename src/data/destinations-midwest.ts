@@ -477,6 +477,7 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "links",
         driveMinutes: 25,
+        url: "https://www.crystaldowns.org",
         highlight:
           "Top-10 course in the world (Alister MacKenzie/Perry Maxwell) — strictly private, need a member invite",
         googleRating: 4.9,
@@ -630,6 +631,17 @@ export const midwestDestinations: Destination[] = [
           "No-frills BBQ joint with massive portions — brisket, pulled pork, and smoked chicken",
         reservationNeeded: false,
         googleRating: 4.3,
+      },
+    
+      {
+        name: "Boone's Long Lake Inn",
+        style: "steakhouse",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "Rustic Northern Michigan charm with legendary steaks, prime rib, and generous portions in a warm lakeside setting",
+        reservationNeeded: true,
+        googleRating: 4.5,
       },
     ],
     bars: [
@@ -1201,6 +1213,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.grandgeneva.com",
         highlight:
           "Links-inspired layout with Scottish-style mounding — more playable than The Brute",
+        googleRating: 4.3,
+        reviewCount: 375,
       },
       {
         name: "Hawk's View Golf Club",
@@ -1217,6 +1231,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.hawksviewgolfclub.com",
         highlight:
           "36 holes — the Como Crossings links-style nine is the hidden gem in the Lake Geneva area",
+        googleRating: 4.4,
+        reviewCount: 758,
       },
     ],
     lodging: [
@@ -1470,6 +1486,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.frenchlick.com/golf",
         highlight:
           "Pete Dye's mountaintop opus — 300-foot elevation changes and panoramic Hoosier National Forest views",
+        googleRating: 4.8,
+        reviewCount: 2577,
       },
       {
         name: "Donald Ross Course at French Lick",
@@ -1486,6 +1504,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.frenchlick.com/golf",
         highlight:
           "Fully restored 1917 Donald Ross classic — hosted the 1924 PGA Championship (Walter Hagen won)",
+        googleRating: 4.6,
+        reviewCount: 1026,
       },
       {
         name: "Sultan's Run Golf Club",
@@ -1502,6 +1522,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.sultansrun.com",
         highlight:
           "Tim Liddy design through rolling hills and creeks — top public course in Indiana",
+        googleRating: 4.2,
+        reviewCount: 180,
       },
     ],
     lodging: [
@@ -1744,6 +1766,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.superiornational.com",
         highlight:
           "27 holes carved through Sawtooth Mountains birch forest — the crown jewel of Minnesota golf",
+        googleRating: 4.6,
+        reviewCount: 1405,
       },
       {
         name: "Enger Park Golf Course",
@@ -1760,6 +1784,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.golfduluth.com",
         highlight:
           "City muni with stunning Lake Superior panoramas — best bang-for-buck views in Midwest golf",
+        googleRating: 4.1,
+        reviewCount: 144,
       },
       {
         name: "Lester Park Golf Course",
@@ -1776,6 +1802,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.golfduluth.com",
         highlight:
           "Scenic 27-hole layout along Lester River — tight tree-lined holes and excellent value",
+        googleRating: 4.2,
+        reviewCount: 116,
       },
       {
         name: "Ridgeview Country Club",
@@ -1789,8 +1817,11 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 10,
+        url: "https://www.ridgeviewcc.com",
         highlight:
           "Semi-private club open to public play — well-maintained fairways and fast greens",
+        googleRating: 4.2,
+        reviewCount: 390,
       },
     ],
     lodging: [
@@ -1870,6 +1901,17 @@ export const midwestDestinations: Destination[] = [
         highlight:
           "Old-school Italian supper club — family-style pasta and meatballs, BYOB allowed",
         reservationNeeded: true,
+      },
+    
+      {
+        name: "Black Woods Grill & Bar",
+        style: "steakhouse",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "Family-owned since the early 90s with signature steaks — a local hit known for tender and flavorful cuts",
+        reservationNeeded: true,
+        googleRating: 4.3,
       },
     ],
     bars: [
@@ -2045,6 +2087,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.bayharborgolf.com",
         highlight:
           "Arthur Hills design — the Links nine is perched on Lake Michigan bluffs with postcard views on every hole",
+        googleRating: 4.7,
+        reviewCount: 850,
       },
       {
         name: "Crooked Tree Golf Club",
@@ -2061,6 +2105,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.crookedtreegolfclub.com",
         highlight:
           "Harry Bowers design through hardwood forest with dramatic elevation changes — overlooking Little Traverse Bay",
+        googleRating: 4.3,
+        reviewCount: 173,
       },
       {
         name: "Little Traverse Bay Golf Club",
@@ -2077,6 +2123,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.ltbgc.com",
         highlight:
           "Jeff Gorney design with wide fairways and great conditioning — excellent value for northern Michigan",
+        googleRating: 4.4,
+        reviewCount: 608,
       },
       {
         name: "Boyne Highlands - The Heather",
@@ -2093,6 +2141,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.boyne.com/boyne-highlands",
         highlight:
           "Robert Trent Jones Sr. design — the flagship of Boyne's four courses, tournament-worthy conditioning",
+        googleRating: 4.4,
+        reviewCount: 400,
       },
       {
         name: "Boyne Highlands - Arthur Hills",
@@ -2109,6 +2159,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.boyne.com/boyne-highlands",
         highlight:
           "Strategic bunkering and rolling terrain — plays slightly easier than The Heather but just as scenic",
+        googleRating: 4.5,
+        reviewCount: 1194,
       },
       {
         name: "Boyne Highlands - The Moor",
@@ -2125,6 +2177,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.boyne.com/boyne-highlands",
         highlight:
           "Longest of the four courses — wide fairways through meadows, great for scoring",
+        googleRating: 4.4,
+        reviewCount: 788,
       },
       {
         name: "Boyne Highlands - Donald Ross Memorial",
@@ -2141,6 +2195,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.boyne.com/boyne-highlands",
         highlight:
           "Tribute to classic Ross design — replica holes from Pinehurst, Seminole, and Oakland Hills",
+        googleRating: 4.3,
+        reviewCount: 245,
       },
     ],
     lodging: [
@@ -2395,6 +2451,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.thousandoaksgolfclub.com",
         highlight:
           "Best public value in the GR metro — mature trees, rolling terrain, and consistently excellent greens",
+        googleRating: 4.3,
+        reviewCount: 582,
       },
       {
         name: "Pilgrims Run Golf Club",
@@ -2411,6 +2469,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.pilgrimsrun.com",
         highlight:
           "Walk-only heathland design through native fescue and wildflowers — feels like Scotland on a Michigan budget",
+        googleRating: 4.6,
+        reviewCount: 1116,
       },
       {
         name: "The Mines Golf Course",
@@ -2427,6 +2487,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.theminesgolf.com",
         highlight:
           "Built on reclaimed sand mine land — unique elevation changes and wide fairways make it fun for all skill levels",
+        googleRating: 4.4,
+        reviewCount: 876,
       },
       {
         name: "Egypt Valley Country Club (public days)",
@@ -2440,8 +2502,11 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.egyptvalley.com",
         highlight:
           "Semi-private club that opens to the public — championship conditioning in a beautiful hardwood setting",
+        googleRating: 4.6,
+        reviewCount: 765,
       },
       {
         name: "Ravines Golf Club",
@@ -2458,6 +2523,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.ravinesgolfclub.com",
         highlight:
           "Dramatic ravine crossings and elevation drops through dense Michigan forest — the most scenic track in the area",
+        googleRating: 4.5,
+        reviewCount: 1274,
       },
     ],
     lodging: [
@@ -2679,6 +2746,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.horseshoebaygolfclub.com",
         highlight:
           "Door County's premier course — mature hardwoods and bay glimpses on a classic Midwest layout",
+        googleRating: 4.5,
+        reviewCount: 1074,
       },
       {
         name: "Peninsula State Park Golf Course",
@@ -2695,6 +2764,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.peninsulagolf.org",
         highlight:
           "State park course with Eagle Bluff views over Green Bay — one of the most scenic budget rounds in the Midwest",
+        googleRating: 4.5,
+        reviewCount: 409,
       },
       {
         name: "Idlewild Golf Course",
@@ -2711,6 +2782,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.idlewildgolf.com",
         highlight:
           "Sturgeon Bay's solid daily-fee course — well-conditioned with a friendly pace for a fun round",
+        googleRating: 4.4,
+        reviewCount: 767,
       },
       {
         name: "Cherry Hills Golf Course",
@@ -2724,8 +2797,11 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 10,
+        url: "https://www.cherryhillsgolf.com",
         highlight:
           "Affordable Sturgeon Bay track through cherry orchards — low-pressure warm-up round",
+        googleRating: 4.2,
+        reviewCount: 496,
       },
     ],
     lodging: [
@@ -2805,6 +2881,17 @@ export const midwestDestinations: Destination[] = [
         highlight:
           "Fish Creek's go-to for whitefish, cherry pie, and hearty breakfasts",
         reservationNeeded: true,
+      },
+    
+      {
+        name: "CHOP Steakhouse",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Premier Door County chophouse in Sister Bay with filet mignon, NY strip, and a private gathering space",
+        reservationNeeded: true,
+        googleRating: 4.5,
       },
     ],
     bars: [
@@ -2954,6 +3041,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.universityridge.com",
         highlight:
           "Home of the AmFam Championship — Robert Trent Jones Jr. design with tournament conditioning and stunning views of the Wisconsin hills",
+        googleRating: 4.5,
+        reviewCount: 634,
       },
       {
         name: "The Oaks Golf Course",
@@ -2970,6 +3059,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.theoaksgc.com",
         highlight:
           "Cottage Grove's well-conditioned track through oak groves — great value and excellent greens",
+        googleRating: 4.4,
+        reviewCount: 888,
       },
       {
         name: "Hawks Landing Golf Club",
@@ -2986,6 +3077,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.hawkslandinggolf.com",
         highlight:
           "Arnold Palmer design on the west side — great for groups with a comfortable layout and strong facilities",
+        googleRating: 4.2,
+        reviewCount: 391,
       },
       {
         name: "Pleasant View Golf Course",
@@ -3002,6 +3095,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.pleasantviewgc.com",
         highlight:
           "27-hole county facility — excellent conditioning for the price, great warm-up or double-round option",
+        googleRating: 4.1,
+        reviewCount: 502,
       },
       {
         name: "The Legend at Bergamont",
@@ -3018,6 +3113,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.legendatbergamont.com",
         highlight:
           "Oregon, WI gem with dramatic elevation and wooded holes — feels more northern Wisconsin than suburban Madison",
+        googleRating: 4.4,
+        reviewCount: 340,
       },
     ],
     lodging: [
@@ -3246,6 +3343,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.maddens.com/golf",
         highlight:
           "Scott Hoch design on Gull Lake — the best resort course in Minnesota with dramatic water holes and immaculate conditioning",
+        googleRating: 4.7,
+        reviewCount: 899,
       },
       {
         name: "Deacon's Lodge Golf Course",
@@ -3262,6 +3361,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.deaconslodge.com",
         highlight:
           "Arnold Palmer's only Minnesota design — carved through 600 acres of forests and wetlands",
+        googleRating: 4.6,
+        reviewCount: 1318,
       },
       {
         name: "The Pines at Grand View Lodge",
@@ -3278,6 +3379,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.grandviewlodge.com/golf",
         highlight:
           "27 holes through northern Minnesota pines and lakes — three distinct nines that all deliver",
+        googleRating: 4.6,
+        reviewCount: 357,
       },
       {
         name: "Cragun's Resort - Dutch Legacy",
@@ -3294,6 +3397,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.craguns.com/golf",
         highlight:
           "Robert Trent Jones Jr. design on Gull Lake — resort golf with teeth, especially the back nine",
+        googleRating: 4.3,
+        reviewCount: 243,
       },
       {
         name: "Madden's Pine Beach East",
@@ -3310,6 +3415,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.maddens.com/golf",
         highlight:
           "Social par-67 layout perfect for a warm-up round — walking-friendly with cold beers at the turn",
+        googleRating: 4.4,
+        reviewCount: 387,
       },
     ],
     lodging: [
@@ -3467,8 +3574,8 @@ export const midwestDestinations: Destination[] = [
         pricePerPerson: [40, 80],
         groupFriendly: true,
         highlight:
-          "Rent a big pontoon and cruise Gull Lake — swimming, tubing, and sunset beers on the water",
-        bestFor: "rest day",
+          "Rent a big pontoon and cruise Gull Lake — swimming, tubing, and sunset beers on the water. The perfect arrival day activity.",
+        bestFor: "arrival day",
         provider: "Ernie's on Gull / Madden's Marina",
       },
     ],
@@ -3540,6 +3647,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.shakerrun.com",
         highlight:
           "Arthur Hills design with 27 holes through rolling farmland and mature hardwoods — 3-time Ohio Golf Course of the Year",
+        googleRating: 4.6,
+        reviewCount: 545,
       },
       {
         name: "TPC River's Bend",
@@ -3556,6 +3665,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.tpc.com/rivers-bend",
         highlight:
           "TPC network course on the Little Miami River — tournament-caliber conditioning and a demanding layout",
+        googleRating: 4.6,
+        reviewCount: 1378,
       },
       {
         name: "Glenview Golf Course",
@@ -3572,6 +3683,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.greatparks.org/golf/glenview",
         highlight:
           "Hilltop municipal gem with panoramic city skyline views — best public value in Hamilton County",
+        googleRating: 4.3,
+        reviewCount: 482,
       },
       {
         name: "Aston Oaks Golf Club",
@@ -3585,8 +3698,11 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 25,
+        url: "https://www.astonoaks.com",
         highlight:
           "Denis Griffiths design through North Bend's river bluffs — long, challenging, and well-maintained",
+        googleRating: 4.3,
+        reviewCount: 483,
       },
       {
         name: "Stonelick Hills Golf Club",
@@ -3600,8 +3716,11 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 35,
+        url: "https://www.stonelickhills.com",
         highlight:
           "Clermont County's best daily-fee course — hilly terrain through wooded ravines",
+        googleRating: 4.3,
+        reviewCount: 742,
       },
     ],
     lodging: [
@@ -3825,6 +3944,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.longabergergolfclub.com",
         highlight:
           "Arthur Hills design through Appalachian foothills — consistently rated among Ohio's best public courses",
+        googleRating: 4.5,
+        reviewCount: 314,
       },
       {
         name: "The Golf Club at Little Turtle",
@@ -3838,8 +3959,11 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 20,
+        url: "https://www.littleturtlegolf.com",
         highlight:
           "Westerville's best public track — mature trees and well-maintained greens in a residential setting",
+        googleRating: 4.4,
+        reviewCount: 298,
       },
       {
         name: "Darby Creek Golf Course",
@@ -3856,6 +3980,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.metroparks.net/golf",
         highlight:
           "Metro Parks course along Big Darby Creek — excellent value with scenic creek-side holes",
+        googleRating: 4.4,
+        reviewCount: 887,
       },
       {
         name: "New Albany Links Golf Club",
@@ -3869,8 +3995,11 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "links",
         driveMinutes: 25,
+        url: "https://www.newalbanylinks.com",
         highlight:
           "Links-style layout in New Albany — open fairways, pot bunkers, and firm conditions",
+        googleRating: 4.3,
+        reviewCount: 564,
       },
       {
         name: "Cumberland Trail Golf Club",
@@ -3884,8 +4013,11 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 40,
+        url: "https://www.cumberlandtrailgolf.com",
         highlight:
           "Hilly Pataskala track through woods and ravines — feels like Appalachian golf for half the price",
+        googleRating: 4.2,
+        reviewCount: 911,
       },
     ],
     lodging: [
@@ -4114,6 +4246,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.thefortgolfresort.com",
         highlight:
           "Pete Dye design built on Fort Harrison — the best public course in the Indianapolis metro with championship conditioning",
+        googleRating: 4.6,
+        reviewCount: 1027,
       },
       {
         name: "Brickyard Crossing Golf Club",
@@ -4130,6 +4264,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.brickyardcrossing.com",
         highlight:
           "Pete Dye design with 4 holes inside the Indianapolis Motor Speedway — one of the most unique golf experiences anywhere",
+        googleRating: 4.6,
+        reviewCount: 1335,
       },
       {
         name: "The Trophy Club",
@@ -4143,8 +4279,11 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 25,
+        url: "https://www.thetrophyclub.com",
         highlight:
           "Lebanon's best public course — well-groomed with strategic bunkering and good pace of play",
+        googleRating: 4.4,
+        reviewCount: 447,
       },
       {
         name: "Smock Golf Course",
@@ -4161,6 +4300,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.indy.gov/activity/golf",
         highlight:
           "Best Indy Parks muni — a Gary Kern design with more character than you'd expect from a city course",
+        googleRating: 4.4,
+        reviewCount: 428,
       },
       {
         name: "Prairie View Golf Club",
@@ -4177,6 +4318,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.prairieviewgc.com",
         highlight:
           "Carmel's public gem — Robert Trent Jones Jr. design with rolling terrain and top-notch conditioning for the price",
+        googleRating: 4.4,
+        reviewCount: 747,
       },
     ],
     lodging: [
@@ -4399,6 +4542,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.thetournamentclubofiowa.com",
         highlight:
           "Arnold Palmer design and former Korn Ferry Tour host — the best public course in Iowa with tournament-level conditioning",
+        googleRating: 4.4,
+        reviewCount: 1490,
       },
       {
         name: "Otter Creek Golf Course",
@@ -4415,6 +4560,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.ankenyiowa.gov/otter-creek",
         highlight:
           "Ankeny municipal that plays way above its price point — rolling terrain with well-maintained greens",
+        googleRating: 4.3,
+        reviewCount: 615,
       },
       {
         name: "Waveland Golf Course",
@@ -4428,8 +4575,11 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 5,
+        url: "https://www.wavelandgolf.com",
         highlight:
           "Opened in 1901, the second-oldest public course west of the Mississippi — old-school charm right in the city",
+        googleRating: 4.3,
+        reviewCount: 279,
       },
       {
         name: "Copper Creek Golf Course",
@@ -4443,8 +4593,11 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 25,
+        url: "https://www.coppercreekgolf.com",
         highlight:
           "Pleasant Hill's well-designed public course — good mix of challenge and playability through Iowa prairie",
+        googleRating: 4.3,
+        reviewCount: 804,
       },
       {
         name: "Jester Park Golf Course",
@@ -4461,6 +4614,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.jesterparkgolf.com",
         highlight:
           "Polk County course along Saylorville Lake — scenic water views and a great practice facility",
+        googleRating: 4.4,
+        reviewCount: 188,
       },
     ],
     lodging: [
@@ -4683,6 +4838,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.marquettegolfclub.com",
         highlight:
           "Mike DeVries design carved into granite cliffs above Lake Superior — a top-50 public course with views that rival Pebble Beach",
+        googleRating: 4.6,
+        reviewCount: 495,
       },
       {
         name: "Marquette Golf Club - Heritage",
@@ -4699,6 +4856,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.marquettegolfclub.com",
         highlight:
           "Classic 1926 course through mature pines — the 'other' Marquette course is still excellent golf at a fraction of Greywalls' price",
+        googleRating: 4.4,
+        reviewCount: 626,
       },
       {
         name: "Sweetgrass Golf Club",
@@ -4715,6 +4874,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.sweetgrassgolfclub.com",
         highlight:
           "Paul Albanese design at Island Resort & Casino — big, bold, and beautifully routed through UP wilderness",
+        googleRating: 4.6,
+        reviewCount: 338,
       },
       {
         name: "Timber Ridge Golf Course",
@@ -4728,8 +4889,11 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 45,
+        url: "https://www.timberridgegolf.com",
         highlight:
           "Escanaba area track through northern hardwoods — well-maintained and affordable UP golf",
+        googleRating: 4.4,
+        reviewCount: 347,
       },
     ],
     lodging: [
@@ -4809,6 +4973,17 @@ export const midwestDestinations: Destination[] = [
         highlight:
           "Marquette institution since 1896 — breakfast, hand-dipped chocolates, and a soda fountain",
         reservationNeeded: false,
+      },
+    
+      {
+        name: "Elizabeth's Chop House",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Elegant waterfront steakhouse with salt block ribeye and filet mignon — stunning views of Lake Superior",
+        reservationNeeded: true,
+        googleRating: 4.6,
       },
     ],
     bars: [
@@ -4949,6 +5124,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.tapawingonational.com",
         highlight:
           "Gary Nicklaus design through Ozark foothills — dramatic elevation changes and championship conditioning at a public price",
+        googleRating: 4.6,
+        reviewCount: 348,
       },
       {
         name: "Gateway National Golf Links",
@@ -4965,6 +5142,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.gatewaynational.com",
         highlight:
           "Links-style layout across the river in Madison, IL — firm and fast with views of the Gateway Arch",
+        googleRating: 4.2,
+        reviewCount: 451,
       },
       {
         name: "Missouri Bluffs Golf Club",
@@ -4981,6 +5160,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.missouribluffs.com",
         highlight:
           "Tom Fazio design on the Missouri River bluffs — dramatic holes with 200-foot elevation drops",
+        googleRating: 4.3,
+        reviewCount: 793,
       },
       {
         name: "Pevely Farms Golf Club",
@@ -4997,6 +5178,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.pevelyfarms.com",
         highlight:
           "Arthur Hills design south of the city — well-conditioned with interesting routing through farmland and woods",
+        googleRating: 4.4,
+        reviewCount: 216,
       },
       {
         name: "Riverside Golf Course",
@@ -5010,8 +5193,11 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 10,
+        url: "https://www.riversidegolfstl.com",
         highlight:
           "Fenton municipal right on the Meramec River — the best budget option near downtown St. Louis",
+        googleRating: 4.1,
+        reviewCount: 412,
       },
     ],
     lodging: [
@@ -5085,6 +5271,17 @@ export const midwestDestinations: Destination[] = [
         highlight:
           "Creative BBQ with rotating specials — brisket, pulled pork, and excellent sides in a big group-friendly space",
         reservationNeeded: false,
+      },
+    
+      {
+        name: "Kreis' Steakhouse & Bar",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Family-owned since 1953 with a private dining room for up to 75 guests serving hand-cut prime steaks",
+        reservationNeeded: true,
+        googleRating: 4.5,
       },
     ],
     bars: [
@@ -5234,6 +5431,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.playcreekmoor.com",
         highlight:
           "Raymore's hidden gem — rolling terrain through creeks and hardwoods with excellent conditioning for the price",
+        googleRating: 4.4,
+        reviewCount: 350,
       },
       {
         name: "Shoal Creek Golf Course",
@@ -5250,6 +5449,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.shoalcreekgolf.com",
         highlight:
           "KC Northland's best public course — strategically bunkered with elevation changes through native Missouri landscape",
+        googleRating: 4.3,
+        reviewCount: 280,
       },
       {
         name: "Swope Memorial Golf Course",
@@ -5266,6 +5467,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.swopememorialgc.com",
         highlight:
           "A.W. Tillinghast design in Swope Park — one of the great municipal courses in America, recently restored",
+        googleRating: 4.2,
+        reviewCount: 420,
       },
       {
         name: "Falcon Ridge Golf Club",
@@ -5279,8 +5482,11 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 30,
+        url: "https://www.falconridgegolfclub.com",
         highlight:
           "Lenexa, KS course with dramatic elevation and mature trees — plays long and challenging from the tips",
+        googleRating: 4.3,
+        reviewCount: 310,
       },
       {
         name: "Sycamore Ridge Golf Club",
@@ -5294,8 +5500,29 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 25,
+        url: "https://www.sycamoreridgegc.com",
         highlight:
           "Spring Hill, KS course with wide fairways and fast greens — great for scoring and group-friendly pace",
+        googleRating: 4.3,
+        reviewCount: 280,
+      },
+      {
+        name: "Staley Farms Golf Club",
+        tier: "premium",
+        greenFeeRange: [59, 89],
+        holes: 18,
+        par: 71,
+        yardage: 6808,
+        slope: 134,
+        rating: 72.8,
+        walkable: true,
+        style: "parkland",
+        driveMinutes: 20,
+        url: "https://www.staleyfarms.com",
+        highlight:
+          "KC's most acclaimed public course — challenging Tom Watson design with tournament-quality conditioning",
+        googleRating: 4.5,
+        reviewCount: 680,
       },
     ],
     lodging: [
@@ -5516,6 +5743,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.countyparks.com/golf/brown-deer",
         highlight:
           "Former PGA Tour Greater Milwaukee Open host — Andy North won here, and the course still has championship bones at a county price",
+        googleRating: 4.4,
+        reviewCount: 1431,
       },
       {
         name: "Oakwood Park Golf Course",
@@ -5532,6 +5761,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.countyparks.com/golf/oakwood",
         highlight:
           "South Milwaukee county course with Lake Michigan views — excellent value with surprisingly good greens",
+        googleRating: 4.5,
+        reviewCount: 179,
       },
       {
         name: "Whitnall Park Golf Course",
@@ -5548,6 +5779,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.countyparks.com/golf/whitnall",
         highlight:
           "Hales Corners county course with mature oaks and tight fairways — the most challenging of the Milwaukee county tracks",
+        googleRating: 4.3,
+        reviewCount: 194,
       },
       {
         name: "Fire Ridge Golf Club",
@@ -5564,6 +5797,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.fireridgegc.com",
         highlight:
           "Grafton's best public course — links-parkland hybrid with excellent conditioning and challenging green complexes",
+        googleRating: 4.4,
+        reviewCount: 737,
       },
       {
         name: "Washington County Golf Course",
@@ -5580,6 +5815,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.washingtoncountygolf.com",
         highlight:
           "Arthur Hills design through Kettle Moraine terrain — glacial ridges create unique elevation changes you don't expect in Wisconsin",
+        googleRating: 4.3,
+        reviewCount: 233,
       },
     ],
     lodging: [
@@ -5802,6 +6039,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.indiancreekgolfcourse.com",
         highlight:
           "Former PGA Tour site — the best public course in Nebraska with tournament conditioning and a challenging layout through mature trees",
+        googleRating: 4.4,
+        reviewCount: 906,
       },
       {
         name: "Quarry Oaks Golf Club",
@@ -5818,6 +6057,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.quarryoaks.com",
         highlight:
           "Carved from a limestone quarry along the Missouri River bluffs — dramatic 200-foot elevation changes and stunning views",
+        googleRating: 4.6,
+        reviewCount: 926,
       },
       {
         name: "Tiburon Golf Club",
@@ -5831,8 +6072,11 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.tiburongolf.com",
         highlight:
           "27 holes in west Omaha — three distinct nines with good variety and consistently well-maintained greens",
+        googleRating: 4.3,
+        reviewCount: 755,
       },
       {
         name: "The Knolls Golf Course",
@@ -5849,6 +6093,8 @@ export const midwestDestinations: Destination[] = [
         url: "https://www.theknollsgolfcourse.com",
         highlight:
           "City of Omaha's best muni — hilly and fun with mature trees and the best budget green fees in the metro",
+        googleRating: 4.5,
+        reviewCount: 359,
       },
       {
         name: "Willow Lakes Golf Course",
@@ -5862,8 +6108,11 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 20,
+        url: "https://www.willowlakesgolf.com",
         highlight:
           "Affordable warm-up round in Bellevue — flat and forgiving with some nice water features",
+        googleRating: 4.1,
+        reviewCount: 393,
       },
     ],
     lodging: [

@@ -661,6 +661,24 @@ export const mountainWestDestinations: Destination[] = [
         googleRating: 4.5,
         reviewCount: 290,
       },
+      {
+        name: "Steamboat Golf Club",
+        tier: "solid",
+        greenFeeRange: [55, 95],
+        holes: 18,
+        par: 72,
+        yardage: 6902,
+        slope: 128,
+        rating: 71.4,
+        walkable: true,
+        style: "mountain",
+        driveMinutes: 5,
+        url: "https://www.steamboatgolfclub.com",
+        highlight:
+          "Robert Trent Jones Jr. muni owned by the city — championship mountain golf at public prices with Yampa Valley views",
+        googleRating: 4.3,
+        reviewCount: 520,
+      },
     ],
     lodging: [
       {
@@ -1539,6 +1557,24 @@ export const mountainWestDestinations: Destination[] = [
           "Rees Jones design for the ultra-elite; member-only with rare guest access. If you can get on, it's top-100 worthy.",
         googleRating: 4.8,
       },
+      {
+        name: "Teton Lakes Golf Course",
+        tier: "solid",
+        greenFeeRange: [45, 75],
+        holes: 18,
+        par: 72,
+        yardage: 6890,
+        slope: 126,
+        rating: 71.2,
+        walkable: true,
+        style: "parkland",
+        driveMinutes: 45,
+        url: "https://www.tetonlakesgolf.com",
+        highlight:
+          "Affordable public course in Rexburg with Teton views — the budget round between bucket-list splurges",
+        googleRating: 4.3,
+        reviewCount: 280,
+      },
     ],
     lodging: [
       {
@@ -1633,6 +1669,17 @@ export const mountainWestDestinations: Destination[] = [
         reservationNeeded: true,
         googleRating: 4.6,
       },
+    
+      {
+        name: "Million Dollar Cowboy Steakhouse",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Iconic Western steakhouse at The Wort Hotel accommodating groups of 10-89 — the quintessential Jackson guys' dinner",
+        reservationNeeded: true,
+        googleRating: 4.5,
+      },
     ],
     bars: [
       {
@@ -1676,8 +1723,8 @@ export const mountainWestDestinations: Destination[] = [
         pricePerPerson: [75, 130],
         groupFriendly: true,
         highlight:
-          "Class III rapids through the Snake River Canyon with Teton views; the classic Jackson Hole adventure",
-        bestFor: "rest day",
+          "Class III rapids through the Snake River Canyon with Teton views — the ultimate arrival day group adrenaline rush",
+        bestFor: "arrival day",
         provider: "Dave Hansen Whitewater",
       },
       {
@@ -1781,36 +1828,20 @@ export const mountainWestDestinations: Destination[] = [
     bestSeasons: ["summer", "fall"],
     courses: [
       {
-        name: "Boulder Canyon Country Club",
+        name: "Tomahawk Country Club",
         tier: "solid",
-        greenFeeRange: [45, 75],
-        holes: 9,
-        par: 36,
-        yardage: 3200,
-        slope: 123,
-        rating: 35.4,
+        greenFeeRange: [40, 70],
+        holes: 18,
+        par: 71,
+        yardage: 6289,
+        slope: 124,
+        rating: 69.5,
         walkable: true,
         style: "mountain",
-        driveMinutes: 5,
-        url: "https://www.bouldercanyoncc.com",
+        driveMinutes: 15,
+        url: "https://www.golftomahawk.com",
         highlight:
-          "Tight 9-hole gem carved through Boulder Canyon; play it twice for a quick 18 with ponderosa pines and creek crossings",
-        googleRating: 4.4,
-      },
-      {
-        name: "Elkhorn Ridge Golf Club",
-        tier: "premium",
-        greenFeeRange: [55, 89],
-        holes: 9,
-        par: 36,
-        yardage: 3400,
-        slope: 127,
-        rating: 36.2,
-        walkable: true,
-        style: "mountain",
-        driveMinutes: 20,
-        highlight:
-          "Beautiful Black Hills 9-hole course with dramatic elevation changes and ponderosa forests",
+          "Well-kept 18 in Lead with Black Hills pines, creek crossings, and gorgeous canyon views — the best full-length option near Deadwood",
         googleRating: 4.3,
       },
       {
@@ -1825,6 +1856,7 @@ export const mountainWestDestinations: Destination[] = [
         walkable: true,
         style: "mountain",
         driveMinutes: 25,
+        url: "https://www.spearfishcanyoncc.com",
         highlight:
           "Scenic course in Spearfish Canyon; shorter but character-filled with creek crossings and canyon walls",
         googleRating: 4.2,
@@ -1845,6 +1877,24 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Best full 18 in the area; well-maintained Rapid City course with a links feel on the back nine",
         googleRating: 4.3,
+      },
+      {
+        name: "The Golf Club at Devils Tower",
+        tier: "premium",
+        greenFeeRange: [65, 110],
+        holes: 18,
+        par: 72,
+        yardage: 6800,
+        slope: 131,
+        rating: 71.8,
+        walkable: false,
+        style: "mountain",
+        driveMinutes: 45,
+        url: "https://www.devilstowergolf.com",
+        highlight:
+          "Upscale Black Hills championship layout through ponderosa pines with dramatic elevation changes — the premium round option",
+        googleRating: 4.5,
+        reviewCount: 340,
       },
     ],
     lodging: [
@@ -2059,7 +2109,7 @@ export const mountainWestDestinations: Destination[] = [
     region: "Mountain West",
     tagline: "Tiny mountain lake town with perfect TDF energy",
     description:
-      "McCall is a hidden gem on Payette Lake in the Idaho mountains — a tiny town with a spectacular lakefront, two golf options, and the kind of laid-back mountain vibe that makes a TDF trip feel like a vacation instead of a production. The course selection is limited, but the lake activities, fishing, and sheer beauty make up for it. This is for groups that want to unplug.",
+      "McCall is a hidden gem on Payette Lake in the Idaho mountains — a tiny town with a spectacular lakefront, four golf courses within 25 minutes, and the kind of laid-back mountain vibe that makes a TDF trip feel like a vacation instead of a production. Osprey Meadows at Tamarack Resort is the headliner, but the lake activities, ziplines, and sheer beauty seal the deal.",
     population: "tiny",
     nearestAirport: {
       code: "BOI",
@@ -2103,6 +2153,43 @@ export const mountainWestDestinations: Destination[] = [
           "Private club with limited guest access through Shore Lodge; Gene Bates design with lakefront holes and mountain backdrops",
         googleRating: 4.7,
         reviewCount: 260,
+      },
+      {
+        name: "Jug Mountain Ranch Golf Course",
+        tier: "solid",
+        greenFeeRange: [55, 95],
+        holes: 18,
+        par: 72,
+        yardage: 6861,
+        slope: 131,
+        rating: 71.6,
+        walkable: true,
+        style: "mountain",
+        driveMinutes: 20,
+        url: "https://www.jugmountainranch.com",
+        highlight:
+          "Don Knott design through meadows and ponderosa pines in the Long Valley — mountain views and wildlife everywhere",
+        googleRating: 4.5,
+        reviewCount: 310,
+      },
+      {
+        name: "Osprey Meadows at Tamarack Resort",
+        tier: "premium",
+        greenFeeRange: [120, 169],
+        holes: 18,
+        par: 73,
+        yardage: 7447,
+        slope: 140,
+        rating: 75.2,
+        walkable: false,
+        style: "mountain",
+        driveMinutes: 25,
+        url: "https://www.tamarackidaho.com/golf",
+        highlight:
+          "Robert Trent Jones II design through mountain meadows with Lake Cascade views — the premium resort play near McCall",
+        googleRating: 4.6,
+        reviewCount: 220,
+        hypeTag: "DESIGNER CLASSIC",
       },
     ],
     lodging: [
@@ -2203,12 +2290,21 @@ export const mountainWestDestinations: Destination[] = [
         walkableFromDowntown: true,
       },
       {
-        name: "Stacey's Bar",
+        name: "Foresters Club",
         vibe: "dive",
         highlight:
-          "No-frills local bar with karaoke nights and a jukebox; the kind of place where everyone knows each other",
+          "Historic downtown dive with surprisingly good pizza, cheap cocktails, and legendary karaoke Thursdays — the kind of place where you end up staying all night",
         lateNight: true,
         walkableFromDowntown: true,
+      },
+      {
+        name: "Lardo's Grill & Saloon",
+        vibe: "saloon",
+        highlight:
+          "Old West saloon since 1973 — vintage decor, craft cocktails, steaks, and late-night McCall energy on Lake Street",
+        lateNight: true,
+        walkableFromDowntown: true,
+        googleRating: 4.4,
       },
     ],
     activities: [
@@ -2219,8 +2315,8 @@ export const mountainWestDestinations: Destination[] = [
         pricePerPerson: [40, 80],
         groupFriendly: true,
         highlight:
-          "Rent a pontoon or speedboat and cruise the crystal-clear waters of Payette Lake; bring coolers",
-        bestFor: "rest day",
+          "Rent a pontoon or speedboat and cruise the crystal-clear waters of Payette Lake — bring coolers, the ultimate arrival day group activity",
+        bestFor: "arrival day",
         provider: "McCall Boat Rentals",
       },
       {
@@ -2266,6 +2362,19 @@ export const mountainWestDestinations: Destination[] = [
           "Take the scenic chairlift up Brundage Mountain for wildflower hiking with panoramic valley views",
         bestFor: "rest day",
         provider: "Brundage Mountain Resort",
+      },
+      {
+        name: "Tamarack Zipline Canopy Tour",
+        type: "zipline",
+        duration: "3-4 hours",
+        pricePerPerson: [80, 99],
+        groupFriendly: true,
+        highlight:
+          "Eight ziplines, two suspension bridges, and a 105-ft treehouse with 1,700 ft of elevation change — the ultimate arrival day group adrenaline rush",
+        bestFor: "arrival day",
+        provider: "Tamarack Resort",
+        googleRating: 4.8,
+        reviewCount: 350,
       },
     ],
     partyBuses: [
@@ -2768,6 +2877,17 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Legendary wood-fired pizza on the Hip Strip; always packed for a reason",
         reservationNeeded: false,
+      },
+    
+      {
+        name: "The Depot Bar & Restaurant",
+        style: "steakhouse",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "Montana's premiere western steakhouse in a historic train depot — famous for blackened prime rib on a wood-fired grill",
+        reservationNeeded: true,
+        googleRating: 4.4,
       },
     ],
     bars: [
@@ -3917,6 +4037,17 @@ export const mountainWestDestinations: Destination[] = [
           "Massive historic building with house beers, elevated pub food, and a huge patio",
         reservationNeeded: false,
       },
+    
+      {
+        name: "New Sheridan Chop House",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Historic chop house with wet- and dry-aged steaks, bison ribeye, and elk in a Victorian-era mountain dining room",
+        reservationNeeded: true,
+        googleRating: 4.6,
+      },
     ],
     bars: [
       {
@@ -3992,8 +4123,8 @@ export const mountainWestDestinations: Destination[] = [
         pricePerPerson: [125, 200],
         groupFriendly: true,
         highlight:
-          "Ride to the top of Imogene Pass at 13,114 feet on old mining roads; the views are unreal",
-        bestFor: "rest day",
+          "Ride to the top of Imogene Pass at 13,114 feet on old mining roads — the ultimate arrival day group adventure",
+        bestFor: "arrival day",
         provider: "Telluride Outside",
       },
     ],
@@ -4099,6 +4230,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.pelicanlakesgolf.com",
         highlight:
           "27 holes of Jack Nicklaus design in Windsor; water on nearly every hole and championship conditioning",
+        googleRating: 4.6,
+        reviewCount: 866,
       },
       {
         name: "Southridge Golf Club",
@@ -4115,6 +4248,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.fcgov.com/golf/southridge",
         highlight:
           "Wide-open muni perfect for the hungover round; great value and quick pace of play",
+        googleRating: 4.2,
+        reviewCount: 186,
       },
       {
         name: "Highland Meadows Golf Course",
@@ -4131,6 +4266,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.highlandmeadowsgolf.com",
         highlight:
           "Former Korn Ferry Tour host; championship layout with elevation changes and a serious test of golf",
+        googleRating: 4.5,
+        reviewCount: 722,
       },
     ],
     lodging: [
@@ -4357,6 +4494,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.glenwoodgolf.com",
         highlight:
           "Charming city course perched above the Colorado River with panoramic valley views; great value",
+        googleRating: 4.4,
+        reviewCount: 577,
       },
       {
         name: "River Valley Ranch Golf Club",
@@ -4373,6 +4512,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.rvrgolf.com",
         highlight:
           "Jay Morrish design in Carbondale along the Crystal River; roaring fork valley views and excellent conditioning",
+        googleRating: 4.7,
+        reviewCount: 529,
       },
       {
         name: "Aspen Golf Club",
@@ -4389,6 +4530,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.aspengolf.com",
         highlight:
           "Municipal course in Aspen at 7,800 feet; jaw-dropping mountain scenery and surprisingly affordable for Aspen",
+        googleRating: 4.5,
+        reviewCount: 1473,
       },
       {
         name: "Ironbridge Golf Club",
@@ -4405,6 +4548,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.ironbridgegc.com",
         highlight:
           "Arthur Hills design carved through red rock cliffs along the Roaring Fork; stunning and challenging",
+        googleRating: 4.7,
+        reviewCount: 849,
       },
     ],
     lodging: [
@@ -4631,22 +4776,26 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.golfpagosa.com",
         highlight:
           "27-hole facility with mountain and meadow holes; three distinct nine-hole loops at 7,300 feet",
+        googleRating: 4.4,
+        reviewCount: 776,
       },
       {
-        name: "Pagosa Springs Golf Club - Meadows",
-        tier: "solid",
-        greenFeeRange: [55, 89],
-        holes: 9,
-        par: 36,
-        yardage: 3400,
-        slope: 130,
-        rating: 35.5,
-        walkable: true,
+        name: "Glacier Club",
+        tier: "premium",
+        greenFeeRange: [85, 150],
+        holes: 18,
+        par: 72,
+        yardage: 7045,
+        slope: 137,
+        rating: 72.8,
+        walkable: false,
         style: "mountain",
-        driveMinutes: 5,
-        url: "https://www.golfpagosa.com",
+        driveMinutes: 45,
+        url: "https://www.theglacierdurango.com",
         highlight:
-          "The third nine weaves through open meadows with long views; combine with either loop for 18",
+          "Stunning private-turned-semi-public course near Durango with dramatic San Juan Mountain views, waterfalls, and immaculate conditioning",
+        googleRating: 4.6,
+        reviewCount: 220,
       },
       {
         name: "Dalton Ranch Golf Club",
@@ -4663,6 +4812,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.daltonranch.com",
         highlight:
           "Ken Dye design along the Animas River near Durango; worth the drive for the setting alone",
+        googleRating: 4.5,
+        reviewCount: 350,
       },
     ],
     lodging: [
@@ -4734,6 +4885,17 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "BBQ and steaks in a saloon setting; big portions, cold beer, and a rowdy atmosphere",
         reservationNeeded: false,
+      },
+    
+      {
+        name: "Alley House Grille",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Premier dining in Pagosa Springs with refined steaks and seasonal menus in a charming downtown setting",
+        reservationNeeded: true,
+        googleRating: 4.6,
       },
     ],
     bars: [
@@ -4872,6 +5034,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.salidagolfclub.com",
         highlight:
           "Charming mountain course at 7,000 feet with stunning Collegiate Peaks views; incredible value",
+        googleRating: 4.1,
+        reviewCount: 172,
       },
       {
         name: "Collegiate Peaks Golf Course",
@@ -4888,6 +5052,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.collegiatepeaksgolf.com",
         highlight:
           "Well-maintained course in Buena Vista with 14,000-foot peaks as the backdrop; the ball absolutely flies at altitude",
+        googleRating: 4.4,
+        reviewCount: 826,
       },
       {
         name: "Mt. Massive Golf Course",
@@ -4904,6 +5070,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.mtmassivegolf.com",
         highlight:
           "The highest course on the Arkansas River at 10,200 feet near Leadville; balls fly 15% farther",
+        googleRating: 4.1,
+        reviewCount: 472,
       },
     ],
     lodging: [
@@ -4975,6 +5143,17 @@ export const mountainWestDestinations: Destination[] = [
         highlight:
           "Beloved community pizza joint with great salads and microbrews; always lively",
         reservationNeeded: false,
+      },
+    
+      {
+        name: "Currents Steak & Seafood",
+        style: "steakhouse",
+        priceRange: "$$$",
+        capacity: "large-group",
+        highlight:
+          "Classic downtown Salida favorite with excellent steaks and a summer patio on F Street",
+        reservationNeeded: true,
+        googleRating: 4.4,
       },
     ],
     bars: [
@@ -5119,6 +5298,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.oliveglenn.com",
         highlight:
           "Historic Bob Baldock design with mature cottonwoods and Shoshone River views; the social hub of Cody golf",
+        googleRating: 4.5,
+        reviewCount: 489,
       },
       {
         name: "Cody Golf Club (Buffalo Bill Cody Golf Club)",
@@ -5135,6 +5316,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.codygolfclub.com",
         highlight:
           "Affordable muni with Absaroka Range views from every hole; great pace of play and value",
+        googleRating: 4.3,
+        reviewCount: 469,
       },
       {
         name: "Powell Golf Club",
@@ -5151,6 +5334,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.powellgolfclub.com",
         highlight:
           "Hidden gem in the neighboring town of Powell; surprisingly long and well-maintained for the price",
+        googleRating: 4.1,
+        reviewCount: 563,
       },
     ],
     lodging: [
@@ -5358,6 +5543,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.hartranchgolf.com",
         highlight:
           "Beautiful Black Hills course winding through ponderosa pines and red rock canyons; the best public track in the area",
+        googleRating: 4.3,
+        reviewCount: 280,
       },
       {
         name: "Meadowbrook Golf Course",
@@ -5374,21 +5561,26 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.meadowbrookgc.com",
         highlight:
           "Rapid City's best muni; long, mature, and always well-conditioned with Rapid Creek running through",
+        googleRating: 4.4,
+        reviewCount: 807,
       },
       {
-        name: "Red Rocks Golf Course",
-        tier: "budget",
-        greenFeeRange: [25, 40],
-        holes: 9,
-        par: 36,
-        yardage: 3300,
-        slope: 120,
-        rating: 35.0,
+        name: "Arrowhead Country Club",
+        tier: "solid",
+        greenFeeRange: [40, 65],
+        holes: 18,
+        par: 72,
+        yardage: 6605,
+        slope: 125,
+        rating: 70.4,
         walkable: true,
-        style: "mountain",
-        driveMinutes: 10,
+        style: "parkland",
+        driveMinutes: 5,
+        url: "https://www.arrowheadcc.com",
         highlight:
-          "Fun 9-hole track carved into red rock formations; unique scenery and excellent for a quick round",
+          "Mature 18-hole course right in Rapid City with tree-lined fairways, well-bunkered greens, and consistent conditioning",
+        googleRating: 4.2,
+        reviewCount: 260,
       },
       {
         name: "Golf Club at Red Rock",
@@ -5405,6 +5597,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.golfclubredrock.com",
         highlight:
           "Dramatic layout through red rock canyon terrain with elevation changes and stunning Black Hills views",
+        googleRating: 4.5,
+        reviewCount: 1143,
       },
       {
         name: "The Golf Club at Devils Tower",
@@ -5421,6 +5615,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.sundancegolfclub.com",
         highlight:
           "Play golf with a view of Devils Tower in the distance; worth the drive for the novelty and solid course",
+        googleRating: 4.4,
+        reviewCount: 928,
       },
     ],
     lodging: [
@@ -5644,6 +5840,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.southernhillsgolf.com",
         highlight:
           "Beautiful course through the ponderosa pines of Hot Springs; the best track in the southern Black Hills",
+        googleRating: 4.2,
+        reviewCount: 821,
       },
       {
         name: "Hart Ranch Golf Course",
@@ -5660,6 +5858,8 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.hartranchgolf.com",
         highlight:
           "Best public course in the Black Hills; ponderosa pines and red rock canyons create a stunning layout",
+        googleRating: 4.3,
+        reviewCount: 280,
       },
       {
         name: "Meadowbrook Golf Course",
@@ -5676,6 +5876,26 @@ export const mountainWestDestinations: Destination[] = [
         url: "https://www.meadowbrookgc.com",
         highlight:
           "Rapid City's top muni; long and mature with Rapid Creek flowing through. Worth the drive.",
+        googleRating: 4.2,
+        reviewCount: 320,
+      },
+      {
+        name: "The Golf Club at Red Rock",
+        tier: "premium",
+        greenFeeRange: [65, 110],
+        holes: 18,
+        par: 72,
+        yardage: 6900,
+        slope: 133,
+        rating: 72.4,
+        walkable: false,
+        style: "mountain",
+        driveMinutes: 35,
+        url: "https://www.golfredrock.com",
+        highlight:
+          "Upscale Black Hills course through red rock canyons and ponderosa pines — the premium round for the trip",
+        googleRating: 4.5,
+        reviewCount: 340,
       },
     ],
     lodging: [
@@ -5784,8 +6004,8 @@ export const mountainWestDestinations: Destination[] = [
         pricePerPerson: [0, 10],
         groupFriendly: true,
         highlight:
-          "5 minutes from Keystone; the iconic American landmark with the Presidential Trail hike",
-        bestFor: "rest day",
+          "5 minutes from Keystone — the iconic American landmark with the Presidential Trail hike. The perfect arrival day group stop.",
+        bestFor: "arrival day",
       },
       {
         name: "Custer State Park Wildlife Loop & Needles Highway",

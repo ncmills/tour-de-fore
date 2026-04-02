@@ -96,11 +96,12 @@ export async function getDestinationPopularity(
 }
 
 /**
- * Get popularity scores for all destinations that have signals
+ * Get popularity scores and view counts for all destinations that have signals
  */
-export async function getAllPopularityScores(): Promise<Map<string, number>> {
+export async function getAllPopularityScores(): Promise<{ scores: Map<string, number>; viewCounts: Map<string, number> }> {
   const r = getRedis();
   const scores = new Map<string, number>();
+  const viewCounts = new Map<string, number>();
 
   // Scan for all view keys
   let cursor = "0";
@@ -114,11 +115,12 @@ export async function getAllPopularityScores(): Promise<Map<string, number>> {
       const selects = parseInt(await r.hget(`signal:selects:${destId}`, "total") || "0");
       if (views > 0) {
         scores.set(destId, selects / views);
+        viewCounts.set(destId, views);
       }
     }
   } while (cursor !== "0");
 
-  return scores;
+  return { scores, viewCounts };
 }
 
 // ── Shop Orders ──

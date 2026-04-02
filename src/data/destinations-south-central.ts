@@ -188,9 +188,9 @@ export const southCentralDestinations: Destination[] = [
         name: "Slick Rock Bar & Grill",
         vibe: "patio",
         highlight:
-          "19th hole at the resort with cold Lone Stars, a big patio, and post-round debrief vibes",
+          "19th hole at the resort with cold Lone Stars, a big patio, and post-round debrief vibes — walkable from all resort lodging",
         lateNight: false,
-        walkableFromDowntown: false,
+        walkableFromDowntown: true,
       },
       {
         name: "Flat Creek Estate Winery",
@@ -355,6 +355,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "resort",
         driveMinutes: 10,
+        url: "https://www.comanchetrace.com",
         highlight:
           "Tom Kite design with 27 holes through rugged Hill Country terrain — three distinct 9-hole loops with dramatic elevation",
         googleRating: 4.5,
@@ -449,6 +450,17 @@ export const southCentralDestinations: Destination[] = [
           "Tex-Mex on Main Street with live music, margaritas, and a huge rooftop patio — the group hangout spot",
         reservationNeeded: false,
         googleRating: 4.4,
+      },
+    
+      {
+        name: "Cabernet Grill",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Hill Country chophouse with certified Angus steaks, the largest Texas wine selection, and a rustic vineyard atmosphere",
+        reservationNeeded: true,
+        googleRating: 4.6,
       },
     ],
     bars: [
@@ -601,6 +613,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "mountain",
         driveMinutes: 5,
+        url: "https://www.hotspringscc.com",
         highlight:
           "Classic 1890s course redesigned by Willie Park Jr. — tight mountain fairways with views of the Ouachita range",
         googleRating: 4.4,
@@ -619,6 +632,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "mountain",
         driveMinutes: 5,
+        url: "https://www.hotspringscc.com",
         highlight:
           "Companion course at HSCC — more open and forgiving than the Arlington with some of the same mountain views",
         googleRating: 4.3,
@@ -636,6 +650,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "mountain",
         driveMinutes: 15,
+        url: "https://www.mountainranchgolfclub.com",
         highlight:
           "Mountain target golf with dramatic elevation changes — several blind shots over ridgelines keep it interesting",
         googleRating: 4.2,
@@ -653,6 +668,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "mountain",
         driveMinutes: 20,
+        url: "https://www.diamantegolfclub.com",
         highlight:
           "Longest and most challenging public course in the area — carved through dense Ouachita forest with water on eight holes",
         googleRating: 4.4,
@@ -670,6 +686,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: true,
         style: "mountain",
         driveMinutes: 10,
+        url: "https://www.belvederecc.com",
         highlight:
           "Classic 1920s course with a throwback feel — short but strategic with small, fast greens",
         googleRating: 4.2,
@@ -891,24 +908,24 @@ export const southCentralDestinations: Destination[] = [
     bestSeasons: ["spring", "fall"],
     courses: [
       {
-        name: "Top of the Rock - Jack Nicklaus Par-3 Course",
+        name: "Buffalo Ridge Springs (Big Cedar Lodge)",
         tier: "bucket-list",
-        greenFeeRange: [175, 295],
-        holes: 9,
-        par: 27,
-        yardage: 1305,
-        slope: 113,
-        rating: 28.4,
-        walkable: true,
+        greenFeeRange: [150, 250],
+        holes: 18,
+        par: 71,
+        yardage: 7036,
+        slope: 140,
+        rating: 73.8,
+        walkable: false,
         style: "mountain",
         driveMinutes: 10,
-        url: "https://www.bigcedar.com/golf",
+        url: "https://www.bigcedar.com/golf/buffalo-ridge",
         highlight:
-          "Nicklaus-designed par-3 masterpiece at Big Cedar Lodge — caves, waterfalls, and Table Rock Lake views. The 9th hole plays into a natural cave.",
+          "Tom Fazio design at Big Cedar Lodge — dramatic Ozark ridgeline holes with 360-degree views of Table Rock Lake and rolling hills. Consistently ranked among Missouri's best.",
         googleRating: 4.8,
-        reviewCount: 900,
+        reviewCount: 680,
         hypeTag: "BUCKET LIST",
-        rankNote: "Best Par-3 Course in America — Golf Digest",
+        rankNote: "Top 10 Public Course in Missouri — Golf Digest",
       },
       {
         name: "Branson Hills Golf Club",
@@ -1636,6 +1653,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 25,
+        url: "https://www.falconheadaustin.com",
         highlight:
           "Public course in Bee Cave with Hill Country terrain, well-maintained conditions, and a challenging layout at a reasonable price",
         googleRating: 4.3,
@@ -1652,6 +1670,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 25,
+        url: "https://www.averyranchgolf.com",
         highlight:
           "North Austin public course with elevation changes, canyon crossings, and some of the best-maintained greens in the city",
         googleRating: 4.3,
@@ -1965,6 +1984,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 20,
+        url: "https://www.texasstargolf.com",
         highlight:
           "Former NCAA Championship venue in Euless — strong public course with mature trees and excellent conditioning at a fair price",
         googleRating: 4.3,
@@ -2282,6 +2302,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "links",
         driveMinutes: 25,
+        url: "https://www.wildcatgolfclub.com",
         highlight:
           "Links-style course in south Houston with mounding, fescue, and strategic bunkering — feels like you left Texas",
         googleRating: 4.4,
@@ -2299,6 +2320,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 30,
+        url: "https://www.blackhorsegolfclub.com",
         highlight:
           "Peter Jacobsen design in Cypress — big, bold course with rolling terrain and excellent conditions for the price",
         googleRating: 4.3,
@@ -2316,6 +2338,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: true,
         style: "coastal",
         driveMinutes: 45,
+        url: "https://www.moodygardensgolf.com",
         highlight:
           "Jacobsen design in Galveston with coastal breezes, marshland views, and pelicans — unique Texas Gulf Coast golf",
         googleRating: 4.3,
@@ -2411,9 +2434,9 @@ export const southCentralDestinations: Destination[] = [
         name: "Anvil Bar & Refuge",
         vibe: "cocktail",
         highlight:
-          "One of the best cocktail bars in America — James Beard-nominated program in Montrose with 100-drink menu",
+          "One of the best cocktail bars in America — James Beard-nominated program in walkable Montrose with 100-drink menu",
         lateNight: true,
-        walkableFromDowntown: false,
+        walkableFromDowntown: true,
       },
       {
         name: "Saint Arnold Brewing Company",
@@ -2443,9 +2466,9 @@ export const southCentralDestinations: Destination[] = [
         name: "Little Woodrow's",
         vibe: "sports-bar",
         highlight:
-          "Houston chain with massive patios, TVs everywhere, and the kind of cold beer and casual energy a golf trip needs",
+          "Houston chain with massive patios in Midtown, TVs everywhere, and the kind of cold beer and casual energy a golf trip needs",
         lateNight: true,
-        walkableFromDowntown: false,
+        walkableFromDowntown: true,
       },
     ],
     activities: [
@@ -2589,6 +2612,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 20,
+        url: "https://www.englishturn.com",
         highlight:
           "Jack Nicklaus design and former PGA Tour venue — challenging wetland course with strategic water hazards and mature oaks",
         googleRating: 4.4,
@@ -2715,6 +2739,17 @@ export const southCentralDestinations: Destination[] = [
         highlight:
           "Home of the original muffuletta since 1906 — massive Italian sandwiches with olive salad in the French Quarter",
         reservationNeeded: false,
+      },
+    
+      {
+        name: "Dickie Brennan's Steakhouse",
+        style: "steakhouse",
+        priceRange: "$$$$",
+        capacity: "large-group",
+        highlight:
+          "Named among America's best steakhouses by Travel+Leisure and Maxim — a French Quarter institution with private dining",
+        reservationNeeded: true,
+        googleRating: 4.6,
       },
     ],
     bars: [
@@ -2908,6 +2943,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 20,
+        url: "https://www.persimmonridgegolf.com",
         highlight:
           "Arthur Hills design consistently ranked among Kentucky's best — rolling terrain through hardwood forests with excellent conditioning",
         googleRating: 4.6,
@@ -2925,6 +2961,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 35,
+        url: "https://www.chariotrun.com",
         highlight:
           "Horseshoe Casino's course across the river in Indiana — challenging Fuzzy Zoeller/Clyde Johnston design at a great price",
         googleRating: 4.3,
@@ -2942,6 +2979,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.quailchasegolf.com",
         highlight:
           "27-hole public facility with three distinct 9-hole loops — friendly layout, good conditions, and the best value in Louisville",
         googleRating: 4.2,
@@ -2960,6 +2998,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 25,
+        url: "https://www.heritagehillgolf.com",
         highlight:
           "Shepherdsville public course with well-maintained fairways, reasonable rates, and a solid test without the premium price tag",
         googleRating: 4.2,
@@ -3238,6 +3277,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 20,
+        url: "https://www.indianspringsgolf.com",
         highlight:
           "Bill Coore and Ben Crenshaw design that's become the best public option in Tulsa — rolling terrain with native grasses and smart bunkering",
         googleRating: 4.6,
@@ -3256,6 +3296,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.battlecreekgolf.com",
         highlight:
           "Tulsa's best-kept public secret — mature trees, elevation changes, and excellent conditions at rock-bottom prices",
         googleRating: 4.4,
@@ -3274,6 +3315,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 25,
+        url: "https://www.forestridgegc.com",
         highlight:
           "Randy Heckenkemper design in Broken Arrow with challenging elevation and water features — one of the best-conditioned public courses in Oklahoma",
         googleRating: 4.5,
@@ -3291,6 +3333,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.mohawkparkgolf.com",
         highlight:
           "Two 18-hole courses at municipal prices — Pecan Valley hosted the 1984 US Amateur. Raw but historic with surprising bones.",
         googleRating: 4.2,
@@ -3529,6 +3572,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 35,
+        url: "https://www.soonergolf.com",
         highlight:
           "Bob Cupp design and home of OU golf — championship layout with Cross Timbers terrain, stone bridges, and excellent conditioning",
         googleRating: 4.5,
@@ -3546,6 +3590,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 10,
+        url: "https://www.okc.gov/golf",
         highlight:
           "Perry Maxwell design from 1929 — the oldest course in OKC with historic bones, good greens, and a walkable layout at municipal prices",
         googleRating: 4.3,
@@ -3563,6 +3608,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.okc.gov/golf",
         highlight:
           "Two solid 18-hole municipal courses on OKC's south side — well-maintained, affordable, and great for doubling up on rounds",
         googleRating: 4.2,
@@ -3580,6 +3626,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 25,
+        url: "https://www.golfedmond.com",
         highlight:
           "Tom Fazio design in Edmond with rolling Cross Timbers terrain and excellent conditioning — one of the best public courses in the OKC metro",
         googleRating: 4.5,
@@ -3800,6 +3847,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.stonebridgegolf.com",
         highlight:
           "Best public course in northwest Louisiana — challenging layout through pine forests with excellent conditioning and low green fees",
         googleRating: 4.4,
@@ -3817,6 +3865,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 5,
+        url: "https://www.shreveportla.gov/golf",
         highlight:
           "Classic Shreveport muni dating to the 1930s — affordable, walkable, and a solid warm-up round option",
         googleRating: 4.2,
@@ -3834,6 +3883,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 10,
+        url: "https://www.northwoodhillsgolf.com",
         highlight:
           "Well-maintained municipal course with tree-lined fairways, solid greens, and good value for the money",
         googleRating: 4.3,
@@ -3851,6 +3901,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.eastridgecc.com",
         highlight:
           "Semi-private club with public tee times available — rolling terrain through mature pines with a country club feel at public prices",
         googleRating: 4.4,
@@ -4057,6 +4108,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.chenalcc.com",
         highlight:
           "Robert Trent Jones Jr. 36-hole facility — two championship courses through Ozark foothills with excellent conditioning and resort-quality amenities",
         googleRating: 4.5,
@@ -4074,6 +4126,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 10,
+        url: "https://www.rebsamengolf.com",
         highlight:
           "Classic Little Rock muni on the Arkansas River — mature trees, good greens, and the best value in the city",
         googleRating: 4.3,
@@ -4092,6 +4145,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 20,
+        url: "https://www.maumellecc.com",
         highlight:
           "Semi-private club with public access — rolling Ozark-edge terrain through pines with reasonable green fees",
         googleRating: 4.3,
@@ -4109,6 +4163,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 30,
+        url: "https://www.thealotianclub.com",
         highlight:
           "Tom Fazio design ranked among the top 50 courses in America — ultra-private but accessible through member invitations and charity events",
         googleRating: 4.9,
@@ -4360,6 +4415,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
+        url: "https://www.santamariagolf.com",
         highlight:
           "Robert Trent Jones Sr. design and Baton Rouge's best municipal course — solid layout with mature oaks and good greens",
         googleRating: 4.3,
@@ -4377,6 +4433,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 10,
+        url: "https://www.webbparkmunigolf.com",
         highlight:
           "No-frills Baton Rouge muni with honest golf at rock-bottom prices — ideal for the hangover round after a Third Street night",
         googleRating: 4.2,
@@ -4647,6 +4704,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 10,
+        url: "https://www.sycamorecreekgolf.com",
         highlight:
           "Affordable Osage Beach course with rolling terrain, good greens, and lake-area convenience at budget prices",
         googleRating: 4.2,
@@ -4734,17 +4792,17 @@ export const southCentralDestinations: Destination[] = [
         name: "Shady Gators",
         vibe: "patio",
         highlight:
-          "The legendary lake party bar — massive waterfront deck, live music, and the epicenter of Lake of the Ozarks nightlife",
+          "The legendary lake party bar — massive waterfront deck, live music, and the epicenter of Lake of the Ozarks nightlife. Dock up and walk in.",
         lateNight: true,
-        walkableFromDowntown: false,
+        walkableFromDowntown: true,
       },
       {
         name: "Backwater Jack's",
         vibe: "patio",
         highlight:
-          "Dock bar with a pool, waterslide, and live music — boat up or drive in for all-day lake party vibes",
+          "Dock bar with a pool, waterslide, and live music — boat up or drive in for all-day lake party vibes. Adjacent to Shady Gators.",
         lateNight: true,
-        walkableFromDowntown: false,
+        walkableFromDowntown: true,
       },
       {
         name: "Brews Brothers Tap Room",
@@ -4879,6 +4937,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "coastal",
         driveMinutes: 5,
+        url: "https://www.galvestoncc.com",
         highlight:
           "Semi-private island course with Gulf views, sea breezes, and a links-influenced layout — the best golf on the island",
         googleRating: 4.4,
@@ -4896,6 +4955,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "links",
         driveMinutes: 45,
+        url: "https://www.wildcatgolfclub.com",
         highlight:
           "Links-style course in south Houston — add it to a Galveston trip for a quality 36-hole day with a different look",
         googleRating: 4.3,
@@ -4913,6 +4973,7 @@ export const southCentralDestinations: Destination[] = [
         walkable: true,
         style: "coastal",
         driveMinutes: 30,
+        url: "https://www.bayoakscc.com",
         highlight:
           "Mainland course near Galveston in Clear Lake — affordable, well-maintained, and a change of pace from island wind",
         googleRating: 4.2,
