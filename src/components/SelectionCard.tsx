@@ -35,7 +35,7 @@ export default function SelectionCard({ label, sublabel, selected, onClick, comp
       }}
     >
       {isTdfEndorsed && (
-        <img src="/icon-fancy.png" alt="TDF Endorsed" style={{ width: 72, height: 72, marginBottom: "0.4rem" }} />
+        <img src="/icon-fancy.png" alt="Tour de Fore endorsed selection" style={{ width: 72, height: 72, marginBottom: "0.4rem" }} />
       )}
       <span style={{
         display: "block",

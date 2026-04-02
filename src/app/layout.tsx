@@ -88,6 +88,17 @@ export const metadata: Metadata = {
   title: "Tour de Fore | An Annual Golf Odyssey",
   description:
     "Six years of fairways, friendships, and questionable handicaps. The official home of Tour de Fore.",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   openGraph: {
     title: "Tour de Fore",
     description: "An Annual Golf Odyssey",
@@ -124,6 +135,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://us.i.posthog.com" />
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+        <link rel="dns-prefetch" href="https://us.i.posthog.com" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

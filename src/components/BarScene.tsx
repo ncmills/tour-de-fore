@@ -58,7 +58,7 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
       {/* Bar scene — photo background */}
       <img
         src="/bar-photo.png"
-        alt=""
+        alt="Tour de Fore bar scene background"
         style={{
           position: "absolute",
           inset: 0,

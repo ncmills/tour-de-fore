@@ -44,7 +44,7 @@ export default function SetPasswordClient() {
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "2rem", textAlign: "center" }}>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} style={{ maxWidth: 400, width: "100%" }}>
-        <img src="/icon-fancy.png" alt="TDF" style={{ width: 64, height: 64, margin: "0 auto 1.5rem" }} />
+        <img src="/icon-fancy.png" alt="Tour de Fore logo" style={{ width: 64, height: 64, margin: "0 auto 1.5rem" }} />
         <h1 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(1.8rem, 4vw, 2.5rem)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "0.5rem" }}>
           Set Your Password
         </h1>
