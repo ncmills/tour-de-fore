@@ -143,6 +143,7 @@ export interface PlanCourse {
   whyThisCourse: string;
   url?: string;
   imageSearch?: string;
+  imageUrl?: string;
 }
 
 export interface PlanDay {

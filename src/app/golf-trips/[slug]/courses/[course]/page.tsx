@@ -66,8 +66,6 @@ export default async function CoursePage({ params }: Props) {
           <div><span style={{ color: "rgba(255,255,255,0.4)" }}>Holes</span><br /><strong>{course.holes}</strong></div>
           <div><span style={{ color: "rgba(255,255,255,0.4)" }}>Par</span><br /><strong>{course.par}</strong></div>
           <div><span style={{ color: "rgba(255,255,255,0.4)" }}>Yardage</span><br /><strong>{course.yardage.toLocaleString()}</strong></div>
-          <div><span style={{ color: "rgba(255,255,255,0.4)" }}>Slope</span><br /><strong>{course.slope}</strong></div>
-          <div><span style={{ color: "rgba(255,255,255,0.4)" }}>Rating</span><br /><strong>{course.rating}</strong></div>
         </div>
 
         {/* Rating + badges */}

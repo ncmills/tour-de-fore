@@ -23,7 +23,7 @@ export const northeastDestinations: Destination[] = [
         greenFeeRange: [125, 195],
         holes: 18,
         par: 72,
-        yardage: 6665,
+        yardage: 7011,
         slope: 131,
         rating: 72.2,
         walkable: false,
@@ -4411,7 +4411,7 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "mountain",
         driveMinutes: 20,
-        url: "https://www.bethlehemcc.com",
+        url: "https://bethlehemgolf.com",
         highlight:
           "Donald Ross design from 1898 — one of the oldest courses in NH with classic mountain golf charm",
         googleRating: 4.3,
@@ -4434,25 +4434,6 @@ export const northeastDestinations: Destination[] = [
           "Donald Ross mountain layout in Bethlehem — 1903 design with stunning White Mountain panoramas and classic New England charm",
         googleRating: 4.3,
         reviewCount: 280,
-      },
-      {
-        name: "Waumbek Golf Club",
-        tier: "solid",
-        greenFeeRange: [35, 55],
-        holes: 18,
-        par: 71,
-        yardage: 6100,
-        slope: 120,
-        rating: 68.5,
-        walkable: true,
-        style: "mountain",
-        driveMinutes: 20,
-        url: "https://www.waumbekgolf.com",
-        highlight:
-          "New Hampshire's oldest 18-hole course (1895) — jaw-dropping Presidential Range views on every hole in Jefferson",
-        googleRating: 4.4,
-        reviewCount: 190,
-        hypeTag: "HIDDEN GEM",
       },
     ],
     lodging: [
@@ -4516,16 +4497,6 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Bethlehem farm-to-table spot with creative breakfast and lunch — perfect post-round fuel",
         reservationNeeded: false,
-      },
-    
-      {
-        name: "The Main Dining Room at Mount Washington",
-        style: "steakhouse",
-        priceRange: "$$$$",
-        capacity: "large-group",
-        highlight:
-          "Grand hotel dining with jacket-required dress code — Presidential Range views and New England prime cuts. The splurge dinner.",
-        reservationNeeded: true,
       },
     ],
     bars: [

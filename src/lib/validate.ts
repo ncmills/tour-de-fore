@@ -55,7 +55,7 @@ export function validateWizardState(raw: unknown): WizardState {
     specialRequests: sanitizeString(s.specialRequests, 1000),
     organizerName,
     organizerEmail,
-    attendees: [], // sanitize out attendee data for now
+    attendees: sanitizeAttendees(s.attendees),
     authMode: (s.authMode === "login" ? "login" : "new") as "new" | "login",
     authPassword: "", // never send password to plan generation
   };
@@ -79,6 +79,18 @@ function sanitizeStringArray(val: unknown, maxItems: number, maxItemLen: number)
     .filter((v) => typeof v === "string")
     .map((v) => (v as string).slice(0, maxItemLen).trim())
     .filter(Boolean);
+}
+
+function sanitizeAttendees(val: unknown): { name: string; email: string }[] {
+  if (!Array.isArray(val)) return [];
+  return val
+    .slice(0, 20) // cap at 20 attendees
+    .filter((a) => a && typeof a === "object")
+    .map((a: Record<string, unknown>) => ({
+      name: sanitizeString(a.name, 100),
+      email: sanitizeEmail(a.email),
+    }))
+    .filter((a) => a.email); // only keep entries with valid emails
 }
 
 function clampInt(val: unknown, min: number, max: number, fallback: number): number {

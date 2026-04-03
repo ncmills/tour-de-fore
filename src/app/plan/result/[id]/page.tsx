@@ -5,6 +5,7 @@ import { getSessionEmail, getUserPlans } from "@/lib/auth";
 import PlanResultClient from "@/components/PlanResultClient";
 import PlanSelectionClient from "@/components/PlanSelectionClient";
 import PlanGate from "@/components/PlanGate";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import type {
   TripTier,
   ThreePlanResult,
@@ -98,16 +99,18 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
     if (!plan) notFound();
 
     return (
-      <Suspense>
-        <PlanResultClient
-          plan={plan}
-          allPlans={rec.plans}
-          planId={id}
-          tier={selectedTier as TripTier}
-          dest={dest}
-          paid={true}
-        />
-      </Suspense>
+      <ErrorBoundary fallbackHref={`/plan/result/${id}`}>
+        <Suspense>
+          <PlanResultClient
+            plan={plan}
+            allPlans={rec.plans}
+            planId={id}
+            tier={selectedTier as TripTier}
+            dest={dest}
+            paid={true}
+          />
+        </Suspense>
+      </ErrorBoundary>
     );
   }
 

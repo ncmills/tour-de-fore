@@ -496,10 +496,14 @@ export default function PlanWizardClient() {
 
       while (true) {
         const { done, value } = await reader.read();
-        if (done) break;
-        buffer += decoder.decode(value, { stream: true });
+        if (done) {
+          // Flush any remaining data in the buffer (final line may lack trailing \n)
+          buffer += decoder.decode();
+        } else {
+          buffer += decoder.decode(value, { stream: true });
+        }
         const lines = buffer.split("\n");
-        buffer = lines.pop() || "";
+        buffer = done ? "" : (lines.pop() || "");
         for (const line of lines) {
           if (!line.trim()) continue;
           try {
@@ -515,6 +519,7 @@ export default function PlanWizardClient() {
             throw parseErr;
           }
         }
+        if (done) break;
       }
 
       if (!result?.planId) {

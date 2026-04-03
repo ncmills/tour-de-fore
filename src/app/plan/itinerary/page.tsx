@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { getPlan } from "@/lib/kv";
 import ItineraryClient from "@/components/ItineraryClient";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import type { TripTier, PriceLevel } from "@/lib/plan-types";
 
 interface Props {
@@ -33,14 +34,16 @@ export default async function ItineraryPage({ searchParams }: Props) {
   const selectedOptions = stored.selectedOptions || null;
 
   return (
-    <Suspense>
-      <ItineraryClient
-        plan={plan}
-        selectedOptions={selectedOptions}
-        planId={planId}
-        tier={tier as TripTier}
-        dest={dest}
-      />
-    </Suspense>
+    <ErrorBoundary fallbackHref={`/plan/build?planId=${planId}&dest=${dest}&tier=${tier}`}>
+      <Suspense>
+        <ItineraryClient
+          plan={plan}
+          selectedOptions={selectedOptions}
+          planId={planId}
+          tier={tier as TripTier}
+          dest={dest}
+        />
+      </Suspense>
+    </ErrorBoundary>
   );
 }

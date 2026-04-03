@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { allDestinations } from "@/data";
 import MulliganButton from "@/components/MulliganButton";
 import HomeButton from "@/components/HomeButton";
-import { REGION_SLUGS, REGION_LABELS } from "./helpers";
+import { REGION_SLUGS, REGION_LABELS, STATE_NAMES } from "./helpers";
 import { Region } from "@/data/types";
 
 export const metadata: Metadata = {
@@ -130,6 +130,26 @@ export default function GolfTripsIndex() {
               </p>
             </a>
           ))}
+        </div>
+
+        {/* All Destinations */}
+        <div style={{ marginTop: "4rem" }}>
+          <h2 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1.5rem", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "1.5rem" }}>All Destinations</h2>
+          {(Object.entries(REGION_SLUGS) as [Region, string][]).map(([regionName, rSlug]) => {
+            const regionDests = allDestinations.filter((d) => REGION_SLUGS[d.region] === rSlug).sort((a, b) => a.city.localeCompare(b.city));
+            return (
+              <div key={rSlug} style={{ marginBottom: "1.5rem" }}>
+                <h3 style={{ fontSize: "0.85rem", color: "#EA580C", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.5rem" }}>{regionName}</h3>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+                  {regionDests.map((d) => (
+                    <a key={d.id} href={`/golf-trips/${d.id}`} style={{ padding: "6px 12px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 6, textDecoration: "none", color: "rgba(255,255,255,0.6)", fontSize: "0.78rem" }}>
+                      {d.city}, {d.state}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         {/* Browse by Course Tier */}

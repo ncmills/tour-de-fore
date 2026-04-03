@@ -29,9 +29,11 @@ export function buildSystemPrompt(destinationContext: string): string {
 ## Group Logistics
 - 12–16 is the sweet spot for group size
 - Beyond 16 people: stagger tee times by foursome (8-10 min gaps)
-- Under 8: book as two foursomes, keep it tight
+- 8–11 people: book as two–three foursomes, keep it tight
+- 4–7 people: one or two foursomes. Consider a smaller house, condo, or large Airbnb instead of a mansion. Party bus doesn't make sense — use rental cars or ride share instead
+- 2–3 people: twosome or threesome bookings. Use a hotel, condo, or small Airbnb — NOT a big house. Skip party bus, recommend rental car. Lodging cost per-person will be higher — factor this into budget honestly
 - Always have a group text/chat — communication is everything
-- Assign a "treasurer" to handle the group Venmo/fund
+- Assign a "treasurer" to handle the group Venmo/fund (groups of 6+)
 
 ## Budget Heuristic
 - $800–$1,500/person for a 3-day trip is the realistic range
@@ -67,9 +69,12 @@ CRITICAL: You MUST respond with ONLY valid JSON. No markdown fences, no explanat
 You will be told which tier to generate. Generate ONE COMPLETE trip plan for that tier. The plan must be a COMPLETE, standalone plan with all details.
 
 ### Tier Descriptions
-- **"The Imp" (Budget Tier)**: Cheapest courses — municipal, public, twilight rates. Budget-friendly house (simpler, further from downtown OK). Casual dining — BBQ, tacos, pub grub, cook-at-home. Fewer activities, more DIY fun. Wallet-friendly but still great.
-- **"The Devil" (Recommended Tier)**: Best-value mix — one premium track, rest solid mid-tier. Good house with pool/hot tub near nightlife. Steakhouse final night, private chef one night. Full activities, party bus on golf days. The sweet spot.
-- **"The Demon King" (Luxury Tier)**: Bucket-list courses, no price ceiling. Premium estate/luxury rental. Private chef multiple nights, top-tier steakhouse, craft cocktail bars. Premium activities (private charters, VIP). Party bus every day. Money no object.
+- **"The Imp" (Budget Tier)**: Cheapest courses — municipal, public, twilight rates (use LOW END of green fee ranges). Budget-friendly house (cheapest lodging option that fits the group). Casual dining — BBQ, tacos, pub grub, cook-at-home. Fewer activities, more DIY fun. Wallet-friendly but still great. The per-person estimate MUST be significantly cheaper than The Devil.
+- **"The Devil" (Recommended Tier)**: Best-value mix — one premium track, rest solid mid-tier (use MID-RANGE green fees). Good house with pool/hot tub near nightlife (mid-range lodging). Steakhouse final night, private chef one night. Full activities, party bus on golf days. The sweet spot.
+- **"The Demon King" (Luxury Tier)**: Bucket-list courses, no price ceiling (use HIGH END of green fee ranges, pick the most expensive courses available). Premium estate/luxury rental (most expensive lodging). Private chef multiple nights, top-tier steakhouse, craft cocktail bars. Premium activities (private charters, VIP). Party bus every day. The per-person estimate MUST be significantly MORE expensive than The Devil.
+
+### CRITICAL PRICING RULE
+Each tier MUST produce a meaningfully different per-person budget estimate. The Imp should be 25-40% cheaper than The Devil, and The Demon King should be 30-60% more expensive than The Devil. Use different courses, different lodging price points, and different dining to achieve clear price separation. If the destination only has expensive options, The Imp should use twilight rates, fewer rounds, and the cheapest available lodging.
 
 ### Alternatives
 Include alternatives so users can mix and match:
@@ -185,7 +190,13 @@ The JSON must be a single plan object with this shape:
 }`;
 }
 
-export function buildUserMessage(state: WizardState, tier?: "imp" | "devil" | "demonKing" | "allTiers"): string {
+export interface PriceTargets {
+  imp: string;   // e.g. "$700–$950"
+  devil: string;  // e.g. "$1,100–$1,400"
+  demonKing: string; // e.g. "$1,800–$2,500"
+}
+
+export function buildUserMessage(state: WizardState, tier?: "imp" | "devil" | "demonKing" | "allTiers", priceTargets?: PriceTargets): string {
   const destination =
     state.destinationType === "specific"
       ? `Specific destination: ${state.destination}`
@@ -194,6 +205,24 @@ export function buildUserMessage(state: WizardState, tier?: "imp" | "devil" | "d
   const timing = state.flexible
     ? `Flexible timing, preferred season: ${state.preferredSeason}`
     : `Target dates: ${state.tripMonth} ${state.tripYear}`;
+
+  // Build tier-specific price guidance
+  let priceGuidance = "";
+  if (priceTargets) {
+    if (tier === "allTiers") {
+      priceGuidance = `\n\nPRICE TARGETS (per person, these are MANDATORY — your estimatedBudget.perPerson MUST fall within these ranges):
+- The Imp (budget): ${priceTargets.imp}/person
+- The Devil (recommended): ${priceTargets.devil}/person
+- The Demon King (luxury): ${priceTargets.demonKing}/person
+Pick courses, lodging, and dining that achieve these price points. Use the cheapest courses and lodging for Imp, most expensive for Demon King.`;
+    } else if (tier === "imp") {
+      priceGuidance = `\n\nPRICE TARGET (MANDATORY): The Imp tier MUST have an estimatedBudget.perPerson of approximately ${priceTargets.imp}/person. Pick the cheapest courses (budget/solid tier, low-end green fees), cheapest lodging, and casual dining to hit this target.`;
+    } else if (tier === "devil") {
+      priceGuidance = `\n\nPRICE TARGET (MANDATORY): The Devil tier MUST have an estimatedBudget.perPerson of approximately ${priceTargets.devil}/person. Pick mid-range courses (solid/premium tier, midpoint green fees), mid-range lodging, and a good mix of dining to hit this target.`;
+    } else if (tier === "demonKing") {
+      priceGuidance = `\n\nPRICE TARGET (MANDATORY): The Demon King tier MUST have an estimatedBudget.perPerson of approximately ${priceTargets.demonKing}/person. Pick the most expensive bucket-list courses (high-end green fees), premium lodging, and top-tier dining to hit this target.`;
+    }
+  }
 
   return `Plan a golf trip with these preferences:
 
@@ -221,7 +250,7 @@ OFF-COURSE:
 BUDGET:
 - Per-person budget: ${state.budget}
 - Priorities: ${state.budgetPriorities.join(", ")}
-${state.specialRequests ? `- Special requests: ${state.specialRequests}` : ""}
+${state.specialRequests ? `- Special requests: ${state.specialRequests}` : ""}${priceGuidance}
 
 Generate ${tier === "allTiers" ? 'ALL THREE tier plans — "The Imp" (budget), "The Devil" (recommended), and "The Demon King" (luxury) — as a JSON array of 3 objects: [imp, devil, demonKing]. Each object follows the same JSON schema described in the system prompt.' : tier === "imp" ? 'the "The Imp" (budget) tier' : tier === "demonKing" ? 'the "The Demon King" (luxury) tier' : 'the "The Devil" (recommended) tier'} trip plan as JSON. Use REAL venues, courses, and pricing from the destination database provided in your system prompt. Do not invent fake establishments.`;
 }

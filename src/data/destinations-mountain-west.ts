@@ -88,7 +88,7 @@ export const mountainWestDestinations: Destination[] = [
         driveMinutes: 30,
         url: "https://www.eaglebendgolfclub.com",
         highlight:
-          "Jack Nicklaus-influenced 27 holes on Flathead Lake — the largest natural freshwater lake west of the Mississippi",
+          "27 holes with a Nicklaus-designed nine on Flathead Lake — the largest natural freshwater lake west of the Mississippi",
         googleRating: 4.5,
         reviewCount: 530,
         hypeTag: "DESIGNER CLASSIC",
@@ -1856,7 +1856,7 @@ export const mountainWestDestinations: Destination[] = [
         walkable: true,
         style: "mountain",
         driveMinutes: 25,
-        url: "https://www.spearfishcanyoncc.com",
+        url: "https://spearfishcanyongolf.com",
         highlight:
           "Scenic course in Spearfish Canyon; shorter but character-filled with creek crossings and canyon walls",
         googleRating: 4.2,
@@ -3951,7 +3951,7 @@ export const mountainWestDestinations: Destination[] = [
         walkable: true,
         style: "links",
         driveMinutes: 65,
-        url: "https://www.cobblecreekgolf.com",
+        url: "https://www.cobblecreek.com",
         highlight:
           "Jim Engh design in Montrose; links-style through desert mesa terrain — totally different from Telluride GC",
         googleRating: 4.5,
@@ -4886,17 +4886,6 @@ export const mountainWestDestinations: Destination[] = [
           "BBQ and steaks in a saloon setting; big portions, cold beer, and a rowdy atmosphere",
         reservationNeeded: false,
       },
-    
-      {
-        name: "Alley House Grille",
-        style: "steakhouse",
-        priceRange: "$$$$",
-        capacity: "large-group",
-        highlight:
-          "Premier dining in Pagosa Springs with refined steaks and seasonal menus in a charming downtown setting",
-        reservationNeeded: true,
-        googleRating: 4.6,
-      },
     ],
     bars: [
       {
@@ -5594,7 +5583,7 @@ export const mountainWestDestinations: Destination[] = [
         walkable: false,
         style: "mountain",
         driveMinutes: 10,
-        url: "https://www.golfclubredrock.com",
+        url: "https://www.golfclubatredrock.com",
         highlight:
           "Dramatic layout through red rock canyon terrain with elevation changes and stunning Black Hills views",
         googleRating: 4.5,

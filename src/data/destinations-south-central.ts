@@ -8,7 +8,7 @@ export const southCentralDestinations: Destination[] = [
     region: "South Central",
     tagline: "Four championship courses on Lake LBJ in the Texas Hill Country",
     description:
-      "Horseshoe Bay Resort is the crown jewel of Texas Hill Country golf — four Robert Trent Jones Sr./Sr. courses carved through granite hills and live oaks overlooking Lake LBJ. Stay on-site for seamless golf, then hit the lake for sunset boat cruises. It's resort golf done right without the pretension.",
+      "Horseshoe Bay Resort is the crown jewel of Texas Hill Country golf — three Robert Trent Jones Sr. courses plus a Jack Nicklaus Signature course, all carved through granite hills and live oaks overlooking Lake LBJ. Stay on-site for seamless golf, then hit the lake for sunset boat cruises. It's resort golf done right without the pretension.",
     population: "tiny",
     nearestAirport: {
       code: "AUS",
@@ -972,9 +972,9 @@ export const southCentralDestinations: Destination[] = [
         greenFeeRange: [40, 70],
         holes: 18,
         par: 64,
-        yardage: 4951,
-        slope: 115,
-        rating: 63.8,
+        yardage: 5111,
+        slope: 125,
+        rating: 66.5,
         walkable: true,
         style: "mountain",
         driveMinutes: 5,

@@ -3,12 +3,14 @@ import { notFound } from "next/navigation";
 import { allDestinations } from "@/data";
 import MulliganButton from "@/components/MulliganButton";
 import HomeButton from "@/components/HomeButton";
+import Link from "next/link";
 import {
   tierLabel,
   tierColor,
   seasonLabel,
   regionSlug,
   stateSlug,
+  slugify,
   STATE_NAMES,
   REGION_LABELS,
 } from "../helpers";
@@ -242,7 +244,11 @@ export default async function DestinationPage({
         <h2 style={sectionTitle}>Courses</h2>
         <div style={{ ...grid, marginBottom: "3rem" }}>
           {dest.courses.map((c) => (
-            <div key={c.name} style={card}>
+            <Link
+              key={c.name}
+              href={`/golf-trips/${dest.id}/courses/${slugify(c.name)}`}
+              style={{ ...card, textDecoration: "none", color: "#fff", display: "block" }}
+            >
               <div
                 style={{
                   display: "flex",
@@ -280,7 +286,7 @@ export default async function DestinationPage({
                 </span>
                 <span>{c.style}</span>
                 <span>
-                  {c.rating} / {c.slope} slope
+                  Par {c.par} · {c.yardage.toLocaleString()} yds
                 </span>
                 {c.walkable && (
                   <span style={{ color: "#3a7050" }}>Walkable</span>
@@ -289,7 +295,7 @@ export default async function DestinationPage({
                   <span style={{ color: "#D4A843" }}>{c.hypeTag}</span>
                 )}
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 

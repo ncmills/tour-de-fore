@@ -20,6 +20,7 @@ export interface CourseInsight {
   hypeTag?: string;
   style: string;
   greenFeeRange: [number, number];
+  imageUrl?: string;
 }
 
 export interface DiningInsight {
@@ -110,6 +111,7 @@ export function buildInsightsContext(destination: Destination, groupSize: number
       hypeTag: c.hypeTag,
       style: c.style,
       greenFeeRange: c.greenFeeRange,
+      imageUrl: c.imageUrl,
     };
   }
 

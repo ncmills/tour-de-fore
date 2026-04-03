@@ -23,19 +23,19 @@
         "city": "Laughlin",
         "state": "NV",
         "priceLevel": "budget",
-        "score": 94
+        "score": 103
       },
       {
-        "city": "San Antonio",
-        "state": "TX",
+        "city": "Tucson",
+        "state": "AZ",
         "priceLevel": "mid",
-        "score": 94
+        "score": 109
       },
       {
         "city": "Las Vegas",
         "state": "NV",
         "priceLevel": "premium",
-        "score": 91
+        "score": 111
       }
     ],
     "passed": true
@@ -61,22 +61,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Whitefish",
-        "state": "MT",
+        "city": "Flagstaff",
+        "state": "AZ",
         "priceLevel": "budget",
-        "score": 94
+        "score": 101
       },
       {
         "city": "Reno",
         "state": "NV",
         "priceLevel": "mid",
-        "score": 88
+        "score": 97
       },
       {
         "city": "Santa Fe",
         "state": "NM",
         "priceLevel": "premium",
-        "score": 89
+        "score": 101
       }
     ],
     "passed": true
@@ -102,22 +102,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Lake Havasu City",
-        "state": "AZ",
+        "city": "Albuquerque",
+        "state": "NM",
         "priceLevel": "budget",
-        "score": 89
+        "score": 98
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Flagstaff",
+        "state": "AZ",
         "priceLevel": "mid",
-        "score": 94
+        "score": 101
       },
       {
         "city": "Las Vegas",
         "state": "NV",
         "priceLevel": "premium",
-        "score": 91
+        "score": 111
       }
     ],
     "passed": true
@@ -165,22 +165,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Leavenworth",
-        "state": "WA",
+        "city": "Hood River",
+        "state": "OR",
         "priceLevel": "budget",
-        "score": 89
+        "score": 98
       },
       {
-        "city": "Whitefish",
-        "state": "MT",
-        "priceLevel": "mid",
-        "score": 94
-      },
-      {
-        "city": "Seattle",
+        "city": "Walla Walla",
         "state": "WA",
+        "priceLevel": "mid",
+        "score": 101
+      },
+      {
+        "city": "Sun Valley / Ketchum",
+        "state": "ID",
         "priceLevel": "premium",
-        "score": 94
+        "score": 103
       }
     ],
     "passed": true
@@ -206,22 +206,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Walla Walla",
-        "state": "WA",
+        "city": "Boise",
+        "state": "ID",
         "priceLevel": "budget",
-        "score": 90
+        "score": 111
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Sunriver",
+        "state": "OR",
         "priceLevel": "mid",
-        "score": 94
+        "score": 107
       },
       {
         "city": "Bend",
         "state": "OR",
         "priceLevel": "premium",
-        "score": 94
+        "score": 111
       }
     ],
     "passed": true
@@ -250,13 +250,13 @@
         "city": "Fort Collins",
         "state": "CO",
         "priceLevel": "budget",
-        "score": 89
+        "score": 109
       },
       {
         "city": "Colorado Springs",
         "state": "CO",
         "priceLevel": "premium",
-        "score": 92
+        "score": 109
       }
     ],
     "passed": true
@@ -285,19 +285,19 @@
         "city": "Missoula",
         "state": "MT",
         "priceLevel": "budget",
-        "score": 94
+        "score": 114
       },
       {
         "city": "Whitefish",
         "state": "MT",
         "priceLevel": "mid",
-        "score": 94
+        "score": 114
       },
       {
-        "city": "Bend",
-        "state": "OR",
+        "city": "Telluride",
+        "state": "CO",
         "priceLevel": "premium",
-        "score": 94
+        "score": 99
       }
     ],
     "passed": true
@@ -323,22 +323,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Laughlin",
-        "state": "NV",
+        "city": "Missoula",
+        "state": "MT",
         "priceLevel": "budget",
-        "score": 94
+        "score": 114
       },
       {
         "city": "Bozeman",
         "state": "MT",
         "priceLevel": "mid",
-        "score": 94
+        "score": 111
       },
       {
         "city": "Park City",
         "state": "UT",
         "priceLevel": "premium",
-        "score": 92
+        "score": 112
       }
     ],
     "passed": true
@@ -364,22 +364,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "St. Louis",
-        "state": "MO",
+        "city": "Milwaukee",
+        "state": "WI",
         "priceLevel": "budget",
-        "score": 86
+        "score": 97
       },
       {
-        "city": "Cincinnati",
-        "state": "OH",
+        "city": "Indianapolis",
+        "state": "IN",
         "priceLevel": "mid",
-        "score": 94
+        "score": 104
       },
       {
-        "city": "Charleston",
-        "state": "SC",
+        "city": "Galena",
+        "state": "IL",
         "priceLevel": "premium",
-        "score": 94
+        "score": 111
       }
     ],
     "passed": true
@@ -405,22 +405,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Milwaukee",
-        "state": "WI",
+        "city": "Grand Rapids",
+        "state": "MI",
         "priceLevel": "budget",
-        "score": 88
+        "score": 103
       },
       {
-        "city": "Whitefish",
-        "state": "MT",
+        "city": "Indianapolis",
+        "state": "IN",
         "priceLevel": "mid",
-        "score": 94
+        "score": 104
       },
       {
         "city": "Kohler",
         "state": "WI",
         "priceLevel": "premium",
-        "score": 90
+        "score": 106
       }
     ],
     "passed": true
@@ -446,22 +446,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "St. Louis",
-        "state": "MO",
+        "city": "Milwaukee",
+        "state": "WI",
         "priceLevel": "budget",
-        "score": 86
+        "score": 97
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Marquette",
+        "state": "MI",
         "priceLevel": "mid",
-        "score": 94
+        "score": 100
       },
       {
-        "city": "Traverse City",
+        "city": "Harbor Springs / Petoskey",
         "state": "MI",
         "priceLevel": "premium",
-        "score": 94
+        "score": 100
       }
     ],
     "passed": true
@@ -487,22 +487,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Grand Rapids",
-        "state": "MI",
+        "city": "Gulf Shores",
+        "state": "AL",
         "priceLevel": "budget",
-        "score": 94
+        "score": 103
       },
       {
         "city": "Sarasota",
         "state": "FL",
         "priceLevel": "mid",
-        "score": 94
+        "score": 103
       },
       {
-        "city": "Sea Island / St. Simons",
-        "state": "GA",
+        "city": "Pinehurst",
+        "state": "NC",
         "priceLevel": "premium",
-        "score": 89
+        "score": 104
       }
     ],
     "passed": true
@@ -531,7 +531,7 @@
         "city": "Asheville",
         "state": "NC",
         "priceLevel": "mid",
-        "score": 92
+        "score": 101
       }
     ],
     "passed": true
@@ -557,22 +557,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Virginia Beach",
-        "state": "VA",
+        "city": "Gulf Shores",
+        "state": "AL",
         "priceLevel": "budget",
-        "score": 91
+        "score": 103
       },
       {
         "city": "Naples",
         "state": "FL",
         "priceLevel": "mid",
-        "score": 92
+        "score": 101
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Pinehurst",
+        "state": "NC",
         "priceLevel": "premium",
-        "score": 94
+        "score": 104
       }
     ],
     "passed": true
@@ -598,22 +598,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Grand Rapids",
-        "state": "MI",
+        "city": "Poconos",
+        "state": "PA",
         "priceLevel": "budget",
-        "score": 94
+        "score": 106
       },
       {
-        "city": "Ocean City",
-        "state": "MD",
+        "city": "Atlantic City",
+        "state": "NJ",
         "priceLevel": "mid",
-        "score": 91
+        "score": 114
       },
       {
         "city": "Williamsburg",
         "state": "VA",
         "priceLevel": "premium",
-        "score": 84
+        "score": 111
       }
     ],
     "passed": true
@@ -639,22 +639,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Poconos",
-        "state": "PA",
-        "priceLevel": "budget",
-        "score": 86
-      },
-      {
         "city": "Ocean City",
         "state": "MD",
-        "priceLevel": "mid",
-        "score": 91
+        "priceLevel": "budget",
+        "score": 111
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Finger Lakes",
+        "state": "NY",
+        "priceLevel": "mid",
+        "score": 112
+      },
+      {
+        "city": "Lake Placid",
+        "state": "NY",
         "priceLevel": "premium",
-        "score": 94
+        "score": 111
       }
     ],
     "passed": true
@@ -680,22 +680,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Bretton Woods",
-        "state": "NH",
+        "city": "Mystic",
+        "state": "CT",
         "priceLevel": "budget",
-        "score": 86
+        "score": 100
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Hudson Valley",
+        "state": "NY",
         "priceLevel": "mid",
-        "score": 94
+        "score": 106
       },
       {
-        "city": "Cape Cod",
-        "state": "MA",
+        "city": "Stowe",
+        "state": "VT",
         "priceLevel": "premium",
-        "score": 87
+        "score": 106
       }
     ],
     "passed": true
@@ -721,22 +721,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Laughlin",
-        "state": "NV",
+        "city": "Little Rock",
+        "state": "AR",
         "priceLevel": "budget",
-        "score": 94
+        "score": 111
       },
       {
-        "city": "Louisville",
-        "state": "KY",
+        "city": "San Antonio",
+        "state": "TX",
         "priceLevel": "mid",
-        "score": 91
+        "score": 114
       },
       {
         "city": "Austin",
         "state": "TX",
         "priceLevel": "premium",
-        "score": 94
+        "score": 114
       }
     ],
     "passed": true
@@ -765,7 +765,7 @@
         "city": "Lake of the Ozarks",
         "state": "MO",
         "priceLevel": "mid",
-        "score": 78
+        "score": 101
       }
     ],
     "passed": true
@@ -791,22 +791,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Laughlin",
-        "state": "NV",
+        "city": "Baton Rouge",
+        "state": "LA",
         "priceLevel": "budget",
-        "score": 94
+        "score": 105
       },
       {
-        "city": "Galveston",
-        "state": "TX",
+        "city": "Branson",
+        "state": "MO",
         "priceLevel": "mid",
-        "score": 87
+        "score": 106
       },
       {
         "city": "Austin",
         "state": "TX",
         "priceLevel": "premium",
-        "score": 94
+        "score": 114
       }
     ],
     "passed": true
@@ -830,22 +830,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Flagstaff",
+        "city": "Lake Havasu City",
         "state": "AZ",
         "priceLevel": "budget",
-        "score": 92
+        "score": 98
       },
       {
-        "city": "Santa Fe",
-        "state": "NM",
+        "city": "St. George",
+        "state": "UT",
         "priceLevel": "mid",
-        "score": 89
+        "score": 103
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Reno",
+        "state": "NV",
         "priceLevel": "premium",
-        "score": 94
+        "score": 97
       }
     ],
     "passed": true
@@ -869,22 +869,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Mesquite",
-        "state": "NV",
+        "city": "Payson",
+        "state": "AZ",
         "priceLevel": "budget",
-        "score": 85
+        "score": 95
       },
       {
-        "city": "St. George",
-        "state": "UT",
+        "city": "Phoenix / Mesa",
+        "state": "AZ",
         "priceLevel": "mid",
-        "score": 87
+        "score": 100
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Reno",
+        "state": "NV",
         "priceLevel": "premium",
-        "score": 94
+        "score": 97
       }
     ],
     "passed": true
@@ -908,22 +908,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Lake Havasu City",
-        "state": "AZ",
+        "city": "Albuquerque",
+        "state": "NM",
         "priceLevel": "budget",
-        "score": 89
+        "score": 98
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Flagstaff",
+        "state": "AZ",
         "priceLevel": "mid",
-        "score": 94
+        "score": 101
       },
       {
         "city": "Las Vegas",
         "state": "NV",
         "priceLevel": "premium",
-        "score": 91
+        "score": 111
       }
     ],
     "passed": true
@@ -947,22 +947,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Phoenix / Mesa",
+        "state": "AZ",
         "priceLevel": "budget",
-        "score": 94
+        "score": 100
       },
       {
         "city": "Scottsdale",
         "state": "AZ",
         "priceLevel": "mid",
-        "score": 74
+        "score": 94
       },
       {
         "city": "Las Vegas",
         "state": "NV",
         "priceLevel": "premium",
-        "score": 91
+        "score": 111
       }
     ],
     "passed": true
@@ -1006,22 +1006,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Walla Walla",
-        "state": "WA",
+        "city": "Hood River",
+        "state": "OR",
         "priceLevel": "budget",
-        "score": 90
+        "score": 98
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Walla Walla",
+        "state": "WA",
         "priceLevel": "mid",
-        "score": 94
+        "score": 101
       },
       {
         "city": "Sun Valley / Ketchum",
         "state": "ID",
         "priceLevel": "premium",
-        "score": 89
+        "score": 103
       }
     ],
     "passed": true
@@ -1045,22 +1045,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Eugene",
+        "city": "Hood River",
         "state": "OR",
         "priceLevel": "budget",
-        "score": 94
+        "score": 98
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Walla Walla",
+        "state": "WA",
         "priceLevel": "mid",
-        "score": 94
+        "score": 101
       },
       {
         "city": "Sun Valley / Ketchum",
         "state": "ID",
         "priceLevel": "premium",
-        "score": 89
+        "score": 103
       }
     ],
     "passed": true
@@ -1084,22 +1084,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Walla Walla",
-        "state": "WA",
+        "city": "Boise",
+        "state": "ID",
         "priceLevel": "budget",
-        "score": 90
+        "score": 111
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Sunriver",
+        "state": "OR",
         "priceLevel": "mid",
-        "score": 94
+        "score": 107
       },
       {
         "city": "Bend",
         "state": "OR",
         "priceLevel": "premium",
-        "score": 94
+        "score": 111
       }
     ],
     "passed": true
@@ -1123,22 +1123,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Sunriver",
+        "state": "OR",
         "priceLevel": "budget",
-        "score": 94
+        "score": 104
       },
       {
         "city": "Portland",
         "state": "OR",
         "priceLevel": "mid",
-        "score": 94
+        "score": 106
       },
       {
         "city": "Seattle",
         "state": "WA",
         "priceLevel": "premium",
-        "score": 94
+        "score": 106
       }
     ],
     "passed": true
@@ -1182,22 +1182,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Laughlin",
-        "state": "NV",
+        "city": "Rapid City",
+        "state": "SD",
         "priceLevel": "budget",
-        "score": 94
+        "score": 107
       },
       {
         "city": "Durango",
         "state": "CO",
         "priceLevel": "mid",
-        "score": 84
+        "score": 101
       },
       {
         "city": "Vail",
         "state": "CO",
         "priceLevel": "premium",
-        "score": 92
+        "score": 112
       }
     ],
     "passed": true
@@ -1221,22 +1221,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Laughlin",
-        "state": "NV",
+        "city": "Rapid City",
+        "state": "SD",
         "priceLevel": "budget",
-        "score": 94
+        "score": 107
       },
       {
         "city": "Durango",
         "state": "CO",
         "priceLevel": "mid",
-        "score": 84
+        "score": 101
       },
       {
         "city": "Vail",
         "state": "CO",
         "priceLevel": "premium",
-        "score": 92
+        "score": 112
       }
     ],
     "passed": true
@@ -1260,22 +1260,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Laughlin",
-        "state": "NV",
+        "city": "Missoula",
+        "state": "MT",
         "priceLevel": "budget",
-        "score": 94
+        "score": 114
       },
       {
         "city": "Bozeman",
         "state": "MT",
         "priceLevel": "mid",
-        "score": 94
+        "score": 111
       },
       {
         "city": "Park City",
         "state": "UT",
         "priceLevel": "premium",
-        "score": 92
+        "score": 112
       }
     ],
     "passed": true
@@ -1302,13 +1302,13 @@
         "city": "Bozeman",
         "state": "MT",
         "priceLevel": "budget",
-        "score": 94
+        "score": 108
       },
       {
         "city": "Vail",
         "state": "CO",
         "priceLevel": "premium",
-        "score": 92
+        "score": 109
       }
     ],
     "passed": true
@@ -1355,19 +1355,19 @@
         "city": "Des Moines",
         "state": "IA",
         "priceLevel": "budget",
-        "score": 94
+        "score": 106
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Galena",
+        "state": "IL",
         "priceLevel": "mid",
-        "score": 94
+        "score": 111
       },
       {
-        "city": "Kohler",
-        "state": "WI",
+        "city": "Traverse City",
+        "state": "MI",
         "priceLevel": "premium",
-        "score": 90
+        "score": 111
       }
     ],
     "passed": true
@@ -1394,19 +1394,19 @@
         "city": "Columbus",
         "state": "OH",
         "priceLevel": "budget",
-        "score": 94
+        "score": 106
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Madison",
+        "state": "WI",
         "priceLevel": "mid",
-        "score": 94
+        "score": 106
       },
       {
         "city": "Traverse City",
         "state": "MI",
         "priceLevel": "premium",
-        "score": 94
+        "score": 111
       }
     ],
     "passed": true
@@ -1430,22 +1430,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "St. Louis",
-        "state": "MO",
+        "city": "Milwaukee",
+        "state": "WI",
         "priceLevel": "budget",
-        "score": 86
+        "score": 97
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Marquette",
+        "state": "MI",
         "priceLevel": "mid",
-        "score": 94
+        "score": 100
       },
       {
-        "city": "Traverse City",
+        "city": "Harbor Springs / Petoskey",
         "state": "MI",
         "priceLevel": "premium",
-        "score": 94
+        "score": 100
       }
     ],
     "passed": true
@@ -1509,22 +1509,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Chattanooga",
-        "state": "TN",
+        "city": "Myrtle Beach",
+        "state": "SC",
         "priceLevel": "budget",
-        "score": 94
+        "score": 109
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Naples",
+        "state": "FL",
         "priceLevel": "mid",
-        "score": 94
+        "score": 101
       },
       {
-        "city": "Hilton Head",
+        "city": "Kiawah Island",
         "state": "SC",
         "priceLevel": "premium",
-        "score": 85
+        "score": 109
       }
     ],
     "passed": true
@@ -1548,22 +1548,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Orlando",
-        "state": "FL",
+        "city": "Chattanooga",
+        "state": "TN",
         "priceLevel": "budget",
-        "score": 92
+        "score": 106
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Outer Banks",
+        "state": "NC",
         "priceLevel": "mid",
-        "score": 94
+        "score": 95
       },
       {
         "city": "Hilton Head",
         "state": "SC",
         "priceLevel": "premium",
-        "score": 85
+        "score": 108
       }
     ],
     "passed": true
@@ -1587,22 +1587,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Virginia Beach",
-        "state": "VA",
+        "city": "Gulf Shores",
+        "state": "AL",
         "priceLevel": "budget",
-        "score": 91
+        "score": 103
       },
       {
         "city": "Naples",
         "state": "FL",
         "priceLevel": "mid",
-        "score": 92
+        "score": 101
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Pinehurst",
+        "state": "NC",
         "priceLevel": "premium",
-        "score": 94
+        "score": 104
       }
     ],
     "passed": true
@@ -1626,22 +1626,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Gulf Shores",
-        "state": "AL",
+        "city": "Virginia Beach",
+        "state": "VA",
         "priceLevel": "budget",
-        "score": 86
+        "score": 103
       },
       {
-        "city": "Lake Placid",
-        "state": "NY",
+        "city": "Outer Banks",
+        "state": "NC",
         "priceLevel": "mid",
-        "score": 94
+        "score": 95
       },
       {
-        "city": "Hilton Head",
-        "state": "SC",
+        "city": "Reynolds Lake Oconee",
+        "state": "GA",
         "priceLevel": "premium",
-        "score": 85
+        "score": 98
       }
     ],
     "passed": true
@@ -1685,22 +1685,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Burlington",
-        "state": "VT",
+        "city": "Mystic",
+        "state": "CT",
         "priceLevel": "budget",
-        "score": 94
+        "score": 100
       },
       {
-        "city": "Bar Harbor",
-        "state": "ME",
+        "city": "Berkshires",
+        "state": "MA",
         "priceLevel": "mid",
-        "score": 86
+        "score": 109
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Williamsburg",
+        "state": "VA",
         "priceLevel": "premium",
-        "score": 94
+        "score": 111
       }
     ],
     "passed": true
@@ -1724,22 +1724,22 @@
     "pickCount": 3,
     "picks": [
       {
+        "city": "Bar Harbor",
+        "state": "ME",
+        "priceLevel": "budget",
+        "score": 111
+      },
+      {
         "city": "Bretton Woods",
         "state": "NH",
-        "priceLevel": "budget",
-        "score": 86
-      },
-      {
-        "city": "Hudson Valley",
-        "state": "NY",
         "priceLevel": "mid",
-        "score": 82
+        "score": 103
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Kennebunkport",
+        "state": "ME",
         "priceLevel": "premium",
-        "score": 94
+        "score": 106
       }
     ],
     "passed": true
@@ -1763,22 +1763,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Bretton Woods",
-        "state": "NH",
+        "city": "Mystic",
+        "state": "CT",
         "priceLevel": "budget",
-        "score": 86
+        "score": 100
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Hudson Valley",
+        "state": "NY",
         "priceLevel": "mid",
-        "score": 94
+        "score": 106
       },
       {
-        "city": "Cape Cod",
-        "state": "MA",
+        "city": "Stowe",
+        "state": "VT",
         "priceLevel": "premium",
-        "score": 87
+        "score": 106
       }
     ],
     "passed": true
@@ -1805,19 +1805,19 @@
         "city": "Poconos",
         "state": "PA",
         "priceLevel": "budget",
-        "score": 86
+        "score": 106
       },
       {
         "city": "Ocean City",
         "state": "MD",
         "priceLevel": "mid",
-        "score": 91
+        "score": 111
       },
       {
-        "city": "Nashville",
-        "state": "TN",
+        "city": "Lake Placid",
+        "state": "NY",
         "priceLevel": "premium",
-        "score": 94
+        "score": 108
       }
     ],
     "passed": true
@@ -1861,22 +1861,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Laughlin",
-        "state": "NV",
+        "city": "Shreveport-Bossier City",
+        "state": "LA",
         "priceLevel": "budget",
-        "score": 94
+        "score": 103
       },
       {
-        "city": "Houston",
+        "city": "Galveston",
         "state": "TX",
         "priceLevel": "mid",
-        "score": 85
+        "score": 104
       },
       {
         "city": "New Orleans",
         "state": "LA",
         "priceLevel": "premium",
-        "score": 90
+        "score": 107
       }
     ],
     "passed": true
@@ -1900,22 +1900,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Laughlin",
-        "state": "NV",
+        "city": "Hot Springs",
+        "state": "AR",
         "priceLevel": "budget",
-        "score": 94
+        "score": 109
       },
       {
-        "city": "Branson",
-        "state": "MO",
+        "city": "Houston",
+        "state": "TX",
         "priceLevel": "mid",
-        "score": 89
+        "score": 111
       },
       {
         "city": "New Orleans",
         "state": "LA",
         "priceLevel": "premium",
-        "score": 90
+        "score": 107
       }
     ],
     "passed": true
@@ -1939,22 +1939,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Laughlin",
-        "state": "NV",
+        "city": "Baton Rouge",
+        "state": "LA",
         "priceLevel": "budget",
-        "score": 94
+        "score": 105
       },
       {
-        "city": "Galveston",
-        "state": "TX",
+        "city": "Branson",
+        "state": "MO",
         "priceLevel": "mid",
-        "score": 87
+        "score": 106
       },
       {
         "city": "Austin",
         "state": "TX",
         "priceLevel": "premium",
-        "score": 94
+        "score": 114
       }
     ],
     "passed": true
@@ -1978,22 +1978,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Nashville",
-        "state": "TN",
+        "city": "Galveston",
+        "state": "TX",
         "priceLevel": "budget",
-        "score": 94
+        "score": 104
+      },
+      {
+        "city": "Dallas-Fort Worth",
+        "state": "TX",
+        "priceLevel": "mid",
+        "score": 112
       },
       {
         "city": "New Orleans",
         "state": "LA",
-        "priceLevel": "mid",
-        "score": 90
-      },
-      {
-        "city": "Horseshoe Bay",
-        "state": "TX",
         "priceLevel": "premium",
-        "score": 68
+        "score": 107
       }
     ],
     "passed": true
@@ -2036,22 +2036,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "St. George",
-        "state": "UT",
+        "city": "Flagstaff",
+        "state": "AZ",
         "priceLevel": "budget",
-        "score": 94
+        "score": 108
       },
       {
-        "city": "Lake Placid",
-        "state": "NY",
+        "city": "Bend",
+        "state": "OR",
         "priceLevel": "mid",
-        "score": 98
+        "score": 117
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Naples",
+        "state": "FL",
         "priceLevel": "premium",
-        "score": 99
+        "score": 105
       }
     ],
     "passed": true
@@ -2074,22 +2074,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "St. George",
-        "state": "UT",
+        "city": "Flagstaff",
+        "state": "AZ",
         "priceLevel": "budget",
-        "score": 94
+        "score": 108
       },
       {
-        "city": "Lake Placid",
-        "state": "NY",
+        "city": "Bend",
+        "state": "OR",
         "priceLevel": "mid",
-        "score": 98
+        "score": 117
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Naples",
+        "state": "FL",
         "priceLevel": "premium",
-        "score": 99
+        "score": 105
       }
     ],
     "passed": true
@@ -2113,22 +2113,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Lexington",
-        "state": "KY",
+        "city": "Kansas City",
+        "state": "MO",
         "priceLevel": "budget",
-        "score": 89
+        "score": 101
       },
       {
-        "city": "Louisville",
-        "state": "KY",
+        "city": "Houston",
+        "state": "TX",
         "priceLevel": "mid",
-        "score": 97
+        "score": 117
       },
       {
-        "city": "Sedona",
-        "state": "AZ",
+        "city": "Naples",
+        "state": "FL",
         "priceLevel": "premium",
-        "score": 91
+        "score": 105
       }
     ],
     "passed": true
@@ -2152,22 +2152,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Lexington",
-        "state": "KY",
+        "city": "Kansas City",
+        "state": "MO",
         "priceLevel": "budget",
-        "score": 89
+        "score": 101
       },
       {
-        "city": "Louisville",
-        "state": "KY",
+        "city": "Houston",
+        "state": "TX",
         "priceLevel": "mid",
-        "score": 97
+        "score": 117
       },
       {
-        "city": "Sedona",
-        "state": "AZ",
+        "city": "Naples",
+        "state": "FL",
         "priceLevel": "premium",
-        "score": 91
+        "score": 105
       }
     ],
     "passed": true
@@ -2191,22 +2191,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Lexington",
-        "state": "KY",
+        "city": "Kansas City",
+        "state": "MO",
         "priceLevel": "budget",
-        "score": 89
+        "score": 101
       },
       {
-        "city": "Louisville",
-        "state": "KY",
+        "city": "Houston",
+        "state": "TX",
         "priceLevel": "mid",
-        "score": 97
+        "score": 117
       },
       {
-        "city": "Sedona",
-        "state": "AZ",
+        "city": "Naples",
+        "state": "FL",
         "priceLevel": "premium",
-        "score": 91
+        "score": 105
       }
     ],
     "passed": true
@@ -2230,22 +2230,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Duluth",
-        "state": "MN",
+        "city": "Payson",
+        "state": "AZ",
         "priceLevel": "budget",
-        "score": 99
+        "score": 102
       },
       {
-        "city": "Saratoga Springs",
+        "city": "Catskills",
         "state": "NY",
         "priceLevel": "mid",
-        "score": 96
+        "score": 107
       },
       {
-        "city": "Sun Valley / Ketchum",
-        "state": "ID",
+        "city": "Brainerd",
+        "state": "MN",
         "priceLevel": "premium",
-        "score": 95
+        "score": 102
       }
     ],
     "passed": true
@@ -2269,22 +2269,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Duluth",
-        "state": "MN",
+        "city": "Payson",
+        "state": "AZ",
         "priceLevel": "budget",
-        "score": 99
+        "score": 102
       },
       {
-        "city": "Saratoga Springs",
+        "city": "Catskills",
         "state": "NY",
         "priceLevel": "mid",
-        "score": 96
+        "score": 107
       },
       {
-        "city": "Sun Valley / Ketchum",
-        "state": "ID",
+        "city": "Brainerd",
+        "state": "MN",
         "priceLevel": "premium",
-        "score": 95
+        "score": 102
       }
     ],
     "passed": true
@@ -2308,22 +2308,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Duluth",
-        "state": "MN",
+        "city": "Payson",
+        "state": "AZ",
         "priceLevel": "budget",
-        "score": 99
+        "score": 102
       },
       {
-        "city": "Saratoga Springs",
+        "city": "Catskills",
         "state": "NY",
         "priceLevel": "mid",
-        "score": 96
+        "score": 107
       },
       {
-        "city": "Sun Valley / Ketchum",
-        "state": "ID",
+        "city": "Brainerd",
+        "state": "MN",
         "priceLevel": "premium",
-        "score": 95
+        "score": 102
       }
     ],
     "passed": true
@@ -2347,22 +2347,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "St. George",
-        "state": "UT",
+        "city": "Leavenworth",
+        "state": "WA",
         "priceLevel": "budget",
-        "score": 94
+        "score": 107
       },
       {
-        "city": "Ocean City",
-        "state": "MD",
+        "city": "Stowe",
+        "state": "VT",
         "priceLevel": "mid",
-        "score": 95
+        "score": 110
       },
       {
-        "city": "Fredericksburg",
-        "state": "TX",
+        "city": "Destin",
+        "state": "FL",
         "priceLevel": "premium",
-        "score": 95
+        "score": 104
       }
     ],
     "passed": true
@@ -2386,22 +2386,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "St. George",
-        "state": "UT",
+        "city": "Leavenworth",
+        "state": "WA",
         "priceLevel": "budget",
-        "score": 94
+        "score": 107
       },
       {
-        "city": "Ocean City",
-        "state": "MD",
+        "city": "Stowe",
+        "state": "VT",
         "priceLevel": "mid",
-        "score": 95
+        "score": 110
       },
       {
-        "city": "Fredericksburg",
-        "state": "TX",
+        "city": "Destin",
+        "state": "FL",
         "priceLevel": "premium",
-        "score": 95
+        "score": 104
       }
     ],
     "passed": true
@@ -2425,22 +2425,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "St. George",
-        "state": "UT",
+        "city": "Leavenworth",
+        "state": "WA",
         "priceLevel": "budget",
-        "score": 94
+        "score": 107
       },
       {
-        "city": "Ocean City",
-        "state": "MD",
+        "city": "Stowe",
+        "state": "VT",
         "priceLevel": "mid",
-        "score": 95
+        "score": 110
       },
       {
-        "city": "Fredericksburg",
-        "state": "TX",
+        "city": "Destin",
+        "state": "FL",
         "priceLevel": "premium",
-        "score": 95
+        "score": 104
       }
     ],
     "passed": true
@@ -2463,22 +2463,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "St. George",
-        "state": "UT",
+        "city": "Flagstaff",
+        "state": "AZ",
         "priceLevel": "budget",
-        "score": 94
+        "score": 108
       },
       {
-        "city": "Lake Placid",
-        "state": "NY",
+        "city": "Bend",
+        "state": "OR",
         "priceLevel": "mid",
-        "score": 98
+        "score": 117
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Naples",
+        "state": "FL",
         "priceLevel": "premium",
-        "score": 99
+        "score": 105
       }
     ],
     "passed": true
@@ -2509,7 +2509,7 @@
         "city": "Payson",
         "state": "AZ",
         "priceLevel": "mid",
-        "score": 94
+        "score": 103
       }
     ],
     "passed": true
@@ -2537,22 +2537,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Durango",
-        "state": "CO",
+        "city": "Gig Harbor",
+        "state": "WA",
         "priceLevel": "budget",
-        "score": 102
-      },
-      {
-        "city": "Sun Valley / Ketchum",
-        "state": "ID",
-        "priceLevel": "mid",
-        "score": 97
+        "score": 112
       },
       {
         "city": "Seattle",
         "state": "WA",
+        "priceLevel": "mid",
+        "score": 114
+      },
+      {
+        "city": "Sun Valley / Ketchum",
+        "state": "ID",
         "priceLevel": "premium",
-        "score": 102
+        "score": 111
       }
     ],
     "passed": true
@@ -2583,19 +2583,19 @@
         "city": "Bozeman",
         "state": "MT",
         "priceLevel": "budget",
-        "score": 102
+        "score": 119
       },
       {
-        "city": "Seattle",
-        "state": "WA",
+        "city": "Durango",
+        "state": "CO",
         "priceLevel": "mid",
-        "score": 102
+        "score": 119
       },
       {
         "city": "Vail",
         "state": "CO",
         "priceLevel": "premium",
-        "score": 100
+        "score": 120
       }
     ],
     "passed": true
@@ -2623,22 +2623,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Durango",
-        "state": "CO",
+        "city": "Traverse City",
+        "state": "MI",
         "priceLevel": "budget",
-        "score": 102
+        "score": 119
+      },
+      {
+        "city": "French Lick",
+        "state": "IN",
+        "priceLevel": "mid",
+        "score": 111
       },
       {
         "city": "Kohler",
         "state": "WI",
-        "priceLevel": "mid",
-        "score": 98
-      },
-      {
-        "city": "Traverse City",
-        "state": "MI",
         "priceLevel": "premium",
-        "score": 102
+        "score": 114
       }
     ],
     "passed": true
@@ -2666,22 +2666,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Savannah",
-        "state": "GA",
+        "city": "Gulf Shores",
+        "state": "AL",
         "priceLevel": "budget",
-        "score": 100
+        "score": 111
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Sarasota",
+        "state": "FL",
         "priceLevel": "mid",
-        "score": 102
+        "score": 111
       },
       {
-        "city": "Sea Island / St. Simons",
-        "state": "GA",
+        "city": "Hilton Head",
+        "state": "SC",
         "priceLevel": "premium",
-        "score": 97
+        "score": 116
       }
     ],
     "passed": true
@@ -2709,22 +2709,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Bar Harbor",
-        "state": "ME",
+        "city": "Mystic",
+        "state": "CT",
         "priceLevel": "budget",
-        "score": 94
+        "score": 108
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Stowe",
+        "state": "VT",
         "priceLevel": "mid",
-        "score": 102
+        "score": 114
       },
       {
-        "city": "Cape Cod",
-        "state": "MA",
+        "city": "Kennebunkport",
+        "state": "ME",
         "priceLevel": "premium",
-        "score": 95
+        "score": 114
       }
     ],
     "passed": true
@@ -2755,19 +2755,19 @@
         "city": "Shreveport-Bossier City",
         "state": "LA",
         "priceLevel": "budget",
-        "score": 94
+        "score": 111
       },
       {
         "city": "Galveston",
         "state": "TX",
         "priceLevel": "mid",
-        "score": 95
+        "score": 112
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Branson",
+        "state": "MO",
         "priceLevel": "premium",
-        "score": 102
+        "score": 114
       }
     ],
     "passed": true
@@ -2798,19 +2798,19 @@
         "city": "St. George",
         "state": "UT",
         "priceLevel": "budget",
-        "score": 95
+        "score": 111
       },
       {
-        "city": "Durango",
-        "state": "CO",
+        "city": "Sedona",
+        "state": "AZ",
         "priceLevel": "mid",
-        "score": 102
+        "score": 112
       },
       {
         "city": "Scottsdale",
         "state": "AZ",
         "priceLevel": "premium",
-        "score": 102
+        "score": 122
       }
     ],
     "passed": true
@@ -2838,22 +2838,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Walla Walla",
+        "city": "Spokane",
         "state": "WA",
         "priceLevel": "budget",
-        "score": 90
+        "score": 106
       },
       {
-        "city": "Durango",
-        "state": "CO",
+        "city": "Leavenworth",
+        "state": "WA",
         "priceLevel": "mid",
-        "score": 102
+        "score": 101
       },
       {
         "city": "Seattle",
         "state": "WA",
         "priceLevel": "premium",
-        "score": 94
+        "score": 106
       }
     ],
     "passed": true
@@ -2884,13 +2884,13 @@
         "city": "Deadwood",
         "state": "SD",
         "priceLevel": "budget",
-        "score": 100
+        "score": 117
       },
       {
         "city": "Durango",
         "state": "CO",
         "priceLevel": "premium",
-        "score": 102
+        "score": 119
       }
     ],
     "passed": true
@@ -2921,7 +2921,7 @@
         "city": "Galena",
         "state": "IL",
         "priceLevel": "mid",
-        "score": 100
+        "score": 119
       }
     ],
     "passed": true
@@ -2949,22 +2949,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Galena",
-        "state": "IL",
+        "city": "Orlando",
+        "state": "FL",
         "priceLevel": "budget",
-        "score": 100
+        "score": 104
       },
       {
         "city": "Sarasota",
         "state": "FL",
         "priceLevel": "mid",
-        "score": 94
+        "score": 103
       },
       {
-        "city": "Sea Island / St. Simons",
-        "state": "GA",
+        "city": "Destin",
+        "state": "FL",
         "priceLevel": "premium",
-        "score": 89
+        "score": 100
       }
     ],
     "passed": true
@@ -2992,22 +2992,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Galena",
-        "state": "IL",
+        "city": "Ocean City",
+        "state": "MD",
         "priceLevel": "budget",
-        "score": 100
-      },
-      {
-        "city": "Cape May",
-        "state": "NJ",
-        "priceLevel": "mid",
-        "score": 89
+        "score": 111
       },
       {
         "city": "Lake Placid",
         "state": "NY",
+        "priceLevel": "mid",
+        "score": 111
+      },
+      {
+        "city": "Cape Cod",
+        "state": "MA",
         "priceLevel": "premium",
-        "score": 94
+        "score": 112
       }
     ],
     "passed": true
@@ -3038,19 +3038,19 @@
         "city": "Little Rock",
         "state": "AR",
         "priceLevel": "budget",
-        "score": 94
+        "score": 111
       },
       {
-        "city": "Tulsa",
-        "state": "OK",
+        "city": "San Antonio",
+        "state": "TX",
         "priceLevel": "mid",
-        "score": 94
+        "score": 114
       },
       {
-        "city": "Scottsdale",
-        "state": "AZ",
+        "city": "Fredericksburg",
+        "state": "TX",
         "priceLevel": "premium",
-        "score": 102
+        "score": 106
       }
     ],
     "passed": true
@@ -3078,22 +3078,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Mesquite",
-        "state": "NV",
+        "city": "Payson",
+        "state": "AZ",
         "priceLevel": "budget",
-        "score": 93
+        "score": 103
       },
       {
-        "city": "Tulsa",
-        "state": "OK",
+        "city": "Albuquerque",
+        "state": "NM",
         "priceLevel": "mid",
-        "score": 102
+        "score": 106
       },
       {
         "city": "Las Vegas",
         "state": "NV",
         "priceLevel": "premium",
-        "score": 99
+        "score": 119
       }
     ],
     "passed": true
@@ -3124,7 +3124,7 @@
         "city": "Spokane",
         "state": "WA",
         "priceLevel": "mid",
-        "score": 102
+        "score": 114
       }
     ],
     "passed": true
@@ -3155,7 +3155,7 @@
         "city": "Deadwood",
         "state": "SD",
         "priceLevel": "mid",
-        "score": 100
+        "score": 117
       }
     ],
     "passed": true
@@ -3186,7 +3186,7 @@
         "city": "French Lick",
         "state": "IN",
         "priceLevel": "mid",
-        "score": 91
+        "score": 111
       }
     ],
     "passed": true
@@ -3217,7 +3217,7 @@
         "city": "Biloxi",
         "state": "MS",
         "priceLevel": "mid",
-        "score": 96
+        "score": 105
       }
     ],
     "passed": true
@@ -3245,22 +3245,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Atlantic City",
-        "state": "NJ",
+        "city": "Hershey",
+        "state": "PA",
         "priceLevel": "budget",
-        "score": 102
+        "score": 113
       },
       {
         "city": "Saratoga Springs",
         "state": "NY",
         "priceLevel": "mid",
-        "score": 100
+        "score": 117
       },
       {
-        "city": "Biloxi",
-        "state": "MS",
+        "city": "Atlantic City",
+        "state": "NJ",
         "priceLevel": "premium",
-        "score": 96
+        "score": 122
       }
     ],
     "passed": true
@@ -3288,22 +3288,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Laughlin",
-        "state": "NV",
+        "city": "Shreveport-Bossier City",
+        "state": "LA",
         "priceLevel": "budget",
-        "score": 102
+        "score": 111
       },
       {
         "city": "Oklahoma City",
         "state": "OK",
         "priceLevel": "mid",
-        "score": 99
+        "score": 119
       },
       {
         "city": "Louisville",
         "state": "KY",
         "priceLevel": "premium",
-        "score": 99
+        "score": 119
       }
     ],
     "passed": true
@@ -3334,7 +3334,7 @@
         "city": "Scottsdale",
         "state": "AZ",
         "priceLevel": "mid",
-        "score": 102
+        "score": 122
       }
     ],
     "passed": true
@@ -3362,22 +3362,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Boise",
-        "state": "ID",
+        "city": "Eugene",
+        "state": "OR",
         "priceLevel": "budget",
-        "score": 94
+        "score": 106
       },
       {
-        "city": "Glenwood Springs",
-        "state": "CO",
+        "city": "Gig Harbor",
+        "state": "WA",
         "priceLevel": "mid",
-        "score": 98
+        "score": 104
       },
       {
-        "city": "Bend",
+        "city": "Portland",
         "state": "OR",
         "priceLevel": "premium",
-        "score": 94
+        "score": 106
       }
     ],
     "passed": true
@@ -3408,7 +3408,7 @@
         "city": "Glenwood Springs",
         "state": "CO",
         "priceLevel": "mid",
-        "score": 98
+        "score": 118
       }
     ],
     "passed": true
@@ -3439,13 +3439,13 @@
         "city": "French Lick",
         "state": "IN",
         "priceLevel": "budget",
-        "score": 91
+        "score": 111
       },
       {
         "city": "Kohler",
         "state": "WI",
         "priceLevel": "premium",
-        "score": 98
+        "score": 114
       }
     ],
     "passed": true
@@ -3473,22 +3473,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Saratoga Springs",
-        "state": "NY",
-        "priceLevel": "budget",
-        "score": 100
-      },
-      {
-        "city": "Sea Island / St. Simons",
+        "city": "Reynolds Lake Oconee",
         "state": "GA",
-        "priceLevel": "mid",
-        "score": 97
+        "priceLevel": "budget",
+        "score": 106
       },
       {
         "city": "Pinehurst",
         "state": "NC",
+        "priceLevel": "mid",
+        "score": 112
+      },
+      {
+        "city": "Sea Island / St. Simons",
+        "state": "GA",
         "priceLevel": "premium",
-        "score": 86
+        "score": 111
       }
     ],
     "passed": true
@@ -3516,22 +3516,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Catskills",
+        "city": "Saratoga Springs",
         "state": "NY",
         "priceLevel": "budget",
-        "score": 87
+        "score": 117
+      },
+      {
+        "city": "Catskills",
+        "state": "NY",
+        "priceLevel": "mid",
+        "score": 111
       },
       {
         "city": "Bretton Woods",
         "state": "NH",
-        "priceLevel": "mid",
-        "score": 94
-      },
-      {
-        "city": "Kohler",
-        "state": "WI",
         "priceLevel": "premium",
-        "score": 98
+        "score": 111
       }
     ],
     "passed": true
@@ -3562,13 +3562,13 @@
         "city": "Hot Springs",
         "state": "AR",
         "priceLevel": "budget",
-        "score": 100
+        "score": 117
       },
       {
         "city": "Horseshoe Bay",
         "state": "TX",
         "priceLevel": "premium",
-        "score": 86
+        "score": 105
       }
     ],
     "passed": true
@@ -3596,22 +3596,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Flagstaff",
-        "state": "AZ",
-        "priceLevel": "budget",
-        "score": 100
-      },
-      {
         "city": "Albuquerque",
         "state": "NM",
-        "priceLevel": "mid",
-        "score": 97
+        "priceLevel": "budget",
+        "score": 106
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Flagstaff",
+        "state": "AZ",
+        "priceLevel": "mid",
+        "score": 109
+      },
+      {
+        "city": "Reno",
+        "state": "NV",
         "priceLevel": "premium",
-        "score": 102
+        "score": 105
       }
     ],
     "passed": true
@@ -3639,22 +3639,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Boise",
-        "state": "ID",
+        "city": "Spokane",
+        "state": "WA",
         "priceLevel": "budget",
-        "score": 102
+        "score": 114
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Gig Harbor",
+        "state": "WA",
         "priceLevel": "mid",
-        "score": 102
+        "score": 112
       },
       {
-        "city": "Bend",
+        "city": "Portland",
         "state": "OR",
         "priceLevel": "premium",
-        "score": 102
+        "score": 114
       }
     ],
     "passed": true
@@ -3685,19 +3685,19 @@
         "city": "Rapid City",
         "state": "SD",
         "priceLevel": "budget",
-        "score": 98
+        "score": 115
       },
       {
-        "city": "Bend",
-        "state": "OR",
+        "city": "Fort Collins",
+        "state": "CO",
         "priceLevel": "mid",
-        "score": 102
+        "score": 117
       },
       {
         "city": "Vail",
         "state": "CO",
         "priceLevel": "premium",
-        "score": 100
+        "score": 120
       }
     ],
     "passed": true
@@ -3728,19 +3728,19 @@
         "city": "Omaha",
         "state": "NE",
         "priceLevel": "budget",
-        "score": 100
+        "score": 112
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Indianapolis",
+        "state": "IN",
         "priceLevel": "mid",
-        "score": 102
+        "score": 112
       },
       {
-        "city": "Harbor Springs / Petoskey",
-        "state": "MI",
+        "city": "Lake Geneva",
+        "state": "WI",
         "priceLevel": "premium",
-        "score": 100
+        "score": 114
       }
     ],
     "passed": true
@@ -3768,22 +3768,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Savannah",
-        "state": "GA",
+        "city": "Nashville",
+        "state": "TN",
         "priceLevel": "budget",
-        "score": 100
+        "score": 114
       },
       {
-        "city": "Charleston",
-        "state": "SC",
+        "city": "Sarasota",
+        "state": "FL",
         "priceLevel": "mid",
-        "score": 102
+        "score": 111
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Hilton Head",
+        "state": "SC",
         "priceLevel": "premium",
-        "score": 102
+        "score": 116
       }
     ],
     "passed": true
@@ -3814,19 +3814,19 @@
         "city": "Cooperstown",
         "state": "NY",
         "priceLevel": "budget",
-        "score": 90
+        "score": 109
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Cape May",
+        "state": "NJ",
         "priceLevel": "mid",
-        "score": 102
+        "score": 114
       },
       {
-        "city": "Cape Cod",
-        "state": "MA",
+        "city": "Kennebunkport",
+        "state": "ME",
         "priceLevel": "premium",
-        "score": 95
+        "score": 114
       }
     ],
     "passed": true
@@ -3854,22 +3854,22 @@
     "pickCount": 3,
     "picks": [
       {
+        "city": "Baton Rouge",
+        "state": "LA",
+        "priceLevel": "budget",
+        "score": 113
+      },
+      {
         "city": "Galveston",
         "state": "TX",
-        "priceLevel": "budget",
-        "score": 95
-      },
-      {
-        "city": "Houston",
-        "state": "TX",
         "priceLevel": "mid",
-        "score": 93
+        "score": 112
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "New Orleans",
+        "state": "LA",
         "priceLevel": "premium",
-        "score": 102
+        "score": 115
       }
     ],
     "passed": true
@@ -3897,22 +3897,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Lake Havasu City",
-        "state": "AZ",
+        "city": "St. George",
+        "state": "UT",
         "priceLevel": "budget",
-        "score": 97
+        "score": 111
       },
       {
-        "city": "San Antonio",
-        "state": "TX",
+        "city": "Phoenix / Mesa",
+        "state": "AZ",
         "priceLevel": "mid",
-        "score": 102
+        "score": 108
       },
       {
         "city": "Las Vegas",
         "state": "NV",
         "priceLevel": "premium",
-        "score": 99
+        "score": 119
       }
     ],
     "passed": true
@@ -3943,7 +3943,7 @@
         "city": "Sun Valley / Ketchum",
         "state": "ID",
         "priceLevel": "mid",
-        "score": 97
+        "score": 111
       }
     ],
     "passed": true
@@ -3974,7 +3974,7 @@
         "city": "Colorado Springs",
         "state": "CO",
         "priceLevel": "mid",
-        "score": 100
+        "score": 117
       }
     ],
     "passed": true
@@ -4005,19 +4005,19 @@
         "city": "Kansas City",
         "state": "MO",
         "priceLevel": "budget",
-        "score": 84
+        "score": 96
       },
       {
         "city": "Brainerd",
         "state": "MN",
         "priceLevel": "mid",
-        "score": 83
+        "score": 97
       },
       {
-        "city": "Charleston",
-        "state": "SC",
+        "city": "French Lick",
+        "state": "IN",
         "priceLevel": "premium",
-        "score": 102
+        "score": 103
       }
     ],
     "passed": true
@@ -4045,22 +4045,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Atlantic City",
-        "state": "NJ",
+        "city": "Charleston",
+        "state": "SC",
         "priceLevel": "budget",
-        "score": 102
-      },
-      {
-        "city": "Pinehurst",
-        "state": "NC",
-        "priceLevel": "mid",
-        "score": 86
+        "score": 114
       },
       {
         "city": "Sea Island / St. Simons",
         "state": "GA",
+        "priceLevel": "mid",
+        "score": 111
+      },
+      {
+        "city": "Pinehurst",
+        "state": "NC",
         "priceLevel": "premium",
-        "score": 97
+        "score": 112
       }
     ],
     "passed": true
@@ -4091,7 +4091,7 @@
         "city": "Atlantic City",
         "state": "NJ",
         "priceLevel": "mid",
-        "score": 102
+        "score": 122
       }
     ],
     "passed": true
@@ -4119,16 +4119,16 @@
     "pickCount": 2,
     "picks": [
       {
-        "city": "Dallas-Fort Worth",
-        "state": "TX",
-        "priceLevel": "budget",
-        "score": 100
-      },
-      {
         "city": "San Antonio",
         "state": "TX",
+        "priceLevel": "budget",
+        "score": 122
+      },
+      {
+        "city": "Dallas-Fort Worth",
+        "state": "TX",
         "priceLevel": "premium",
-        "score": 102
+        "score": 120
       }
     ],
     "passed": true
@@ -4159,19 +4159,19 @@
         "city": "Lake Havasu City",
         "state": "AZ",
         "priceLevel": "budget",
-        "score": 97
+        "score": 106
       },
       {
         "city": "Scottsdale",
         "state": "AZ",
         "priceLevel": "mid",
-        "score": 102
+        "score": 122
       },
       {
-        "city": "Galveston",
-        "state": "TX",
+        "city": "Phoenix / Mesa",
+        "state": "AZ",
         "priceLevel": "premium",
-        "score": 95
+        "score": 108
       }
     ],
     "passed": true
@@ -4202,19 +4202,19 @@
         "city": "Hood River",
         "state": "OR",
         "priceLevel": "budget",
-        "score": 97
+        "score": 106
       },
       {
-        "city": "Durango",
-        "state": "CO",
+        "city": "Spokane",
+        "state": "WA",
         "priceLevel": "mid",
-        "score": 94
+        "score": 114
       },
       {
         "city": "Portland",
         "state": "OR",
         "priceLevel": "premium",
-        "score": 102
+        "score": 114
       }
     ],
     "passed": true
@@ -4242,22 +4242,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Fort Collins",
-        "state": "CO",
+        "city": "Rapid City",
+        "state": "SD",
         "priceLevel": "budget",
-        "score": 89
+        "score": 107
       },
       {
-        "city": "Glenwood Springs",
+        "city": "Colorado Springs",
         "state": "CO",
         "priceLevel": "mid",
-        "score": 90
+        "score": 109
       },
       {
-        "city": "Scottsdale",
-        "state": "AZ",
+        "city": "Vail",
+        "state": "CO",
         "priceLevel": "premium",
-        "score": 102
+        "score": 112
       }
     ],
     "passed": true
@@ -4288,7 +4288,7 @@
         "city": "Lake Geneva",
         "state": "WI",
         "priceLevel": "mid",
-        "score": 97
+        "score": 114
       }
     ],
     "passed": true
@@ -4316,22 +4316,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Gulf Shores",
-        "state": "AL",
+        "city": "Biloxi",
+        "state": "MS",
         "priceLevel": "budget",
-        "score": 94
+        "score": 105
       },
       {
         "city": "Outer Banks",
         "state": "NC",
         "priceLevel": "mid",
-        "score": 88
+        "score": 103
       },
       {
-        "city": "Lake Geneva",
-        "state": "WI",
+        "city": "Destin",
+        "state": "FL",
         "priceLevel": "premium",
-        "score": 97
+        "score": 108
       }
     ],
     "passed": true
@@ -4362,7 +4362,7 @@
         "city": "Catskills",
         "state": "NY",
         "priceLevel": "mid",
-        "score": 87
+        "score": 111
       }
     ],
     "passed": true
@@ -4393,13 +4393,13 @@
         "city": "Galveston",
         "state": "TX",
         "priceLevel": "budget",
-        "score": 95
+        "score": 112
       },
       {
         "city": "Horseshoe Bay",
         "state": "TX",
         "priceLevel": "premium",
-        "score": 86
+        "score": 105
       }
     ],
     "passed": true
@@ -4428,22 +4428,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Flagstaff",
-        "state": "AZ",
+        "city": "Albuquerque",
+        "state": "NM",
         "priceLevel": "budget",
-        "score": 100
+        "score": 106
       },
       {
         "city": "Reno",
         "state": "NV",
         "priceLevel": "mid",
-        "score": 96
+        "score": 105
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Flagstaff",
+        "state": "AZ",
         "priceLevel": "premium",
-        "score": 110
+        "score": 109
       }
     ],
     "passed": true
@@ -4472,22 +4472,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Eugene",
-        "state": "OR",
+        "city": "Boise",
+        "state": "ID",
         "priceLevel": "budget",
-        "score": 102
+        "score": 119
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Gig Harbor",
+        "state": "WA",
         "priceLevel": "mid",
-        "score": 110
+        "score": 120
       },
       {
         "city": "Seattle",
         "state": "WA",
         "priceLevel": "premium",
-        "score": 110
+        "score": 122
       }
     ],
     "passed": true
@@ -4516,22 +4516,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Chattanooga",
+        "city": "Nashville",
         "state": "TN",
         "priceLevel": "budget",
-        "score": 102
+        "score": 114
       },
       {
-        "city": "Sarasota",
-        "state": "FL",
+        "city": "Savannah",
+        "state": "GA",
         "priceLevel": "mid",
-        "score": 110
+        "score": 117
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Pinehurst",
+        "state": "NC",
         "priceLevel": "premium",
-        "score": 110
+        "score": 112
       }
     ],
     "passed": true
@@ -4563,19 +4563,19 @@
         "city": "Kansas City",
         "state": "MO",
         "priceLevel": "budget",
-        "score": 92
+        "score": 104
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Brainerd",
+        "state": "MN",
         "priceLevel": "mid",
-        "score": 110
+        "score": 105
       },
       {
-        "city": "Lake Geneva",
-        "state": "WI",
+        "city": "Harbor Springs / Petoskey",
+        "state": "MI",
         "priceLevel": "premium",
-        "score": 97
+        "score": 108
       }
     ],
     "passed": true
@@ -4604,22 +4604,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Hot Springs",
-        "state": "AR",
+        "city": "Mesquite",
+        "state": "NV",
         "priceLevel": "budget",
-        "score": 108
+        "score": 105
       },
       {
         "city": "Santa Fe",
         "state": "NM",
         "priceLevel": "mid",
-        "score": 97
+        "score": 109
       },
       {
         "city": "Las Vegas",
         "state": "NV",
         "priceLevel": "premium",
-        "score": 99
+        "score": 119
       }
     ],
     "passed": true
@@ -4651,7 +4651,7 @@
         "city": "Spokane",
         "state": "WA",
         "priceLevel": "mid",
-        "score": 102
+        "score": 114
       }
     ],
     "passed": true
@@ -4680,22 +4680,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Saratoga Springs",
-        "state": "NY",
+        "city": "Biloxi",
+        "state": "MS",
         "priceLevel": "budget",
-        "score": 108
+        "score": 105
       },
       {
-        "city": "Sea Island / St. Simons",
+        "city": "Reynolds Lake Oconee",
         "state": "GA",
         "priceLevel": "mid",
-        "score": 97
+        "score": 106
       },
       {
         "city": "Pinehurst",
         "state": "NC",
         "priceLevel": "premium",
-        "score": 86
+        "score": 112
       }
     ],
     "passed": true
@@ -4727,13 +4727,13 @@
         "city": "French Lick",
         "state": "IN",
         "priceLevel": "budget",
-        "score": 99
+        "score": 119
       },
       {
         "city": "Kohler",
         "state": "WI",
         "priceLevel": "premium",
-        "score": 98
+        "score": 114
       }
     ],
     "passed": true
@@ -4767,19 +4767,19 @@
         "city": "St. George",
         "state": "UT",
         "priceLevel": "budget",
-        "score": 103
+        "score": 119
       },
       {
-        "city": "Durango",
-        "state": "CO",
+        "city": "Sedona",
+        "state": "AZ",
         "priceLevel": "mid",
-        "score": 110
+        "score": 120
       },
       {
         "city": "Scottsdale",
         "state": "AZ",
         "priceLevel": "premium",
-        "score": 110
+        "score": 130
       }
     ],
     "passed": true
@@ -4810,22 +4810,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Durango",
-        "state": "CO",
+        "city": "Gig Harbor",
+        "state": "WA",
         "priceLevel": "budget",
-        "score": 110
-      },
-      {
-        "city": "Sun Valley / Ketchum",
-        "state": "ID",
-        "priceLevel": "mid",
-        "score": 105
+        "score": 112
       },
       {
         "city": "Seattle",
         "state": "WA",
+        "priceLevel": "mid",
+        "score": 114
+      },
+      {
+        "city": "Sun Valley / Ketchum",
+        "state": "ID",
         "priceLevel": "premium",
-        "score": 102
+        "score": 119
       }
     ],
     "passed": true
@@ -4856,22 +4856,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Atlantic City",
-        "state": "NJ",
+        "city": "Virginia Beach",
+        "state": "VA",
         "priceLevel": "budget",
-        "score": 110
+        "score": 111
       },
       {
-        "city": "Naples",
+        "city": "Sarasota",
         "state": "FL",
         "priceLevel": "mid",
-        "score": 100
+        "score": 111
       },
       {
         "city": "Hilton Head",
         "state": "SC",
         "priceLevel": "premium",
-        "score": 93
+        "score": 116
       }
     ],
     "passed": true
@@ -4902,22 +4902,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Durango",
-        "state": "CO",
-        "priceLevel": "budget",
-        "score": 110
-      },
-      {
         "city": "Brainerd",
         "state": "MN",
+        "priceLevel": "budget",
+        "score": 105
+      },
+      {
+        "city": "French Lick",
+        "state": "IN",
         "priceLevel": "mid",
-        "score": 91
+        "score": 111
       },
       {
         "city": "Kohler",
         "state": "WI",
         "priceLevel": "premium",
-        "score": 98
+        "score": 114
       }
     ],
     "passed": true
@@ -4946,22 +4946,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Lake Havasu City",
-        "state": "AZ",
+        "city": "Albuquerque",
+        "state": "NM",
         "priceLevel": "budget",
-        "score": 97
+        "score": 106
       },
       {
-        "city": "Galveston",
-        "state": "TX",
+        "city": "Reno",
+        "state": "NV",
         "priceLevel": "mid",
-        "score": 103
+        "score": 105
       },
       {
         "city": "Scottsdale",
         "state": "AZ",
         "priceLevel": "premium",
-        "score": 102
+        "score": 122
       }
     ],
     "passed": true
@@ -4990,22 +4990,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Hood River",
-        "state": "OR",
+        "city": "Spokane",
+        "state": "WA",
         "priceLevel": "budget",
-        "score": 105
+        "score": 122
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Boise",
+        "state": "ID",
         "priceLevel": "mid",
-        "score": 102
+        "score": 119
       },
       {
         "city": "Portland",
         "state": "OR",
         "priceLevel": "premium",
-        "score": 110
+        "score": 122
       }
     ],
     "passed": true
@@ -5034,22 +5034,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Gulf Shores",
-        "state": "AL",
-        "priceLevel": "budget",
-        "score": 102
-      },
-      {
-        "city": "Nashville",
+        "city": "Chattanooga",
         "state": "TN",
-        "priceLevel": "mid",
-        "score": 102
+        "priceLevel": "budget",
+        "score": 114
       },
       {
-        "city": "Lake Geneva",
-        "state": "WI",
+        "city": "Charleston",
+        "state": "SC",
+        "priceLevel": "mid",
+        "score": 114
+      },
+      {
+        "city": "Destin",
+        "state": "FL",
         "priceLevel": "premium",
-        "score": 105
+        "score": 116
       }
     ],
     "passed": true
@@ -5078,22 +5078,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Columbus",
-        "state": "OH",
-        "priceLevel": "budget",
-        "score": 102
-      },
-      {
         "city": "Madison",
         "state": "WI",
-        "priceLevel": "mid",
-        "score": 102
+        "priceLevel": "budget",
+        "score": 114
       },
       {
-        "city": "Sarasota",
-        "state": "FL",
+        "city": "Cincinnati",
+        "state": "OH",
+        "priceLevel": "mid",
+        "score": 114
+      },
+      {
+        "city": "Lake Geneva",
+        "state": "WI",
         "priceLevel": "premium",
-        "score": 110
+        "score": 122
       }
     ],
     "passed": true
@@ -5119,19 +5119,19 @@
         "city": "Lake Havasu City",
         "state": "AZ",
         "priceLevel": "budget",
-        "score": 89
+        "score": 98
       },
       {
-        "city": "St. George",
-        "state": "UT",
+        "city": "Phoenix / Mesa",
+        "state": "AZ",
         "priceLevel": "mid",
-        "score": 87
+        "score": 100
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Scottsdale",
+        "state": "AZ",
         "priceLevel": "premium",
-        "score": 94
+        "score": 84
       }
     ],
     "passed": true
@@ -5154,22 +5154,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Walla Walla",
-        "state": "WA",
+        "city": "Hood River",
+        "state": "OR",
         "priceLevel": "budget",
-        "score": 80
+        "score": 98
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Walla Walla",
+        "state": "WA",
         "priceLevel": "mid",
-        "score": 94
+        "score": 91
       },
       {
         "city": "Seattle",
         "state": "WA",
         "priceLevel": "premium",
-        "score": 84
+        "score": 96
       }
     ],
     "passed": true
@@ -5192,22 +5192,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Laughlin",
-        "state": "NV",
+        "city": "Rapid City",
+        "state": "SD",
         "priceLevel": "budget",
-        "score": 94
+        "score": 107
       },
       {
         "city": "Colorado Springs",
         "state": "CO",
         "priceLevel": "mid",
-        "score": 82
+        "score": 99
       },
       {
         "city": "Park City",
         "state": "UT",
         "priceLevel": "premium",
-        "score": 72
+        "score": 92
       }
     ],
     "passed": true
@@ -5230,22 +5230,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Indianapolis",
-        "state": "IN",
+        "city": "St. Louis",
+        "state": "MO",
         "priceLevel": "budget",
-        "score": 92
+        "score": 98
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Columbus",
+        "state": "OH",
         "priceLevel": "mid",
-        "score": 94
+        "score": 106
       },
       {
-        "city": "Lake Geneva",
-        "state": "WI",
+        "city": "Traverse City",
+        "state": "MI",
         "priceLevel": "premium",
-        "score": 89
+        "score": 101
       }
     ],
     "passed": true
@@ -5268,22 +5268,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Madison",
-        "state": "WI",
+        "city": "Virginia Beach",
+        "state": "VA",
         "priceLevel": "budget",
-        "score": 94
+        "score": 93
       },
       {
         "city": "Nashville",
         "state": "TN",
         "priceLevel": "mid",
-        "score": 84
+        "score": 96
       },
       {
         "city": "Destin",
         "state": "FL",
         "priceLevel": "premium",
-        "score": 91
+        "score": 100
       }
     ],
     "passed": true
@@ -5306,22 +5306,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Madison",
-        "state": "WI",
+        "city": "Bar Harbor",
+        "state": "ME",
         "priceLevel": "budget",
-        "score": 94
+        "score": 101
       },
       {
-        "city": "Saratoga Springs",
+        "city": "Finger Lakes",
         "state": "NY",
         "priceLevel": "mid",
-        "score": 92
+        "score": 112
       },
       {
-        "city": "Portland",
-        "state": "ME",
+        "city": "Stowe",
+        "state": "VT",
         "priceLevel": "premium",
-        "score": 94
+        "score": 96
       }
     ],
     "passed": true
@@ -5344,22 +5344,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Laughlin",
-        "state": "NV",
+        "city": "Shreveport-Bossier City",
+        "state": "LA",
         "priceLevel": "budget",
-        "score": 94
+        "score": 103
       },
       {
-        "city": "Dallas-Fort Worth",
-        "state": "TX",
+        "city": "Branson",
+        "state": "MO",
         "priceLevel": "mid",
-        "score": 82
+        "score": 96
       },
       {
         "city": "Austin",
         "state": "TX",
         "priceLevel": "premium",
-        "score": 84
+        "score": 104
       }
     ],
     "passed": true
@@ -5382,22 +5382,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Lake Havasu City",
-        "state": "AZ",
+        "city": "Albuquerque",
+        "state": "NM",
         "priceLevel": "budget",
-        "score": 89
+        "score": 98
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Flagstaff",
+        "state": "AZ",
         "priceLevel": "mid",
-        "score": 94
+        "score": 101
       },
       {
         "city": "Las Vegas",
         "state": "NV",
         "priceLevel": "premium",
-        "score": 91
+        "score": 111
       }
     ],
     "passed": true
@@ -5420,22 +5420,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Walla Walla",
-        "state": "WA",
+        "city": "Boise",
+        "state": "ID",
         "priceLevel": "budget",
-        "score": 90
+        "score": 111
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Sunriver",
+        "state": "OR",
         "priceLevel": "mid",
-        "score": 94
+        "score": 107
       },
       {
         "city": "Bend",
         "state": "OR",
         "priceLevel": "premium",
-        "score": 94
+        "score": 111
       }
     ],
     "passed": true
@@ -5458,22 +5458,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Laughlin",
-        "state": "NV",
+        "city": "Missoula",
+        "state": "MT",
         "priceLevel": "budget",
-        "score": 94
+        "score": 114
       },
       {
         "city": "Bozeman",
         "state": "MT",
         "priceLevel": "mid",
-        "score": 94
+        "score": 111
       },
       {
         "city": "Park City",
         "state": "UT",
         "priceLevel": "premium",
-        "score": 92
+        "score": 112
       }
     ],
     "passed": true
@@ -5496,22 +5496,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "St. Louis",
-        "state": "MO",
+        "city": "Milwaukee",
+        "state": "WI",
         "priceLevel": "budget",
-        "score": 86
+        "score": 97
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Marquette",
+        "state": "MI",
         "priceLevel": "mid",
-        "score": 94
+        "score": 100
       },
       {
-        "city": "Traverse City",
+        "city": "Harbor Springs / Petoskey",
         "state": "MI",
         "priceLevel": "premium",
-        "score": 94
+        "score": 100
       }
     ],
     "passed": true
@@ -5534,22 +5534,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Virginia Beach",
-        "state": "VA",
+        "city": "Gulf Shores",
+        "state": "AL",
         "priceLevel": "budget",
-        "score": 91
+        "score": 103
       },
       {
         "city": "Naples",
         "state": "FL",
         "priceLevel": "mid",
-        "score": 92
+        "score": 101
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Pinehurst",
+        "state": "NC",
         "priceLevel": "premium",
-        "score": 94
+        "score": 104
       }
     ],
     "passed": true
@@ -5572,22 +5572,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Bretton Woods",
-        "state": "NH",
+        "city": "Mystic",
+        "state": "CT",
         "priceLevel": "budget",
-        "score": 86
+        "score": 100
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Hudson Valley",
+        "state": "NY",
         "priceLevel": "mid",
-        "score": 94
+        "score": 106
       },
       {
-        "city": "Cape Cod",
-        "state": "MA",
+        "city": "Stowe",
+        "state": "VT",
         "priceLevel": "premium",
-        "score": 87
+        "score": 106
       }
     ],
     "passed": true
@@ -5610,22 +5610,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Laughlin",
-        "state": "NV",
+        "city": "Baton Rouge",
+        "state": "LA",
         "priceLevel": "budget",
-        "score": 94
+        "score": 105
       },
       {
-        "city": "Galveston",
-        "state": "TX",
+        "city": "Branson",
+        "state": "MO",
         "priceLevel": "mid",
-        "score": 87
+        "score": 106
       },
       {
         "city": "Austin",
         "state": "TX",
         "priceLevel": "premium",
-        "score": 94
+        "score": 114
       }
     ],
     "passed": true
@@ -5648,22 +5648,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Laughlin",
-        "state": "NV",
+        "city": "Payson",
+        "state": "AZ",
         "priceLevel": "budget",
-        "score": 74
+        "score": 85
       },
       {
-        "city": "San Antonio",
-        "state": "TX",
+        "city": "Tucson",
+        "state": "AZ",
         "priceLevel": "mid",
-        "score": 94
+        "score": 99
       },
       {
         "city": "Scottsdale",
         "state": "AZ",
         "priceLevel": "premium",
-        "score": 94
+        "score": 114
       }
     ],
     "passed": true
@@ -5689,19 +5689,19 @@
         "city": "Eugene",
         "state": "OR",
         "priceLevel": "budget",
-        "score": 74
+        "score": 86
       },
       {
-        "city": "Spokane",
+        "city": "Walla Walla",
         "state": "WA",
         "priceLevel": "mid",
-        "score": 74
+        "score": 81
       },
       {
-        "city": "Park City",
-        "state": "UT",
+        "city": "Portland",
+        "state": "OR",
         "priceLevel": "premium",
-        "score": 92
+        "score": 106
       }
     ],
     "passed": true
@@ -5727,19 +5727,19 @@
         "city": "Rapid City",
         "state": "SD",
         "priceLevel": "budget",
-        "score": 70
+        "score": 87
       },
       {
         "city": "Durango",
         "state": "CO",
         "priceLevel": "mid",
-        "score": 84
+        "score": 101
       },
       {
-        "city": "Scottsdale",
-        "state": "AZ",
+        "city": "Vail",
+        "state": "CO",
         "priceLevel": "premium",
-        "score": 94
+        "score": 112
       }
     ],
     "passed": true
@@ -5762,22 +5762,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Des Moines",
-        "state": "IA",
+        "city": "Grand Rapids",
+        "state": "MI",
         "priceLevel": "budget",
-        "score": 74
-      },
-      {
-        "city": "Atlantic City",
-        "state": "NJ",
-        "priceLevel": "mid",
-        "score": 94
+        "score": 103
       },
       {
         "city": "Brainerd",
         "state": "MN",
+        "priceLevel": "mid",
+        "score": 97
+      },
+      {
+        "city": "Kohler",
+        "state": "WI",
         "priceLevel": "premium",
-        "score": 83
+        "score": 106
       }
     ],
     "passed": true
@@ -5803,19 +5803,19 @@
         "city": "Virginia Beach",
         "state": "VA",
         "priceLevel": "budget",
-        "score": 81
+        "score": 93
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Nashville",
+        "state": "TN",
         "priceLevel": "mid",
-        "score": 94
+        "score": 96
       },
       {
-        "city": "Hilton Head",
-        "state": "SC",
+        "city": "Reynolds Lake Oconee",
+        "state": "GA",
         "priceLevel": "premium",
-        "score": 85
+        "score": 98
       }
     ],
     "passed": true
@@ -5841,19 +5841,19 @@
         "city": "Poconos",
         "state": "PA",
         "priceLevel": "budget",
-        "score": 86
+        "score": 106
       },
       {
-        "city": "Stowe",
-        "state": "VT",
+        "city": "Berkshires",
+        "state": "MA",
         "priceLevel": "mid",
-        "score": 79
+        "score": 99
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Kennebunkport",
+        "state": "ME",
         "priceLevel": "premium",
-        "score": 94
+        "score": 96
       }
     ],
     "passed": true
@@ -5879,19 +5879,19 @@
         "city": "Hot Springs",
         "state": "AR",
         "priceLevel": "budget",
-        "score": 82
+        "score": 99
       },
       {
-        "city": "Houston",
-        "state": "TX",
+        "city": "Branson",
+        "state": "MO",
         "priceLevel": "mid",
-        "score": 85
+        "score": 106
       },
       {
-        "city": "Scottsdale",
-        "state": "AZ",
+        "city": "New Orleans",
+        "state": "LA",
         "priceLevel": "premium",
-        "score": 94
+        "score": 107
       }
     ],
     "passed": true
@@ -5914,22 +5914,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Flagstaff",
+        "city": "Lake Havasu City",
         "state": "AZ",
         "priceLevel": "budget",
-        "score": 92
+        "score": 98
       },
       {
-        "city": "Santa Fe",
-        "state": "NM",
+        "city": "St. George",
+        "state": "UT",
         "priceLevel": "mid",
-        "score": 89
+        "score": 103
       },
       {
-        "city": "Durango",
-        "state": "CO",
+        "city": "Sedona",
+        "state": "AZ",
         "priceLevel": "premium",
-        "score": 94
+        "score": 104
       }
     ],
     "passed": true
@@ -5952,22 +5952,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Eugene",
-        "state": "OR",
+        "city": "Boise",
+        "state": "ID",
         "priceLevel": "budget",
-        "score": 94
+        "score": 111
       },
       {
-        "city": "Durango",
-        "state": "CO",
+        "city": "Sunriver",
+        "state": "OR",
         "priceLevel": "mid",
-        "score": 94
+        "score": 107
       },
       {
         "city": "Bend",
         "state": "OR",
         "priceLevel": "premium",
-        "score": 94
+        "score": 111
       }
     ],
     "passed": true
@@ -5993,19 +5993,19 @@
         "city": "Missoula",
         "state": "MT",
         "priceLevel": "budget",
-        "score": 94
+        "score": 114
       },
       {
         "city": "Bozeman",
         "state": "MT",
         "priceLevel": "mid",
-        "score": 94
+        "score": 111
       },
       {
-        "city": "Scottsdale",
-        "state": "AZ",
+        "city": "Park City",
+        "state": "UT",
         "priceLevel": "premium",
-        "score": 94
+        "score": 112
       }
     ],
     "passed": true
@@ -6031,19 +6031,19 @@
         "city": "Des Moines",
         "state": "IA",
         "priceLevel": "budget",
-        "score": 94
+        "score": 106
       },
       {
-        "city": "Durango",
-        "state": "CO",
+        "city": "Galena",
+        "state": "IL",
         "priceLevel": "mid",
-        "score": 94
+        "score": 111
       },
       {
-        "city": "Lake Geneva",
-        "state": "WI",
+        "city": "French Lick",
+        "state": "IN",
         "priceLevel": "premium",
-        "score": 89
+        "score": 103
       }
     ],
     "passed": true
@@ -6066,22 +6066,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Myrtle Beach",
-        "state": "SC",
+        "city": "Virginia Beach",
+        "state": "VA",
         "priceLevel": "budget",
-        "score": 89
+        "score": 103
       },
       {
         "city": "Naples",
         "state": "FL",
         "priceLevel": "mid",
-        "score": 92
+        "score": 101
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Pinehurst",
+        "state": "NC",
         "priceLevel": "premium",
-        "score": 94
+        "score": 104
       }
     ],
     "passed": true
@@ -6104,22 +6104,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Hershey",
+        "city": "Poconos",
         "state": "PA",
         "priceLevel": "budget",
-        "score": 86
+        "score": 106
       },
       {
-        "city": "Bar Harbor",
-        "state": "ME",
+        "city": "Hudson Valley",
+        "state": "NY",
         "priceLevel": "mid",
-        "score": 86
+        "score": 106
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Cape Cod",
+        "state": "MA",
         "priceLevel": "premium",
-        "score": 94
+        "score": 112
       }
     ],
     "passed": true
@@ -6142,22 +6142,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Hot Springs",
-        "state": "AR",
+        "city": "Oklahoma City",
+        "state": "OK",
         "priceLevel": "budget",
-        "score": 92
+        "score": 111
       },
       {
-        "city": "Louisville",
-        "state": "KY",
+        "city": "Houston",
+        "state": "TX",
         "priceLevel": "mid",
-        "score": 91
+        "score": 111
       },
       {
-        "city": "Scottsdale",
-        "state": "AZ",
+        "city": "Austin",
+        "state": "TX",
         "priceLevel": "premium",
-        "score": 94
+        "score": 114
       }
     ],
     "passed": true
@@ -6180,22 +6180,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Payson",
-        "state": "AZ",
+        "city": "Mesquite",
+        "state": "NV",
         "priceLevel": "budget",
-        "score": 92
+        "score": 99
       },
       {
-        "city": "Santa Fe",
-        "state": "NM",
+        "city": "Flagstaff",
+        "state": "AZ",
         "priceLevel": "mid",
-        "score": 96
+        "score": 99
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Las Vegas",
+        "state": "NV",
         "priceLevel": "premium",
-        "score": 104
+        "score": 101
       }
     ],
     "passed": true
@@ -6221,19 +6221,19 @@
         "city": "Eugene",
         "state": "OR",
         "priceLevel": "budget",
-        "score": 95
+        "score": 112
       },
       {
-        "city": "Bozeman",
-        "state": "MT",
+        "city": "Sunriver",
+        "state": "OR",
         "priceLevel": "mid",
-        "score": 104
+        "score": 101
       },
       {
         "city": "Portland",
         "state": "OR",
         "priceLevel": "premium",
-        "score": 98
+        "score": 96
       }
     ],
     "passed": true
@@ -6256,22 +6256,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Tulsa",
-        "state": "OK",
+        "city": "Virginia Beach",
+        "state": "VA",
         "priceLevel": "budget",
-        "score": 102
+        "score": 95
       },
       {
         "city": "Asheville",
         "state": "NC",
         "priceLevel": "mid",
-        "score": 94
+        "score": 91
       },
       {
         "city": "St. Augustine",
         "state": "FL",
         "priceLevel": "premium",
-        "score": 92
+        "score": 94
       }
     ],
     "passed": true
@@ -6294,22 +6294,22 @@
     "pickCount": 3,
     "picks": [
       {
+        "city": "Des Moines",
+        "state": "IA",
+        "priceLevel": "budget",
+        "score": 112
+      },
+      {
         "city": "Columbus",
         "state": "OH",
-        "priceLevel": "budget",
-        "score": 98
-      },
-      {
-        "city": "Bozeman",
-        "state": "MT",
         "priceLevel": "mid",
-        "score": 104
+        "score": 105
       },
       {
-        "city": "Lake Geneva",
-        "state": "WI",
+        "city": "Traverse City",
+        "state": "MI",
         "priceLevel": "premium",
-        "score": 91
+        "score": 101
       }
     ],
     "passed": true
@@ -6332,22 +6332,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Lake Havasu City",
-        "state": "AZ",
+        "city": "Albuquerque",
+        "state": "NM",
         "priceLevel": "budget",
-        "score": 80
+        "score": 97
       },
       {
-        "city": "Vail",
-        "state": "CO",
+        "city": "Santa Fe",
+        "state": "NM",
         "priceLevel": "mid",
-        "score": 95
+        "score": 104
       },
       {
-        "city": "Las Vegas",
-        "state": "NV",
+        "city": "Sedona",
+        "state": "AZ",
         "priceLevel": "premium",
-        "score": 100
+        "score": 114
       }
     ],
     "passed": true
@@ -6373,19 +6373,19 @@
         "city": "Hood River",
         "state": "OR",
         "priceLevel": "budget",
-        "score": 80
+        "score": 96
       },
       {
         "city": "Leavenworth",
         "state": "WA",
         "priceLevel": "mid",
-        "score": 81
+        "score": 100
       },
       {
-        "city": "Vail",
-        "state": "CO",
+        "city": "Portland",
+        "state": "OR",
         "priceLevel": "premium",
-        "score": 95
+        "score": 111
       }
     ],
     "passed": true
@@ -6411,19 +6411,19 @@
         "city": "Lexington",
         "state": "KY",
         "priceLevel": "budget",
-        "score": 78
+        "score": 98
       },
       {
-        "city": "Charleston",
-        "state": "SC",
+        "city": "Outer Banks",
+        "state": "NC",
         "priceLevel": "mid",
-        "score": 91
+        "score": 102
       },
       {
-        "city": "Kohler",
-        "state": "WI",
+        "city": "Destin",
+        "state": "FL",
         "priceLevel": "premium",
-        "score": 96
+        "score": 109
       }
     ],
     "passed": true
@@ -6446,22 +6446,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Columbus",
-        "state": "OH",
-        "priceLevel": "budget",
-        "score": 86
-      },
-      {
-        "city": "Vail",
-        "state": "CO",
-        "priceLevel": "mid",
-        "score": 95
-      },
-      {
-        "city": "Kohler",
+        "city": "Madison",
         "state": "WI",
+        "priceLevel": "budget",
+        "score": 106
+      },
+      {
+        "city": "Galena",
+        "state": "IL",
+        "priceLevel": "mid",
+        "score": 115
+      },
+      {
+        "city": "Traverse City",
+        "state": "MI",
         "priceLevel": "premium",
-        "score": 96
+        "score": 121
       }
     ],
     "passed": true
@@ -6484,22 +6484,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Mesquite",
-        "state": "NV",
+        "city": "Payson",
+        "state": "AZ",
         "priceLevel": "budget",
-        "score": 75
+        "score": 88
       },
       {
-        "city": "St. George",
-        "state": "UT",
+        "city": "Phoenix / Mesa",
+        "state": "AZ",
         "priceLevel": "mid",
-        "score": 77
+        "score": 94
       },
       {
-        "city": "Vail",
-        "state": "CO",
+        "city": "Las Vegas",
+        "state": "NV",
         "priceLevel": "premium",
-        "score": 87
+        "score": 121
       }
     ],
     "passed": true
@@ -6522,22 +6522,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Boise",
-        "state": "ID",
+        "city": "Spokane",
+        "state": "WA",
         "priceLevel": "budget",
-        "score": 84
+        "score": 99
       },
       {
         "city": "Gig Harbor",
         "state": "WA",
         "priceLevel": "mid",
-        "score": 82
+        "score": 100
       },
       {
-        "city": "Vail",
-        "state": "CO",
+        "city": "Seattle",
+        "state": "WA",
         "priceLevel": "premium",
-        "score": 87
+        "score": 104
       }
     ],
     "passed": true
@@ -6560,22 +6560,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Pawleys Island",
-        "state": "SC",
-        "priceLevel": "budget",
-        "score": 83
-      },
-      {
-        "city": "Nashville",
+        "city": "Chattanooga",
         "state": "TN",
-        "priceLevel": "mid",
-        "score": 85
+        "priceLevel": "budget",
+        "score": 102
       },
       {
-        "city": "Kohler",
-        "state": "WI",
+        "city": "Charleston",
+        "state": "SC",
+        "priceLevel": "mid",
+        "score": 104
+      },
+      {
+        "city": "Pinehurst",
+        "state": "NC",
         "priceLevel": "premium",
-        "score": 87
+        "score": 108
       }
     ],
     "passed": true
@@ -6598,22 +6598,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Des Moines",
-        "state": "IA",
+        "city": "Madison",
+        "state": "WI",
         "priceLevel": "budget",
-        "score": 84
+        "score": 100
       },
       {
-        "city": "Grand Rapids",
-        "state": "MI",
+        "city": "Galena",
+        "state": "IL",
         "priceLevel": "mid",
-        "score": 84
+        "score": 107
       },
       {
-        "city": "Vail",
-        "state": "CO",
+        "city": "Traverse City",
+        "state": "MI",
         "priceLevel": "premium",
-        "score": 87
+        "score": 111
       }
     ],
     "passed": true
@@ -6636,22 +6636,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Lake Havasu City",
-        "state": "AZ",
+        "city": "Albuquerque",
+        "state": "NM",
         "priceLevel": "budget",
-        "score": 89
+        "score": 98
       },
       {
-        "city": "Durango",
-        "state": "CO",
+        "city": "Flagstaff",
+        "state": "AZ",
         "priceLevel": "mid",
-        "score": 94
+        "score": 101
       },
       {
         "city": "Scottsdale",
         "state": "AZ",
         "priceLevel": "premium",
-        "score": 94
+        "score": 114
       }
     ],
     "passed": true
@@ -6674,22 +6674,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Walla Walla",
+        "city": "Spokane",
         "state": "WA",
         "priceLevel": "budget",
-        "score": 90
+        "score": 106
       },
       {
-        "city": "Durango",
-        "state": "CO",
+        "city": "Leavenworth",
+        "state": "WA",
         "priceLevel": "mid",
-        "score": 94
+        "score": 101
       },
       {
         "city": "Seattle",
         "state": "WA",
         "priceLevel": "premium",
-        "score": 94
+        "score": 106
       }
     ],
     "passed": true
@@ -6712,22 +6712,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Pawleys Island",
-        "state": "SC",
+        "city": "Orlando",
+        "state": "FL",
         "priceLevel": "budget",
-        "score": 92
+        "score": 104
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Sarasota",
+        "state": "FL",
         "priceLevel": "mid",
-        "score": 94
+        "score": 103
       },
       {
         "city": "Sea Island / St. Simons",
         "state": "GA",
         "priceLevel": "premium",
-        "score": 89
+        "score": 103
       }
     ],
     "passed": true
@@ -6750,22 +6750,22 @@
     "pickCount": 3,
     "picks": [
       {
+        "city": "Madison",
+        "state": "WI",
+        "priceLevel": "budget",
+        "score": 106
+      },
+      {
         "city": "Columbus",
         "state": "OH",
-        "priceLevel": "budget",
-        "score": 94
-      },
-      {
-        "city": "Durango",
-        "state": "CO",
         "priceLevel": "mid",
-        "score": 94
+        "score": 106
       },
       {
-        "city": "Harbor Springs / Petoskey",
-        "state": "MI",
+        "city": "Lake Geneva",
+        "state": "WI",
         "priceLevel": "premium",
-        "score": 92
+        "score": 106
       }
     ],
     "passed": true
@@ -6789,7 +6789,7 @@
         "city": "Scottsdale",
         "state": "AZ",
         "priceLevel": "mid",
-        "score": 101
+        "score": 121
       }
     ],
     "passed": true
@@ -6813,7 +6813,7 @@
         "city": "Pinehurst",
         "state": "NC",
         "priceLevel": "mid",
-        "score": 82
+        "score": 108
       }
     ],
     "passed": true
@@ -6837,7 +6837,7 @@
         "city": "Austin",
         "state": "TX",
         "priceLevel": "mid",
-        "score": 100
+        "score": 120
       }
     ],
     "passed": true
@@ -6861,7 +6861,7 @@
         "city": "Bandon",
         "state": "OR",
         "priceLevel": "mid",
-        "score": 86
+        "score": 107
       }
     ],
     "passed": true
@@ -6885,7 +6885,7 @@
         "city": "Myrtle Beach",
         "state": "SC",
         "priceLevel": "mid",
-        "score": 93
+        "score": 113
       }
     ],
     "passed": true
@@ -6909,7 +6909,7 @@
         "city": "Las Vegas",
         "state": "NV",
         "priceLevel": "mid",
-        "score": 98
+        "score": 118
       }
     ],
     "passed": true
@@ -6933,7 +6933,7 @@
         "city": "Branson",
         "state": "MO",
         "priceLevel": "mid",
-        "score": 95
+        "score": 112
       }
     ],
     "passed": true
@@ -6957,7 +6957,7 @@
         "city": "Bend",
         "state": "OR",
         "priceLevel": "mid",
-        "score": 100
+        "score": 117
       }
     ],
     "passed": true
@@ -6981,7 +6981,7 @@
         "city": "Hilton Head",
         "state": "SC",
         "priceLevel": "mid",
-        "score": 89
+        "score": 112
       }
     ],
     "passed": true
@@ -7005,7 +7005,7 @@
         "city": "Charleston",
         "state": "SC",
         "priceLevel": "mid",
-        "score": 98
+        "score": 110
       }
     ],
     "passed": true
@@ -7029,7 +7029,7 @@
         "city": "Traverse City",
         "state": "MI",
         "priceLevel": "mid",
-        "score": 99
+        "score": 116
       }
     ],
     "passed": true
@@ -7053,7 +7053,7 @@
         "city": "Scottsdale",
         "state": "AZ",
         "priceLevel": "mid",
-        "score": 101
+        "score": 121
       }
     ],
     "passed": true
@@ -7121,22 +7121,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Grand Rapids",
-        "state": "MI",
-        "priceLevel": "budget",
-        "score": 94
-      },
-      {
-        "city": "Poconos",
+        "city": "Hershey",
         "state": "PA",
-        "priceLevel": "mid",
-        "score": 86
+        "priceLevel": "budget",
+        "score": 102
       },
       {
         "city": "Hudson Valley",
         "state": "NY",
+        "priceLevel": "mid",
+        "score": 103
+      },
+      {
+        "city": "Williamsburg",
+        "state": "VA",
         "priceLevel": "premium",
-        "score": 82
+        "score": 111
       }
     ],
     "passed": true
@@ -7190,22 +7190,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Boise",
-        "state": "ID",
+        "city": "Walla Walla",
+        "state": "WA",
         "priceLevel": "budget",
-        "score": 100
+        "score": 107
       },
       {
-        "city": "Orlando",
-        "state": "FL",
+        "city": "Cape May",
+        "state": "NJ",
         "priceLevel": "mid",
-        "score": 96
+        "score": 110
       },
       {
-        "city": "Kennebunkport",
-        "state": "ME",
+        "city": "Vail",
+        "state": "CO",
         "priceLevel": "premium",
-        "score": 94
+        "score": 117
       }
     ],
     "passed": true
@@ -7224,22 +7224,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "St. George",
-        "state": "UT",
+        "city": "Leavenworth",
+        "state": "WA",
         "priceLevel": "budget",
-        "score": 94
+        "score": 107
       },
       {
-        "city": "Ocean City",
-        "state": "MD",
+        "city": "Stowe",
+        "state": "VT",
         "priceLevel": "mid",
-        "score": 95
+        "score": 110
       },
       {
-        "city": "Fredericksburg",
-        "state": "TX",
+        "city": "Destin",
+        "state": "FL",
         "priceLevel": "premium",
-        "score": 95
+        "score": 104
       }
     ],
     "passed": true
@@ -7262,7 +7262,7 @@
         "city": "Asheville",
         "state": "NC",
         "priceLevel": "mid",
-        "score": 92
+        "score": 101
       }
     ],
     "passed": true
@@ -7288,13 +7288,13 @@
         "city": "Deadwood",
         "state": "SD",
         "priceLevel": "budget",
-        "score": 100
+        "score": 117
       },
       {
         "city": "Durango",
         "state": "CO",
         "priceLevel": "premium",
-        "score": 102
+        "score": 119
       }
     ],
     "passed": true
@@ -7316,22 +7316,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Flagstaff",
+        "city": "Lake Havasu City",
         "state": "AZ",
         "priceLevel": "budget",
-        "score": 92
+        "score": 98
       },
       {
-        "city": "Durango",
-        "state": "CO",
+        "city": "St. George",
+        "state": "UT",
         "priceLevel": "mid",
-        "score": 94
+        "score": 103
       },
       {
-        "city": "Sedona",
-        "state": "AZ",
+        "city": "Reno",
+        "state": "NV",
         "priceLevel": "premium",
-        "score": 84
+        "score": 97
       }
     ],
     "passed": true
@@ -7353,22 +7353,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Biloxi",
-        "state": "MS",
+        "city": "Pawleys Island",
+        "state": "SC",
         "priceLevel": "budget",
-        "score": 88
+        "score": 101
       },
       {
         "city": "Asheville",
         "state": "NC",
         "priceLevel": "mid",
-        "score": 92
+        "score": 101
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Hilton Head",
+        "state": "SC",
         "priceLevel": "premium",
-        "score": 94
+        "score": 108
       }
     ],
     "passed": true
@@ -7393,19 +7393,19 @@
         "city": "Deadwood",
         "state": "SD",
         "priceLevel": "budget",
-        "score": 92
+        "score": 109
       },
       {
         "city": "Durango",
         "state": "CO",
         "priceLevel": "mid",
-        "score": 94
+        "score": 111
       },
       {
-        "city": "Scottsdale",
-        "state": "AZ",
+        "city": "Vail",
+        "state": "CO",
         "priceLevel": "premium",
-        "score": 94
+        "score": 112
       }
     ],
     "passed": true
@@ -7427,22 +7427,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Lake Havasu City",
-        "state": "AZ",
-        "priceLevel": "budget",
-        "score": 89
-      },
-      {
         "city": "Albuquerque",
         "state": "NM",
-        "priceLevel": "mid",
-        "score": 89
+        "priceLevel": "budget",
+        "score": 98
       },
       {
-        "city": "Durango",
-        "state": "CO",
+        "city": "Flagstaff",
+        "state": "AZ",
+        "priceLevel": "mid",
+        "score": 101
+      },
+      {
+        "city": "Sedona",
+        "state": "AZ",
         "priceLevel": "premium",
-        "score": 94
+        "score": 104
       }
     ],
     "passed": true
@@ -7464,22 +7464,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Myrtle Beach",
-        "state": "SC",
+        "city": "Virginia Beach",
+        "state": "VA",
         "priceLevel": "budget",
-        "score": 89
+        "score": 103
       },
       {
         "city": "Naples",
         "state": "FL",
         "priceLevel": "mid",
-        "score": 92
+        "score": 101
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Sea Island / St. Simons",
+        "state": "GA",
         "priceLevel": "premium",
-        "score": 94
+        "score": 103
       }
     ],
     "passed": true
@@ -7504,19 +7504,19 @@
         "city": "Missoula",
         "state": "MT",
         "priceLevel": "budget",
-        "score": 94
+        "score": 114
       },
       {
         "city": "Bozeman",
         "state": "MT",
         "priceLevel": "mid",
-        "score": 94
+        "score": 111
       },
       {
-        "city": "Scottsdale",
-        "state": "AZ",
+        "city": "Park City",
+        "state": "UT",
         "priceLevel": "premium",
-        "score": 94
+        "score": 112
       }
     ],
     "passed": true
@@ -7538,22 +7538,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Payson",
-        "state": "AZ",
+        "city": "Mesquite",
+        "state": "NV",
         "priceLevel": "budget",
-        "score": 86
+        "score": 97
       },
       {
-        "city": "Durango",
-        "state": "CO",
+        "city": "Santa Fe",
+        "state": "NM",
         "priceLevel": "mid",
-        "score": 94
+        "score": 101
       },
       {
         "city": "Las Vegas",
         "state": "NV",
         "priceLevel": "premium",
-        "score": 91
+        "score": 111
       }
     ],
     "passed": true
@@ -7575,22 +7575,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Virginia Beach",
-        "state": "VA",
+        "city": "Gulf Shores",
+        "state": "AL",
         "priceLevel": "budget",
-        "score": 91
+        "score": 103
       },
       {
-        "city": "Traverse City",
-        "state": "MI",
+        "city": "Savannah",
+        "state": "GA",
         "priceLevel": "mid",
-        "score": 94
+        "score": 101
       },
       {
-        "city": "Hilton Head",
+        "city": "Kiawah Island",
         "state": "SC",
         "priceLevel": "premium",
-        "score": 85
+        "score": 109
       }
     ],
     "passed": true
@@ -7612,22 +7612,22 @@
     "pickCount": 3,
     "picks": [
       {
-        "city": "Fort Collins",
-        "state": "CO",
+        "city": "Rapid City",
+        "state": "SD",
         "priceLevel": "budget",
-        "score": 89
+        "score": 107
       },
       {
-        "city": "Glenwood Springs",
+        "city": "Colorado Springs",
         "state": "CO",
         "priceLevel": "mid",
-        "score": 90
+        "score": 109
       },
       {
-        "city": "Scottsdale",
-        "state": "AZ",
+        "city": "Vail",
+        "state": "CO",
         "priceLevel": "premium",
-        "score": 94
+        "score": 112
       }
     ],
     "passed": true

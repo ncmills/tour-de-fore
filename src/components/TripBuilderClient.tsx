@@ -235,12 +235,12 @@ export default function TripBuilderClient({
       const ci = lookupCourse(insights, name);
       return ci ? { rating: ci.googleRating, reviewCount: ci.reviewCount, driveMinutes: ci.driveMinutes } : {};
     };
-    for (const c of plan.courses) {
+    for (const c of (plan.courses || [])) {
       seen.add(c.name);
       courses.push({ id: c.name, name: c.name, price: c.greenFee + "/pp", detail: c.whyThisCourse, recommended: true, ...enrich(c.name) });
     }
     for (const { key, plan: p } of otherPlans) {
-      for (const c of p.courses) {
+      for (const c of (p.courses || [])) {
         if (!seen.has(c.name)) {
           seen.add(c.name);
           courses.push({ id: c.name, name: c.name, price: c.greenFee + "/pp", detail: c.whyThisCourse, tier: tierLabel[key] || key, ...enrich(c.name) });
@@ -259,12 +259,12 @@ export default function TripBuilderClient({
       const di = lookupDining(insights, name);
       return di ? { rating: di.googleRating, reviewCount: di.reviewCount } : {};
     };
-    for (const d of plan.dining) {
+    for (const d of (plan.dining || [])) {
       seen.add(d.name);
       opts.push({ id: d.name, name: d.name, price: d.priceRange, detail: `${d.type}`, recommended: true, ...enrich(d.name) });
     }
     for (const { key, plan: p } of otherPlans) {
-      for (const d of p.dining) {
+      for (const d of (p.dining || [])) {
         if (!seen.has(d.name)) {
           seen.add(d.name);
           opts.push({ id: d.name, name: d.name, price: d.priceRange, detail: `${d.type}`, tier: tierLabel[key] || key, ...enrich(d.name) });
@@ -299,15 +299,16 @@ export default function TripBuilderClient({
   }, [plan, otherPlans, tierLabel, insights]);
 
   // Merge lodging
+  const safeLodging = plan.lodging || { name: "Lodging TBD", type: "House", costPerNight: "$0" };
   const allLodging = useMemo(() => {
     const opts: Option[] = [{
-      id: plan.lodging.name,
-      name: plan.lodging.name,
-      price: plan.lodging.costPerNight + "/night",
-      detail: plan.lodging.type,
+      id: safeLodging.name,
+      name: safeLodging.name,
+      price: safeLodging.costPerNight + "/night",
+      detail: safeLodging.type,
       recommended: true,
     }];
-    const seen = new Set([plan.lodging.name]);
+    const seen = new Set([safeLodging.name]);
     for (const { key, plan: p } of otherPlans) {
       if (p.lodging && !seen.has(p.lodging.name)) {
         seen.add(p.lodging.name);
@@ -315,7 +316,7 @@ export default function TripBuilderClient({
       }
     }
     return opts;
-  }, [plan, otherPlans, tierLabel]);
+  }, [safeLodging, otherPlans, tierLabel]);
 
   // Activity options
   const activityOptions: Option[] = ACTIVITIES.map((a) => ({ id: a, name: a }));
@@ -327,7 +328,7 @@ export default function TripBuilderClient({
   const numNights = numDays + 2;
 
   // Initialize day selections
-  const [lodging, setLodging] = useState(plan.lodging.name);
+  const [lodging, setLodging] = useState(safeLodging.name);
   const [days, setDays] = useState<DaySelections[]>(() => {
     const init: DaySelections[] = [];
     for (let d = 0; d < numDays; d++) {
@@ -434,14 +435,14 @@ export default function TripBuilderClient({
   };
 
   // ── Price calculation ──
-  const aiEstimate = useMemo(() => parseDollars(plan.estimatedBudget?.perPerson), [plan]);
+  const aiEstimate = useMemo(() => parseDollars(plan.estimatedBudget?.perPerson || ""), [plan]);
 
   // Build a map of course name → green fee (number)
   const courseFeeMap = useMemo(() => {
     const m: Record<string, number> = {};
-    for (const c of plan.courses) m[c.name] = parseDollars(c.greenFee);
+    for (const c of (plan.courses || [])) m[c.name] = parseDollars(c.greenFee);
     for (const { plan: p } of otherPlans) {
-      for (const c of p.courses) {
+      for (const c of (p.courses || [])) {
         if (!(c.name in m)) m[c.name] = parseDollars(c.greenFee);
       }
     }
@@ -451,9 +452,9 @@ export default function TripBuilderClient({
   // Build a map of dining name → per-person cost
   const diningFeeMap = useMemo(() => {
     const m: Record<string, number> = {};
-    for (const d of plan.dining) m[d.name] = diningPricePerPerson(d.priceRange);
+    for (const d of (plan.dining || [])) m[d.name] = diningPricePerPerson(d.priceRange);
     for (const { plan: p } of otherPlans) {
-      for (const d of p.dining) {
+      for (const d of (p.dining || [])) {
         if (!(d.name in m)) m[d.name] = diningPricePerPerson(d.priceRange);
       }
     }
@@ -461,7 +462,7 @@ export default function TripBuilderClient({
   }, [plan, otherPlans]);
 
   // Default lodging cost per night
-  const defaultLodgingCost = useMemo(() => parseDollars(plan.lodging.costPerNight), [plan]);
+  const defaultLodgingCost = useMemo(() => parseDollars(safeLodging.costPerNight), [safeLodging]);
 
   // Current lodging cost per night
   const currentLodgingCost = useMemo(() => {
@@ -520,7 +521,7 @@ export default function TripBuilderClient({
   // Initial price from default selections (for delta arrow)
   const initialPricePerPerson = useMemo(() => {
     const lodgingPerPerson = (defaultLodgingCost * numNights) / groupSize;
-    const defaultGolfTotal = plan.courses.reduce((sum, c) => sum + parseDollars(c.greenFee), 0);
+    const defaultGolfTotal = (plan.courses || []).reduce((sum, c) => sum + parseDollars(c.greenFee), 0);
     // Default dining: use the initial day selections (first N dining options)
     let defaultDiningTotal = 0;
     for (let d = 0; d < numDays; d++) {

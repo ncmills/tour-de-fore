@@ -12,43 +12,122 @@ export function buildFreePreview(
   priceLevel: PriceLevel,
   reasons: string[] = []
 ): FreePreview {
-  // Pick the best-fit lodging (largest capacity that fits group)
-  const sortedLodging = [...destination.lodging].sort((a, b) => {
-    // Prefer lodging that fits the group, then by rating
-    const aFits = state.groupSize <= a.sleeps[1] ? 1 : 0;
-    const bFits = state.groupSize <= b.sleeps[1] ? 1 : 0;
-    if (aFits !== bFits) return bFits - aFits;
-    return (b.avgRating || 4.5) - (a.avgRating || 4.5);
-  });
-  const bestLodging = sortedLodging[0];
+  // Pick lodging appropriate to the tier
+  const fittingLodging = [...destination.lodging]
+    .filter((l) => state.groupSize <= l.sleeps[1])
+    .sort((a, b) => {
+      const aCost = (a.nightlyRange[0] + a.nightlyRange[1]) / 2;
+      const bCost = (b.nightlyRange[0] + b.nightlyRange[1]) / 2;
+      // budget = cheapest, premium = most expensive, mid = median
+      return priceLevel === "premium" ? bCost - aCost : aCost - bCost;
+    });
+  const allLodgingSorted = fittingLodging.length > 0
+    ? fittingLodging
+    : [...destination.lodging].sort((a, b) => {
+        const aCost = (a.nightlyRange[0] + a.nightlyRange[1]) / 2;
+        const bCost = (b.nightlyRange[0] + b.nightlyRange[1]) / 2;
+        return priceLevel === "premium" ? bCost - aCost : aCost - bCost;
+      });
+  const bestLodging = priceLevel === "mid" && allLodgingSorted.length > 1
+    ? allLodgingSorted[Math.floor(allLodgingSorted.length / 2)]
+    : allLodgingSorted[0];
 
-  // Pick 3 courses — mix tiers based on user preference
-  const desiredTiers = getCourseQualityTiers(state.courseQuality);
-  const matchingCourses = destination.courses
-    .filter((c) => desiredTiers.includes(c.tier))
-    .sort((a, b) => (b.googleRating || 4.5) - (a.googleRating || 4.5));
+  // Pick courses appropriate to the tier
+  const tierPriority: Record<PriceLevel, string[]> = {
+    budget: ["budget", "solid"],
+    mid: ["solid", "premium"],
+    premium: ["bucket-list", "premium"],
+  };
+  const preferredTiers = tierPriority[priceLevel];
+  const coursesForTier = destination.courses
+    .filter((c) => preferredTiers.includes(c.tier))
+    .sort((a, b) => {
+      const aFee = (a.greenFeeRange[0] + a.greenFeeRange[1]) / 2;
+      const bFee = (b.greenFeeRange[0] + b.greenFeeRange[1]) / 2;
+      return priceLevel === "premium" ? bFee - aFee : aFee - bFee;
+    });
   const otherCourses = destination.courses
-    .filter((c) => !desiredTiers.includes(c.tier))
+    .filter((c) => !preferredTiers.includes(c.tier))
     .sort((a, b) => (b.googleRating || 4.5) - (a.googleRating || 4.5));
-  const selectedCourses = [...matchingCourses, ...otherCourses].slice(0, 3);
+  const selectedCourses = [...coursesForTier, ...otherCourses].slice(0, 3);
 
-  // Estimate budget per person
+  // Tier-aware pricing
   const golfDays = Math.max(state.numberOfDays - 1, 1);
   const rounds = golfDays * 2;
+  // For budget use low end of fees, premium use high end, mid use midpoint
+  const feeSelector: Record<PriceLevel, (c: typeof selectedCourses[0]) => number> = {
+    budget: (c) => c.greenFeeRange[0],
+    mid: (c) => (c.greenFeeRange[0] + c.greenFeeRange[1]) / 2,
+    premium: (c) => c.greenFeeRange[1],
+  };
   const avgGreenFee = selectedCourses.length > 0
-    ? selectedCourses.reduce((s, c) => s + (c.greenFeeRange[0] + c.greenFeeRange[1]) / 2, 0) / selectedCourses.length
+    ? selectedCourses.reduce((s, c) => s + feeSelector[priceLevel](c), 0) / selectedCourses.length
     : 100;
   const nights = state.numberOfDays + 1;
-  const lodgingPerPerson = bestLodging
-    ? ((bestLodging.nightlyRange[0] + bestLodging.nightlyRange[1]) / 2 * nights) / Math.max(state.groupSize, 8)
-    : 200;
-  const foodPerDay = 75;
-  const totalEstimate = Math.round(avgGreenFee * rounds + lodgingPerPerson + foodPerDay * state.numberOfDays + 200);
+  // For budget use low end of lodging, premium use high end
+  const lodgingNightly = bestLodging
+    ? (priceLevel === "budget" ? bestLodging.nightlyRange[0]
+       : priceLevel === "premium" ? bestLodging.nightlyRange[1]
+       : (bestLodging.nightlyRange[0] + bestLodging.nightlyRange[1]) / 2)
+    : 300;
+  const lodgingPerPerson = (lodgingNightly * nights) / Math.max(state.groupSize, 2);
+  // Data-driven food estimate from actual dining prices
+  const priceToNum: Record<string, number> = { "$": 30, "$$": 60, "$$$": 100, "$$$$": 150 };
+  const tierDiningSelector: Record<PriceLevel, (spots: typeof destination.dining) => number> = {
+    budget: (spots) => {
+      const cheap = spots.filter(d => d.priceRange === "$" || d.priceRange === "$$");
+      const pool = cheap.length > 0 ? cheap : spots;
+      return pool.reduce((s, d) => s + (priceToNum[d.priceRange] || 60), 0) / pool.length;
+    },
+    mid: (spots) => spots.reduce((s, d) => s + (priceToNum[d.priceRange] || 60), 0) / spots.length,
+    premium: (spots) => {
+      const upscale = spots.filter(d => d.priceRange === "$$$" || d.priceRange === "$$$$");
+      const pool = upscale.length > 0 ? upscale : spots;
+      return pool.reduce((s, d) => s + (priceToNum[d.priceRange] || 100), 0) / pool.length;
+    },
+  };
+  // 2 meals/day out (breakfast at the house)
+  const foodPerDay = destination.dining.length > 0
+    ? Math.round(tierDiningSelector[priceLevel](destination.dining) * 2)
+    : ({ budget: 50, mid: 75, premium: 120 })[priceLevel];
 
-  // Format budget range
-  const low = Math.round(totalEstimate * 0.8);
-  const high = Math.round(totalEstimate * 1.3);
-  const estimatedBudget = `$${Math.round(low / 100) * 100}–$${Math.round(high / 100) * 100}`;
+  // Data-driven activity estimate (arrival day activity)
+  const activityEstimate = destination.activities.length > 0
+    ? Math.round(
+        destination.activities.reduce((s, a) =>
+          s + (priceLevel === "budget" ? a.pricePerPerson[0] : priceLevel === "premium" ? a.pricePerPerson[1] : (a.pricePerPerson[0] + a.pricePerPerson[1]) / 2), 0
+        ) / destination.activities.length
+      )
+    : 0;
+
+  // Transport estimate: party bus for mid/premium if available, rental car for budget
+  const gs = Math.max(state.groupSize, 2);
+  let transportEstimate = 50 * state.numberOfDays; // default: rental car split
+  if (priceLevel !== "budget" && destination.partyBuses.length > 0 && gs >= 8) {
+    const bus = destination.partyBuses[0];
+    const hourlyRate = priceLevel === "premium" ? bus.hourlyRate[1] : (bus.hourlyRate[0] + bus.hourlyRate[1]) / 2;
+    // ~6 hours/day for golf days
+    transportEstimate = Math.round((hourlyRate * 6 * golfDays) / gs);
+  }
+
+  // Private chef estimate (1 night for mid, 2 for premium)
+  let chefEstimate = 0;
+  if (destination.privateChefs.length > 0 && priceLevel !== "budget") {
+    const chef = destination.privateChefs[0];
+    const ppCost = priceLevel === "premium" ? chef.pricePerPerson[1] : chef.pricePerPerson[0];
+    const chefNights = priceLevel === "premium" ? 2 : 1;
+    chefEstimate = ppCost * chefNights;
+  }
+
+  const totalEstimate = Math.round(
+    avgGreenFee * rounds + lodgingPerPerson + foodPerDay * state.numberOfDays +
+    activityEstimate + transportEstimate + chefEstimate
+  );
+
+  // Format budget range (tighter: ±15%)
+  const low = Math.round(totalEstimate * 0.85);
+  const high = Math.round(totalEstimate * 1.15);
+  const estimatedBudget = `$${Math.round(low / 50) * 50}–$${Math.round(high / 50) * 50}`;
 
   // Build teasers — one visible item per category to hook the user
   const arrivalActivity = destination.activities.find((a) => a.bestFor === "arrival day" && a.groupFriendly)

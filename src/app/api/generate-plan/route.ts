@@ -16,8 +16,10 @@ import {
   getThreeDestinations,
   buildSystemPrompt,
   buildUserMessage,
+  type PriceTargets,
 } from "@/lib/planner-prompt";
 import { buildDestinationContext, setPopularityScores } from "@/data/query";
+import type { Destination } from "@/data/types";
 import { getAllPopularityScores } from "@/lib/kv";
 import { buildFreePreview } from "@/lib/free-plan";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
@@ -72,11 +74,70 @@ function tryParseJSON(jsonStr: string): unknown | null {
   return null;
 }
 
+/** Compute tier-specific price targets from destination data */
+function computePriceTargets(destination: Destination, groupSize: number, numberOfDays: number): PriceTargets {
+  const golfDays = Math.max(numberOfDays - 1, 1);
+  const rounds = golfDays * 2;
+  const nights = numberOfDays + 1;
+  const gs = Math.max(groupSize, 2);
+
+  // Sort courses by avg fee
+  const coursesByFee = [...destination.courses].sort(
+    (a, b) => (a.greenFeeRange[0] + a.greenFeeRange[1]) / 2 - (b.greenFeeRange[0] + b.greenFeeRange[1]) / 2
+  );
+  // Budget: cheapest courses at low-end fees
+  const budgetCourses = coursesByFee.slice(0, Math.max(3, Math.ceil(coursesByFee.length / 3)));
+  const budgetAvgFee = budgetCourses.reduce((s, c) => s + c.greenFeeRange[0], 0) / budgetCourses.length;
+  // Premium: most expensive courses at high-end fees
+  const premCourses = coursesByFee.slice(-Math.max(3, Math.ceil(coursesByFee.length / 3)));
+  const premAvgFee = premCourses.reduce((s, c) => s + c.greenFeeRange[1], 0) / premCourses.length;
+  // Mid: midpoint
+  const midAvgFee = coursesByFee.reduce((s, c) => s + (c.greenFeeRange[0] + c.greenFeeRange[1]) / 2, 0) / coursesByFee.length;
+
+  // Lodging sorted by cost
+  const lodgingByPrice = [...destination.lodging].sort(
+    (a, b) => (a.nightlyRange[0] + a.nightlyRange[1]) / 2 - (b.nightlyRange[0] + b.nightlyRange[1]) / 2
+  );
+  const cheapLodging = lodgingByPrice[0];
+  const expLodging = lodgingByPrice[lodgingByPrice.length - 1];
+  const midLodging = lodgingByPrice[Math.floor(lodgingByPrice.length / 2)];
+
+  const budgetLodgingPP = (cheapLodging.nightlyRange[0] * nights) / gs;
+  const midLodgingPP = ((midLodging.nightlyRange[0] + midLodging.nightlyRange[1]) / 2 * nights) / gs;
+  const premLodgingPP = (expLodging.nightlyRange[1] * nights) / gs;
+
+  // Food estimates per tier
+  const budgetFood = 50 * numberOfDays;
+  const midFood = 75 * numberOfDays;
+  const premFood = 120 * numberOfDays;
+
+  // Extras (activities, transport)
+  const budgetExtras = 100;
+  const midExtras = 200;
+  const premExtras = 400;
+
+  const budgetTotal = Math.round(budgetAvgFee * rounds + budgetLodgingPP + budgetFood + budgetExtras);
+  const midTotal = Math.round(midAvgFee * rounds + midLodgingPP + midFood + midExtras);
+  const premTotal = Math.round(premAvgFee * rounds + premLodgingPP + premFood + premExtras);
+
+  // Ensure minimum 20% gap between tiers
+  const adjustedMid = Math.max(midTotal, Math.round(budgetTotal * 1.2));
+  const adjustedPrem = Math.max(premTotal, Math.round(adjustedMid * 1.3));
+
+  const fmt = (n: number) => `$${Math.round(n / 50) * 50}`;
+  return {
+    imp: `${fmt(budgetTotal * 0.9)}–${fmt(budgetTotal * 1.1)}`,
+    devil: `${fmt(adjustedMid * 0.9)}–${fmt(adjustedMid * 1.1)}`,
+    demonKing: `${fmt(adjustedPrem * 0.9)}–${fmt(adjustedPrem * 1.1)}`,
+  };
+}
+
 async function generateSingleTier(
   client: Anthropic,
   state: Parameters<typeof buildUserMessage>[0],
   destinationContext: string,
   tier: "imp" | "devil" | "demonKing",
+  priceTargets?: PriceTargets,
   attempt = 1
 ): Promise<GeneratedPlan> {
   // On final attempt: increase tokens and drop temperature for more deterministic output
@@ -87,7 +148,7 @@ async function generateSingleTier(
     temperature: isLastAttempt ? 0.1 : 0.3,
     system: buildSystemPrompt(destinationContext),
     messages: [
-      { role: "user", content: buildUserMessage(state, tier) },
+      { role: "user", content: buildUserMessage(state, tier, priceTargets) },
       ...(attempt > 1 ? [{ role: "assistant" as const, content: "{" }] : []),
     ],
   });
@@ -104,14 +165,34 @@ async function generateSingleTier(
   // On retries, we prefill "{" as assistant message — prepend it back
   const rawText = attempt > 1 ? "{" + textBlock.text : textBlock.text;
   const parsed = tryParseJSON(rawText);
-  if (parsed) return parsed as GeneratedPlan;
+  if (parsed) {
+    const plan = parsed as GeneratedPlan;
+    // Ensure critical fields exist — Claude's truncated JSON can omit them
+    plan.lodging = plan.lodging || { name: "Lodging TBD", type: "House", address: "", costPerNight: "$0", rationale: "" };
+    plan.courses = Array.isArray(plan.courses) ? plan.courses : [];
+    plan.dining = Array.isArray(plan.dining) ? plan.dining : [];
+    plan.bars = Array.isArray(plan.bars) ? plan.bars : [];
+    plan.schedule = Array.isArray(plan.schedule) ? plan.schedule : [];
+    plan.proTips = Array.isArray(plan.proTips) ? plan.proTips : [];
+    plan.estimatedBudget = plan.estimatedBudget || { perPerson: "$0", breakdown: [] };
+    plan.groupLogistics = plan.groupLogistics || { teeTimeStrategy: "", transport: "", packingList: [] };
+    plan.numberOfDays = plan.numberOfDays || plan.schedule.length || 3;
+    plan.groupSize = plan.groupSize || state.groupSize || 12;
+
+    // If courses are completely empty after repair, retry — this is a critical field
+    if (plan.courses.length === 0 && attempt < 3) {
+      console.warn(`${tier} has 0 courses after parse repair, retrying...`);
+      return generateSingleTier(client, state, destinationContext, tier, priceTargets, attempt + 1);
+    }
+    return plan;
+  }
 
   console.error(`JSON parse failed for ${tier} attempt=${attempt} (${message.usage.output_tokens} tokens, stop: ${message.stop_reason}). First 500 chars: ${textBlock.text.trim().slice(0, 500)}`);
 
   // Retry up to 3 attempts
   if (attempt < 3) {
     console.log(`Retrying ${tier} tier (attempt ${attempt + 1})...`);
-    return generateSingleTier(client, state, destinationContext, tier, attempt + 1);
+    return generateSingleTier(client, state, destinationContext, tier, priceTargets, attempt + 1);
   }
 
   throw new Error(`Plan generation failed for ${tier} tier after ${attempt} attempts`);
@@ -121,6 +202,7 @@ async function generateAllTiersInOne(
   client: Anthropic,
   state: Parameters<typeof buildUserMessage>[0],
   destinationContext: string,
+  priceTargets?: PriceTargets,
   attempt = 1
 ): Promise<ThreePlanResult | null> {
   const isLastAttempt = attempt >= 2;
@@ -131,7 +213,7 @@ async function generateAllTiersInOne(
       temperature: isLastAttempt ? 0.1 : 0.3,
       system: buildSystemPrompt(destinationContext),
       messages: [
-        { role: "user", content: buildUserMessage(state, "allTiers") },
+        { role: "user", content: buildUserMessage(state, "allTiers", priceTargets) },
         ...(attempt > 1 ? [{ role: "assistant" as const, content: "[" }] : []),
       ],
     });
@@ -145,12 +227,25 @@ async function generateAllTiersInOne(
     const parsed = tryParseJSON(rawText);
 
     if (Array.isArray(parsed) && parsed.length === 3) {
-      return { imp: parsed[0] as GeneratedPlan, devil: parsed[1] as GeneratedPlan, demonKing: parsed[2] as GeneratedPlan };
+      const sanitize = (p: GeneratedPlan): GeneratedPlan => ({
+        ...p,
+        lodging: p.lodging || { name: "Lodging TBD", type: "House", address: "", costPerNight: "$0", rationale: "" },
+        courses: Array.isArray(p.courses) ? p.courses : [],
+        dining: Array.isArray(p.dining) ? p.dining : [],
+        bars: Array.isArray(p.bars) ? p.bars : [],
+        schedule: Array.isArray(p.schedule) ? p.schedule : [],
+        proTips: Array.isArray(p.proTips) ? p.proTips : [],
+        estimatedBudget: p.estimatedBudget || { perPerson: "$0", breakdown: [] },
+        groupLogistics: p.groupLogistics || { teeTimeStrategy: "", transport: "", packingList: [] },
+        numberOfDays: p.numberOfDays || p.schedule?.length || 3,
+        groupSize: p.groupSize || state.groupSize || 12,
+      });
+      return { imp: sanitize(parsed[0] as GeneratedPlan), devil: sanitize(parsed[1] as GeneratedPlan), demonKing: sanitize(parsed[2] as GeneratedPlan) };
     }
 
     if (attempt < 2) {
       console.log(`allTiers parse incomplete (got ${Array.isArray(parsed) ? parsed.length : 'non-array'}), retrying...`);
-      return generateAllTiersInOne(client, state, destinationContext, attempt + 1);
+      return generateAllTiersInOne(client, state, destinationContext, priceTargets, attempt + 1);
     }
     return null;
   } catch (err) {
@@ -162,18 +257,19 @@ async function generateAllTiersInOne(
 async function generatePlansForDestination(
   client: Anthropic,
   state: Parameters<typeof buildUserMessage>[0],
-  destinationContext: string
+  destinationContext: string,
+  priceTargets?: PriceTargets
 ): Promise<ThreePlanResult> {
   // Try generating all 3 tiers in a single call (saves ~60% input tokens)
-  const combined = await generateAllTiersInOne(client, state, destinationContext);
+  const combined = await generateAllTiersInOne(client, state, destinationContext, priceTargets);
   if (combined) return combined;
 
   // Fallback: generate each tier individually in parallel
   console.log("Falling back to individual tier generation...");
   const [imp, devil, demonKing] = await Promise.all([
-    generateSingleTier(client, state, destinationContext, "imp"),
-    generateSingleTier(client, state, destinationContext, "devil"),
-    generateSingleTier(client, state, destinationContext, "demonKing"),
+    generateSingleTier(client, state, destinationContext, "imp", priceTargets),
+    generateSingleTier(client, state, destinationContext, "devil", priceTargets),
+    generateSingleTier(client, state, destinationContext, "demonKing", priceTargets),
   ]);
   return { imp, devil, demonKing };
 }
@@ -280,23 +376,30 @@ export async function POST(req: NextRequest) {
 
         const client = new Anthropic({ timeout: 240_000 }); // 4 min — our NDJSON stream keeps Vercel alive
 
-        // Generate ALL destinations in parallel
-        send({ type: "status", message: `Building plans for ${picks.map(p => p.destination.city).join(", ")}...` });
+        // Generate plans — deduplicate same-destination picks (specific city case)
+        const uniqueCities = [...new Set(picks.map(p => p.destination.id))];
+        send({ type: "status", message: `Building plans for ${[...new Set(picks.map(p => p.destination.city))].join(", ")}...` });
 
-        const recommendations = await Promise.all(
-          picks.map(async (pick) => {
+        // Generate plans for each unique destination
+        const planCache = new Map<string, ThreePlanResult>();
+        await Promise.all(
+          uniqueCities.map(async (destId) => {
+            const pick = picks.find(p => p.destination.id === destId)!;
             const context = buildDestinationContext(pick.destination);
-            const plans = await generatePlansForDestination(client, state, context);
-            return {
-              destinationId: pick.destination.id,
-              city: pick.destination.city,
-              state: pick.destination.state,
-              tagline: pick.destination.tagline,
-              priceLevel: pick.priceLevel,
-              plans,
-            } satisfies DestinationRecommendation;
+            const priceTargets = computePriceTargets(pick.destination, state.groupSize, state.numberOfDays);
+            const plans = await generatePlansForDestination(client, state, context, priceTargets);
+            planCache.set(destId, plans);
           })
         );
+
+        const recommendations = picks.map((pick) => ({
+          destinationId: pick.destination.id,
+          city: pick.destination.city,
+          state: pick.destination.state,
+          tagline: pick.destination.tagline,
+          priceLevel: pick.priceLevel,
+          plans: planCache.get(pick.destination.id)!,
+        } satisfies DestinationRecommendation));
 
         send({ type: "status", message: "Saving your trip..." });
 
@@ -333,7 +436,12 @@ export async function POST(req: NextRequest) {
         };
 
         await storePlan(storedPlan);
-        await storeAttendees(planId, [{ name: state.organizerName, email }]);
+        // Store organizer + any attendees from the wizard
+        const allAttendees = [
+          { name: state.organizerName, email },
+          ...(state.attendees || []).filter((a) => a.email && a.email !== email),
+        ];
+        await storeAttendees(planId, allAttendees);
 
         if (email) {
           await addPlanToUser(email, planId);

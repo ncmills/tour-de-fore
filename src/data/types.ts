@@ -36,6 +36,7 @@ export interface GolfCourse {
   style: CourseStyle;
   driveMinutes: number; // from city center
   url?: string;
+  imageUrl?: string; // OG image from course website
   highlight: string; // one-line sell
   // Sentiment / hype fields
   googleRating?: number; // e.g. 4.6

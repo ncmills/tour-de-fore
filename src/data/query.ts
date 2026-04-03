@@ -181,10 +181,13 @@ function computePriceIndex(d: Destination, groupSize: number, numberOfDays: numb
   const rounds = golfDays * 2;
   const nights = numberOfDays + 1; // arrive night before, leave after last day
 
-  // Use median lodging cost (not just cheapest floor) for better price differentiation
+  // Lodging: use actual group size for per-person split
+  // Small groups (<6) won't fill a big house — use cheapest lodging option that fits
   const lodgingCosts = d.lodging.map((l) => (l.nightlyRange[0] + l.nightlyRange[1]) / 2).sort((a, b) => a - b);
   const medianLodging = lodgingCosts[Math.floor(lodgingCosts.length / 2)];
-  const lodgingPerPerson = (medianLodging * nights) / Math.max(groupSize, 8);
+  const smallGroupLodging = lodgingCosts[0]; // cheapest option for small groups
+  const effectiveLodging = groupSize < 6 ? smallGroupLodging : medianLodging;
+  const lodgingPerPerson = (effectiveLodging * nights) / Math.max(groupSize, 2);
 
   // Data-driven food estimate from actual dining prices (2.5 meals/day)
   const foodPerDay = d.dining.length > 0
@@ -421,17 +424,16 @@ export function pickThreeDestinations(
   // Get primary region destinations
   let primaryDestinations = filterDestinations(options);
 
-  // If specific city, just return that city at all price levels
+  // If specific city, return all 3 price tiers for that same destination
   if (options.specificCity && primaryDestinations.length > 0) {
     const d = primaryDestinations[0];
     const { score, reasons } = scoreDestination(d, options);
-    return [{
-      destination: d,
-      priceLevel: "mid" as PriceLevel,
-      score,
-      priceIndex: computePriceIndex(d, options.groupSize || 12, options.numberOfDays || 3),
-      reasons,
-    }];
+    const priceIndex = computePriceIndex(d, options.groupSize || 12, options.numberOfDays || 3);
+    return [
+      { destination: d, priceLevel: "budget" as PriceLevel, score, priceIndex, reasons },
+      { destination: d, priceLevel: "mid" as PriceLevel, score, priceIndex, reasons },
+      { destination: d, priceLevel: "premium" as PriceLevel, score, priceIndex, reasons },
+    ];
   }
 
   // Score and sort primary destinations
@@ -591,7 +593,7 @@ export function buildDestinationContext(destination: Destination): string {
   const courseList = d.courses
     .map(
       (c) =>
-        `  - ${c.name} (${c.tier}) — $${c.greenFeeRange[0]}-${c.greenFeeRange[1]}/person, ${c.holes}h par ${c.par}, ${c.yardage}yd, slope ${c.slope}, rating ${c.rating}, ${c.style}${c.walkable ? ", walkable" : ""}, ${c.driveMinutes} min drive — ${c.highlight}${c.url ? ` | ${c.url}` : ""}`
+        `  - ${c.name} (${c.tier}) — $${c.greenFeeRange[0]}-${c.greenFeeRange[1]}/person, ${c.holes}h par ${c.par}, ${c.yardage}yd, ${c.style}${c.walkable ? ", walkable" : ""}, ${c.driveMinutes} min drive — ${c.highlight}${c.url ? ` | ${c.url}` : ""}`
     )
     .join("\n");
 
