@@ -2,12 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "motion/react";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useSearchParams } from "next/navigation";
-import TubeTv from "./TubeTv";
-import VideoGrid from "./VideoGrid";
 import RotatingTagline from "./RotatingTagline";
+
+const TubeTv = dynamic(() => import("./TubeTv"), { ssr: false });
+const VideoGrid = dynamic(() => import("./VideoGrid"), { ssr: false });
 
 const HYPE_VIDEO = "/hype-audio.mp4"; // has audio; TubeTv starts muted, user can unmute
 
@@ -209,7 +211,7 @@ export default function HomeClient() {
           {/* Rotating tagline above logo */}
           <RotatingTagline isMobile={isMobile} />
           <Image
-            src="/logo-full.png"
+            src="/logo-full.webp"
             alt="Tour de Fore"
             width={4504}
             height={3776}
@@ -238,7 +240,7 @@ export default function HomeClient() {
             textDecoration: "none",
           }}
         >
-          <img src="/devil-mascot.png" alt="Tour de Fore member login" style={{ width: isMobile ? 50 : 80, height: "auto" }} />
+          <img src="/devil-mascot.webp" alt="Tour de Fore member login" style={{ width: isMobile ? 50 : 80, height: "auto" }} />
           <span style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.9)", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "var(--font-inter), sans-serif", marginTop: "-8px" }}>{isLoggedIn ? "My Account" : "Login"}</span>
         </motion.a>
       )}
@@ -261,7 +263,7 @@ export default function HomeClient() {
               alignItems: "center",
               justifyContent: "center",
               gap: isMobile ? "0.8rem" : "1rem 2.5rem",
-              paddingTop: isMobile ? "clamp(380px, 65vh, 500px)" : "clamp(540px, 68vh, 680px)",
+              paddingTop: isMobile ? "clamp(308px, 50vh, 400px)" : "clamp(540px, 68vh, 680px)",
               paddingLeft: "1.5rem",
               paddingRight: "1.5rem",
             }}

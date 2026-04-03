@@ -272,6 +272,8 @@ body.menu-open {
 
 .neon-stats {
   animation: neonFlicker 4s ease-in-out infinite;
+  will-change: opacity;
+  contain: style;
 }
 .neon-stats span {
   animation: neonFlicker 3s ease-in-out infinite;
@@ -281,60 +283,6 @@ body.menu-open {
 .neon-stats span:nth-child(4) { animation-delay: 0.9s; }
 .neon-stats span:nth-child(5) { animation-delay: 1.2s; }
 .neon-stats span:nth-child(6) { animation-delay: 1.5s; }
-
-@keyframes neonDying {
-  0% { opacity: 1; text-shadow: 0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3); }
-  2% { opacity: 0.05; text-shadow: none; }
-  3.5% { opacity: 0.8; text-shadow: 0 0 4px rgba(255,106,40,0.5); }
-  4.5% { opacity: 0; text-shadow: none; }
-  6% { opacity: 1; text-shadow: 0 0 10px rgba(255,106,40,1), 0 0 25px rgba(255,60,20,0.8), 0 0 50px rgba(255,40,10,0.4); }
-  8% { opacity: 0.12; text-shadow: none; }
-  8.5% { opacity: 0.6; }
-  9% { opacity: 0; text-shadow: none; }
-  10% { opacity: 0.9; text-shadow: 0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6); }
-  12% { opacity: 0.04; text-shadow: none; }
-  13% { opacity: 1; text-shadow: 0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3); }
-  22% { opacity: 1; }
-  23% { opacity: 0; text-shadow: none; }
-  23.8% { opacity: 0.7; text-shadow: 0 0 3px rgba(255,106,40,0.3); }
-  24.5% { opacity: 0.08; text-shadow: none; }
-  25% { opacity: 0.5; }
-  25.5% { opacity: 0; text-shadow: none; }
-  26.5% { opacity: 1; text-shadow: 0 0 10px rgba(255,106,40,1), 0 0 25px rgba(255,60,20,0.8), 0 0 50px rgba(255,40,10,0.4); }
-  38% { opacity: 1; }
-  39% { opacity: 0.06; text-shadow: none; }
-  39.5% { opacity: 0.4; }
-  40% { opacity: 0; text-shadow: none; }
-  41% { opacity: 0.85; text-shadow: 0 0 5px rgba(255,106,40,0.6); }
-  42% { opacity: 0.03; text-shadow: none; }
-  43% { opacity: 1; text-shadow: 0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3); }
-  55% { opacity: 1; }
-  56% { opacity: 0; text-shadow: none; }
-  56.5% { opacity: 0.65; text-shadow: 0 0 3px rgba(255,106,40,0.3); }
-  57% { opacity: 0; text-shadow: none; }
-  57.8% { opacity: 0.3; }
-  58.2% { opacity: 0; text-shadow: none; }
-  59% { opacity: 0.9; text-shadow: 0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6); }
-  60% { opacity: 0.07; text-shadow: none; }
-  61% { opacity: 1; text-shadow: 0 0 10px rgba(255,106,40,1), 0 0 25px rgba(255,60,20,0.8), 0 0 50px rgba(255,40,10,0.4); }
-  72% { opacity: 1; }
-  73% { opacity: 0.1; text-shadow: none; }
-  73.5% { opacity: 0.5; }
-  74% { opacity: 0; text-shadow: none; }
-  75% { opacity: 0.75; text-shadow: 0 0 4px rgba(255,106,40,0.4); }
-  75.5% { opacity: 0; text-shadow: none; }
-  76.5% { opacity: 1; text-shadow: 0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3); }
-  88% { opacity: 1; }
-  89% { opacity: 0.04; text-shadow: none; }
-  89.5% { opacity: 0.6; }
-  90% { opacity: 0; text-shadow: none; }
-  91% { opacity: 1; text-shadow: 0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3); }
-  100% { opacity: 1; text-shadow: 0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3); }
-}
-
-.neon-dying {
-  animation: neonDying 2.5s ease-in-out infinite;
-}
 
 @keyframes bloodDrip {
   0% { transform: scaleY(0); opacity: 0; transform-origin: top; }
@@ -445,4 +393,50 @@ body.menu-open {
 
 .flame-glow {
   animation: flameGlow 2.5s ease-in-out infinite;
+  will-change: box-shadow;
+}
+
+/* ── Neon tagline flicker (CSS-only, replaces per-character JS timers) ── */
+@keyframes neonTaglineFlicker {
+  0%, 100% { opacity: 1; }
+  4% { opacity: 0.85; }
+  6% { opacity: 1; }
+  22% { opacity: 1; }
+  23% { opacity: 0.6; }
+  24% { opacity: 0.9; }
+  25% { opacity: 0.4; }
+  26% { opacity: 1; }
+  50% { opacity: 1; }
+  51% { opacity: 0.7; }
+  52% { opacity: 1; }
+  72% { opacity: 1; }
+  73% { opacity: 0.5; }
+  74% { opacity: 0.8; }
+  75% { opacity: 1; }
+}
+.neon-tagline-text {
+  animation: neonTaglineFlicker 3.5s ease-in-out infinite;
+  will-change: opacity;
+}
+@media (max-width: 640px) {
+  @keyframes neonTaglineFlickerMobile {
+    0%, 100% { opacity: 1; }
+    4% { opacity: 0.88; }
+    6% { opacity: 1; }
+    22% { opacity: 1; }
+    23% { opacity: 0.68; }
+    24% { opacity: 0.92; }
+    25% { opacity: 0.52; }
+    26% { opacity: 1; }
+    50% { opacity: 1; }
+    51% { opacity: 0.76; }
+    52% { opacity: 1; }
+    72% { opacity: 1; }
+    73% { opacity: 0.6; }
+    74% { opacity: 0.84; }
+    75% { opacity: 1; }
+  }
+  .neon-tagline-text {
+    animation: neonTaglineFlickerMobile 3.5s ease-in-out infinite;
+  }
 }

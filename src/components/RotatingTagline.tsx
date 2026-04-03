@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
 const TAGLINES = [
@@ -13,73 +13,6 @@ const CYCLE_INTERVAL = 5000;
 
 interface RotatingTaglineProps {
   isMobile: boolean;
-}
-
-// Each character gets its own random flicker timing
-function NeonChar({ char, index }: { char: string; index: number }) {
-  const ref = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    if (char === " " || !ref.current) return;
-
-    // Each character flickers on its own random schedule
-    const baseDelay = 400 + Math.random() * 1200;
-    let timeout: NodeJS.Timeout;
-
-    const flicker = () => {
-      const el = ref.current;
-      if (!el) return;
-
-      // Random flicker pattern: quick blinks
-      const blinks = 1 + Math.floor(Math.random() * 3);
-      let step = 0;
-
-      const doBlink = () => {
-        if (!el) return;
-        if (step < blinks * 2) {
-          if (step % 2 === 0) {
-            // Off
-            el.style.opacity = (Math.random() * 0.15).toFixed(2);
-            el.style.textShadow = "none";
-          } else {
-            // On (sometimes dim)
-            const brightness = 0.5 + Math.random() * 0.5;
-            el.style.opacity = brightness.toFixed(2);
-            el.style.textShadow = "";
-          }
-          step++;
-          setTimeout(doBlink, 30 + Math.random() * 80);
-        } else {
-          // Fully back on
-          el.style.opacity = "1";
-          el.style.textShadow = "";
-          // Schedule next flicker
-          timeout = setTimeout(flicker, baseDelay + Math.random() * 2000);
-        }
-      };
-
-      doBlink();
-    };
-
-    // Stagger start per character
-    timeout = setTimeout(flicker, index * 80 + Math.random() * 1500);
-
-    return () => clearTimeout(timeout);
-  }, [char, index]);
-
-  if (char === " ") return <span>{"\u00A0"}</span>;
-
-  return (
-    <span
-      ref={ref}
-      style={{
-        display: "inline-block",
-        transition: "none",
-      }}
-    >
-      {char}
-    </span>
-  );
 }
 
 export default function RotatingTagline({ isMobile }: RotatingTaglineProps) {
@@ -96,12 +29,15 @@ export default function RotatingTagline({ isMobile }: RotatingTaglineProps) {
 
   return (
     <div style={{
-      height: isMobile ? "clamp(2rem, 7vw, 2.6rem)" : "clamp(2.4rem, 4vw, 4rem)",
+      height: isMobile ? "auto" : "clamp(2.4rem, 4vw, 4rem)",
+      minHeight: isMobile ? "clamp(2.4rem, 10vw, 3.6rem)" : undefined,
       marginBottom: isMobile ? "clamp(0.8rem, 2.4vw, 1.2rem)" : "clamp(1rem, 2vw, 1.6rem)",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
       overflow: "hidden",
+      padding: isMobile ? "0 0.5rem" : undefined,
+      maxWidth: isMobile ? "95vw" : undefined,
     }}>
       <AnimatePresence mode="wait">
         <motion.p
@@ -110,25 +46,26 @@ export default function RotatingTagline({ isMobile }: RotatingTaglineProps) {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.5 }}
+          className="neon-tagline-text"
           style={{
             fontFamily: "var(--font-plan-block), sans-serif",
-            fontSize: isMobile ? "clamp(1.4rem, 6vw, 2rem)" : "clamp(1.8rem, 3.5vw, 3.5rem)",
+            fontSize: isMobile ? "clamp(1.1rem, 4.5vw, 1.6rem)" : "clamp(1.8rem, 3.5vw, 3.5rem)",
             fontWeight: 700,
             textTransform: "uppercase",
-            letterSpacing: "0.1em",
-            color: isMobile ? "#60a5fa" : "#3b82f6",
+            letterSpacing: isMobile ? "0.05em" : "0.1em",
+            color: isMobile ? "#93bbfc" : "#3b82f6",
             textShadow: isMobile
-              ? "0 0 4px rgba(59,130,246,0.5), 0 0 10px rgba(30,64,175,0.25)"
+              ? "0 0 5px rgba(59,130,246,0.56), 0 0 11px rgba(30,64,175,0.32), 0 0 22px rgba(20,40,140,0.16)"
               : "0 0 7px rgba(59,130,246,0.9), 0 0 20px rgba(30,64,175,0.6), 0 0 40px rgba(20,40,140,0.3), 0 0 80px rgba(10,20,100,0.15)",
             WebkitTextStroke: isMobile ? undefined : "0.3px rgba(96,165,250,0.4)",
-            whiteSpace: "nowrap",
+            whiteSpace: isMobile ? "normal" : "nowrap",
+            textAlign: "center" as const,
+            lineHeight: isMobile ? 1.3 : undefined,
             margin: 0,
           }}
         >
-          <span style={tagline.scale < 1 ? { fontSize: `${tagline.scale}em` } : undefined}>
-            {tagline.text.split("").map((char, i) => (
-              <NeonChar key={`${idx}-${i}`} char={char} index={i} />
-            ))}
+          <span style={!isMobile && tagline.scale < 1 ? { fontSize: `${tagline.scale}em` } : undefined}>
+            {tagline.text}
           </span>
         </motion.p>
       </AnimatePresence>

@@ -16,6 +16,8 @@ const LAYOUTS = [
     areas: `"a a" "b c" "d d"` },
   // Layout D: full bleed single
   { cols: "1fr", rows: "1fr", cells: 1, name: "full-bleed" },
+  // Layout E: mobile stacked (2 videos top/bottom)
+  { cols: "1fr", rows: "1fr 1fr", cells: 2, name: "mobile-stack" },
 ];
 
 const CYCLE_INTERVAL = 12000; // 12s between layout changes
@@ -29,13 +31,18 @@ export default function VideoGrid({ active }: VideoGridProps) {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const clipQueue = useRef<string[]>(shuffleClips(homepageClips));
   const clipIndex = useRef(0);
-  const [layoutIdx, setLayoutIdx] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [layoutIdx, setLayoutIdx] = useState(0);
 
-  // Track mobile
+  // Track mobile + set initial layout
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth <= 640);
+    const check = () => {
+      const mobile = window.innerWidth <= 640;
+      setIsMobile(mobile);
+    };
     check();
+    // Set correct initial layout for mobile (full-bleed)
+    if (window.innerWidth <= 640) setLayoutIdx(3);
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
   }, []);
@@ -63,7 +70,8 @@ export default function VideoGrid({ active }: VideoGridProps) {
     v.autoplay = true;
     v.playsInline = true;
     v.loop = true;
-    v.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;";
+    v.preload = "metadata";
+    v.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:opacity;";
     v.src = src;
     v.load();
     v.play().catch(() => {});
@@ -100,7 +108,7 @@ export default function VideoGrid({ active }: VideoGridProps) {
   useEffect(() => {
     if (!active) return;
 
-    const layouts = isMobile ? [0, 3] : [0, 1, 2, 3]; // Mobile: 2x2 and full-bleed only
+    const layouts = isMobile ? [3, 4] : [0, 1, 2, 3]; // Mobile: full-bleed + stacked only
     let currentIdx = 0;
 
     const interval = setInterval(() => {
