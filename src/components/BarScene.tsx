@@ -123,7 +123,7 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               <span style={{ fontSize: "clamp(0.9rem, 2vw, 1.1rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>drink</span>
             </motion.button>
 
-            {/* 🍺 Beer = shop feature */}
+            {/* 👕 T-shirt = shop feature */}
             <motion.button
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: [1, 1.06, 1] }}
@@ -153,7 +153,7 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
                 lineHeight: 1,
               }}
             >
-              🍺
+              👕
               <span style={{ fontSize: "clamp(0.9rem, 2vw, 1.1rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>shop</span>
             </motion.button>
           </motion.div>
@@ -212,7 +212,7 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
               <span style={{ fontSize: "clamp(0.9rem, 2vw, 1.1rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>sober up</span>
             </motion.button>
 
-            {/* 🍺 Shop */}
+            {/* 👕 T-shirt = Shop */}
             <motion.button
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: [1, 1.06, 1] }}
@@ -242,7 +242,7 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
                 lineHeight: 1,
               }}
             >
-              🍺
+              👕
               <span style={{ fontSize: "clamp(0.9rem, 2vw, 1.1rem)", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-script), cursive", letterSpacing: "0.05em" }}>shop</span>
             </motion.button>
           </motion.div>

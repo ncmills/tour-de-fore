@@ -60,19 +60,27 @@ export default function VideoGrid({ active }: VideoGridProps) {
   }, []);
 
   // Create a video element imperatively (iOS Safari safe)
+  // Videos play at most 2 times then pause on last frame
   const createVideo = useCallback((src: string): HTMLVideoElement => {
     const v = document.createElement("video");
     v.muted = true;
     v.setAttribute("muted", "");
     v.setAttribute("autoplay", "");
     v.setAttribute("playsinline", "");
-    v.setAttribute("loop", "");
     v.autoplay = true;
     v.playsInline = true;
-    v.loop = true;
+    v.loop = false;
     v.preload = "metadata";
     v.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:opacity;";
     v.src = src;
+    let playCount = 0;
+    v.addEventListener("ended", () => {
+      playCount++;
+      if (playCount < 2) {
+        v.currentTime = 0;
+        v.play().catch(() => {});
+      }
+    });
     v.load();
     v.play().catch(() => {});
     return v;

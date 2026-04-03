@@ -175,13 +175,6 @@ export default function HomeClient() {
                 >
                   all the devils are here
                 </motion.p>
-                <motion.p
-                  style={{ ...textStyle, fontSize: "clamp(0.7rem, 1.8vw, 1rem)", letterSpacing: "0.12em", clipPath: "inset(0 105% 0 -5px)", opacity: 0.7, marginTop: "0.75em" }}
-                  animate={{ clipPath: "inset(0 -5px 0 -5px)" }}
-                  transition={{ duration: 1.4, delay: 2.0, ease: [0.25, 0.0, 0.35, 1.0] }}
-                >
-                  Built by golfers. Powered by AI. Fueled by beer.
-                </motion.p>
               </div>
             </motion.div>
           )}
