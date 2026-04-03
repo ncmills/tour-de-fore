@@ -20,7 +20,7 @@ export default function Logo({ className = "w-10 h-10" }: { className?: string }
 export function LogoFull({ className = "w-64" }: { className?: string }) {
   return (
     <Image
-      src="/logo-full.png"
+      src="/logo-full.webp"
       alt="Tour de Fore — Est. 2021"
       width={4504}
       height={3776}
