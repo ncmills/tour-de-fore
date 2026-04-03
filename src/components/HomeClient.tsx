@@ -6,8 +6,9 @@ import { motion, AnimatePresence } from "motion/react";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import TubeTv from "./TubeTv";
+import VideoGrid from "./VideoGrid";
+import RotatingTagline from "./RotatingTagline";
 
-const VIDEO_HD = "/bg.mp4";
 const HYPE_VIDEO = "/hype-audio.mp4"; // has audio; TubeTv starts muted, user can unmute
 
 const textStyle: React.CSSProperties = {
@@ -35,29 +36,7 @@ export default function HomeClient() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   // hoveredSubtitle/typedText removed — using permanent tagline
   const [ambientOn, setAmbientOn] = useState(false);
-  const bgVideoRef = useRef<HTMLVideoElement>(null);
   const ambientAudioRef = useRef<HTMLAudioElement | null>(null);
-
-  useEffect(() => {
-    const container = bgVideoRef.current as unknown as HTMLDivElement;
-    if (!container) return;
-    const v = document.createElement("video");
-    // CRITICAL: set muted BEFORE src — iOS Safari requirement
-    v.muted = true;
-    v.setAttribute("muted", "");
-    v.setAttribute("autoplay", "");
-    v.setAttribute("playsinline", "");
-    v.setAttribute("loop", "");
-    v.autoplay = true;
-    v.playsInline = true;
-    v.loop = true;
-    v.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;";
-    v.src = VIDEO_HD;
-    v.load();
-    container.appendChild(v);
-    v.play().catch(() => {});
-    return () => { v.pause(); if (container.contains(v)) container.removeChild(v); };
-  }, []);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth <= 640);
@@ -128,16 +107,14 @@ export default function HomeClient() {
   return (
     <main style={{ height: "100vh", overflow: "hidden", position: "relative", background: "#000" }}>
 
-      {/* Background video — fades in concurrently with logo going to black */}
+      {/* Video grid background — fades in concurrently with logo going to black */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: logoUninverted ? 1 : 0 }}
         transition={{ duration: 1.8 }}
         style={{ position: "absolute", inset: 0 }}
       >
-        {/* Video injected imperatively (iOS autoplay fix — muted must be set before src) */}
-        <div ref={bgVideoRef as unknown as React.RefObject<HTMLDivElement>} style={{ position: "absolute", inset: 0 }} />
-        <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.45)" }} />
+        <VideoGrid active={phase === "done"} />
       </motion.div>
 
       {/* ── FULL-HEIGHT FLEX: TV + text in one column ── */}
@@ -208,18 +185,18 @@ export default function HomeClient() {
           )}
         </AnimatePresence>
 
-        {/* Logo + subtitle above it — always in DOM, visibility controlled by animation */}
+        {/* Logo + rotating tagline above it — always in DOM, visibility controlled by animation */}
         <motion.div
           style={{ position: "absolute", display: "flex", flexDirection: "column", alignItems: "center" }}
           initial={skip
-            ? { opacity: 1, scale: 1, filter: "invert(0)" }
-            : { opacity: 0, scale: 1.1, filter: "invert(1)" }
+            ? { opacity: 1, scale: 1, filter: "invert(1) brightness(2)" }
+            : { opacity: 0, scale: 1.1, filter: "invert(0) brightness(1)" }
           }
           animate={
             skip ? {}
-            : logoUninverted ? { opacity: 1, scale: 1, filter: "invert(0)" }
-            : logoVisible ? { opacity: 1, scale: 1, filter: "invert(1)" }
-            : { opacity: 0, scale: 1.1, filter: "invert(1)" }
+            : logoUninverted ? { opacity: 1, scale: 1, filter: "invert(1) brightness(2)" }
+            : logoVisible ? { opacity: 1, scale: 1, filter: "invert(0) brightness(1)" }
+            : { opacity: 0, scale: 1.1, filter: "invert(0) brightness(1)" }
           }
           transition={
             logoUninverted
@@ -229,32 +206,15 @@ export default function HomeClient() {
               : {}
           }
         >
-          {/* Tagline above logo */}
-          <p
-            className="neon-stats"
-            style={{
-              fontFamily: "var(--font-plan-block), sans-serif",
-              fontSize: isMobile ? "clamp(1rem, 4.3vw, 1.3rem)" : "clamp(1.25rem, 1.9vw, 1.75rem)",
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: "0.1em",
-              color: isMobile ? "#ff8040" : "#ff6a28",
-              textShadow: isMobile
-                ? "0 0 4px rgba(255,106,40,0.5), 0 0 10px rgba(255,60,20,0.25)"
-                : "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3), 0 0 80px rgba(200,30,0,0.15)",
-              WebkitTextStroke: isMobile ? undefined : "0.3px rgba(255,140,60,0.4)",
-              marginBottom: isMobile ? "clamp(0.8rem, 2.4vw, 1.2rem)" : "clamp(1rem, 2vw, 1.6rem)",
-            }}
-          >
-            Plan smarter. Play more. Remember less.
-          </p>
+          {/* Rotating tagline above logo */}
+          <RotatingTagline isMobile={isMobile} />
           <Image
             src="/logo-full.png"
             alt="Tour de Fore"
             width={4504}
             height={3776}
             priority
-            style={{ width: isMobile ? "clamp(195px, 58vw, 286px)" : "clamp(260px, 29vw, 442px)", height: "auto", filter: "brightness(0)", marginBottom: isMobile ? "clamp(0.8rem, 2.4vw, 1.2rem)" : "clamp(1rem, 2vw, 1.6rem)" }}
+            style={{ width: isMobile ? "clamp(195px, 58vw, 286px)" : "clamp(260px, 29vw, 442px)", height: "auto", marginBottom: isMobile ? "clamp(0.8rem, 2.4vw, 1.2rem)" : "clamp(1rem, 2vw, 1.6rem)" }}
           />
         </motion.div>
       </div>
@@ -278,7 +238,7 @@ export default function HomeClient() {
             textDecoration: "none",
           }}
         >
-          <img src="/devil-avatar.png" alt="Tour de Fore member login" style={{ width: isMobile ? 48 : 81, height: isMobile ? 38 : 65 }} />
+          <img src="/devil-mascot.png" alt="Tour de Fore member login" style={{ width: isMobile ? 50 : 80, height: "auto" }} />
           <span style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.9)", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "var(--font-inter), sans-serif", marginTop: "-8px" }}>{isLoggedIn ? "My Account" : "Login"}</span>
         </motion.a>
       )}
@@ -317,8 +277,8 @@ export default function HomeClient() {
                 onClick={() => { try { sessionStorage.setItem("tdf-explode", "1"); } catch {} }}
                 style={{
                   position: "relative" as const,
-                  fontFamily: "var(--font-scrawl), cursive",
-                  fontSize: isMobile ? "clamp(1.4rem, 6vw, 2rem)" : "clamp(1.8rem, 3.5vw, 3.5rem)",
+                  fontFamily: "var(--font-blackletter), cursive",
+                  fontSize: isMobile ? "clamp(2.2rem, 9.4vw, 3.1rem)" : "clamp(2.8rem, 5.5vw, 5.5rem)",
                   color: blood ? "#fff" : "rgba(255,255,255,0.7)",
                   textDecoration: "none",
                   transition: "color 0.2s, background 0.3s, text-shadow 0.3s",
