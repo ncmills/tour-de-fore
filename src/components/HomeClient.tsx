@@ -8,6 +8,16 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import RotatingTagline from "./RotatingTagline";
 
+/* Nosifer — loaded only on homepage for nav links */
+const NosiFontLink = () => (
+  <>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+    {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+    <link href="https://fonts.googleapis.com/css2?family=Nosifer&display=swap" rel="stylesheet" />
+  </>
+);
+
 const TubeTv = dynamic(() => import("./TubeTv"), { ssr: false });
 const VideoGrid = dynamic(() => import("./VideoGrid"), { ssr: false });
 
@@ -108,6 +118,7 @@ export default function HomeClient() {
 
   return (
     <main style={{ height: "100vh", overflow: "hidden", position: "relative", background: "#000" }}>
+      <NosiFontLink />
 
       {/* Video grid background — fades in concurrently with logo going to black */}
       <motion.div
@@ -279,7 +290,7 @@ export default function HomeClient() {
                 onClick={() => { try { sessionStorage.setItem("tdf-explode", "1"); } catch {} }}
                 style={{
                   position: "relative" as const,
-                  fontFamily: "var(--font-blackletter), cursive",
+                  fontFamily: "'Nosifer', cursive",
                   fontSize: isMobile ? "clamp(2.2rem, 9.4vw, 3.1rem)" : "clamp(2.8rem, 5.5vw, 5.5rem)",
                   color: blood ? "#fff" : "rgba(255,255,255,0.7)",
                   textDecoration: "none",
