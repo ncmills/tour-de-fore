@@ -345,7 +345,6 @@ export default function PlanWizardClient() {
   const [confirmed, setConfirmed] = useState(false);
   const [overlayError, setOverlayError] = useState("");
   const [overlayLimitReached, setOverlayLimitReached] = useState(false);
-  const [subscribing, setSubscribing] = useState(false);
   const [loadingMsg, setLoadingMsg] = useState(0);
   const [error, setError] = useState("");
   const isScrolling = useRef(false);
@@ -481,7 +480,7 @@ export default function PlanWizardClient() {
         try { data = JSON.parse(text); } catch { /* not JSON */ }
         if (data.limitReached) {
           setOverlayLimitReached(true);
-          setOverlayError((data.error as string) || "You've used your free plan this month.");
+          setOverlayError((data.error as string) || "You've used your 3 free plans this week.");
           return;
         }
         throw new Error((data.error as string) || "Failed to generate plan");
@@ -548,54 +547,28 @@ export default function PlanWizardClient() {
               {overlayLimitReached ? (
                 <>
                   <p className="font-body text-base max-w-sm" style={{ color: "rgba(255,255,255,0.6)" }}>
-                    You&apos;ve used your free plan this month.
+                    You&apos;ve used all 3 of your free plans this week.
+                  </p>
+                  <p className="font-body text-sm max-w-sm" style={{ color: "rgba(255,255,255,0.35)" }}>
+                    Your plans reset every Monday. Check back then to build more trips.
                   </p>
                   <button
-                    onClick={async () => {
-                      setSubscribing(true);
-                      try {
-                        const res = await fetch("/api/subscribe", {
-                          method: "POST",
-                          headers: { "Content-Type": "application/json" },
-                          body: JSON.stringify({ returnUrl: window.location.href }),
-                        });
-                        const data = await res.json();
-                        if (data.url) {
-                          window.location.href = data.url;
-                        } else {
-                          setOverlayError(data.error || "Failed to start checkout.");
-                          setOverlayLimitReached(false);
-                        }
-                      } catch {
-                        setOverlayError("Something went wrong. Try again.");
-                        setOverlayLimitReached(false);
-                      } finally {
-                        setSubscribing(false);
-                      }
-                    }}
-                    disabled={subscribing}
+                    onClick={() => { window.location.href = "/?skip=1"; }}
                     style={{
                       padding: "12px 28px",
                       fontSize: "0.9rem",
                       fontWeight: 600,
                       fontFamily: "var(--font-inter), sans-serif",
-                      background: "rgba(180,130,40,0.15)",
-                      border: "1px solid rgba(180,130,40,0.35)",
+                      background: "rgba(220,38,38,0.15)",
+                      border: "1px solid rgba(220,38,38,0.35)",
                       borderRadius: 8,
-                      color: "rgba(212,168,67,0.9)",
-                      cursor: subscribing ? "wait" : "pointer",
+                      color: "rgba(255,255,255,0.7)",
+                      cursor: "pointer",
                       transition: "all 0.2s",
                       letterSpacing: "0.02em",
                     }}
                   >
-                    {subscribing ? "Loading..." : "Go VIP \u2014 $19.99/mo for unlimited plans"}
-                  </button>
-                  <button
-                    onClick={() => { window.location.href = "/?skip=1"; }}
-                    className="font-body text-sm text-text-muted underline py-2 px-4"
-                    style={{ opacity: 0.5 }}
-                  >
-                    Go home
+                    Go Home
                   </button>
                 </>
               ) : (
@@ -1057,7 +1030,7 @@ export default function PlanWizardClient() {
             Unleash the Devils
           </motion.button>
           <p style={{ fontSize: "0.84rem", color: "rgba(255,255,255,0.25)", textAlign: "center", marginTop: "1rem" }}>
-            {state.authMode === "login" ? "Sign in to generate your trip." : "1 free plan per month."}
+            {state.authMode === "login" ? "Sign in to generate your trip." : "3 free plans per week."}
           </p>
         </Question>
       )}

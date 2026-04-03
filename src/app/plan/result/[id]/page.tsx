@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import { getPlan } from "@/lib/kv";
+import { getPlan, getAttendees } from "@/lib/kv";
 import { getSessionEmail, getUserPlans } from "@/lib/auth";
 import PlanResultClient from "@/components/PlanResultClient";
 import PlanSelectionClient from "@/components/PlanSelectionClient";
@@ -68,11 +68,18 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
     );
   }
 
-  // Verify plan ownership — organizer or plan is in user's plans
+  // Verify plan access — organizer, plan owner, or listed attendee
   const isOrganizer = stored.inputs?.organizerEmail?.toLowerCase() === sessionEmail?.toLowerCase();
   const userPlans = sessionEmail ? await getUserPlans(sessionEmail) : [];
   const ownsThisPlan = isOrganizer || userPlans.includes(id);
-  const isPaid = stored.paid && ownsThisPlan;
+  // Check if user is a listed attendee (shared plan access)
+  let isAttendee = false;
+  if (!ownsThisPlan && sessionEmail) {
+    const attendees = await getAttendees(id);
+    isAttendee = attendees.some((a) => a.email.toLowerCase() === sessionEmail.toLowerCase());
+  }
+  const hasAccess = ownsThisPlan || isAttendee;
+  const isPaid = stored.paid && hasAccess;
 
   // No dest: show destination cards
   if (!dest) {

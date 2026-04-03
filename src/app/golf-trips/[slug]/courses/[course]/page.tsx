@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { allDestinations } from "@/data";
 import { slugify, tierLabel, tierColor } from "@/app/golf-trips/helpers";
 import MulliganButton from "@/components/MulliganButton";
@@ -29,7 +30,7 @@ export async function generateMetadata({ params }: Props) {
     title: `${course.name} — ${dest.city}, ${dest.state} | Tour de Fore`,
     description: `${course.highlight} Green fees: $${course.greenFeeRange[0]}-$${course.greenFeeRange[1]}. ${tierLabel(course.tier)} tier ${course.style} course in ${dest.city}, ${dest.state}.`,
     alternates: { canonical: `https://tourdefore.com/golf-trips/${slug}/courses/${courseSlug}` },
-    openGraph: { title: `${course.name} — ${dest.city}, ${dest.state}`, description: course.highlight, images: ["/icon-fancy.png"] },
+    openGraph: { title: `${course.name} — ${dest.city}, ${dest.state}`, description: course.highlight, images: [course.imageUrl || "/icon-fancy.png"] },
   };
 }
 
@@ -51,6 +52,22 @@ export default async function CoursePage({ params }: Props) {
         <Link href={`/golf-trips/${slug}`} style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.8rem", textDecoration: "none", marginBottom: "1rem", display: "inline-block" }}>
           ← {dest.city}, {dest.state}
         </Link>
+
+        {/* Hero image */}
+        {course.imageUrl && (
+          <div style={{ position: "relative", width: "100%", aspectRatio: "21/9", borderRadius: 12, overflow: "hidden", marginBottom: "2rem", border: "1px solid rgba(255,255,255,0.08)" }}>
+            <Image
+              src={course.imageUrl}
+              alt={course.name}
+              fill
+              sizes="(max-width: 800px) 100vw, 800px"
+              style={{ objectFit: "cover" }}
+              priority
+              unoptimized
+            />
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 40%)" }} />
+          </div>
+        )}
 
         <h1 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "0.5rem" }}>
           {course.name}
@@ -145,6 +162,7 @@ export default async function CoursePage({ params }: Props) {
             priceRange: `$${course.greenFeeRange[0]}-$${course.greenFeeRange[1]}`,
             ...(course.googleRating ? { aggregateRating: { "@type": "AggregateRating", ratingValue: course.googleRating, reviewCount: course.reviewCount || 1, bestRating: 5 } } : {}),
             description: course.highlight,
+            ...(course.imageUrl ? { image: course.imageUrl } : {}),
             ...(course.url ? { url: course.url } : {}),
           }),
         }}

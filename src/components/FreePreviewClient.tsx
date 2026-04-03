@@ -3,9 +3,31 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import Link from "next/link";
+import Image from "next/image";
 import type { FreePreview, PriceLevel } from "@/lib/plan-types";
 import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
+
+const FALLBACK_GOLF_IMAGES = [
+  "https://www.troonnorthgolf.com/wp-content/uploads/sites/8934/2023/06/home-main.jpg",
+  "https://balihaigolfclub.com/wp-content/uploads/2024/07/bali-hai-og.jpg",
+  "https://chambersbaygolf.com/wp-content/uploads/2025/05/cb-homescreen.jpg",
+  "https://tamarackidaho.com/wp-content/uploads/2024/04/SH.2023.6.29_Golfing-157-scaled.jpg",
+  "https://falconridgegolfclub.com/wp-content/uploads/HOLE-18-FALCON-RIDGE-0098.jpg",
+  "https://www.wolfrungolfclub.com/wp-content/uploads/sites/8583/2022/09/home-full-1.jpg",
+  "https://www.sandiagolf.com/wp-content/uploads/sites/8959/2023/06/21.jpg",
+  "https://tetherow.com/wp-content/uploads/2018/12/tetherow-lodge-hero-3000.jpg",
+  "https://www.reservegolf.com/wp-content/uploads/sites/9325/2024/01/IMG_5043.jpg",
+  "https://newcastlegolf.com/wp-content/uploads/2024/01/DJI_0055-Enhanced-NR.jpg",
+  "https://casablanca.playmesquite.com/wp-content/uploads/2025/01/200808_nevada_palmsgolf_033.jpg",
+  "https://azhideawaycollection.com/wp-content/uploads/2024/12/sedona_home_hero-1024x728.webp",
+];
+
+function getFallbackImage(name: string): string {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) hash = ((hash << 5) - hash + name.charCodeAt(i)) | 0;
+  return FALLBACK_GOLF_IMAGES[Math.abs(hash) % FALLBACK_GOLF_IMAGES.length];
+}
 
 function LockedSection({ label, count, icon }: { label: string; count: number; icon: string }) {
   return (
@@ -191,37 +213,52 @@ export default function FreePreviewClient({
                 background: "rgba(255,255,255,0.03)",
                 border: "1px solid rgba(255,255,255,0.1)",
                 borderRadius: 12,
-                padding: "1.25rem 1.5rem",
+                overflow: "hidden",
                 position: "relative",
               }}>
-                {course.hypeTag && (
-                  <span style={{
-                    position: "absolute",
-                    top: "0.75rem",
-                    right: "0.75rem",
-                    fontSize: "0.55rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.15em",
-                    padding: "3px 8px",
-                    background: "rgba(234,88,12,0.2)",
-                    border: "1px solid rgba(234,88,12,0.4)",
-                    borderRadius: 4,
-                    color: "rgba(234,88,12,0.9)",
-                  }}>
-                    🏆 {course.hypeTag}
-                  </span>
-                )}
-                <div style={{ fontSize: "1rem", fontWeight: 600, color: "#fff", marginBottom: "0.25rem" }}>
-                  {course.name}
+                {/* Course image */}
+                <div style={{ position: "relative", width: "100%", aspectRatio: "16/9", overflow: "hidden" }}>
+                  <Image
+                    src={course.imageUrl || getFallbackImage(course.name)}
+                    alt={course.name}
+                    fill
+                    sizes="(max-width: 800px) 100vw, 800px"
+                    style={{ objectFit: "cover" }}
+                    unoptimized
+                  />
+                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%)" }} />
+                  {course.hypeTag && (
+                    <span style={{
+                      position: "absolute",
+                      top: "0.75rem",
+                      right: "0.75rem",
+                      fontSize: "0.55rem",
+                      fontWeight: 700,
+                      letterSpacing: "0.15em",
+                      padding: "3px 8px",
+                      background: "rgba(234,88,12,0.3)",
+                      border: "1px solid rgba(234,88,12,0.5)",
+                      borderRadius: 4,
+                      color: "rgba(234,88,12,0.95)",
+                      backdropFilter: "blur(4px)",
+                    }}>
+                      🏆 {course.hypeTag}
+                    </span>
+                  )}
                 </div>
-                <div style={{ display: "flex", gap: "1rem", fontSize: "0.8rem", color: "rgba(255,255,255,0.4)", marginBottom: "0.5rem" }}>
-                  <span>{course.tier}</span>
-                  <span>${course.greenFeeRange[0]}–${course.greenFeeRange[1]}</span>
-                  {course.googleRating && <span>⭐ {course.googleRating}</span>}
+                <div style={{ padding: "1.25rem 1.5rem" }}>
+                  <div style={{ fontSize: "1rem", fontWeight: 600, color: "#fff", marginBottom: "0.25rem" }}>
+                    {course.name}
+                  </div>
+                  <div style={{ display: "flex", gap: "1rem", fontSize: "0.8rem", color: "rgba(255,255,255,0.4)", marginBottom: "0.5rem" }}>
+                    <span>{course.tier}</span>
+                    <span>${course.greenFeeRange[0]}–${course.greenFeeRange[1]}</span>
+                    {course.googleRating && <span>⭐ {course.googleRating}</span>}
+                  </div>
+                  <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.5)" }}>
+                    {course.highlight}
+                  </p>
                 </div>
-                <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.5)" }}>
-                  {course.highlight}
-                </p>
               </div>
             ))}
           </div>

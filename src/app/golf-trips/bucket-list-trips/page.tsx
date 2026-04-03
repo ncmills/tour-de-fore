@@ -32,7 +32,21 @@ export default function BucketListPage() {
         <h1 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "0.5rem" }}>
           Bucket List Golf Trips
         </h1>
-        <p style={{ color: "rgba(255,255,255,0.4)", marginBottom: "3rem" }}>Destinations with the most elite courses in America. {bucketDests.length} destinations.</p>
+        <p style={{ color: "rgba(255,255,255,0.4)", marginBottom: "1.5rem" }}>Destinations with the most elite courses in America. {bucketDests.length} destinations.</p>
+
+        <div style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.9rem", lineHeight: 1.8, maxWidth: 720, marginBottom: "3rem" }}>
+          <p style={{ marginBottom: "0.75rem" }}>
+            These are the trips you plan once and talk about forever. Every destination below features at least one
+            bucket-list tier course — Top 100 public layouts, PGA Tour venues, or once-in-a-lifetime designs that
+            serious golfers travel specifically to play. We ranked by concentration of elite courses, so destinations
+            with multiple bucket-list options appear first.
+          </p>
+          <p>
+            Beyond the marquee courses, each destination includes premium lodging options, the best local dining,
+            and activities worth the trip even on rest days. Click any destination for full course details including
+            ratings, slope, green fees, and walkability — then use our AI planner to build a complete bucket-list itinerary.
+          </p>
+        </div>
 
         <h2 style={{ fontSize: "1.1rem", fontWeight: 600, marginBottom: "1rem", color: "rgba(255,255,255,0.6)" }}>Destinations with Bucket List Courses</h2>
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>

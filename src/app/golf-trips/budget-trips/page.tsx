@@ -32,7 +32,21 @@ export default function BudgetTripsPage() {
         <h1 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "0.5rem" }}>
           Budget Golf Trips
         </h1>
-        <p style={{ color: "rgba(255,255,255,0.4)", marginBottom: "3rem" }}>Great golf doesn&apos;t have to break the bank. {budgetDests.length} affordable destinations.</p>
+        <p style={{ color: "rgba(255,255,255,0.4)", marginBottom: "1.5rem" }}>Great golf doesn&apos;t have to break the bank. {budgetDests.length} affordable destinations.</p>
+
+        <div style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.9rem", lineHeight: 1.8, maxWidth: 720, marginBottom: "3rem" }}>
+          <p style={{ marginBottom: "0.75rem" }}>
+            You don&apos;t need Scottsdale money to plan a killer golf trip. These {budgetDests.length} destinations
+            deliver solid courses, affordable lodging, and enough restaurants and bars to keep everyone happy — all
+            at a price point that won&apos;t start arguments about splitting the bill. We sorted by combined cost of
+            the cheapest green fee and nightly lodging rate, so the most affordable options float to the top.
+          </p>
+          <p>
+            Pro tip: budget destinations often have walkable courses (saving cart fees), BYOB-friendly rental houses
+            (saving bar tabs), and shoulder-season windows where prices drop even further. Check each destination
+            page for specific pricing breakdowns and use our AI planner to build a trip around your group&apos;s budget.
+          </p>
+        </div>
 
         <h2 style={{ fontSize: "1.1rem", fontWeight: 600, marginBottom: "1rem", color: "rgba(255,255,255,0.6)" }}>Most Affordable Golf Destinations</h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(300px, 100%), 1fr))", gap: "1rem" }}>

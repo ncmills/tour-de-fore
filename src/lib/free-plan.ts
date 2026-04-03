@@ -179,6 +179,7 @@ export function buildFreePreview(
       highlight: c.highlight,
       googleRating: c.googleRating,
       hypeTag: c.hypeTag,
+      imageUrl: c.imageUrl,
     })),
     estimatedBudgetPerPerson: estimatedBudget,
     numberOfDays: state.numberOfDays,

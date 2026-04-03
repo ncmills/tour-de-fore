@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useMemo, useRef, useEffect } from "react";
 import { motion } from "motion/react";
+import Image from "next/image";
 import type { GeneratedPlan, ThreePlanResult, TripTier } from "@/lib/plan-types";
 import type { InsightsContext } from "@/lib/insights";
 import { lookupCourse, lookupDining, lookupBar, formatReviewCount, estimateDriveBetween, getDayHints, computeTdfPicks, isTdfPick, type TdfPicks, type DayHint } from "@/lib/insights";
@@ -20,6 +21,7 @@ interface Option {
   tier?: string;
   recommended?: boolean;
   driveMinutes?: number;
+  imageUrl?: string;
 }
 
 interface Tag {
@@ -79,6 +81,30 @@ const TAG_COLORS: Record<string, { bg: string; text: string }> = {
   purple: { bg: "rgba(147,51,234,0.15)", text: "#c084fc" },
 };
 
+// ── Fallback golf course images (from courses with known good OG images) ──
+
+const FALLBACK_GOLF_IMAGES = [
+  "https://www.troonnorthgolf.com/wp-content/uploads/sites/8934/2023/06/home-main.jpg",
+  "https://balihaigolfclub.com/wp-content/uploads/2024/07/bali-hai-og.jpg",
+  "https://chambersbaygolf.com/wp-content/uploads/2025/05/cb-homescreen.jpg",
+  "https://tamarackidaho.com/wp-content/uploads/2024/04/SH.2023.6.29_Golfing-157-scaled.jpg",
+  "https://falconridgegolfclub.com/wp-content/uploads/HOLE-18-FALCON-RIDGE-0098.jpg",
+  "https://www.wolfrungolfclub.com/wp-content/uploads/sites/8583/2022/09/home-full-1.jpg",
+  "https://www.sandiagolf.com/wp-content/uploads/sites/8959/2023/06/21.jpg",
+  "https://tetherow.com/wp-content/uploads/2018/12/tetherow-lodge-hero-3000.jpg",
+  "https://www.reservegolf.com/wp-content/uploads/sites/9325/2024/01/IMG_5043.jpg",
+  "https://newcastlegolf.com/wp-content/uploads/2024/01/DJI_0055-Enhanced-NR.jpg",
+  "https://casablanca.playmesquite.com/wp-content/uploads/2025/01/200808_nevada_palmsgolf_033.jpg",
+  "https://azhideawaycollection.com/wp-content/uploads/2024/12/sedona_home_hero-1024x728.webp",
+];
+
+/** Deterministic fallback image based on course name */
+function getFallbackImage(name: string): string {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) hash = ((hash << 5) - hash + name.charCodeAt(i)) | 0;
+  return FALLBACK_GOLF_IMAGES[Math.abs(hash) % FALLBACK_GOLF_IMAGES.length];
+}
+
 // ── Small Option Card ──
 
 function OptionCard({ option, selected, onSelect, disabled, tags }: { option: Option; selected: boolean; onSelect: () => void; disabled?: boolean; tags?: Tag[] }) {
@@ -100,46 +126,62 @@ function OptionCard({ option, selected, onSelect, disabled, tags }: { option: Op
         transition: "all 0.15s",
       }}
     >
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <span style={{ fontWeight: 600, fontSize: "0.9rem" }}>{option.name}</span>
-        <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
-          {option.rating && <span style={{ color: "#D4A843", fontSize: "0.75rem" }}>{option.rating}★{option.reviewCount ? ` (${formatReviewCount(option.reviewCount)})` : ""}</span>}
-          {option.price && <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.75rem" }}>{option.price}</span>}
-          {selected && <span style={{ color: "#EA580C", fontSize: "0.9rem" }}>✓</span>}
+      <div style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
+        {/* Course thumbnail */}
+        <div style={{ flexShrink: 0, width: 56, height: 56, borderRadius: 6, overflow: "hidden", position: "relative", border: "1px solid rgba(255,255,255,0.1)" }}>
+          <Image
+            src={option.imageUrl || getFallbackImage(option.name)}
+            alt={option.name}
+            fill
+            sizes="56px"
+            style={{ objectFit: "cover" }}
+            unoptimized
+          />
+        </div>
+        {/* Content */}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <span style={{ fontWeight: 600, fontSize: "0.9rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{option.name}</span>
+            <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexShrink: 0 }}>
+              {option.rating && <span style={{ color: "#D4A843", fontSize: "0.75rem" }}>{option.rating}★{option.reviewCount ? ` (${formatReviewCount(option.reviewCount)})` : ""}</span>}
+              {option.price && <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.75rem" }}>{option.price}</span>}
+              {selected && <span style={{ color: "#EA580C", fontSize: "0.9rem" }}>✓</span>}
+            </div>
+          </div>
+          {/* Tags row */}
+          {tags && tags.length > 0 && (
+            <div style={{ display: "flex", gap: "0.35rem", marginTop: "0.35rem", flexWrap: "wrap" }}>
+              {tags.map((t) => {
+                const c = TAG_COLORS[t.color] || TAG_COLORS.orange;
+                return (
+                  <span
+                    key={t.label}
+                    style={{
+                      fontSize: "0.6rem",
+                      fontWeight: 700,
+                      letterSpacing: "0.06em",
+                      textTransform: "uppercase",
+                      padding: "2px 6px",
+                      borderRadius: 4,
+                      background: c.bg,
+                      color: c.text,
+                      lineHeight: 1.4,
+                    }}
+                  >
+                    {t.label === "TDF PICK" ? "🔥 " + t.label : t.label}
+                  </span>
+                );
+              })}
+            </div>
+          )}
+          {(option.detail || option.tier) && (
+            <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.25rem", flexWrap: "wrap" }}>
+              {option.tier && !option.recommended && <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.3)", textTransform: "uppercase" }}>{option.tier}</span>}
+              {option.detail && <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.35)" }}>{option.detail}</span>}
+            </div>
+          )}
         </div>
       </div>
-      {/* Tags row */}
-      {tags && tags.length > 0 && (
-        <div style={{ display: "flex", gap: "0.35rem", marginTop: "0.35rem", flexWrap: "wrap" }}>
-          {tags.map((t) => {
-            const c = TAG_COLORS[t.color] || TAG_COLORS.orange;
-            return (
-              <span
-                key={t.label}
-                style={{
-                  fontSize: "0.6rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.06em",
-                  textTransform: "uppercase",
-                  padding: "2px 6px",
-                  borderRadius: 4,
-                  background: c.bg,
-                  color: c.text,
-                  lineHeight: 1.4,
-                }}
-              >
-                {t.label === "TDF PICK" ? "🔥 " + t.label : t.label}
-              </span>
-            );
-          })}
-        </div>
-      )}
-      {(option.detail || option.tier) && (
-        <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.25rem", flexWrap: "wrap" }}>
-          {option.tier && !option.recommended && <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.3)", textTransform: "uppercase" }}>{option.tier}</span>}
-          {option.detail && <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.35)" }}>{option.detail}</span>}
-        </div>
-      )}
     </button>
   );
 }
@@ -233,7 +275,7 @@ export default function TripBuilderClient({
     const enrich = (name: string) => {
       if (!insights) return {};
       const ci = lookupCourse(insights, name);
-      return ci ? { rating: ci.googleRating, reviewCount: ci.reviewCount, driveMinutes: ci.driveMinutes } : {};
+      return ci ? { rating: ci.googleRating, reviewCount: ci.reviewCount, driveMinutes: ci.driveMinutes, imageUrl: ci.imageUrl } : {};
     };
     for (const c of (plan.courses || [])) {
       seen.add(c.name);

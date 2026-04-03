@@ -2,10 +2,32 @@
 
 import { useState, useMemo } from "react";
 import { motion } from "motion/react";
+import Image from "next/image";
 import type { GeneratedPlan, TripTier, PlanCourse, PlanDining, PlanBar, PlanScheduleItem } from "@/lib/plan-types";
 import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
 import PlanBreadcrumb from "./PlanBreadcrumb";
+
+const FALLBACK_GOLF_IMAGES = [
+  "https://www.troonnorthgolf.com/wp-content/uploads/sites/8934/2023/06/home-main.jpg",
+  "https://balihaigolfclub.com/wp-content/uploads/2024/07/bali-hai-og.jpg",
+  "https://chambersbaygolf.com/wp-content/uploads/2025/05/cb-homescreen.jpg",
+  "https://tamarackidaho.com/wp-content/uploads/2024/04/SH.2023.6.29_Golfing-157-scaled.jpg",
+  "https://falconridgegolfclub.com/wp-content/uploads/HOLE-18-FALCON-RIDGE-0098.jpg",
+  "https://www.wolfrungolfclub.com/wp-content/uploads/sites/8583/2022/09/home-full-1.jpg",
+  "https://www.sandiagolf.com/wp-content/uploads/sites/8959/2023/06/21.jpg",
+  "https://tetherow.com/wp-content/uploads/2018/12/tetherow-lodge-hero-3000.jpg",
+  "https://www.reservegolf.com/wp-content/uploads/sites/9325/2024/01/IMG_5043.jpg",
+  "https://newcastlegolf.com/wp-content/uploads/2024/01/DJI_0055-Enhanced-NR.jpg",
+  "https://casablanca.playmesquite.com/wp-content/uploads/2025/01/200808_nevada_palmsgolf_033.jpg",
+  "https://azhideawaycollection.com/wp-content/uploads/2024/12/sedona_home_hero-1024x728.webp",
+];
+
+function getFallbackImage(name: string): string {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) hash = ((hash << 5) - hash + name.charCodeAt(i)) | 0;
+  return FALLBACK_GOLF_IMAGES[Math.abs(hash) % FALLBACK_GOLF_IMAGES.length];
+}
 
 // ── Helpers ──
 
@@ -508,15 +530,29 @@ export default function ItineraryClient({
               </h2>
               {day.morning && (
                 <ItineraryCard icon="⛳" label="Morning — Round 1">
-                  <p style={{ fontSize: "1.05rem", fontWeight: 600, marginBottom: "0.2rem" }}>{day.morning.name}</p>
-                  <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)" }}>Green fee: {day.morning.greenFee}/pp</p>
-                  {day.morning.whyThisCourse && <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)", marginTop: "0.3rem", fontStyle: "italic" }}>{day.morning.whyThisCourse}</p>}
+                  <div style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
+                    <div style={{ flexShrink: 0, width: 48, height: 48, borderRadius: 6, overflow: "hidden", position: "relative", border: "1px solid rgba(255,255,255,0.1)" }}>
+                      <Image src={day.morning.imageUrl || getFallbackImage(day.morning.name)} alt={day.morning.name} fill sizes="48px" style={{ objectFit: "cover" }} unoptimized />
+                    </div>
+                    <div>
+                      <p style={{ fontSize: "1.05rem", fontWeight: 600, marginBottom: "0.2rem" }}>{day.morning.name}</p>
+                      <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)" }}>Green fee: {day.morning.greenFee}/pp</p>
+                      {day.morning.whyThisCourse && <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)", marginTop: "0.3rem", fontStyle: "italic" }}>{day.morning.whyThisCourse}</p>}
+                    </div>
+                  </div>
                 </ItineraryCard>
               )}
               {day.afternoon && (
                 <ItineraryCard icon="⛳" label="Afternoon — Round 2">
-                  <p style={{ fontSize: "1.05rem", fontWeight: 600, marginBottom: "0.2rem" }}>{day.afternoon.name}</p>
-                  <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)" }}>Green fee: {day.afternoon.greenFee}/pp</p>
+                  <div style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
+                    <div style={{ flexShrink: 0, width: 48, height: 48, borderRadius: 6, overflow: "hidden", position: "relative", border: "1px solid rgba(255,255,255,0.1)" }}>
+                      <Image src={day.afternoon.imageUrl || getFallbackImage(day.afternoon.name)} alt={day.afternoon.name} fill sizes="48px" style={{ objectFit: "cover" }} unoptimized />
+                    </div>
+                    <div>
+                      <p style={{ fontSize: "1.05rem", fontWeight: 600, marginBottom: "0.2rem" }}>{day.afternoon.name}</p>
+                      <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)" }}>Green fee: {day.afternoon.greenFee}/pp</p>
+                    </div>
+                  </div>
                 </ItineraryCard>
               )}
               {day.afternoonActivity && (

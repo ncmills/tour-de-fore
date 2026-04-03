@@ -8,6 +8,7 @@ import {
   stateSlug,
   seasonLabel,
   regionSlug,
+  metaDescription,
 } from "../../helpers";
 
 export function generateStaticParams() {
@@ -35,11 +36,11 @@ export async function generateMetadata({
   const description = `Explore ${dests.length} golf trip destinations in ${name}. Courses, lodging, nightlife, and activities for your group golf getaway.`;
   return {
     title,
-    description: description.slice(0, 155),
+    description: metaDescription(description),
     alternates: {
       canonical: `https://tourdefore.com/golf-trips/state/${state}`,
     },
-    openGraph: { title, description: description.slice(0, 155), images: ["/icon-fancy.png"] },
+    openGraph: { title, description: metaDescription(description), images: ["/icon-fancy.png"] },
   };
 }
 
@@ -132,9 +133,9 @@ export default async function StatePage({
         >
           {dests.map((d) => (
             <a key={d.id} href={`/golf-trips/${d.id}`} style={card}>
-              <h2 style={{ fontSize: "1.05rem", fontWeight: 600, marginBottom: "0.3rem" }}>
+              <h3 style={{ fontSize: "1.05rem", fontWeight: 600, marginBottom: "0.3rem" }}>
                 {d.city}, {d.state}
-              </h2>
+              </h3>
               <p style={{ fontSize: "0.85rem", color: "#A1A1AA", marginBottom: "0.5rem" }}>
                 {d.tagline}
               </p>

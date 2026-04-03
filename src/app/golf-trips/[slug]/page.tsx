@@ -11,6 +11,7 @@ import {
   regionSlug,
   stateSlug,
   slugify,
+  metaDescription,
   STATE_NAMES,
   REGION_LABELS,
 } from "../helpers";
@@ -28,7 +29,7 @@ export async function generateMetadata({
   const dest = allDestinations.find((d) => d.id === slug);
   if (!dest) return {};
   const title = `${dest.city} Golf Trip: Courses, Lodging, Nightlife & a Budget That Works | Tour de Fore`;
-  const description = dest.description.slice(0, 155);
+  const description = metaDescription(dest.description);
   return {
     title,
     description,
@@ -440,11 +441,42 @@ export default async function DestinationPage({
           </a>
         </div>
 
-        {/* ── Footer links ── */}
+        {/* ── Related Guides ── */}
         <div
           style={{
             borderTop: "1px solid #222",
             paddingTop: "1.5rem",
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "0.75rem",
+            marginBottom: "1.5rem",
+          }}
+        >
+          <a
+            href={`/golf-trips/${dest.id}/guide`}
+            style={{ padding: "10px 20px", background: "rgba(234,88,12,0.08)", border: "1px solid rgba(234,88,12,0.3)", borderRadius: 8, textDecoration: "none", color: "#EA580C", fontSize: "0.85rem", fontWeight: 600 }}
+          >
+            Planning Guide
+          </a>
+          <a
+            href={`/golf-trips/${dest.id}/cost`}
+            style={{ padding: "10px 20px", background: "rgba(74,222,128,0.08)", border: "1px solid rgba(74,222,128,0.3)", borderRadius: 8, textDecoration: "none", color: "#4ade80", fontSize: "0.85rem", fontWeight: 600 }}
+          >
+            Cost Breakdown
+          </a>
+          {dest.bars.length >= 3 && dest.population !== "tiny" && (
+            <a
+              href={`/golf-trips/${dest.id}/bachelor-party`}
+              style={{ padding: "10px 20px", background: "rgba(124,58,237,0.08)", border: "1px solid rgba(124,58,237,0.3)", borderRadius: 8, textDecoration: "none", color: "#a78bfa", fontSize: "0.85rem", fontWeight: 600 }}
+            >
+              Bachelor Party
+            </a>
+          )}
+        </div>
+
+        {/* ── Footer links ── */}
+        <div
+          style={{
             display: "flex",
             flexWrap: "wrap",
             gap: "1rem 1.5rem",

@@ -11,10 +11,25 @@ export const metadata = {
 
 export default function PlanATripPage() {
   return (
-    <Suspense>
-      <ExplosionGate pageKey="plan-a-trip">
-        <PlanFlowClient />
-      </ExplosionGate>
-    </Suspense>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://tourdefore.com" },
+              { "@type": "ListItem", position: 2, name: "Plan a Trip", item: "https://tourdefore.com/plan-a-trip" },
+            ],
+          }),
+        }}
+      />
+      <Suspense>
+        <ExplosionGate pageKey="plan-a-trip">
+          <PlanFlowClient />
+        </ExplosionGate>
+      </Suspense>
+    </>
   );
 }

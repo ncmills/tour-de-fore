@@ -9,6 +9,7 @@ import {
   STATE_NAMES,
   seasonLabel,
   stateSlug,
+  metaDescription,
 } from "../../helpers";
 import { Region } from "@/data/types";
 
@@ -37,11 +38,11 @@ export async function generateMetadata({
 
   return {
     title,
-    description: description.slice(0, 155),
+    description: metaDescription(description),
     alternates: {
       canonical: `https://tourdefore.com/golf-trips/region/${region}`,
     },
-    openGraph: { title, description: description.slice(0, 155), images: ["/icon-fancy.png"] },
+    openGraph: { title, description: metaDescription(description), images: ["/icon-fancy.png"] },
   };
 }
 

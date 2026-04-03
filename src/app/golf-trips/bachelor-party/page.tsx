@@ -32,7 +32,21 @@ export default function BachelorPartyPage() {
         <h1 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "0.5rem" }}>
           Bachelor Party Golf Trips
         </h1>
-        <p style={{ color: "rgba(255,255,255,0.4)", marginBottom: "3rem" }}>Top destinations with the best nightlife, courses, and group vibes.</p>
+        <p style={{ color: "rgba(255,255,255,0.4)", marginBottom: "1.5rem" }}>Top destinations with the best nightlife, courses, and group vibes.</p>
+
+        <div style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.9rem", lineHeight: 1.8, maxWidth: 720, marginBottom: "3rem" }}>
+          <p style={{ marginBottom: "0.75rem" }}>
+            A bachelor party golf trip is the perfect send-off — competitive rounds during the day, epic nights out after.
+            We ranked these {ranked.length} destinations by nightlife depth (late-night bars, variety of scenes), dining
+            quality, activity options, and of course, the golf itself. Every destination below has at least 3 bars,
+            a non-tiny town population, and enough going on to keep your crew entertained from tee time to last call.
+          </p>
+          <p>
+            Each destination page breaks down the full picture: course-by-course details, the best group-friendly lodging
+            (houses that sleep 8+), restaurant picks for group dinners, and every bar worth hitting.
+            Use our AI planner to build a complete bachelor party itinerary in 60 seconds flat.
+          </p>
+        </div>
 
         <h2 style={{ fontSize: "1.1rem", fontWeight: 600, marginBottom: "1rem", color: "rgba(255,255,255,0.6)" }}>Top {ranked.length} Bachelor Party Destinations</h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(300px, 100%), 1fr))", gap: "1rem" }}>

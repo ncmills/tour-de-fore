@@ -25,11 +25,27 @@ import { buildFreePreview } from "@/lib/free-plan";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import { validateWizardState } from "@/lib/validate";
 import {
-  canGenerateFreePlan,
-  recordFreePlanGeneration,
   addPlanToUser,
-  isSubscribed,
 } from "@/lib/auth";
+import { getRedis } from "@/lib/redis";
+
+/** Get ISO week key like "2026-W14" */
+function getWeekKey(): string {
+  const d = new Date();
+  const jan1 = new Date(d.getFullYear(), 0, 1);
+  const days = Math.floor((d.getTime() - jan1.getTime()) / 86400000);
+  const week = Math.ceil((days + jan1.getDay() + 1) / 7);
+  return `${d.getFullYear()}-W${String(week).padStart(2, "0")}`;
+}
+
+/** Get next Monday midnight ISO string */
+function getNextWeekReset(): string {
+  const d = new Date();
+  const day = d.getDay();
+  const daysUntilMonday = day === 0 ? 1 : 8 - day;
+  const next = new Date(d.getFullYear(), d.getMonth(), d.getDate() + daysUntilMonday);
+  return next.toISOString();
+}
 
 function tryParseJSON(jsonStr: string): unknown | null {
   // Strip markdown fences
@@ -314,17 +330,18 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Check free plan limit (1 plan/month for non-subscribed, non-unlimited users)
-  if (email && !UNLIMITED_EMAILS.includes(email)) {
-    const isUserSubscribed = await isSubscribed(email);
-    if (!isUserSubscribed) {
-      const canGenerate = await canGenerateFreePlan(email);
-      if (!canGenerate) {
-        return NextResponse.json({
-          error: "You've used your free plan this month. Check back next month!",
-          limitReached: true,
-        }, { status: 429 });
-      }
+  // Free tier: 3 plans per week per user
+  if (email && !isUnlimited) {
+    const weekKey = getWeekKey();
+    const countRaw = await getRedis().get(`user:${email}:plans:${weekKey}`);
+    const count = countRaw ? parseInt(countRaw) : 0;
+    if (count >= 3) {
+      return NextResponse.json({
+        error: "You've used your 3 free plans this week. Come back next week!",
+        limitReached: true,
+        plansUsed: count,
+        resetsAt: getNextWeekReset(),
+      }, { status: 429 });
     }
   }
 
@@ -388,6 +405,18 @@ export async function POST(req: NextRequest) {
             const context = buildDestinationContext(pick.destination);
             const priceTargets = computePriceTargets(pick.destination, state.groupSize, state.numberOfDays);
             const plans = await generatePlansForDestination(client, state, context, priceTargets);
+            // Enrich course data with imageUrl from destination database
+            for (const plan of Object.values(plans)) {
+              if (!plan?.courses) continue;
+              for (const course of plan.courses) {
+                const dbCourse = pick.destination.courses.find(
+                  (c) => c.name.toLowerCase() === course.name.toLowerCase()
+                    || c.name.toLowerCase().includes(course.name.toLowerCase())
+                    || course.name.toLowerCase().includes(c.name.toLowerCase())
+                );
+                if (dbCourse?.imageUrl) course.imageUrl = dbCourse.imageUrl;
+              }
+            }
             planCache.set(destId, plans);
           })
         );
@@ -417,13 +446,15 @@ export async function POST(req: NextRequest) {
           premium: destByLevel.premium || fallbackRec,
         } : undefined;
 
-        // Record free plan usage
-        const subscribed = email ? await isSubscribed(email) : false;
-        if (email && !UNLIMITED_EMAILS.includes(email) && !subscribed) {
-          await recordFreePlanGeneration(email);
+        // Record weekly plan usage
+        if (email && !UNLIMITED_EMAILS.includes(email)) {
+          const weekKey = getWeekKey();
+          const redisKey = `user:${email}:plans:${weekKey}`;
+          await getRedis().incr(redisKey);
+          await getRedis().expire(redisKey, 60 * 60 * 24 * 8); // 8 days TTL
         }
 
-        // Store plan
+        // Store plan — all plans are fully unlocked (no paywall)
         const planId = crypto.randomUUID();
         const storedPlan: StoredPlan = {
           id: planId,
@@ -432,7 +463,7 @@ export async function POST(req: NextRequest) {
           inputs: state,
           createdAt: new Date().toISOString(),
           emailsSent: false,
-          paid: subscribed || UNLIMITED_EMAILS.includes(email || ""),
+          paid: true, // all plans are fully unlocked
         };
 
         await storePlan(storedPlan);

@@ -239,8 +239,8 @@ function scoreDestination(d: Destination, options: FilterOptions): ScoreResult {
 
   // ── Course quality match (capped at 3 to avoid data-richness bias) ──
   const matchingCourses = d.courses.filter((c) => desiredTiers.includes(c.tier));
-  let courseScore = Math.min(matchingCourses.length, 3) * 10;
-  if (hasBudgetPriority("Best courses")) courseScore = Math.round(courseScore * 1.5);
+  let courseScore = Math.min(matchingCourses.length, 3) * 7;
+  if (hasBudgetPriority("Best courses")) courseScore = Math.round(courseScore * 1.4);
   score += courseScore;
   if (matchingCourses.length >= 2) {
     reasons.push({ pts: courseScore, text: `${matchingCourses.length} courses match your preference` });
@@ -287,16 +287,23 @@ function scoreDestination(d: Destination, options: FilterOptions): ScoreResult {
     }
   } else {
     // Default bar scoring (Couple nights / Point us to a bar)
-    score += Math.min(walkableBars, 3) * 3;
+    score += Math.min(walkableBars, 3) * 4;
     score += Math.min(lateNightBars, 2) * 3;
+    if (walkableBars >= 2) {
+      reasons.push({ pts: walkableBars * 4, text: `${walkableBars} walkable bars for after-dinner drinks` });
+    }
   }
 
-  // ── Dining options — adjusted by budget priority ──
-  let diningScore = Math.min(d.dining.length, 3) * 2;
+  // ── Dining options — weighted higher for dining-focused trips ──
+  let diningScore = Math.min(d.dining.length, 4) * 3;
+  // Bonus for variety: steakhouse + at least 2 other styles
+  const hasSteak = d.dining.some((r) => r.style === "steakhouse");
+  const diningStyles = new Set(d.dining.map((r) => r.style));
+  if (hasSteak && diningStyles.size >= 3) diningScore += 5;
   if (hasBudgetPriority("Best dining")) {
-    diningScore *= 2;
+    diningScore = Math.round(diningScore * 2);
     if (d.dining.some((r) => r.priceRange === "$$$$")) {
-      diningScore += 3;
+      diningScore += 6;
       reasons.push({ pts: diningScore, text: "Top-tier dining options available" });
     }
   }
@@ -384,6 +391,14 @@ function scoreDestination(d: Destination, options: FilterOptions): ScoreResult {
     if (fitsWell) score += 4;
     if (d.lodging.length >= 2) score += 3;
   }
+
+  // ── Thin data penalty — destinations missing key categories rank lower ──
+  if (d.bars.length === 0) score -= 10;
+  else if (d.bars.length === 1) score -= 4;
+  if (d.dining.length === 0) score -= 12;
+  else if (d.dining.length <= 2) score -= 5;
+  if (d.activities.length === 0) score -= 8;
+  if (d.partyBuses.length === 0 && (options.groupSize || 12) >= 8) score -= 4;
 
   // ── Popularity bonus — requires minimum impressions ──
   const popularity = _popularityScores.get(d.id) || 0;

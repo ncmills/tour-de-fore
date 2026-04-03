@@ -47,6 +47,7 @@ export async function POST(req: NextRequest) {
         style: c.style,
         walkable: c.walkable,
         driveMinutes: c.driveMinutes,
+        imageUrl: c.imageUrl,
       })),
       lodging: dest.lodging.map((l) => ({
         type: l.type,

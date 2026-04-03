@@ -231,6 +231,7 @@ export interface FreePreview {
     highlight: string;
     googleRating?: number;
     hypeTag?: string;
+    imageUrl?: string;
   }[];
   estimatedBudgetPerPerson: string;
   numberOfDays: number;

@@ -68,9 +68,16 @@ export default async function TierCoursesPage({ params }: Props) {
         <h1 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "0.5rem" }}>
           <span style={{ color }}>{label}</span> Golf Courses
         </h1>
-        <p style={{ color: "rgba(255,255,255,0.4)", marginBottom: "3rem" }}>{courses.length} courses across America</p>
+        <p style={{ color: "rgba(255,255,255,0.4)", marginBottom: "1.5rem" }}>{courses.length} courses across America</p>
 
-        <h2 style={{ fontSize: 0, width: 0, height: 0, overflow: "hidden", position: "absolute" }}>Browse {label} Courses by Tier</h2>
+        <div style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.9rem", lineHeight: 1.8, maxWidth: 720, marginBottom: "3rem" }}>
+          {tier === "bucket-list" && <p>These are the courses every golfer dreams about — Top 100 public courses, PGA Tour hosts, and layouts designed by legends like Pete Dye, Tom Fazio, and Jack Nicklaus. Expect championship conditions, premium green fees ($150–$500+), and rounds you&apos;ll remember forever. Worth every penny for a once-in-a-lifetime group trip.</p>}
+          {tier === "premium" && <p>Premium courses strike the sweet spot between elite quality and reasonable pricing. You&apos;re getting well-maintained layouts, challenging designs, and memorable settings — without the sticker shock of bucket-list venues. Green fees typically run $80–$200, making these ideal for groups that want great golf without blowing the entire trip budget on one round.</p>}
+          {tier === "solid" && <p>Solid tier courses are the backbone of a great golf trip. Well-maintained, enjoyable layouts that won&apos;t drain your wallet. Green fees typically run $40–$120, and many of these tracks surprise you with views, conditions, and designs that punch well above their price point. Perfect for groups playing 36 a day or fitting in extra rounds between activities.</p>}
+          {tier === "budget" && <p>Budget courses prove you don&apos;t need to spend big to have a blast on the course. Under $60 green fees with courses that are still well-maintained, fun to play, and perfect for groups focused on the overall trip experience. Many are walkable, most have solid practice facilities, and they free up cash for everything else your crew wants to do.</p>}
+        </div>
+
+        <h2 style={{ fontSize: "1.1rem", fontWeight: 600, marginBottom: "1rem", color: "rgba(255,255,255,0.6)" }}>Browse by Tier</h2>
         <div style={{ display: "flex", gap: "0.5rem", marginBottom: "2rem", flexWrap: "wrap" }}>
           {TIERS.map((t) => (
             <Link key={t} href={`/golf-trips/courses/${t}`} style={{ padding: "6px 16px", borderRadius: 4, fontSize: "0.75rem", fontWeight: 600, textDecoration: "none", background: tier === t ? tierColor(t) : "rgba(255,255,255,0.05)", color: tier === t ? "#fff" : "rgba(255,255,255,0.4)", border: tier === t ? "none" : "1px solid rgba(255,255,255,0.1)" }}>

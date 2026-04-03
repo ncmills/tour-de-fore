@@ -119,3 +119,16 @@ export function seasonLabel(seasons: string[]): string {
 export function slugify(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
+
+/** Truncate text at a sentence or clause boundary within maxLen chars */
+export function metaDescription(text: string, maxLen = 155): string {
+  if (text.length <= maxLen) return text;
+  const truncated = text.slice(0, maxLen);
+  const lastPeriod = truncated.lastIndexOf(". ");
+  const lastComma = truncated.lastIndexOf(", ");
+  const lastDash = truncated.lastIndexOf(" — ");
+  const breakPoint = Math.max(lastPeriod, lastComma, lastDash);
+  if (breakPoint > maxLen * 0.5) return text.slice(0, breakPoint + 1).trim();
+  const lastSpace = truncated.lastIndexOf(" ");
+  return lastSpace > 0 ? text.slice(0, lastSpace).trim() + "…" : truncated.trim() + "…";
+}

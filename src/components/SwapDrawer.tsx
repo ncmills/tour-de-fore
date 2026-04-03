@@ -2,6 +2,28 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import Image from "next/image";
+
+const FALLBACK_GOLF_IMAGES = [
+  "https://www.troonnorthgolf.com/wp-content/uploads/sites/8934/2023/06/home-main.jpg",
+  "https://balihaigolfclub.com/wp-content/uploads/2024/07/bali-hai-og.jpg",
+  "https://chambersbaygolf.com/wp-content/uploads/2025/05/cb-homescreen.jpg",
+  "https://tamarackidaho.com/wp-content/uploads/2024/04/SH.2023.6.29_Golfing-157-scaled.jpg",
+  "https://falconridgegolfclub.com/wp-content/uploads/HOLE-18-FALCON-RIDGE-0098.jpg",
+  "https://www.wolfrungolfclub.com/wp-content/uploads/sites/8583/2022/09/home-full-1.jpg",
+  "https://www.sandiagolf.com/wp-content/uploads/sites/8959/2023/06/21.jpg",
+  "https://tetherow.com/wp-content/uploads/2018/12/tetherow-lodge-hero-3000.jpg",
+  "https://www.reservegolf.com/wp-content/uploads/sites/9325/2024/01/IMG_5043.jpg",
+  "https://newcastlegolf.com/wp-content/uploads/2024/01/DJI_0055-Enhanced-NR.jpg",
+  "https://casablanca.playmesquite.com/wp-content/uploads/2025/01/200808_nevada_palmsgolf_033.jpg",
+  "https://azhideawaycollection.com/wp-content/uploads/2024/12/sedona_home_hero-1024x728.webp",
+];
+
+function getFallbackImage(name: string): string {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) hash = ((hash << 5) - hash + name.charCodeAt(i)) | 0;
+  return FALLBACK_GOLF_IMAGES[Math.abs(hash) % FALLBACK_GOLF_IMAGES.length];
+}
 
 interface SwapDrawerProps {
   planId: string;
@@ -105,27 +127,43 @@ export default function SwapDrawer({ planId, destLevel, category, currentName, o
                     color: "#fff",
                   }}
                 >
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.3rem" }}>
-                    <span style={{ fontWeight: 600, fontSize: "0.95rem" }}>
-                      {(item.name || item.type || `Option ${i + 1}`) as string}
-                    </span>
-                    {item.googleRating ? (
-                      <span style={{ color: "#D4A843", fontSize: "0.8rem" }}>
-                        {String(item.googleRating)}★
-                      </span>
-                    ) : null}
-                  </div>
-                  {item.highlight ? (
-                    <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.8rem", lineHeight: 1.4, marginBottom: "0.3rem" }}>
-                      {String(item.highlight)}
-                    </p>
-                  ) : null}
-                  <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-                    {item.tier ? <span style={{ fontSize: "0.7rem", color: "#EA580C", textTransform: "uppercase", letterSpacing: "0.05em" }}>{String(item.tier)}</span> : null}
-                    {item.greenFeeRange ? <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.3)" }}>${(item.greenFeeRange as number[])[0]}–${(item.greenFeeRange as number[])[1]}</span> : null}
-                    {item.priceRange ? <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.3)" }}>{String(item.priceRange)}</span> : null}
-                    {item.nightlyRange ? <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.3)" }}>${(item.nightlyRange as number[])[0]}–${(item.nightlyRange as number[])[1]}/night</span> : null}
-                    {item.vibe ? <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.3)" }}>{String(item.vibe)}</span> : null}
+                  <div style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
+                    {category === "courses" && (
+                      <div style={{ flexShrink: 0, width: 48, height: 48, borderRadius: 6, overflow: "hidden", position: "relative", border: "1px solid rgba(255,255,255,0.1)" }}>
+                        <Image
+                          src={(item.imageUrl as string) || getFallbackImage((item.name as string) || `opt-${i}`)}
+                          alt={(item.name as string) || "Golf course"}
+                          fill
+                          sizes="48px"
+                          style={{ objectFit: "cover" }}
+                          unoptimized
+                        />
+                      </div>
+                    )}
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.3rem" }}>
+                        <span style={{ fontWeight: 600, fontSize: "0.95rem" }}>
+                          {(item.name || item.type || `Option ${i + 1}`) as string}
+                        </span>
+                        {item.googleRating ? (
+                          <span style={{ color: "#D4A843", fontSize: "0.8rem" }}>
+                            {String(item.googleRating)}★
+                          </span>
+                        ) : null}
+                      </div>
+                      {item.highlight ? (
+                        <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.8rem", lineHeight: 1.4, marginBottom: "0.3rem" }}>
+                          {String(item.highlight)}
+                        </p>
+                      ) : null}
+                      <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+                        {item.tier ? <span style={{ fontSize: "0.7rem", color: "#EA580C", textTransform: "uppercase", letterSpacing: "0.05em" }}>{String(item.tier)}</span> : null}
+                        {item.greenFeeRange ? <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.3)" }}>${(item.greenFeeRange as number[])[0]}–${(item.greenFeeRange as number[])[1]}</span> : null}
+                        {item.priceRange ? <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.3)" }}>{String(item.priceRange)}</span> : null}
+                        {item.nightlyRange ? <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.3)" }}>${(item.nightlyRange as number[])[0]}–${(item.nightlyRange as number[])[1]}/night</span> : null}
+                        {item.vibe ? <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.3)" }}>{String(item.vibe)}</span> : null}
+                      </div>
+                    </div>
                   </div>
                 </motion.button>
               ))}

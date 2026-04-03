@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   GeneratedPlan,
   ThreePlanResult,
@@ -14,6 +15,27 @@ import {
 } from "@/lib/plan-types";
 import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
+
+const FALLBACK_GOLF_IMAGES = [
+  "https://www.troonnorthgolf.com/wp-content/uploads/sites/8934/2023/06/home-main.jpg",
+  "https://balihaigolfclub.com/wp-content/uploads/2024/07/bali-hai-og.jpg",
+  "https://chambersbaygolf.com/wp-content/uploads/2025/05/cb-homescreen.jpg",
+  "https://tamarackidaho.com/wp-content/uploads/2024/04/SH.2023.6.29_Golfing-157-scaled.jpg",
+  "https://falconridgegolfclub.com/wp-content/uploads/HOLE-18-FALCON-RIDGE-0098.jpg",
+  "https://www.wolfrungolfclub.com/wp-content/uploads/sites/8583/2022/09/home-full-1.jpg",
+  "https://www.sandiagolf.com/wp-content/uploads/sites/8959/2023/06/21.jpg",
+  "https://tetherow.com/wp-content/uploads/2018/12/tetherow-lodge-hero-3000.jpg",
+  "https://www.reservegolf.com/wp-content/uploads/sites/9325/2024/01/IMG_5043.jpg",
+  "https://newcastlegolf.com/wp-content/uploads/2024/01/DJI_0055-Enhanced-NR.jpg",
+  "https://casablanca.playmesquite.com/wp-content/uploads/2025/01/200808_nevada_palmsgolf_033.jpg",
+  "https://azhideawaycollection.com/wp-content/uploads/2024/12/sedona_home_hero-1024x728.webp",
+];
+
+function getFallbackImage(name: string): string {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) hash = ((hash << 5) - hash + name.charCodeAt(i)) | 0;
+  return FALLBACK_GOLF_IMAGES[Math.abs(hash) % FALLBACK_GOLF_IMAGES.length];
+}
 
 /* ── helpers ── */
 
@@ -431,36 +453,50 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
               viewport={{ once: true, amount: 0.2 }}
               transition={{ delay: i * 0.06 }}
             >
-              <HoverCard style={{ padding: "1.75rem 2rem", height: "100%", display: "flex", flexDirection: "column" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginBottom: 10,
-                  }}
-                >
-                  <span
+              <HoverCard style={{ padding: 0, height: "100%", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+                {/* Course hero image */}
+                <div style={{ position: "relative", width: "100%", aspectRatio: "16/9", overflow: "hidden" }}>
+                  <Image
+                    src={course.imageUrl || getFallbackImage(course.name)}
+                    alt={course.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 350px"
+                    style={{ objectFit: "cover" }}
+                    unoptimized
+                  />
+                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%)" }} />
+                </div>
+                <div style={{ padding: "1.25rem 1.5rem", flex: 1, display: "flex", flexDirection: "column" }}>
+                  <div
                     style={{
-                      fontSize: 11,
-                      textTransform: "uppercase",
-                      letterSpacing: "0.1em",
-                      color: tierColors[tier],
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      marginBottom: 10,
                     }}
                   >
-                    Day {course.day} &mdash; {course.session}
-                  </span>
-                  <span style={{ color: tierColors[tier], fontSize: 14, fontWeight: 600 }}>
-                    {course.greenFee}
-                  </span>
+                    <span
+                      style={{
+                        fontSize: 11,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.1em",
+                        color: tierColors[tier],
+                      }}
+                    >
+                      Day {course.day} &mdash; {course.session}
+                    </span>
+                    <span style={{ color: tierColors[tier], fontSize: 14, fontWeight: 600 }}>
+                      {course.greenFee}
+                    </span>
+                  </div>
+                  <h3 style={{ fontSize: 18, fontWeight: 700, margin: "0 0 10px" }}>
+                    {course.name}
+                  </h3>
+                  <p style={{ color: "#888", fontSize: 13, lineHeight: 1.6, margin: 0, flex: 1 }}>
+                    {course.whyThisCourse}
+                  </p>
+                  {course.url && <ExternalLink href={course.url} label="Tee Times & Info" />}
                 </div>
-                <h3 style={{ fontSize: 18, fontWeight: 700, margin: "0 0 10px" }}>
-                  {course.name}
-                </h3>
-                <p style={{ color: "#888", fontSize: 13, lineHeight: 1.6, margin: 0, flex: 1 }}>
-                  {course.whyThisCourse}
-                </p>
-                {course.url && <ExternalLink href={course.url} label="Tee Times & Info" />}
               </HoverCard>
             </motion.div>
           ))}

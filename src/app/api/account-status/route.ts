@@ -1,8 +1,17 @@
 import { NextResponse } from "next/server";
-import { getSessionEmail, canGenerateFreePlan, getFreePlanCount, isSubscribed } from "@/lib/auth";
+import { getSessionEmail } from "@/lib/auth";
+import { getRedis } from "@/lib/redis";
 
 const UNLIMITED_EMAILS = ["nicholauscmills@gmail.com", "matt@sixtenmgmt.com"];
-const FREE_PLAN_LIMIT = 1;
+const WEEKLY_PLAN_LIMIT = 3;
+
+function getWeekKey(): string {
+  const d = new Date();
+  const jan1 = new Date(d.getFullYear(), 0, 1);
+  const days = Math.floor((d.getTime() - jan1.getTime()) / 86400000);
+  const week = Math.ceil((days + jan1.getDay() + 1) / 7);
+  return `${d.getFullYear()}-W${String(week).padStart(2, "0")}`;
+}
 
 export async function GET() {
   try {
@@ -12,16 +21,16 @@ export async function GET() {
     }
 
     const unlimited = UNLIMITED_EMAILS.includes(email);
-    const plansUsed = await getFreePlanCount(email);
-    const subscribed = await isSubscribed(email);
-    const canPlan = unlimited || subscribed || (await canGenerateFreePlan(email));
+    const weekKey = getWeekKey();
+    const countRaw = await getRedis().get(`user:${email}:plans:${weekKey}`);
+    const plansUsed = countRaw ? parseInt(countRaw) : 0;
+    const canPlan = unlimited || plansUsed < WEEKLY_PLAN_LIMIT;
 
     return NextResponse.json({
       canPlan,
       plansUsed,
-      plansLimit: FREE_PLAN_LIMIT,
+      plansLimit: WEEKLY_PLAN_LIMIT,
       unlimited,
-      subscribed,
     });
   } catch {
     return NextResponse.json({ error: "Failed to fetch status" }, { status: 500 });
