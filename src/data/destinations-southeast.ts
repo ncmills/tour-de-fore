@@ -33,6 +33,8 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 0,
         url: "https://www.pinehurst.com/golf/courses/no-2/",
+
+        imageUrl: "https://www.pinehurst.com/wp-content/uploads/2022/11/No2_Hole_9_01.jpg",
         highlight:
           "Donald Ross masterpiece. Host of multiple US Opens. The crowned, turtle-back greens are the ultimate test.",
         googleRating: 4.7,
@@ -53,6 +55,8 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 0,
         url: "https://www.pinehurst.com/golf/courses/no-4/",
+
+        imageUrl: "https://www.pinehurst.com/wp-content/uploads/2022/11/Golf_Course_No4.jpg",
         highlight:
           "Gil Hanse redesign with sandy waste areas and wide fairways. Many say it rivals No. 2.",
         googleRating: 4.8,
@@ -72,6 +76,8 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 0,
         url: "https://www.pinehurst.com/golf/courses/no-8/",
+
+        imageUrl: "https://www.pinehurst.com/wp-content/uploads/2023/01/GOLF_C08H14_MARSH_GIBSON_SEPT22_.jpeg",
         highlight:
           "Tom Fazio's Centennial course. Wide fairways, dramatic elevation changes, and pristine conditioning.",
         googleRating: 4.6,
@@ -692,6 +698,8 @@ export const southeastDestinations: Destination[] = [
         style: "coastal",
         driveMinutes: 10,
         url: "https://www.seapines.com/golf/harbour-town-golf-links/",
+
+        imageUrl: "https://www.seapines.com/sites/default/files/media/images/Hornstein_HT_hole18a.jpg",
         highlight:
           "Pete Dye and Jack Nicklaus co-design. Home of the RBC Heritage. The lighthouse behind 18 is one of golf's most iconic images.",
         googleRating: 4.7,
@@ -1043,6 +1051,8 @@ export const southeastDestinations: Destination[] = [
         style: "links",
         driveMinutes: 10,
         url: "https://www.kivadunes.com/golf/",
+
+        imageUrl: "https://www.kivadunes.com/wp-content/uploads/2022/12/golfgallery.jpg",
         highlight:
           "Jerry Pate links-style design right on the Gulf. Ranked #1 public course in Alabama. Dunes, wind, and ocean views.",
         googleRating: 4.6,
@@ -1063,6 +1073,8 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 5,
         url: "https://www.craftfarms.com/golf/cotton-creek/",
+
+        imageUrl: "https://craftfarms.com/wp-content/uploads/2022/10/COTTON-CREEK-COURSE.jpg",
         highlight:
           "Arnold Palmer design with wide fairways and generous greens. The most forgiving of the area courses.",
         googleRating: 4.3,
@@ -1081,6 +1093,8 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 5,
         url: "https://www.craftfarms.com/golf/cypress-bend/",
+
+        imageUrl: "https://craftfarms.com/wp-content/uploads/2022/05/cypress-bend-golf-alabama.jpg",
         highlight:
           "Tighter and more demanding than its Cotton Creek sibling. Water on 15 holes keeps you honest.",
         googleRating: 4.2,
@@ -1099,6 +1113,8 @@ export const southeastDestinations: Destination[] = [
         style: "resort",
         driveMinutes: 8,
         url: "https://www.peninsulagolfclub.com/",
+
+        imageUrl: "https://peninsulagolfclub.com/wp-content/uploads/2022/12/review-A-2.jpg",
         highlight:
           "Earl Stone design with 27 holes in three 9-hole loops. Marshes, lakes, and great value.",
         googleRating: 4.2,
@@ -1118,6 +1134,8 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 15,
         url: "https://www.glenlakesgolf.com/",
+
+        imageUrl: "https://www.glenlakesgolf.com/wp-content/uploads/sites/2749/2014/10/david.jpg?w=300",
         highlight:
           "Bruce Devlin design north of town. Consistently well-maintained and the best pure value in the area.",
         googleRating: 4.3,
@@ -1357,6 +1375,8 @@ export const southeastDestinations: Destination[] = [
         style: "coastal",
         driveMinutes: 10,
         url: "https://www.theclubatsavannahharbor.com/",
+
+        imageUrl: "https://www.theclubatsavannahharbor.com/wp-content/uploads/sites/8980/2023/06/home-main.jpg",
         highlight:
           "Robert Cupp and Sam Snead design on Hutchinson Island. Marsh and river views, formerly hosted a PGA Tour event.",
         googleRating: 4.5,
@@ -1670,7 +1690,6 @@ export const southeastDestinations: Destination[] = [
         walkable: true,
         style: "links",
         driveMinutes: 15,
-        url: "https://www.kearneyhill.com",
         highlight:
           "P.B. Dye links-style muni with great bones. Rolling terrain, fescue, and the best value in Lexington.",
         googleRating: 4.3,
@@ -1707,7 +1726,6 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 15,
-        url: "https://www.uclubky.com",
         highlight:
           "UK's championship course. Hosted NCAA championships and SEC events. The area's best pure test of golf.",
         googleRating: 4.5,
@@ -2033,6 +2051,8 @@ export const southeastDestinations: Destination[] = [
         style: "mountain",
         driveMinutes: 25,
         url: "https://www.cliffsliving.com/golf",
+
+        imageUrl: "https://cliffsliving.com/wp-content/uploads/2023/05/Golf-79764-scaled.jpg",
         highlight:
           "Jack Nicklaus design in a private mountain community. Dramatic elevation changes and Appalachian views. Guest access through real estate or member.",
         googleRating: 4.7,
@@ -2051,6 +2071,8 @@ export const southeastDestinations: Destination[] = [
         style: "mountain",
         driveMinutes: 45,
         url: "https://www.sequoyahnational.com/",
+
+        imageUrl: "https://www.sequoyahnational.com/wp-content/uploads/2019/05/MG_78952.jpg",
         highlight:
           "Robert Trent Jones II mountain design near Cherokee. Dramatic mountain scenery and excellent value. Worth the drive.",
         googleRating: 4.4,
@@ -2328,6 +2350,8 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 10,
         url: "https://www.kellyplantationgolf.com/",
+
+        imageUrl: "https://static.wixstatic.com/media/da3da3_83b99005f6f948959c274bd6306e501b~mv2_d_3894_1947_s_2.jpg/v1/fill/w_2500,h_1250,al_c/da3da3_83b99005f6f948959c274bd6306e501b~mv2_d_3894_1947_s_2.jpg",
         highlight:
           "Fred Couples and Gene Bates design along Choctawhatchee Bay. Beautiful routing through wetlands and hardwoods.",
         googleRating: 4.4,
@@ -2690,7 +2714,6 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "coastal",
         driveMinutes: 15,
-        url: "https://www.patriotspointegolf.com/",
         highlight:
           "Harbor views and the USS Yorktown as your backdrop. Great twilight rate for arrival day golf.",
         googleRating: 4.3,
@@ -2727,6 +2750,8 @@ export const southeastDestinations: Destination[] = [
         style: "links",
         driveMinutes: 30,
         url: "https://www.wilddunes.com/golf",
+
+        imageUrl: "https://www.wilddunesresort.com/site/assets/files/1067/wd_links_12th_hole_evening-2-2_edit.jpg",
         highlight:
           "Tom Fazio oceanfront links on Isle of Palms. Final three holes along the Atlantic are spectacular.",
         googleRating: 4.6,
@@ -3025,6 +3050,8 @@ export const southeastDestinations: Destination[] = [
         style: "coastal",
         driveMinutes: 25,
         url: "https://www.caledoniagolfandfishclub.com",
+
+        imageUrl: "https://caledoniagolfandfishclub.com/wp-content/uploads/2019/03/caledonia-golf-vacations-banner-768x402.jpg",
         highlight: "Mike Strantz masterpiece draped in live oaks and Spanish moss. Best course on the Grand Strand.",
         googleRating: 4.8,
         reviewCount: 1100,
@@ -3079,6 +3106,8 @@ export const southeastDestinations: Destination[] = [
         style: "coastal",
         driveMinutes: 20,
         url: "https://www.tidewatergolf.com",
+
+        imageUrl: "https://bidagent.xad.com/conv/286550?ts=TIMESTAMP",
         highlight: "Perched above the Intracoastal Waterway with stunning marsh views. Consistently top-rated.",
         googleRating: 4.6,
         reviewCount: 920,
@@ -3287,6 +3316,8 @@ export const southeastDestinations: Destination[] = [
         style: "links",
         driveMinutes: 15,
         url: "https://www.gaylordsprings.com",
+
+        imageUrl: "https://www.gaylordsprings.com/resourcefiles/homeimages/video-image.png",
         highlight: "Larry Nelson design along the Cumberland River. Resort-quality conditioning with water on 13 holes.",
         googleRating: 4.4,
       },
@@ -3334,7 +3365,6 @@ export const southeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 20,
-        url: "https://www.oldhickorycc.com",
         highlight: "Classic Nashville track with mature trees and tight fairways. Great afternoon round.",
         googleRating: 4.2,
       },
@@ -3553,7 +3583,6 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 25,
-        url: "https://www.beartracegolf.com",
         highlight: "Jack Nicklaus design on Chickamauga Lake. State park course with championship pedigree.",
         googleRating: 4.4,
       },
@@ -3569,7 +3598,6 @@ export const southeastDestinations: Destination[] = [
         walkable: false,
         style: "mountain",
         driveMinutes: 20,
-        url: "https://www.lookoutmountaingc.com",
         highlight: "Scenic mountain layout with dramatic elevation changes and valley views.",
         googleRating: 4.3,
       },
@@ -4057,6 +4085,8 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 20,
         url: "https://www.stjohnsgolf.com",
+
+        imageUrl: "https://www.stjohnsgolf.com/wp-content/uploads/sites/9752/2025/12/New-St-Johns-Flag.jpg",
         highlight: "Clyde Johnston design that punches above its price. Good value round to balance the splurge days.",
         googleRating: 4.5,
         reviewCount: 489,
@@ -4525,6 +4555,8 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 20,
         url: "https://www.greenfieldplantation.com",
+
+        imageUrl: "https://assets.cdn.filesafe.space/dENVUeQ2YpQvba57xOBc/media/68e931355db7d613b464cecc.png",
         highlight: "Best value in the Sarasota area. Well-maintained with some nice water features.",
         googleRating: 4.4,
         reviewCount: 538,
@@ -4749,6 +4781,8 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 25,
         url: "https://www.ocngolf.com",
+
+        imageUrl: "https://www.ocngolf.com/wp-content/uploads/sites/8939/2026/01/golf-ball-next-to-hole-aerial-view-full-size-background-image.png",
         highlight: "Phil Ritson design used as PGA Tour Q-School venue. Big, bold, and beautifully conditioned.",
         googleRating: 4.5,
         reviewCount: 1182,
@@ -4766,6 +4800,8 @@ export const southeastDestinations: Destination[] = [
         style: "resort",
         driveMinutes: 30,
         url: "https://www.reunionresort.com/golf",
+
+        imageUrl: "https://symphony.cdn.tambourine.com/reunion-resort/media/63-reunion-6047cdfd36b49.jpg",
         highlight: "Tom Watson design with rolling terrain and strategic bunkering. Best of Reunion's three courses.",
         googleRating: 4.6,
         reviewCount: 1015,
@@ -5222,6 +5258,8 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 15,
         url: "https://www.hellspoint.com",
+
+        imageUrl: "https://www.hellspoint.com/wp-content/uploads/sites/6720/2024/05/view-from-clubhouse-ok.jpg",
         highlight: "Rees Jones design with water on 13 holes. Challenging and well-conditioned daily-fee track.",
         googleRating: 4.2,
         reviewCount: 380,
@@ -5447,6 +5485,8 @@ export const southeastDestinations: Destination[] = [
         style: "coastal",
         driveMinutes: 5,
         url: "https://www.truebluegolf.com",
+
+        imageUrl: "https://www.truebluegolf.com/wp-content/uploads/2019/04/caledonia-golf-vacations-banner-768x402.jpg",
         highlight: "Strantz's sister course to Caledonia. Wider and wilder with massive waste bunkers.",
         googleRating: 4.7,
         reviewCount: 1500,
@@ -5480,7 +5520,6 @@ export const southeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 5,
-        url: "https://www.litchfieldcc.com",
         highlight: "Willard Byrd design through ancient oaks. Classic lowcountry layout at a great price.",
         googleRating: 4.3,
         reviewCount: 380,
@@ -5727,6 +5766,8 @@ export const southeastDestinations: Destination[] = [
         style: "links",
         driveMinutes: 5,
         url: "https://www.nagsheadgolflinks.com",
+
+        imageUrl: "https://cms11-prod.invitedclubs.com/contentassets/1be648ab5beb4252b1b0d4e04682e66d/nags_head_video.jpg/",
         highlight: "Bob Moore design on Roanoke Sound. True links experience with ocean winds and sound views.",
         googleRating: 4.5,
         reviewCount: 520,
@@ -5947,6 +5988,8 @@ export const southeastDestinations: Destination[] = [
         style: "links",
         driveMinutes: 5,
         url: "https://www.seaisland.com/golf",
+
+        imageUrl: "https://www.seaisland.com/content/uploads/2021/10/20130125_golf_seaside_course_13_aerial_grandfather_grandaughter_tombras_simonite_0007-e1646077686659.jpg",
         highlight: "Tom Fazio design hosting the RSM Classic. Ocean-side links with sweeping marsh and Atlantic views.",
         googleRating: 4.6,
         reviewCount: 1230,
@@ -5964,6 +6007,8 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 5,
         url: "https://www.seaisland.com/golf",
+
+        imageUrl: "https://www.seaisland.com/content/uploads/2021/10/20130125_golf_seaside_course_13_aerial_grandfather_grandaughter_tombras_simonite_0007-e1646077686659.jpg",
         highlight: "Rees Jones redesign through live oaks and lagoons. More traditional than Seaside and equally excellent.",
         googleRating: 4.4,
         reviewCount: 660,
@@ -5981,6 +6026,8 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 10,
         url: "https://www.seaisland.com/golf",
+
+        imageUrl: "https://www.seaisland.com/content/uploads/2021/10/20130125_golf_seaside_course_13_aerial_grandfather_grandaughter_tombras_simonite_0007-e1646077686659.jpg",
         highlight: "Davis Love III and Mark Love design on St. Simons. Avenue of Oaks entrance is unforgettable.",
         googleRating: 4.6,
         reviewCount: 345,
@@ -6200,6 +6247,8 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 5,
         url: "https://www.reynoldslakeoconee.com/golf",
+
+        imageUrl: "https://s3.us-east-2.amazonaws.com/reynoldsdotcomassets/images/site/Golf_Teaser_Square-Retina.jpg",
         highlight: "Rees Jones design that hosted the PGA Cup. Lakeside holes and dramatic bunkering.",
         googleRating: 4.5,
         reviewCount: 694,
@@ -6217,6 +6266,8 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 5,
         url: "https://www.reynoldslakeoconee.com/golf",
+
+        imageUrl: "https://s3.us-east-2.amazonaws.com/reynoldsdotcomassets/images/site/Golf_Teaser_Square-Retina.jpg",
         highlight: "Tom Fazio design. Augusta National-style conditioning with dramatic elevation and lake views.",
         googleRating: 4.4,
         reviewCount: 1031,
@@ -6234,6 +6285,8 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 5,
         url: "https://www.reynoldslakeoconee.com/golf",
+
+        imageUrl: "https://s3.us-east-2.amazonaws.com/reynoldsdotcomassets/images/site/Golf_Teaser_Square-Retina.jpg",
         highlight: "Bob Cupp design with the most lake-exposed routing. Five holes right on the water.",
         googleRating: 4.5,
         reviewCount: 1342,
@@ -6251,6 +6304,8 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 10,
         url: "https://www.reynoldslakeoconee.com/golf",
+
+        imageUrl: "https://s3.us-east-2.amazonaws.com/reynoldsdotcomassets/images/site/Golf_Teaser_Square-Retina.jpg",
         highlight: "Jim Engh design with creative green complexes and dramatic Georgia pines throughout.",
         googleRating: 4.6,
         reviewCount: 308,
@@ -6268,6 +6323,8 @@ export const southeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 10,
         url: "https://www.reynoldslakeoconee.com/golf",
+
+        imageUrl: "https://s3.us-east-2.amazonaws.com/reynoldsdotcomassets/images/site/Golf_Teaser_Square-Retina.jpg",
         highlight: "Jack Nicklaus design ranked top-100 public. Nine holes on Lake Oconee with a stunning island-green par 3.",
         googleRating: 4.8,
         reviewCount: 2086,

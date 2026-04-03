@@ -30,6 +30,8 @@ export const southCentralDestinations: Destination[] = [
         style: "resort",
         driveMinutes: 0,
         url: "https://www.hsbresort.com/golf",
+
+        imageUrl: "https://www.hsbresort.com/content/uploads/2023/05/Hotel-Tower-2-scaled.jpg",
         highlight:
           "Robert Trent Jones Sr.'s Texas masterpiece — carved through solid granite with dramatic forced carries over ravines",
         googleRating: 4.6,
@@ -49,6 +51,8 @@ export const southCentralDestinations: Destination[] = [
         style: "resort",
         driveMinutes: 0,
         url: "https://www.hsbresort.com/golf",
+
+        imageUrl: "https://www.hsbresort.com/content/uploads/2023/05/Hotel-Tower-2-scaled.jpg",
         highlight:
           "Most scenic of the four courses — plays along Slick Rock Creek with waterfalls and wildflowers in spring",
         googleRating: 4.5,
@@ -67,6 +71,8 @@ export const southCentralDestinations: Destination[] = [
         style: "resort",
         driveMinutes: 0,
         url: "https://www.hsbresort.com/golf",
+
+        imageUrl: "https://www.hsbresort.com/content/uploads/2023/05/Hotel-Tower-2-scaled.jpg",
         highlight:
           "The toughest of the four — elevated tees with panoramic Hill Country views and punishing carries",
         googleRating: 4.5,
@@ -85,6 +91,8 @@ export const southCentralDestinations: Destination[] = [
         style: "resort",
         driveMinutes: 5,
         url: "https://www.hsbresort.com/golf",
+
+        imageUrl: "https://www.hsbresort.com/content/uploads/2023/05/Hotel-Tower-2-scaled.jpg",
         highlight:
           "Jack Nicklaus signature design and the newest addition — 400 feet of elevation change with jaw-dropping views of Lake LBJ",
         googleRating: 4.8,
@@ -318,6 +326,8 @@ export const southCentralDestinations: Destination[] = [
         style: "resort",
         driveMinutes: 10,
         url: "https://www.bootranch.com",
+
+        imageUrl: "https://www.bootranch.com/wp-content/uploads/2024/06/Image-3-min.jpg",
         highlight:
           "Hal Sutton design through live oaks and granite outcrops — one of the best private courses in Texas with limited reciprocal access",
         googleRating: 4.8,
@@ -336,7 +346,6 @@ export const southCentralDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 5,
-        url: "https://www.fbgtx.org/golf",
         highlight:
           "Affordable municipal course right in town — friendly layout with wildflower-lined fairways in spring",
         googleRating: 4.2,
@@ -650,7 +659,6 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "mountain",
         driveMinutes: 15,
-        url: "https://www.mountainranchgolfclub.com",
         highlight:
           "Mountain target golf with dramatic elevation changes — several blind shots over ridgelines keep it interesting",
         googleRating: 4.2,
@@ -668,7 +676,6 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "mountain",
         driveMinutes: 20,
-        url: "https://www.diamantegolfclub.com",
         highlight:
           "Longest and most challenging public course in the area — carved through dense Ouachita forest with water on eight holes",
         googleRating: 4.4,
@@ -939,7 +946,6 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "mountain",
         driveMinutes: 10,
-        url: "https://www.bransonhillsgolf.com",
         highlight:
           "Chuck Smith design consistently ranked #1 public course in Missouri — dramatic Ozark terrain with 200 feet of elevation change",
         googleRating: 4.7,
@@ -979,6 +985,8 @@ export const southCentralDestinations: Destination[] = [
         style: "mountain",
         driveMinutes: 5,
         url: "https://www.thousandhills.com",
+
+        imageUrl: "https://www.thousandhills.com/wp-content/uploads/2015/12/ThousandHillsClubhouse.jpg",
         highlight:
           "Short executive course perfect for an afternoon round or hangover day — fun layout through Ozark hills",
         googleRating: 4.2,
@@ -1015,6 +1023,8 @@ export const southCentralDestinations: Destination[] = [
         style: "mountain",
         driveMinutes: 15,
         url: "https://www.bigcedar.com/golf",
+
+        imageUrl: "https://bigcedar.com/wp-content/uploads/2025/11/cliffhangers-hillside-1200x630-1.jpg",
         highlight:
           "Tom Fazio design at Big Cedar — natural springs, Ozark meadows, and bison grazing near the fairways. One of the most scenic courses in the country.",
         googleRating: 4.7,
@@ -1336,6 +1346,8 @@ export const southCentralDestinations: Destination[] = [
         style: "resort",
         driveMinutes: 20,
         url: "https://www.lacanteragolfclub.com",
+
+        imageUrl: "https://www.lacanteragolfclub.com/wp-content/uploads/sites/9032/2026/01/LaCantera_07A.jpg",
         highlight:
           "Arnold Palmer design on a former quarry site with panoramic Hill Country views and a challenging finishing stretch",
         googleRating: 4.4,
@@ -1951,6 +1963,8 @@ export const southCentralDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 25,
         url: "https://www.cowboysgolfclub.com",
+
+        imageUrl: "https://cowboysgolfclub.com/wp-content/uploads/2022/11/Cowboys-Golf-Club_Close-Up-Of-Star-On-Course.jpg",
         highlight:
           "The only NFL-themed golf course in the world — Dallas Cowboys branding, luxury clubhouse, and a legit championship layout",
         googleRating: 4.5,
@@ -2001,7 +2015,6 @@ export const southCentralDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 20,
-        url: "https://www.fossilcreekgolfclub.com",
         highlight:
           "Arnold Palmer design in Fort Worth with elevation changes, creek crossings, and a challenging back nine through mature oaks",
         googleRating: 4.4,
@@ -2285,6 +2298,8 @@ export const southCentralDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 30,
         url: "https://www.golfclubofhouston.com",
+
+        imageUrl: "https://www.golfclubofhouston.com/Images/Library/R9XMcrQw.png",
         highlight:
           "Former Shell Houston Open venue — long, challenging Rees Jones design with tour-level conditioning and huge greens",
         googleRating: 4.5,
@@ -2303,6 +2318,8 @@ export const southCentralDestinations: Destination[] = [
         style: "links",
         driveMinutes: 25,
         url: "https://www.wildcatgolfclub.com",
+
+        imageUrl: "https://www.wildcatgolfclub.com/wp-content/uploads/sites/7721/2023/09/wildcat-grill.jpg",
         highlight:
           "Links-style course in south Houston with mounding, fescue, and strategic bunkering — feels like you left Texas",
         googleRating: 4.4,
@@ -2321,6 +2338,8 @@ export const southCentralDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 30,
         url: "https://www.blackhorsegolfclub.com",
+
+        imageUrl: "https://www.blackhorsegolfclub.com/Images/Library/rv_nkkrw.png",
         highlight:
           "Peter Jacobsen design in Cypress — big, bold course with rolling terrain and excellent conditions for the price",
         googleRating: 4.3,
@@ -2339,6 +2358,8 @@ export const southCentralDestinations: Destination[] = [
         style: "coastal",
         driveMinutes: 45,
         url: "https://www.moodygardensgolf.com",
+
+        imageUrl: "https://www.moodygardensgolf.com/wp-content/uploads/sites/5115/2015/07/bg1.jpg",
         highlight:
           "Jacobsen design in Galveston with coastal breezes, marshland views, and pelicans — unique Texas Gulf Coast golf",
         googleRating: 4.3,
@@ -2923,7 +2944,6 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 15,
-        url: "https://www.vfriders.com",
         highlight:
           "Jack Nicklaus design and multiple PGA Championship / Ryder Cup host — private but limited guest access through resort packages and charity events",
         googleRating: 4.8,
@@ -2943,7 +2963,6 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 20,
-        url: "https://www.persimmonridgegolf.com",
         highlight:
           "Arthur Hills design consistently ranked among Kentucky's best — rolling terrain through hardwood forests with excellent conditioning",
         googleRating: 4.6,
@@ -2979,7 +2998,6 @@ export const southCentralDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
-        url: "https://www.quailchasegolf.com",
         highlight:
           "27-hole public facility with three distinct 9-hole loops — friendly layout, good conditions, and the best value in Louisville",
         googleRating: 4.2,
@@ -3315,7 +3333,6 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 25,
-        url: "https://www.forestridgegc.com",
         highlight:
           "Randy Heckenkemper design in Broken Arrow with challenging elevation and water features — one of the best-conditioned public courses in Oklahoma",
         googleRating: 4.5,
@@ -3333,7 +3350,6 @@ export const southCentralDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
-        url: "https://www.mohawkparkgolf.com",
         highlight:
           "Two 18-hole courses at municipal prices — Pecan Valley hosted the 1984 US Amateur. Raw but historic with surprising bones.",
         googleRating: 4.2,
@@ -3572,7 +3588,6 @@ export const southCentralDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 35,
-        url: "https://www.soonergolf.com",
         highlight:
           "Bob Cupp design and home of OU golf — championship layout with Cross Timbers terrain, stone bridges, and excellent conditioning",
         googleRating: 4.5,
@@ -3883,7 +3898,6 @@ export const southCentralDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 10,
-        url: "https://www.northwoodhillsgolf.com",
         highlight:
           "Well-maintained municipal course with tree-lined fairways, solid greens, and good value for the money",
         googleRating: 4.3,
@@ -4127,6 +4141,8 @@ export const southCentralDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 10,
         url: "https://www.rebsamengolf.com",
+
+        imageUrl: "https://www.rebsamengolf.com/uploads/b/56320710-87c9-11ed-a66d-675054fb98fd/Little%20Rock%20Parks%20&amp;%20Recreation%20Rebsamen%20Golf%20Course_MzA5OD.png",
         highlight:
           "Classic Little Rock muni on the Arkansas River — mature trees, good greens, and the best value in the city",
         googleRating: 4.3,
@@ -4398,6 +4414,8 @@ export const southCentralDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 35,
         url: "https://www.thebluffs.com",
+
+        imageUrl: "https://thebluffs.com/wp-content/uploads/2025/03/Laser-Treatment-light.jpg",
         highlight:
           "Arnold Palmer design through Louisiana bluffs and ravines — dramatic 200-foot elevation changes rare for this part of the state",
         googleRating: 4.4,
@@ -4433,7 +4451,6 @@ export const southCentralDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 10,
-        url: "https://www.webbparkmunigolf.com",
         highlight:
           "No-frills Baton Rouge muni with honest golf at rock-bottom prices — ideal for the hangover round after a Third Street night",
         googleRating: 4.2,
@@ -4650,6 +4667,8 @@ export const southCentralDestinations: Destination[] = [
         style: "resort",
         driveMinutes: 5,
         url: "https://www.4seasonsresort.com/golf",
+
+        imageUrl: "https://4seasonsresort.com/wp-content/uploads/2024/12/Golf-Courses-Lodge-of-Four-Seasons-e1770069412910.webp",
         highlight:
           "Robert Trent Jones Sr. design overlooking the lake with dramatic cove crossings and mature Ozark forest — the signature course at the lake",
         googleRating: 4.5,
@@ -4668,6 +4687,8 @@ export const southCentralDestinations: Destination[] = [
         style: "resort",
         driveMinutes: 5,
         url: "https://www.4seasonsresort.com/golf",
+
+        imageUrl: "https://4seasonsresort.com/wp-content/uploads/2024/12/Golf-Courses-Lodge-of-Four-Seasons-e1770069412910.webp",
         highlight:
           "Ken Kavanaugh design companion to the Cove — more forgiving but still scenic with ridge-top views of the lake",
         googleRating: 4.3,
@@ -4686,6 +4707,8 @@ export const southCentralDestinations: Destination[] = [
         style: "resort",
         driveMinutes: 15,
         url: "https://www.oldkinderhook.com",
+
+        imageUrl: "https://oldkinderhook.com/wp-content/uploads/2018/08/kinderhook-golf-slider-9.jpg",
         highlight:
           "Tom Weiskopf design through wooded Ozark terrain with Lake of the Ozarks views — consistently ranked among Missouri's best",
         googleRating: 4.6,
@@ -4705,6 +4728,8 @@ export const southCentralDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 10,
         url: "https://www.sycamorecreekgolf.com",
+
+        imageUrl: "https://static.hugedomains.com/images/hdv3-img/og_hugedomains.png",
         highlight:
           "Affordable Osage Beach course with rolling terrain, good greens, and lake-area convenience at budget prices",
         googleRating: 4.2,
@@ -4956,6 +4981,8 @@ export const southCentralDestinations: Destination[] = [
         style: "links",
         driveMinutes: 45,
         url: "https://www.wildcatgolfclub.com",
+
+        imageUrl: "https://www.wildcatgolfclub.com/wp-content/uploads/sites/7721/2023/09/wildcat-grill.jpg",
         highlight:
           "Links-style course in south Houston — add it to a Galveston trip for a quality 36-hole day with a different look",
         googleRating: 4.3,
@@ -4973,7 +5000,6 @@ export const southCentralDestinations: Destination[] = [
         walkable: true,
         style: "coastal",
         driveMinutes: 30,
-        url: "https://www.bayoakscc.com",
         highlight:
           "Mainland course near Galveston in Clear Lake — affordable, well-maintained, and a change of pace from island wind",
         googleRating: 4.2,

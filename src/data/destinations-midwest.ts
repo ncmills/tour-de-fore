@@ -34,6 +34,8 @@ export const midwestDestinations: Destination[] = [
         style: "links",
         driveMinutes: 5,
         url: "https://www.destinationkohler.com/golf/whistling-straits",
+
+        imageUrl: "https://s7d9.scene7.com/is/image/kohlerhospitality/WSPoster2?wid=1920",
         highlight:
           "2021 Ryder Cup, 3-time PGA Championship host — lakeside links that rival anything in the British Isles",
         googleRating: 4.8,
@@ -54,6 +56,8 @@ export const midwestDestinations: Destination[] = [
         style: "links",
         driveMinutes: 5,
         url: "https://www.destinationkohler.com/golf/whistling-straits",
+
+        imageUrl: "https://s7d9.scene7.com/is/image/kohlerhospitality/WSPoster2?wid=1920",
         highlight:
           "The 'other' Straits course — still world-class links with Lake Michigan views at a fraction of the price",
         googleRating: 4.6,
@@ -73,6 +77,8 @@ export const midwestDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 2,
         url: "https://www.destinationkohler.com/golf/blackwolf-run",
+
+        imageUrl: "https://s7d9.scene7.com/is/image/kohlerhospitality/HPDesktopPoster?wid=1440",
         highlight:
           "Pete Dye's inland masterpiece — dramatic elevation changes along the Sheboygan River",
         googleRating: 4.7,
@@ -93,6 +99,8 @@ export const midwestDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 2,
         url: "https://www.destinationkohler.com/golf/blackwolf-run",
+
+        imageUrl: "https://s7d9.scene7.com/is/image/kohlerhospitality/HPDesktopPoster?wid=1440",
         highlight:
           "Wider fairways than the River Course but no less challenging — great for a second-day loop",
         googleRating: 4.5,
@@ -111,6 +119,8 @@ export const midwestDestinations: Destination[] = [
         style: "links",
         driveMinutes: 45,
         url: "https://erinhills.com",
+
+        imageUrl: "https://erinhills.com/wp-content/uploads/2024/11/EH-Web-Images_Resources-Contact-Us.jpg",
         highlight:
           "2017 US Open host — walk-only links on rolling glacial terrain, one of the purest golf experiences in the US",
         googleRating: 4.8,
@@ -150,6 +160,8 @@ export const midwestDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 15,
         url: "https://www.quitquiocgolf.com",
+
+        imageUrl: "https://www.quitquiocgolf.com/wp-content/uploads/2024/05/golf-course-restaurant-bar-elkhart-lake-wi-turf-1.png",
         highlight:
           "Affordable 27-hole layout perfect for a warm-up round or extra loops",
         googleRating: 4.2,
@@ -459,6 +471,8 @@ export const midwestDestinations: Destination[] = [
         style: "links",
         driveMinutes: 60,
         url: "https://www.bayharborgolf.com",
+
+        imageUrl: "https://cdn.sanity.io/images/lffh1pcz/bay-harbor-golf-club/1e1688b1c0cfd3915e63b9cc94f2936cf6efc3a0-5272x3948.jpg?w=1200&amp;fm=png&amp;fit=min",
         highlight:
           "27 holes by Arthur Hills — the Links nine along Little Traverse Bay is the signature stretch",
         googleRating: 4.6,
@@ -892,6 +906,8 @@ export const midwestDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 20,
         url: "https://www.lacomagolf.com",
+
+        imageUrl: "https://www.lacomagolf.com/",
         highlight:
           "36 holes of affordable golf across the river in East Dubuque — two solid layouts",
         googleRating: 4.2,
@@ -1138,6 +1154,8 @@ export const midwestDestinations: Destination[] = [
         style: "resort",
         driveMinutes: 5,
         url: "https://www.genevanationalresort.com",
+
+        imageUrl: "https://static.wixstatic.com/media/0348fe_c746cc8f91274fe0a60d0c34339fae39~mv2.jpg/v1/fill/w_600,h_310,al_c/0348fe_c746cc8f91274fe0a60d0c34339fae39~mv2.jpg",
         highlight:
           "Arnold Palmer design with water on 13 holes — the most scenic of the three GN courses",
         googleRating: 4.4,
@@ -1157,6 +1175,8 @@ export const midwestDestinations: Destination[] = [
         style: "resort",
         driveMinutes: 5,
         url: "https://www.genevanationalresort.com",
+
+        imageUrl: "https://static.wixstatic.com/media/0348fe_c746cc8f91274fe0a60d0c34339fae39~mv2.jpg/v1/fill/w_600,h_310,al_c/0348fe_c746cc8f91274fe0a60d0c34339fae39~mv2.jpg",
         highlight:
           "Gary Player's design philosophy on full display — strategic bunkering and elevation changes",
         googleRating: 4.4,
@@ -1175,6 +1195,8 @@ export const midwestDestinations: Destination[] = [
         style: "resort",
         driveMinutes: 5,
         url: "https://www.genevanationalresort.com",
+
+        imageUrl: "https://static.wixstatic.com/media/0348fe_c746cc8f91274fe0a60d0c34339fae39~mv2.jpg/v1/fill/w_600,h_310,al_c/0348fe_c746cc8f91274fe0a60d0c34339fae39~mv2.jpg",
         highlight:
           "Lee Trevino's only Midwest design — the most forgiving of the three but still plenty of teeth",
         googleRating: 4.3,
@@ -1193,6 +1215,8 @@ export const midwestDestinations: Destination[] = [
         style: "resort",
         driveMinutes: 5,
         url: "https://www.grandgeneva.com",
+
+        imageUrl: "https://gry-cms.s3.us-east-1.amazonaws.com/grand-geneva/GGRSGeneral/Banners/1920X1100-2025031213572404dji_0474_1920x1100.jpg?v=20260403182350",
         highlight:
           "Lives up to its name — a brawny resort course with tight fairways and demanding greens",
         googleRating: 4.3,
@@ -1211,6 +1235,8 @@ export const midwestDestinations: Destination[] = [
         style: "resort",
         driveMinutes: 5,
         url: "https://www.grandgeneva.com",
+
+        imageUrl: "https://gry-cms.s3.us-east-1.amazonaws.com/grand-geneva/GGRSGeneral/Banners/1920X1100-2025031213572404dji_0474_1920x1100.jpg?v=20260403182350",
         highlight:
           "Links-inspired layout with Scottish-style mounding — more playable than The Brute",
         googleRating: 4.3,
@@ -1520,6 +1546,8 @@ export const midwestDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 10,
         url: "https://www.sultansrun.com",
+
+        imageUrl: "https://www.sultansrun.com/wp-content/uploads/sites/9577/2025/03/Sultans-Run-Clubhouse-Dusk.jpg",
         highlight:
           "Tim Liddy design through rolling hills and creeks — top public course in Indiana",
         googleRating: 4.2,
@@ -1782,6 +1810,8 @@ export const midwestDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 5,
         url: "https://www.golfduluth.com",
+
+        imageUrl: "https://www.golfduluth.com/wp-content/uploads/sites/9702/2026/01/Enger-Park-31.jpg",
         highlight:
           "City muni with stunning Lake Superior panoramas — best bang-for-buck views in Midwest golf",
         googleRating: 4.1,
@@ -1800,6 +1830,8 @@ export const midwestDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 10,
         url: "https://www.golfduluth.com",
+
+        imageUrl: "https://www.golfduluth.com/wp-content/uploads/sites/9702/2026/01/Enger-Park-31.jpg",
         highlight:
           "Scenic 27-hole layout along Lester River — tight tree-lined holes and excellent value",
         googleRating: 4.2,
@@ -2102,7 +2134,6 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 10,
-        url: "https://www.crookedtreegolfclub.com",
         highlight:
           "Harry Bowers design through hardwood forest with dramatic elevation changes — overlooking Little Traverse Bay",
         googleRating: 4.3,
@@ -2139,6 +2170,8 @@ export const midwestDestinations: Destination[] = [
         style: "resort",
         driveMinutes: 10,
         url: "https://www.boyne.com/boyne-highlands",
+
+        imageUrl: "https://cdn.sanity.io/images/vk0aamtp/boyne-resorts/55ac22df87e5b6e0c7f2595da58647f93656c9e2-2100x1400.png?w=1200&amp;fm=png&amp;fit=min",
         highlight:
           "Robert Trent Jones Sr. design — the flagship of Boyne's four courses, tournament-worthy conditioning",
         googleRating: 4.4,
@@ -2157,6 +2190,8 @@ export const midwestDestinations: Destination[] = [
         style: "resort",
         driveMinutes: 10,
         url: "https://www.boyne.com/boyne-highlands",
+
+        imageUrl: "https://cdn.sanity.io/images/vk0aamtp/boyne-resorts/55ac22df87e5b6e0c7f2595da58647f93656c9e2-2100x1400.png?w=1200&amp;fm=png&amp;fit=min",
         highlight:
           "Strategic bunkering and rolling terrain — plays slightly easier than The Heather but just as scenic",
         googleRating: 4.5,
@@ -2175,6 +2210,8 @@ export const midwestDestinations: Destination[] = [
         style: "resort",
         driveMinutes: 10,
         url: "https://www.boyne.com/boyne-highlands",
+
+        imageUrl: "https://cdn.sanity.io/images/vk0aamtp/boyne-resorts/55ac22df87e5b6e0c7f2595da58647f93656c9e2-2100x1400.png?w=1200&amp;fm=png&amp;fit=min",
         highlight:
           "Longest of the four courses — wide fairways through meadows, great for scoring",
         googleRating: 4.4,
@@ -2193,6 +2230,8 @@ export const midwestDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 10,
         url: "https://www.boyne.com/boyne-highlands",
+
+        imageUrl: "https://cdn.sanity.io/images/vk0aamtp/boyne-resorts/55ac22df87e5b6e0c7f2595da58647f93656c9e2-2100x1400.png?w=1200&amp;fm=png&amp;fit=min",
         highlight:
           "Tribute to classic Ross design — replica holes from Pinehurst, Seminole, and Oakland Hills",
         googleRating: 4.3,
@@ -2448,7 +2487,6 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
-        url: "https://www.thousandoaksgolfclub.com",
         highlight:
           "Best public value in the GR metro — mature trees, rolling terrain, and consistently excellent greens",
         googleRating: 4.3,
@@ -2467,6 +2505,8 @@ export const midwestDestinations: Destination[] = [
         style: "heathland",
         driveMinutes: 25,
         url: "https://www.pilgrimsrun.com",
+
+        imageUrl: "https://www.pilgrimsrun.com/wp-content/uploads/2022/10/T25-6-150x150.png",
         highlight:
           "Walk-only heathland design through native fescue and wildflowers — feels like Scotland on a Michigan budget",
         googleRating: 4.6,
@@ -2485,6 +2525,8 @@ export const midwestDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 20,
         url: "https://www.theminesgolf.com",
+
+        imageUrl: "https://static.wixstatic.com/media/e88ed1_3778003bfccc44609326830fff3b0aeb~mv2_d_3504_2336_s_2.jpg/v1/fill/w_2500,h_1666,al_c/e88ed1_3778003bfccc44609326830fff3b0aeb~mv2_d_3504_2336_s_2.jpg",
         highlight:
           "Built on reclaimed sand mine land — unique elevation changes and wide fairways make it fun for all skill levels",
         googleRating: 4.4,
@@ -2743,7 +2785,6 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 10,
-        url: "https://www.horseshoebaygolfclub.com",
         highlight:
           "Door County's premier course — mature hardwoods and bay glimpses on a classic Midwest layout",
         googleRating: 4.5,
@@ -3039,6 +3080,8 @@ export const midwestDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 15,
         url: "https://www.universityridge.com",
+
+        imageUrl: "http://www.universityridge.com/assets/images/JPEGs/home-page/default_og_image_2400w1256h.jpg",
         highlight:
           "Home of the AmFam Championship — Robert Trent Jones Jr. design with tournament conditioning and stunning views of the Wisconsin hills",
         googleRating: 4.5,
@@ -3056,7 +3099,6 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 20,
-        url: "https://www.theoaksgc.com",
         highlight:
           "Cottage Grove's well-conditioned track through oak groves — great value and excellent greens",
         googleRating: 4.4,
@@ -3075,6 +3117,8 @@ export const midwestDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 20,
         url: "https://www.hawkslandinggolf.com",
+
+        imageUrl: "https://www.hawkslandinggolf.com/wp-content/uploads/sites/8670/2022/11/slide1.jpg",
         highlight:
           "Arnold Palmer design on the west side — great for groups with a comfortable layout and strong facilities",
         googleRating: 4.2,
@@ -3093,6 +3137,8 @@ export const midwestDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 15,
         url: "https://www.pleasantviewgc.com",
+
+        imageUrl: "https://img1.wsimg.com/isteam/ip/e83a5a42-26ef-46ea-a937-961be5cf2072/cd47bde6-cb4b-4ce4-9023-aaebaeae7a6a.jpg",
         highlight:
           "27-hole county facility — excellent conditioning for the price, great warm-up or double-round option",
         googleRating: 4.1,
@@ -3110,7 +3156,6 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 20,
-        url: "https://www.legendatbergamont.com",
         highlight:
           "Oregon, WI gem with dramatic elevation and wooded holes — feels more northern Wisconsin than suburban Madison",
         googleRating: 4.4,
@@ -3341,6 +3386,8 @@ export const midwestDestinations: Destination[] = [
         style: "resort",
         driveMinutes: 15,
         url: "https://www.maddens.com/golf",
+
+        imageUrl: "https://www.maddens.com/content/uploads/2020/05/maddens-trees-no-back-dark-green.png",
         highlight:
           "Scott Hoch design on Gull Lake — the best resort course in Minnesota with dramatic water holes and immaculate conditioning",
         googleRating: 4.7,
@@ -3358,7 +3405,6 @@ export const midwestDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 20,
-        url: "https://www.deaconslodge.com",
         highlight:
           "Arnold Palmer's only Minnesota design — carved through 600 acres of forests and wetlands",
         googleRating: 4.6,
@@ -3413,6 +3459,8 @@ export const midwestDestinations: Destination[] = [
         style: "resort",
         driveMinutes: 15,
         url: "https://www.maddens.com/golf",
+
+        imageUrl: "https://www.maddens.com/content/uploads/2020/05/maddens-trees-no-back-dark-green.png",
         highlight:
           "Social par-67 layout perfect for a warm-up round — walking-friendly with cold beers at the turn",
         googleRating: 4.4,
@@ -3681,6 +3729,8 @@ export const midwestDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 10,
         url: "https://www.greatparks.org/golf/glenview",
+
+        imageUrl: "https://www.greatparks.org/getContentAsset/1181a644-c233-4331-b7bf-f738586d1ff8/6bf380df-49ab-4ee8-b277-1f89e677ae10/Share_Card_Default.webp?language=en",
         highlight:
           "Hilltop municipal gem with panoramic city skyline views — best public value in Hamilton County",
         googleRating: 4.3,
@@ -3699,6 +3749,8 @@ export const midwestDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 25,
         url: "https://www.astonoaks.com",
+
+        imageUrl: "https://static.hugedomains.com/images/hdv3-img/og_hugedomains.png",
         highlight:
           "Denis Griffiths design through North Bend's river bluffs — long, challenging, and well-maintained",
         googleRating: 4.3,
@@ -3960,6 +4012,8 @@ export const midwestDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 20,
         url: "https://www.littleturtlegolf.com",
+
+        imageUrl: "https://littleturtlegolf.com/wp-content/uploads/2025/07/amenities-pool-768x1083.jpg",
         highlight:
           "Westerville's best public track — mature trees and well-maintained greens in a residential setting",
         googleRating: 4.4,
@@ -4013,7 +4067,6 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 40,
-        url: "https://www.cumberlandtrailgolf.com",
         highlight:
           "Hilly Pataskala track through woods and ravines — feels like Appalachian golf for half the price",
         googleRating: 4.2,
@@ -4243,7 +4296,6 @@ export const midwestDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 10,
-        url: "https://www.thefortgolfresort.com",
         highlight:
           "Pete Dye design built on Fort Harrison — the best public course in the Indianapolis metro with championship conditioning",
         googleRating: 4.6,
@@ -4539,7 +4591,6 @@ export const midwestDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 30,
-        url: "https://www.thetournamentclubofiowa.com",
         highlight:
           "Arnold Palmer design and former Korn Ferry Tour host — the best public course in Iowa with tournament-level conditioning",
         googleRating: 4.4,
@@ -4890,6 +4941,8 @@ export const midwestDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 45,
         url: "https://www.timberridgegolf.com",
+
+        imageUrl: "https://static.hugedomains.com/images/hdv3-img/og_hugedomains.png",
         highlight:
           "Escanaba area track through northern hardwoods — well-maintained and affordable UP golf",
         googleRating: 4.4,
@@ -5121,7 +5174,6 @@ export const midwestDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 40,
-        url: "https://www.tapawingonational.com",
         highlight:
           "Gary Nicklaus design through Ozark foothills — dramatic elevation changes and championship conditioning at a public price",
         googleRating: 4.6,
@@ -5176,6 +5228,8 @@ export const midwestDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 35,
         url: "https://www.pevelyfarms.com",
+
+        imageUrl: "https://www.pevelyfarms.com/wp-content/uploads/sites/7836/2021/12/Pevely-Farms-Course-5.jpg",
         highlight:
           "Arthur Hills design south of the city — well-conditioned with interesting routing through farmland and woods",
         googleRating: 4.4,
@@ -5193,7 +5247,6 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 10,
-        url: "https://www.riversidegolfstl.com",
         highlight:
           "Fenton municipal right on the Meramec River — the best budget option near downtown St. Louis",
         googleRating: 4.1,
@@ -5428,7 +5481,6 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 25,
-        url: "https://www.playcreekmoor.com",
         highlight:
           "Raymore's hidden gem — rolling terrain through creeks and hardwoods with excellent conditioning for the price",
         googleRating: 4.4,
@@ -5464,7 +5516,6 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 10,
-        url: "https://www.swopememorialgc.com",
         highlight:
           "A.W. Tillinghast design in Swope Park — one of the great municipal courses in America, recently restored",
         googleRating: 4.2,
@@ -5483,6 +5534,8 @@ export const midwestDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 30,
         url: "https://www.falconridgegolfclub.com",
+
+        imageUrl: "https://falconridgegolfclub.com/wp-content/uploads/HOLE-18-FALCON-RIDGE-0098.jpg",
         highlight:
           "Lenexa, KS course with dramatic elevation and mature trees — plays long and challenging from the tips",
         googleRating: 4.3,
@@ -5500,7 +5553,6 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 25,
-        url: "https://www.sycamoreridgegc.com",
         highlight:
           "Spring Hill, KS course with wide fairways and fast greens — great for scoring and group-friendly pace",
         googleRating: 4.3,
@@ -5519,6 +5571,8 @@ export const midwestDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 20,
         url: "https://www.staleyfarms.com",
+
+        imageUrl: "https://staleyfarms.com/wp-content/uploads/380892472_705595864920777_3001820993260262756_n-1024x683.jpg",
         highlight:
           "KC's most acclaimed public course — challenging Tom Watson design with tournament-quality conditioning",
         googleRating: 4.5,
@@ -5812,7 +5866,6 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 40,
-        url: "https://www.washingtoncountygolf.com",
         highlight:
           "Arthur Hills design through Kettle Moraine terrain — glacial ridges create unique elevation changes you don't expect in Wisconsin",
         googleRating: 4.3,
@@ -6036,7 +6089,6 @@ export const midwestDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 25,
-        url: "https://www.indiancreekgolfcourse.com",
         highlight:
           "Former PGA Tour site — the best public course in Nebraska with tournament conditioning and a challenging layout through mature trees",
         googleRating: 4.4,
@@ -6073,6 +6125,8 @@ export const midwestDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 15,
         url: "https://www.tiburongolf.com",
+
+        imageUrl: "https://www.tiburongolf.com/wp-content/uploads/sites/7862/2022/01/DJI_0057.jpg?w=1024",
         highlight:
           "27 holes in west Omaha — three distinct nines with good variety and consistently well-maintained greens",
         googleRating: 4.3,
@@ -6090,7 +6144,6 @@ export const midwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
-        url: "https://www.theknollsgolfcourse.com",
         highlight:
           "City of Omaha's best muni — hilly and fun with mature trees and the best budget green fees in the metro",
         googleRating: 4.5,

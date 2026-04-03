@@ -53,6 +53,8 @@ export const pacificNWDestinations: Destination[] = [
         style: "links",
         driveMinutes: 10,
         url: "https://www.tetherow.com",
+
+        imageUrl: "https://tetherow.com/wp-content/uploads/2018/12/tetherow-lodge-hero-3000.jpg",
         highlight:
           "David McLay Kidd links-style design with panoramic Cascade Mountain views",
         googleRating: 4.6,
@@ -92,6 +94,8 @@ export const pacificNWDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 25,
         url: "https://www.crosswater.com",
+
+        imageUrl: "https://www.sunriverresort.com/opengraph-image.jpg?4b35762ed8e867f8",
         highlight:
           "Bob Cupp design winding through wetlands along the Deschutes and Little Deschutes rivers",
         googleRating: 4.8,
@@ -742,6 +746,8 @@ export const pacificNWDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 5,
         url: "https://www.sunriverresort.com/golf/meadows",
+
+        imageUrl: "https://www.sunriverresort.com/opengraph-image.jpg?4b35762ed8e867f8",
         highlight:
           "Robert Trent Jones Jr. redesign with Cascade Mountain views and wide fairways",
         googleRating: 4.4,
@@ -760,6 +766,8 @@ export const pacificNWDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 5,
         url: "https://www.sunriverresort.com/golf/woodlands",
+
+        imageUrl: "https://www.sunriverresort.com/opengraph-image.jpg?4b35762ed8e867f8",
         highlight:
           "Tree-lined classic layout through the ponderosa pines — forgiving but fun",
         googleRating: 4.3,
@@ -1019,6 +1027,8 @@ export const pacificNWDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 30,
         url: "https://www.cdacasino.com/golf",
+
+        imageUrl: "https://www.cdacasino.com/wp-content/uploads/2026/01/CDACasinoShoot20252-50_v2.png",
         highlight:
           "Gene Bates design through wetlands and timber on the Coeur d'Alene Tribe reservation — top 50 public course",
         googleRating: 4.6,
@@ -1371,6 +1381,8 @@ export const pacificNWDestinations: Destination[] = [
         style: "mountain",
         driveMinutes: 100,
         url: "https://www.tamarackidaho.com/golf",
+
+        imageUrl: "https://tamarackidaho.com/wp-content/uploads/2024/04/SH.2023.6.29_Golfing-157-scaled.jpg",
         highlight:
           "Robert Trent Jones II design in the mountains above Donnelly — worth the drive for a spectacular mountain round",
         googleRating: 4.6,
@@ -1634,7 +1646,6 @@ export const pacificNWDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 25,
-        url: "https://www.thedallesgolf.com",
         highlight:
           "Charming 18-hole course in The Dalles with Columbia Gorge views and a welcoming clubhouse — great second-day round",
         googleRating: 4.2,
@@ -1653,6 +1664,8 @@ export const pacificNWDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 45,
         url: "https://www.elkridgegolf.com",
+
+        imageUrl: "https://www.elkridgegolf.com/wp-content/uploads/2021/04/circle-green-min.png",
         highlight:
           "Well-maintained 18 in Goldendale, WA with views of Mt. Adams — worth the drive across the river",
         googleRating: 4.2,
@@ -1671,6 +1684,8 @@ export const pacificNWDestinations: Destination[] = [
         style: "mountain",
         driveMinutes: 30,
         url: "https://www.skamania.com/golf",
+
+        imageUrl: "https://www.skamania.com/site/assets/files/21648/0-v1.jpg",
         highlight:
           "Stunning Gorge-view course at Skamania Lodge — shorter but challenging mountain layout with Columbia River panoramas",
         googleRating: 4.4,
@@ -1929,6 +1944,8 @@ export const pacificNWDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 30,
         url: "https://www.pumpkinridge.com",
+
+        imageUrl: "https://www.pumpkinridge.com/Images/Library/jaFqiz1g.png",
         highlight:
           "Former US Amateur host carved through old-growth forest — PNW golf at its most pristine",
         googleRating: 4.7,
@@ -1947,6 +1964,8 @@ export const pacificNWDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 25,
         url: "https://www.reservegolf.com",
+
+        imageUrl: "https://www.reservegolf.com/wp-content/uploads/sites/9325/2024/01/IMG_5043.jpg",
         highlight:
           "John Fought design with tour-quality conditioning and excellent practice facilities",
         googleRating: 4.6,
@@ -2244,6 +2263,8 @@ export const pacificNWDestinations: Destination[] = [
         style: "links",
         driveMinutes: 40,
         url: "https://www.chambersbaygolf.com",
+
+        imageUrl: "https://chambersbaygolf.com/wp-content/uploads/2025/05/cb-homescreen.jpg",
         highlight:
           "2015 US Open venue — walking-only links carved from a gravel quarry on Puget Sound",
         googleRating: 4.9,
@@ -2298,6 +2319,8 @@ export const pacificNWDestinations: Destination[] = [
         style: "mountain",
         driveMinutes: 20,
         url: "https://www.newcastlegolf.com",
+
+        imageUrl: "https://newcastlegolf.com/wp-content/uploads/2024/01/DJI_0055-Enhanced-NR.jpg",
         highlight:
           "Perched above Lake Washington with panoramic views of the Seattle skyline and Cascades",
         googleRating: 4.6,
@@ -2316,6 +2339,8 @@ export const pacificNWDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 50,
         url: "https://www.trophylakegolf.com",
+
+        imageUrl: "https://www.trophylakegolf.com/wp-content/uploads/2020/10/TL012-MAIN-edited-0-1024x640.png",
         highlight:
           "Hidden gem on the Kitsap Peninsula with a fly-fishing pond and excellent conditioning",
         googleRating: 4.4,
@@ -2577,7 +2602,6 @@ export const pacificNWDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 35,
-        url: "https://www.circlingraven.com",
         highlight:
           "Gene Bates design through Coeur d'Alene tribal land — consistently rated top public course in Idaho",
         googleRating: 4.8,
@@ -3187,6 +3211,8 @@ export const pacificNWDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 20,
         url: "https://www.hiddenlakesgolf.com",
+
+        imageUrl: "https://static.hugedomains.com/images/hdv3-img/og_hugedomains.png",
         highlight:
           "Well-kept resort course with mountain views and a relaxed pace of play",
         googleRating: 4.3,
@@ -4067,6 +4093,8 @@ export const pacificNWDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 25,
         url: "https://www.highlandergolf.com",
+
+        imageUrl: "https://static.hugedomains.com/images/hdv3-img/og_hugedomains.png",
         highlight:
           "Well-maintained East Wenatchee course with Columbia River views and excellent value",
         googleRating: 4.3,
@@ -4348,6 +4376,8 @@ export const pacificNWDestinations: Destination[] = [
         style: "coastal",
         driveMinutes: 10,
         url: "https://www.seasidegolfcourse.com",
+
+        imageUrl: "https://img1.wsimg.com/isteam/ip/4b0e8c5c-e9bc-4bc3-b468-4e32874ca116/Ocean.jpg",
         highlight:
           "Fun, walkable 18-hole course right in Seaside with ocean breezes and mountain views — relaxed pace and great for a second-day round",
         googleRating: 4.3,
@@ -4588,6 +4618,8 @@ export const pacificNWDestinations: Destination[] = [
         style: "links",
         driveMinutes: 25,
         url: "https://www.chambersbaygolf.com",
+
+        imageUrl: "https://chambersbaygolf.com/wp-content/uploads/2025/05/cb-homescreen.jpg",
         highlight:
           "2015 US Open host — links-style course on Puget Sound built on a reclaimed gravel mine",
         googleRating: 4.8,

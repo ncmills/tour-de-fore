@@ -72,6 +72,8 @@ export const southwestDestinations: Destination[] = [
         style: "desert",
         driveMinutes: 25,
         url: "https://www.troonnorthgolf.com",
+
+        imageUrl: "https://www.troonnorthgolf.com/wp-content/uploads/sites/8934/2023/06/home-main.jpg",
         highlight:
           "Tom Weiskopf masterpiece nestled against Pinnacle Peak with the iconic Monument boulder",
         googleRating: 4.7,
@@ -408,6 +410,8 @@ export const southwestDestinations: Destination[] = [
         style: "desert",
         driveMinutes: 5,
         url: "https://www.sedonagolfresort.com",
+
+        imageUrl: "https://azhideawaycollection.com/wp-content/uploads/2024/12/sedona_home_hero-1024x728.webp",
         highlight:
           "The signature 10th hole frames Cathedral Rock — one of the most photographed golf holes in America",
         googleRating: 4.5,
@@ -704,6 +708,8 @@ export const southwestDestinations: Destination[] = [
         style: "desert",
         driveMinutes: 15,
         url: "https://www.arizonanationalgolfclub.com",
+
+        imageUrl: "https://www.arizonanationalgolfclub.com/wp-content/uploads/sites/9649/2025/08/39_90.jpeg",
         highlight:
           "Robert Trent Jones Jr. design near Saguaro National Park — great desert golf at mid-range pricing",
         googleRating: 4.4,
@@ -947,6 +953,8 @@ export const southwestDestinations: Destination[] = [
         style: "desert",
         driveMinutes: 15,
         url: "https://www.sandhollowresort.com",
+
+        imageUrl: "https://sandhollowresort.com/wp-content/uploads/2024/12/hot-air-balloon.png",
         highlight:
           "John Fought design through red sandstone formations — a top-25 public course in the US and worth the trip alone",
         googleRating: 4.7,
@@ -1005,6 +1013,8 @@ export const southwestDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 10,
         url: "https://www.sunrivergolf.com",
+
+        imageUrl: "http://static1.squarespace.com/static/5a1db8d08c56a817eafad734/t/66cc869fc3dc1a64b479ba98/1724679846982/sunriver-st-george-golf-club-2.jpg?format=1500w",
         highlight:
           "Wide fairways and gentle layout — a great warm-up round or hangover-recovery course",
         googleRating: 4.2,
@@ -1022,7 +1032,6 @@ export const southwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 5,
-        url: "https://www.southgategolf.com",
         highlight:
           "Short and affordable muni — good for an extra round or a quick morning scramble",
         googleRating: 4.0,
@@ -1259,6 +1268,8 @@ export const southwestDestinations: Destination[] = [
         style: "resort",
         driveMinutes: 5,
         url: "https://www.casablancaresort.com/golf",
+
+        imageUrl: "https://casablanca.playmesquite.com/wp-content/uploads/2025/01/200808_nevada_palmsgolf_033.jpg",
         highlight:
           "Well-maintained resort course at the CasaBlanca hotel — great value with casino and dining attached",
         googleRating: 4.3,
@@ -1293,6 +1304,8 @@ export const southwestDestinations: Destination[] = [
         style: "desert",
         driveMinutes: 5,
         url: "https://www.falconridgegolfclub.com",
+
+        imageUrl: "https://falconridgegolfclub.com/wp-content/uploads/HOLE-18-FALCON-RIDGE-0098.jpg",
         highlight:
           "Hilly desert layout with canyon views and some dramatic forced carries",
         googleRating: 4.3,
@@ -1485,6 +1498,8 @@ export const southwestDestinations: Destination[] = [
         style: "links",
         driveMinutes: 10,
         url: "https://www.linksdesantafe.com",
+
+        imageUrl: "https://www.linksdesantafe.com/wp-content/uploads/sites/9785/2025/12/6000-x-3375-marty-sanchez-links-de-santa-fe-2_62c893.jpg",
         highlight:
           "Muni-priced links course with panoramic Sangre de Cristo mountain views — best value in Santa Fe",
         googleRating: 4.4,
@@ -1773,7 +1788,6 @@ export const southwestDestinations: Destination[] = [
         walkable: false,
         style: "mountain",
         driveMinutes: 10,
-        url: "https://www.pinecanyonflagstaff.com",
         highlight:
           "Jay Morrish design through ponderosa pines with dramatic elevation changes and views of the San Francisco Peaks",
         googleRating: 4.7,
@@ -2060,6 +2074,8 @@ export const southwestDestinations: Destination[] = [
         style: "desert",
         driveMinutes: 30,
         url: "https://www.lvpaiutegolf.com",
+
+        imageUrl: "https://static.wixstatic.com/media/c4c9f0_d780a3afa2304d15ba9ca118d4ff5dda~mv2.jpg/v1/fill/w_2500,h_1871,al_c/c4c9f0_d780a3afa2304d15ba9ca118d4ff5dda~mv2.jpg",
         highlight:
           "Pete Dye design with 45 holes on site — Wolf is the beast, Snow Mountain and Sun Mountain round out the trio",
         googleRating: 4.5,
@@ -2079,6 +2095,8 @@ export const southwestDestinations: Destination[] = [
         style: "resort",
         driveMinutes: 5,
         url: "https://www.balihaigolfclub.com",
+
+        imageUrl: "https://balihaigolfclub.com/wp-content/uploads/2024/07/bali-hai-og.jpg",
         highlight:
           "Tropical-themed course steps from the Strip — palm trees, white sand, and convenience you can not beat",
         googleRating: 4.4,
@@ -2359,6 +2377,8 @@ export const southwestDestinations: Destination[] = [
         style: "mountain",
         driveMinutes: 15,
         url: "https://www.wolfrungolfclub.com",
+
+        imageUrl: "https://www.wolfrungolfclub.com/wp-content/uploads/sites/8583/2022/09/home-full-1.jpg",
         highlight:
           "Challenging mountain layout with Sierra Nevada views and some of the best conditioning in northern Nevada",
         googleRating: 4.4,
@@ -2627,7 +2647,6 @@ export const southwestDestinations: Destination[] = [
         walkable: true,
         style: "desert",
         driveMinutes: 10,
-        url: "https://www.papagogolfcourse.net",
         highlight:
           "Iconic Phoenix muni nestled between the Papago Buttes — where the locals play and the views punch way above the green fee",
         googleRating: 4.5,
@@ -2646,7 +2665,6 @@ export const southwestDestinations: Destination[] = [
         walkable: true,
         style: "desert",
         driveMinutes: 15,
-        url: "https://www.asukarsten.com",
         highlight:
           "Pete Dye design for ASU — sneaky tough college course with great conditioning for the price",
         googleRating: 4.4,
@@ -2953,6 +2971,8 @@ export const southwestDestinations: Destination[] = [
         style: "desert",
         driveMinutes: 15,
         url: "https://www.sandiagolf.com",
+
+        imageUrl: "https://www.sandiagolf.com/wp-content/uploads/sites/8959/2023/06/21.jpg",
         highlight:
           "Scott Miller design at Sandia Resort with Sandia Mountain views and a casino next door",
         googleRating: 4.4,
@@ -3200,7 +3220,6 @@ export const southwestDestinations: Destination[] = [
         walkable: true,
         style: "desert",
         driveMinutes: 5,
-        url: "https://www.londonbridgegolf.com",
         highlight:
           "Well-maintained desert muni with mountain views — the best value in town",
         googleRating: 4.3,
@@ -3218,7 +3237,6 @@ export const southwestDestinations: Destination[] = [
         walkable: true,
         style: "desert",
         driveMinutes: 5,
-        url: "https://www.londonbridgegolf.com",
         highlight:
           "Shorter sister course — wide open, forgiving, and perfect for a warm-up or hangover round",
         googleRating: 4.2,
@@ -3237,6 +3255,8 @@ export const southwestDestinations: Destination[] = [
         style: "desert",
         driveMinutes: 35,
         url: "https://www.havasusprings.com/golf",
+
+        imageUrl: "https://havasusprings.com/wp-content/uploads/2024/01/Waterfront-dining-lake-havasu.jpg",
         highlight:
           "Hidden gem 18-hole resort course on the Colorado River with waterfront holes and mountain views — worth the drive south",
         googleRating: 4.2,
@@ -3481,7 +3501,6 @@ export const southwestDestinations: Destination[] = [
         walkable: false,
         style: "resort",
         driveMinutes: 10,
-        url: "https://www.mojaveresortgolf.com",
         highlight:
           "Best course in the Laughlin area — well-conditioned resort layout with mountain and river valley views",
         googleRating: 4.4,
@@ -3499,7 +3518,6 @@ export const southwestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 5,
-        url: "https://www.emeraldrivergolf.com",
         highlight:
           "Flat and forgiving course right in Laughlin — cheap, walkable, and perfect for a warm-up round",
         googleRating: 4.2,

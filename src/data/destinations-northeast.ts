@@ -30,6 +30,8 @@ export const northeastDestinations: Destination[] = [
         style: "coastal",
         driveMinutes: 15,
         url: "https://www.oceanedge.com/golf",
+
+        imageUrl: "https://symphony.cdn.tambourine.com/ocean-edge-resort-golf-club/media/a-house-with-a-large-garden-635708d881339.jpg",
         highlight:
           "Jack Nicklaus signature design winding through cranberry bogs and Cape Cod pines",
         googleRating: 4.4,
@@ -48,7 +50,6 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 20,
-        url: "https://www.cranberryvalleygolfcourse.com",
         highlight:
           "Top-rated municipal course consistently ranked among the best public tracks in Massachusetts",
         googleRating: 4.5,
@@ -407,6 +408,8 @@ export const northeastDestinations: Destination[] = [
         style: "mountain",
         driveMinutes: 5,
         url: "https://www.lakeplacidclub.com",
+
+        imageUrl: "http://static1.squarespace.com/static/5f28553f67a59c1ee1d86482/t/5f31580d83fba46af1cd8832/1597069328560/NEW_LPC_4c_master_transparent.png?format=1500w",
         highlight:
           "Shorter companion course at LPC — great for an afternoon round with forgiving fairways",
         googleRating: 4.3,
@@ -1023,6 +1026,8 @@ export const northeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 10,
         url: "https://www.golfsaratoga.com",
+
+        imageUrl: "https://static.wixstatic.com/media/4551d2_5a3fce38f9ca4f9d83564a987bacf555%7Emv2.png/v1/fit/w_2500,h_1330,al_c/4551d2_5a3fce38f9ca4f9d83564a987bacf555%7Emv2.png",
         highlight:
           "Roger Rulewich design ranked among the best public courses in New York — stunning water features throughout",
         googleRating: 4.6,
@@ -1339,7 +1344,6 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
-        url: "https://www.senecalakecc.com",
         highlight:
           "Charming semi-private track overlooking Seneca Lake — great views and honest golf",
         googleRating: 4.2,
@@ -1357,7 +1361,6 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 30,
-        url: "https://www.reservoircreekgolf.com",
         highlight:
           "Hidden gem near Watkins Glen — hilly terrain, well-maintained greens, very affordable",
         googleRating: 4.3,
@@ -1655,7 +1658,6 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "mountain",
         driveMinutes: 20,
-        url: "https://www.buckhillgolf.com",
         highlight:
           "Historic 27-hole facility with Donald Ross roots and solid mountain views at a budget price",
         googleRating: 4.2,
@@ -2465,7 +2467,6 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 10,
-        url: "https://www.sableoaks.com",
         highlight:
           "South Portland's best public course — tight fairways through mature pines, challenging for all levels",
         googleRating: 4.4,
@@ -3283,6 +3284,8 @@ export const northeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 20,
         url: "https://www.shoregategolfclub.com",
+
+        imageUrl: "http://shoregategolfclub.com/cdn/shop/files/ShoreGateGolf-60_e4662ce1-105a-4557-8c80-93966c824fb3.jpg?v=1669912233",
         highlight:
           "Ron Forse design through South Jersey pine barrens — links-style bunkering with parkland routing",
         googleRating: 4.5,
@@ -3320,6 +3323,8 @@ export const northeastDestinations: Destination[] = [
         style: "links",
         driveMinutes: 15,
         url: "https://www.twisteddune.com",
+
+        imageUrl: "https://www.twisteddune.com/wp-content/uploads/sites/7794/2019/04/home-box01.jpg",
         highlight:
           "Scottish-style links built on actual sand dunes — feels like you're playing in Ireland, not New Jersey",
         googleRating: 4.5,
@@ -3566,7 +3571,6 @@ export const northeastDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 5,
-        url: "https://www.hersheycc.com",
         highlight:
           "Maurice McCarthy design with Hershey resort pedigree — the best course in the area with tournament conditioning",
         googleRating: 4.6,
@@ -3584,7 +3588,6 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 5,
-        url: "https://www.hersheycc.com",
         highlight:
           "Shorter companion course with more forgiving fairways — great second-day round for the group",
         googleRating: 4.5,
@@ -3620,7 +3623,6 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 20,
-        url: "https://www.ironvalleygc.com",
         highlight:
           "Cornwall course with nice elevation changes and woods — punches above its weight for the price",
         googleRating: 4.5,
@@ -4095,6 +4097,8 @@ export const northeastDestinations: Destination[] = [
         style: "mountain",
         driveMinutes: 5,
         url: "https://www.windhammountain.com/golf",
+
+        imageUrl: "https://www.windhammountainclub.com/wp-content/uploads/2026/03/Screenshot_35.png",
         highlight:
           "Ski-resort mountain course with dramatic elevation changes and Catskill views on every hole",
         googleRating: 4.5,
@@ -4148,7 +4152,6 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "mountain",
         driveMinutes: 10,
-        url: "https://www.christmansgolf.com",
         highlight:
           "Classic mountain resort course — old-school Catskills golf at a budget-friendly price",
         googleRating: 4,
@@ -4393,7 +4396,6 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "mountain",
         driveMinutes: 15,
-        url: "https://www.waumbekgolf.com",
         highlight:
           "Classic White Mountains course in Jefferson with Presidential Range views — a well-maintained 18 that complements the resort rounds",
         googleRating: 4.3,
@@ -4430,6 +4432,8 @@ export const northeastDestinations: Destination[] = [
         style: "mountain",
         driveMinutes: 20,
         url: "https://www.maplewoodgolfresort.com",
+
+        imageUrl: "https://www.maplewoodgolfresort.com/wp-content/uploads/2024/05/square-maplewood-photo.webp",
         highlight:
           "Donald Ross mountain layout in Bethlehem — 1903 design with stunning White Mountain panoramas and classic New England charm",
         googleRating: 4.3,
@@ -4644,6 +4648,8 @@ export const northeastDestinations: Destination[] = [
         style: "coastal",
         driveMinutes: 5,
         url: "https://www.kebovalleyclub.com",
+
+        imageUrl: "https://kebovalleyclub.com/wp-content/uploads/2022/04/Kebo-Valley-social.jpg",
         highlight:
           "8th oldest golf club in America — stunning mountain and ocean views from a Herbert Leeds design inside Acadia",
         googleRating: 4.6,
@@ -4924,7 +4930,6 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "links",
         driveMinutes: 10,
-        url: "https://www.langfarmgolf.com",
         highlight:
           "Links-style course on former farmland in Essex — open layout with solid conditioning and great value",
         googleRating: 4.4,
@@ -4942,7 +4947,6 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
-        url: "https://www.rockyridgevt.com",
         highlight:
           "St. George course with rolling terrain and Green Mountain views — reliable and affordable",
         googleRating: 4.3,
@@ -4961,6 +4965,8 @@ export const northeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 10,
         url: "https://www.kwiniaska.com",
+
+        imageUrl: "https://kwiniaska.com/wp-content/uploads/2023/09/IMG_20230829_063655606_HDR-EFFECTS.jpg",
         highlight:
           "Shelburne course with Lake Champlain views — well-maintained semi-private club with public tee times",
         googleRating: 4.4,
@@ -5209,7 +5215,6 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 5,
-        url: "https://www.cooperstowncountryclub.com",
         highlight:
           "Affordable local course with well-maintained greens and classic upstate New York golf charm",
         googleRating: 4.3,
@@ -5227,7 +5232,6 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
-        url: "https://www.christmansgolf.com",
         highlight:
           "Family-run course near Schuyler Lake — honest golf at rock-bottom prices",
         googleRating: 4,
@@ -5468,7 +5472,6 @@ export const northeastDestinations: Destination[] = [
         walkable: false,
         style: "coastal",
         driveMinutes: 10,
-        url: "https://www.capemaynational.com",
         highlight:
           "Karl Litton/Robert Mullock design through wetlands and pines — consistently ranked among NJ's best public courses",
         googleRating: 4.6,
@@ -5487,6 +5490,8 @@ export const northeastDestinations: Destination[] = [
         style: "coastal",
         driveMinutes: 20,
         url: "https://www.avalonlinks.com",
+
+        imageUrl: "https://www.avalonlinks.com/wp-content/uploads/sites/9563/2025/03/outings.jpg",
         highlight:
           "Bob Hendricks design in Swainton with coastal wind and well-maintained greens — solid shore golf",
         googleRating: 4.3,
@@ -5717,7 +5722,6 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "coastal",
         driveMinutes: 10,
-        url: "https://www.shennecossettgolf.com",
         highlight:
           "Donald Ross design overlooking the Thames River and Long Island Sound — a public treasure with ocean views",
         googleRating: 4.4,
@@ -5736,6 +5740,8 @@ export const northeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 15,
         url: "https://www.lakeofisles.com",
+
+        imageUrl: "https://www.facebook.com/tr?id=26603812462549625&ev=PageView&noscript=1",
         highlight:
           "Rees Jones championship design at Foxwoods — top 100 you can play, with a world-class practice facility",
         googleRating: 4.7,
@@ -5983,6 +5989,8 @@ export const northeastDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 15,
         url: "https://www.casperkillgolf.com",
+
+        imageUrl: "https://www.casperkillgolf.com/wp-content/uploads/sites/9227/2023/08/slide1-1.jpg",
         highlight:
           "Poughkeepsie course with rolling terrain and mature trees — solid public golf at a good price",
         googleRating: 4.2,
@@ -6000,7 +6008,6 @@ export const northeastDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 20,
-        url: "https://www.beekmancountryclub.com",
         highlight:
           "27-hole facility in Hopewell Junction — three distinct nines with good variety and solid conditioning",
         googleRating: 4.3,

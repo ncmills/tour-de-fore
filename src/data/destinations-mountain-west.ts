@@ -106,6 +106,8 @@ export const mountainWestDestinations: Destination[] = [
         style: "mountain",
         driveMinutes: 10,
         url: "https://www.northernpinesgolf.com",
+
+        imageUrl: "https://northernpineseventcenter.com/wp-content/uploads/2025/04/northern-pines-golf-sign-2021.jpg",
         highlight:
           "Well-conditioned daily-fee course through dense Montana forest; great value",
         googleRating: 4.2,
@@ -359,6 +361,8 @@ export const mountainWestDestinations: Destination[] = [
         style: "mountain",
         driveMinutes: 5,
         url: "https://www.bigskyresort.com/golf",
+
+        imageUrl: "https://cdn.sanity.io/images/8ts88bij/big-sky/6c8877aa8e0a9259b6b236993bb747eea4d9dbc6-1920x1080.jpg?w=1200&amp;fm=png&amp;fit=min",
         highlight:
           "Arnold Palmer design weaving through the Gallatin Canyon; elk and moose regularly cross fairways",
         googleRating: 4.5,
@@ -636,7 +640,6 @@ export const mountainWestDestinations: Destination[] = [
         walkable: false,
         style: "mountain",
         driveMinutes: 10,
-        url: "https://www.rollingstoneranchgc.com",
         highlight:
           "Robert Trent Jones Jr. design at the Sheraton; dramatic elevation changes and views of the Flat Tops Wilderness",
         googleRating: 4.4,
@@ -674,6 +677,8 @@ export const mountainWestDestinations: Destination[] = [
         style: "mountain",
         driveMinutes: 5,
         url: "https://www.steamboatgolfclub.com",
+
+        imageUrl: "https://www.steamboatgolfclub.com/wp-content/uploads/sites/7564/2025/05/Golfers-Choice-2025-2.png",
         highlight:
           "Robert Trent Jones Jr. muni owned by the city — championship mountain golf at public prices with Yampa Valley views",
         googleRating: 4.3,
@@ -956,7 +961,6 @@ export const mountainWestDestinations: Destination[] = [
         walkable: true,
         style: "mountain",
         driveMinutes: 5,
-        url: "https://www.hillcrestgolfclubdurango.com",
         highlight:
           "Classic muni perched above town at Fort Lewis College; cheap, walkable, and stunning panoramic views",
         googleRating: 4.3,
@@ -1225,7 +1229,6 @@ export const mountainWestDestinations: Destination[] = [
         walkable: true,
         style: "mountain",
         driveMinutes: 5,
-        url: "https://www.parkcitygolf.org",
         highlight:
           "Muni course right in town with walkable terrain and mountain views; incredible value for the area",
         googleRating: 4.3,
@@ -1245,6 +1248,8 @@ export const mountainWestDestinations: Destination[] = [
         style: "mountain",
         driveMinutes: 20,
         url: "https://www.promontoryclub.com",
+
+        imageUrl: "https://www.promontoryclub.com/wp-content/uploads/2024/04/Test3-5.webp",
         highlight:
           "Ultra-exclusive Pete Dye design at 6,800 feet; member access only but worth calling for reciprocal play — absolute world-class track",
         googleRating: 4.9,
@@ -1535,7 +1540,6 @@ export const mountainWestDestinations: Destination[] = [
         walkable: false,
         style: "mountain",
         driveMinutes: 20,
-        url: "https://www.snakeriversc.com",
         highlight:
           "Tom Fazio design along the Snake River; ultra-private with limited access but absolutely world-class conditioning and views",
         googleRating: 4.9,
@@ -1873,7 +1877,6 @@ export const mountainWestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 55,
-        url: "https://www.hartranchgolf.com",
         highlight:
           "Best full 18 in the area; well-maintained Rapid City course with a links feel on the back nine",
         googleRating: 4.3,
@@ -1891,6 +1894,8 @@ export const mountainWestDestinations: Destination[] = [
         style: "mountain",
         driveMinutes: 45,
         url: "https://www.devilstowergolf.com",
+
+        imageUrl: "https://sundancegolfclub.com/wp-content/uploads/2025/07/golf-course-flag-6.jpg",
         highlight:
           "Upscale Black Hills championship layout through ponderosa pines with dramatic elevation changes — the premium round option",
         googleRating: 4.5,
@@ -2149,6 +2154,8 @@ export const mountainWestDestinations: Destination[] = [
         style: "mountain",
         driveMinutes: 5,
         url: "https://www.whitetailclub.com",
+
+        imageUrl: "https://whitetailclub.com/wp-content/uploads/2022/10/Lakefront-Clubhouse.jpg",
         highlight:
           "Private club with limited guest access through Shore Lodge; Gene Bates design with lakefront holes and mountain backdrops",
         googleRating: 4.7,
@@ -2185,6 +2192,8 @@ export const mountainWestDestinations: Destination[] = [
         style: "mountain",
         driveMinutes: 25,
         url: "https://www.tamarackidaho.com/golf",
+
+        imageUrl: "https://tamarackidaho.com/wp-content/uploads/2024/04/SH.2023.6.29_Golfing-157-scaled.jpg",
         highlight:
           "Robert Trent Jones II design through mountain meadows with Lake Cascade views — the premium resort play near McCall",
         googleRating: 4.6,
@@ -2473,6 +2482,8 @@ export const mountainWestDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 5,
         url: "https://www.cottonwoodhills.com",
+
+        imageUrl: "https://static.wixstatic.com/media/673678_f6135b9fda2045db904e99099c37b1f5%7Emv2.jpg/v1/fit/w_2500,h_1330,al_c/673678_f6135b9fda2045db904e99099c37b1f5%7Emv2.jpg",
         highlight:
           "Tight tree-lined fairways with a links-style finish; the most centrally located course in Bozeman",
         googleRating: 4.3,
@@ -2736,7 +2747,6 @@ export const mountainWestDestinations: Destination[] = [
         walkable: false,
         style: "mountain",
         driveMinutes: 15,
-        url: "https://www.canyonrivergc.com",
         highlight:
           "Stunning Steve Jones design along the Clark Fork River; risk/reward layout with canyon views",
         googleRating: 4.5,
@@ -2754,7 +2764,6 @@ export const mountainWestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 15,
-        url: "https://www.theranchclub.net",
         highlight:
           "Well-conditioned course through ponderosa pines with a great practice facility and affordable rates",
         googleRating: 4.3,
@@ -2772,7 +2781,6 @@ export const mountainWestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 5,
-        url: "https://www.larchmontgolf.com",
         highlight:
           "Missoula's beloved muni; deceptively long and great value, right in town",
         googleRating: 4.2,
@@ -3649,6 +3657,8 @@ export const mountainWestDestinations: Destination[] = [
         style: "mountain",
         driveMinutes: 10,
         url: "https://www.sonnenalp.com/golf",
+
+        imageUrl: "https://sonnenalp.com/wp-content/uploads/2019/11/NWETZEL_7825-1-1.jpg",
         highlight:
           "Bob Cupp design with stunning Gore Range views; long and demanding with immaculate conditioning",
         googleRating: 4.5,
@@ -3932,7 +3942,6 @@ export const mountainWestDestinations: Destination[] = [
         walkable: true,
         style: "mountain",
         driveMinutes: 40,
-        url: "https://www.thedivideclub.com",
         highlight:
           "High mesa course near Ridgway with sweeping views of the Sneffels Range; excellent value alternative",
         googleRating: 4.4,
@@ -3952,6 +3961,8 @@ export const mountainWestDestinations: Destination[] = [
         style: "links",
         driveMinutes: 65,
         url: "https://www.cobblecreek.com",
+
+        imageUrl: "http://static1.squarespace.com/static/692f3e913eff441b1eb980b6/t/695e80dbb1dbab78120db151/1767801051129/LinksEntrance.png?format=1500w",
         highlight:
           "Jim Engh design in Montrose; links-style through desert mesa terrain — totally different from Telluride GC",
         googleRating: 4.5,
@@ -4189,7 +4200,6 @@ export const mountainWestDestinations: Destination[] = [
         walkable: false,
         style: "mountain",
         driveMinutes: 15,
-        url: "https://www.lovelandgolf.com",
         highlight:
           "Jack Nicklaus-designed city course with dramatic red rock outcroppings and Horsetooth Reservoir views",
         googleRating: 4.5,
@@ -4209,6 +4219,8 @@ export const mountainWestDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 5,
         url: "https://www.fcgov.com/golf/collindale",
+
+        imageUrl: "https://www.fortcollins.gov/files/sharedassets/city/v/1/community-services/parks/golf/collindale_1.jpg?w=1200",
         highlight:
           "Fort Collins' best muni; mature trees, tight fairways, and always in great shape",
         googleRating: 4.3,
@@ -4227,7 +4239,6 @@ export const mountainWestDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 25,
-        url: "https://www.pelicanlakesgolf.com",
         highlight:
           "27 holes of Jack Nicklaus design in Windsor; water on nearly every hole and championship conditioning",
         googleRating: 4.6,
@@ -4246,6 +4257,8 @@ export const mountainWestDestinations: Destination[] = [
         style: "parkland",
         driveMinutes: 5,
         url: "https://www.fcgov.com/golf/southridge",
+
+        imageUrl: "https://www.fortcollins.gov/files/sharedassets/city/v/1/community-services/parks/golf/southridge.jpg?w=1200",
         highlight:
           "Wide-open muni perfect for the hungover round; great value and quick pace of play",
         googleRating: 4.2,
@@ -4263,7 +4276,6 @@ export const mountainWestDestinations: Destination[] = [
         walkable: false,
         style: "parkland",
         driveMinutes: 15,
-        url: "https://www.highlandmeadowsgolf.com",
         highlight:
           "Former Korn Ferry Tour host; championship layout with elevation changes and a serious test of golf",
         googleRating: 4.5,
@@ -4528,6 +4540,8 @@ export const mountainWestDestinations: Destination[] = [
         style: "mountain",
         driveMinutes: 40,
         url: "https://www.aspengolf.com",
+
+        imageUrl: "http://static1.squarespace.com/static/5f34c398b7f44126530fdf1d/t/676d8898e9d1df40ca3d764f/1735231640916/AGC.png?format=1500w",
         highlight:
           "Municipal course in Aspen at 7,800 feet; jaw-dropping mountain scenery and surprisingly affordable for Aspen",
         googleRating: 4.5,
@@ -4545,7 +4559,6 @@ export const mountainWestDestinations: Destination[] = [
         walkable: false,
         style: "mountain",
         driveMinutes: 10,
-        url: "https://www.ironbridgegc.com",
         highlight:
           "Arthur Hills design carved through red rock cliffs along the Roaring Fork; stunning and challenging",
         googleRating: 4.7,
@@ -4791,7 +4804,6 @@ export const mountainWestDestinations: Destination[] = [
         walkable: false,
         style: "mountain",
         driveMinutes: 45,
-        url: "https://www.theglacierdurango.com",
         highlight:
           "Stunning private-turned-semi-public course near Durango with dramatic San Juan Mountain views, waterfalls, and immaculate conditioning",
         googleRating: 4.6,
@@ -5021,6 +5033,8 @@ export const mountainWestDestinations: Destination[] = [
         style: "mountain",
         driveMinutes: 5,
         url: "https://www.salidagolfclub.com",
+
+        imageUrl: "https://keju.lol/assets/img/satset-138.webp",
         highlight:
           "Charming mountain course at 7,000 feet with stunning Collegiate Peaks views; incredible value",
         googleRating: 4.1,
@@ -5284,7 +5298,6 @@ export const mountainWestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 5,
-        url: "https://www.oliveglenn.com",
         highlight:
           "Historic Bob Baldock design with mature cottonwoods and Shoshone River views; the social hub of Cody golf",
         googleRating: 4.5,
@@ -5302,7 +5315,6 @@ export const mountainWestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 5,
-        url: "https://www.codygolfclub.com",
         highlight:
           "Affordable muni with Absaroka Range views from every hole; great pace of play and value",
         googleRating: 4.3,
@@ -5529,7 +5541,6 @@ export const mountainWestDestinations: Destination[] = [
         walkable: false,
         style: "mountain",
         driveMinutes: 15,
-        url: "https://www.hartranchgolf.com",
         highlight:
           "Beautiful Black Hills course winding through ponderosa pines and red rock canyons; the best public track in the area",
         googleRating: 4.3,
@@ -5547,7 +5558,6 @@ export const mountainWestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 5,
-        url: "https://www.meadowbrookgc.com",
         highlight:
           "Rapid City's best muni; long, mature, and always well-conditioned with Rapid Creek running through",
         googleRating: 4.4,
@@ -5844,7 +5854,6 @@ export const mountainWestDestinations: Destination[] = [
         walkable: false,
         style: "mountain",
         driveMinutes: 35,
-        url: "https://www.hartranchgolf.com",
         highlight:
           "Best public course in the Black Hills; ponderosa pines and red rock canyons create a stunning layout",
         googleRating: 4.3,
@@ -5862,7 +5871,6 @@ export const mountainWestDestinations: Destination[] = [
         walkable: true,
         style: "parkland",
         driveMinutes: 40,
-        url: "https://www.meadowbrookgc.com",
         highlight:
           "Rapid City's top muni; long and mature with Rapid Creek flowing through. Worth the drive.",
         googleRating: 4.2,
