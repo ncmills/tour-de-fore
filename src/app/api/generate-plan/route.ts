@@ -117,12 +117,59 @@ async function generateSingleTier(
   throw new Error(`Plan generation failed for ${tier} tier after ${attempt} attempts`);
 }
 
+async function generateAllTiersInOne(
+  client: Anthropic,
+  state: Parameters<typeof buildUserMessage>[0],
+  destinationContext: string,
+  attempt = 1
+): Promise<ThreePlanResult | null> {
+  const isLastAttempt = attempt >= 2;
+  try {
+    const message = await client.messages.create({
+      model: "claude-haiku-4-5-20251001",
+      max_tokens: isLastAttempt ? 20000 : 16000,
+      temperature: isLastAttempt ? 0.1 : 0.3,
+      system: buildSystemPrompt(destinationContext),
+      messages: [
+        { role: "user", content: buildUserMessage(state, "allTiers") },
+        ...(attempt > 1 ? [{ role: "assistant" as const, content: "[" }] : []),
+      ],
+    });
+
+    console.log(`Claude [allTiers] attempt=${attempt}: model=${message.model} in=${message.usage.input_tokens} out=${message.usage.output_tokens} stop=${message.stop_reason}`);
+
+    const textBlock = message.content.find((b) => b.type === "text");
+    if (!textBlock || textBlock.type !== "text") return null;
+
+    const rawText = attempt > 1 ? "[" + textBlock.text : textBlock.text;
+    const parsed = tryParseJSON(rawText);
+
+    if (Array.isArray(parsed) && parsed.length === 3) {
+      return { imp: parsed[0] as GeneratedPlan, devil: parsed[1] as GeneratedPlan, demonKing: parsed[2] as GeneratedPlan };
+    }
+
+    if (attempt < 2) {
+      console.log(`allTiers parse incomplete (got ${Array.isArray(parsed) ? parsed.length : 'non-array'}), retrying...`);
+      return generateAllTiersInOne(client, state, destinationContext, attempt + 1);
+    }
+    return null;
+  } catch (err) {
+    console.error(`allTiers failed attempt=${attempt}:`, err);
+    return null;
+  }
+}
+
 async function generatePlansForDestination(
   client: Anthropic,
   state: Parameters<typeof buildUserMessage>[0],
   destinationContext: string
 ): Promise<ThreePlanResult> {
-  // Generate all 3 tiers in parallel — each fits in 8K tokens
+  // Try generating all 3 tiers in a single call (saves ~60% input tokens)
+  const combined = await generateAllTiersInOne(client, state, destinationContext);
+  if (combined) return combined;
+
+  // Fallback: generate each tier individually in parallel
+  console.log("Falling back to individual tier generation...");
   const [imp, devil, demonKing] = await Promise.all([
     generateSingleTier(client, state, destinationContext, "imp"),
     generateSingleTier(client, state, destinationContext, "devil"),
@@ -199,7 +246,7 @@ export async function POST(req: NextRequest) {
 
   // Build free previews (no Claude, instant)
   const previews = picks.map((pick) =>
-    buildFreePreview(pick.destination, state, pick.priceLevel)
+    buildFreePreview(pick.destination, state, pick.priceLevel, pick.reasons)
   );
   const byLevel: Record<PriceLevel, typeof previews[0] | undefined> = {
     budget: previews.find((p) => p.priceLevel === "budget"),

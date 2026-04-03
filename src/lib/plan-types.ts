@@ -211,6 +211,8 @@ export interface FreePreview {
   tagline: string;
   description: string;
   priceLevel: PriceLevel;
+  // Why the engine picked this destination
+  reasons: string[];
   // Visible in free plan
   lodgingPreview: {
     type: string;
@@ -232,6 +234,11 @@ export interface FreePreview {
   estimatedBudgetPerPerson: string;
   numberOfDays: number;
   groupSize: number;
+  // Teasers (visible, hooks the user)
+  activityTeaser?: { name: string; type: string; priceRange: string };
+  barTeaser?: { name: string; vibe: string };
+  partyBusAvailable?: { hourlyRange: [number, number] };
+  privateChefAvailable?: { pricePerPersonRange: [number, number] };
   // Locked counts (visible but grayed)
   lockedCounts: {
     moreHouses: number;

@@ -39,6 +39,12 @@ interface FilterOptions {
   budget?: string;
   courseQuality?: string;
   activities?: string[];
+  // Wizard preferences that influence scoring
+  nightlife?: string;
+  dining?: string;
+  lodgingPref?: string;
+  budgetPriorities?: string[];
+  mustPlayCourses?: string;
 }
 
 function budgetToRange(budget: string): [number, number] {
@@ -93,18 +99,6 @@ function regionLabelToRegion(label: string): Region | null {
   };
   return map[label] || null;
 }
-
-// ── Neighbor regions for diversity ──
-
-const neighborRegions: Record<Region, Region[]> = {
-  "Southwest": ["Mountain West", "South Central"],
-  "Pacific NW": ["Mountain West"],
-  "Mountain West": ["Pacific NW", "Southwest", "Midwest"],
-  "Midwest": ["Mountain West", "Northeast", "Southeast"],
-  "Southeast": ["South Central", "Northeast", "Midwest"],
-  "Northeast": ["Midwest", "Southeast"],
-  "South Central": ["Southwest", "Southeast", "Midwest"],
-};
 
 // ── Filter destinations ──
 
@@ -163,6 +157,18 @@ export function filterDestinations(options: FilterOptions): Destination[] {
   return results;
 }
 
+// ── Price range helpers ──
+
+function priceRangeToNumber(priceRange: string): number {
+  switch (priceRange) {
+    case "$": return 40;
+    case "$$": return 65;
+    case "$$$": return 100;
+    case "$$$$": return 150;
+    default: return 75;
+  }
+}
+
 // ── Compute price index for a destination ──
 
 function computePriceIndex(d: Destination, groupSize: number, numberOfDays: number = 3): number {
@@ -180,62 +186,144 @@ function computePriceIndex(d: Destination, groupSize: number, numberOfDays: numb
   const medianLodging = lodgingCosts[Math.floor(lodgingCosts.length / 2)];
   const lodgingPerPerson = (medianLodging * nights) / Math.max(groupSize, 8);
 
-  // Food scales with days: ~$75/person/day
-  const foodEstimate = numberOfDays * 75;
+  // Data-driven food estimate from actual dining prices (2.5 meals/day)
+  const foodPerDay = d.dining.length > 0
+    ? Math.round(d.dining.reduce((sum, r) => sum + priceRangeToNumber(r.priceRange), 0) / d.dining.length * 2.5)
+    : 75;
+  const foodEstimate = numberOfDays * foodPerDay;
 
-  return avgGreenFee * rounds + lodgingPerPerson + foodEstimate;
+  // Activity cost estimate (1 activity/day for up to 2 days)
+  const activityEstimate = d.activities.length > 0
+    ? Math.round(
+        d.activities.reduce((sum, a) => sum + (a.pricePerPerson[0] + a.pricePerPerson[1]) / 2, 0) /
+        d.activities.length * Math.min(numberOfDays, 2)
+      )
+    : 0;
+
+  return avgGreenFee * rounds + lodgingPerPerson + foodEstimate + activityEstimate;
 }
 
 // ── Score a destination based on user preferences ──
 
-function scoreDestination(d: Destination, options: FilterOptions): number {
+interface ScoreResult {
+  score: number;
+  reasons: string[];
+}
+
+function scoreDestination(d: Destination, options: FilterOptions): ScoreResult {
   const budgetRange = budgetToRange(options.budget || "");
   const desiredTiers = courseQualityToTiers(options.courseQuality || "");
   let score = 0;
+  const reasons: Array<{ pts: number; text: string }> = [];
 
-  // Course quality match (capped at 3 to avoid data-richness bias)
+  const hasBudgetPriority = (p: string) =>
+    options.budgetPriorities?.includes(p) ?? false;
+
+  // ── Must-play course match (dominant signal) ──
+  if (options.mustPlayCourses) {
+    const query = options.mustPlayCourses.toLowerCase();
+    const matchedCourse = d.courses.find((c) =>
+      c.name.toLowerCase().includes(query)
+    );
+    if (matchedCourse) {
+      score += 50;
+      reasons.push({ pts: 50, text: `Your must-play course ${matchedCourse.name} is here` });
+    } else if (d.city.toLowerCase().includes(query)) {
+      score += 30;
+      reasons.push({ pts: 30, text: `Matches your must-play destination` });
+    }
+  }
+
+  // ── Course quality match (capped at 3 to avoid data-richness bias) ──
   const matchingCourses = d.courses.filter((c) => desiredTiers.includes(c.tier));
-  score += Math.min(matchingCourses.length, 3) * 10;
+  let courseScore = Math.min(matchingCourses.length, 3) * 10;
+  if (hasBudgetPriority("Best courses")) courseScore = Math.round(courseScore * 1.5);
+  score += courseScore;
+  if (matchingCourses.length >= 2) {
+    reasons.push({ pts: courseScore, text: `${matchingCourses.length} courses match your preference` });
+  }
 
-  // Budget fit — gradient scoring instead of binary cliff
+  // ── Budget fit — gradient scoring instead of binary cliff ──
   const estimatedPerPerson = computePriceIndex(d, options.groupSize || 12, options.numberOfDays || 3);
   if (budgetRange[1] < 99999) {
     const midBudget = (budgetRange[0] + budgetRange[1]) / 2;
     const distance = Math.abs(estimatedPerPerson - midBudget) / Math.max(midBudget, 1);
-    score += Math.round(Math.max(0, 20 - distance * 30));
+    const budgetScore = Math.round(Math.max(0, 20 - distance * 30));
+    score += budgetScore;
+    if (budgetScore >= 14) {
+      reasons.push({ pts: budgetScore, text: `Fits your budget well` });
+    }
   } else {
-    score += 10; // "Money is no object" — slight baseline, no strong preference
+    score += 10;
   }
 
-  // Has enough courses (flat bonus, no double-stacking)
+  // ── Has enough courses (flat bonus) ──
   if (d.courses.length >= 3) score += 8;
 
-  // Bar/nightlife — capped to prevent data-richness domination
+  // ── Bar/nightlife — adjusted by nightlife preference ──
   const walkableBars = d.bars.filter((b) => b.walkableFromDowntown).length;
-  score += Math.min(walkableBars, 3) * 3;
-  score += Math.min(d.bars.filter((b) => b.lateNight).length, 2) * 2;
+  const lateNightBars = d.bars.filter((b) => b.lateNight).length;
+  const nightlifePref = options.nightlife || "";
 
-  // Dining options
-  score += Math.min(d.dining.length, 3) * 2;
+  if (nightlifePref === "In bed by 10") {
+    // Zero bar scoring; bonus for lodging amenities instead
+    const hasPoolOrTub = d.lodging.some((l) =>
+      l.amenities.some((a) => /pool|hot tub|jacuzzi/i.test(a))
+    );
+    if (hasPoolOrTub) {
+      score += 5;
+      reasons.push({ pts: 5, text: "Great lodging with pool/hot tub for relaxing" });
+    }
+  } else if (nightlifePref === "Going out every night") {
+    // Boosted bar scoring
+    score += Math.min(walkableBars, 3) * 5;
+    score += Math.min(lateNightBars, 2) * 4;
+    if (walkableBars >= 3) {
+      score += 5;
+      reasons.push({ pts: 28, text: `Active nightlife scene with ${walkableBars} walkable bars` });
+    }
+  } else {
+    // Default bar scoring (Couple nights / Point us to a bar)
+    score += Math.min(walkableBars, 3) * 3;
+    score += Math.min(lateNightBars, 2) * 3;
+  }
 
-  // Activity options
+  // ── Dining options — adjusted by budget priority ──
+  let diningScore = Math.min(d.dining.length, 3) * 2;
+  if (hasBudgetPriority("Best dining")) {
+    diningScore *= 2;
+    if (d.dining.some((r) => r.priceRange === "$$$$")) {
+      diningScore += 3;
+      reasons.push({ pts: diningScore, text: "Top-tier dining options available" });
+    }
+  }
+  score += diningScore;
+
+  // ── Activity options ──
   score += Math.min(d.activities.length, 3) * 3;
 
-  // Airport convenience
+  // ── Airport convenience ──
   if (d.nearestAirport.driveMinutes <= 30) score += 5;
   else if (d.nearestAirport.driveMinutes <= 60) score += 3;
 
-  // Arrival day activity bonus (TDF tradition) — reduced from 8 to avoid penalizing resort destinations
+  // ── Arrival day activities (TDF tradition — boosted) ──
   const arrivalActivities = d.activities.filter((a) =>
     a.bestFor === "arrival day" && a.groupFriendly
   );
-  if (arrivalActivities.length > 0) score += 5;
+  if (arrivalActivities.length > 0) {
+    score += 8;
+    if (arrivalActivities.length >= 2) {
+      score += 3;
+      const names = arrivalActivities.slice(0, 2).map((a) => a.name);
+      reasons.push({ pts: 11, text: `Great arrival-day options: ${names.join(", ")}` });
+    }
+  }
 
-  // Activity type diversity — credit destinations with varied activity types
+  // ── Activity type diversity ──
   const uniqueActivityTypes = new Set(d.activities.map((a) => a.type));
   score += Math.min(uniqueActivityTypes.size, 4) * 2;
 
-  // Activity match bonus (capped at 3 matches to avoid runaway scoring)
+  // ── Activity match bonus (capped at 3) ──
   if (options.activities && options.activities.length > 0) {
     const requestedTypes = options.activities
       .map(wizardActivityToType)
@@ -244,23 +332,77 @@ function scoreDestination(d: Destination, options: FilterOptions): number {
       d.activities.some((a) => a.type === type)
     ).length;
     score += Math.min(matchCount, 3) * 8;
+    if (matchCount > 0) {
+      const matched = requestedTypes
+        .filter((type) => d.activities.some((a) => a.type === type))
+        .slice(0, 2);
+      reasons.push({ pts: matchCount * 8, text: `Has your requested activities: ${matched.join(", ")}` });
+    }
   }
 
-  // Popularity bonus — requires minimum impressions to avoid cold-start bias
+  // ── Party bus scoring ──
+  const fittingBus = d.partyBuses.find((b) =>
+    b.canDoGolfAndBars && (options.groupSize || 12) <= b.capacity[1]
+  );
+  if (fittingBus) {
+    score += 8;
+    reasons.push({ pts: 8, text: `Party bus available for up to ${fittingBus.capacity[1]}` });
+  } else if (d.partyBuses.some((b) => b.canDoGolfAndBars)) {
+    score += 5;
+  }
+
+  // ── Private chef scoring ──
+  if (d.privateChefs.length > 0) {
+    score += 4;
+    if (options.dining === "Private chef") {
+      score += 6;
+      reasons.push({ pts: 10, text: "Private chef options match your dining preference" });
+    }
+  }
+
+  // ── Lodging preference ──
+  if (options.lodgingPref === "One big house") {
+    const bigHouse = d.lodging.find((l) => (options.groupSize || 12) <= l.sleeps[1]);
+    if (bigHouse) {
+      score += 5;
+    } else {
+      score -= 3;
+    }
+  } else if (options.lodgingPref === "Split houses") {
+    if (d.lodging.length >= 2) score += 3;
+  }
+
+  // ── Best lodging priority ──
+  if (hasBudgetPriority("Best lodging")) {
+    const groupSize = options.groupSize || 12;
+    const fitsWell = d.lodging.some((l) =>
+      groupSize >= l.sleeps[0] && groupSize <= l.sleeps[1] + 2
+    );
+    if (fitsWell) score += 4;
+    if (d.lodging.length >= 2) score += 3;
+  }
+
+  // ── Popularity bonus — requires minimum impressions ──
   const popularity = _popularityScores.get(d.id) || 0;
   const viewCount = _viewCounts.get(d.id) || 0;
   if (viewCount >= 10) {
     score += Math.round(popularity * 10);
   }
 
-  // Regional diversity bonus (when no region specified, boost underrepresented regions)
+  // ── Regional diversity bonus (when no region specified) ──
   if (!options.region) {
     const regionSize = _regionSizes.get(d.region) || 1;
     const avgRegionSize = allDestinations.length / 7;
     score += Math.round((avgRegionSize / regionSize) * 5);
   }
 
-  return score;
+  // Return top 3 reasons by impact
+  const topReasons = reasons
+    .sort((a, b) => b.pts - a.pts)
+    .slice(0, 3)
+    .map((r) => r.text);
+
+  return { score, reasons: topReasons };
 }
 
 // ── Pick 3 destinations at different price levels ──
@@ -270,6 +412,7 @@ export interface PickedDestination {
   priceLevel: PriceLevel;
   score: number;
   priceIndex: number;
+  reasons: string[];
 }
 
 export function pickThreeDestinations(
@@ -281,51 +424,37 @@ export function pickThreeDestinations(
   // If specific city, just return that city at all price levels
   if (options.specificCity && primaryDestinations.length > 0) {
     const d = primaryDestinations[0];
+    const { score, reasons } = scoreDestination(d, options);
     return [{
       destination: d,
       priceLevel: "mid" as PriceLevel,
-      score: scoreDestination(d, options),
+      score,
       priceIndex: computePriceIndex(d, options.groupSize || 12, options.numberOfDays || 3),
+      reasons,
     }];
   }
 
-  // Get neighbor destinations for the wild card slot
-  let neighborDestinations: Destination[] = [];
-  if (options.region) {
-    const region = regionLabelToRegion(options.region);
-    if (region) {
-      const neighbors = neighborRegions[region] || [];
-      neighborDestinations = allDestinations.filter(
-        (d) => neighbors.includes(d.region)
-      );
-
-      // Apply same season/size/activity filters to neighbors
-      if (options.season) {
-        neighborDestinations = neighborDestinations.filter((d) =>
-          d.bestSeasons.includes(options.season!)
-        );
-      }
-      if (options.groupSize) {
-        neighborDestinations = neighborDestinations.filter((d) =>
-          d.lodging.some((l) => options.groupSize! <= l.sleeps[1])
-        );
-      }
-    }
-  }
-
   // Score and sort primary destinations
-  const scoredPrimary = primaryDestinations.map((d) => ({
-    destination: d,
-    score: scoreDestination(d, options),
-    priceIndex: computePriceIndex(d, options.groupSize || 12, options.numberOfDays || 3),
-  }));
+  const scoredPrimary = primaryDestinations.map((d) => {
+    const { score, reasons } = scoreDestination(d, options);
+    return {
+      destination: d,
+      score,
+      priceIndex: computePriceIndex(d, options.groupSize || 12, options.numberOfDays || 3),
+      reasons,
+    };
+  });
 
-  // Score neighbor destinations
-  const scoredNeighbors = neighborDestinations.map((d) => ({
-    destination: d,
-    score: scoreDestination(d, options),
-    priceIndex: computePriceIndex(d, options.groupSize || 12, options.numberOfDays || 3),
-  }));
+  // Must-play force-inclusion: if a course name matches, guarantee that destination appears
+  let forcedPick: typeof scoredPrimary[0] | null = null;
+  if (options.mustPlayCourses) {
+    const query = options.mustPlayCourses.toLowerCase();
+    forcedPick = scoredPrimary.find((s) =>
+      s.destination.courses.some((c) => c.name.toLowerCase().includes(query))
+    ) || scoredPrimary.find((s) =>
+      s.destination.city.toLowerCase().includes(query)
+    ) || null;
+  }
 
   // Sort primary by price to classify into tiers
   const byPrice = [...scoredPrimary].sort((a, b) => a.priceIndex - b.priceIndex);
@@ -354,13 +483,22 @@ export function pickThreeDestinations(
   // Pick from top candidates in a pool using input-sensitive selection
   // This ensures different user inputs produce different picks among similarly-scored destinations
   const inputHash = simpleHash(JSON.stringify(options));
-  const pickBest = (pool: typeof byPrice, excludeRegions?: Set<string>) => {
-    const filtered = excludeRegions
-      ? pool.filter((d) => !excludeRegions.has(d.destination.region))
-      : pool;
-    const candidates = filtered.length > 0 ? filtered : pool;
+  const pickBest = (
+    pool: typeof byPrice,
+    excludeCities?: Set<string>,
+    excludeRegions?: Set<string>
+  ) => {
+    let filtered = pool;
+    if (excludeCities && excludeCities.size > 0) {
+      const afterCity = filtered.filter((d) => !excludeCities.has(d.destination.id));
+      if (afterCity.length > 0) filtered = afterCity;
+    }
+    if (excludeRegions && excludeRegions.size > 0) {
+      const afterRegion = filtered.filter((d) => !excludeRegions.has(d.destination.region));
+      if (afterRegion.length > 0) filtered = afterRegion;
+    }
     // Sort by score descending
-    const sorted = [...candidates].sort((a, b) => b.score - a.score);
+    const sorted = [...filtered].sort((a, b) => b.score - a.score);
     // Consider top candidates within 85% of best score for more variety
     const bestScore = sorted[0].score;
     const threshold = bestScore * 0.85;
@@ -369,73 +507,56 @@ export function pickThreeDestinations(
     return topCandidates[inputHash % topCandidates.length];
   };
 
-  // When no region is specified, enforce regional diversity across the 3 picks
-  const enforceRegionDiversity = !options.region;
+  // Always enforce city diversity — never return the same city twice
+  const usedCities = new Set<string>();
+  // When no region is specified, also enforce regional diversity (unless must-play overrides)
+  const enforceRegionDiversity = !options.region && !forcedPick;
   const usedRegions = new Set<string>();
 
-  const budgetPick = pickBest(budgetPool);
+  // If must-play matched, force that destination into the mid slot first
+  let midPick: typeof byPrice[0] = forcedPick || byPrice[0]; // overwritten below if not forced
+  if (forcedPick) {
+    usedCities.add(midPick.destination.id);
+  }
+
+  const budgetPick = pickBest(budgetPool, usedCities, enforceRegionDiversity ? usedRegions : undefined);
+  usedCities.add(budgetPick.destination.id);
   if (enforceRegionDiversity) usedRegions.add(budgetPick.destination.region);
 
   const premiumPick = pickBest(
     premiumPool.length > 0 ? premiumPool : midPool,
+    usedCities,
     enforceRegionDiversity ? usedRegions : undefined
   );
+  usedCities.add(premiumPick.destination.id);
   if (enforceRegionDiversity) usedRegions.add(premiumPick.destination.region);
 
-  // For mid: pick best from mid pool, excluding budget/premium picks and used regions
-  const midCandidates = midPool.filter(
-    (d) =>
-      d.destination.id !== budgetPick.destination.id &&
-      d.destination.id !== premiumPick.destination.id
-  );
-
-  let midPick: typeof budgetPick;
-  if (midCandidates.length > 0) {
-    midPick = pickBest(midCandidates, enforceRegionDiversity ? usedRegions : undefined);
-  } else {
-    const remaining = byPrice.filter(
-      (d) =>
-        d.destination.id !== budgetPick.destination.id &&
-        d.destination.id !== premiumPick.destination.id
+  // For mid: pick best from mid pool if not already forced
+  if (!forcedPick) {
+    const midCandidates = midPool.filter(
+      (d) => !usedCities.has(d.destination.id)
     );
-    midPick = remaining.length > 0
-      ? pickBest(remaining, enforceRegionDiversity ? usedRegions : undefined)
-      : budgetPick;
-  }
 
-  // When region IS specified, try swapping mid with a neighbor region pick
+    if (midCandidates.length > 0) {
+      midPick = pickBest(midCandidates, usedCities, enforceRegionDiversity ? usedRegions : undefined);
+    } else {
+      const remaining = byPrice.filter(
+        (d) => !usedCities.has(d.destination.id)
+      );
+      midPick = remaining.length > 0
+        ? pickBest(remaining, usedCities, enforceRegionDiversity ? usedRegions : undefined)
+        : budgetPick;
+    }
+  }
+  usedCities.add(midPick.destination.id);
+
   const result: PickedDestination[] = [
     { ...budgetPick, priceLevel: "budget" },
     { ...midPick, priceLevel: "mid" },
     { ...premiumPick, priceLevel: "premium" },
   ];
 
-  if (options.region && scoredNeighbors.length > 0) {
-    const bestNeighbor = scoredNeighbors.reduce((best, curr) =>
-      curr.score > best.score ? curr : best
-    );
-
-    if (bestNeighbor.score >= midPick.score * 0.8) {
-      let neighborLevel: PriceLevel;
-      if (bestNeighbor.priceIndex <= budgetPick.priceIndex * 1.1) {
-        neighborLevel = "budget";
-      } else if (bestNeighbor.priceIndex >= premiumPick.priceIndex * 0.9) {
-        neighborLevel = "premium";
-      } else {
-        neighborLevel = "mid";
-      }
-
-      const slotIndex = result.findIndex((r) => r.priceLevel === neighborLevel);
-      if (slotIndex >= 0) {
-        result[slotIndex] = {
-          ...bestNeighbor,
-          priceLevel: neighborLevel,
-        };
-      }
-    }
-  }
-
-  // Ensure all 3 are different cities
+  // Ensure all 3 are different cities (safety net)
   const seen = new Set<string>();
   const deduped: PickedDestination[] = [];
   for (const pick of result) {
@@ -445,12 +566,13 @@ export function pickThreeDestinations(
     }
   }
 
+  // Backfill only from primary region destinations (never neighbors)
   if (deduped.length < 3) {
-    const allCandidates = [...scoredPrimary, ...scoredNeighbors]
+    const backfillCandidates = scoredPrimary
       .filter((d) => !seen.has(d.destination.id))
       .sort((a, b) => b.score - a.score);
 
-    for (const candidate of allCandidates) {
+    for (const candidate of backfillCandidates) {
       if (deduped.length >= 3) break;
       const level: PriceLevel = deduped.length === 1 ? "mid" : "premium";
       deduped.push({ ...candidate, priceLevel: level });

@@ -122,6 +122,18 @@ function DestinationCard({
           <span style={{ fontSize: "0.65rem", fontWeight: 400, color: "rgba(255,255,255,0.3)", marginLeft: "0.4rem" }}>per person</span>
         </div>
 
+        {/* Why we picked this */}
+        {preview?.reasons && preview.reasons.length > 0 && (
+          <div style={{ marginBottom: "1rem", padding: "0.6rem 0.75rem", background: "rgba(255,255,255,0.03)", borderRadius: 8, borderLeft: `2px solid ${accentColor}` }}>
+            {preview.reasons.map((reason, ri) => (
+              <div key={ri} style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.55)", lineHeight: 1.5, display: "flex", alignItems: "flex-start", gap: "0.4rem" }}>
+                <span style={{ color: accentColor, flexShrink: 0 }}>✦</span>
+                <span>{reason}</span>
+              </div>
+            ))}
+          </div>
+        )}
+
         {/* Inline preview — lodging + courses */}
         {preview && (
           <div style={{ marginBottom: "1rem" }}>
@@ -145,10 +157,33 @@ function DestinationCard({
                 </div>
               ))}
             </div>
+
+            {/* Teasers — activity, bar, party bus, chef */}
+            <div style={{ marginTop: "0.75rem", display: "flex", flexDirection: "column", gap: "0.35rem" }}>
+              {preview.activityTeaser && (
+                <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.5)" }}>
+                  🎯 {preview.activityTeaser.name} — {preview.activityTeaser.priceRange}/person
+                </div>
+              )}
+              {preview.barTeaser && (
+                <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.5)" }}>
+                  🌙 {preview.barTeaser.name} ({preview.barTeaser.vibe})
+                </div>
+              )}
+              {preview.partyBusAvailable && (
+                <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.5)" }}>
+                  🚌 Party bus — ${preview.partyBusAvailable.hourlyRange[0]}-${preview.partyBusAvailable.hourlyRange[1]}/hr
+                </div>
+              )}
+              {preview.privateChefAvailable && (
+                <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.5)" }}>
+                  👨‍🍳 Private chef — ${preview.privateChefAvailable.pricePerPersonRange[0]}-${preview.privateChefAvailable.pricePerPersonRange[1]}/person
+                </div>
+              )}
+            </div>
           </div>
         )}
 
-        {/* Locked teaser OR View Plan CTA */}
         {/* What's included teaser */}
         {lockedCounts && (
           <div style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.35)", marginBottom: "0.75rem" }}>

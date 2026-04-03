@@ -3,6 +3,8 @@
 import { useState, useCallback, useMemo, useRef, useEffect } from "react";
 import { motion } from "motion/react";
 import type { GeneratedPlan, ThreePlanResult, TripTier } from "@/lib/plan-types";
+import type { InsightsContext } from "@/lib/insights";
+import { lookupCourse, lookupDining, lookupBar, formatReviewCount, estimateDriveBetween, getDayHints, computeTdfPicks, isTdfPick, type TdfPicks, type DayHint } from "@/lib/insights";
 import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
 
@@ -13,6 +15,7 @@ interface Option {
   name: string;
   price?: string;
   rating?: number;
+  reviewCount?: number;
   detail?: string;
   tier?: string;
   recommended?: boolean;
@@ -73,6 +76,7 @@ const TAG_COLORS: Record<string, { bg: string; text: string }> = {
   orange: { bg: "rgba(234,88,12,0.15)", text: "#fb923c" },
   blue:   { bg: "rgba(59,130,246,0.15)", text: "#93c5fd" },
   red:    { bg: "rgba(220,38,38,0.18)", text: "#EA580C" },
+  purple: { bg: "rgba(147,51,234,0.15)", text: "#c084fc" },
 };
 
 // ── Small Option Card ──
@@ -99,7 +103,7 @@ function OptionCard({ option, selected, onSelect, disabled, tags }: { option: Op
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <span style={{ fontWeight: 600, fontSize: "0.9rem" }}>{option.name}</span>
         <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
-          {option.rating && <span style={{ color: "#D4A843", fontSize: "0.75rem" }}>{option.rating}★</span>}
+          {option.rating && <span style={{ color: "#D4A843", fontSize: "0.75rem" }}>{option.rating}★{option.reviewCount ? ` (${formatReviewCount(option.reviewCount)})` : ""}</span>}
           {option.price && <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.75rem" }}>{option.price}</span>}
           {selected && <span style={{ color: "#EA580C", fontSize: "0.9rem" }}>✓</span>}
         </div>
@@ -198,12 +202,14 @@ export default function TripBuilderClient({
   planId,
   tier,
   dest,
+  insights,
 }: {
   plan: GeneratedPlan;
   allPlans?: ThreePlanResult;
   planId: string;
   tier: TripTier;
   dest: string;
+  insights?: InsightsContext | null;
 }) {
   const tierLabel: Record<string, string> = { imp: "Imp", devil: "Devil", demonKing: "Demon King" };
   const selectedTierKey = tier === "demon-king" ? "demonKing" : tier;
@@ -220,62 +226,77 @@ export default function TripBuilderClient({
     return others;
   }, [allPlans, selectedTierKey]);
 
-  // Merge courses from all tiers (deduped)
+  // Merge courses from all tiers (deduped) + enrich with insight data
   const allCourses = useMemo(() => {
     const courses: Option[] = [];
     const seen = new Set<string>();
+    const enrich = (name: string) => {
+      if (!insights) return {};
+      const ci = lookupCourse(insights, name);
+      return ci ? { rating: ci.googleRating, reviewCount: ci.reviewCount, driveMinutes: ci.driveMinutes } : {};
+    };
     for (const c of plan.courses) {
       seen.add(c.name);
-      courses.push({ id: c.name, name: c.name, price: c.greenFee + "/pp", detail: c.whyThisCourse, recommended: true, driveMinutes: undefined });
+      courses.push({ id: c.name, name: c.name, price: c.greenFee + "/pp", detail: c.whyThisCourse, recommended: true, ...enrich(c.name) });
     }
     for (const { key, plan: p } of otherPlans) {
       for (const c of p.courses) {
         if (!seen.has(c.name)) {
           seen.add(c.name);
-          courses.push({ id: c.name, name: c.name, price: c.greenFee + "/pp", detail: c.whyThisCourse, tier: tierLabel[key] || key });
+          courses.push({ id: c.name, name: c.name, price: c.greenFee + "/pp", detail: c.whyThisCourse, tier: tierLabel[key] || key, ...enrich(c.name) });
         }
       }
     }
     return courses;
-  }, [plan, otherPlans, tierLabel]);
+  }, [plan, otherPlans, tierLabel, insights]);
 
-  // Merge dining
+  // Merge dining + enrich
   const allDining = useMemo(() => {
     const opts: Option[] = [];
     const seen = new Set<string>();
+    const enrich = (name: string) => {
+      if (!insights) return {};
+      const di = lookupDining(insights, name);
+      return di ? { rating: di.googleRating, reviewCount: di.reviewCount } : {};
+    };
     for (const d of plan.dining) {
       seen.add(d.name);
-      opts.push({ id: d.name, name: d.name, price: d.priceRange, detail: `${d.type}`, recommended: true });
+      opts.push({ id: d.name, name: d.name, price: d.priceRange, detail: `${d.type}`, recommended: true, ...enrich(d.name) });
     }
     for (const { key, plan: p } of otherPlans) {
       for (const d of p.dining) {
         if (!seen.has(d.name)) {
           seen.add(d.name);
-          opts.push({ id: d.name, name: d.name, price: d.priceRange, detail: `${d.type}`, tier: tierLabel[key] || key });
+          opts.push({ id: d.name, name: d.name, price: d.priceRange, detail: `${d.type}`, tier: tierLabel[key] || key, ...enrich(d.name) });
         }
       }
     }
     return opts;
-  }, [plan, otherPlans, tierLabel]);
+  }, [plan, otherPlans, tierLabel, insights]);
 
-  // Merge bars
+  // Merge bars + enrich
   const allBars = useMemo(() => {
     const opts: Option[] = [];
     const seen = new Set<string>();
+    const enrich = (name: string) => {
+      if (!insights) return {};
+      const bi = lookupBar(insights, name);
+      return bi?.googleRating ? { rating: bi.googleRating } : {};
+    };
     for (const b of (plan.bars || [])) {
       seen.add(b.name);
-      opts.push({ id: b.name, name: b.name, detail: b.vibe, recommended: true });
+      opts.push({ id: b.name, name: b.name, detail: b.vibe, recommended: true, ...enrich(b.name) });
     }
     for (const { key, plan: p } of otherPlans) {
       for (const b of (p.bars || [])) {
         if (!seen.has(b.name)) {
           seen.add(b.name);
-          opts.push({ id: b.name, name: b.name, detail: b.vibe, tier: tierLabel[key] || key });
+          opts.push({ id: b.name, name: b.name, detail: b.vibe, tier: tierLabel[key] || key, ...enrich(b.name) });
         }
       }
     }
     return opts;
-  }, [plan, otherPlans, tierLabel]);
+  }, [plan, otherPlans, tierLabel, insights]);
 
   // Merge lodging
   const allLodging = useMemo(() => {
@@ -332,12 +353,18 @@ export default function TripBuilderClient({
   const [saving, setSaving] = useState(false);
   const [expandedDay, setExpandedDay] = useState<number | null>(0);
   const [autoSaved, setAutoSaved] = useState(false);
+  // Track which slots user manually touched (for TDF Build partial auto-fill)
+  const [touchedSlots, setTouchedSlots] = useState<Set<string>>(new Set());
+  const markTouched = useCallback((slot: string) => {
+    setTouchedSlots((prev) => new Set(prev).add(slot));
+  }, []);
   const autoSaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const autoSaveFadeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const updateDay = useCallback((dayIndex: number, field: keyof DaySelections, value: string | boolean) => {
     setDays((prev) => prev.map((d, i) => i === dayIndex ? { ...d, [field]: value } : d));
-  }, []);
+    markTouched(`day${dayIndex}-${field}`);
+  }, [markTouched]);
 
   // Auto-save selections with 2s debounce
   useEffect(() => {
@@ -517,6 +544,13 @@ export default function TripBuilderClient({
 
   const priceDirection = prevPrice === null ? null : currentPricePerPerson > prevPrice ? "up" : currentPricePerPerson < prevPrice ? "down" : null;
 
+  // ── TDF Picks (data-driven best options) ──
+
+  const tdfPicks = useMemo<TdfPicks | null>(() => {
+    if (!insights) return null;
+    return computeTdfPicks(insights, allCourses, allDining, allBars, allLodging, numDays);
+  }, [insights, allCourses, allDining, allBars, allLodging, numDays]);
+
   // ── Smart recommendation tags ──
 
   // Determine if user picked expensive lodging (above median)
@@ -526,11 +560,17 @@ export default function TripBuilderClient({
     return currentLodgingCost > median;
   }, [allLodging, currentLodgingCost]);
 
+  // Cap tags at 3, with priority ordering
+  const capTags = (t: Tag[]): Tag[] => {
+    // Priority: TDF PICK > hype/rank > quality > info
+    const priority: Record<string, number> = { "TDF PICK": 0, "BUCKET LIST": 1, "TOP 100 PUBLIC": 1, "HIDDEN GEM": 1, "TOURNAMENT HOST": 1, "DESIGNER CLASSIC": 1, "LOCALS' FAVORITE": 1, "BEST VALUE": 1, "BEST RATED": 2, "BUDGET PICK": 3, "BALANCES BUDGET": 4, "LATE NIGHT": 5, "WALKABLE": 5, "RESERVATION": 5, "GROUPS 16+": 5, "CLOSE TO ROUND 1": 6 };
+    return [...t].sort((a, b) => (priority[a.label] ?? 9) - (priority[b.label] ?? 9)).slice(0, 3);
+  };
+
   const courseTagMap = useMemo(() => {
     const tags: Record<string, Tag[]> = {};
     if (allCourses.length === 0) return tags;
 
-    // Find cheapest + best rated
     let cheapest = allCourses[0];
     let bestRated = allCourses[0];
     for (const c of allCourses) {
@@ -541,7 +581,16 @@ export default function TripBuilderClient({
 
     for (const c of allCourses) {
       const t: Tag[] = [];
-      if (c.recommended) t.push({ label: "TDF PICK", color: "red" });
+      // TDF PICK from data-driven scoring (or fallback to Claude's recommended)
+      const isTdf = tdfPicks ? isTdfPick(tdfPicks, "course", c.id) : c.recommended;
+      if (isTdf) t.push({ label: "TDF PICK", color: "red" });
+      // Insight-driven tags
+      if (insights) {
+        const ci = lookupCourse(insights, c.name);
+        if (ci?.hypeTag) t.push({ label: ci.hypeTag, color: "purple" });
+        if (ci?.rankNote) t.push({ label: "TOP 100 PUBLIC", color: "purple" });
+        if (ci?.walkable) t.push({ label: "WALKABLE", color: "green" });
+      }
       if (c.id === cheapest.id && parseDollars(c.price) > 0) t.push({ label: "BUDGET PICK", color: "green" });
       if (c.id === bestRated.id && (bestRated.rating || 0) > 0) t.push({ label: "BEST RATED", color: "gold" });
       if (lodgingIsExpensive && parseDollars(c.price) > 0) {
@@ -549,10 +598,10 @@ export default function TripBuilderClient({
         const avg = allCourses.reduce((s, x) => s + parseDollars(x.price), 0) / allCourses.length;
         if (fee < avg * 0.85) t.push({ label: "BALANCES BUDGET", color: "blue" });
       }
-      if (t.length > 0) tags[c.id] = t;
+      if (t.length > 0) tags[c.id] = capTags(t);
     }
     return tags;
-  }, [allCourses, lodgingIsExpensive]);
+  }, [allCourses, lodgingIsExpensive, insights, tdfPicks]);
 
   const lodgingTagMap = useMemo(() => {
     const tags: Record<string, Tag[]> = {};
@@ -565,12 +614,13 @@ export default function TripBuilderClient({
 
     for (const l of allLodging) {
       const t: Tag[] = [];
-      if (l.recommended) t.push({ label: "TDF PICK", color: "red" });
+      const isTdf = tdfPicks ? tdfPicks.lodging === l.id : l.recommended;
+      if (isTdf) t.push({ label: "TDF PICK", color: "red" });
       if (l.id === cheapest.id && parseDollars(l.price) > 0) t.push({ label: "BUDGET PICK", color: "green" });
-      if (t.length > 0) tags[l.id] = t;
+      if (t.length > 0) tags[l.id] = capTags(t);
     }
     return tags;
-  }, [allLodging]);
+  }, [allLodging, tdfPicks]);
 
   const diningTagMap = useMemo(() => {
     const tags: Record<string, Tag[]> = {};
@@ -587,21 +637,37 @@ export default function TripBuilderClient({
 
     for (const d of allDining) {
       const t: Tag[] = [];
-      if (d.recommended) t.push({ label: "TDF PICK", color: "red" });
+      const isTdf = tdfPicks ? isTdfPick(tdfPicks, "dining", d.id) : d.recommended;
+      if (isTdf) t.push({ label: "TDF PICK", color: "red" });
+      // Insight-driven tags
+      if (insights) {
+        const di = lookupDining(insights, d.name);
+        if (di?.reservationNeeded) t.push({ label: "RESERVATION", color: "orange" });
+        if (di?.capacity === "large-group") t.push({ label: "GROUPS 16+", color: "green" });
+        if (di?.capacity === "small" && insights.groupSize > 8) t.push({ label: "SEATS ≤8", color: "orange" });
+      }
       if (d.id === cheapest.id) t.push({ label: "BUDGET PICK", color: "green" });
       if (d.id === bestRated.id && (bestRated.rating || 0) > 0) t.push({ label: "BEST RATED", color: "gold" });
-      if (t.length > 0) tags[d.id] = t;
+      if (t.length > 0) tags[d.id] = capTags(t);
     }
     return tags;
-  }, [allDining]);
+  }, [allDining, insights, tdfPicks]);
 
   const barTagMap = useMemo(() => {
     const tags: Record<string, Tag[]> = {};
     for (const b of allBars) {
-      if (b.recommended) tags[b.id] = [{ label: "TDF PICK", color: "red" }];
+      const t: Tag[] = [];
+      const isTdf = tdfPicks ? isTdfPick(tdfPicks, "bar", b.id) : b.recommended;
+      if (isTdf) t.push({ label: "TDF PICK", color: "red" });
+      if (insights) {
+        const bi = lookupBar(insights, b.name);
+        if (bi?.lateNight) t.push({ label: "LATE NIGHT", color: "purple" });
+        if (bi?.walkableFromDowntown) t.push({ label: "WALKABLE", color: "green" });
+      }
+      if (t.length > 0) tags[b.id] = capTags(t);
     }
     return tags;
-  }, [allBars]);
+  }, [allBars, insights, tdfPicks]);
 
   // Build per-day Round 2 tag maps that add "CLOSE TO ROUND 1" hints
   const getRound2TagMap = useCallback((round1Id: string) => {
@@ -609,22 +675,53 @@ export default function TripBuilderClient({
     for (const [id, base] of Object.entries(courseTagMap)) {
       tags[id] = [...base];
     }
-    // If round 1 is selected, mark same course as "close"
     if (round1Id) {
       if (!tags[round1Id]) tags[round1Id] = [];
-      // Only add if not already present
       if (!tags[round1Id].some((t) => t.label === "CLOSE TO ROUND 1")) {
-        tags[round1Id] = [...(tags[round1Id] || []), { label: "CLOSE TO ROUND 1", color: "orange" }];
+        tags[round1Id] = capTags([...(tags[round1Id] || []), { label: "CLOSE TO ROUND 1", color: "orange" }]);
       }
     }
     return tags;
   }, [courseTagMap]);
 
-  // Check if two courses on the same day are different (show travel hint)
-  const getTravelHint = (day: DaySelections) => {
-    if (day.round2IsActivity || !day.round1 || !day.round2 || day.round1 === day.round2) return null;
+  // Data-driven travel hint between courses
+  const getTravelHint = useCallback((day: DaySelections): string | null => {
+    if (day.round2Mode !== "golf" || !day.round1 || !day.round2 || day.round1 === day.round2) return null;
+    if (insights) {
+      const est = estimateDriveBetween(insights, day.round1, day.round2);
+      if (est != null) {
+        return est > 30
+          ? `~${est}min between courses — consider party bus`
+          : `~${est}min drive between courses`;
+      }
+    }
     return "Different courses — check drive time between them";
-  };
+  }, [insights]);
+
+  // Inline day hints from insights
+  const getDayHintsMemo = useCallback((day: DaySelections, dayIndex: number): DayHint[] => {
+    if (!insights) return [];
+    return getDayHints(insights, day.round1Mode === "golf" ? day.round1 : null, day.round2Mode === "golf" ? day.round2 : null, day.dinner, day.bar, dayIndex === 0);
+  }, [insights]);
+
+  // ── TDF Build: auto-select best options ──
+
+  const handleTdfBuild = useCallback(() => {
+    if (!tdfPicks) return;
+    setLodging(tdfPicks.lodging || lodging);
+    setTransport(tdfPicks.transport || transport);
+    setDays((prev) => prev.map((d, i) => {
+      const pick = tdfPicks.days[i];
+      if (!pick) return d;
+      return {
+        ...d,
+        round1: touchedSlots.has(`day${i}-round1`) ? d.round1 : (pick.round1 || d.round1),
+        round2: touchedSlots.has(`day${i}-round2`) ? d.round2 : (pick.round2 || d.round2),
+        dinner: touchedSlots.has(`day${i}-dinner`) ? d.dinner : (pick.dinner || d.dinner),
+        bar: touchedSlots.has(`day${i}-bar`) ? d.bar : (pick.bar || d.bar),
+      };
+    }));
+  }, [tdfPicks, touchedSlots, lodging, transport]);
 
   return (
     <>
@@ -687,6 +784,33 @@ export default function TripBuilderClient({
           </span>
         )}
       </div>
+
+      {/* TDF Build button */}
+      {tdfPicks && (
+        <div style={{ maxWidth: 700, margin: "0 auto 2rem", textAlign: "center" }}>
+          <button
+            onClick={handleTdfBuild}
+            className="flame-glow"
+            style={{
+              background: "linear-gradient(135deg, rgba(220,38,38,0.9), rgba(234,88,12,0.9))",
+              border: "none",
+              borderRadius: 8,
+              padding: "0.85rem 2rem",
+              fontSize: "0.85rem",
+              fontWeight: 700,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              color: "#fff",
+              cursor: "pointer",
+            }}
+          >
+            🔥 TDF Build — Let the Devils Pick
+          </button>
+          <p style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.35)", marginTop: "0.4rem" }}>
+            Auto-selects the best options based on ratings, reviews & group fit. Your picks are kept.
+          </p>
+        </div>
+      )}
 
       <div style={{ maxWidth: 700, margin: "0 auto" }}>
 
@@ -866,6 +990,25 @@ export default function TripBuilderClient({
                     onSelect={(id) => updateDay(di, "bar", id)}
                     tagMap={barTagMap}
                   />
+
+                  {/* Inline insight hints for this day */}
+                  {insights && (() => {
+                    const hints = getDayHintsMemo(day, di);
+                    if (hints.length === 0) return null;
+                    return (
+                      <div style={{ marginTop: "0.5rem", marginBottom: "1rem", display: "flex", flexDirection: "column", gap: "0.25rem" }}>
+                        {hints.map((h, hi) => (
+                          <p key={hi} style={{
+                            fontSize: "0.7rem",
+                            fontStyle: "italic",
+                            color: h.type === "warning" ? "rgba(251,146,60,0.8)" : h.type === "positive" ? "rgba(110,231,183,0.7)" : h.type === "tip" ? "rgba(147,51,234,0.6)" : "rgba(255,255,255,0.4)",
+                          }}>
+                            {h.type === "warning" ? "⚠️ " : h.type === "positive" ? "✓ " : h.type === "tip" ? "💡 " : "📍 "}{h.text}
+                          </p>
+                        ))}
+                      </div>
+                    );
+                  })()}
                 </>
               )}
             </section>

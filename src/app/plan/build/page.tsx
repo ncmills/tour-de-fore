@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { getPlan } from "@/lib/kv";
 import TripBuilderClient from "@/components/TripBuilderClient";
 import type { TripTier, PriceLevel, ThreePlanResult } from "@/lib/plan-types";
+import { allDestinations } from "@/data/index";
+import { buildInsightsContext } from "@/lib/insights";
 
 interface Props {
   searchParams: Promise<{ planId?: string; dest?: string; tier?: string }>;
@@ -30,6 +32,12 @@ export default async function BuildPage({ searchParams }: Props) {
   const plan = (rec.plans as any)[tierKey];
   if (!plan) notFound();
 
+  // Look up destination data for smart insights
+  const destination = allDestinations.find((d) => d.id === rec.destinationId);
+  const insights = destination
+    ? buildInsightsContext(destination, stored.inputs?.groupSize || 12)
+    : null;
+
   return (
     <Suspense>
       <TripBuilderClient
@@ -38,6 +46,7 @@ export default async function BuildPage({ searchParams }: Props) {
         planId={planId}
         tier={tier as TripTier}
         dest={dest}
+        insights={insights}
       />
     </Suspense>
   );

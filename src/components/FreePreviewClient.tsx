@@ -227,6 +227,47 @@ export default function FreePreviewClient({
           </div>
         </motion.section>
 
+        {/* ── TEASERS (visible hooks) ── */}
+        {(preview.activityTeaser || preview.barTeaser || preview.partyBusAvailable || preview.privateChefAvailable) && (
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35 }}
+            style={{ marginBottom: "2rem" }}
+          >
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(200px, 100%), 1fr))", gap: "0.75rem" }}>
+              {preview.activityTeaser && (
+                <div style={{ padding: "0.75rem", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 8 }}>
+                  <div style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.35)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.3rem" }}>Top Arrival Activity</div>
+                  <div style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.7)" }}>🎯 {preview.activityTeaser.name}</div>
+                  <div style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.4)" }}>{preview.activityTeaser.priceRange}/person</div>
+                </div>
+              )}
+              {preview.barTeaser && (
+                <div style={{ padding: "0.75rem", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 8 }}>
+                  <div style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.35)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.3rem" }}>Featured Bar</div>
+                  <div style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.7)" }}>🌙 {preview.barTeaser.name}</div>
+                  <div style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.4)" }}>{preview.barTeaser.vibe}</div>
+                </div>
+              )}
+              {preview.partyBusAvailable && (
+                <div style={{ padding: "0.75rem", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 8 }}>
+                  <div style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.35)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.3rem" }}>Party Bus</div>
+                  <div style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.7)" }}>🚌 Available</div>
+                  <div style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.4)" }}>${preview.partyBusAvailable.hourlyRange[0]}-${preview.partyBusAvailable.hourlyRange[1]}/hr</div>
+                </div>
+              )}
+              {preview.privateChefAvailable && (
+                <div style={{ padding: "0.75rem", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 8 }}>
+                  <div style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.35)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.3rem" }}>Private Chef</div>
+                  <div style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.7)" }}>👨‍🍳 Available</div>
+                  <div style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.4)" }}>${preview.privateChefAvailable.pricePerPersonRange[0]}-${preview.privateChefAvailable.pricePerPersonRange[1]}/person</div>
+                </div>
+              )}
+            </div>
+          </motion.section>
+        )}
+
         {/* ── LOCKED SECTIONS ── */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}

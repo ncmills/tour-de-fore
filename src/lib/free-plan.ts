@@ -3,13 +3,14 @@ import type { WizardState, FreePreview, PriceLevel } from "./plan-types";
 
 /**
  * Build a free preview from database data alone — no Claude API call.
- * Shows just enough to excite the user: 1 house, 3 courses, estimated budget.
- * Everything else shows locked counts with trophy badges.
+ * Shows just enough to excite the user: 1 house, 3 courses, estimated budget,
+ * plus teasers for activities, bars, party bus, and private chef.
  */
 export function buildFreePreview(
   destination: Destination,
   state: WizardState,
-  priceLevel: PriceLevel
+  priceLevel: PriceLevel,
+  reasons: string[] = []
 ): FreePreview {
   // Pick the best-fit lodging (largest capacity that fits group)
   const sortedLodging = [...destination.lodging].sort((a, b) => {
@@ -49,6 +50,32 @@ export function buildFreePreview(
   const high = Math.round(totalEstimate * 1.3);
   const estimatedBudget = `$${Math.round(low / 100) * 100}–$${Math.round(high / 100) * 100}`;
 
+  // Build teasers — one visible item per category to hook the user
+  const arrivalActivity = destination.activities.find((a) => a.bestFor === "arrival day" && a.groupFriendly)
+    || destination.activities[0];
+  const activityTeaser = arrivalActivity ? {
+    name: arrivalActivity.name,
+    type: arrivalActivity.type,
+    priceRange: `$${arrivalActivity.pricePerPerson[0]}–$${arrivalActivity.pricePerPerson[1]}`,
+  } : undefined;
+
+  const bestBar = destination.bars.find((b) => b.walkableFromDowntown && b.lateNight)
+    || destination.bars[0];
+  const barTeaser = bestBar ? {
+    name: bestBar.name,
+    vibe: bestBar.vibe,
+  } : undefined;
+
+  const partyBus = destination.partyBuses.find((b) => b.canDoGolfAndBars) || destination.partyBuses[0];
+  const partyBusAvailable = partyBus ? {
+    hourlyRange: partyBus.hourlyRate,
+  } : undefined;
+
+  const chef = destination.privateChefs[0];
+  const privateChefAvailable = chef ? {
+    pricePerPersonRange: chef.pricePerPerson,
+  } : undefined;
+
   return {
     destinationId: destination.id,
     city: destination.city,
@@ -56,6 +83,7 @@ export function buildFreePreview(
     tagline: destination.tagline,
     description: destination.description,
     priceLevel,
+    reasons,
     lodgingPreview: {
       type: bestLodging.type,
       sleeps: bestLodging.sleeps,
@@ -76,6 +104,10 @@ export function buildFreePreview(
     estimatedBudgetPerPerson: estimatedBudget,
     numberOfDays: state.numberOfDays,
     groupSize: state.groupSize,
+    activityTeaser,
+    barTeaser,
+    partyBusAvailable,
+    privateChefAvailable,
     lockedCounts: {
       moreHouses: Math.max(destination.lodging.length - 1, 0),
       restaurants: destination.dining.length,

@@ -185,7 +185,7 @@ The JSON must be a single plan object with this shape:
 }`;
 }
 
-export function buildUserMessage(state: WizardState, tier?: "imp" | "devil" | "demonKing"): string {
+export function buildUserMessage(state: WizardState, tier?: "imp" | "devil" | "demonKing" | "allTiers"): string {
   const destination =
     state.destinationType === "specific"
       ? `Specific destination: ${state.destination}`
@@ -223,7 +223,7 @@ BUDGET:
 - Priorities: ${state.budgetPriorities.join(", ")}
 ${state.specialRequests ? `- Special requests: ${state.specialRequests}` : ""}
 
-Generate ${tier === "imp" ? 'the "The Imp" (budget) tier' : tier === "demonKing" ? 'the "The Demon King" (luxury) tier' : 'the "The Devil" (recommended) tier'} trip plan as JSON. Use REAL venues, courses, and pricing from the destination database provided in your system prompt. Do not invent fake establishments.`;
+Generate ${tier === "allTiers" ? 'ALL THREE tier plans — "The Imp" (budget), "The Devil" (recommended), and "The Demon King" (luxury) — as a JSON array of 3 objects: [imp, devil, demonKing]. Each object follows the same JSON schema described in the system prompt.' : tier === "imp" ? 'the "The Imp" (budget) tier' : tier === "demonKing" ? 'the "The Demon King" (luxury) tier' : 'the "The Devil" (recommended) tier'} trip plan as JSON. Use REAL venues, courses, and pricing from the destination database provided in your system prompt. Do not invent fake establishments.`;
 }
 
 // ── Build destination context from wizard state ──
@@ -256,6 +256,11 @@ export function getThreeDestinations(state: WizardState): PickedDestination[] {
     budget: state.budget,
     courseQuality: state.courseQuality,
     activities: state.activities,
+    nightlife: state.nightlife,
+    dining: state.dining,
+    lodgingPref: state.lodging,
+    budgetPriorities: state.budgetPriorities,
+    mustPlayCourses: state.mustPlayCourses,
   });
 }
 
