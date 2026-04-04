@@ -4,6 +4,7 @@ import ShareableTripClient from "@/components/ShareableTripClient";
 
 interface Props {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ tier?: string; dest?: string }>;
 }
 
 export async function generateMetadata({ params }: Props) {
@@ -25,20 +26,26 @@ export async function generateMetadata({ params }: Props) {
   };
 }
 
-export default async function ShareableTripPage({ params }: Props) {
+export default async function ShareableTripPage({ params, searchParams }: Props) {
   const { id } = await params;
+  const { tier, dest } = await searchParams;
   const stored = await getPlan(id);
 
   if (!stored || !stored.paid || !stored.destinations) {
     notFound();
   }
 
-  const destLevel = stored.paidDestination || "mid";
+  const destLevel = (dest as "budget" | "mid" | "premium") || stored.paidDestination || "mid";
   const rec = stored.destinations[destLevel];
   if (!rec) notFound();
 
-  // Use the devil (recommended) tier for the shareable view
-  const plan = rec.plans.devil;
+  // Use tier from query params, falling back to devil (recommended)
+  const selectedTier = tier || "devil";
+  const plan = selectedTier === "imp"
+    ? rec.plans.imp
+    : selectedTier === "demon-king"
+      ? rec.plans.demonKing
+      : rec.plans.devil;
 
   return <ShareableTripClient plan={plan} planId={id} selectedOptions={stored.selectedOptions} />;
 }

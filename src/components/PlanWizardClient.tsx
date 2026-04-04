@@ -347,6 +347,8 @@ export default function PlanWizardClient() {
   const [overlayLimitReached, setOverlayLimitReached] = useState(false);
   const [loadingMsg, setLoadingMsg] = useState(0);
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [showResumed, setShowResumed] = useState(false);
   const isScrolling = useRef(false);
   const typedSteps = useRef<Set<string>>(new Set());
 
@@ -358,6 +360,8 @@ export default function PlanWizardClient() {
         const parsed = JSON.parse(saved);
         if (parsed && typeof parsed === "object") {
           dispatch({ type: "RESTORE_STATE", state: parsed });
+          setShowResumed(true);
+          setTimeout(() => setShowResumed(false), 2000);
         }
       }
     } catch { /* ignore */ }
@@ -460,6 +464,7 @@ export default function PlanWizardClient() {
     }
 
     setIsGenerating(true);
+    setIsLoading(true);
     setLoadingMsg(0);
 
     const interval = setInterval(() => {
@@ -467,11 +472,24 @@ export default function PlanWizardClient() {
     }, 2500);
 
     try {
-      const res = await fetch("/api/generate-plan", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(state),
-      });
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 90000);
+
+      let res: Response;
+      try {
+        res = await fetch("/api/generate-plan", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(state),
+          signal: controller.signal,
+        });
+      } catch (fetchErr) {
+        clearTimeout(timeoutId);
+        if (fetchErr instanceof DOMException && fetchErr.name === "AbortError") {
+          throw new Error("Generation is taking longer than expected. Please try again.");
+        }
+        throw fetchErr;
+      }
 
       // Non-OK responses are always plain JSON (rate limit, validation, etc.)
       if (!res.ok) {
@@ -521,6 +539,8 @@ export default function PlanWizardClient() {
         if (done) break;
       }
 
+      clearTimeout(timeoutId);
+
       if (!result?.planId) {
         throw new Error("Failed to generate plan. Please try again.");
       }
@@ -533,13 +553,14 @@ export default function PlanWizardClient() {
       setOverlayError(err instanceof Error ? err.message : "Something went wrong. Try again.");
     } finally {
       clearInterval(interval);
+      setIsLoading(false);
     }
   };
 
   // ── Loading / Confirmation / Error overlay ──
   if (isGenerating || confirmed || overlayError) {
     return (
-      <div className="fixed inset-0 z-50 flex flex-col items-center justify-center text-center px-6" style={{ background: "#000" }}>
+      <div className="fixed inset-0 z-50 flex flex-col items-center justify-center text-center px-6" role="status" aria-live="polite" style={{ background: "#000" }}>
         <AnimatePresence mode="wait">
           {overlayError ? (
             <motion.div key="error" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center gap-6">
@@ -631,7 +652,10 @@ export default function PlanWizardClient() {
                   {LOADING_MESSAGES[loadingMsg]}
                 </motion.p>
               </AnimatePresence>
-              <p className="mt-6 text-xs text-text-dim opacity-50 text-center max-w-[280px]">
+              <p className="mt-4 text-sm text-text-muted opacity-40 text-center">
+                This usually takes 30–45 seconds
+              </p>
+              <p className="mt-3 text-xs text-text-dim opacity-50 text-center max-w-[280px]">
                 Building 3 destinations × 3 plans each — 9 custom itineraries just for your crew
               </p>
               <div className="mt-4 w-48 h-px bg-border overflow-hidden">
@@ -697,6 +721,25 @@ export default function PlanWizardClient() {
           transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
         />
       </div>
+      {/* Step counter */}
+      <div style={{ position: "fixed", top: 10, right: 16, zIndex: 51, fontSize: "0.72rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", fontFamily: "var(--font-inter), sans-serif" }}>
+        Step {currentQ + 1} of {totalQuestions}
+      </div>
+
+      {/* Session restore banner */}
+      <AnimatePresence>
+        {showResumed && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            style={{ position: "fixed", top: 16, left: "50%", transform: "translateX(-50%)", zIndex: 52, padding: "8px 20px", borderRadius: 6, background: "rgba(234,88,12,0.15)", border: "1px solid rgba(234,88,12,0.3)", color: "rgba(255,255,255,0.7)", fontSize: "0.78rem", letterSpacing: "0.06em", fontFamily: "var(--font-inter), sans-serif", whiteSpace: "nowrap" }}
+          >
+            Resuming your plan
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <MulliganButton onClick={() => {
         if (currentQ > 0) {
@@ -775,7 +818,7 @@ export default function PlanWizardClient() {
             />
           </div>
           {state.flexible ? (
-            <div className="grid grid-cols-3 gap-5" style={{ marginBottom: "3rem" }}>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5" style={{ marginBottom: "3rem" }}>
               {SEASONS.map((s) => (
                 <SelectionCard key={s} label={s} selected={state.preferredSeason === s} onClick={() => set("preferredSeason", s)} compact />
               ))}
@@ -820,7 +863,7 @@ export default function PlanWizardClient() {
             ))}
           </div>
           <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>Age range</p>
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {["20s", "30s", "40s", "Mixed"].map((a) => (
               <SelectionCard key={a} label={a} selected={state.ageRange === a} onClick={() => { set("ageRange", a); advance(revealedCount); }} compact />
             ))}
@@ -831,7 +874,7 @@ export default function PlanWizardClient() {
       {/* STEP 4: THE GOLF — Rounds + Quality + Walking + Must-play */}
       {currentQ === 3 && (
         <Question number={4} total={totalQuestions} title="How much golf can you handle?" subtitle="The Golf" id={questionIds[3]} typedSteps={typedSteps}>
-          <div className="grid grid-cols-3 gap-5" style={{ marginBottom: "3rem" }}>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5" style={{ marginBottom: "3rem" }}>
             {[
               { label: "One (18)", sublabel: "Casual" },
               { label: "Two (36)", sublabel: tdfRec },
@@ -847,7 +890,7 @@ export default function PlanWizardClient() {
             ))}
           </div>
           <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>Walking or riding?</p>
-          <div className="grid grid-cols-3 gap-5" style={{ marginBottom: "3rem" }}>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5" style={{ marginBottom: "3rem" }}>
             {["Walking", "Riding", "Mix / Don't care"].map((w) => (
               <SelectionCard key={w} label={w} selected={state.walkingOrRiding === w} onClick={() => set("walkingOrRiding", w)} compact />
             ))}
@@ -988,6 +1031,7 @@ export default function PlanWizardClient() {
                 className="wizard-input"
                 type="text"
                 placeholder="Your name"
+                aria-label="Your name"
                 value={state.organizerName}
                 onChange={(e) => set("organizerName", e.target.value)}
                 autoComplete="name"
@@ -998,6 +1042,7 @@ export default function PlanWizardClient() {
               className="wizard-input"
               type="email"
               placeholder="Email"
+              aria-label="Email address"
               value={state.organizerEmail}
               onChange={(e) => set("organizerEmail", e.target.value)}
               autoComplete="email"
@@ -1007,6 +1052,7 @@ export default function PlanWizardClient() {
               className="wizard-input"
               type="password"
               placeholder={state.authMode === "login" ? "Password" : "Create password (min 8 chars)"}
+              aria-label={state.authMode === "login" ? "Password" : "Create password"}
               value={state.authPassword}
               onChange={(e) => set("authPassword", e.target.value)}
               autoComplete={state.authMode === "login" ? "current-password" : "new-password"}
@@ -1016,18 +1062,19 @@ export default function PlanWizardClient() {
           </div>
 
           {error && (
-            <motion.p initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} style={{ color: "#f87171", fontSize: "0.8rem", fontFamily: "var(--font-inter), sans-serif", marginBottom: "1rem", textAlign: "center" }}>
-              {error}
+            <motion.p initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} role="alert" style={{ color: "#f87171", fontSize: "0.95rem", fontFamily: "var(--font-inter), sans-serif", marginBottom: "1rem", textAlign: "center" }}>
+              ⚠ {error}
             </motion.p>
           )}
 
           <motion.button
             onClick={handleGenerate}
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.99 }}
-            style={{ width: "auto", padding: "1.3rem 3rem", background: "rgba(220,38,38,0.9)", color: "#fff", border: "none", borderRadius: 4, fontSize: "1rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", fontFamily: "var(--font-plan-block), sans-serif", margin: "0 auto", display: "block" }}
+            disabled={isLoading}
+            whileHover={isLoading ? {} : { scale: 1.01 }}
+            whileTap={isLoading ? {} : { scale: 0.99 }}
+            style={{ width: "auto", padding: "1.3rem 3rem", background: isLoading ? "rgba(220,38,38,0.4)" : "rgba(220,38,38,0.9)", color: "#fff", border: "none", borderRadius: 4, fontSize: "1rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: isLoading ? "not-allowed" : "pointer", fontFamily: "var(--font-plan-block), sans-serif", margin: "0 auto", display: "block", opacity: isLoading ? 0.6 : 1, transition: "opacity 0.3s, background 0.3s" }}
           >
-            Unleash the Devils
+            {isLoading ? "Generating..." : "Unleash the Devils"}
           </motion.button>
           <p style={{ fontSize: "0.84rem", color: "rgba(255,255,255,0.25)", textAlign: "center", marginTop: "1rem" }}>
             {state.authMode === "login" ? "Sign in to generate your trip." : "3 free plans per week."}

@@ -1,7 +1,9 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import { getPlan } from "@/lib/kv";
+import { getPlan, getAttendees } from "@/lib/kv";
+import { getSessionEmail, getUserPlans } from "@/lib/auth";
 import TripBuilderClient from "@/components/TripBuilderClient";
+import PlanGate from "@/components/PlanGate";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import type { TripTier, PriceLevel, ThreePlanResult, GeneratedPlan } from "@/lib/plan-types";
 import { allDestinations } from "@/data/index";
@@ -23,6 +25,33 @@ export default async function BuildPage({ searchParams }: Props) {
 
   const stored = await getPlan(planId);
   if (!stored || !stored.paid || !stored.destinations) notFound();
+
+  // Auth gate — require login and verify plan access
+  const sessionEmail = await getSessionEmail();
+  if (!sessionEmail) {
+    const preview = stored.freePreviews?.mid || stored.freePreviews?.budget;
+    return (
+      <Suspense>
+        <PlanGate
+          planId={planId}
+          city={preview?.city || "your destination"}
+          state={preview?.state || ""}
+          prefillEmail={stored.inputs?.organizerEmail || ""}
+        />
+      </Suspense>
+    );
+  }
+
+  // Verify plan access — organizer, plan owner, or listed attendee
+  const isOrganizer = stored.inputs?.organizerEmail?.toLowerCase() === sessionEmail.toLowerCase();
+  const userPlans = await getUserPlans(sessionEmail);
+  const ownsThisPlan = isOrganizer || userPlans.includes(planId);
+  let isAttendee = false;
+  if (!ownsThisPlan) {
+    const attendees = await getAttendees(planId);
+    isAttendee = attendees.some((a) => a.email.toLowerCase() === sessionEmail.toLowerCase());
+  }
+  if (!ownsThisPlan && !isAttendee) notFound();
 
   const destLevel = dest as PriceLevel;
   const rec = stored.destinations[destLevel];

@@ -195,9 +195,14 @@ async function generateSingleTier(
     plan.numberOfDays = plan.numberOfDays || plan.schedule.length || 3;
     plan.groupSize = plan.groupSize || state.groupSize || 12;
 
-    // If courses are completely empty after repair, retry — this is a critical field
-    if (plan.courses.length === 0 && attempt < 3) {
-      console.warn(`${tier} has 0 courses after parse repair, retrying...`);
+    // If courses, dining, or bars are completely empty after repair, retry — these are critical fields
+    if ((plan.courses.length === 0 || plan.dining.length === 0 || plan.bars.length === 0) && attempt < 3) {
+      const missing = [
+        plan.courses.length === 0 && "courses",
+        plan.dining.length === 0 && "dining",
+        plan.bars.length === 0 && "bars",
+      ].filter(Boolean).join(", ");
+      console.warn(`${tier} has empty [${missing}] after parse repair, retrying...`);
       return generateSingleTier(client, state, destinationContext, tier, priceTargets, attempt + 1);
     }
     return plan;

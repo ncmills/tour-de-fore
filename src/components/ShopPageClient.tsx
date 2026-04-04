@@ -254,7 +254,7 @@ export default function ShopPageClient({ onBack }: { onBack?: () => void }) {
     <main style={{ minHeight: "100vh", background: "#0f1a0f", color: "#fff", position: "relative", overflow: "hidden" }}>
       {/* Background */}
       <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0 }}>
-        <img src="/proshop-photo.webp" alt="Tour de Fore pro shop merchandise display" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+        <img src="/proshop-photo.webp" alt="Tour de Fore pro shop merchandise display" width={800} height={600} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
       </div>
 
       {/* Cart button — offset right to avoid HomeButton overlap */}

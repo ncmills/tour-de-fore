@@ -8,7 +8,7 @@ function getResend() {
 
 export async function POST(req: NextRequest) {
   try {
-    const { planId, emails } = await req.json();
+    const { planId, emails, tier, dest } = await req.json();
 
     if (!planId) {
       return NextResponse.json({ error: "Missing planId" }, { status: 400 });
@@ -52,7 +52,9 @@ export async function POST(req: NextRequest) {
     const plan = stored.destinations
       ? stored.destinations.mid.plans.devil
       : stored.plans!.devil;
-    const planUrl = `https://tourdefore.com/plan/result/${planId}`;
+    const destParam = dest || "mid";
+    const tierParam = tier || "devil";
+    const planUrl = `https://tourdefore.com/plan/result/${planId}?dest=${destParam}&tier=${tierParam}`;
     const organizerEmail = stored.inputs.organizerEmail;
 
     // Send emails

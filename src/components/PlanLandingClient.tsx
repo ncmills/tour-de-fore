@@ -69,7 +69,7 @@ export default function PlanLandingClient({ onFirstTime }: { onFirstTime: () => 
       <HomeButton />
 
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} style={{ maxWidth: 500, width: "100%" }}>
-        <img src="/logo-est2021.webp" alt="Tour de Fore Est. 2021" style={{ width: "clamp(140px, 50vw, 240px)", height: "clamp(140px, 50vw, 240px)", margin: "0 auto 0.5rem", objectFit: "contain" }} />
+        <img src="/logo-est2021.webp" alt="Tour de Fore Est. 2021" width={240} height={240} style={{ width: "clamp(140px, 50vw, 240px)", height: "clamp(140px, 50vw, 240px)", margin: "0 auto 0.5rem", objectFit: "contain" }} />
         <p className="neon-stats" style={{ color: "#ff6a28", fontSize: "clamp(0.8rem, 2vw, 1rem)", fontFamily: "var(--font-plan-block), sans-serif", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3)", marginBottom: "0.5rem" }}>
           Stop planning in a group chat. Start planning like a devil.
         </p>

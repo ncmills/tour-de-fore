@@ -252,7 +252,10 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
   const [emailError, setEmailError] = useState("");
 
   const copyLink = () => {
-    navigator.clipboard.writeText(window.location.href);
+    const url = new URL(window.location.href);
+    if (dest) url.searchParams.set("dest", dest);
+    if (tier) url.searchParams.set("tier", tier);
+    navigator.clipboard.writeText(url.toString());
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -268,7 +271,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
       const res = await fetch("/api/send-plan-emails", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ planId, emails }),
+        body: JSON.stringify({ planId, emails, tier, dest }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));

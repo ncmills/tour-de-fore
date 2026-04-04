@@ -173,8 +173,9 @@ h1, h2, h3, h4 {
 
 /* ── Focus-visible ── */
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid #f59e0b;
   outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.25);
 }
 .wizard-input:focus-visible {
   outline: 2px solid rgba(234, 88, 12, 0.6) !important;
@@ -220,6 +221,7 @@ select.appearance-none {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+    transform: none !important;
   }
 }
 
@@ -438,5 +440,60 @@ body.menu-open {
   }
   .neon-tagline-text {
     animation: neonTaglineFlickerMobile 3.5s ease-in-out infinite;
+  }
+}
+
+/* ── Print-friendly itinerary ── */
+@media print {
+  nav, footer, header,
+  .mulligan-wrap, .home-btn-img,
+  .skip-to-content,
+  [data-print-hide] {
+    display: none !important;
+  }
+
+  html, body, main {
+    background: #fff !important;
+    color: #111 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  div, section, article {
+    background: #fff !important;
+    border-color: #ddd !important;
+    color: #111 !important;
+  }
+
+  h1, h2, h3, h4, p, span, li, a {
+    color: #111 !important;
+    text-shadow: none !important;
+  }
+
+  h2 {
+    color: #c2410c !important;
+  }
+
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  * {
+    overflow: visible !important;
+    max-height: none !important;
+  }
+
+  main {
+    padding: 1rem !important;
+  }
+
+  a[target="_blank"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.7rem;
+    color: #666 !important;
   }
 }

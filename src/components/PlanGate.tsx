@@ -46,7 +46,7 @@ export default function PlanGate({ planId, city, state: st, prefillEmail = "" }:
         animate={{ opacity: 1, y: 0 }}
         style={{ maxWidth: 480, width: "100%" }}
       >
-        <img src="/icon-fancy.png" alt="Tour de Fore logo" style={{ width: 80, height: 80, margin: "0 auto 1.5rem" }} />
+        <img src="/icon-fancy.png" alt="Tour de Fore logo" width={80} height={80} style={{ width: 80, height: 80, margin: "0 auto 1.5rem" }} />
 
         <h1 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(2rem, 5vw, 3rem)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "0.75rem" }}>
           Your plan is ready

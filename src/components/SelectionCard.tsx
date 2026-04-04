@@ -16,6 +16,8 @@ export default function SelectionCard({ label, sublabel, selected, onClick, comp
   return (
     <motion.button
       onClick={onClick}
+      aria-label={label}
+      aria-pressed={selected}
       whileHover={{ y: -2 }}
       whileTap={{ scale: 0.97 }}
       transition={{ type: "spring", stiffness: 400, damping: 25 }}
@@ -28,6 +30,7 @@ export default function SelectionCard({ label, sublabel, selected, onClick, comp
         cursor: "pointer",
         transition: "background 0.2s, border-color 0.2s",
         width: "100%",
+        minHeight: 48,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -35,7 +38,7 @@ export default function SelectionCard({ label, sublabel, selected, onClick, comp
       }}
     >
       {isTdfEndorsed && (
-        <img src="/icon-fancy.png" alt="Tour de Fore endorsed selection" style={{ width: 72, height: 72, marginBottom: "0.4rem" }} />
+        <img src="/icon-fancy.png" alt="Tour de Fore endorsed selection" width={72} height={72} style={{ width: 72, height: 72, marginBottom: "0.4rem" }} />
       )}
       <span style={{
         display: "block",
