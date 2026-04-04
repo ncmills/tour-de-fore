@@ -100,10 +100,16 @@ export default function DrunkMode() {
     window.addEventListener("mousemove", onMove);
 
     let raf = 0;
+    let lastWriteX = 0, lastWriteY = 0;
     const tick = () => {
       fakeX += (realX - fakeX) * 0.04;
       fakeY += (realY - fakeY) * 0.04;
-      svg.style.transform = `translate(${fakeX}px, ${fakeY}px)`;
+      // Only write to DOM when position changed meaningfully (>0.5px)
+      if (Math.abs(fakeX - lastWriteX) > 0.5 || Math.abs(fakeY - lastWriteY) > 0.5) {
+        svg.style.transform = `translate(${fakeX}px, ${fakeY}px)`;
+        lastWriteX = fakeX;
+        lastWriteY = fakeY;
+      }
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);

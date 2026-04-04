@@ -23,8 +23,8 @@ export async function GET(req: NextRequest) {
   // Anthropic API quick test
   if (process.env.ANTHROPIC_API_KEY) {
     try {
-      const { default: Anthropic } = await import("@anthropic-ai/sdk");
-      const client = new Anthropic({ timeout: 30_000 });
+      const { getAnthropicHealthClient } = await import("@/lib/anthropic");
+      const client = getAnthropicHealthClient();
       const msg = await client.messages.create({
         model: "claude-haiku-4-5-20251001",
         max_tokens: 5,

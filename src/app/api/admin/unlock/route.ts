@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import Anthropic from "@anthropic-ai/sdk";
+import { getAnthropicClient } from "@/lib/anthropic";
 import { getPlan, storePlan } from "@/lib/kv";
 import { allDestinations } from "@/data/index";
 import { buildDestinationContext } from "@/data/query";
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Generate via Claude
-    const client = new Anthropic();
+    const client = getAnthropicClient();
     const context = buildDestinationContext(destination);
     const message = await client.messages.create({
       model: "claude-sonnet-4-20250514",

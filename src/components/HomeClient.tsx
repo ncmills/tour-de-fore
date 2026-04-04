@@ -233,7 +233,7 @@ export default function HomeClient() {
             textDecoration: "none",
           }}
         >
-          <img src="/devil-mascot.webp" alt="Tour de Fore member login" width={80} height={80} style={{ width: isMobile ? 50 : 80, height: "auto" }} />
+          <Image src="/devil-mascot.webp" alt="Tour de Fore member login" width={isMobile ? 50 : 80} height={isMobile ? 50 : 80} style={{ height: "auto" }} />
           <span style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.9)", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "var(--font-inter), sans-serif", marginTop: "-8px" }}>{isLoggedIn ? "My Account" : "Login"}</span>
         </motion.a>
       )}

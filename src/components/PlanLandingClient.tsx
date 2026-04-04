@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { motion } from "motion/react";
 import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
@@ -69,7 +70,7 @@ export default function PlanLandingClient({ onFirstTime }: { onFirstTime: () => 
       <HomeButton />
 
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} style={{ maxWidth: 500, width: "100%" }}>
-        <img src="/logo-est2021.webp" alt="Tour de Fore Est. 2021" width={240} height={240} style={{ width: "clamp(140px, 50vw, 240px)", height: "clamp(140px, 50vw, 240px)", margin: "0 auto 0.5rem", objectFit: "contain" }} />
+        <Image src="/logo-est2021.webp" alt="Tour de Fore Est. 2021" width={240} height={240} style={{ width: "clamp(140px, 50vw, 240px)", height: "clamp(140px, 50vw, 240px)", margin: "0 auto 0.5rem", objectFit: "contain" }} />
         <p className="neon-stats neon-stats-text" style={{ fontSize: "clamp(0.8rem, 2vw, 1rem)", marginBottom: "0.5rem" }}>
           Stop planning in a group chat. Start planning like a devil.
         </p>

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import Anthropic from "@anthropic-ai/sdk";
+import type Anthropic from "@anthropic-ai/sdk";
+import { getAnthropicClient } from "@/lib/anthropic";
 
 export const maxDuration = 300; // streaming responses bypass Vercel timeout
 import {
@@ -376,7 +377,7 @@ export async function POST(req: NextRequest) {
       try {
         send({ type: "status", message: "Scouting destinations..." });
 
-        const client = new Anthropic({ timeout: 240_000 }); // 4 min — our NDJSON stream keeps Vercel alive
+        const client = getAnthropicClient();
 
         // Generate plans — deduplicate same-destination picks (specific city case)
         const uniqueCities = [...new Set(picks.map(p => p.destination.id))];

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
 import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
@@ -254,7 +255,7 @@ export default function ShopPageClient({ onBack }: { onBack?: () => void }) {
     <main style={{ minHeight: "100vh", background: "transparent", color: "#fff", position: "relative", overflow: "hidden" }}>
       {/* Background */}
       <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0 }}>
-        <img src="/proshop-photo.webp" alt="Tour de Fore pro shop merchandise display" width={800} height={600} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+        <Image src="/proshop-photo.webp" alt="Tour de Fore pro shop merchandise display" width={800} height={600} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} priority />
       </div>
 
       {/* Cart button — offset right to avoid HomeButton overlap */}

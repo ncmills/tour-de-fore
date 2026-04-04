@@ -23,6 +23,8 @@ export async function GET() {
       plansUsed,
       plansLimit: WEEKLY_PLAN_LIMIT,
       unlimited,
+    }, {
+      headers: { "Cache-Control": "private, max-age=60" },
     });
   } catch {
     return NextResponse.json({ error: "Failed to fetch status" }, { status: 500 });

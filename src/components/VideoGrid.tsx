@@ -37,6 +37,7 @@ interface CellState {
   timer: ReturnType<typeof setTimeout> | null;
   loopCount: number;
   swapped: boolean; // guard against double-swap
+  onEnded: () => void; // stored for cleanup
 }
 
 export default function VideoGrid({ active }: VideoGridProps) {
@@ -129,6 +130,7 @@ export default function VideoGrid({ active }: VideoGridProps) {
       if (state.timer) clearTimeout(state.timer);
       state.swapped = true;
       const oldVideo = state.video;
+      oldVideo.removeEventListener("ended", state.onEnded);
       oldVideo.style.transition = `opacity ${FADE_MS}ms ease`;
       oldVideo.style.opacity = "0";
       setTimeout(() => { oldVideo.pause(); oldVideo.remove(); }, FADE_MS + 100);
@@ -162,9 +164,9 @@ export default function VideoGrid({ active }: VideoGridProps) {
     // Hard timeout: 10s max
     const timer = setTimeout(doSwap, VIDEO_MAX_MS);
 
-    // Loop counting via ended event
+    // Loop counting via ended event (named handler for cleanup)
     let loopCount = 0;
-    newVideo.addEventListener("ended", () => {
+    const onEnded = () => {
       loopCount++;
       if (loopCount >= VIDEO_MAX_LOOPS) {
         doSwap();
@@ -172,13 +174,15 @@ export default function VideoGrid({ active }: VideoGridProps) {
         newVideo.currentTime = 0;
         newVideo.play().catch(() => {});
       }
-    });
+    };
+    newVideo.addEventListener("ended", onEnded);
 
     cellStates.current[cellIdx] = {
       video: newVideo,
       timer,
       loopCount: 0,
       swapped: false,
+      onEnded,
     };
   }, [createVideo, prefetchNext]);
 
@@ -209,6 +213,7 @@ export default function VideoGrid({ active }: VideoGridProps) {
       cellStates.current.forEach(s => {
         if (s) {
           if (s.timer) clearTimeout(s.timer);
+          s.video.removeEventListener("ended", s.onEnded);
           s.video.pause();
           s.video.remove();
         }

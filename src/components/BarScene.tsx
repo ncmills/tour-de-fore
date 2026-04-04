@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
 import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
@@ -57,17 +58,15 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
 
 
       {/* Bar scene — photo background */}
-      <img
+      <Image
         src="/bar-photo.webp"
         alt="Tour de Fore bar scene background"
+        fill
+        sizes="100vw"
+        priority
         style={{
-          position: "absolute",
-          inset: 0,
-          width: "100%",
-          height: "100%",
           objectFit: "cover",
           objectPosition: "center",
-          display: "block",
         }}
       />
 

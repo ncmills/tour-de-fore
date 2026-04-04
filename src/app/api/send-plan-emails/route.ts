@@ -98,9 +98,10 @@ export async function POST(req: NextRequest) {
       });
     });
 
-    await Promise.all(emailPromises);
+    const results = await Promise.allSettled(emailPromises);
+    const failed = results.filter(r => r.status === "rejected").length;
 
-    return NextResponse.json({ success: true, sent: attendees.length });
+    return NextResponse.json({ success: true, sent: attendees.length - failed, failed });
   } catch (err) {
     console.error("Email send error:", err);
     return NextResponse.json(

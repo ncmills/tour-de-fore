@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "motion/react";
 
 interface SelectionCardProps {
@@ -38,7 +39,7 @@ export default function SelectionCard({ label, sublabel, selected, onClick, comp
       }}
     >
       {isTdfEndorsed && (
-        <img src="/icon-fancy.png" alt="Tour de Fore endorsed selection" width={72} height={72} style={{ width: 72, height: 72, marginBottom: "0.4rem" }} />
+        <Image src="/icon-fancy.png" alt="Tour de Fore endorsed selection" width={72} height={72} style={{ marginBottom: "0.4rem" }} />
       )}
       <span style={{
         display: "block",

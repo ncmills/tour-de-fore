@@ -26,6 +26,7 @@ const caveat = Caveat({
   subsets: ["latin"],
   weight: ["400", "700"],
   display: "swap",
+  preload: false,
 });
 
 const instrumentSerif = Instrument_Serif({
@@ -34,6 +35,7 @@ const instrumentSerif = Instrument_Serif({
   weight: ["400"],
   style: ["normal", "italic"],
   display: "swap",
+  preload: false,
 });
 
 const permanentMarker = Permanent_Marker({
@@ -41,6 +43,7 @@ const permanentMarker = Permanent_Marker({
   subsets: ["latin"],
   weight: ["400"],
   display: "swap",
+  preload: false,
 });
 
 const lilitaOne = Lilita_One({
@@ -48,6 +51,7 @@ const lilitaOne = Lilita_One({
   subsets: ["latin"],
   weight: ["400"],
   display: "swap",
+  preload: false,
 });
 
 const bebasNeue = Bebas_Neue({
@@ -55,6 +59,7 @@ const bebasNeue = Bebas_Neue({
   subsets: ["latin"],
   weight: ["400"],
   display: "swap",
+  preload: false,
 });
 
 const pacifico = Pacifico({
@@ -62,6 +67,7 @@ const pacifico = Pacifico({
   subsets: ["latin"],
   weight: ["400"],
   display: "swap",
+  preload: false,
 });
 
 const rye = Rye({
@@ -69,6 +75,7 @@ const rye = Rye({
   subsets: ["latin"],
   weight: ["400"],
   display: "swap",
+  preload: false,
 });
 
 const lobster = Lobster({
@@ -76,6 +83,7 @@ const lobster = Lobster({
   subsets: ["latin"],
   weight: ["400"],
   display: "swap",
+  preload: false,
 });
 
 const alfaSlabOne = Alfa_Slab_One({
@@ -83,6 +91,7 @@ const alfaSlabOne = Alfa_Slab_One({
   subsets: ["latin"],
   weight: ["400"],
   display: "swap",
+  preload: false,
 });
 
 const blakaHollow = Blaka_Hollow({
@@ -90,6 +99,7 @@ const blakaHollow = Blaka_Hollow({
   subsets: ["latin"],
   weight: ["400"],
   display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
 
 type Mode = "signin" | "register";
@@ -109,7 +110,7 @@ export default function LoginClient({ returnTo = "/my-trips" }: { returnTo?: str
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} style={{ maxWidth: 400, width: "100%", textAlign: "center" }}>
 
         <a href="/?skip=1">
-          <img src="/icon-fancy.png" alt="Tour de Fore" width={64} height={64} style={{ width: 64, height: 64, margin: "0 auto 1.5rem", display: "block" }} />
+          <Image src="/icon-fancy.png" alt="Tour de Fore" width={64} height={64} style={{ margin: "0 auto 1.5rem", display: "block" }} />
         </a>
 
         <h1 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(1.8rem, 4vw, 2.5rem)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "0.5rem" }}>

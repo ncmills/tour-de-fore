@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import Anthropic from "@anthropic-ai/sdk";
+import { getAnthropicClient } from "@/lib/anthropic";
 import { getStripe } from "@/lib/stripe";
 
 export const maxDuration = 120;
@@ -135,7 +135,7 @@ export async function PUT(req: NextRequest) {
     }
 
     // NOW call Claude — this is the paid value ($99 worth)
-    const client = new Anthropic();
+    const client = getAnthropicClient();
     const context = buildDestinationContext(destination);
     const message = await client.messages.create({
       model: "claude-sonnet-4-20250514",
