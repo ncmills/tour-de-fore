@@ -2,10 +2,18 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { getPlan, storePlan, storeOrder } from "@/lib/kv";
 import { addPlanToUser, setSubscription } from "@/lib/auth";
-import { createPrintfulOrder, findVariant } from "@/lib/printful";
-import { Resend } from "resend";
+import { createPrintfulOrder } from "@/lib/printful";
+import { getStripe } from "@/lib/stripe";
+import { sendEmail } from "@/lib/email";
+import {
+  parseOrderItems,
+  resolveVariants,
+  extractShipping,
+  buildRecipient,
+  buildExternalId,
+} from "@/lib/order-utils";
 
-const stripe = new Stripe((process.env.STRIPE_SECRET_KEY ?? "sk_test_placeholder").trim());
+const stripe = getStripe();
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET?.trim();
 
 export async function POST(req: NextRequest) {

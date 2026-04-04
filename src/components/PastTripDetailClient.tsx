@@ -255,15 +255,10 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
           {/* Day sections */}
           {trip.schedule.map((day, i) => (
             <div key={i} id={`day-${i}`} style={{ marginBottom: "2.5rem", scrollMarginTop: "80px" }}>
-              <h3 style={{
-                fontFamily: "var(--font-plan-block), sans-serif",
+              <h3 className="neon-stats-text" style={{
                 fontSize: "1.1rem",
-                fontWeight: 700,
-                textTransform: "uppercase",
                 letterSpacing: "0.06em",
-                color: "#ff6a28",
                 marginBottom: "0.5rem",
-                textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3)",
               }}>
                 {day.day} — {day.date}
               </h3>

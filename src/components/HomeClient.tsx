@@ -16,7 +16,7 @@ const HYPE_VIDEO = "/hype-audio.mp4"; // has audio; TubeTv starts muted, user ca
 const textStyle: React.CSSProperties = {
   fontFamily: "var(--font-scrawl), cursive",
   fontSize: "clamp(1.3rem, 3.5vw, 3.5rem)",
-  color: "#ff6a28",
+  color: "var(--color-neon, #ff6a28)",
   lineHeight: 1,
   margin: 0,
   padding: 0,

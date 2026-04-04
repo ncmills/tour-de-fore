@@ -289,7 +289,7 @@ export default function ShopPageClient({ onBack }: { onBack?: () => void }) {
           }}>
             Pro Shop
           </h1>
-          <p className="neon-stats" style={{ fontFamily: "var(--font-plan-block), sans-serif", color: "#ff6a28", fontSize: "clamp(0.75rem, 1.8vw, 1rem)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3)" }}>
+          <p className="neon-stats neon-stats-text" style={{ fontSize: "clamp(0.75rem, 1.8vw, 1rem)" }}>
             Gear for devils who play 108 holes and live to tell about it.
           </p>
         </motion.div>
@@ -314,7 +314,7 @@ export default function ShopPageClient({ onBack }: { onBack?: () => void }) {
         </div>
 
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }} style={{ textAlign: "center", marginTop: "3rem", padding: "1.5rem", borderTop: "1px solid rgba(212,168,67,0.1)" }}>
-          <p className="neon-stats" style={{ fontFamily: "var(--font-plan-block), sans-serif", color: "#ff6a28", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3)" }}>
+          <p className="neon-stats neon-stats-text" style={{ fontSize: "0.75rem", letterSpacing: "0.12em" }}>
             LOOK GOOD. PLAY BAD. DRINK WELL.
           </p>
         </motion.div>

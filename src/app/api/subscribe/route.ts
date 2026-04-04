@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import Stripe from "stripe";
+import { getStripe } from "@/lib/stripe";
 import { getSessionEmail } from "@/lib/auth";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "sk_test_placeholder");
+const stripe = getStripe();
 
 /**
  * Creates a Stripe Checkout session for the $19.99/month VIP subscription.

@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import Stripe from "stripe";
+import { getStripe } from "@/lib/stripe";
 import { getPlan } from "@/lib/kv";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "sk_test_placeholder", {
-  apiVersion: "2025-03-31.basil" as Stripe.LatestApiVersion,
-});
+const stripe = getStripe();
 
 function parseBudgetToNumber(budget: string): number {
   // Extract numbers from strings like "$1,200-$1,800" and use midpoint

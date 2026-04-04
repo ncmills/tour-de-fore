@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import Stripe from "stripe";
 import Anthropic from "@anthropic-ai/sdk";
+import { getStripe } from "@/lib/stripe";
 
 export const maxDuration = 120;
 import { getPlan, storePlan } from "@/lib/kv";
@@ -15,7 +15,7 @@ import type {
   StoredPlan,
 } from "@/lib/plan-types";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "sk_test_placeholder");
+const stripe = getStripe();
 
 // Create Stripe checkout session for $99
 export async function POST(req: NextRequest) {

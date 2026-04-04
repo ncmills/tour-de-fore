@@ -245,7 +245,7 @@ export default function Nav() {
             >
               Tour de Fore
             </Link>
-            <p className="neon-stats" style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#ff6a28", textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3)", marginBottom: "3rem" }}>
+            <p className="neon-stats neon-stats-text" style={{ fontSize: "0.75rem", marginBottom: "3rem" }}>
               We planned ours. Now we&apos;ll plan yours.
             </p>
 

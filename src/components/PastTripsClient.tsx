@@ -186,14 +186,8 @@ export default function PastTripsClient() {
         }}>
           Body of Work
         </h1>
-        <p className="neon-stats" style={{
-          fontFamily: "var(--font-plan-block), sans-serif",
+        <p className="neon-stats neon-stats-text" style={{
           fontSize: "clamp(0.7rem, 1.4vw, 0.95rem)",
-          fontWeight: 700,
-          textTransform: "uppercase",
-          letterSpacing: "0.08em",
-          color: "#ff6a28",
-          textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3)",
           maxWidth: "600px",
           margin: "0 auto",
           lineHeight: 1.8,

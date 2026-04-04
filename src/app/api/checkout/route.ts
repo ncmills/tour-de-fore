@@ -1,11 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import Stripe from "stripe";
+import { getStripe } from "@/lib/stripe";
 import { getProductById } from "@/lib/printful";
 
-const stripe = new Stripe((process.env.STRIPE_SECRET_KEY ?? "sk_test_placeholder").trim(), {
-  timeout: 30000,
-  maxNetworkRetries: 3,
-});
+const stripe = getStripe();
 
 interface CheckoutItem {
   productId: string; // our internal product ID

@@ -104,7 +104,7 @@ export default async function BachelorPartyDestPage({
           {" "}{dest.dining.length} group-friendly restaurants, and {dest.activities.length} off-course activities when you need a break from the links.
         </p>
 
-        <p className="neon-stats" style={{ fontSize: "0.85rem", color: "#ff6a28", fontFamily: "var(--font-plan-block), sans-serif", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6)", marginBottom: "2rem" }}>
+        <p className="neon-stats neon-stats-text" style={{ fontSize: "0.85rem", marginBottom: "2rem" }}>
           {dest.courses.length} courses · {lateNightBars.length} late-night bars · {dest.activities.length} activities
         </p>
 
