@@ -654,7 +654,7 @@ export const pacificNWDestinations: Destination[] = [
         name: "Bandon Beach & Face Rock Walk",
         type: "hiking",
         duration: "1-2 hours",
-        pricePerPerson: [0, 0],
+        pricePerPerson: [5, 10],
         groupFriendly: true,
         highlight:
           "Walk the dramatic sea stacks and tide pools on Bandon's beach — Face Rock is iconic",
@@ -1218,7 +1218,7 @@ export const pacificNWDestinations: Destination[] = [
         name: "Tubbs Hill Hike",
         type: "hiking",
         duration: "1-2 hours",
-        pricePerPerson: [0, 0],
+        pricePerPerson: [5, 10],
         groupFriendly: true,
         highlight:
           "2.3-mile loop trail on a peninsula right downtown with lake views — perfect morning shakeout",
@@ -1547,7 +1547,7 @@ export const pacificNWDestinations: Destination[] = [
         name: "Table Rock Hike",
         type: "hiking",
         duration: "1-2 hours",
-        pricePerPerson: [0, 0],
+        pricePerPerson: [5, 10],
         groupFriendly: true,
         highlight:
           "Short steep hike to the cross overlooking all of Boise — great morning sweat",
@@ -4528,7 +4528,7 @@ export const pacificNWDestinations: Destination[] = [
         name: "Haystack Rock Tide Pool Exploration",
         type: "hiking",
         duration: "1-2 hours",
-        pricePerPerson: [0, 0],
+        pricePerPerson: [5, 10],
         groupFriendly: true,
         highlight:
           "Walk to Haystack Rock at low tide to see starfish, anemones, and puffins — iconic Oregon coast",
@@ -4538,7 +4538,7 @@ export const pacificNWDestinations: Destination[] = [
         name: "Cannon Beach to Seaside Hike (Tillamook Head)",
         type: "hiking",
         duration: "half day",
-        pricePerPerson: [0, 0],
+        pricePerPerson: [5, 10],
         groupFriendly: true,
         highlight:
           "6-mile trail over Tillamook Head with stunning ocean views — Lewis and Clark walked this path",

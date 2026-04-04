@@ -1021,7 +1021,7 @@ export const southwestDestinations: Destination[] = [
         driveMinutes: 10,
         url: "https://www.sunrivergolf.com",
 
-        imageUrl: "http://static1.squarespace.com/static/5a1db8d08c56a817eafad734/t/66cc869fc3dc1a64b479ba98/1724679846982/sunriver-st-george-golf-club-2.jpg?format=1500w",
+        imageUrl: "https://static1.squarespace.com/static/5a1db8d08c56a817eafad734/t/66cc869fc3dc1a64b479ba98/1724679846982/sunriver-st-george-golf-club-2.jpg?format=1500w",
         highlight:
           "Wide fairways and gentle layout — a great warm-up round or hangover-recovery course",
         googleRating: 4.2,

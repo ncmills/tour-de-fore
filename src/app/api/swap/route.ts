@@ -66,6 +66,7 @@ export async function POST(req: NextRequest) {
         capacity: d.capacity,
         highlight: d.highlight,
         googleRating: d.googleRating,
+        imageUrl: d.imageUrl,
       })),
       bars: dest.bars.map((b) => ({
         name: b.name,
@@ -74,6 +75,7 @@ export async function POST(req: NextRequest) {
         lateNight: b.lateNight,
         walkableFromDowntown: b.walkableFromDowntown,
         googleRating: b.googleRating,
+        imageUrl: b.imageUrl,
       })),
     };
 

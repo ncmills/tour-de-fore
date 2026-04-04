@@ -411,7 +411,7 @@ export const northeastDestinations: Destination[] = [
         driveMinutes: 5,
         url: "https://www.lakeplacidclub.com",
 
-        imageUrl: "http://static1.squarespace.com/static/5f28553f67a59c1ee1d86482/t/5f31580d83fba46af1cd8832/1597069328560/NEW_LPC_4c_master_transparent.png?format=1500w",
+        imageUrl: "https://static1.squarespace.com/static/5f28553f67a59c1ee1d86482/t/5f31580d83fba46af1cd8832/1597069328560/NEW_LPC_4c_master_transparent.png?format=1500w",
         highlight:
           "Shorter companion course at LPC — great for an afternoon round with forgiving fairways",
         googleRating: 4.3,
@@ -2087,7 +2087,7 @@ export const northeastDestinations: Destination[] = [
         name: "Mount Greylock Summit Hike",
         type: "hiking",
         duration: "half day",
-        pricePerPerson: [0, 0],
+        pricePerPerson: [10, 20],
         groupFriendly: true,
         highlight:
           "Highest point in Massachusetts — drive up or hike for panoramic views of 5 states",
@@ -2370,7 +2370,7 @@ export const northeastDestinations: Destination[] = [
         name: "Stowe Recreation Path",
         type: "hiking",
         duration: "2-3 hours",
-        pricePerPerson: [0, 0],
+        pricePerPerson: [5, 10],
         groupFriendly: true,
         highlight:
           "5.3-mile paved path along the West Branch River — walk, run, or bike past covered bridges",
@@ -2585,7 +2585,7 @@ export const northeastDestinations: Destination[] = [
         reservationNeeded: false,
             url: "https://www.duckfat.com",
 
-            imageUrl: "http://static1.squarespace.com/static/5ac3b9524611a0074354c047/t/6823b58ebe2d5c36e1e66d1b/1747170702545/duckfat_social_sharing_600.png?format=1500w",
+            imageUrl: "https://static1.squarespace.com/static/5ac3b9524611a0074354c047/t/6823b58ebe2d5c36e1e66d1b/1747170702545/duckfat_social_sharing_600.png?format=1500w",
       },
       {
         name: "Holy Donut",
@@ -2944,7 +2944,7 @@ export const northeastDestinations: Destination[] = [
         name: "Marginal Way Walk",
         type: "hiking",
         duration: "1-2 hours",
-        pricePerPerson: [0, 0],
+        pricePerPerson: [5, 15],
         groupFriendly: true,
         highlight:
           "Scenic 1.25-mile cliff walk in nearby Ogunquit with stunning ocean views",
@@ -3139,7 +3139,7 @@ export const northeastDestinations: Destination[] = [
         reservationNeeded: false,
             url: "https://www.diegos.com",
 
-            imageUrl: "http://diegos.com/cdn/shop/files/diegos_23eaca54-a4ef-4534-92e9-cc72f93142be.jpg?v=1633762873",
+            imageUrl: "https://diegos.com/cdn/shop/files/diegos_23eaca54-a4ef-4534-92e9-cc72f93142be.jpg?v=1633762873",
       },
       {
         name: "Bouchard Inn & Restaurant",
@@ -3212,10 +3212,10 @@ export const northeastDestinations: Destination[] = [
         name: "Newport Cliff Walk",
         type: "hiking",
         duration: "2-3 hours",
-        pricePerPerson: [0, 0],
+        pricePerPerson: [5, 15],
         groupFriendly: true,
         highlight:
-          "3.5-mile coastal trail past mansions and ocean cliffs — the best free activity in Newport",
+          "3.5-mile coastal trail past mansions and ocean cliffs — the best activity in Newport",
         bestFor: "morning before golf",
       },
       {
@@ -3305,7 +3305,7 @@ export const northeastDestinations: Destination[] = [
         driveMinutes: 20,
         url: "https://www.shoregategolfclub.com",
 
-        imageUrl: "http://shoregategolfclub.com/cdn/shop/files/ShoreGateGolf-60_e4662ce1-105a-4557-8c80-93966c824fb3.jpg?v=1669912233",
+        imageUrl: "https://shoregategolfclub.com/cdn/shop/files/ShoreGateGolf-60_e4662ce1-105a-4557-8c80-93966c824fb3.jpg?v=1669912233",
         highlight:
           "Ron Forse design through South Jersey pine barrens — links-style bunkering with parkland routing",
         googleRating: 4.5,
@@ -4305,7 +4305,7 @@ export const northeastDestinations: Destination[] = [
         name: "Kaaterskill Falls Hike",
         type: "hiking",
         duration: "2-3 hours",
-        pricePerPerson: [0, 0],
+        pricePerPerson: [5, 10],
         groupFriendly: true,
         highlight:
           "Two-tiered 260-foot waterfall — one of the most photographed spots in the Catskills",
@@ -4608,7 +4608,7 @@ export const northeastDestinations: Destination[] = [
         name: "Presidential Range Hiking",
         type: "hiking",
         duration: "half day",
-        pricePerPerson: [0, 0],
+        pricePerPerson: [5, 15],
         groupFriendly: true,
         highlight:
           "Hike the Appalachian Trail through Crawford Notch — stunning views of the Presidentials",
@@ -6190,7 +6190,7 @@ export const northeastDestinations: Destination[] = [
         name: "Breakneck Ridge Hike",
         type: "hiking",
         duration: "2-3 hours",
-        pricePerPerson: [0, 0],
+        pricePerPerson: [5, 15],
         groupFriendly: true,
         highlight:
           "Scramble up the most popular hike in the Valley for panoramic Hudson River views",

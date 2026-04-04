@@ -128,18 +128,21 @@ export default function SwapDrawer({ planId, destLevel, category, currentName, o
                   }}
                 >
                   <div style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
-                    {category === "courses" && (
-                      <div style={{ flexShrink: 0, width: 48, height: 48, borderRadius: 6, overflow: "hidden", position: "relative", border: "1px solid rgba(255,255,255,0.1)" }}>
-                        <Image
-                          src={(item.imageUrl as string) || getFallbackImage((item.name as string) || `opt-${i}`)}
-                          alt={(item.name as string) || "Golf course"}
-                          fill
-                          sizes="48px"
-                          style={{ objectFit: "cover" }}
-                          unoptimized
-                        />
-                      </div>
-                    )}
+                    {(() => {
+                      const imgSrc = (item.imageUrl as string) || (category === "courses" ? getFallbackImage((item.name as string) || `opt-${i}`) : null);
+                      return imgSrc ? (
+                        <div style={{ flexShrink: 0, width: 48, height: 48, borderRadius: 6, overflow: "hidden", position: "relative", border: "1px solid rgba(255,255,255,0.1)" }}>
+                          <Image
+                            src={imgSrc}
+                            alt={(item.name as string) || "Option"}
+                            fill
+                            sizes="48px"
+                            style={{ objectFit: "cover" }}
+                            unoptimized
+                          />
+                        </div>
+                      ) : null;
+                    })()}
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.3rem" }}>
                         <span style={{ fontWeight: 600, fontSize: "0.95rem" }}>

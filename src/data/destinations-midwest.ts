@@ -482,7 +482,7 @@ export const midwestDestinations: Destination[] = [
       {
         name: "Crystal Downs Country Club",
         tier: "bucket-list",
-        greenFeeRange: [0, 0],
+        greenFeeRange: [250, 350],
         holes: 18,
         par: 70,
         yardage: 6518,
@@ -3090,7 +3090,7 @@ export const midwestDestinations: Destination[] = [
         driveMinutes: 15,
         url: "https://www.universityridge.com",
 
-        imageUrl: "http://www.universityridge.com/assets/images/JPEGs/home-page/default_og_image_2400w1256h.jpg",
+        imageUrl: "https://www.universityridge.com/assets/images/JPEGs/home-page/default_og_image_2400w1256h.jpg",
         highlight:
           "Home of the AmFam Championship — Robert Trent Jones Jr. design with tournament conditioning and stunning views of the Wisconsin hills",
         googleRating: 4.5,
@@ -4466,7 +4466,7 @@ export const midwestDestinations: Destination[] = [
         reservationNeeded: true,
             url: "https://www.tinker-street.com",
 
-            imageUrl: "http://static1.squarespace.com/static/5609ed6fe4b0a067cd548eeb/t/6959d35deee84455986ffbb6/1767494493963/TS_wordmark_k_Stroke_2.jpg?format=1500w",
+            imageUrl: "https://static1.squarespace.com/static/5609ed6fe4b0a067cd548eeb/t/6959d35deee84455986ffbb6/1767494493963/TS_wordmark_k_Stroke_2.jpg?format=1500w",
       },
     ],
     bars: [

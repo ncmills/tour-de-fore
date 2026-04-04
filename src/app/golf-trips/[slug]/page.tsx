@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import { allDestinations } from "@/data";
 import MulliganButton from "@/components/MulliganButton";
 import HomeButton from "@/components/HomeButton";
@@ -37,6 +38,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
+      ...(dest.courses.find((c) => c.imageUrl) ? { images: [dest.courses.find((c) => c.imageUrl)!.imageUrl!] } : {}),
     },
   };
 }
@@ -248,53 +250,61 @@ export default async function DestinationPage({
             <Link
               key={c.name}
               href={`/golf-trips/${dest.id}/courses/${slugify(c.name)}`}
-              style={{ ...card, textDecoration: "none", color: "#fff", display: "block" }}
+              style={{ ...card, textDecoration: "none", color: "#fff", display: "block", padding: 0, overflow: "hidden" }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "flex-start",
-                  marginBottom: "0.5rem",
-                }}
-              >
-                <h3
+              {c.imageUrl && (
+                <div style={{ position: "relative", width: "100%", aspectRatio: "16/9", overflow: "hidden" }}>
+                  <Image src={c.imageUrl} alt={c.name} fill sizes="(max-width: 768px) 100vw, 350px" style={{ objectFit: "cover" }} unoptimized />
+                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 40%)" }} />
+                </div>
+              )}
+              <div style={{ padding: "1.25rem" }}>
+                <div
                   style={{
-                    fontSize: "1.05rem",
-                    fontWeight: 600,
-                    lineHeight: 1.3,
-                    flex: 1,
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-start",
+                    marginBottom: "0.5rem",
                   }}
                 >
-                  {c.name}
-                </h3>
-                <span style={badge(tierColor(c.tier))}>{tierLabel(c.tier)}</span>
-              </div>
-              <p style={{ fontSize: "0.85rem", color: "#A1A1AA", marginBottom: "0.75rem" }}>
-                {c.highlight}
-              </p>
-              <div
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: "0.75rem",
-                  fontSize: "0.8rem",
-                  color: "#71717A",
-                }}
-              >
-                <span>
-                  ${c.greenFeeRange[0]}-${c.greenFeeRange[1]}
-                </span>
-                <span>{c.style}</span>
-                <span>
-                  Par {c.par} · {c.yardage.toLocaleString()} yds
-                </span>
-                {c.walkable && (
-                  <span style={{ color: "#3a7050" }}>Walkable</span>
-                )}
-                {c.hypeTag && (
-                  <span style={{ color: "#D4A843" }}>{c.hypeTag}</span>
-                )}
+                  <h3
+                    style={{
+                      fontSize: "1.05rem",
+                      fontWeight: 600,
+                      lineHeight: 1.3,
+                      flex: 1,
+                    }}
+                  >
+                    {c.name}
+                  </h3>
+                  <span style={badge(tierColor(c.tier))}>{tierLabel(c.tier)}</span>
+                </div>
+                <p style={{ fontSize: "0.85rem", color: "#A1A1AA", marginBottom: "0.75rem" }}>
+                  {c.highlight}
+                </p>
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: "0.75rem",
+                    fontSize: "0.8rem",
+                    color: "#71717A",
+                  }}
+                >
+                  <span>
+                    ${c.greenFeeRange[0]}-${c.greenFeeRange[1]}
+                  </span>
+                  <span>{c.style}</span>
+                  <span>
+                    Par {c.par} · {c.yardage.toLocaleString()} yds
+                  </span>
+                  {c.walkable && (
+                    <span style={{ color: "#3a7050" }}>Walkable</span>
+                  )}
+                  {c.hypeTag && (
+                    <span style={{ color: "#D4A843" }}>{c.hypeTag}</span>
+                  )}
+                </div>
               </div>
             </Link>
           ))}
@@ -350,21 +360,29 @@ export default async function DestinationPage({
             <h2 style={sectionTitle}>Dining</h2>
             <div style={{ ...grid, marginBottom: "3rem" }}>
               {dest.dining.map((d) => (
-                <div key={d.name} style={card}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.4rem" }}>
-                    <h3 style={{ fontSize: "1rem", fontWeight: 600 }}>{d.name}</h3>
-                    <span style={{ fontSize: "0.85rem", color: "#D4A843" }}>{d.priceRange}</span>
-                  </div>
-                  <span style={label}>{d.style}</span>
-                  <p style={{ fontSize: "0.85rem", color: "#A1A1AA", marginTop: "0.4rem" }}>
-                    {d.highlight}
-                  </p>
-                  {d.googleRating && (
-                    <span style={{ fontSize: "0.75rem", color: "#71717A", marginTop: "0.35rem", display: "block" }}>
-                      {d.googleRating} stars
-                      {d.reviewCount ? ` (${d.reviewCount.toLocaleString()} reviews)` : ""}
-                    </span>
+                <div key={d.name} style={{ ...card, padding: 0, overflow: "hidden" }}>
+                  {d.imageUrl && (
+                    <div style={{ position: "relative", width: "100%", aspectRatio: "16/9", overflow: "hidden" }}>
+                      <Image src={d.imageUrl} alt={d.name} fill sizes="(max-width: 768px) 100vw, 350px" style={{ objectFit: "cover" }} unoptimized />
+                      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 40%)" }} />
+                    </div>
                   )}
+                  <div style={{ padding: "1.25rem" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.4rem" }}>
+                      <h3 style={{ fontSize: "1rem", fontWeight: 600 }}>{d.name}</h3>
+                      <span style={{ fontSize: "0.85rem", color: "#D4A843" }}>{d.priceRange}</span>
+                    </div>
+                    <span style={label}>{d.style}</span>
+                    <p style={{ fontSize: "0.85rem", color: "#A1A1AA", marginTop: "0.4rem" }}>
+                      {d.highlight}
+                    </p>
+                    {d.googleRating && (
+                      <span style={{ fontSize: "0.75rem", color: "#71717A", marginTop: "0.35rem", display: "block" }}>
+                        {d.googleRating} stars
+                        {d.reviewCount ? ` (${d.reviewCount.toLocaleString()} reviews)` : ""}
+                      </span>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
@@ -377,17 +395,25 @@ export default async function DestinationPage({
             <h2 style={sectionTitle}>Nightlife</h2>
             <div style={{ ...grid, marginBottom: "3rem" }}>
               {dest.bars.map((b) => (
-                <div key={b.name} style={card}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.4rem" }}>
-                    <h3 style={{ fontSize: "1rem", fontWeight: 600 }}>{b.name}</h3>
-                    {b.lateNight && (
-                      <span style={badge("#7c3aed")}>Late Night</span>
-                    )}
+                <div key={b.name} style={{ ...card, padding: 0, overflow: "hidden" }}>
+                  {b.imageUrl && (
+                    <div style={{ position: "relative", width: "100%", aspectRatio: "16/9", overflow: "hidden" }}>
+                      <Image src={b.imageUrl} alt={b.name} fill sizes="(max-width: 768px) 100vw, 350px" style={{ objectFit: "cover" }} unoptimized />
+                      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 40%)" }} />
+                    </div>
+                  )}
+                  <div style={{ padding: "1.25rem" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.4rem" }}>
+                      <h3 style={{ fontSize: "1rem", fontWeight: 600 }}>{b.name}</h3>
+                      {b.lateNight && (
+                        <span style={badge("#7c3aed")}>Late Night</span>
+                      )}
+                    </div>
+                    <span style={label}>{b.vibe.replace("-", " ")}</span>
+                    <p style={{ fontSize: "0.85rem", color: "#A1A1AA", marginTop: "0.4rem" }}>
+                      {b.highlight}
+                    </p>
                   </div>
-                  <span style={label}>{b.vibe.replace("-", " ")}</span>
-                  <p style={{ fontSize: "0.85rem", color: "#A1A1AA", marginTop: "0.4rem" }}>
-                    {b.highlight}
-                  </p>
                 </div>
               ))}
             </div>

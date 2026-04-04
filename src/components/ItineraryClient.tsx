@@ -60,6 +60,41 @@ function formatDollars(n: number): string {
   return "$" + n.toLocaleString();
 }
 
+
+function generateICSFile(tripName: string, destination: string, numDays: number) {
+  const now = new Date();
+  const uid = `tdf-${Date.now()}@tourdefore.com`;
+  const formatDate = (d: Date) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+  const startDate = formatDate(now);
+  const endDate = formatDate(new Date(now.getTime() + numDays * 24 * 60 * 60 * 1000));
+
+  const ics = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//Tour de Fore//Golf Trip Planner//EN",
+    "BEGIN:VEVENT",
+    `UID:${uid}`,
+    `DTSTART:${startDate}`,
+    `DTEND:${endDate}`,
+    `SUMMARY:${tripName || "Golf Trip"} - ${destination}`,
+    `DESCRIPTION:Golf trip to ${destination} (${numDays} days). Plan your trip at tourdefore.com`,
+    `LOCATION:${destination}`,
+    "STATUS:TENTATIVE",
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ].join("\r\n");
+
+  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `${(tripName || "golf-trip").replace(/[^a-zA-Z0-9]/g, "-").toLowerCase()}.ics`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
 // ── Types ──
 
 interface DayItinerary {
@@ -757,6 +792,67 @@ export default function ItineraryClient({
               )}
             </div>
           )}
+
+
+          {/* Print Itinerary */}
+          <button
+            data-print-hide
+            onClick={() => window.print()}
+            style={{
+              padding: "14px 32px",
+              background: "#111",
+              border: "1px solid rgba(255,255,255,0.15)",
+              borderRadius: 8,
+              color: "rgba(255,255,255,0.7)",
+              fontSize: "0.9rem",
+              fontWeight: 600,
+              letterSpacing: "0.04em",
+              textTransform: "uppercase",
+              fontFamily: "var(--font-plan-block), sans-serif",
+              cursor: "pointer",
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "0.5rem",
+              transition: "border-color 0.15s, color 0.15s",
+            }}
+          >
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4H7v4a2 2 0 002 2zm0-16h6a2 2 0 012 2v2H7V5a2 2 0 012-2z" />
+            </svg>
+            Print Itinerary
+          </button>
+
+          {/* Add to Calendar */}
+          <button
+            data-print-hide
+            onClick={() => generateICSFile(plan.tripName || "Golf Trip", plan.destination, numDays)}
+            style={{
+              padding: "14px 32px",
+              background: "#111",
+              border: "1px solid rgba(255,255,255,0.15)",
+              borderRadius: 8,
+              color: "rgba(255,255,255,0.7)",
+              fontSize: "0.9rem",
+              fontWeight: 600,
+              letterSpacing: "0.04em",
+              textTransform: "uppercase",
+              fontFamily: "var(--font-plan-block), sans-serif",
+              cursor: "pointer",
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "0.5rem",
+              transition: "border-color 0.15s, color 0.15s",
+            }}
+          >
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            Add to Calendar
+          </button>
 
           {/* Edit Selections */}
           <a

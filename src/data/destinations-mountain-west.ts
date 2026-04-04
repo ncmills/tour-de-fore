@@ -3199,7 +3199,7 @@ export const mountainWestDestinations: Destination[] = [
         reservationNeeded: false,
               url: "https://www.shugas.com",
 
-              imageUrl: "http://static1.squarespace.com/static/65e127ffcb4a8e709564d57d/t/67a1624fdc0f0529ac0fb557/1738629711216/boat.jpg?format=1500w",
+              imageUrl: "https://static1.squarespace.com/static/65e127ffcb4a8e709564d57d/t/67a1624fdc0f0529ac0fb557/1738629711216/boat.jpg?format=1500w",
       googleRating: 4.4,
       },
       {
@@ -3252,10 +3252,10 @@ export const mountainWestDestinations: Destination[] = [
         name: "Garden of the Gods",
         type: "hiking",
         duration: "2-3 hours",
-        pricePerPerson: [0, 0],
+        pricePerPerson: [5, 15],
         groupFriendly: true,
         highlight:
-          "Iconic red rock formations with easy trails and stunning photo ops; free admission",
+          "Iconic red rock formations with easy trails and stunning photo ops; small parking fee",
         bestFor: "morning before golf",
       },
       {
@@ -3985,7 +3985,7 @@ export const mountainWestDestinations: Destination[] = [
         driveMinutes: 65,
         url: "https://www.cobblecreek.com",
 
-        imageUrl: "http://static1.squarespace.com/static/692f3e913eff441b1eb980b6/t/695e80dbb1dbab78120db151/1767801051129/LinksEntrance.png?format=1500w",
+        imageUrl: "https://static1.squarespace.com/static/692f3e913eff441b1eb980b6/t/695e80dbb1dbab78120db151/1767801051129/LinksEntrance.png?format=1500w",
         highlight:
           "Jim Engh design in Montrose; links-style through desert mesa terrain — totally different from Telluride GC",
         googleRating: 4.5,
@@ -4144,10 +4144,10 @@ export const mountainWestDestinations: Destination[] = [
         name: "Mountain Village Gondola & Hike",
         type: "hiking",
         duration: "2-3 hours",
-        pricePerPerson: [0, 0],
+        pricePerPerson: [25, 45],
         groupFriendly: true,
         highlight:
-          "Free gondola ride with access to alpine hiking trails; Bear Creek Falls is a 2-mile stunner",
+          "Gondola ride with access to alpine hiking trails; Bear Creek Falls is a 2-mile stunner",
         bestFor: "morning before golf",
       },
       {
@@ -4567,7 +4567,7 @@ export const mountainWestDestinations: Destination[] = [
         driveMinutes: 40,
         url: "https://www.aspengolf.com",
 
-        imageUrl: "http://static1.squarespace.com/static/5f34c398b7f44126530fdf1d/t/676d8898e9d1df40ca3d764f/1735231640916/AGC.png?format=1500w",
+        imageUrl: "https://static1.squarespace.com/static/5f34c398b7f44126530fdf1d/t/676d8898e9d1df40ca3d764f/1735231640916/AGC.png?format=1500w",
         highlight:
           "Municipal course in Aspen at 7,800 feet; jaw-dropping mountain scenery and surprisingly affordable for Aspen",
         googleRating: 4.5,

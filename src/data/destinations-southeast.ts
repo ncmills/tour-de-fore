@@ -5361,7 +5361,7 @@ export const southeastDestinations: Destination[] = [
         reservationNeeded: true,
               url: "https://www.aberdeen-barn.com",
 
-              imageUrl: "http://static1.squarespace.com/static/660449f6a49e482c79f7ca40/t/665a2b021ed79971e85c6725/1717185283046/Aberdeen+barn+outside+front.jpeg?format=1500w",
+              imageUrl: "https://static1.squarespace.com/static/660449f6a49e482c79f7ca40/t/665a2b021ed79971e85c6725/1717185283046/Aberdeen+barn+outside+front.jpeg?format=1500w",
       googleRating: 4.4,
       },
     ],
@@ -6133,7 +6133,7 @@ export const southeastDestinations: Destination[] = [
         reservationNeeded: true,
         googleRating: 4.3,
         reviewCount: 310,
-        url: "http://www.benniesredbarn.com/",
+        url: "https://www.benniesredbarn.com/",
 
         imageUrl: "https://nebula.wsimg.com/4bbe4e74bb667fa354d1e47cecff0b09?AccessKeyId=17022F15F00FE9FBD844&disposition=0&alloworigin=1",
       },

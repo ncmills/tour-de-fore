@@ -962,7 +962,7 @@ export default function TripBuilderClient({
                     {day.round1Mode === "golf" && (
                       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                         {allCourses.map((o) => (
-                          <OptionCard key={o.id} option={o} selected={day.round1 === o.id} onSelect={() => updateDay(di, "round1", o.id)} tags={courseTagMap[o.id]} />
+                          <OptionCard key={o.id} option={o} selected={day.round1 === o.id} onSelect={() => updateDay(di, "round1", o.id)} tags={courseTagMap[o.id]} useFallbackImage />
                         ))}
                       </div>
                     )}
@@ -994,7 +994,7 @@ export default function TripBuilderClient({
                           {allCourses.map((o) => {
                             const r2Tags = getRound2TagMap(day.round1);
                             return (
-                              <OptionCard key={o.id} option={o} selected={day.round2 === o.id} onSelect={() => updateDay(di, "round2", o.id)} tags={r2Tags[o.id]} />
+                              <OptionCard key={o.id} option={o} selected={day.round2 === o.id} onSelect={() => updateDay(di, "round2", o.id)} tags={r2Tags[o.id]} useFallbackImage />
                             );
                           })}
                         </div>
