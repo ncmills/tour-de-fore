@@ -108,9 +108,32 @@ export default async function CostPage({
     ],
   };
 
+  const faqLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: `How much does a golf trip to ${dest.city} cost?`,
+        acceptedAnswer: { "@type": "Answer", text: `A ${dest.city} golf trip costs approximately $${Math.round(budgetTotal)} (budget), $${Math.round(midTotal)} (mid-range), or $${Math.round(premiumTotal)} (premium) per person for 3 nights and 2 rounds with a group of 8. Green fees range from $${cheapestGreen} to $${topGreen}.` },
+      },
+      {
+        "@type": "Question",
+        name: `What are green fees in ${dest.city}?`,
+        acceptedAnswer: { "@type": "Answer", text: `Green fees in ${dest.city} range from $${cheapestGreen} to $${topGreen} per round with cart across ${dest.courses.length} courses. The average is around $${midGreen}.` },
+      },
+      {
+        "@type": "Question",
+        name: `How much is lodging for a golf group in ${dest.city}?`,
+        acceptedAnswer: { "@type": "Answer", text: dest.lodging.length > 0 ? `Group lodging in ${dest.city} starts at $${cheapestLodging}/night for the whole house. Split among 8 guys, that's $${Math.round(cheapestLodging / 8)}/person/night.` : `Lodging data for ${dest.city} is coming soon.` },
+      },
+    ],
+  };
+
   return (
     <main id="main-content" style={{ background: "#000", color: "#fff", fontFamily: "var(--font-inter), sans-serif", minHeight: "100vh" }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
       <MulliganButton href={`/golf-trips/${dest.id}`} />
       <HomeButton />
 

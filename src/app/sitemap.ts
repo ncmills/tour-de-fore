@@ -14,28 +14,56 @@ const bachelorDests = allDestinations.filter(
   (d) => d.bars.length >= 3 && d.population !== "tiny"
 );
 
-// Comparison pairs
-const popularSlugs = [
-  "scottsdale-az", "myrtle-beach-sc", "pinehurst-nc", "kiawah-island-sc",
-  "bend-or", "bandon-or", "kohler-wi", "traverse-city-mi", "austin-tx",
-  "las-vegas-nv", "st-george-ut", "park-city-ut", "hilton-head-sc",
-  "napa-ca", "palm-springs-ca", "savannah-ga", "charleston-sc",
-  "boise-id", "steamboat-springs-co", "cape-cod-ma",
-].filter((s) => allDestinations.some((d) => d.id === s));
-
+// Comparison pairs — cross-region, same-region, same-state
 function generateComparisonPairs(): string[] {
   const pairs: string[] = [];
   const seen = new Set<string>();
-  for (let i = 0; i < popularSlugs.length; i++) {
-    for (let j = i + 1; j < popularSlugs.length; j++) {
-      const key = [popularSlugs[i], popularSlugs[j]].sort().join("|");
-      if (!seen.has(key)) {
-        seen.add(key);
-        pairs.push(`${popularSlugs[i]}-vs-${popularSlugs[j]}`);
-      }
-      if (pairs.length >= 75) return pairs;
+
+  function addPair(s1: string, s2: string) {
+    const key = [s1, s2].sort().join("|");
+    if (!seen.has(key)) {
+      seen.add(key);
+      pairs.push(`${s1}-vs-${s2}`);
     }
   }
+
+  const popular = [
+    "scottsdale-az", "myrtle-beach-sc", "pinehurst-nc", "kiawah-island-sc",
+    "bend-or", "bandon-or", "kohler-wi", "traverse-city-mi", "austin-tx",
+    "las-vegas-nv", "st-george-ut", "park-city-ut", "hilton-head-sc",
+    "napa-ca", "palm-springs-ca", "savannah-ga", "charleston-sc",
+    "boise-id", "steamboat-springs-co", "cape-cod-ma",
+  ].filter((s) => allDestinations.some((d) => d.id === s));
+
+  for (let i = 0; i < popular.length; i++) {
+    for (let j = i + 1; j < popular.length; j++) {
+      addPair(popular[i], popular[j]);
+    }
+  }
+
+  // Same-region top 5
+  const regionGroups = new Map<string, string[]>();
+  for (const d of allDestinations) {
+    if (!regionGroups.has(d.region)) regionGroups.set(d.region, []);
+    regionGroups.get(d.region)!.push(d.id);
+  }
+  for (const ids of regionGroups.values()) {
+    const top = ids.slice(0, 5);
+    for (let i = 0; i < top.length; i++) for (let j = i + 1; j < top.length; j++) addPair(top[i], top[j]);
+  }
+
+  // Same-state top 4
+  const stateGroups = new Map<string, string[]>();
+  for (const d of allDestinations) {
+    if (!stateGroups.has(d.state)) stateGroups.set(d.state, []);
+    stateGroups.get(d.state)!.push(d.id);
+  }
+  for (const ids of stateGroups.values()) {
+    if (ids.length < 2) continue;
+    const top = ids.slice(0, 4);
+    for (let i = 0; i < top.length; i++) for (let j = i + 1; j < top.length; j++) addPair(top[i], top[j]);
+  }
+
   return pairs;
 }
 
@@ -103,6 +131,14 @@ export default function sitemap({ id }: { id: number }): MetadataRoute.Sitemap {
       // Themes
       ...["bachelor-party", "budget", "bucket-list"].map((t) => ({
         url: `${base}/golf-trips/${t}`,
+        lastModified: new Date(),
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
+      })),
+      // Guides index + individual guides
+      { url: `${base}/guides`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.8 },
+      ...["how-to-plan-a-group-golf-trip", "best-golf-trip-destinations-by-month", "best-walkable-golf-courses", "golf-trip-budget-guide", "golf-trip-packing-list", "best-golf-trips-under-500", "desert-vs-coastal-vs-mountain-golf", "best-golf-destinations-for-large-groups", "top-bucket-list-golf-courses", "first-time-golf-trip-mistakes"].map((slug) => ({
+        url: `${base}/guides/${slug}`,
         lastModified: new Date(),
         changeFrequency: "monthly" as const,
         priority: 0.7,

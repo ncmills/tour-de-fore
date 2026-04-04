@@ -112,6 +112,38 @@ export default async function GuidePage({
     ],
   };
 
+  const faqLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: `What is the best time to visit ${dest.city} for a golf trip?`,
+        acceptedAnswer: { "@type": "Answer", text: `The best seasons for golf in ${dest.city} are ${seasonLabel(dest.bestSeasons)}. Course conditions and pricing are typically optimal during these months.` },
+      },
+      {
+        "@type": "Question",
+        name: `How many golf courses are in ${dest.city}?`,
+        acceptedAnswer: { "@type": "Answer", text: `${dest.city} has ${dest.courses.length} courses in our database, with green fees ranging from $${cheapestGreen} to $${pricestGreen} per round.${bucketListCourses.length > 0 ? ` ${bucketListCourses.length} are bucket-list tier courses.` : ""}` },
+      },
+      {
+        "@type": "Question",
+        name: `How much does a ${dest.city} golf trip cost per person?`,
+        acceptedAnswer: { "@type": "Answer", text: `A budget ${dest.city} golf trip runs approximately $${Math.round(budgetPerPerson)} per person for 3 nights and 2 rounds (group of 4). This includes green fees from $${cheapestGreen}, lodging from $${cheapestLodging}/night, and an estimated $50/day for food and drinks.` },
+      },
+      {
+        "@type": "Question",
+        name: `What airport do you fly into for a ${dest.city} golf trip?`,
+        acceptedAnswer: { "@type": "Answer", text: `The nearest airport is ${dest.nearestAirport.name} (${dest.nearestAirport.code}), which is a ${dest.nearestAirport.driveMinutes}-minute drive to ${dest.city}.` },
+      },
+      ...(dest.lodging.length > 0 ? [{
+        "@type": "Question",
+        name: `Where should a golf group stay in ${dest.city}?`,
+        acceptedAnswer: { "@type": "Answer", text: `${dest.city} has ${dest.lodging.length} group-friendly lodging options starting at $${cheapestLodging}/night. Most groups rent a house that sleeps ${dest.lodging[0].sleeps[0]}-${dest.lodging[0].sleeps[1]} to keep everyone together.` },
+      }] : []),
+    ],
+  };
+
   // Build sample 3-day itinerary from real data
   const topCourses = [...dest.courses].sort((a, b) => (b.googleRating || 0) - (a.googleRating || 0)).slice(0, 3);
   const topDining = dest.dining.slice(0, 3);
@@ -129,6 +161,7 @@ export default async function GuidePage({
       }}
     >
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
       <MulliganButton href={`/golf-trips/${dest.id}`} />
       <HomeButton />
 

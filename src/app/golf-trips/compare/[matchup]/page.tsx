@@ -12,7 +12,15 @@ function generatePairs(): { slug1: string; slug2: string }[] {
   const pairs: { slug1: string; slug2: string }[] = [];
   const seen = new Set<string>();
 
-  // Popular destinations to compare cross-region
+  function addPair(s1: string, s2: string) {
+    const key = [s1, s2].sort().join("|");
+    if (!seen.has(key) && allDestinations.some((d) => d.id === s1) && allDestinations.some((d) => d.id === s2)) {
+      seen.add(key);
+      pairs.push({ slug1: s1, slug2: s2 });
+    }
+  }
+
+  // Popular destinations for cross-region matchups
   const popular = [
     "scottsdale-az", "myrtle-beach-sc", "pinehurst-nc", "kiawah-island-sc",
     "bend-or", "bandon-or", "kohler-wi", "traverse-city-mi", "austin-tx",
@@ -21,17 +29,46 @@ function generatePairs(): { slug1: string; slug2: string }[] {
     "boise-id", "steamboat-springs-co", "cape-cod-ma",
   ];
 
-  // Cross-region popular matchups
+  // Cross-region popular matchups (~75 pairs)
   for (let i = 0; i < popular.length; i++) {
     for (let j = i + 1; j < popular.length; j++) {
-      const key = [popular[i], popular[j]].sort().join("|");
-      if (!seen.has(key) && allDestinations.some((d) => d.id === popular[i]) && allDestinations.some((d) => d.id === popular[j])) {
-        seen.add(key);
-        pairs.push({ slug1: popular[i], slug2: popular[j] });
-      }
-      if (pairs.length >= 75) break;
+      addPair(popular[i], popular[j]);
     }
-    if (pairs.length >= 75) break;
+  }
+
+  // Same-region rivals: top 3 destinations per region paired with each other
+  const regionGroups = new Map<string, typeof allDestinations>();
+  for (const d of allDestinations) {
+    const r = d.region;
+    if (!regionGroups.has(r)) regionGroups.set(r, []);
+    regionGroups.get(r)!.push(d);
+  }
+
+  for (const [, dests] of regionGroups) {
+    // Sort by course count (proxy for popularity)
+    const top = dests.sort((a, b) => b.courses.length - a.courses.length).slice(0, 5);
+    for (let i = 0; i < top.length; i++) {
+      for (let j = i + 1; j < top.length; j++) {
+        addPair(top[i].id, top[j].id);
+      }
+    }
+  }
+
+  // Same-state rivals (e.g., Scottsdale vs Tucson vs Sedona)
+  const stateGroups = new Map<string, typeof allDestinations>();
+  for (const d of allDestinations) {
+    if (!stateGroups.has(d.state)) stateGroups.set(d.state, []);
+    stateGroups.get(d.state)!.push(d);
+  }
+
+  for (const [, dests] of stateGroups) {
+    if (dests.length < 2) continue;
+    const top = dests.sort((a, b) => b.courses.length - a.courses.length).slice(0, 4);
+    for (let i = 0; i < top.length; i++) {
+      for (let j = i + 1; j < top.length; j++) {
+        addPair(top[i].id, top[j].id);
+      }
+    }
   }
 
   return pairs;
