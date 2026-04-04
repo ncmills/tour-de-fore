@@ -42,7 +42,7 @@ export default function MulliganButton({
         top,
         left: right ? undefined : left,
         right: right || undefined,
-        zIndex: 10000,
+        zIndex: 300,
         pointerEvents: "auto",
       }}
     >

@@ -27,15 +27,12 @@ export async function GET(req: NextRequest) {
       const client = new Anthropic({ timeout: 30_000 });
       const msg = await client.messages.create({
         model: "claude-haiku-4-5-20251001",
-        max_tokens: 1000,
-        messages: [{ role: "user", content: "Write exactly 500 words about golf. Count as you go." }],
+        max_tokens: 5,
+        messages: [{ role: "user", content: "Say ok" }],
       });
-      const text = msg.content[0]?.type === "text" ? msg.content[0].text : "";
       checks.anthropicApi = "ok";
       checks.anthropicModel = msg.model;
       checks.anthropicTokens = `in:${msg.usage.input_tokens} out:${msg.usage.output_tokens}`;
-      checks.anthropicStop = msg.stop_reason || "unknown";
-      checks.anthropicOutputLen = `${text.length} chars`;
     } catch (e) {
       checks.anthropicApi = `fail: ${e instanceof Error ? e.message : String(e)}`;
     }

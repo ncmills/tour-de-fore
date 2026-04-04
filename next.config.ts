@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   serverExternalPackages: ["bcryptjs"],
-  compress: true,
+  poweredByHeader: false,
   images: {
     formats: ["image/webp", "image/avif"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
@@ -52,9 +52,26 @@ const nextConfig: NextConfig = {
       ],
     },
     {
-      source: "/_next/static/:path*",
+      // Security headers (moved from middleware to avoid Edge Runtime on every request)
+      source: "/((?!api/|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|mp4|mov|mp3)).*)",
       headers: [
-        { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+        { key: "X-Frame-Options", value: "DENY" },
+        { key: "X-Content-Type-Options", value: "nosniff" },
+        { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+        { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+        {
+          key: "Content-Security-Policy",
+          value: [
+            "default-src 'self'",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com https://js.stripe.com https://us.i.posthog.com https://us-assets.i.posthog.com",
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+            "font-src 'self' https://fonts.gstatic.com",
+            "img-src 'self' data: blob: https: http:",
+            "media-src 'self' https: blob:",
+            "connect-src 'self' https://api.stripe.com https://checkout.stripe.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://us.i.posthog.com https://us-assets.i.posthog.com",
+            "frame-src https://js.stripe.com",
+          ].join("; "),
+        },
       ],
     },
   ],

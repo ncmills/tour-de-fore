@@ -20,17 +20,33 @@ const LAYOUTS = [
   { cols: "1fr", rows: "1fr 1fr", cells: 2, name: "mobile-stack" },
 ];
 
-const CYCLE_INTERVAL = 12000; // 12s between layout changes
+const LAYOUT_MIN_MS = 6000;
+const LAYOUT_MAX_MS = 10000;
+const VIDEO_MAX_MS = 10000; // Hard cap: 10s per video
+const VIDEO_MAX_LOOPS = 2;
+const FADE_MS = 400;
+const INIT_STAGGER_MS = 300;
 
 interface VideoGridProps {
-  active: boolean; // true when phase === "done"
+  active: boolean;
+}
+
+// Per-cell state for independent lifetime tracking
+interface CellState {
+  video: HTMLVideoElement;
+  timer: ReturnType<typeof setTimeout> | null;
+  loopCount: number;
+  swapped: boolean; // guard against double-swap
 }
 
 export default function VideoGrid({ active }: VideoGridProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const cellStates = useRef<(CellState | null)[]>([null, null, null, null]);
   const clipQueue = useRef<string[]>(shuffleClips(homepageClips));
   const clipIndex = useRef(0);
+  const prefetchEl = useRef<HTMLVideoElement | null>(null);
+  const layoutTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const activeRef = useRef(false);
   const [isMobile, setIsMobile] = useState(false);
   const [layoutIdx, setLayoutIdx] = useState(0);
 
@@ -41,7 +57,6 @@ export default function VideoGrid({ active }: VideoGridProps) {
       setIsMobile(mobile);
     };
     check();
-    // Set correct initial layout for mobile (full-bleed)
     if (window.innerWidth <= 640) setLayoutIdx(3);
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
@@ -51,7 +66,6 @@ export default function VideoGrid({ active }: VideoGridProps) {
   const getNextClip = useCallback(() => {
     const clip = clipQueue.current[clipIndex.current % clipQueue.current.length];
     clipIndex.current++;
-    // Reshuffle when we cycle through all
     if (clipIndex.current >= clipQueue.current.length) {
       clipQueue.current = shuffleClips(homepageClips);
       clipIndex.current = 0;
@@ -59,9 +73,33 @@ export default function VideoGrid({ active }: VideoGridProps) {
     return clip;
   }, []);
 
-  // Create a video element imperatively (iOS Safari safe)
-  // Videos play at most 2 times then pause on last frame
-  const createVideo = useCallback((src: string): HTMLVideoElement => {
+  // Prefetch the next video so it's buffered and ready
+  const prefetchNext = useCallback(() => {
+    const src = getNextClip();
+    const v = document.createElement("video");
+    v.muted = true;
+    v.setAttribute("muted", "");
+    v.setAttribute("playsinline", "");
+    v.playsInline = true;
+    v.preload = "auto";
+    v.src = src;
+    v.load();
+    prefetchEl.current = v;
+  }, [getNextClip]);
+
+  // Create a video element (iOS Safari safe)
+  const createVideo = useCallback((src?: string): HTMLVideoElement => {
+    // Use prefetched video if available and no specific src requested
+    if (!src && prefetchEl.current) {
+      const v = prefetchEl.current;
+      prefetchEl.current = null;
+      v.autoplay = true;
+      v.setAttribute("autoplay", "");
+      v.loop = false;
+      v.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:opacity;";
+      return v;
+    }
+    const videoSrc = src || getNextClip();
     const v = document.createElement("video");
     v.muted = true;
     v.setAttribute("muted", "");
@@ -70,100 +108,149 @@ export default function VideoGrid({ active }: VideoGridProps) {
     v.autoplay = true;
     v.playsInline = true;
     v.loop = false;
-    v.preload = "metadata";
+    v.preload = "auto";
     v.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:opacity;";
-    v.src = src;
-    let playCount = 0;
-    v.addEventListener("ended", () => {
-      playCount++;
-      if (playCount < 2) {
-        v.currentTime = 0;
-        v.play().catch(() => {});
+    v.src = videoSrc;
+    v.load();
+    return v;
+  }, [getNextClip]);
+
+  // Swap a single cell's video with fade transition
+  const swapCell = useCallback((cellIdx: number) => {
+    if (!activeRef.current) return;
+    const container = containerRef.current;
+    if (!container) return;
+    const cells = container.querySelectorAll<HTMLDivElement>("[data-cell]");
+    const cell = cells[cellIdx];
+    if (!cell) return;
+
+    const state = cellStates.current[cellIdx];
+    if (state) {
+      if (state.timer) clearTimeout(state.timer);
+      state.swapped = true;
+      const oldVideo = state.video;
+      oldVideo.style.transition = `opacity ${FADE_MS}ms ease`;
+      oldVideo.style.opacity = "0";
+      setTimeout(() => { oldVideo.pause(); oldVideo.remove(); }, FADE_MS + 100);
+    }
+
+    const newVideo = createVideo();
+    newVideo.style.opacity = "0";
+    newVideo.style.transition = `opacity ${FADE_MS}ms ease`;
+    cell.appendChild(newVideo);
+    newVideo.play().catch(() => {});
+
+    // Start prefetching the next one
+    prefetchNext();
+
+    requestAnimationFrame(() => {
+      newVideo.style.opacity = "1";
+    });
+
+    // Set up independent lifetime tracking for this cell
+    const guard = { done: false };
+
+    const doSwap = () => {
+      if (guard.done) return;
+      guard.done = true;
+      const s = cellStates.current[cellIdx];
+      if (s?.timer) clearTimeout(s.timer);
+      cellStates.current[cellIdx] = null;
+      swapCell(cellIdx);
+    };
+
+    // Hard timeout: 10s max
+    const timer = setTimeout(doSwap, VIDEO_MAX_MS);
+
+    // Loop counting via ended event
+    let loopCount = 0;
+    newVideo.addEventListener("ended", () => {
+      loopCount++;
+      if (loopCount >= VIDEO_MAX_LOOPS) {
+        doSwap();
+      } else {
+        newVideo.currentTime = 0;
+        newVideo.play().catch(() => {});
       }
     });
-    v.load();
-    v.play().catch(() => {});
-    return v;
-  }, []);
 
-  // Initialize grid cells with videos
+    cellStates.current[cellIdx] = {
+      video: newVideo,
+      timer,
+      loopCount: 0,
+      swapped: false,
+    };
+  }, [createVideo, prefetchNext]);
+
+  // Initialize grid with staggered video loads
   useEffect(() => {
     if (!active || !containerRef.current) return;
+    activeRef.current = true;
 
-    const cells = containerRef.current.querySelectorAll<HTMLDivElement>("[data-cell]");
     const maxCells = isMobile ? 2 : 4;
 
-    cells.forEach((cell, i) => {
-      if (i >= maxCells) return;
-      // Clear existing
-      const existing = cell.querySelector("video");
-      if (existing) return; // Already has video
+    // Prefetch first video immediately
+    prefetchNext();
 
-      const clip = getNextClip();
-      const v = createVideo(clip);
-      cell.appendChild(v);
-      videoRefs.current[i] = v;
-    });
+    // Stagger cell initialization
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    for (let i = 0; i < maxCells; i++) {
+      const t = setTimeout(() => {
+        swapCell(i);
+        // Prefetch for next swap
+        prefetchNext();
+      }, i * INIT_STAGGER_MS + Math.random() * 200);
+      timers.push(t);
+    }
 
     return () => {
-      videoRefs.current.forEach(v => { v?.pause(); v?.remove(); });
-      videoRefs.current = [];
+      activeRef.current = false;
+      timers.forEach(clearTimeout);
+      cellStates.current.forEach(s => {
+        if (s) {
+          if (s.timer) clearTimeout(s.timer);
+          s.video.pause();
+          s.video.remove();
+        }
+      });
+      cellStates.current = [null, null, null, null];
+      if (prefetchEl.current) {
+        prefetchEl.current = null;
+      }
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active]);
 
-  // Layout cycling timer
+  // Randomized layout cycling (decoupled from video swaps)
   useEffect(() => {
     if (!active) return;
 
-    const layouts = isMobile ? [3, 4] : [0, 1, 2, 3]; // Mobile: full-bleed + stacked only
-    let currentIdx = 0;
+    const desktopLayouts = [0, 1, 2, 3];
+    const mobileLayouts = [3, 4];
 
-    const interval = setInterval(() => {
-      currentIdx = (currentIdx + 1) % layouts.length;
-      setLayoutIdx(layouts[currentIdx]);
-
-      // Swap 1-2 videos on layout change
-      const cells = containerRef.current?.querySelectorAll<HTMLDivElement>("[data-cell]");
-      if (cells) {
-        const swapCount = layouts[currentIdx] === 3 ? 1 : 2;
-        const cellArr = Array.from(cells);
-        const toSwap = cellArr
-          .sort(() => Math.random() - 0.5)
-          .slice(0, swapCount);
-
-        toSwap.forEach(cell => {
-          const oldVideo = cell.querySelector("video");
-          if (oldVideo) {
-            const newClip = getNextClip();
-            const newVideo = createVideo(newClip);
-            newVideo.style.opacity = "0";
-            newVideo.style.transition = "opacity 0.8s ease";
-            cell.appendChild(newVideo);
-
-            requestAnimationFrame(() => {
-              newVideo.style.opacity = "1";
-              oldVideo.style.transition = "opacity 0.8s ease";
-              oldVideo.style.opacity = "0";
-            });
-
-            setTimeout(() => {
-              oldVideo.pause();
-              oldVideo.remove();
-            }, 900);
-          }
+    const scheduleNext = () => {
+      const jitter = LAYOUT_MIN_MS + Math.random() * (LAYOUT_MAX_MS - LAYOUT_MIN_MS);
+      layoutTimer.current = setTimeout(() => {
+        const layouts = isMobile ? mobileLayouts : desktopLayouts;
+        // Pick a random DIFFERENT layout
+        setLayoutIdx(prev => {
+          const options = layouts.filter(l => l !== prev);
+          return options[Math.floor(Math.random() * options.length)];
         });
-      }
-    }, CYCLE_INTERVAL);
+        scheduleNext();
+      }, jitter);
+    };
 
-    return () => clearInterval(interval);
-  }, [active, isMobile, getNextClip, createVideo]);
+    scheduleNext();
 
+    return () => {
+      if (layoutTimer.current) clearTimeout(layoutTimer.current);
+    };
+  }, [active, isMobile]);
 
   const layout = LAYOUTS[layoutIdx];
   const cellCount = layout.cells;
 
-  // Build grid style
   const gridStyle: React.CSSProperties = {
     position: "absolute",
     inset: 0,

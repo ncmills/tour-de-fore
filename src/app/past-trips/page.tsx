@@ -12,9 +12,9 @@ export const metadata = {
 export default function PastTripsPage() {
   return (
     <Suspense>
-      <ExplosionGate pageKey="past-trips">
-        <PastTripsClient />
-      </ExplosionGate>
-    </Suspense>
+        <ExplosionGate pageKey="past-trips">
+          <PastTripsClient />
+        </ExplosionGate>
+      </Suspense>
   );
 }

@@ -8,10 +8,12 @@ const TOKEN_TTL = 60 * 15; // 15 min for magic link
 export async function createMagicToken(email: string, wizardState?: unknown): Promise<string> {
   const token = crypto.randomUUID();
   const r = getRedis();
-  await r.set(`magic:${token}`, email, "EX", TOKEN_TTL);
+  const pipe = r.pipeline();
+  pipe.set(`magic:${token}`, email, "EX", TOKEN_TTL);
   if (wizardState) {
-    await r.set(`magic:${token}:wizard`, JSON.stringify(wizardState), "EX", TOKEN_TTL);
+    pipe.set(`magic:${token}:wizard`, JSON.stringify(wizardState), "EX", TOKEN_TTL);
   }
+  await pipe.exec();
   return token;
 }
 
@@ -47,8 +49,10 @@ export async function getSessionEmail(): Promise<string | null> {
 export async function addPlanToUser(email: string, planId: string): Promise<void> {
   const r = getRedis();
   const key = `user:${email}:plans`;
-  await r.sadd(key, planId);
-  await r.expire(key, SESSION_TTL * 12); // 1 year
+  const pipe = r.pipeline();
+  pipe.sadd(key, planId);
+  pipe.expire(key, SESSION_TTL * 12); // 1 year
+  await pipe.exec();
 }
 
 export async function getUserPlans(email: string): Promise<string[]> {
@@ -59,11 +63,13 @@ export async function getUserPlans(email: string): Promise<string[]> {
 export async function setUserPastTrips(email: string, years: number[]): Promise<void> {
   const r = getRedis();
   const key = `user:${email}:attended`;
-  await r.del(key);
+  const pipe = r.pipeline();
+  pipe.del(key);
   if (years.length > 0) {
-    await r.sadd(key, ...years.map(String));
-    await r.expire(key, SESSION_TTL * 12);
+    pipe.sadd(key, ...years.map(String));
+    pipe.expire(key, SESSION_TTL * 12);
   }
+  await pipe.exec();
 }
 
 export async function getUserPastTrips(email: string): Promise<number[]> {
@@ -109,8 +115,10 @@ export async function canGenerateFreePlan(email: string): Promise<boolean> {
 export async function recordFreePlanGeneration(email: string): Promise<void> {
   const r = getRedis();
   const key = `user:${email}:freeplans:${getMonthKey()}`;
-  await r.incr(key);
-  await r.expire(key, 60 * 60 * 24 * 35); // ~35 days
+  const pipe = r.pipeline();
+  pipe.incr(key);
+  pipe.expire(key, 60 * 60 * 24 * 35); // ~35 days
+  await pipe.exec();
 }
 
 export function getMonthKey(): string {
@@ -127,60 +135,64 @@ export async function getFreePlanCount(email: string): Promise<number> {
 
 export async function changeUserEmail(oldEmail: string, newEmail: string): Promise<void> {
   const r = getRedis();
-
-  // Migrate name
-  const name = await r.get(`user:${oldEmail}:name`);
-  if (name) {
-    await r.set(`user:${newEmail}:name`, name, "EX", PROFILE_TTL);
-    await r.del(`user:${oldEmail}:name`);
-  }
-
-  // Migrate password
-  const passwordHash = await r.get(`user:${oldEmail}:password`);
-  if (passwordHash) {
-    await r.set(`user:${newEmail}:password`, passwordHash, "EX", PROFILE_TTL);
-    await r.del(`user:${oldEmail}:password`);
-  }
-
-  // Migrate plans
-  const plans = await r.smembers(`user:${oldEmail}:plans`);
-  if (plans.length > 0) {
-    await r.sadd(`user:${newEmail}:plans`, ...plans);
-    await r.expire(`user:${newEmail}:plans`, SESSION_TTL * 12);
-    await r.del(`user:${oldEmail}:plans`);
-  }
-
-  // Migrate subscription
-  const sub = await r.get(`user:${oldEmail}:sub`);
-  if (sub) {
-    const ttl = await r.ttl(`user:${oldEmail}:sub`);
-    await r.set(`user:${newEmail}:sub`, sub, "EX", ttl > 0 ? ttl : PROFILE_TTL);
-    await r.del(`user:${oldEmail}:sub`);
-  }
-
-  // Migrate attended years
-  const attended = await r.smembers(`user:${oldEmail}:attended`);
-  if (attended.length > 0) {
-    await r.sadd(`user:${newEmail}:attended`, ...attended);
-    await r.expire(`user:${newEmail}:attended`, SESSION_TTL * 12);
-    await r.del(`user:${oldEmail}:attended`);
-  }
-
-  // Migrate free plan count for current month
   const monthKey = getMonthKey();
-  const freePlanCount = await r.get(`user:${oldEmail}:freeplans:${monthKey}`);
+
+  // Bulk read all old user data in one pipeline
+  const readPipe = r.pipeline();
+  readPipe.get(`user:${oldEmail}:name`);
+  readPipe.get(`user:${oldEmail}:password`);
+  readPipe.smembers(`user:${oldEmail}:plans`);
+  readPipe.get(`user:${oldEmail}:sub`);
+  readPipe.ttl(`user:${oldEmail}:sub`);
+  readPipe.smembers(`user:${oldEmail}:attended`);
+  readPipe.get(`user:${oldEmail}:freeplans:${monthKey}`);
+  readPipe.ttl(`user:${oldEmail}:freeplans:${monthKey}`);
+  const results = await readPipe.exec();
+  if (!results) return;
+
+  const name = results[0]?.[1] as string | null;
+  const passwordHash = results[1]?.[1] as string | null;
+  const plans = results[2]?.[1] as string[] | null;
+  const sub = results[3]?.[1] as string | null;
+  const subTtl = results[4]?.[1] as number;
+  const attended = results[5]?.[1] as string[] | null;
+  const freePlanCount = results[6]?.[1] as string | null;
+  const freeplanTtl = results[7]?.[1] as number;
+
+  // Bulk write all migrations in one pipeline
+  const writePipe = r.pipeline();
+
+  if (name) {
+    writePipe.set(`user:${newEmail}:name`, name, "EX", PROFILE_TTL);
+    writePipe.del(`user:${oldEmail}:name`);
+  }
+  if (passwordHash) {
+    writePipe.set(`user:${newEmail}:password`, passwordHash, "EX", PROFILE_TTL);
+    writePipe.del(`user:${oldEmail}:password`);
+  }
+  if (plans && plans.length > 0) {
+    writePipe.sadd(`user:${newEmail}:plans`, ...plans);
+    writePipe.expire(`user:${newEmail}:plans`, SESSION_TTL * 12);
+    writePipe.del(`user:${oldEmail}:plans`);
+  }
+  if (sub) {
+    writePipe.set(`user:${newEmail}:sub`, sub, "EX", subTtl > 0 ? subTtl : PROFILE_TTL);
+    writePipe.del(`user:${oldEmail}:sub`);
+  }
+  if (attended && attended.length > 0) {
+    writePipe.sadd(`user:${newEmail}:attended`, ...attended);
+    writePipe.expire(`user:${newEmail}:attended`, SESSION_TTL * 12);
+    writePipe.del(`user:${oldEmail}:attended`);
+  }
   if (freePlanCount) {
-    const ttl = await r.ttl(`user:${oldEmail}:freeplans:${monthKey}`);
-    await r.set(`user:${newEmail}:freeplans:${monthKey}`, freePlanCount, "EX", ttl > 0 ? ttl : 60 * 60 * 24 * 35);
-    await r.del(`user:${oldEmail}:freeplans:${monthKey}`);
+    writePipe.set(`user:${newEmail}:freeplans:${monthKey}`, freePlanCount, "EX", freeplanTtl > 0 ? freeplanTtl : 60 * 60 * 24 * 35);
+    writePipe.del(`user:${oldEmail}:freeplans:${monthKey}`);
   }
 
-  // Migrate email verified
-  const verified = await r.get(`user:${oldEmail}:email_verified`);
-  if (verified) {
-    await r.del(`user:${oldEmail}:email_verified`);
-    // Don't migrate — new email needs its own verification
-  }
+  // Delete old email_verified (don't migrate — new email needs its own verification)
+  writePipe.del(`user:${oldEmail}:email_verified`);
+
+  await writePipe.exec();
 }
 
 // ── Password Auth ──

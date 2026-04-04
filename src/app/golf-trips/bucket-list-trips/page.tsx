@@ -44,7 +44,7 @@ export default function BucketListPage() {
           <p>
             Beyond the marquee courses, each destination includes premium lodging options, the best local dining,
             and activities worth the trip even on rest days. Click any destination for full course details including
-            ratings, slope, green fees, and walkability — then use our AI planner to build a complete bucket-list itinerary.
+            ratings, green fees, and walkability — then use our AI planner to build a complete bucket-list itinerary.
           </p>
         </div>
 

@@ -1,12 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import Stripe from "stripe";
-import { createPrintfulOrder, findVariant } from "@/lib/printful";
+import { createPrintfulOrder } from "@/lib/printful";
 import { storeOrder, getOrder } from "@/lib/kv";
-import { Resend } from "resend";
-
-function getStripe() {
-  return new Stripe((process.env.STRIPE_SECRET_KEY ?? "").trim());
-}
+import { getStripe } from "@/lib/stripe";
+import { sendEmail } from "@/lib/email";
+import {
+  parseOrderItems,
+  resolveVariants,
+  extractShipping,
+  buildRecipient,
+  buildExternalId,
+} from "@/lib/order-utils";
 
 export async function GET(req: NextRequest) {
   // Vercel cron sends this header; also accept manual calls with the secret
@@ -45,48 +48,19 @@ export async function GET(req: NextRequest) {
         continue;
       }
 
-      // Parse items
-      const rawItems = JSON.parse(itemsJson) as { s?: number; q?: number; p?: string; c?: string; z?: string; syncVariantId?: number; quantity?: number; productId?: string; color?: string; size?: string }[];
-      const items = rawItems.map(i => ({
-        syncVariantId: i.syncVariantId ?? i.s ?? 0,
-        quantity: i.quantity ?? i.q ?? 1,
-        productId: i.productId ?? i.p ?? "",
-        color: i.color ?? i.c ?? "",
-        size: i.size ?? i.z,
-      }));
-
-      // Resolve AND re-validate syncVariantIds against live catalog
-      for (const item of items) {
-        if (item.productId && item.color) {
-          const variant = await findVariant(item.productId, item.color, item.size);
-          if (variant) {
-            item.syncVariantId = variant.syncVariantId;
-          } else if (item.syncVariantId) {
-            console.warn(`Cron: variant ${item.syncVariantId} for ${item.productId}/${item.color}/${item.size} not in catalog`);
-            item.syncVariantId = 0; // mark invalid so it gets caught by validItems filter
-          }
-        }
-      }
+      // Parse items and resolve variants against live catalog
+      const items = parseOrderItems(itemsJson);
+      await resolveVariants(items, "Cron");
 
       // Get shipping — retrieve full session
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const fullSession = await stripe.checkout.sessions.retrieve(session.id) as any;
-      const shippingObj = fullSession.collected_information?.shipping_details
-        || fullSession.shipping_details
-        || fullSession.shipping;
-      const customerAddr = fullSession.customer_details?.address;
-      const shippingAddress = shippingObj?.address || (customerAddr ? {
-        line1: customerAddr.line1, line2: customerAddr.line2,
-        city: customerAddr.city, state: customerAddr.state,
-        country: customerAddr.country, postal_code: customerAddr.postal_code,
-      } : null);
-      const shippingName = shippingObj?.name || fullSession.customer_details?.name || "Customer";
-      const customerEmail = fullSession.customer_details?.email || "";
+      const shipping = extractShipping(fullSession);
 
-      if (!shippingAddress?.line1) {
+      if (!shipping.address) {
         results.push({ sessionId: session.id, status: "needs_attention", detail: "No shipping address" });
         await storeOrder({
-          id: session.id, email: customerEmail,
+          id: session.id, email: shipping.email,
           items: items.map(i => ({ productId: i.productId, color: i.color, size: i.size, quantity: i.quantity })),
           stripeSessionId: session.id, printfulOrderId: null,
           status: "needs_attention", createdAt: new Date().toISOString(),
@@ -105,21 +79,12 @@ export async function GET(req: NextRequest) {
       try {
         const printfulResult = await createPrintfulOrder(
           validItems.map(i => ({ sync_variant_id: i.syncVariantId, quantity: i.quantity })),
-          {
-            name: shippingName,
-            address1: shippingAddress.line1 || "",
-            address2: shippingAddress.line2 || undefined,
-            city: shippingAddress.city || "",
-            state_code: shippingAddress.state || "",
-            country_code: shippingAddress.country || "US",
-            zip: shippingAddress.postal_code || "",
-            email: customerEmail,
-          },
-          `tdf-${session.id.slice(-56)}`
+          buildRecipient(shipping),
+          buildExternalId(session.id)
         );
 
         await storeOrder({
-          id: session.id, email: customerEmail,
+          id: session.id, email: shipping.email,
           items: items.map(i => ({ productId: i.productId, color: i.color, size: i.size, quantity: i.quantity })),
           stripeSessionId: session.id,
           printfulOrderId: printfulResult?.id || null,
@@ -128,16 +93,12 @@ export async function GET(req: NextRequest) {
         });
 
         // Send alert if this was a rescue (webhook had failed)
-        if (printfulResult && process.env.RESEND_API_KEY) {
-          try {
-            const resend = new Resend(process.env.RESEND_API_KEY);
-            await resend.emails.send({
-              from: "Tour de Fore <noreply@tourdefore.com>",
-              to: "info@tourdefore.com",
-              subject: "Cron rescued a missed order",
-              html: `<p>The hourly sync caught a paid order that the webhook missed.</p><p><strong>Session:</strong> ${session.id}</p><p><strong>Printful Order:</strong> #${printfulResult.id}</p><p><strong>Customer:</strong> ${customerEmail}</p>`,
-            });
-          } catch { /* non-critical */ }
+        if (printfulResult) {
+          await sendEmail({
+            to: "info@tourdefore.com",
+            subject: "Cron rescued a missed order",
+            html: `<p>The hourly sync caught a paid order that the webhook missed.</p><p><strong>Session:</strong> ${session.id}</p><p><strong>Printful Order:</strong> #${printfulResult.id}</p><p><strong>Customer:</strong> ${shipping.email}</p>`,
+          });
         }
 
         results.push({ sessionId: session.id, status: "rescued", detail: `Printful #${printfulResult?.id}` });
@@ -151,18 +112,12 @@ export async function GET(req: NextRequest) {
 
   // Alert on any failures that need manual attention
   const failures = results.filter(r => r.status === "printful_error" || r.status === "needs_attention");
-  if (failures.length > 0 && process.env.RESEND_API_KEY) {
-    try {
-      const resend = new Resend(process.env.RESEND_API_KEY);
-      await resend.emails.send({
-        from: "Tour de Fore <noreply@tourdefore.com>",
-        to: "info@tourdefore.com",
-        subject: `ALERT: ${failures.length} order(s) need attention`,
-        html: `<p>The cron sync found paid orders that could not be fulfilled:</p>
-          <pre>${JSON.stringify(failures, null, 2)}</pre>
-          <p>Check Stripe dashboard and manually create Printful orders or refund.</p>`,
-      });
-    } catch { /* non-critical */ }
+  if (failures.length > 0) {
+    await sendEmail({
+      to: "info@tourdefore.com",
+      subject: `ALERT: ${failures.length} order(s) need attention`,
+      html: `<p>The cron sync found paid orders that could not be fulfilled:</p><pre>${JSON.stringify(failures, null, 2)}</pre><p>Check Stripe dashboard and manually create Printful orders or refund.</p>`,
+    });
   }
 
   return NextResponse.json({ checked: results.length, rescued: results.filter(r => r.status === "rescued").length, results });

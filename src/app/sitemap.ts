@@ -69,6 +69,9 @@ function generateComparisonPairs(): string[] {
 
 const comparisonPairs = generateComparisonPairs();
 
+// Fixed build date — avoids telling Google "everything changed" on every deploy
+const LAST_MODIFIED = new Date("2026-04-04");
+
 export async function generateSitemaps() {
   return [
     { id: 0 }, // static pages, navigation, tiers, activities, themes
@@ -87,59 +90,59 @@ export default function sitemap({ id }: { id: number }): MetadataRoute.Sitemap {
     const activityTypes = ["atv", "fishing", "shooting", "casino", "brewery", "spa", "water-sports", "horseback", "hiking", "rafting", "zipline", "go-karts", "axe-throwing", "skeet", "boat-rental", "kayaking", "winery", "distillery", "paintball", "mountain-biking"];
 
     return [
-      { url: base, lastModified: new Date(), changeFrequency: "weekly", priority: 1 },
-      { url: `${base}/plan`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
-      { url: `${base}/plan-a-trip`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
-      { url: `${base}/golf-trips`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
-      { url: `${base}/concierge`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-      { url: `${base}/past-trips`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
-      { url: `${base}/past-trips/2025`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.6 },
-      { url: `${base}/past-trips/2024`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.6 },
-      { url: `${base}/past-trips/2023`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.5 },
-      { url: `${base}/past-trips/2022`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.5 },
-      { url: `${base}/past-trips/2021`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.5 },
-      { url: `${base}/shop`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
-      { url: `${base}/site-map`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.5 },
+      { url: base, lastModified: LAST_MODIFIED, changeFrequency: "weekly", priority: 1 },
+      { url: `${base}/plan`, lastModified: LAST_MODIFIED, changeFrequency: "weekly", priority: 0.9 },
+      { url: `${base}/plan-a-trip`, lastModified: LAST_MODIFIED, changeFrequency: "weekly", priority: 0.9 },
+      { url: `${base}/golf-trips`, lastModified: LAST_MODIFIED, changeFrequency: "weekly", priority: 0.9 },
+      { url: `${base}/concierge`, lastModified: LAST_MODIFIED, changeFrequency: "monthly", priority: 0.8 },
+      { url: `${base}/past-trips`, lastModified: LAST_MODIFIED, changeFrequency: "monthly", priority: 0.7 },
+      { url: `${base}/past-trips/2025`, lastModified: LAST_MODIFIED, changeFrequency: "yearly", priority: 0.6 },
+      { url: `${base}/past-trips/2024`, lastModified: LAST_MODIFIED, changeFrequency: "yearly", priority: 0.6 },
+      { url: `${base}/past-trips/2023`, lastModified: LAST_MODIFIED, changeFrequency: "yearly", priority: 0.5 },
+      { url: `${base}/past-trips/2022`, lastModified: LAST_MODIFIED, changeFrequency: "yearly", priority: 0.5 },
+      { url: `${base}/past-trips/2021`, lastModified: LAST_MODIFIED, changeFrequency: "yearly", priority: 0.5 },
+      { url: `${base}/shop`, lastModified: LAST_MODIFIED, changeFrequency: "monthly", priority: 0.6 },
+      { url: `${base}/site-map`, lastModified: LAST_MODIFIED, changeFrequency: "weekly", priority: 0.5 },
       // Regions
       ...regionIds.map((slug) => ({
         url: `${base}/golf-trips/region/${slug}`,
-        lastModified: new Date(),
+        lastModified: LAST_MODIFIED,
         changeFrequency: "monthly" as const,
         priority: 0.7,
       })),
       // States
       ...uniqueStates.map((s) => ({
         url: `${base}/golf-trips/state/${stateSlug(s)}`,
-        lastModified: new Date(),
+        lastModified: LAST_MODIFIED,
         changeFrequency: "monthly" as const,
         priority: 0.7,
       })),
       // Tiers
       ...["bucket-list", "premium", "solid", "budget"].map((t) => ({
         url: `${base}/golf-trips/courses/${t}`,
-        lastModified: new Date(),
+        lastModified: LAST_MODIFIED,
         changeFrequency: "monthly" as const,
         priority: 0.7,
       })),
       // Activities
       ...activityTypes.map((t) => ({
         url: `${base}/golf-trips/activities/${t}`,
-        lastModified: new Date(),
+        lastModified: LAST_MODIFIED,
         changeFrequency: "monthly" as const,
         priority: 0.6,
       })),
       // Themes
       ...["bachelor-party", "budget", "bucket-list"].map((t) => ({
         url: `${base}/golf-trips/${t}`,
-        lastModified: new Date(),
+        lastModified: LAST_MODIFIED,
         changeFrequency: "monthly" as const,
         priority: 0.7,
       })),
       // Guides index + individual guides
-      { url: `${base}/guides`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.8 },
+      { url: `${base}/guides`, lastModified: LAST_MODIFIED, changeFrequency: "weekly" as const, priority: 0.8 },
       ...["how-to-plan-a-group-golf-trip", "best-golf-trip-destinations-by-month", "best-walkable-golf-courses", "golf-trip-budget-guide", "golf-trip-packing-list", "best-golf-trips-under-500", "desert-vs-coastal-vs-mountain-golf", "best-golf-destinations-for-large-groups", "top-bucket-list-golf-courses", "first-time-golf-trip-mistakes"].map((slug) => ({
         url: `${base}/guides/${slug}`,
-        lastModified: new Date(),
+        lastModified: LAST_MODIFIED,
         changeFrequency: "monthly" as const,
         priority: 0.7,
       })),
@@ -156,14 +159,14 @@ export default function sitemap({ id }: { id: number }): MetadataRoute.Sitemap {
     for (const d of regionDests) {
       entries.push({
         url: `${base}/golf-trips/${d.id}`,
-        lastModified: new Date(),
+        lastModified: LAST_MODIFIED,
         changeFrequency: "monthly",
         priority: 0.8,
       });
       for (const c of d.courses) {
         entries.push({
           url: `${base}/golf-trips/${d.id}/courses/${slugify(c.name)}`,
-          lastModified: new Date(),
+          lastModified: LAST_MODIFIED,
           changeFrequency: "monthly",
           priority: 0.6,
         });
@@ -178,13 +181,13 @@ export default function sitemap({ id }: { id: number }): MetadataRoute.Sitemap {
     for (const d of allDestinations) {
       entries.push({
         url: `${base}/golf-trips/${d.id}/guide`,
-        lastModified: new Date(),
+        lastModified: LAST_MODIFIED,
         changeFrequency: "monthly",
         priority: 0.8,
       });
       entries.push({
         url: `${base}/golf-trips/${d.id}/cost`,
-        lastModified: new Date(),
+        lastModified: LAST_MODIFIED,
         changeFrequency: "monthly",
         priority: 0.7,
       });
@@ -197,13 +200,13 @@ export default function sitemap({ id }: { id: number }): MetadataRoute.Sitemap {
     return [
       ...bachelorDests.map((d) => ({
         url: `${base}/golf-trips/${d.id}/bachelor-party`,
-        lastModified: new Date(),
+        lastModified: LAST_MODIFIED,
         changeFrequency: "monthly" as const,
         priority: 0.7,
       })),
       ...comparisonPairs.map((matchup) => ({
         url: `${base}/golf-trips/compare/${matchup}`,
-        lastModified: new Date(),
+        lastModified: LAST_MODIFIED,
         changeFrequency: "monthly" as const,
         priority: 0.6,
       })),

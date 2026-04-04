@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSession, setPassword, setUserName, setEmailVerified, hasPassword } from "@/lib/auth";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
+import { setSessionCookie } from "@/lib/shared-constants";
 
 export async function POST(req: NextRequest) {
   try {
@@ -38,14 +39,7 @@ export async function POST(req: NextRequest) {
     const sessionId = await createSession(normalizedEmail);
 
     const response = NextResponse.json({ ok: true });
-    response.cookies.set("tdf-session", sessionId, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 60 * 60 * 24 * 30,
-      path: "/",
-    });
-
+    setSessionCookie(response, sessionId);
     return response;
   } catch (err) {
     console.error("Register error:", err);

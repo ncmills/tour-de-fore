@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getRedis } from "@/lib/redis";
+import { verifyAdmin } from "@/lib/shared-constants";
 
 export async function POST(req: NextRequest) {
   const { email, secret } = await req.json();
-  if (secret !== process.env.ADMIN_SECRET) {
+  if (!verifyAdmin(secret)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

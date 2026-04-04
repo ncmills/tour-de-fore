@@ -3,6 +3,7 @@ import { Space_Grotesk, Inter, Instrument_Serif, Caveat, Permanent_Marker, Lilit
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import DrunkMode from "@/components/DrunkMode";
+import GlobalFire from "@/components/GlobalFire";
 import PostHogProvider from "@/components/PostHogProvider";
 import "./globals.css";
 
@@ -159,12 +160,6 @@ export default function RootLayout({
               description: "An Annual Golf Odyssey — six years of fairways, friendships, and questionable handicaps.",
               url: "https://tourdefore.com",
               foundingDate: "2021",
-              sameAs: [
-                "https://idonthaveawill.com",
-                "https://whatpeptidesdo.com",
-                "https://doppelwriter.com",
-                "https://imfrustrated.org",
-              ],
             }),
           }}
         />
@@ -176,6 +171,7 @@ export default function RootLayout({
           Skip to content
         </a>
         <PostHogProvider>
+          <GlobalFire />
           {children}
           <DrunkMode />
         </PostHogProvider>

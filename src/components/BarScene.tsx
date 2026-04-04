@@ -47,8 +47,8 @@ export default function BarScene({ onShop, onDrink, isDrunk }: Props) {
       style={{
         position: "fixed",
         inset: 0,
-        zIndex: 300,
-        background: "#1a1610",
+        zIndex: 1,
+        background: "transparent",
         overflow: "hidden",
       }}
     >

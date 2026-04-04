@@ -57,14 +57,16 @@ export async function recordDestinationView(
 ): Promise<void> {
   const r = getRedis();
   const key = `signal:views:${destinationId}`;
-  await r.hincrby(key, "total", 1);
+  const pipe = r.pipeline();
+  pipe.hincrby(key, "total", 1);
   if (inputs.region) {
-    await r.hincrby(key, `region:${inputs.region}`, 1);
+    pipe.hincrby(key, `region:${inputs.region}`, 1);
   }
   if (inputs.budget) {
-    await r.hincrby(key, `budget:${inputs.budget}`, 1);
+    pipe.hincrby(key, `budget:${inputs.budget}`, 1);
   }
-  await r.expire(key, SIGNAL_TTL);
+  pipe.expire(key, SIGNAL_TTL);
+  await pipe.exec();
 }
 
 /**
@@ -76,23 +78,11 @@ export async function recordDestinationSelect(
 ): Promise<void> {
   const r = getRedis();
   const key = `signal:selects:${destinationId}`;
-  await r.hincrby(key, "total", 1);
-  await r.hincrby(key, `tier:${tier}`, 1);
-  await r.expire(key, SIGNAL_TTL);
-}
-
-/**
- * Get popularity score for a destination (selects / views ratio)
- * Returns 0-1 score, higher = users choose this more when shown
- */
-export async function getDestinationPopularity(
-  destinationId: string
-): Promise<number> {
-  const r = getRedis();
-  const views = parseInt(await r.hget(`signal:views:${destinationId}`, "total") || "0");
-  const selects = parseInt(await r.hget(`signal:selects:${destinationId}`, "total") || "0");
-  if (views === 0) return 0;
-  return selects / views;
+  const pipe = r.pipeline();
+  pipe.hincrby(key, "total", 1);
+  pipe.hincrby(key, `tier:${tier}`, 1);
+  pipe.expire(key, SIGNAL_TTL);
+  await pipe.exec();
 }
 
 /**
@@ -104,21 +94,35 @@ export async function getAllPopularityScores(): Promise<{ scores: Map<string, nu
   const viewCounts = new Map<string, number>();
 
   // Scan for all view keys
+  const allKeys: string[] = [];
   let cursor = "0";
   do {
     const [nextCursor, keys] = await r.scan(cursor, "MATCH", "signal:views:*", "COUNT", 100);
     cursor = nextCursor;
-
-    for (const key of keys) {
-      const destId = key.replace("signal:views:", "");
-      const views = parseInt(await r.hget(key, "total") || "0");
-      const selects = parseInt(await r.hget(`signal:selects:${destId}`, "total") || "0");
-      if (views > 0) {
-        scores.set(destId, selects / views);
-        viewCounts.set(destId, views);
-      }
-    }
+    allKeys.push(...keys);
   } while (cursor !== "0");
+
+  if (allKeys.length === 0) return { scores, viewCounts };
+
+  // Batch all hget calls in a single pipeline
+  const pipe = r.pipeline();
+  for (const key of allKeys) {
+    const destId = key.replace("signal:views:", "");
+    pipe.hget(key, "total");
+    pipe.hget(`signal:selects:${destId}`, "total");
+  }
+  const results = await pipe.exec();
+  if (!results) return { scores, viewCounts };
+
+  for (let i = 0; i < allKeys.length; i++) {
+    const destId = allKeys[i].replace("signal:views:", "");
+    const views = parseInt((results[i * 2]?.[1] as string) || "0");
+    const selects = parseInt((results[i * 2 + 1]?.[1] as string) || "0");
+    if (views > 0) {
+      scores.set(destId, selects / views);
+      viewCounts.set(destId, views);
+    }
+  }
 
   return { scores, viewCounts };
 }
@@ -139,11 +143,13 @@ const ORDER_TTL = 60 * 60 * 24 * 365; // 1 year
 
 export async function storeOrder(order: ShopOrder): Promise<void> {
   const r = getRedis();
-  await r.set(`order:${order.id}`, JSON.stringify(order), "EX", ORDER_TTL);
+  const pipe = r.pipeline();
+  pipe.set(`order:${order.id}`, JSON.stringify(order), "EX", ORDER_TTL);
   if (order.email) {
-    await r.sadd(`user:${order.email}:orders`, order.id);
-    await r.expire(`user:${order.email}:orders`, ORDER_TTL);
+    pipe.sadd(`user:${order.email}:orders`, order.id);
+    pipe.expire(`user:${order.email}:orders`, ORDER_TTL);
   }
+  await pipe.exec();
 }
 
 export async function getOrder(id: string): Promise<ShopOrder | null> {

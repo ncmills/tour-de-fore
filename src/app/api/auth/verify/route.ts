@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyMagicToken, createSession, setEmailVerified, hasPassword } from "@/lib/auth";
+import { setSessionCookie } from "@/lib/shared-constants";
 
 export async function GET(req: NextRequest) {
   const token = req.nextUrl.searchParams.get("token");
@@ -28,13 +29,6 @@ export async function GET(req: NextRequest) {
   }
 
   const response = NextResponse.redirect(new URL(redirectUrl, req.url));
-  response.cookies.set("tdf-session", sessionId, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    maxAge: 60 * 60 * 24 * 30,
-    path: "/",
-  });
-
+  setSessionCookie(response, sessionId, "lax");
   return response;
 }

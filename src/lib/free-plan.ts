@@ -72,7 +72,7 @@ export function buildFreePreview(
     : 300;
   const lodgingPerPerson = (lodgingNightly * nights) / Math.max(state.groupSize, 2);
   // Data-driven food estimate from actual dining prices
-  const priceToNum: Record<string, number> = { "$": 30, "$$": 60, "$$$": 100, "$$$$": 150 };
+  const priceToNum: Record<string, number> = { "$": 40, "$$": 65, "$$$": 100, "$$$$": 150 };
   const tierDiningSelector: Record<PriceLevel, (spots: typeof destination.dining) => number> = {
     budget: (spots) => {
       const cheap = spots.filter(d => d.priceRange === "$" || d.priceRange === "$$");
@@ -197,14 +197,4 @@ export function buildFreePreview(
       privateChefOptions: destination.privateChefs.length,
     },
   };
-}
-
-function getCourseQualityTiers(quality: string): string[] {
-  switch (quality) {
-    case "Cheap & fun": return ["budget", "solid"];
-    case "Mix of public & resort": return ["solid", "premium"];
-    case "Bucket list only": return ["bucket-list", "premium"];
-    case "Whatever fits budget": return ["budget", "solid", "premium", "bucket-list"];
-    default: return ["budget", "solid", "premium", "bucket-list"];
-  }
 }

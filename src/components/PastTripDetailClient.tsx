@@ -6,7 +6,6 @@ import Image from "next/image";
 import { useState, useEffect, useMemo, useCallback } from "react";
 import type { Trip } from "@/lib/trips";
 import USMap from "./USMap";
-import FireBackground from "./FireBackground";
 import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
 
@@ -68,8 +67,6 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
 
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff", position: "relative" }}>
-      <FireBackground />
-
       <MulliganButton href={isLive ? "/?skip=1" : "/past-trips"} />
       <HomeButton />
 

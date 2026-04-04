@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import Stripe from "stripe";
-import { createPrintfulOrder, findVariant } from "@/lib/printful";
+import { createPrintfulOrder } from "@/lib/printful";
 import { storeOrder, getOrder } from "@/lib/kv";
-
-function getStripe() {
-  return new Stripe((process.env.STRIPE_SECRET_KEY ?? "").trim());
-}
+import { getStripe } from "@/lib/stripe";
+import {
+  parseOrderItems,
+  resolveVariants,
+  extractShipping,
+  buildRecipient,
+  buildExternalId,
+} from "@/lib/order-utils";
 
 // Called by the success page to ensure this specific order made it to Printful
 export async function POST(req: NextRequest) {
@@ -35,34 +38,20 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ status: "no_items" });
     }
 
-    const rawItems = JSON.parse(itemsJson) as { s?: number; q?: number; p?: string; c?: string; z?: string; syncVariantId?: number; quantity?: number; productId?: string; color?: string; size?: string }[];
-    const items = rawItems.map(i => ({
-      syncVariantId: i.syncVariantId ?? i.s ?? 0,
-      quantity: i.quantity ?? i.q ?? 1,
-      productId: i.productId ?? i.p ?? "",
-      color: i.color ?? i.c ?? "",
-      size: i.size ?? i.z,
-    }));
+    const items = parseOrderItems(itemsJson);
 
+    // Only resolve items that don't already have a syncVariantId
     for (const item of items) {
       if (!item.syncVariantId && item.productId && item.color) {
+        const { findVariant } = await import("@/lib/printful");
         const variant = await findVariant(item.productId, item.color, item.size);
         if (variant) item.syncVariantId = variant.syncVariantId;
       }
     }
 
-    const shippingObj = session.collected_information?.shipping_details
-      || session.shipping_details || session.shipping;
-    const customerAddr = session.customer_details?.address;
-    const shippingAddress = shippingObj?.address || (customerAddr ? {
-      line1: customerAddr.line1, line2: customerAddr.line2,
-      city: customerAddr.city, state: customerAddr.state,
-      country: customerAddr.country, postal_code: customerAddr.postal_code,
-    } : null);
-    const shippingName = shippingObj?.name || session.customer_details?.name || "Customer";
-    const customerEmail = session.customer_details?.email || "";
+    const shipping = extractShipping(session);
 
-    if (!shippingAddress?.line1) {
+    if (!shipping.address) {
       return NextResponse.json({ status: "no_shipping" });
     }
 
@@ -73,21 +62,12 @@ export async function POST(req: NextRequest) {
 
     const printfulResult = await createPrintfulOrder(
       validItems.map(i => ({ sync_variant_id: i.syncVariantId, quantity: i.quantity })),
-      {
-        name: shippingName,
-        address1: shippingAddress.line1 || "",
-        address2: shippingAddress.line2 || undefined,
-        city: shippingAddress.city || "",
-        state_code: shippingAddress.state || "",
-        country_code: shippingAddress.country || "US",
-        zip: shippingAddress.postal_code || "",
-        email: customerEmail,
-      },
-      `tdf-${sessionId.slice(-56)}`
+      buildRecipient(shipping),
+      buildExternalId(sessionId)
     );
 
     await storeOrder({
-      id: sessionId, email: customerEmail,
+      id: sessionId, email: shipping.email,
       items: items.map(i => ({ productId: i.productId, color: i.color, size: i.size, quantity: i.quantity })),
       stripeSessionId: sessionId,
       printfulOrderId: printfulResult?.id || null,

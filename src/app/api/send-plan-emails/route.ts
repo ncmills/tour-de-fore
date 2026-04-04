@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
 import { getPlan, getAttendees, markEmailsSent } from "@/lib/kv";
-
-function getResend() {
-  return new Resend(process.env.RESEND_API_KEY);
-}
+import { getResendClient, FROM_ADDRESS } from "@/lib/email";
 
 export async function POST(req: NextRequest) {
   try {
@@ -58,12 +54,12 @@ export async function POST(req: NextRequest) {
     const organizerEmail = stored.inputs.organizerEmail;
 
     // Send emails
-    const resend = getResend();
+    const resend = getResendClient();
     const emailPromises = attendees.map((attendee) => {
       const isOrganizer = attendee.email === organizerEmail;
 
       return resend.emails.send({
-        from: "Tour de Fore <noreply@tourdefore.com>",
+        from: FROM_ADDRESS,
         to: attendee.email,
         subject: `${plan.tripName} — Your Golf Trip Plan is Ready`,
         html: `

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
 import { getSessionEmail, verifyPassword, changeUserEmail, createSession } from "@/lib/auth";
+import { setSessionCookie } from "@/lib/shared-constants";
 
 export async function POST(req: NextRequest) {
   try {
@@ -36,16 +36,9 @@ export async function POST(req: NextRequest) {
 
     // Create new session under new email
     const sessionId = await createSession(normalized);
-    const cookieStore = await cookies();
-    cookieStore.set("tdf-session", sessionId, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 60 * 60 * 24 * 30,
-      path: "/",
-    });
-
-    return NextResponse.json({ ok: true, email: normalized });
+    const response = NextResponse.json({ ok: true, email: normalized });
+    setSessionCookie(response, sessionId);
+    return response;
   } catch (err) {
     console.error("Change email error:", err);
     return NextResponse.json({ error: "Failed to change email" }, { status: 500 });

@@ -6,13 +6,6 @@ import type { GeneratedPlan, ThreePlanResult } from "./plan-types";
  * Hides: exact names, URLs, addresses, booking links.
  */
 
-const courseLabels: Record<string, string> = {
-  "bucket-list": "Bucket-List Course",
-  "premium": "Premium Course",
-  "solid": "Solid Mid-Tier Course",
-  "budget": "Budget-Friendly Course",
-};
-
 const diningLabels: Record<string, string> = {
   "steakhouse": "Steakhouse",
   "bbq": "BBQ Joint",

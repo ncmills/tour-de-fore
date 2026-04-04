@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useCallback, useRef, useEffect } from "react";
 import { trips } from "@/lib/trips";
-import FireBackground from "./FireBackground";
 import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
 
@@ -75,8 +74,6 @@ export default function PastTripsClient() {
         fontFamily: "var(--font-body), sans-serif",
       }}
     >
-      <FireBackground />
-
       <MulliganButton />
       <HomeButton />
 

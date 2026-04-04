@@ -251,7 +251,7 @@ export default function ShopPageClient({ onBack }: { onBack?: () => void }) {
   };
 
   return (
-    <main style={{ minHeight: "100vh", background: "#0f1a0f", color: "#fff", position: "relative", overflow: "hidden" }}>
+    <main style={{ minHeight: "100vh", background: "transparent", color: "#fff", position: "relative", overflow: "hidden" }}>
       {/* Background */}
       <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0 }}>
         <img src="/proshop-photo.webp" alt="Tour de Fore pro shop merchandise display" width={800} height={600} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
@@ -328,7 +328,7 @@ export default function ShopPageClient({ onBack }: { onBack?: () => void }) {
             <motion.div
               initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }}
               transition={{ ease: [0.25, 0.1, 0.25, 1] }}
-              style={{ position: "fixed", top: 0, right: 0, bottom: 0, width: "min(420px, 100vw)", background: "#0f1a0f", borderLeft: "1px solid rgba(212,168,67,0.15)", zIndex: 10002, display: "flex", flexDirection: "column", padding: "2rem" }}
+              style={{ position: "fixed", top: 0, right: 0, bottom: 0, width: "min(420px, 100vw)", background: "rgba(15,26,15,0.95)", borderLeft: "1px solid rgba(212,168,67,0.15)", zIndex: 10002, display: "flex", flexDirection: "column", padding: "2rem" }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem" }}>
                 <h2 style={{ fontFamily: "var(--font-shop-circus), serif", fontSize: "1.2rem", color: "#D4A843", letterSpacing: "0.06em" }}>Your Cart</h2>

@@ -309,20 +309,14 @@ function Question({
       style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "flex-start", padding: "clamp(3rem, 8vh, 5rem) clamp(1rem, 5vw, 2.5rem) 4.5rem", textAlign: "center", overflow: "auto" }}
     >
       <div style={{ maxWidth: 620, margin: "0 auto", width: "100%" }}>
-        {/* Counter + category */}
-        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "center", gap: "0.5rem", marginBottom: "2.4rem" }}>
-          <span style={{ fontSize: "1.1rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", fontFamily: "var(--font-plan-block), sans-serif" }}>
-            {number} <span style={{ fontSize: "0.715rem" }}>of</span> {total}
-          </span>
-          {subtitle && (
-            <>
-              <span style={{ color: "rgba(255,255,255,0.25)" }}>&mdash;</span>
-              <span className="neon-stats" style={{ fontSize: "1.1rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#EA580C", fontFamily: "var(--font-plan-block), sans-serif", textShadow: "0 0 7px rgba(234,88,12,0.6), 0 0 20px rgba(234,88,12,0.3)" }}>
-                <span>{subtitle}</span>
-              </span>
-            </>
-          )}
-        </div>
+        {/* Category label */}
+        {subtitle && (
+          <div style={{ marginBottom: "2.4rem", textAlign: "center" }}>
+            <span className="neon-stats neon-stats-text" style={{ fontSize: "1.1rem", letterSpacing: "0.22em" }}>
+              {subtitle}
+            </span>
+          </div>
+        )}
 
         {/* Title — ICE COLD blocky slab */}
         <h2 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(2.6rem, 6vw, 4.2rem)", fontWeight: 700, color: "#fff", lineHeight: 1.1, letterSpacing: "0.04em", textTransform: "uppercase", marginBottom: "3rem", minHeight: "1.1em" }}>
@@ -560,7 +554,7 @@ export default function PlanWizardClient() {
   // ── Loading / Confirmation / Error overlay ──
   if (isGenerating || confirmed || overlayError) {
     return (
-      <div className="fixed inset-0 z-50 flex flex-col items-center justify-center text-center px-6" role="status" aria-live="polite" style={{ background: "#000" }}>
+      <div className="fixed inset-0 z-50 flex flex-col items-center justify-center text-center px-6" role="status" aria-live="polite" style={{ background: "rgba(0,0,0,0.85)" }}>
         <AnimatePresence mode="wait">
           {overlayError ? (
             <motion.div key="error" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center gap-6">
@@ -712,7 +706,7 @@ export default function PlanWizardClient() {
   );
 
   return (
-    <div id="main-content" style={{ background: "#000", height: "100vh", overflow: "hidden", position: "relative" }}>
+    <div id="main-content" style={{ background: "transparent", height: "100vh", overflow: "hidden", position: "relative" }}>
       {/* Fixed progress bar — thin white line */}
       <div style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 50, height: 2, background: "rgba(255,255,255,0.08)" }}>
         <motion.div
@@ -721,10 +715,8 @@ export default function PlanWizardClient() {
           transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
         />
       </div>
-      {/* Step counter */}
-      <div style={{ position: "fixed", top: 10, right: 16, zIndex: 51, fontSize: "0.72rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", fontFamily: "var(--font-inter), sans-serif" }}>
-        Step {currentQ + 1} of {totalQuestions}
-      </div>
+      {/* Home button — top right */}
+      <HomeButton />
 
       {/* Session restore banner */}
       <AnimatePresence>

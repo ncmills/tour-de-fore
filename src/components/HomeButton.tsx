@@ -10,7 +10,7 @@ export default function HomeButton({ side = "right" }: { side?: "left" | "right"
         ...(side === "left"
           ? { left: "clamp(1rem, 4vw, 2rem)" }
           : { right: "clamp(1rem, 4vw, 2rem)" }),
-        zIndex: 10000,
+        zIndex: 300,
         display: "flex",
         alignItems: "center",
         gap: "6px",

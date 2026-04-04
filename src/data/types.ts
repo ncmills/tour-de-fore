@@ -30,8 +30,8 @@ export interface GolfCourse {
   holes: number;
   par: number;
   yardage: number;
-  slope: number;
-  rating: number;
+  slope?: number;
+  rating?: number;
   walkable: boolean;
   style: CourseStyle;
   driveMinutes: number; // from city center

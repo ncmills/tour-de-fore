@@ -87,12 +87,20 @@ export default function Footer() {
             <h4 className="text-xs tracking-[0.15em] uppercase text-accent mb-6 font-body font-medium">
               Shop
             </h4>
-            <Link
-              href="/shop"
-              className="text-text-muted hover:text-accent transition-colors duration-300 text-sm font-body block mb-10"
-            >
-              View Pro Shop
-            </Link>
+            <div className="space-y-3 mb-10">
+              <Link
+                href="/shop"
+                className="text-text-muted hover:text-accent transition-colors duration-300 text-sm font-body block"
+              >
+                View Pro Shop
+              </Link>
+              <Link
+                href="/subscribe"
+                className="text-text-muted hover:text-accent transition-colors duration-300 text-sm font-body block"
+              >
+                Become a Devil
+              </Link>
+            </div>
 
             <div className="opacity-30 hover:opacity-50 transition-opacity duration-500">
               <USMap compact />

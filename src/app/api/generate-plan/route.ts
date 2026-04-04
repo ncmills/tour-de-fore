@@ -24,28 +24,9 @@ import { getAllPopularityScores } from "@/lib/kv";
 import { buildFreePreview } from "@/lib/free-plan";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import { validateWizardState } from "@/lib/validate";
-import {
-  addPlanToUser,
-} from "@/lib/auth";
+import { addPlanToUser } from "@/lib/auth";
 import { getRedis } from "@/lib/redis";
-
-/** Get ISO week key like "2026-W14" */
-function getWeekKey(): string {
-  const d = new Date();
-  const jan1 = new Date(d.getFullYear(), 0, 1);
-  const days = Math.floor((d.getTime() - jan1.getTime()) / 86400000);
-  const week = Math.ceil((days + jan1.getDay() + 1) / 7);
-  return `${d.getFullYear()}-W${String(week).padStart(2, "0")}`;
-}
-
-/** Get next Monday midnight ISO string */
-function getNextWeekReset(): string {
-  const d = new Date();
-  const day = d.getDay();
-  const daysUntilMonday = day === 0 ? 1 : 8 - day;
-  const next = new Date(d.getFullYear(), d.getMonth(), d.getDate() + daysUntilMonday);
-  return next.toISOString();
-}
+import { UNLIMITED_EMAILS, getWeekKey, getNextWeekReset } from "@/lib/shared-constants";
 
 function tryParseJSON(jsonStr: string): unknown | null {
   // Strip markdown fences
@@ -319,7 +300,6 @@ export async function POST(req: NextRequest) {
   }
 
   const email = state.organizerEmail;
-  const UNLIMITED_EMAILS = ["nicholauscmills@gmail.com", "matt@sixtenmgmt.com"];
   const isAdminHeader = req.headers.get("x-admin-secret") === process.env.ADMIN_SECRET;
   const isUnlimited = isAdminHeader || (!!email && UNLIMITED_EMAILS.includes(email));
 
@@ -455,8 +435,10 @@ export async function POST(req: NextRequest) {
         if (email && !UNLIMITED_EMAILS.includes(email)) {
           const weekKey = getWeekKey();
           const redisKey = `user:${email}:plans:${weekKey}`;
-          await getRedis().incr(redisKey);
-          await getRedis().expire(redisKey, 60 * 60 * 24 * 8); // 8 days TTL
+          const pipe = getRedis().pipeline();
+          pipe.incr(redisKey);
+          pipe.expire(redisKey, 60 * 60 * 24 * 8); // 8 days TTL
+          await pipe.exec();
         }
 
         // Store plan — all plans are fully unlocked (no paywall)

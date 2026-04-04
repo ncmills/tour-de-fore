@@ -298,10 +298,3 @@ export function getThreeDestinations(state: WizardState): PickedDestination[] {
     mustPlayCourses: state.mustPlayCourses,
   });
 }
-
-/** @deprecated Use getThreeDestinations instead */
-export function getDestinationContext(state: WizardState): string {
-  const picks = getThreeDestinations(state);
-  if (picks.length === 0) return "";
-  return buildDestinationContext(picks[0].destination);
-}

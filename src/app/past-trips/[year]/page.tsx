@@ -36,7 +36,7 @@ export default async function YearPage({ params }: { params: Promise<{ year: str
 
   return (
     <Suspense>
-      <PastTripDetailClient trip={trip} />
-    </Suspense>
+        <PastTripDetailClient trip={trip} />
+      </Suspense>
   );
 }

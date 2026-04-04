@@ -271,6 +271,7 @@ export interface StoredPlan {
   createdAt: string;
   emailsSent: boolean;
   // Paid plan state
+  stripeSessionId?: string; // checkout session ID for payment verification
   paidDestination?: PriceLevel; // which destination the user paid for
   paid?: boolean;
   paidAt?: string;

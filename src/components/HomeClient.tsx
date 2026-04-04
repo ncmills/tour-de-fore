@@ -107,7 +107,7 @@ export default function HomeClient() {
   }, [logoVisible]);
 
   return (
-    <main style={{ height: "100vh", overflow: "hidden", position: "relative", background: "#000" }}>
+    <main style={{ height: "100vh", overflow: "hidden", position: "relative", background: "var(--color-bg, #18181B)" }}>
 
       {/* Video grid background — fades in concurrently with logo going to black */}
       <motion.div
@@ -269,30 +269,22 @@ export default function HomeClient() {
               <Link
                 key={label}
                 href={href}
+                className={blood ? "" : "home-link"}
                 onClick={() => { try { sessionStorage.setItem("tdf-explode", "1"); } catch {} }}
                 style={{
                   position: "relative" as const,
                   fontFamily: "var(--font-blackletter), cursive",
                   fontSize: isMobile ? "clamp(2.2rem, 9.4vw, 3.1rem)" : "clamp(2.8rem, 5.5vw, 5.5rem)",
-                  color: blood ? "#fff" : "rgba(255,255,255,0.7)",
                   textDecoration: "none",
-                  transition: "color 0.2s, background 0.3s, text-shadow 0.3s",
-                  textShadow: "0 0 8px rgba(255,60,20,0.3), 0 0 20px rgba(255,60,20,0.15)",
                   overflow: "visible" as const,
                   ...(blood ? {
+                    color: "#fff",
                     background: "radial-gradient(ellipse at 50% 60%, rgba(139,0,0,0.7) 0%, rgba(180,20,20,0.45) 40%, rgba(120,0,0,0.2) 70%, transparent 100%)",
                     padding: "0.3em 1em",
                     borderRadius: "50% / 40%",
                     textShadow: "0 0 20px rgba(200,0,0,0.5), 0 2px 4px rgba(0,0,0,0.5)",
+                    transition: "background 0.3s",
                   } : {}),
-                }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.color = "rgba(255,255,255,1)";
-                  e.currentTarget.style.textShadow = "0 0 12px rgba(255,60,20,0.6), 0 0 30px rgba(255,60,20,0.3)";
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.color = blood ? "#fff" : "rgba(255,255,255,0.7)";
-                  e.currentTarget.style.textShadow = blood ? "0 0 20px rgba(200,0,0,0.5), 0 2px 4px rgba(0,0,0,0.5)" : "0 0 8px rgba(255,60,20,0.3), 0 0 20px rgba(255,60,20,0.15)";
                 }}
               >
                 {label}
@@ -346,7 +338,7 @@ export default function HomeClient() {
           position: "fixed",
           top: "1.2rem",
           left: "1.4rem",
-          zIndex: 9999,
+          zIndex: 300,
           background: "rgba(255,255,255,0.22)",
           border: "2px solid rgba(255,255,255,0.6)",
           borderRadius: "50%",

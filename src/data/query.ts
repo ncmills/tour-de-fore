@@ -87,23 +87,16 @@ function wizardActivityToType(activity: string): ActivityType | null {
   return map[activity] || null;
 }
 
+const VALID_REGIONS = new Set<Region>(["Southwest", "Pacific NW", "Midwest", "Southeast", "Northeast", "Mountain West", "South Central"]);
+
 function regionLabelToRegion(label: string): Region | null {
-  const map: Record<string, Region> = {
-    "Southwest": "Southwest",
-    "Pacific NW": "Pacific NW",
-    "Midwest": "Midwest",
-    "Southeast": "Southeast",
-    "Northeast": "Northeast",
-    "Mountain West": "Mountain West",
-    "South Central": "South Central",
-  };
-  return map[label] || null;
+  return VALID_REGIONS.has(label as Region) ? (label as Region) : null;
 }
 
 // ── Filter destinations ──
 
 export function filterDestinations(options: FilterOptions): Destination[] {
-  let results = [...allDestinations];
+  let results: Destination[] = allDestinations;
 
   // Filter by specific city (fuzzy match)
   if (options.specificCity) {

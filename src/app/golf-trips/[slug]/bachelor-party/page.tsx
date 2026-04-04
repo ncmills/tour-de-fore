@@ -213,14 +213,14 @@ export default async function BachelorPartyDestPage({
           <p style={{ ...prose, marginBottom: "1rem" }}>
             {competitiveCourses.length > 0
               ? `${competitiveCourses.length} premium/bucket-list courses for the main event rounds.`
-              : `${dest.courses.length} courses to choose from. Pick the hardest slope for the competition round.`}
+              : `${dest.courses.length} courses to choose from. Pick the toughest layout for the competition round.`}
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
             {topCourses.slice(0, 5).map((c) => (
               <Link key={c.name} href={`/golf-trips/${dest.id}/courses/${slugify(c.name)}`} style={{ ...card, textDecoration: "none", color: "#fff", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <div>
                   <span style={{ fontWeight: 600 }}>{c.name}</span>
-                  <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.8rem", marginLeft: "0.5rem" }}>{c.slope} slope · Par {c.par}</span>
+                  <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.8rem", marginLeft: "0.5rem" }}>Par {c.par} · {c.yardage.toLocaleString()} yds</span>
                 </div>
                 <span style={{ fontSize: "0.7rem", fontWeight: 700, padding: "2px 8px", borderRadius: 4, background: tierColor(c.tier), color: "#fff" }}>{tierLabel(c.tier)}</span>
               </Link>

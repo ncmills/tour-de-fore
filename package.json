@@ -6,10 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "test:filter": "tsx scripts/test-filtering.ts",
-    "test:api": "tsx scripts/test-api.ts",
-    "test:api:prod": "tsx scripts/test-api.ts --base-url https://tourdefore.com"
+    "lint": "eslint"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.80.0",

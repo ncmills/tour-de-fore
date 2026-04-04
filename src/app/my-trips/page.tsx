@@ -41,9 +41,9 @@ export default async function MyTripsPage() {
 
   return (
     <MyTripsClient
-      email={email}
-      name={name || ""}
-      plannedTrips={plannedTrips.filter(Boolean) as NonNullable<(typeof plannedTrips)[number]>[]}
-    />
+          email={email}
+          name={name || ""}
+          plannedTrips={plannedTrips.filter(Boolean) as NonNullable<(typeof plannedTrips)[number]>[]}
+        />
   );
 }

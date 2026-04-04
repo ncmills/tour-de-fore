@@ -94,10 +94,6 @@ function fuzzyMatch(dbName: string, optionName: string): boolean {
   return a === b || a.includes(b) || b.includes(a);
 }
 
-function findMatch<T extends { name: string }>(items: T[], optionName: string): T | undefined {
-  return items.find((item) => fuzzyMatch(item.name, optionName));
-}
-
 // ── Build context from destination data ──
 
 export function buildInsightsContext(destination: Destination, groupSize: number): InsightsContext {

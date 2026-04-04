@@ -6,8 +6,7 @@ import { buildDestinationContext } from "@/data/query";
 import { buildSystemPrompt, buildUserMessage } from "@/lib/planner-prompt";
 import { addPlanToUser } from "@/lib/auth";
 import type { PriceLevel, ThreePlanResult, DestinationRecommendation } from "@/lib/plan-types";
-
-const ADMIN_SECRET = process.env.ADMIN_SECRET;
+import { verifyAdmin } from "@/lib/shared-constants";
 
 /**
  * Admin endpoint to unlock a plan without payment (for testing).
@@ -17,7 +16,7 @@ export async function POST(req: NextRequest) {
   try {
     const { planId, dest, secret } = await req.json();
 
-    if (!ADMIN_SECRET || secret !== ADMIN_SECRET) {
+    if (!verifyAdmin(secret)) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 

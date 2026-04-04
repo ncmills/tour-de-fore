@@ -1,17 +1,9 @@
 import { NextResponse } from "next/server";
 import { getSessionEmail } from "@/lib/auth";
 import { getRedis } from "@/lib/redis";
+import { UNLIMITED_EMAILS, getWeekKey } from "@/lib/shared-constants";
 
-const UNLIMITED_EMAILS = ["nicholauscmills@gmail.com", "matt@sixtenmgmt.com"];
 const WEEKLY_PLAN_LIMIT = 3;
-
-function getWeekKey(): string {
-  const d = new Date();
-  const jan1 = new Date(d.getFullYear(), 0, 1);
-  const days = Math.floor((d.getTime() - jan1.getTime()) / 86400000);
-  const week = Math.ceil((days + jan1.getDay() + 1) / 7);
-  return `${d.getFullYear()}-W${String(week).padStart(2, "0")}`;
-}
 
 export async function GET() {
   try {

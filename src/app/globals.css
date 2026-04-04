@@ -175,13 +175,13 @@ h1, h2, h3, h4 {
 
 /* ── Focus-visible ── */
 :focus-visible {
-  outline: 2px solid #f59e0b;
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
-  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.25);
+  box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.25);
 }
 .wizard-input:focus-visible {
-  outline: 2px solid rgba(234, 88, 12, 0.6) !important;
-  outline-offset: 2px;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 /* ── Custom select arrow ── */
@@ -232,7 +232,7 @@ select.appearance-none {
   position: fixed;
   top: -100%;
   left: 16px;
-  z-index: 10000;
+  z-index: 500;
   padding: 12px 24px;
   background: var(--color-accent);
   color: white;
@@ -296,6 +296,17 @@ body.menu-open {
   letter-spacing: 0.1em;
   color: var(--color-neon, #ff6a28);
   text-shadow: 0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3);
+}
+
+/* ── Homepage nav links ── */
+.home-link {
+  color: rgba(255,255,255,0.7);
+  text-shadow: 0 0 8px rgba(255,60,20,0.3), 0 0 20px rgba(255,60,20,0.15);
+  transition: color 0.2s, text-shadow 0.3s;
+}
+.home-link:hover {
+  color: rgba(255,255,255,1);
+  text-shadow: 0 0 12px rgba(255,60,20,0.6), 0 0 30px rgba(255,60,20,0.3);
 }
 
 @keyframes bloodDrip {
@@ -380,10 +391,13 @@ body.menu-open {
     gap: 0.5rem !important;
   }
 
-  /* Tier toggle tabs — smaller padding on mobile */
+  /* Tier toggle tabs — smaller but accessible on mobile */
   .tier-tab-link {
-    padding: 6px 12px !important;
-    font-size: 0.65rem !important;
+    padding: 8px 14px !important;
+    font-size: 0.7rem !important;
+    min-height: 44px !important;
+    display: inline-flex !important;
+    align-items: center !important;
   }
 
   /* Shop cart button — reposition on mobile to avoid nav + title overlap */

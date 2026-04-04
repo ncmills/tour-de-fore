@@ -730,7 +730,7 @@ export default function MyTripsClient({
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            zIndex: 9999,
+            zIndex: 400,
             padding: "1rem",
           }}
         >

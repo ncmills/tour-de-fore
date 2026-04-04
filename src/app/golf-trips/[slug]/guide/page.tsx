@@ -185,15 +185,9 @@ export default async function GuidePage({
         </p>
 
         <p
-          className="neon-stats"
+          className="neon-stats neon-stats-text"
           style={{
             fontSize: "0.85rem",
-            color: "#ff6a28",
-            fontFamily: "var(--font-plan-block), sans-serif",
-            fontWeight: 700,
-            textTransform: "uppercase",
-            letterSpacing: "0.08em",
-            textShadow: "0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6)",
             marginBottom: "2rem",
           }}
         >
@@ -315,7 +309,6 @@ export default async function GuidePage({
                   <span>${c.greenFeeRange[0]}–${c.greenFeeRange[1]}</span>
                   <span>{c.style}</span>
                   <span>Par {c.par} · {c.yardage.toLocaleString()} yds</span>
-                  <span>{c.rating}/{c.slope} slope</span>
                   {c.walkable && <span style={{ color: "#3a7050" }}>Walkable</span>}
                   {c.googleRating && <span style={{ color: "#D4A843" }}>{c.googleRating}★{c.reviewCount ? ` (${c.reviewCount.toLocaleString()})` : ""}</span>}
                 </div>

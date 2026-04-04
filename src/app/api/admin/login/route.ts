@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSession } from "@/lib/auth";
-
-const ADMIN_SECRET = process.env.ADMIN_SECRET;
+import { verifyAdmin, setSessionCookie } from "@/lib/shared-constants";
 
 /**
  * Admin login — creates a session for any email without magic link.
@@ -11,20 +10,12 @@ export async function GET(req: NextRequest) {
   const email = req.nextUrl.searchParams.get("email");
   const secret = req.nextUrl.searchParams.get("secret");
 
-  if (!ADMIN_SECRET || secret !== ADMIN_SECRET || !email) {
+  if (!verifyAdmin(secret) || !email) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const sessionId = await createSession(email);
-
   const response = NextResponse.redirect(new URL("/my-trips", req.url));
-  response.cookies.set("tdf-session", sessionId, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
-    maxAge: 60 * 60 * 24 * 30,
-    path: "/",
-  });
-
+  setSessionCookie(response, sessionId);
   return response;
 }
