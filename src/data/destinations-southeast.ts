@@ -207,12 +207,13 @@ export const southeastDestinations: Destination[] = [
       {
         name: "Dugan's Pub",
         style: "casual",
-        priceRange: "$$",
+        priceRange: "$",
         capacity: "large-group",
         highlight:
           "Village pub with solid food and cold beer. The go-to casual spot after a round.",
         reservationNeeded: false,
-        googleRating: 4.3,
+              url: "https://www.dugans-pub.com",
+      googleRating: 4.3,
       },
       {
         name: "The Drum",
@@ -517,12 +518,15 @@ export const southeastDestinations: Destination[] = [
       {
         name: "Tomasso",
         style: "italian",
-        priceRange: "$$$",
+        priceRange: "$",
         capacity: "large-group",
         highlight:
           "Upscale Italian at the Sanctuary Hotel. Handmade pastas, great wine list.",
         reservationNeeded: true,
-        googleRating: 4.5,
+              url: "https://www.tomasso.com",
+
+              imageUrl: "https://tomasso.com/wp-content/uploads/2016/07/home-featured.jpg",
+      googleRating: 4.5,
       },
       {
         name: "The Ryder Cup Bar",
@@ -537,12 +541,13 @@ export const southeastDestinations: Destination[] = [
       {
         name: "Husk",
         style: "southern",
-        priceRange: "$$$",
+        priceRange: "$$",
         capacity: "large-group",
         highlight:
           "Sean Brock's farm-to-table Southern icon in downtown Charleston. Worth the 45-minute drive for one big dinner.",
         reservationNeeded: true,
-        googleRating: 4.4,
+              url: "https://www.husk.com",
+      googleRating: 4.4,
       },
       {
         name: "Jasmine Porch",
@@ -1200,12 +1205,13 @@ export const southeastDestinations: Destination[] = [
       {
         name: "LuLu's",
         style: "seafood",
-        priceRange: "$$",
+        priceRange: "$",
         capacity: "large-group",
         highlight:
           "Lucy Buffett's (Jimmy's sister) waterfront spot. Massive, lively, and built for groups. Get the Cheeseburger in Paradise.",
         reservationNeeded: false,
-        googleRating: 4.2,
+              url: "https://www.lulus.com",
+      googleRating: 4.2,
       },
       {
         name: "Cobalt The Restaurant",
@@ -1483,11 +1489,12 @@ export const southeastDestinations: Destination[] = [
       {
         name: "The Grey",
         style: "southern",
-        priceRange: "$$$$",
+        priceRange: "$$",
         capacity: "large-group",
         highlight:
           "Mashama Bailey's masterpiece in a restored Greyhound station. James Beard Award winner. The best restaurant in Savannah.",
         reservationNeeded: true,
+            url: "https://www.the-grey.com",
       },
       {
         name: "Elizabeth on 37th",
@@ -1554,6 +1561,7 @@ export const southeastDestinations: Destination[] = [
           "Craft cocktail bar in a former armory. Best cocktails in Savannah, full stop.",
         lateNight: true,
         walkableFromDowntown: true,
+            url: "https://www.artillery.com",
       },
       {
         name: "Pinkie Master's",
@@ -1813,11 +1821,12 @@ export const southeastDestinations: Destination[] = [
       {
         name: "Malone's",
         style: "steakhouse",
-        priceRange: "$$$",
+        priceRange: "$$",
         capacity: "large-group",
         highlight:
           "Lexington's premier steakhouse. Prime steaks, great bourbon selection, and a private dining room for groups.",
         reservationNeeded: true,
+            url: "https://www.malones.com",
       },
       {
         name: "County Club",
@@ -2143,11 +2152,12 @@ export const southeastDestinations: Destination[] = [
       {
         name: "Curate",
         style: "upscale",
-        priceRange: "$$$",
+        priceRange: "$$",
         capacity: "large-group",
         highlight:
           "Spanish tapas from James Beard Award-winning chef Katie Button. Order for the table and share everything.",
         reservationNeeded: true,
+            url: "https://www.curate.com",
       },
       {
         name: "12 Bones Smokehouse",
@@ -2161,11 +2171,12 @@ export const southeastDestinations: Destination[] = [
       {
         name: "Rhubarb",
         style: "farm-to-table",
-        priceRange: "$$$",
+        priceRange: "$$",
         capacity: "large-group",
         highlight:
           "John Fleer's farm-to-table American cuisine on Pack Square. Seasonal menu showcasing Appalachian ingredients.",
         reservationNeeded: true,
+            url: "https://www.rhubarb.com",
       },
     
       {
@@ -3200,6 +3211,7 @@ export const southeastDestinations: Destination[] = [
         highlight: "Legendary Myrtle dive bar where Alabama got discovered. Live music and cheap drinks.",
         lateNight: true,
         walkableFromDowntown: true,
+            url: "https://www.bowery-bar.com",
       },
       {
         name: "Tin Roof",
@@ -3890,13 +3902,15 @@ export const southeastDestinations: Destination[] = [
       {
         name: "Bob's Steak & Chop House",
         style: "steakhouse",
-        priceRange: "$$$$",
+        priceRange: "$$",
         capacity: "large-group",
         highlight: "Prime steaks and chops inside the Omni resort. Indoor dining, lively bar, and outdoor patio with fireplaces. The big-night steakhouse dinner.",
         reservationNeeded: true,
         googleRating: 4.7,
         reviewCount: 2700,
         url: "https://www.bobs-steakandchop.com/bobs-steak-and-chop-house-location/amelia-island",
+
+        imageUrl: "https://symphony.cdn.tambourine.com/bobs-steak-chop-house/media/bobsteakhouse-01-homepage-location-map-images-08-louisville-64469f4241cc3.jpg",
       },
     ],
     bars: [
@@ -4177,6 +4191,7 @@ export const southeastDestinations: Destination[] = [
         highlight: "Tiny, dark, cash-only bar with strong drinks and local character. A hidden gem.",
         lateNight: true,
         walkableFromDowntown: true,
+            url: "https://www.dos-gatos.com",
       },
     ],
     activities: [
@@ -5077,10 +5092,11 @@ export const southeastDestinations: Destination[] = [
       {
         name: "Vestige",
         style: "farm-to-table",
-        priceRange: "$$$$",
+        priceRange: "$$",
         capacity: "small",
         highlight: "James Beard-nominated tasting menu in Ocean Springs. Intimate and outstanding.",
         reservationNeeded: true,
+            url: "https://www.vestige.com",
       },
       {
         name: "Half Shell Oyster House",
@@ -5338,12 +5354,15 @@ export const southeastDestinations: Destination[] = [
       {
         name: "Aberdeen Barn",
         style: "steakhouse",
-        priceRange: "$$$",
+        priceRange: "$",
         capacity: "large-group",
         highlight:
           "Family-owned since 1966 with prime rib, quality steaks, and a banquet area for groups and private functions",
         reservationNeeded: true,
-        googleRating: 4.4,
+              url: "https://www.aberdeen-barn.com",
+
+              imageUrl: "http://static1.squarespace.com/static/660449f6a49e482c79f7ca40/t/665a2b021ed79971e85c6725/1717185283046/Aberdeen+barn+outside+front.jpeg?format=1500w",
+      googleRating: 4.4,
       },
     ],
     bars: [
@@ -6097,21 +6116,26 @@ export const southeastDestinations: Destination[] = [
       {
         name: "Crab Trap",
         style: "seafood",
-        priceRange: "$$",
+        priceRange: "$",
         capacity: "large-group",
         highlight: "Casual waterfront seafood on St. Simons. Fresh catch, hush puppies, and cold beer.",
         reservationNeeded: false,
+            url: "https://www.crab-trap.com",
+
+            imageUrl: "https://img1.wsimg.com/isteam/videos/uA41GmyyG8IMaxXdb",
       },
       {
         name: "Bennie's Red Barn",
         style: "steakhouse",
-        priceRange: "$$$",
+        priceRange: "$$",
         capacity: "large-group",
         highlight: "St. Simons tradition since 1954. Steaks grilled over an open oak flame in a classic old-school setting. Welcomes large groups and tour buses.",
         reservationNeeded: true,
         googleRating: 4.3,
         reviewCount: 310,
         url: "http://www.benniesredbarn.com/",
+
+        imageUrl: "https://nebula.wsimg.com/4bbe4e74bb667fa354d1e47cecff0b09?AccessKeyId=17022F15F00FE9FBD844&disposition=0&alloworigin=1",
       },
     ],
     bars: [

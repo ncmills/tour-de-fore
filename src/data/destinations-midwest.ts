@@ -629,22 +629,24 @@ export const midwestDestinations: Destination[] = [
       {
         name: "Firefly",
         style: "farm-to-table",
-        priceRange: "$$$",
+        priceRange: "$$",
         capacity: "medium",
         highlight:
           "New American with local farm partnerships — outdoor patio overlooking downtown",
         reservationNeeded: true,
-        googleRating: 4.6,
+              url: "https://www.firefly.com",
+      googleRating: 4.6,
       },
       {
         name: "Bubba's",
         style: "bbq",
-        priceRange: "$$",
+        priceRange: "$",
         capacity: "large-group",
         highlight:
           "No-frills BBQ joint with massive portions — brisket, pulled pork, and smoked chicken",
         reservationNeeded: false,
-        googleRating: 4.3,
+              url: "https://www.bubbas.com",
+      googleRating: 4.3,
       },
     
       {
@@ -2301,11 +2303,12 @@ export const midwestDestinations: Destination[] = [
       {
         name: "City Park Grill",
         style: "casual",
-        priceRange: "$$",
+        priceRange: "$",
         capacity: "large-group",
         highlight:
           "Hemingway's old hangout in downtown Petoskey — great burgers, craft beer, and historical charm",
         reservationNeeded: false,
+            url: "https://www.city-park-grill.com",
       },
       {
         name: "Palette Bistro",
@@ -2608,20 +2611,26 @@ export const midwestDestinations: Destination[] = [
       {
         name: "The Chop House",
         style: "steakhouse",
-        priceRange: "$$$",
+        priceRange: "$",
         capacity: "large-group",
         highlight:
           "Downtown GR's premier steakhouse — dry-aged beef, private dining room for groups",
         reservationNeeded: true,
+            url: "https://www.the-chop-house.com",
+
+            imageUrl: "https://imgstore.io/images/2025/04/25/anti-rungkad.jpeg",
       },
       {
         name: "HopCat",
         style: "brewpub",
-        priceRange: "$$",
+        priceRange: "$",
         capacity: "large-group",
         highlight:
           "130 taps of craft beer and their famous Crack Fries — the original location of the now-national chain",
         reservationNeeded: false,
+            url: "https://www.hopcat.com",
+
+            imageUrl: "https://cdn.prod.website-files.com/6189677b4a721063e16505af/6536825161c460197944d744_HopCat_Photos_Livonia1.jpg",
       },
       {
         name: "San Chez Bistro",
@@ -3216,11 +3225,12 @@ export const midwestDestinations: Destination[] = [
       {
         name: "The Old Fashioned",
         style: "casual",
-        priceRange: "$$",
+        priceRange: "$",
         capacity: "large-group",
         highlight:
           "Wisconsin comfort food — cheese curds, brats, Friday fish fry, and the state's best brandy Old Fashioned",
         reservationNeeded: false,
+            url: "https://www.the-old-fashioned.com",
       },
       {
         name: "Heritage Tavern",
@@ -3234,11 +3244,12 @@ export const midwestDestinations: Destination[] = [
       {
         name: "Graze",
         style: "casual",
-        priceRange: "$$",
+        priceRange: "$",
         capacity: "large-group",
         highlight:
           "Dane County farmers' market-driven menu right on the Capitol Square — great brunch spot too",
         reservationNeeded: false,
+            url: "https://www.graze.com",
       },
     ],
     bars: [
@@ -3531,11 +3542,14 @@ export const midwestDestinations: Destination[] = [
       {
         name: "The Rustic",
         style: "bbq",
-        priceRange: "$$",
+        priceRange: "$",
         capacity: "large-group",
         highlight:
           "Smoked meats and craft beer on the water — laid-back lakeside BBQ that handles big groups well",
         reservationNeeded: false,
+            url: "https://www.the-rustic.com",
+
+            imageUrl: "https://the-rustic.com/wp-content/uploads/2023/06/fresh-sandwiches-in-cape-coral-the-rustic.png",
       },
       {
         name: "Black Bear Lodge & Saloon",
@@ -3865,6 +3879,9 @@ export const midwestDestinations: Destination[] = [
           "Colorful craft cocktail bar in OTR — inventive drinks and a party atmosphere",
         lateNight: true,
         walkableFromDowntown: true,
+            url: "https://www.sundry-and-vice.com",
+
+            imageUrl: "https://img1.wsimg.com/isteam/videos/uA41GmyyG8IMaxXdb",
       },
       {
         name: "MOTR Pub",
@@ -4145,11 +4162,12 @@ export const midwestDestinations: Destination[] = [
       {
         name: "The Pearl",
         style: "seafood",
-        priceRange: "$$$",
+        priceRange: "$$",
         capacity: "large-group",
         highlight:
           "Short North oyster bar and seafood — great raw bar, craft cocktails, and a buzzy atmosphere",
         reservationNeeded: true,
+            url: "https://www.the-pearl.com",
       },
     ],
     bars: [
@@ -4422,11 +4440,12 @@ export const midwestDestinations: Destination[] = [
       {
         name: "Milktooth",
         style: "farm-to-table",
-        priceRange: "$$",
+        priceRange: "$",
         capacity: "medium",
         highlight:
           "Bon Appetit-recognized brunch spot in Fletcher Place — creative dishes in a converted garage",
         reservationNeeded: false,
+            url: "https://www.milktooth.com",
       },
       {
         name: "Bru Burger Bar",
@@ -4440,11 +4459,14 @@ export const midwestDestinations: Destination[] = [
       {
         name: "Tinker Street",
         style: "farm-to-table",
-        priceRange: "$$$",
+        priceRange: "$",
         capacity: "large-group",
         highlight:
           "Broad Ripple's best dinner — seasonal menus with a creative cocktail program and intimate vibe",
         reservationNeeded: true,
+            url: "https://www.tinker-street.com",
+
+            imageUrl: "http://static1.squarespace.com/static/5609ed6fe4b0a067cd548eeb/t/6959d35deee84455986ffbb6/1767494493963/TS_wordmark_k_Stroke_2.jpg?format=1500w",
       },
     ],
     bars: [
@@ -5012,11 +5034,14 @@ export const midwestDestinations: Destination[] = [
       {
         name: "Steinhaus",
         style: "casual",
-        priceRange: "$$",
+        priceRange: "$",
         capacity: "large-group",
         highlight:
           "German beer hall vibes — brats, pretzels, and boot-drinking in a fun group atmosphere",
         reservationNeeded: false,
+            url: "https://www.steinhaus.com",
+
+            imageUrl: "https://steinhaus.com/media/uploads/_1200x630_crop_center-center_82_none/steinhaus-transparent-1200x800.png?mtime=1653634780",
       },
       {
         name: "Donckers",

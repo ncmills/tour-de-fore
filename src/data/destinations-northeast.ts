@@ -207,7 +207,8 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "No-frills fried clams and lobster rolls — the classic Cape Cod lunch spot",
         reservationNeeded: false,
-        googleRating: 4.3,
+              url: "https://www.cookes-seafood.com",
+      googleRating: 4.3,
       },
       {
         name: "Pain D'Avignon",
@@ -248,6 +249,7 @@ export const northeastDestinations: Destination[] = [
           "Tiki-influenced cocktail bar on Hyannis Main Street with inventive rum drinks",
         lateNight: true,
         walkableFromDowntown: true,
+            url: "https://www.embargo.com",
       },
       {
         name: "Cape Cod Beer",
@@ -864,13 +866,15 @@ export const northeastDestinations: Destination[] = [
       {
         name: "Opus 9 Steakhouse",
         style: "steakhouse",
-        priceRange: "$$$$",
+        priceRange: "$$",
         capacity: "large-group",
         highlight:
           "Williamsburg's premier chophouse in New Town. Prime cuts, extensive wine list, fireside dining, and private rooms for groups of 10-50. Rated 4.7 by 6,000+ OpenTable diners.",
         reservationNeeded: true,
         googleRating: 4.7,
         url: "https://opus9steakhouse.com/",
+
+        imageUrl: "https://opus9steakhouse.com/wp-content/uploads/2024/08/IMG_7531-resize-3.jpg",
       },
     ],
     bars: [
@@ -897,6 +901,7 @@ export const northeastDestinations: Destination[] = [
           "William & Mary dive bar institution — cheap beer, loud music, zero pretension",
         lateNight: true,
         walkableFromDowntown: true,
+            url: "https://www.pauls-deli.com",
       },
       {
         name: "Amber Ox Public House",
@@ -1996,11 +2001,14 @@ export const northeastDestinations: Destination[] = [
       {
         name: "Trattoria Rustica",
         style: "italian",
-        priceRange: "$$$",
+        priceRange: "$",
         capacity: "large-group",
         highlight:
           "Pittsfield Italian with handmade pasta and a great patio — hearty portions for hungry golfers",
         reservationNeeded: true,
+            url: "https://www.trattoria-rustica.com",
+
+            imageUrl: "https://stellasblackdogtavern.com/wp-content/uploads/Stellas_menu_May2024-1.png",
       },
       {
         name: "SoCo Creamery & Cafe",
@@ -2014,12 +2022,14 @@ export const northeastDestinations: Destination[] = [
       {
         name: "RARE 297 Steakhouse",
         style: "steakhouse",
-        priceRange: "$$$$",
+        priceRange: "$$",
         capacity: "large-group",
         highlight:
           "Premium steaks, sushi, and seafood inside the historic Hotel on North in Pittsfield. Private banquet hall seats up to 234. Bar open until 1am Fri-Sat. Opened 2024 and already the go-to steakhouse in the Berkshires.",
         reservationNeeded: true,
         url: "https://www.rare297.com/",
+
+        imageUrl: "https://static.wixstatic.com/media/08a999_f3e81c722d88465297248cfbbb5147f9%7Emv2.jpeg/v1/fit/w_2500,h_1330,al_c/08a999_f3e81c722d88465297248cfbbb5147f9%7Emv2.jpeg",
       },
     ],
     bars: [
@@ -2030,6 +2040,7 @@ export const northeastDestinations: Destination[] = [
           "Great Barrington cocktail bar with craft drinks, small plates, and a moody vibe",
         lateNight: true,
         walkableFromDowntown: true,
+            url: "https://www.the-well.com",
       },
       {
         name: "Brick House Pub",
@@ -2567,11 +2578,14 @@ export const northeastDestinations: Destination[] = [
       {
         name: "Duckfat",
         style: "casual",
-        priceRange: "$$",
+        priceRange: "$",
         capacity: "medium",
         highlight:
           "Belgian frites, paninis, and duck fat milkshakes — cult lunch spot in the Old Port",
         reservationNeeded: false,
+            url: "https://www.duckfat.com",
+
+            imageUrl: "http://static1.squarespace.com/static/5ac3b9524611a0074354c047/t/6823b58ebe2d5c36e1e66d1b/1747170702545/duckfat_social_sharing_600.png?format=1500w",
       },
       {
         name: "Holy Donut",
@@ -2581,6 +2595,9 @@ export const northeastDestinations: Destination[] = [
         highlight:
           "Maine potato donuts in wild flavors — essential hangover cure breakfast",
         reservationNeeded: false,
+            url: "https://www.holy-donut.com",
+
+            imageUrl: "https://img1.wsimg.com/isteam/videos/uA41GmyyG8IMaxXdb",
       },
     
       {
@@ -3115,11 +3132,14 @@ export const northeastDestinations: Destination[] = [
       {
         name: "Diego's",
         style: "mexican",
-        priceRange: "$$",
+        priceRange: "$",
         capacity: "large-group",
         highlight:
           "Thames Street Mexican with strong margaritas and a rooftop that packs out on weekends",
         reservationNeeded: false,
+            url: "https://www.diegos.com",
+
+            imageUrl: "http://diegos.com/cdn/shop/files/diegos_23eaca54-a4ef-4534-92e9-cc72f93142be.jpg?v=1633762873",
       },
       {
         name: "Bouchard Inn & Restaurant",
@@ -3416,11 +3436,12 @@ export const northeastDestinations: Destination[] = [
       {
         name: "Buddakan",
         style: "sushi",
-        priceRange: "$$$",
+        priceRange: "$$",
         capacity: "large-group",
         highlight:
           "Stephen Starr's Asian fusion spectacle at the Playground Pier — group-friendly with a scene",
         reservationNeeded: true,
+            url: "https://www.buddakan.com",
       },
     ],
     bars: [
@@ -3966,6 +3987,9 @@ export const northeastDestinations: Destination[] = [
           "Jamaica-themed mega-bar complex on the bay — multiple bars, live music, DJs, and a sand beach. THE OC nightlife destination.",
         lateNight: true,
         walkableFromDowntown: false,
+            url: "https://www.seacrets.com",
+
+            imageUrl: "https://website-media.com/seacrets/seacrets-2025/2025/07/22225809/IMG_8503.jpg",
       },
       {
         name: "Fish Tales Bar & Grill",
@@ -3990,6 +4014,9 @@ export const northeastDestinations: Destination[] = [
           "706 Philadelphia Ave sports bar — big screens, buckets of beer, and a rowdy crowd",
         lateNight: true,
         walkableFromDowntown: true,
+            url: "https://www.pickles-pub.com",
+
+            imageUrl: "https://static.spotapps.co/website_images/ab_websites/671004_website_v1/social.jpg",
       },
     ],
     activities: [
@@ -4224,12 +4251,14 @@ export const northeastDestinations: Destination[] = [
       {
         name: "Lilly's Steaks & Cocktails",
         style: "steakhouse",
-        priceRange: "$$$$",
+        priceRange: "$$",
         capacity: "large-group",
         highlight:
           "Windham's premier steakhouse with perfectly aged beef, fresh seafood, and handcrafted cocktails. Private dining room available for groups.",
         reservationNeeded: true,
         url: "https://lillyssteaks.com",
+
+        imageUrl: "https://lillyssteaks.com/og-image.jpg",
       },
     ],
     bars: [
@@ -4731,11 +4760,12 @@ export const northeastDestinations: Destination[] = [
       {
         name: "Havana",
         style: "upscale",
-        priceRange: "$$$",
+        priceRange: "$$",
         capacity: "large-group",
         highlight:
           "Latin-inspired fine dining on Main Street with creative cocktails and a great patio",
         reservationNeeded: true,
+            url: "https://www.havana.com",
       },
       {
         name: "Side Street Cafe",
@@ -4758,12 +4788,14 @@ export const northeastDestinations: Destination[] = [
       {
         name: "Jack Russell's Steak House & Brewery",
         style: "steakhouse",
-        priceRange: "$$$",
+        priceRange: "$$",
         capacity: "large-group",
         highlight:
           "Family-owned steakhouse and brewery since 1997 on Eden Street. House-brewed ales, hand-cut steaks, and multiple dining rooms including upstairs seating. The group steakhouse dinner.",
         reservationNeeded: true,
         url: "https://www.steakbarharbor.com",
+
+        imageUrl: "https://static.wixstatic.com/media/335757_ac9c93c038034f408ccad75318446d8c%7Emv2.jpg/v1/fit/w_2500,h_1330,al_c/335757_ac9c93c038034f408ccad75318446d8c%7Emv2.jpg",
       },
     ],
     bars: [
@@ -5804,11 +5836,12 @@ export const northeastDestinations: Destination[] = [
       {
         name: "Engine Room",
         style: "casual",
-        priceRange: "$$",
+        priceRange: "$",
         capacity: "large-group",
         highlight:
           "Mystic gastropub in a converted factory — craft beer, burgers, and a fun industrial vibe",
         reservationNeeded: false,
+            url: "https://www.engine-room.com",
       },
       {
         name: "Frank Pepe Pizzeria Napoletana",
@@ -6080,7 +6113,7 @@ export const northeastDestinations: Destination[] = [
       {
         name: "Hudson Valley Steakhouse",
         style: "steakhouse",
-        priceRange: "$$$$",
+        priceRange: "$$",
         capacity: "large-group",
         highlight:
           "USDA Prime dry-aged steaks hand-selected by the chef in Yorktown Heights. 40oz tomahawk for two, tableside Maine lobster, and private dining for up to 200. Worth the drive south.",
@@ -6088,6 +6121,8 @@ export const northeastDestinations: Destination[] = [
         googleRating: 4.6,
         reviewCount: 250,
         url: "https://hudsonvalleysteakhouse.com/",
+
+        imageUrl: "https://static.spotapps.co/website_images/ab_websites/127043_website/social_share.jpg",
       },
     ],
     bars: [

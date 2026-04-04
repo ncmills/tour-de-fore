@@ -30,6 +30,7 @@ export interface DiningInsight {
   reservationNeeded: boolean;
   priceRange: string;
   style: string;
+  imageUrl?: string;
 }
 
 export interface BarInsight {
@@ -37,6 +38,7 @@ export interface BarInsight {
   walkableFromDowntown: boolean;
   lateNight: boolean;
   vibe: string;
+  imageUrl?: string;
 }
 
 export interface ActivityInsight {
@@ -124,6 +126,7 @@ export function buildInsightsContext(destination: Destination, groupSize: number
       reservationNeeded: d.reservationNeeded,
       priceRange: d.priceRange,
       style: d.style,
+      imageUrl: d.imageUrl,
     };
   }
 
@@ -134,6 +137,7 @@ export function buildInsightsContext(destination: Destination, groupSize: number
       walkableFromDowntown: b.walkableFromDowntown,
       lateNight: b.lateNight,
       vibe: b.vibe,
+      imageUrl: b.imageUrl,
     };
   }
 

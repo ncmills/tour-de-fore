@@ -2133,6 +2133,9 @@ export const southCentralDestinations: Destination[] = [
           "Massive patio bar in Uptown with live Texas country, craft cocktails, and Southern comfort food",
         lateNight: true,
         walkableFromDowntown: true,
+            url: "https://www.the-rustic.com",
+
+            imageUrl: "https://the-rustic.com/wp-content/uploads/2023/06/fresh-sandwiches-in-cape-coral-the-rustic.png",
       },
       {
         name: "Midnight Rambler",
@@ -2141,6 +2144,9 @@ export const southCentralDestinations: Destination[] = [
           "Basement cocktail lounge in The Joule hotel — dimly lit, vinyl-spinning, and serving some of the best drinks in Dallas",
         lateNight: true,
         walkableFromDowntown: true,
+            url: "https://www.midnight-rambler.com",
+
+            imageUrl: "https://img1.wsimg.com/isteam/getty/1471448614",
       },
       {
         name: "White Elephant Saloon",
@@ -2746,11 +2752,12 @@ export const southCentralDestinations: Destination[] = [
       {
         name: "Galatoire's",
         style: "upscale",
-        priceRange: "$$$$",
+        priceRange: "$$",
         capacity: "large-group",
         highlight:
           "Bourbon Street fine dining since 1905 — old-school Creole with jacketed waiters, Friday lunch is legendary",
         reservationNeeded: true,
+            url: "https://www.galatoires.com",
       },
       {
         name: "Central Grocery",
@@ -3424,11 +3431,14 @@ export const southCentralDestinations: Destination[] = [
       {
         name: "Juniper Restaurant",
         style: "farm-to-table",
-        priceRange: "$$$",
+        priceRange: "$",
         capacity: "medium",
         highlight:
           "Elevated comfort food with Oklahoma-sourced ingredients — the best fine dining experience in Tulsa",
         reservationNeeded: true,
+            url: "https://www.juniper-restaurant.com",
+
+            imageUrl: "https://juniper-restaurant.com/wp-content/uploads/2022/03/Cumbrian-lamb-rump-dauphinoise-potato-root-vegetables-lamb-jus.jpg",
       },
     ],
     bars: [
@@ -3716,11 +3726,14 @@ export const southCentralDestinations: Destination[] = [
       {
         name: "Vast",
         style: "upscale",
-        priceRange: "$$$$",
+        priceRange: "$",
         capacity: "large-group",
         highlight:
           "Fine dining on the 49th floor of Devon Tower — Oklahoma's tallest building with 360-degree views and creative American cuisine",
         reservationNeeded: true,
+            url: "https://www.vast.com",
+
+            imageUrl: "https://www.carstory.com/og-default.png",
       },
     ],
     bars: [
@@ -4498,11 +4511,12 @@ export const southCentralDestinations: Destination[] = [
       {
         name: "Ruffino's",
         style: "italian",
-        priceRange: "$$$",
+        priceRange: "$$",
         capacity: "large-group",
         highlight:
           "Baton Rouge's premier Italian restaurant with handmade pasta, fresh seafood, and private dining rooms for groups",
         reservationNeeded: true,
+            url: "https://www.ruffinos.com",
       },
       {
         name: "Jay's Bar-B-Q",

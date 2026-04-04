@@ -28,7 +28,8 @@ export async function generateMetadata({
   const dest = allDestinations.find((d) => d.id === slug);
   if (!dest) return {};
   const title = `${dest.city} Golf Trip Planning Guide — Courses, Lodging & Itinerary | Tour de Fore`;
-  const description = `Plan your ${dest.city}, ${dest.state} golf trip: ${dest.courses.length} courses, group lodging from $${Math.min(...dest.lodging.map((l) => l.nightlyRange[0]))}/night, ${dest.dining.length} restaurants, and ${dest.bars.length} bars. Sample 3-day itinerary included.`;
+  const cheapLodging = dest.lodging.length > 0 ? Math.min(...dest.lodging.map((l) => l.nightlyRange[0])) : 0;
+  const description = `Plan your ${dest.city}, ${dest.state} golf trip: ${dest.courses.length} courses${cheapLodging > 0 ? `, group lodging from $${cheapLodging}/night` : ""}, ${dest.dining.length} restaurants, and ${dest.bars.length} bars. Sample 3-day itinerary included.`;
   return {
     title,
     description: metaDescription(description),
@@ -98,8 +99,8 @@ export default async function GuidePage({
   const walkableCourses = dest.courses.filter((c) => c.walkable);
   const bucketListCourses = dest.courses.filter((c) => c.tier === "bucket-list");
 
-  // Budget estimate for 4 guys, 3 nights, 2 rounds
-  const budgetPerPerson = cheapestGreen * 2 + (cheapestLodging * 3) / 4 + 50 * 3; // 50/day food estimate
+  // Budget estimate for 8 guys, 3 nights, 2 rounds (matches cost page assumptions)
+  const budgetPerPerson = cheapestGreen * 2 + (cheapestLodging * 3) / 8 + 40 * 3;
 
   const breadcrumbLd = {
     "@context": "https://schema.org",
@@ -118,18 +119,18 @@ export default async function GuidePage({
     mainEntity: [
       {
         "@type": "Question",
-        name: `What is the best time to visit ${dest.city} for a golf trip?`,
-        acceptedAnswer: { "@type": "Answer", text: `The best seasons for golf in ${dest.city} are ${seasonLabel(dest.bestSeasons)}. Course conditions and pricing are typically optimal during these months.` },
+        name: `When should you visit ${dest.city} for a golf trip?`,
+        acceptedAnswer: { "@type": "Answer", text: `The recommended seasons for golf in ${dest.city} are ${seasonLabel(dest.bestSeasons)}. Course conditions and pricing are typically optimal during these months.` },
       },
       {
         "@type": "Question",
         name: `How many golf courses are in ${dest.city}?`,
-        acceptedAnswer: { "@type": "Answer", text: `${dest.city} has ${dest.courses.length} courses in our database, with green fees ranging from $${cheapestGreen} to $${pricestGreen} per round.${bucketListCourses.length > 0 ? ` ${bucketListCourses.length} are bucket-list tier courses.` : ""}` },
+        acceptedAnswer: { "@type": "Answer", text: `There are ${dest.courses.length} notable golf courses in the ${dest.city} area, with green fees ranging from $${cheapestGreen} to $${pricestGreen} per round with cart.${bucketListCourses.length > 0 ? ` ${bucketListCourses.length} are bucket-list tier courses.` : ""}` },
       },
       {
         "@type": "Question",
         name: `How much does a ${dest.city} golf trip cost per person?`,
-        acceptedAnswer: { "@type": "Answer", text: `A budget ${dest.city} golf trip runs approximately $${Math.round(budgetPerPerson)} per person for 3 nights and 2 rounds (group of 4). This includes green fees from $${cheapestGreen}, lodging from $${cheapestLodging}/night, and an estimated $50/day for food and drinks.` },
+        acceptedAnswer: { "@type": "Answer", text: `A budget ${dest.city} golf trip runs approximately $${Math.round(budgetPerPerson)} per person for 3 nights and 2 rounds (group of 8). This includes green fees from $${cheapestGreen}, lodging from $${cheapestLodging}/night split 8 ways, and an estimated $40/day for food and drinks.` },
       },
       {
         "@type": "Question",
@@ -139,7 +140,7 @@ export default async function GuidePage({
       ...(dest.lodging.length > 0 ? [{
         "@type": "Question",
         name: `Where should a golf group stay in ${dest.city}?`,
-        acceptedAnswer: { "@type": "Answer", text: `${dest.city} has ${dest.lodging.length} group-friendly lodging options starting at $${cheapestLodging}/night. Most groups rent a house that sleeps ${dest.lodging[0].sleeps[0]}-${dest.lodging[0].sleeps[1]} to keep everyone together.` },
+        acceptedAnswer: { "@type": "Answer", text: `${dest.city} has ${dest.lodging.length} group-friendly lodging options starting at $${cheapestLodging}/night. Options range from houses sleeping ${Math.min(...dest.lodging.map((l) => l.sleeps[0]))} to ${Math.max(...dest.lodging.map((l) => l.sleeps[1]))} guests.` },
       }] : []),
     ],
   };
@@ -209,7 +210,7 @@ export default async function GuidePage({
               { label: "Green Fees", value: `$${cheapestGreen}–$${pricestGreen}` },
               { label: "Lodging From", value: cheapestLodging > 0 ? `$${cheapestLodging}/night` : "N/A" },
               { label: "Walkable Courses", value: `${walkableCourses.length} of ${dest.courses.length}` },
-              { label: "Budget Est. (4 guys, 3 nights)", value: `~$${Math.round(budgetPerPerson)}/person` },
+              { label: "Budget Est. (8 guys, 3 nights)", value: `~$${Math.round(budgetPerPerson)}/person` },
             ].map((item) => (
               <div key={item.label} style={card}>
                 <span style={label}>{item.label}</span>

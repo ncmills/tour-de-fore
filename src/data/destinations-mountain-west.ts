@@ -751,22 +751,28 @@ export const mountainWestDestinations: Destination[] = [
       {
         name: "Carl's Tavern",
         style: "casual",
-        priceRange: "$$",
+        priceRange: "$",
         capacity: "large-group",
         highlight:
           "Elevated pub food with great burgers and a bourbon collection; big patio on Lincoln Ave",
         reservationNeeded: false,
-        googleRating: 4.5,
+              url: "https://www.carls-tavern.com",
+
+              imageUrl: "https://www.carls-tavern.com/uploads/b/10f117a0-1928-11ef-8276-a38c8b3a7f36/IMG_0819_MjA3MT.jpeg",
+      googleRating: 4.5,
       },
       {
         name: "Mambo Italiano",
         style: "italian",
-        priceRange: "$$",
+        priceRange: "$",
         capacity: "medium",
         highlight:
           "Reliable Italian spot on the mountain; hearty portions perfect for carb-loading between rounds",
         reservationNeeded: false,
-        googleRating: 4.2,
+              url: "https://www.mambo-italiano.com",
+
+              imageUrl: "https://www.mambo-italiano.com/mamboitaliano/wp-content/uploads/2018/03/Barentsburg-Prussian-Steampunk-.gif",
+      googleRating: 4.2,
       },
     ],
     bars: [
@@ -1303,12 +1309,15 @@ export const mountainWestDestinations: Destination[] = [
       {
         name: "Handle",
         style: "farm-to-table",
-        priceRange: "$$$",
+        priceRange: "$",
         capacity: "medium",
         highlight:
           "Small-plates concept on Main Street with a phenomenal cocktail program; best food in Park City",
         reservationNeeded: true,
-        googleRating: 4.7,
+              url: "https://www.handle.com",
+
+              imageUrl: "https://www.handle.com/wp-content/uploads/2023/04/homepage-1.png",
+      googleRating: 4.7,
       },
       {
         name: "Grappa Italian Restaurant",
@@ -2583,11 +2592,12 @@ export const mountainWestDestinations: Destination[] = [
       {
         name: "Blackbird Kitchen",
         style: "italian",
-        priceRange: "$$$",
+        priceRange: "$$",
         capacity: "medium",
         highlight:
           "Wood-fired pizzas and handmade pasta with a killer cocktail program; downtown staple",
         reservationNeeded: true,
+            url: "https://www.blackbird-kitchen.com",
       },
       {
         name: "Montana Ale Works",
@@ -2601,11 +2611,12 @@ export const mountainWestDestinations: Destination[] = [
       {
         name: "Revelry",
         style: "farm-to-table",
-        priceRange: "$$$$",
+        priceRange: "$$",
         capacity: "medium",
         highlight:
           "Bozeman's best fine dining; seasonal tasting menus with local ingredients and an outstanding wine list",
         reservationNeeded: true,
+            url: "https://www.revelry.com",
       },
     ],
     bars: [
@@ -2640,6 +2651,9 @@ export const mountainWestDestinations: Destination[] = [
           "Craft cocktails in a speakeasy-inspired space; late-night DJ sets and dancing on weekends",
         lateNight: true,
         walkableFromDowntown: true,
+            url: "https://www.bar-ix.com",
+
+            imageUrl: "https://bar-ix.sfo3.cdn.digitaloceanspaces.com/website/Marketing/_1200x630_crop_center-center_82_none/crowd_2025-02-07-234521_fkcp.jpg?mtime=1738971936",
       },
     ],
     activities: [
@@ -3157,12 +3171,13 @@ export const mountainWestDestinations: Destination[] = [
       {
         name: "The Rabbit Hole",
         style: "farm-to-table",
-        priceRange: "$$$",
+        priceRange: "$$",
         capacity: "large-group",
         highlight:
           "Multi-level downtown space with creative cocktails and elevated American fare; private event space upstairs",
         reservationNeeded: true,
-        googleRating: 4.5,
+              url: "https://the-rabbit-hole.com",
+      googleRating: 4.5,
       },
       {
         name: "Joseph's Fine Dining",
@@ -3177,12 +3192,15 @@ export const mountainWestDestinations: Destination[] = [
       {
         name: "Shuga's",
         style: "casual",
-        priceRange: "$$",
+        priceRange: "$",
         capacity: "medium",
         highlight:
           "Funky downtown spot with creative cocktails and eclectic food; the mixology is world-class",
         reservationNeeded: false,
-        googleRating: 4.4,
+              url: "https://www.shugas.com",
+
+              imageUrl: "http://static1.squarespace.com/static/65e127ffcb4a8e709564d57d/t/67a1624fdc0f0529ac0fb557/1738629711216/boat.jpg?format=1500w",
+      googleRating: 4.4,
       },
       {
         name: "Front Range Barbeque",
@@ -3453,11 +3471,14 @@ export const mountainWestDestinations: Destination[] = [
       {
         name: "Relish",
         style: "steakhouse",
-        priceRange: "$$$$",
+        priceRange: "$",
         capacity: "medium",
         highlight:
           "Breck's premier steakhouse with prime cuts, creative sides, and a deep wine list",
         reservationNeeded: true,
+            url: "https://www.relish.com",
+
+            imageUrl: "https://www.relish.com/images/og/og.jpg",
       },
       {
         name: "Breckenridge Brewery & Pub",
@@ -3748,11 +3769,12 @@ export const mountainWestDestinations: Destination[] = [
       {
         name: "Mountain Standard",
         style: "farm-to-table",
-        priceRange: "$$$",
+        priceRange: "$$",
         capacity: "large-group",
         highlight:
           "Lively Vail Village spot with craft cocktails, creative small plates, and a buzzy patio scene",
         reservationNeeded: true,
+            url: "https://www.mountain-standard.com",
       },
       {
         name: "Sweet Basil",
@@ -3790,6 +3812,7 @@ export const mountainWestDestinations: Destination[] = [
           "Massive outdoor patio in Lionshead with fire pits, cocktails, and a see-and-be-seen crowd",
         lateNight: false,
         walkableFromDowntown: true,
+            url: "https://www.the-george.com",
       },
       {
         name: "Shakedown Bar",
@@ -4394,6 +4417,9 @@ export const mountainWestDestinations: Destination[] = [
           "Craft cocktails and a sophisticated vibe in Old Town; rooftop deck with mountain views",
         lateNight: true,
         walkableFromDowntown: true,
+            url: "https://www.social.com",
+
+            imageUrl: "https://wp.sfdcdigital.com/en-us/wp-content/uploads/sites/4/2023/06/engagement-og.jpg?w=1024",
       },
     ],
     activities: [
@@ -4669,6 +4695,7 @@ export const mountainWestDestinations: Destination[] = [
           "The late-night local spot; strong drinks, a jukebox, and no tourists",
         lateNight: true,
         walkableFromDowntown: true,
+            url: "https://www.polaris-bar.com",
       },
       {
         name: "Casey Brewing & Blending",
@@ -5123,11 +5150,12 @@ export const mountainWestDestinations: Destination[] = [
       {
         name: "The Fritz",
         style: "farm-to-table",
-        priceRange: "$$$",
+        priceRange: "$$",
         capacity: "medium",
         highlight:
           "Salida's best restaurant; seasonal Colorado cuisine in a hip downtown space with craft cocktails",
         reservationNeeded: true,
+            url: "https://www.the-fritz.com",
       },
       {
         name: "Moonlight Pizza & Brewpub",
@@ -5167,6 +5195,7 @@ export const mountainWestDestinations: Destination[] = [
           "The late-night spot on F Street; shuffleboard, cheap beer, and locals who know your name by round two",
         lateNight: true,
         walkableFromDowntown: true,
+            url: "https://www.bensons-tavern.com",
       },
       {
         name: "Soulcraft Brewing",
@@ -5385,11 +5414,12 @@ export const mountainWestDestinations: Destination[] = [
       {
         name: "The Local",
         style: "farm-to-table",
-        priceRange: "$$$",
+        priceRange: "$$",
         capacity: "medium",
         highlight:
           "Cody's best restaurant; locally sourced seasonal menus with excellent bison and elk preparations",
         reservationNeeded: true,
+            url: "https://the-local.com",
       },
       {
         name: "Pat O'Hara Brewing Company",

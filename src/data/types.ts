@@ -70,6 +70,7 @@ export interface DiningSpot {
   googleRating?: number;
   reviewCount?: number;
   url?: string;
+  imageUrl?: string;
 }
 
 export interface Bar {
@@ -80,6 +81,7 @@ export interface Bar {
   walkableFromDowntown: boolean;
   googleRating?: number;
   url?: string;
+  imageUrl?: string;
 }
 
 export interface Activity {

@@ -286,6 +286,7 @@ export const pacificNWDestinations: Destination[] = [
           "Craft cocktails in a swanky downtown setting — the closest thing to a nightclub Bend has",
         lateNight: true,
         walkableFromDowntown: true,
+            url: "https://www.the-capitol.com",
       },
       {
         name: "Astro Lounge",
@@ -1438,12 +1439,13 @@ export const pacificNWDestinations: Destination[] = [
       {
         name: "Barbacoa",
         style: "steakhouse",
-        priceRange: "$$$",
+        priceRange: "$$",
         capacity: "large-group",
         highlight:
           "Latin-inspired steakhouse downtown with craft cocktails and a lively vibe",
         reservationNeeded: true,
-        googleRating: 4.5,
+              url: "https://www.barbacoa.com",
+      googleRating: 4.5,
       },
       {
         name: "Payette Brewing Tap Room",
@@ -1484,6 +1486,7 @@ export const pacificNWDestinations: Destination[] = [
           "Iconic Boise dive bar with cheap drinks, live music, and late-night chaos",
         lateNight: true,
         walkableFromDowntown: true,
+            url: "https://www.neurolux.com",
       },
       {
         name: "The Balcony Club",
@@ -1515,6 +1518,7 @@ export const pacificNWDestinations: Destination[] = [
         highlight: "Tiki bar downtown with strong tropical drinks and a fun group atmosphere",
         lateNight: true,
         walkableFromDowntown: true,
+            url: "https://www.reef.com",
       },
     ],
     activities: [
@@ -2446,6 +2450,9 @@ export const pacificNWDestinations: Destination[] = [
           "4,000+ bottles of whiskey and spirits — regularly named one of America's best bars",
         lateNight: true,
         walkableFromDowntown: true,
+            url: "https://www.canon.com",
+
+            imageUrl: "https://global.canon/01cmn/img/common/ogp.png",
       },
       {
         name: "Rhein Haus",
@@ -2717,11 +2724,12 @@ export const pacificNWDestinations: Destination[] = [
       {
         name: "Clinkerdagger",
         style: "steakhouse",
-        priceRange: "$$$",
+        priceRange: "$$",
         capacity: "large-group",
         highlight:
           "Riverside fine dining with panoramic Spokane Falls views from every table",
         reservationNeeded: true,
+            url: "https://www.clinkerdagger.com",
       },
       {
         name: "No-Li Brewhouse",
@@ -2735,11 +2743,12 @@ export const pacificNWDestinations: Destination[] = [
       {
         name: "Ruins",
         style: "upscale",
-        priceRange: "$$$",
+        priceRange: "$$",
         capacity: "medium",
         highlight:
           "New American small plates in a beautifully restored building — Spokane's best dinner",
         reservationNeeded: true,
+            url: "https://ruins.com",
       },
       {
         name: "Frank's Diner",
@@ -3001,11 +3010,14 @@ export const pacificNWDestinations: Destination[] = [
       {
         name: "Enoteca",
         style: "italian",
-        priceRange: "$$$",
+        priceRange: "$",
         capacity: "medium",
         highlight:
           "Upscale Italian with a phenomenal wine list in a cozy Ketchum setting",
         reservationNeeded: true,
+            url: "https://enoteca.com",
+
+            imageUrl: "https://www.enoteca.com/og-image.jpg",
       },
       {
         name: "The Cellar Pub",
@@ -3019,11 +3031,12 @@ export const pacificNWDestinations: Destination[] = [
       {
         name: "Globus",
         style: "upscale",
-        priceRange: "$$$$",
+        priceRange: "$$",
         capacity: "medium",
         highlight:
           "New American fine dining in a converted church — Sun Valley's best splurge dinner",
         reservationNeeded: true,
+            url: "https://www.globus.com",
       },
     
       {
@@ -3869,11 +3882,12 @@ export const pacificNWDestinations: Destination[] = [
       {
         name: "Marche",
         style: "farm-to-table",
-        priceRange: "$$$",
+        priceRange: "$$",
         capacity: "large-group",
         highlight:
           "French-inspired farm-to-table in the Fifth Street Market — Eugene's finest with a private dining room",
         reservationNeeded: true,
+            url: "https://www.marche.com",
       },
       {
         name: "The Wheel Apizza Pub",

@@ -207,22 +207,26 @@ export const southwestDestinations: Destination[] = [
       {
         name: "Hash Kitchen",
         style: "casual",
-        priceRange: "$$",
+        priceRange: "$",
         capacity: "large-group",
         highlight:
           "Boozy brunch paradise with a DIY Bloody Mary bar and oversized breakfast plates",
         reservationNeeded: true,
-        googleRating: 4.4,
+              url: "https://www.hash-kitchen.com",
+      googleRating: 4.4,
       },
       {
         name: "Toca Madera",
         style: "upscale",
-        priceRange: "$$$",
+        priceRange: "$",
         capacity: "large-group",
         highlight:
           "Trendy Mexican-Asian fusion with craft cocktails and a nightclub-adjacent energy",
         reservationNeeded: true,
-        googleRating: 4.3,
+              url: "https://www.toca-madera.com",
+
+              imageUrl: "https://toca-madera.com/wp-content/uploads/2021/03/pergola-toldo-toca-madera-1.jpg",
+      googleRating: 4.3,
       },
     ],
     bars: [
@@ -233,6 +237,9 @@ export const southwestDestinations: Destination[] = [
           "No-frills Old Town dive that has been the official post-round watering hole since 1959",
         lateNight: true,
         walkableFromDowntown: true,
+            url: "https://www.coach-house.com",
+
+            imageUrl: "https://static.wixstatic.com/media/996951_714599487a3a45ffb8768e38eb7f69af%7Emv2.png/v1/fit/w_2500,h_1330,al_c/996951_714599487a3a45ffb8768e38eb7f69af%7Emv2.png",
       },
       {
         name: "Bottled Blonde",
@@ -1087,12 +1094,13 @@ export const southwestDestinations: Destination[] = [
       {
         name: "Painted Pony",
         style: "upscale",
-        priceRange: "$$$",
+        priceRange: "$$",
         capacity: "large-group",
         highlight:
           "Fine dining in Ancestor Square — the best restaurant in town for the splurge dinner night",
         reservationNeeded: true,
-        googleRating: 4.5,
+              url: "https://www.painted-pony.com",
+      googleRating: 4.5,
       },
       {
         name: "Xetava Gardens Cafe",
@@ -1133,6 +1141,9 @@ export const southwestDestinations: Destination[] = [
           "Best downtown bar with a big patio, live music on weekends, and a relaxed vibe",
         lateNight: false,
         walkableFromDowntown: true,
+            url: "https://www.georges-corner.com",
+
+            imageUrl: "https://s0.wp.com/i/blank.jpg?m=1383295312i",
       },
       {
         name: "One & Only Bar & Grill",
@@ -1577,22 +1588,28 @@ export const southwestDestinations: Destination[] = [
       {
         name: "The Shed",
         style: "mexican",
-        priceRange: "$$",
+        priceRange: "$",
         capacity: "large-group",
         highlight:
           "Iconic Santa Fe New Mexican restaurant since 1953 — the red chile enchiladas are mandatory",
         reservationNeeded: true,
-        googleRating: 4.5,
+              url: "https://www.the-shed.com",
+
+              imageUrl: "https://racheldawsonsmith.com/wp-content/uploads/2019/02/img_20181216_163227_263.jpg",
+      googleRating: 4.5,
       },
       {
         name: "Geronimo",
         style: "upscale",
-        priceRange: "$$$$",
+        priceRange: "$",
         capacity: "medium",
         highlight:
           "Fine dining in a 1756 adobe on Canyon Road — elk tenderloin and the best special-occasion meal in town",
         reservationNeeded: true,
-        googleRating: 4.7,
+              url: "https://www.geronimo.com",
+
+              imageUrl: "https://www.geronimo.com/images/headers/slide_3.jpg",
+      googleRating: 4.7,
       },
       {
         name: "La Choza",
@@ -1607,12 +1624,13 @@ export const southwestDestinations: Destination[] = [
       {
         name: "Tomasita's",
         style: "mexican",
-        priceRange: "$$",
+        priceRange: "$",
         capacity: "large-group",
         highlight:
           "Railyard district New Mexican staple with potent margaritas and posole that cures all ills",
         reservationNeeded: false,
-        googleRating: 4.4,
+              url: "https://www.tomasitas.com",
+      googleRating: 4.4,
       },
       {
         name: "Andiamo!",
@@ -2532,6 +2550,7 @@ export const southwestDestinations: Destination[] = [
           "Midtown hangout with a big patio, fire pits, and strong cocktails — the group pre-game spot",
         lateNight: true,
         walkableFromDowntown: false,
+            url: "https://www.the-emerson.com",
       },
       {
         name: "Peppermill Fireside Lounge",
@@ -2795,11 +2814,12 @@ export const southwestDestinations: Destination[] = [
       {
         name: "Pizzeria Bianco",
         style: "italian",
-        priceRange: "$$",
+        priceRange: "$",
         capacity: "medium",
         highlight:
           "James Beard Award-winning pizza in Heritage Square — worth the wait",
         reservationNeeded: true,
+            url: "https://www.pizzeria-bianco.com",
       },
     ],
     bars: [

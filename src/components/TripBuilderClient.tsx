@@ -107,8 +107,9 @@ function getFallbackImage(name: string): string {
 
 // ── Small Option Card ──
 
-function OptionCard({ option, selected, onSelect, disabled, tags }: { option: Option; selected: boolean; onSelect: () => void; disabled?: boolean; tags?: Tag[] }) {
+function OptionCard({ option, selected, onSelect, disabled, tags, useFallbackImage }: { option: Option; selected: boolean; onSelect: () => void; disabled?: boolean; tags?: Tag[]; useFallbackImage?: boolean }) {
   const hasFlame = tags?.some((t) => t.label === "TDF PICK");
+  const imgSrc = option.imageUrl || (useFallbackImage ? getFallbackImage(option.name) : null);
   return (
     <button
       onClick={disabled ? undefined : onSelect}
@@ -127,17 +128,19 @@ function OptionCard({ option, selected, onSelect, disabled, tags }: { option: Op
       }}
     >
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
-        {/* Course thumbnail */}
-        <div style={{ flexShrink: 0, width: 56, height: 56, borderRadius: 6, overflow: "hidden", position: "relative", border: "1px solid rgba(255,255,255,0.1)" }}>
-          <Image
-            src={option.imageUrl || getFallbackImage(option.name)}
-            alt={option.name}
-            fill
-            sizes="56px"
-            style={{ objectFit: "cover" }}
-            unoptimized
-          />
-        </div>
+        {/* Thumbnail */}
+        {imgSrc && (
+          <div style={{ flexShrink: 0, width: 56, height: 56, borderRadius: 6, overflow: "hidden", position: "relative", border: "1px solid rgba(255,255,255,0.1)" }}>
+            <Image
+              src={imgSrc}
+              alt={option.name}
+              fill
+              sizes="56px"
+              style={{ objectFit: "cover" }}
+              unoptimized
+            />
+          </div>
+        )}
         {/* Content */}
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -299,7 +302,7 @@ export default function TripBuilderClient({
     const enrich = (name: string) => {
       if (!insights) return {};
       const di = lookupDining(insights, name);
-      return di ? { rating: di.googleRating, reviewCount: di.reviewCount } : {};
+      return di ? { rating: di.googleRating, reviewCount: di.reviewCount, imageUrl: di.imageUrl } : {};
     };
     for (const d of (plan.dining || [])) {
       seen.add(d.name);
@@ -323,7 +326,7 @@ export default function TripBuilderClient({
     const enrich = (name: string) => {
       if (!insights) return {};
       const bi = lookupBar(insights, name);
-      return bi?.googleRating ? { rating: bi.googleRating } : {};
+      return bi ? { rating: bi.googleRating, imageUrl: bi.imageUrl } : {};
     };
     for (const b of (plan.bars || [])) {
       seen.add(b.name);
