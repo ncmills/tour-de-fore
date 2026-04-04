@@ -110,7 +110,7 @@ function ConciergeCTA({ planId, tier, dest }: { planId: string; tier: TripTier; 
   );
 }
 
-function AlternativeCards({ items }: { items?: SectionAlternative[] }) {
+function AlternativeCards({ items, isEstimate }: { items?: SectionAlternative[]; isEstimate?: boolean }) {
   if (!items || items.length === 0) return null;
   return (
     <div
@@ -162,6 +162,7 @@ function AlternativeCards({ items }: { items?: SectionAlternative[] }) {
               }}
             >
               {alt.costDelta}
+              {isEstimate && <span style={{ color: "#666", fontSize: 11, fontWeight: 400, marginLeft: 4 }}>(est.)</span>}
             </span>
           </motion.div>
         );
@@ -415,16 +416,32 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
               <span style={{ fontSize: 26, fontWeight: 700, color: tierColors[tier] }}>
                 {plan.lodging.costPerNight}
               </span>
-              <span style={{ display: "block", color: "#666", fontSize: 13 }}>/night</span>
+              <span style={{ display: "block", color: "#666", fontSize: 13 }}>/night <span style={{ fontSize: 11 }}>(est.)</span></span>
             </div>
           </div>
           <p style={{ color: "#aaa", lineHeight: 1.7, margin: 0, fontSize: 15 }}>
             {plan.lodging.rationale}
           </p>
-          {plan.lodging.url && <ExternalLink href={plan.lodging.url} label="View Listing" />}
+          <div
+            style={{
+              marginTop: 16,
+              padding: "10px 14px",
+              background: "rgba(249,115,22,0.08)",
+              border: "1px solid rgba(249,115,22,0.2)",
+              borderRadius: 8,
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+            }}
+          >
+            <span style={{ fontSize: 14 }}>&#9432;</span>
+            <span style={{ color: "#b0b0b0", fontSize: 12, lineHeight: 1.5 }}>
+              Pricing based on estimated market rates for this area &amp; group size. Actual rates vary by dates and availability.
+            </span>
+          </div>
         </HoverCard>
 
-        <AlternativeCards items={plan.lodgingAlternatives} />
+        <AlternativeCards items={plan.lodgingAlternatives} isEstimate />
 
       </motion.section>
 
@@ -765,7 +782,12 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
               onMouseEnter={(e) => (e.currentTarget.style.background = "#111")}
               onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
             >
-              <span style={{ color: "#999", fontSize: 14 }}>{item.category}</span>
+              <span style={{ color: "#999", fontSize: 14 }}>
+                {item.category}
+                {item.category.toLowerCase().includes("lodging") && (
+                  <span style={{ color: "#666", fontSize: 11, marginLeft: 6 }}>(est.)</span>
+                )}
+              </span>
               <span style={{ fontWeight: 600, fontSize: 15 }}>{item.perPerson}</span>
             </div>
           ))}

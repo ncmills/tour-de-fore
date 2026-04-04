@@ -79,6 +79,7 @@ export interface Bar {
   lateNight: boolean; // open past midnight?
   walkableFromDowntown: boolean;
   googleRating?: number;
+  url?: string;
 }
 
 export interface Activity {
@@ -92,6 +93,7 @@ export interface Activity {
   provider?: string;
   googleRating?: number;
   reviewCount?: number;
+  url?: string;
 }
 
 export interface PartyBus {

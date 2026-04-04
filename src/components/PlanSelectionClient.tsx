@@ -142,6 +142,7 @@ function DestinationCard({
               <span>🏠 {preview.lodgingPreview.type}</span>
               <span>· sleeps {preview.lodgingPreview.sleeps[0]}-{preview.lodgingPreview.sleeps[1]}</span>
               {preview.lodgingPreview.avgRating && <span>· ⭐ {preview.lodgingPreview.avgRating}</span>}
+              <span style={{ color: "rgba(255,255,255,0.25)", fontSize: "0.6rem" }}>(est. pricing)</span>
             </div>
 
             {/* Courses */}

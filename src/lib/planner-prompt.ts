@@ -58,6 +58,13 @@ export function buildSystemPrompt(destinationContext: string): string {
 - Include pricing estimates per the database below
 - This is a quality-of-life game-changer — nobody has to worry about driving
 
+## DATA ACCURACY & LINKS
+- **Courses**: Must be real courses from the database. Include a \`url\` field linking to the course's website or tee-time booking page. Use URLs from the database when available; otherwise use your knowledge of the course's real website.
+- **Restaurants**: Must be real restaurants from the database. Include a \`url\` field linking to the restaurant's website or Google Maps page.
+- **Bars**: Must be real bars from the database. Include a \`url\` field linking to the bar's website or Google Maps page.
+- **Activities**: Must be real activities/providers from the database. Include URLs in schedule item details where applicable.
+- **Lodging**: Provide realistic estimated pricing based on the database's nightly ranges for this area and group size. Do NOT include a \`url\` field for lodging — pricing is estimated and we don't link to specific listings. Describe the type of property and area accurately so users know what to search for.
+
 ## DESTINATION DATABASE
 You MUST use the real data below to build the trip plan. Use actual venue names, real prices, and real options from this database. Do NOT invent venues — use what's listed here, and supplement with your knowledge only if the database doesn't cover something.
 
@@ -108,9 +115,8 @@ The JSON must be a single plan object with this shape:
     "name": "string — specific recommendation or type description",
     "type": "string — e.g. 'Luxury Ranch House', 'Lakeside Lodge'",
     "address": "string — area/neighborhood or specific address",
-    "costPerNight": "string — total per night for the house",
-    "rationale": "string — why this is the move",
-    "url": "string — optional booking link or search URL",
+    "costPerNight": "string — estimated total per night for the house",
+    "rationale": "string — why this is the move, mention that pricing is estimated based on market rates",
     "imageSearch": "string — search-friendly image query"
   },
   "lodgingAlternatives": [
@@ -128,7 +134,7 @@ The JSON must be a single plan object with this shape:
       "session": "AM" | "PM",
       "greenFee": "string — per person",
       "whyThisCourse": "string",
-      "url": "string — optional",
+      "url": "string — course website or tee time booking link (REQUIRED)",
       "imageSearch": "string — search-friendly image query"
     }
   ],
@@ -161,7 +167,7 @@ The JSON must be a single plan object with this shape:
       "type": "string — e.g. 'Steakhouse', 'Local BBQ'",
       "description": "string",
       "priceRange": "string",
-      "url": "string — optional",
+      "url": "string — restaurant website or Google Maps link (REQUIRED)",
       "imageSearch": "string — search-friendly image query"
     }
   ],
@@ -178,7 +184,7 @@ The JSON must be a single plan object with this shape:
       "name": "string",
       "vibe": "string — e.g. 'Craft cocktail lounge', 'Dive bar with pool tables'",
       "description": "string — what makes it worth hitting",
-      "url": "string — optional"
+      "url": "string — bar website or Google Maps link (REQUIRED)"
     }
   ],
   "proTips": ["string — actionable tips for this specific trip"],
