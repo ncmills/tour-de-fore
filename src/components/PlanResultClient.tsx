@@ -320,7 +320,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
             {plan.tripName || plan.destination}
           </span>
           <Link
-            href={`/plan/result/${planId}?dest=${dest || "mid"}`}
+            href={`/plan/result/${planId}`}
             style={{
               fontSize: "0.65rem",
               fontWeight: 700,
