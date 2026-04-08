@@ -301,18 +301,39 @@ export default function ShopPageClient({ onBack }: { onBack?: () => void }) {
           </div>
         )}
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: "2rem" }}>
-          {products.map((product, i) => (
-            <motion.div key={product.id} transition={{ delay: 0.1 + i * 0.1 }}>
-              <ProductCard
-                product={product}
-                onAdd={(color, size) => addToCart(product, color, size)}
-                cartCount={cart.filter((c) => c.productId === product.id).reduce((s, c) => s + c.quantity, 0)}
-                onImageClick={(src) => setLightboxSrc(src)}
-              />
-            </motion.div>
-          ))}
-        </div>
+        {(["apparel", "headwear", "accessories"] as const).map((cat) => {
+          const catProducts = products.filter((p) => p.category === cat);
+          if (catProducts.length === 0) return null;
+          const label = cat === "apparel" ? "Apparel" : cat === "headwear" ? "Headwear" : "Accessories";
+          return (
+            <div key={cat} style={{ marginBottom: "2.5rem" }}>
+              <h2 style={{
+                fontFamily: "var(--font-shop-circus), serif",
+                fontSize: "clamp(1.2rem, 3vw, 1.6rem)",
+                color: "#D4A843",
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                marginBottom: "1.2rem",
+                borderBottom: "1px solid rgba(212,168,67,0.15)",
+                paddingBottom: "0.5rem",
+              }}>
+                {label}
+              </h2>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: "2rem" }}>
+                {catProducts.map((product, i) => (
+                  <motion.div key={product.id} transition={{ delay: 0.1 + i * 0.1 }}>
+                    <ProductCard
+                      product={product}
+                      onAdd={(color, size) => addToCart(product, color, size)}
+                      cartCount={cart.filter((c) => c.productId === product.id).reduce((s, c) => s + c.quantity, 0)}
+                      onImageClick={(src) => setLightboxSrc(src)}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
 
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }} style={{ textAlign: "center", marginTop: "3rem", padding: "1.5rem", borderTop: "1px solid rgba(212,168,67,0.1)" }}>
           <p className="neon-stats neon-stats-text" style={{ fontSize: "0.75rem", letterSpacing: "0.12em" }}>

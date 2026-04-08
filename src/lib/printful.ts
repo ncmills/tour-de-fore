@@ -25,7 +25,7 @@ export interface ShopProduct {
   variants: ProductVariant[];
   colors: string[];
   sizes: string[];
-  category: "apparel" | "headwear";
+  category: "apparel" | "headwear" | "accessories";
 }
 
 // ── In-memory cache (5 min TTL) ──
@@ -62,8 +62,11 @@ function deriveDisplayName(name: string): string {
     .join(" ");
 }
 
-// Headwear Printful category IDs (hats, caps, beanies, headbands, etc.)
-const HEADWEAR_CATEGORIES = new Set([42, 46, 217]);
+// Headwear Printful category IDs (hats, caps, beanies, headbands, truckers, etc.)
+const HEADWEAR_CATEGORIES = new Set([40, 42, 46, 217]);
+
+// Accessories: drinkware, koozies, cards, etc.
+const ACCESSORIES_CATEGORIES = new Set([112, 238, 264, 292]);
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 function transformProduct(result: any): ShopProduct | null {
@@ -106,7 +109,12 @@ function transformProduct(result: any): ShopProduct | null {
     }
   }
 
-  const isHeadwear = HEADWEAR_CATEGORIES.has(svs[0].main_category_id);
+  const mainCat = svs[0].main_category_id;
+  const category = HEADWEAR_CATEGORIES.has(mainCat)
+    ? "headwear"
+    : ACCESSORIES_CATEGORIES.has(mainCat)
+      ? "accessories"
+      : "apparel";
 
   return {
     id: deriveId(sp.name),
@@ -121,7 +129,7 @@ function transformProduct(result: any): ShopProduct | null {
     variants,
     colors: [...colorSet],
     sizes: [...sizeSet],
-    category: isHeadwear ? "headwear" : "apparel",
+    category,
   };
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -153,9 +161,11 @@ export async function fetchShopProducts(): Promise<ShopProduct[]> {
       if (product) products.push(product);
     }
 
-    // Sort: apparel first, then headwear, alphabetical within each group
+    // Sort: apparel → headwear → accessories, alphabetical within each group
+    const catOrder = { apparel: 0, headwear: 1, accessories: 2 };
     products.sort((a, b) => {
-      if (a.category !== b.category) return a.category === "apparel" ? -1 : 1;
+      const ca = catOrder[a.category] ?? 9, cb = catOrder[b.category] ?? 9;
+      if (ca !== cb) return ca - cb;
       return a.name.localeCompare(b.name);
     });
 
