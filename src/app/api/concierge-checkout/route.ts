@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
 import { getPlan } from "@/lib/kv";
 
-const stripe = getStripe();
-
 function parseBudgetToNumber(budget: string): number {
   // Extract numbers from strings like "$1,200-$1,800" and use midpoint
   const cleaned = budget.replace(/,/g, "");
@@ -56,6 +54,7 @@ export async function POST(req: NextRequest) {
     const conciergeFeeInCents = conciergeFee * 100;
 
     const origin = req.headers.get("origin") || "https://tourdefore.com";
+    const stripe = getStripe();
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -76,6 +75,7 @@ export async function POST(req: NextRequest) {
       success_url: `${origin}/concierge/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/plan/result/${planId}?dest=${dest || "mid"}&tier=${tier}`,
       metadata: {
+        site: "tdf",
         planId,
         tier,
         destination: plan.destination,

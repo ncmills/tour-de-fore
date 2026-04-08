@@ -2,13 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
 import { getSessionEmail } from "@/lib/auth";
 
-const stripe = getStripe();
-
 /**
  * Creates a Stripe Checkout session for the $19.99/month VIP subscription.
  */
 export async function POST(req: NextRequest) {
   try {
+    const stripe = getStripe();
     const email = await getSessionEmail();
     if (!email) {
       return NextResponse.json({ error: "Sign in first" }, { status: 401 });
@@ -37,7 +36,7 @@ export async function POST(req: NextRequest) {
       ],
       success_url: `${origin}/subscribe/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: returnUrl || `${origin}/my-trips`,
-      metadata: { email },
+      metadata: { site: "tdf", email },
     });
 
     return NextResponse.json({ url: session.url });

@@ -3,8 +3,6 @@ import type Stripe from "stripe";
 import { getStripe } from "@/lib/stripe";
 import { getProductById } from "@/lib/printful";
 
-const stripe = getStripe();
-
 interface CheckoutItem {
   productId: string; // our internal product ID
   color: string;
@@ -65,6 +63,7 @@ export async function POST(req: NextRequest) {
 
     const origin = req.headers.get("origin") || "https://tourdefore.com";
 
+    const stripe = getStripe();
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: lineItems,
@@ -75,6 +74,7 @@ export async function POST(req: NextRequest) {
         allowed_countries: ["US"],
       },
       metadata: {
+        site: "tdf",
         type: "shop",
         items: JSON.stringify(orderItems.map(i => ({ s: i.syncVariantId, q: i.quantity, p: i.productId, c: i.color, z: i.size }))),
       },

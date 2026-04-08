@@ -15,8 +15,6 @@ import type {
   StoredPlan,
 } from "@/lib/plan-types";
 
-const stripe = getStripe();
-
 // Create Stripe checkout session for $99
 export async function POST(req: NextRequest) {
   try {
@@ -38,6 +36,7 @@ export async function POST(req: NextRequest) {
     }
 
     const origin = req.headers.get("origin") || "https://tourdefore.com";
+    const stripe = getStripe();
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -57,7 +56,7 @@ export async function POST(req: NextRequest) {
       mode: "payment",
       success_url: `${origin}/plan/unlock-success?planId=${planId}&dest=${dest}&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/plan/result/${planId}`,
-      metadata: { planId, dest },
+      metadata: { site: "tdf", planId, dest },
     });
 
     // Store session ID so PUT can verify payment directly (no list+filter)
@@ -98,6 +97,7 @@ export async function PUT(req: NextRequest) {
       if (!sessionId) {
         return NextResponse.json({ error: "No payment session found" }, { status: 402 });
       }
+      const stripe = getStripe();
       // Retry a few times to give webhook time to process
       let verified = false;
       for (let attempt = 0; attempt < 3; attempt++) {

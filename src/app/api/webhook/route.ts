@@ -13,12 +13,11 @@ import {
   buildExternalId,
 } from "@/lib/order-utils";
 
-const stripe = getStripe();
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET?.trim();
-
 export async function POST(req: NextRequest) {
   const body = await req.text();
   const sig = req.headers.get("stripe-signature");
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET?.trim();
+  const stripe = getStripe();
 
   if (!sig || !webhookSecret) {
     return NextResponse.json({ error: "Missing signature or webhook secret" }, { status: 400 });
