@@ -1,14 +1,18 @@
 import { NextResponse } from "next/server";
 import { fetchShopProducts } from "@/lib/printful";
 
-export const revalidate = 300; // ISR: revalidate every 5 minutes
+// Force dynamic — printful.ts has its own 5-min in-memory cache,
+// so this always runs the function but rarely hits the Printful API.
+// Avoids ISR staleness that prevented new products from appearing.
+export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
     const products = await fetchShopProducts();
     return NextResponse.json(products, {
       headers: {
-        "Cache-Control": "public, max-age=300, s-maxage=300, stale-while-revalidate=60",
+        // Short CDN cache with stale-while-revalidate for fast responses
+        "Cache-Control": "public, max-age=60, s-maxage=60, stale-while-revalidate=300",
       },
     });
   } catch (err) {
