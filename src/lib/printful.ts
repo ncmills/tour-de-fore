@@ -7,6 +7,7 @@ const PRINTFUL_API = "https://api.printful.com";
 
 export interface ProductVariant {
   syncVariantId: number; // Printful sync_variant ID (used for orders)
+  catalogVariantId: number; // Printful catalog variant ID (used for cost/shipping lookups)
   color: string;
   size?: string;
   sku: string;
@@ -68,18 +69,74 @@ const HEADWEAR_CATEGORIES = new Set([40, 42, 46, 217]);
 // Accessories: drinkware, koozies, cards, etc.
 const ACCESSORIES_CATEGORIES = new Set([112, 238, 264, 292]);
 
+// ── Cost-aware pricing: fetch catalog cost + shipping, ensure 10% margin ──
+
+// Reference shipping address for rate estimation (rates are flat across US)
+const SHIPPING_REF_RECIPIENT = {
+  address1: "123 Main St",
+  city: "Chicago",
+  state_code: "IL",
+  country_code: "US",
+  zip: "60601",
+};
+
+async function getCatalogVariantCost(catalogVariantId: number): Promise<number> {
+  try {
+    const data = await printfulGet(`/products/variant/${catalogVariantId}`);
+    return parseFloat(data.result?.variant?.price || "0");
+  } catch {
+    return 0;
+  }
+}
+
+async function getShippingRate(catalogVariantId: number): Promise<number> {
+  try {
+    const res = await fetch(`${PRINTFUL_API}/shipping/rates`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${PRINTFUL_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        recipient: SHIPPING_REF_RECIPIENT,
+        items: [{ variant_id: catalogVariantId, quantity: 1 }],
+      }),
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!res.ok) return 0;
+    const data = await res.json();
+    const std = data.result?.find((r: { id: string }) => r.id === "STANDARD") || data.result?.[0];
+    return parseFloat(std?.rate || "0");
+  } catch {
+    return 0;
+  }
+}
+
+// Price = (production cost + shipping) × 1.10, rounded up to nearest dollar
+function costPlusShippingWithMargin(cost: number, shipping: number): number {
+  return Math.ceil((cost + shipping) * 1.10);
+}
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
-function transformProduct(result: any): ShopProduct | null {
+async function transformProduct(result: any): Promise<ShopProduct | null> {
   const sp = result.sync_product;
   const svs: any[] = result.sync_variants || [];
 
   if (svs.length === 0) return null;
 
-  // Use retail_price from first variant — skip products with $0 price
   const retailPrice = parseFloat(svs[0].retail_price || "0");
   if (retailPrice <= 0) return null;
 
-  const priceCents = Math.round(retailPrice * 100);
+  // Fetch cost + shipping for first variant to determine price floor
+  const catalogVariantId = svs[0].variant_id;
+  const [cost, shipping] = await Promise.all([
+    getCatalogVariantCost(catalogVariantId),
+    getShippingRate(catalogVariantId),
+  ]);
+
+  // Price = (cost + shipping) × 1.10 — guaranteed 10% profit
+  const finalPrice = (cost > 0) ? costPlusShippingWithMargin(cost, shipping) : retailPrice;
+  const priceCents = Math.round(finalPrice * 100);
 
   // Build variants, colors, sizes, and colorPreviews
   const variants: ProductVariant[] = [];
@@ -95,6 +152,7 @@ function transformProduct(result: any): ShopProduct | null {
 
     variants.push({
       syncVariantId: sv.id,
+      catalogVariantId: sv.variant_id,
       color,
       size,
       sku: sv.sku || "",
@@ -122,7 +180,7 @@ function transformProduct(result: any): ShopProduct | null {
     name: deriveDisplayName(sp.name),
     description: "Embroidered TDF crest.",
     price: priceCents,
-    displayPrice: `$${retailPrice.toFixed(0)}`,
+    displayPrice: `$${finalPrice.toFixed(0)}`,
     thumbnailUrl: sp.thumbnail_url || "",
     previewUrl: sp.thumbnail_url || "",
     colorPreviews,
@@ -163,7 +221,7 @@ export async function fetchShopProducts(): Promise<ShopProduct[]> {
 
     for (const detail of details) {
       if (!detail) continue;
-      const product = transformProduct(detail.result);
+      const product = await transformProduct(detail.result);
       if (product) products.push(product);
     }
 
