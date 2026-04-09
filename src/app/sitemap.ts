@@ -81,11 +81,13 @@ export async function generateSitemaps() {
   ];
 }
 
-export default function sitemap({ id }: { id: number }): MetadataRoute.Sitemap {
+export default async function sitemap({ id }: { id: number | Promise<string | undefined> }): Promise<MetadataRoute.Sitemap> {
+  // Next.js 16 passes id as a Promise<string>; resolve and coerce to number
+  const numId = typeof id === "number" ? id : Number(await id);
   const base = "https://tourdefore.com";
 
   // Sitemap 0: static + navigation pages
-  if (id === 0) {
+  if (numId === 0) {
     const uniqueStates = [...new Set(allDestinations.map((d) => d.state))];
     const activityTypes = ["atv", "fishing", "shooting", "casino", "brewery", "spa", "water-sports", "horseback", "hiking", "rafting", "zipline", "go-karts", "axe-throwing", "skeet", "boat-rental", "kayaking", "winery", "distillery", "paintball", "mountain-biking"];
 
@@ -150,8 +152,8 @@ export default function sitemap({ id }: { id: number }): MetadataRoute.Sitemap {
   }
 
   // Sitemaps 1-7: one per region with destinations + their courses
-  if (id >= 1 && id <= 7) {
-    const regionSlug = regionIds[id - 1];
+  if (numId >= 1 && numId <= 7) {
+    const regionSlug = regionIds[numId - 1];
     const regionDests = allDestinations.filter(
       (d) => REGION_SLUGS[d.region] === regionSlug
     );
@@ -176,7 +178,7 @@ export default function sitemap({ id }: { id: number }): MetadataRoute.Sitemap {
   }
 
   // Sitemap 8: guide + cost pages (266 pages)
-  if (id === 8) {
+  if (numId === 8) {
     const entries: MetadataRoute.Sitemap = [];
     for (const d of allDestinations) {
       entries.push({
@@ -196,7 +198,7 @@ export default function sitemap({ id }: { id: number }): MetadataRoute.Sitemap {
   }
 
   // Sitemap 9: bachelor party + comparison pages
-  if (id === 9) {
+  if (numId === 9) {
     return [
       ...bachelorDests.map((d) => ({
         url: `${base}/golf-trips/${d.id}/bachelor-party`,
