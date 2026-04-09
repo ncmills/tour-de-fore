@@ -4,7 +4,7 @@ import ShopGate from "@/components/ShopGate";
 
 export const metadata = {
   title: "Golf Trip Gear & Apparel — Pro Shop | Tour de Fore",
-  description: "Tour de Fore golf gear — polos, quarter-zips, hats, and caps. Rep the crew on and off the course. Free shipping on orders over $50.",
+  description: "Tour de Fore golf gear — polos, quarter-zips, hats, and caps. Rep the crew on and off the course. Free shipping included.",
   alternates: { canonical: "https://tourdefore.com/shop" },
   openGraph: { title: "TDF Pro Shop", description: "Tour de Fore golf gear — polos, quarter-zips, hats." },
 };
