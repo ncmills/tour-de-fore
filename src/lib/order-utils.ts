@@ -137,11 +137,16 @@ export function extractShipping(session: Stripe.Checkout.Session): ExtractedShip
       }
     : null;
 
-  // Validate required address fields — incomplete addresses will fail at Printful
+  // Reject incomplete addresses — they will fail at Printful, route to needs_attention instead
   if (address && (!address.line1 || !address.city || !address.state || !address.zip)) {
-    console.error("extractShipping: incomplete address — missing required fields", {
+    console.error("extractShipping: incomplete address — returning null", {
       line1: !!address.line1, city: !!address.city, state: !!address.state, zip: !!address.zip,
     });
+    return {
+      name: shippingObj?.name || session.customer_details?.name || "Customer",
+      email: session.customer_details?.email || "",
+      address: null,
+    };
   }
 
   return {
@@ -157,8 +162,9 @@ export function extractShipping(session: Stripe.Checkout.Session): ExtractedShip
 /**
  * Build a Printful recipient object from extracted shipping data.
  */
-export function buildRecipient(shipping: ExtractedShipping): PrintfulRecipient {
-  const addr = shipping.address!;
+export function buildRecipient(shipping: ExtractedShipping): PrintfulRecipient | null {
+  if (!shipping.address) return null;
+  const addr = shipping.address;
   return {
     name: shipping.name,
     address1: addr.line1,

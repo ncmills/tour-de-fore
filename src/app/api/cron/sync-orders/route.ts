@@ -76,9 +76,14 @@ export async function GET(req: NextRequest) {
 
       // Create Printful order
       try {
+        const recipient = buildRecipient(shipping);
+        if (!recipient) {
+          results.push({ sessionId: session.id, status: "needs_attention", detail: "Incomplete shipping address" });
+          continue;
+        }
         const printfulResult = await createPrintfulOrder(
           validItems.map(i => ({ sync_variant_id: i.syncVariantId, quantity: i.quantity })),
-          buildRecipient(shipping),
+          recipient,
           buildExternalId(session.id)
         );
 

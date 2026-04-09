@@ -21,6 +21,14 @@ export async function POST(req: NextRequest) {
     if (!items || items.length === 0) {
       return NextResponse.json({ error: "No items" }, { status: 400 });
     }
+    if (items.length > 20) {
+      return NextResponse.json({ error: "Too many items (max 20)" }, { status: 400 });
+    }
+    for (const item of items) {
+      if (!item.quantity || item.quantity < 1 || item.quantity > 10) {
+        return NextResponse.json({ error: `Invalid quantity for ${item.productId} (1-10)` }, { status: 400 });
+      }
+    }
 
     // Validate items against server-side catalog (no client-sent prices)
     const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];

@@ -59,9 +59,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ status: "error", message: "No valid variants" }, { status: 400 });
     }
 
+    const recipient = buildRecipient(shipping);
+    if (!recipient) {
+      return NextResponse.json({ status: "error", message: "Incomplete shipping address" }, { status: 400 });
+    }
+
     const printfulResult = await createPrintfulOrder(
       validItems.map(i => ({ sync_variant_id: i.syncVariantId, quantity: i.quantity })),
-      buildRecipient(shipping),
+      recipient,
       buildExternalId(sessionId)
     );
 

@@ -311,11 +311,14 @@ export async function createPrintfulOrder(
   }
 
   // Distributed lock: prevent concurrent creation of the same order
+  let lockKey: string | null = null;
+  let redis: Awaited<ReturnType<typeof import("./redis")["getRedis"]>> | null = null;
+
   if (externalId) {
     const { getRedis } = await import("./redis");
-    const redis = getRedis();
-    const lockKey = `order-lock:${externalId}`;
-    const acquired = await redis.set(lockKey, "1", "EX", 30, "NX"); // 30s lock (reduced from 60)
+    redis = getRedis();
+    lockKey = `order-lock:${externalId}`;
+    const acquired = await redis.set(lockKey, "1", "EX", 30, "NX"); // 30s lock
     if (!acquired) {
       // Another process is creating this order — poll until it appears or timeout
       for (let i = 0; i < 5; i++) {
@@ -328,35 +331,41 @@ export async function createPrintfulOrder(
     }
   }
 
-  // Dedup: check if this order already exists in Printful
-  if (externalId) {
-    const existing = await checkPrintfulOrderExists(externalId);
-    if (existing) {
-      console.log(`Printful order already exists for ${externalId}: #${existing.id} (${existing.status})`);
-      return existing;
+  try {
+    // Dedup: check if this order already exists in Printful
+    if (externalId) {
+      const existing = await checkPrintfulOrderExists(externalId);
+      if (existing) {
+        console.log(`Printful order already exists for ${externalId}: #${existing.id} (${existing.status})`);
+        return existing;
+      }
+    }
+
+    const res = await fetch(`${PRINTFUL_API}/orders?confirm=true`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${PRINTFUL_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        external_id: externalId,
+        recipient,
+        items,
+      }),
+      signal: AbortSignal.timeout(15000), // 15s timeout for order creation
+    });
+
+    if (!res.ok) {
+      const err = await res.text();
+      console.error("Printful order creation failed:", res.status, err);
+      throw new Error(`Printful ${res.status}: ${err}`);
+    }
+
+    const data = await res.json();
+    return { id: data.result.id, status: data.result.status };
+  } finally {
+    if (lockKey && redis) {
+      await redis.del(lockKey).catch(() => {});
     }
   }
-
-  const res = await fetch(`${PRINTFUL_API}/orders?confirm=true`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${PRINTFUL_TOKEN}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      external_id: externalId,
-      recipient,
-      items,
-    }),
-    signal: AbortSignal.timeout(15000), // 15s timeout for order creation
-  });
-
-  if (!res.ok) {
-    const err = await res.text();
-    console.error("Printful order creation failed:", res.status, err);
-    throw new Error(`Printful ${res.status}: ${err}`);
-  }
-
-  const data = await res.json();
-  return { id: data.result.id, status: data.result.status };
 }

@@ -135,10 +135,13 @@ export async function POST(req: NextRequest) {
 
           // Create Printful order
           const recipient = buildRecipient(shipping);
-          log.info("Creating Printful order", { items: validItems.length, name: shipping.name, city: shipping.address.city, state: shipping.address.state });
+          if (!recipient) {
+            log.error("buildRecipient returned null — incomplete address", { sessionId: session.id });
+          }
+          log.info("Creating Printful order", { items: validItems.length, name: shipping.name, city: shipping.address?.city, state: shipping.address?.state });
           let printfulResult: { id: number; status: string } | null = null;
           try {
-            printfulResult = validItems.length > 0 ? await createPrintfulOrder(
+            printfulResult = (validItems.length > 0 && recipient) ? await createPrintfulOrder(
               validItems.map((i) => ({ sync_variant_id: i.syncVariantId, quantity: i.quantity })),
               recipient,
               buildExternalId(session.id)
