@@ -12,6 +12,9 @@ import {
   buildRecipient,
   buildExternalId,
 } from "@/lib/order-utils";
+import { createLogger } from "@/lib/logger";
+
+const log = createLogger("webhook");
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
@@ -27,11 +30,11 @@ export async function POST(req: NextRequest) {
   try {
     event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
   } catch (err) {
-    console.error("Webhook signature verification failed:", err);
+    log.error("Signature verification failed", { err: err instanceof Error ? err.message : String(err) });
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
-  console.log("Webhook received:", event.type, event.id);
+  log.info("Received", { type: event.type, id: event.id });
 
   // Idempotency: atomic SET NX prevents race condition with concurrent webhook deliveries
   const { getRedis } = await import("@/lib/redis");
@@ -39,14 +42,14 @@ export async function POST(req: NextRequest) {
   const idempotencyKey = `webhook:processed:${event.id}`;
   const wasNew = await redis.set(idempotencyKey, "1", "EX", 60 * 60 * 48, "NX"); // 48h TTL
   if (!wasNew) {
-    console.log("Webhook already processed:", event.id);
+    log.info("Already processed, skipping", { id: event.id });
     return NextResponse.json({ received: true });
   }
 
   // Handle checkout completion (one-time plan purchases — legacy)
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
-    console.log("Checkout completed:", session.id, "type:", session.metadata?.type);
+    log.info("Checkout completed", { sessionId: session.id, type: session.metadata?.type });
 
     // Legacy per-plan payment
     const planId = session.metadata?.planId;
@@ -75,7 +78,7 @@ export async function POST(req: NextRequest) {
         const itemsJson = session.metadata?.items || fullSession.metadata?.items;
 
         if (!shipping.address) {
-          console.error("Shop order webhook: no shipping address found on session", session.id);
+          log.error("No shipping address", { sessionId: session.id });
 
           // Still store the order so paid orders don't silently disappear
           if (itemsJson) {
@@ -90,7 +93,7 @@ export async function POST(req: NextRequest) {
                 status: "needs_attention",
                 createdAt: new Date().toISOString(),
               });
-              console.error(`Shop order ${session.id} stored with status needs_attention — missing shipping address`);
+              log.warn("Order stored as needs_attention — missing shipping", { sessionId: session.id });
 
               if (shipping.email) {
                 await sendEmail({
@@ -100,7 +103,7 @@ export async function POST(req: NextRequest) {
                 });
               }
             } catch (storeErr) {
-              console.error("Failed to store needs_attention order:", storeErr);
+              log.error("Failed to store needs_attention order", { err: storeErr instanceof Error ? storeErr.message : String(storeErr) });
             }
           }
         }
@@ -113,7 +116,7 @@ export async function POST(req: NextRequest) {
           const validItems = items.filter((i) => i.syncVariantId && i.syncVariantId > 0);
           const droppedItems = items.filter((i) => !i.syncVariantId || i.syncVariantId <= 0);
           if (droppedItems.length > 0) {
-            console.error(`Webhook: ${droppedItems.length} item(s) had unresolved syncVariantId`);
+            log.error("Unresolved variant IDs", { sessionId: session.id, dropped: droppedItems.length });
             await sendEmail({
               to: "info@tourdefore.com",
               subject: `ALERT: ${droppedItems.length} item(s) could not be resolved — manual fulfillment needed`,
@@ -132,7 +135,7 @@ export async function POST(req: NextRequest) {
 
           // Create Printful order
           const recipient = buildRecipient(shipping);
-          console.log("Creating Printful order for", validItems.length, "items. Shipping:", shipping.name, shipping.address.city, shipping.address.state);
+          log.info("Creating Printful order", { items: validItems.length, name: shipping.name, city: shipping.address.city, state: shipping.address.state });
           let printfulResult: { id: number; status: string } | null = null;
           try {
             printfulResult = validItems.length > 0 ? await createPrintfulOrder(
@@ -141,10 +144,10 @@ export async function POST(req: NextRequest) {
               buildExternalId(session.id)
             ) : null;
           } catch (printfulErr) {
-            console.error("Printful order creation failed:", printfulErr);
+            log.error("Printful order creation failed", { err: printfulErr instanceof Error ? printfulErr.message : String(printfulErr) });
           }
 
-          console.log("Printful result:", printfulResult ? `ID ${printfulResult.id} Status ${printfulResult.status}` : "FAILED (null)");
+          log.info("Printful result", { orderId: printfulResult?.id || null, status: printfulResult?.status || "FAILED" });
 
           if (!printfulResult) {
             await sendEmail({
@@ -167,7 +170,7 @@ export async function POST(req: NextRequest) {
               createdAt: new Date().toISOString(),
             });
           } catch (redisErr) {
-            console.error("Redis order storage failed:", redisErr);
+            log.error("Redis order storage failed", { err: redisErr instanceof Error ? redisErr.message : String(redisErr) });
           }
 
           // Send confirmation email with product images
@@ -187,14 +190,14 @@ export async function POST(req: NextRequest) {
                 html: `<div style="font-family: -apple-system, sans-serif; max-width: 520px; margin: 0 auto; padding: 40px 30px; text-align: center;"><img src="https://tourdefore.com/icon-fancy.png" alt="Tour de Fore" style="width: 64px; height: 64px; margin-bottom: 16px;" /><h1 style="font-size: 22px; color: #c87941; margin: 0 0 8px; font-weight: 600;">Tour de Fore</h1><h2 style="font-size: 18px; margin: 0 0 24px; color: #333; font-weight: 500;">Order Confirmed</h2><table style="width: 100%; border-collapse: collapse; margin-bottom: 24px; text-align: left;">${itemRows.join("")}</table><p style="color: #555; font-size: 14px; line-height: 1.6; margin-bottom: 24px;">Your gear is being prepared. You'll get a shipping confirmation with tracking once it ships.</p><hr style="border: none; border-top: 1px solid #eee; margin: 24px 0;" /><p style="color: #999; font-size: 12px;">Questions? Contact us at <a href="mailto:info@tourdefore.com" style="color: #c87941;">info@tourdefore.com</a></p><p style="color: #bbb; font-size: 11px; margin-top: 16px;">Tour de Fore Pro Shop</p></div>`,
               });
             } catch (emailErr) {
-              console.error("Confirmation email failed:", emailErr);
+              log.error("Confirmation email failed", { err: emailErr instanceof Error ? emailErr.message : String(emailErr) });
             }
           }
 
-          console.log(`Shop order ${session.id} created. Printful: ${printfulResult?.id || "pending"}`);
+          log.info("Shop order complete", { sessionId: session.id, printfulId: printfulResult?.id || "pending" });
         }
       } catch (shopErr) {
-        console.error("Shop order processing failed:", shopErr);
+        log.error("Shop order processing failed", { err: shopErr instanceof Error ? shopErr.message : String(shopErr) });
         // ALWAYS alert on shop order failure — never let a paid order fail silently
         const customerEmail = session.customer_details?.email || "unknown";
         const errDetail = shopErr instanceof Error ? shopErr.message : String(shopErr);
@@ -218,13 +221,13 @@ export async function POST(req: NextRequest) {
         const expiresAt = periodEnd ? new Date(periodEnd * 1000) : new Date();
         if (!periodEnd) expiresAt.setMonth(expiresAt.getMonth() + 1);
         await setSubscription(email, subId, expiresAt);
-        console.log(`Subscription activated for ${email} (${subId}) until ${expiresAt.toISOString()}`);
+        log.info("Subscription activated", { email, subId, expiresAt: expiresAt.toISOString() });
       } catch {
         // Fallback if subscription retrieval fails
         const expiresAt = new Date();
         expiresAt.setMonth(expiresAt.getMonth() + 1);
         await setSubscription(email, subId, expiresAt);
-        console.log(`Subscription activated for ${email} (${subId}) with fallback expiry`);
+        log.warn("Subscription activated with fallback expiry", { email, subId });
       }
     }
   }
@@ -241,7 +244,7 @@ export async function POST(req: NextRequest) {
       const expiresAt = periodEnd ? new Date(periodEnd * 1000) : new Date();
       if (!periodEnd) expiresAt.setMonth(expiresAt.getMonth() + 1);
       await setSubscription(email, subId, expiresAt);
-      console.log(`Subscription renewed for ${email} until ${expiresAt.toISOString()}`);
+      log.info("Subscription renewed", { email, expiresAt: expiresAt.toISOString() });
     }
   }
 
@@ -255,7 +258,7 @@ export async function POST(req: NextRequest) {
         if ("email" in customer && customer.email) {
           const { cancelSubscription } = await import("@/lib/auth");
           await cancelSubscription(customer.email);
-          console.log(`Subscription cancelled for ${customer.email}`);
+          log.info("Subscription cancelled", { email: customer.email });
         }
       } catch { /* silent */ }
     }
