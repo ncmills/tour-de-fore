@@ -9,7 +9,7 @@ function getResend(): Resend {
   return _resend;
 }
 
-const FROM_ADDRESS = "Tour de Fore <noreply@tourdefore.com>";
+const FROM_ADDRESS = "Tour de Fore <info@tourdefore.com>";
 
 /**
  * Record email failure in Redis for monitoring.
