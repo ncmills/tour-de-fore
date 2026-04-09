@@ -284,7 +284,7 @@ export default function MyTripsClient({
           }}
         >
           <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
-            <Image src="/devil-avatar.png" alt="Tour de Fore devil mascot" width={160} height={160} style={{ width: "clamp(80px, 25vw, 160px)", height: "clamp(80px, 25vw, 160px)", objectFit: "contain", margin: "0 auto 0.09rem" }} />
+            <Image src="/devil-mascot.webp" alt="Tour de Fore devil mascot" width={160} height={160} style={{ width: "clamp(80px, 25vw, 160px)", height: "clamp(80px, 25vw, 160px)", objectFit: "contain", margin: "0 auto 0.09rem" }} />
 
             {editingName ? (
               <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
