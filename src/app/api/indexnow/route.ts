@@ -30,25 +30,32 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "No URLs provided" }, { status: 400 });
   }
 
-  // IndexNow accepts up to 10,000 URLs per request
+  // Submit to multiple IndexNow endpoints in batches of 500
+  const ENDPOINTS = [
+    "https://www.bing.com/indexnow",
+    "https://yandex.com/indexnow",
+  ];
+
   const batches = [];
-  for (let i = 0; i < urls.length; i += 10000) {
-    batches.push(urls.slice(i, i + 10000));
+  for (let i = 0; i < urls.length; i += 500) {
+    batches.push(urls.slice(i, i + 500));
   }
 
   const results = [];
-  for (const batch of batches) {
-    const res = await fetch("https://api.indexnow.org/indexnow", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        host: "tourdefore.com",
-        key: INDEXNOW_KEY,
-        keyLocation: `${SITE_HOST}/${INDEXNOW_KEY}.txt`,
-        urlList: batch,
-      }),
-    });
-    results.push({ status: res.status, count: batch.length });
+  for (const endpoint of ENDPOINTS) {
+    for (const batch of batches) {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        body: JSON.stringify({
+          host: "tourdefore.com",
+          key: INDEXNOW_KEY,
+          keyLocation: `${SITE_HOST}/${INDEXNOW_KEY}.txt`,
+          urlList: batch,
+        }),
+      });
+      results.push({ endpoint, status: res.status, count: batch.length });
+    }
   }
 
   return NextResponse.json({
