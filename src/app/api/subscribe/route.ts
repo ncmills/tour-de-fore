@@ -25,8 +25,8 @@ export async function POST(req: NextRequest) {
           price_data: {
             currency: "usd",
             product_data: {
-              name: "Tour de Fore — VIP Membership",
-              description: "Unlimited trip plans with full venue names, booking links, and detailed itineraries every month.",
+              name: "Tour de Fore — Unlimited Planning",
+              description: "Unlimited AI-generated trip plans every month. No cap, no waiting.",
             },
             unit_amount: 1999, // $19.99
             recurring: { interval: "month" },

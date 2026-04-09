@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 import { getSessionEmail } from "@/lib/auth";
 import { getRedis } from "@/lib/redis";
-import { UNLIMITED_EMAILS, getWeekKey } from "@/lib/shared-constants";
+import { UNLIMITED_EMAILS, getMonthKey, getNextMonthReset } from "@/lib/shared-constants";
+import { isSubscribed } from "@/lib/auth";
 
-const WEEKLY_PLAN_LIMIT = 3;
+const MONTHLY_PLAN_LIMIT = 3;
 
 export async function GET() {
   try {
@@ -13,16 +14,19 @@ export async function GET() {
     }
 
     const unlimited = UNLIMITED_EMAILS.includes(email);
-    const weekKey = getWeekKey();
-    const countRaw = await getRedis().get(`user:${email}:plans:${weekKey}`);
+    const subscribed = !unlimited && await isSubscribed(email);
+    const monthKey = getMonthKey();
+    const countRaw = await getRedis().get(`user:${email}:plans:${monthKey}`);
     const plansUsed = countRaw ? parseInt(countRaw) : 0;
-    const canPlan = unlimited || plansUsed < WEEKLY_PLAN_LIMIT;
+    const canPlan = unlimited || subscribed || plansUsed < MONTHLY_PLAN_LIMIT;
 
     return NextResponse.json({
       canPlan,
       plansUsed,
-      plansLimit: WEEKLY_PLAN_LIMIT,
+      plansLimit: MONTHLY_PLAN_LIMIT,
       unlimited,
+      subscribed,
+      resetsAt: getNextMonthReset(),
     }, {
       headers: { "Cache-Control": "private, max-age=60" },
     });

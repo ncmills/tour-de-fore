@@ -19,7 +19,7 @@ export default async function GalleryPage({ searchParams }: Props) {
   if (!planId || !dest || !tier) notFound();
 
   const stored = await getPlan(planId);
-  if (!stored || !stored.paid || !stored.destinations) notFound();
+  if (!stored || !stored.destinations) notFound();
 
   const destLevel = dest as PriceLevel;
   const rec = stored.destinations[destLevel];

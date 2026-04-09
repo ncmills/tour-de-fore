@@ -204,10 +204,10 @@ export default function MyTripsClient({
     setDeletingTripId(null);
   };
 
-  const isVip = accountStatus?.unlimited || accountStatus?.subscribed;
+  const isUnlimited = accountStatus?.unlimited || accountStatus?.subscribed;
 
   const remaining = accountStatus
-    ? isVip
+    ? isUnlimited
       ? null
       : accountStatus.plansLimit - accountStatus.plansUsed
     : null;
@@ -455,13 +455,13 @@ export default function MyTripsClient({
               marginBottom: "1.5rem",
               padding: "0.85rem 1.25rem",
               borderRadius: 10,
-              background: isVip
+              background: isUnlimited
                 ? "rgba(212,168,67,0.08)"
                 : canPlan
                   ? "rgba(74,222,128,0.06)"
                   : "rgba(220,38,38,0.06)",
               border: `1px solid ${
-                isVip
+                isUnlimited
                   ? "rgba(212,168,67,0.25)"
                   : canPlan
                     ? "rgba(74,222,128,0.2)"
@@ -479,7 +479,7 @@ export default function MyTripsClient({
                 width: 8,
                 height: 8,
                 borderRadius: "50%",
-                background: isVip
+                background: isUnlimited
                   ? "rgba(212,168,67,0.8)"
                   : canPlan
                     ? "rgba(74,222,128,0.8)"
@@ -488,14 +488,14 @@ export default function MyTripsClient({
                 flexShrink: 0,
               }} />
               <span style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-inter), sans-serif" }}>
-                {isVip
+                {isUnlimited
                   ? "Unlimited plans"
                   : canPlan
                     ? `You can plan ${remaining} more trip${remaining !== 1 ? "s" : ""} this month`
-                    : "You've reached your plan limit this month"}
+                    : "You've reached your 3 free plans this month"}
               </span>
             </div>
-            {isVip ? (
+            {isUnlimited ? (
               <span style={{
                 fontSize: "0.6rem",
                 fontWeight: 700,
@@ -507,7 +507,7 @@ export default function MyTripsClient({
                 color: "rgba(212,168,67,0.9)",
                 textTransform: "uppercase",
               }}>
-                VIP
+                UNLIMITED
               </span>
             ) : !canPlan && (
               <button
@@ -516,7 +516,7 @@ export default function MyTripsClient({
                 style={{
                   fontSize: "0.75rem",
                   fontWeight: 600,
-                  color: "rgba(212,168,67,0.7)",
+                  color: "rgba(220,38,38,0.7)",
                   background: "none",
                   border: "none",
                   cursor: upgrading ? "wait" : "pointer",
@@ -527,7 +527,7 @@ export default function MyTripsClient({
                   transition: "color 0.15s",
                 }}
               >
-                {upgrading ? "..." : "Upgrade"}
+                {upgrading ? "..." : "Upgrade — $19.99/mo"}
               </button>
             )}
           </motion.div>
@@ -663,20 +663,6 @@ export default function MyTripsClient({
                           </p>
                         </div>
                         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                          {trip.paid && (
-                            <span style={{
-                              fontSize: "0.6rem",
-                              fontWeight: 700,
-                              letterSpacing: "0.1em",
-                              padding: "3px 8px",
-                              background: "rgba(74,222,128,0.15)",
-                              border: "1px solid rgba(74,222,128,0.3)",
-                              borderRadius: 4,
-                              color: "rgba(74,222,128,0.9)",
-                            }}>
-                              UNLOCKED
-                            </span>
-                          )}
                           <Link
                             href={`/plan/result/${trip.id}`}
                             style={{

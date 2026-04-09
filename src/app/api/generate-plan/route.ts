@@ -27,7 +27,7 @@ import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import { validateWizardState } from "@/lib/validate";
 import { addPlanToUser } from "@/lib/auth";
 import { getRedis } from "@/lib/redis";
-import { UNLIMITED_EMAILS, getWeekKey, getNextWeekReset } from "@/lib/shared-constants";
+import { UNLIMITED_EMAILS, getMonthKey, getNextMonthReset } from "@/lib/shared-constants";
 
 function tryParseJSON(jsonStr: string): unknown | null {
   // Strip markdown fences
@@ -333,18 +333,22 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Free tier: 3 plans per week per user
+  // Free tier: 3 plans per month (subscribers get unlimited)
   if (email && !isUnlimited) {
-    const weekKey = getWeekKey();
-    const countRaw = await getRedis().get(`user:${email}:plans:${weekKey}`);
-    const count = countRaw ? parseInt(countRaw) : 0;
-    if (count >= 3) {
-      return NextResponse.json({
-        error: "You've used your 3 free plans this week. Come back next week!",
-        limitReached: true,
-        plansUsed: count,
-        resetsAt: getNextWeekReset(),
-      }, { status: 429 });
+    const { isSubscribed } = await import("@/lib/auth");
+    const subscribed = await isSubscribed(email);
+    if (!subscribed) {
+      const monthKey = getMonthKey();
+      const countRaw = await getRedis().get(`user:${email}:plans:${monthKey}`);
+      const count = countRaw ? parseInt(countRaw) : 0;
+      if (count >= 3) {
+        return NextResponse.json({
+          error: "You've used your 3 free plans this month. Upgrade for unlimited planning!",
+          limitReached: true,
+          plansUsed: count,
+          resetsAt: getNextMonthReset(),
+        }, { status: 429 });
+      }
     }
   }
 
@@ -453,13 +457,13 @@ export async function POST(req: NextRequest) {
           premium: destByLevel.premium || fallbackRec,
         } : undefined;
 
-        // Record weekly plan usage
+        // Record monthly plan usage
         if (email && !UNLIMITED_EMAILS.includes(email)) {
-          const weekKey = getWeekKey();
-          const redisKey = `user:${email}:plans:${weekKey}`;
+          const monthKey = getMonthKey();
+          const redisKey = `user:${email}:plans:${monthKey}`;
           const pipe = getRedis().pipeline();
           pipe.incr(redisKey);
-          pipe.expire(redisKey, 60 * 60 * 24 * 8); // 8 days TTL
+          pipe.expire(redisKey, 60 * 60 * 24 * 35); // ~35 days TTL
           await pipe.exec();
         }
 

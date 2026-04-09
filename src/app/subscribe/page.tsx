@@ -6,12 +6,12 @@ import MulliganButton from "@/components/MulliganButton";
 import HomeButton from "@/components/HomeButton";
 
 const perks = [
-  { icon: "♾️", label: "Unlimited trip plans", desc: "Generate as many plans as you want, all year" },
-  { icon: "📍", label: "Real venue names", desc: "See exactly which courses, restaurants, and bars made the cut" },
-  { icon: "🔗", label: "Booking links", desc: "Direct links to Airbnb, VRBO, tee times, and reservations" },
+  { icon: "♾️", label: "Unlimited trip plans", desc: "No more waiting — plan as many trips as you want, every month" },
+  { icon: "🏌️", label: "Every destination", desc: "Budget, mid-range, and premium options for any crew size" },
   { icon: "📅", label: "Full itineraries", desc: "Day-by-day schedules with pro tips from 6 years of TDF trips" },
   { icon: "🛠️", label: "Trip builder", desc: "Customize every detail — swap courses, lodging, restaurants" },
   { icon: "📤", label: "Share with the crew", desc: "Shareable trip page with RSVP for your whole group" },
+  { icon: "🔥", label: "Always first", desc: "First access to new features and destinations as we add them" },
 ];
 
 export default function SubscribePage() {
@@ -50,7 +50,7 @@ export default function SubscribePage() {
             Become a Devil
           </h1>
           <p className="neon-stats neon-stats-text" style={{ fontSize: "clamp(0.85rem, 2.5vw, 1.05rem)", maxWidth: 500, margin: "0 auto 2rem" }}>
-            Free gets you the shape. Devils get the details.
+            3 free plans a month. Devils get unlimited.
           </p>
         </motion.div>
 
@@ -67,7 +67,7 @@ export default function SubscribePage() {
             marginBottom: "2.5rem",
           }}
         >
-          <div style={{ fontSize: "clamp(3rem, 8vw, 5rem)", fontWeight: 800, color: "#fff" }}>$199</div>
+          <div style={{ fontSize: "clamp(3rem, 8vw, 5rem)", fontWeight: 800, color: "#fff" }}>$19.99<span style={{ fontSize: "0.35em", fontWeight: 400, color: "rgba(255,255,255,0.4)" }}>/mo</span></div>
           <p className="neon-stats neon-stats-text" style={{ fontSize: "clamp(0.75rem, 2vw, 0.9rem)", marginBottom: "2rem" }}>Unlimited trips. Unlimited excuses to your wife.</p>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(250px, 100%), 1fr))", gap: "1rem", textAlign: "left", marginBottom: "2rem" }}>
@@ -99,7 +99,7 @@ export default function SubscribePage() {
               letterSpacing: "0.03em",
             }}
           >
-            {loading ? "Redirecting..." : "Become a Devil — $199/yr"}
+            {loading ? "Redirecting..." : "Become a Devil — $19.99/mo"}
           </button>
 
           <p style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.2)", marginTop: "1rem" }}>
@@ -115,12 +115,12 @@ export default function SubscribePage() {
           <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: 0, fontSize: "clamp(0.65rem, 2vw, 0.8rem)", textAlign: "left" }}>
             {[
               ["", "Free", "Devil"],
-              ["Plans/mo", "1", "Unlimited"],
-              ["Venues", "Hidden", "✓ Real"],
-              ["Links", "—", "✓ Direct"],
-              ["Builder", "—", "✓ Full"],
-              ["Share", "—", "✓ RSVP"],
-              ["Tips", "—", "✓ Insider"],
+              ["Plans/mo", "3", "Unlimited"],
+              ["Full details", "✓", "✓"],
+              ["Real venues", "✓", "✓"],
+              ["Booking links", "✓", "✓"],
+              ["Trip builder", "✓", "✓"],
+              ["Share + RSVP", "✓", "✓"],
             ].map(([feature, free, devil], i) => (
               <div key={i} style={{ display: "contents" }}>
                 <div style={{ padding: "0.5rem 0.25rem", color: "rgba(255,255,255,0.5)", borderBottom: "1px solid rgba(255,255,255,0.05)", fontWeight: i === 0 ? 600 : 400 }}>{feature}</div>

@@ -2,21 +2,16 @@ import { NextResponse } from "next/server";
 
 export const UNLIMITED_EMAILS = ["nicholauscmills@gmail.com", "matt@sixtenmgmt.com"];
 
-/** Get ISO week key like "2026-W14" */
-export function getWeekKey(): string {
+/** Get month key like "2026-04" */
+export function getMonthKey(): string {
   const d = new Date();
-  const jan1 = new Date(d.getFullYear(), 0, 1);
-  const days = Math.floor((d.getTime() - jan1.getTime()) / 86400000);
-  const week = Math.ceil((days + jan1.getDay() + 1) / 7);
-  return `${d.getFullYear()}-W${String(week).padStart(2, "0")}`;
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
 }
 
-/** Get next Monday midnight ISO string */
-export function getNextWeekReset(): string {
+/** Get first day of next month ISO string */
+export function getNextMonthReset(): string {
   const d = new Date();
-  const day = d.getDay();
-  const daysUntilMonday = day === 0 ? 1 : 8 - day;
-  const next = new Date(d.getFullYear(), d.getMonth(), d.getDate() + daysUntilMonday);
+  const next = new Date(d.getFullYear(), d.getMonth() + 1, 1);
   return next.toISOString();
 }
 

@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { ThreeDestinationResult, ThreeFreePreview, PriceLevel, FreePreview } from "@/lib/plan-types";
@@ -22,7 +21,6 @@ function DestinationCard({
   badge,
   preview,
   legacyDest,
-  isUnlocked,
   index,
 }: {
   planId: string;
@@ -33,33 +31,13 @@ function DestinationCard({
   badge?: string;
   preview: FreePreview | null;
   legacyDest?: { city?: string; state?: string; tagline?: string; destinationId?: string; plans?: { devil?: { estimatedBudget?: { perPerson?: string }; courses?: { name: string }[]; lodging?: { type?: string } } } };
-  isUnlocked: boolean;
   index: number;
 }) {
-  const [unlocking, setUnlocking] = useState(false);
-
   const city = preview?.city || legacyDest?.city || "";
   const state = preview?.state || legacyDest?.state || "";
   const tagline = preview?.tagline || legacyDest?.tagline || "";
   const budget = preview?.estimatedBudgetPerPerson || legacyDest?.plans?.devil?.estimatedBudget?.perPerson || "";
   const lockedCounts = preview?.lockedCounts;
-
-  const handleUnlock = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (unlocking) return;
-    setUnlocking(true);
-    try {
-      const res = await fetch("/api/unlock-plan", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ planId, dest: priceKey }),
-      });
-      const data = await res.json();
-      if (data.url) window.location.href = data.url;
-      else setUnlocking(false);
-    } catch { setUnlocking(false); }
-  };
 
   const trackClick = () => {
     const destId = preview?.destinationId || legacyDest?.destinationId;
@@ -89,19 +67,14 @@ function DestinationCard({
         padding: "2rem 1.75rem",
         overflow: "hidden",
       }}>
-        {/* Badges */}
-        <div style={{ display: "flex", gap: "0.5rem", position: "absolute", top: "1rem", right: "1rem" }}>
-          {isUnlocked && (
-            <div style={{ background: "rgba(74,222,128,0.9)", borderRadius: 4, padding: "3px 10px", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.12em", color: "#000" }}>
-              ✓ UNLOCKED
-            </div>
-          )}
-          {badge && !isUnlocked && (
+        {/* Badge */}
+        {badge && (
+          <div style={{ position: "absolute", top: "1rem", right: "1rem" }}>
             <div style={{ background: "rgba(220,38,38,0.9)", borderRadius: 4, padding: "3px 10px", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.15em", color: "#fff" }}>
               {badge}
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Tier + Icon + City */}
         <div style={{ fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: accentColor, marginBottom: "0.15rem" }}>
@@ -193,48 +166,25 @@ function DestinationCard({
           </div>
         )}
 
-        {isUnlocked ? (
-          <Link
-            href={`/plan/gallery?planId=${planId}&dest=${priceKey}&tier=devil`}
-            onClick={trackClick}
-            style={{
-              display: "block",
-              padding: "0.85rem",
-              background: isMid ? "rgba(220,38,38,0.9)" : "rgba(255,255,255,0.08)",
-              border: isMid ? "none" : "1px solid rgba(255,255,255,0.15)",
-              borderRadius: 8,
-              textAlign: "center",
-              fontSize: "0.85rem",
-              fontWeight: 700,
-              color: isMid ? "#fff" : "rgba(255,255,255,0.7)",
-              textDecoration: "none",
-              letterSpacing: "0.03em",
-            }}
-          >
-            View All Options →
-          </Link>
-        ) : (
-          <button
-            onClick={handleUnlock}
-            disabled={unlocking}
-            style={{
-              display: "block",
-              width: "100%",
-              padding: "0.85rem",
-              background: isMid ? "rgba(220,38,38,0.9)" : "rgba(255,255,255,0.08)",
-              border: isMid ? "none" : "1px solid rgba(255,255,255,0.15)",
-              borderRadius: 8,
-              textAlign: "center",
-              fontSize: "0.85rem",
-              fontWeight: 700,
-              color: isMid ? "#fff" : "rgba(255,255,255,0.7)",
-              letterSpacing: "0.03em",
-              cursor: unlocking ? "wait" : "pointer",
-            }}
-          >
-            {unlocking ? "Loading..." : "Unlock Full Plan →"}
-          </button>
-        )}
+        <Link
+          href={`/plan/gallery?planId=${planId}&dest=${priceKey}&tier=devil`}
+          onClick={trackClick}
+          style={{
+            display: "block",
+            padding: "0.85rem",
+            background: isMid ? "rgba(220,38,38,0.9)" : "rgba(255,255,255,0.08)",
+            border: isMid ? "none" : "1px solid rgba(255,255,255,0.15)",
+            borderRadius: 8,
+            textAlign: "center",
+            fontSize: "0.85rem",
+            fontWeight: 700,
+            color: isMid ? "#fff" : "rgba(255,255,255,0.7)",
+            textDecoration: "none",
+            letterSpacing: "0.03em",
+          }}
+        >
+          View All Options →
+        </Link>
       </div>
     </motion.div>
   );
@@ -243,14 +193,11 @@ function DestinationCard({
 export default function PlanSelectionClient({
   planId,
   freePreviews,
-  paid,
-  paidDestination,
   legacyDestinations,
 }: {
   planId: string;
   freePreviews: ThreeFreePreview | null;
   paid?: boolean;
-  paidDestination?: PriceLevel;
   legacyDestinations?: ThreeDestinationResult;
 }) {
   return (
@@ -302,7 +249,6 @@ export default function PlanSelectionClient({
             badge={badge}
             preview={freePreviews?.[key] || null}
             legacyDest={legacyDestinations?.[key]}
-            isUnlocked={paid ? (paidDestination ? paidDestination === key : true) : false}
             index={i}
           />
         ))}

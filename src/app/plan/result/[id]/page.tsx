@@ -72,25 +72,22 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
   const isOrganizer = stored.inputs?.organizerEmail?.toLowerCase() === sessionEmail?.toLowerCase();
   const userPlans = sessionEmail ? await getUserPlans(sessionEmail) : [];
   const ownsThisPlan = isOrganizer || userPlans.includes(id);
-  // Check if user is a listed attendee (shared plan access)
   let isAttendee = false;
   if (!ownsThisPlan && sessionEmail) {
     const attendees = await getAttendees(id);
     isAttendee = attendees.some((a) => a.email.toLowerCase() === sessionEmail.toLowerCase());
   }
   const hasAccess = ownsThisPlan || isAttendee;
-  const isPaid = stored.paid && hasAccess;
 
-  // No dest: show destination cards
+  // No dest: show destination cards (all plans are free — no paywall)
   if (!dest) {
     return (
       <Suspense>
         <PlanSelectionClient
           planId={id}
           freePreviews={stored.freePreviews || null}
-          paid={isPaid}
-          paidDestination={stored.paidDestination}
-          legacyDestinations={isPaid ? stored.destinations : undefined}
+          paid={true}
+          legacyDestinations={hasAccess ? stored.destinations : undefined}
         />
       </Suspense>
     );
@@ -98,8 +95,8 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
 
   const destLevel = dest as PriceLevel;
 
-  // Show full plan (only if user owns it and it's paid)
-  if (isPaid && stored.destinations?.[destLevel]) {
+  // Show full plan
+  if (hasAccess && stored.destinations?.[destLevel]) {
     const rec = stored.destinations[destLevel];
     const selectedTier = tier || "devil";
     const plan = getTierPlan(rec.plans, selectedTier);
@@ -121,8 +118,8 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
     );
   }
 
-  // Legacy plans (only if user owns it)
-  if (isPaid && stored.plans) {
+  // Legacy plans
+  if (hasAccess && stored.plans) {
     const selectedTier = tier || "devil";
     const plan = getTierPlan(stored.plans, selectedTier);
     if (!plan) notFound();
@@ -133,10 +130,10 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
     );
   }
 
-  // Fallback — show selection with appropriate paid status
+  // Fallback — show selection
   return (
     <Suspense>
-      <PlanSelectionClient planId={id} freePreviews={stored.freePreviews || null} paid={isPaid} />
+      <PlanSelectionClient planId={id} freePreviews={stored.freePreviews || null} paid={true} />
     </Suspense>
   );
 }
