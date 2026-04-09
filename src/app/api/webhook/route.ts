@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, after } from "next/server";
 import Stripe from "stripe";
 import { getPlan, storePlan, storeOrder } from "@/lib/kv";
 import { addPlanToUser, setSubscription } from "@/lib/auth";
@@ -13,6 +13,8 @@ import {
   buildExternalId,
 } from "@/lib/order-utils";
 import { createLogger } from "@/lib/logger";
+
+export const maxDuration = 60;
 
 const log = createLogger("webhook");
 
@@ -46,6 +48,19 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ received: true });
   }
 
+  // Return 200 immediately so Stripe doesn't timeout, process in background
+  after(async () => {
+    try {
+      await processWebhookEvent(event, stripe);
+    } catch (err) {
+      log.error("Background processing failed", { type: event.type, id: event.id, err: err instanceof Error ? err.message : String(err) });
+    }
+  });
+
+  return NextResponse.json({ received: true });
+}
+
+async function processWebhookEvent(event: Stripe.Event, stripe: Stripe) {
   // Handle checkout completion (one-time plan purchases — legacy)
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
@@ -285,6 +300,4 @@ export async function POST(req: NextRequest) {
       critical: true,
     });
   }
-
-  return NextResponse.json({ received: true });
 }

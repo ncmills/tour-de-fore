@@ -112,14 +112,16 @@ async function getShippingRate(catalogVariantId: number): Promise<number> {
   }
 }
 
-// Price = (cost + shipping + Stripe fixed fee) / (1 - target margin - Stripe %)
-// Ensures 10% net profit AFTER Stripe takes 2.9% + $0.30
+// Price = (totalCost + Stripe fixed fee) / (1 - target margin - Stripe %)
+// Ensures 10% net profit AFTER Stripe fees AND Printful overhead (tax, digitization, surcharges)
 const TARGET_MARGIN = 0.10;
 const STRIPE_PERCENT = 0.029;
 const STRIPE_FIXED = 0.30;
+const PRINTFUL_OVERHEAD = 0.15; // 15% buffer for Printful sales tax (~8%) + digitization + surcharges
 
 function priceWithMarginAfterFees(cost: number, shipping: number): number {
-  return Math.ceil((cost + shipping + STRIPE_FIXED) / (1 - TARGET_MARGIN - STRIPE_PERCENT));
+  const totalCost = (cost + shipping) * (1 + PRINTFUL_OVERHEAD);
+  return Math.ceil((totalCost + STRIPE_FIXED) / (1 - TARGET_MARGIN - STRIPE_PERCENT));
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
