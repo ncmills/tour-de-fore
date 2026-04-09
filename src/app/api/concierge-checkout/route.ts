@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
 import { getPlan } from "@/lib/kv";
+import type { GeneratedPlan, ThreePlanResult } from "@/lib/plan-types";
 
 function parseBudgetToNumber(budget: string): number {
   // Extract numbers from strings like "$1,200-$1,800" and use midpoint
@@ -30,17 +31,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Plan not found" }, { status: 404 });
     }
 
-    // Get the selected plan: new format (destinations) or legacy (plans)
-    const tierKey = tier === "demon-king" ? "demonKing" : tier;
-    let plan;
+    // Get the selected plan from destinations
+    const tierKey = (tier === "demon-king" ? "demonKing" : tier) as keyof ThreePlanResult;
+    let plan: GeneratedPlan | undefined;
     if (stored.destinations && dest) {
       const destLevel = dest as "budget" | "mid" | "premium";
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      plan = (stored.destinations[destLevel]?.plans as any)?.[tierKey];
-    }
-    if (!plan && stored.plans) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      plan = (stored.plans as any)[tierKey];
+      plan = stored.destinations[destLevel]?.plans?.[tierKey];
     }
     if (!plan) {
       return NextResponse.json({ error: "Invalid tier or destination" }, { status: 400 });

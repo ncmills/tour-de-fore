@@ -212,9 +212,11 @@ export async function POST(req: NextRequest) {
     if (email && session.subscription) {
       const subId = typeof session.subscription === "string" ? session.subscription : session.subscription.id;
       try {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const sub = await stripe.subscriptions.retrieve(subId) as any;
-        const expiresAt = new Date((sub.current_period_end) * 1000);
+        const sub = await stripe.subscriptions.retrieve(subId);
+        // Stripe v20 moved current_period_end to items — fall back to item-level period
+        const periodEnd = sub.items?.data?.[0]?.current_period_end;
+        const expiresAt = periodEnd ? new Date(periodEnd * 1000) : new Date();
+        if (!periodEnd) expiresAt.setMonth(expiresAt.getMonth() + 1);
         await setSubscription(email, subId, expiresAt);
         console.log(`Subscription activated for ${email} (${subId}) until ${expiresAt.toISOString()}`);
       } catch {
@@ -231,8 +233,7 @@ export async function POST(req: NextRequest) {
   if (event.type === "invoice.paid") {
     const invoice = event.data.object as Stripe.Invoice;
     const email = invoice.customer_email;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const rawSub = (invoice as any).subscription;
+    const rawSub = (invoice as unknown as { subscription: string | { id: string } | null }).subscription;
     const subId = typeof rawSub === "string" ? rawSub : rawSub?.id;
     if (email && subId) {
       // Use invoice line item period end for accurate expiry

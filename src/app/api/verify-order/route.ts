@@ -26,8 +26,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Fetch session from Stripe
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const session = await stripe.checkout.sessions.retrieve(sessionId) as any;
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
 
     if (session.payment_status !== "paid" || session.metadata?.type !== "shop") {
       return NextResponse.json({ status: "not_shop_order" });

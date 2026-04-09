@@ -496,8 +496,7 @@ export async function POST(req: NextRequest) {
       } catch (err) {
         const errMsg = err instanceof Error ? err.message : String(err);
         const errName = err instanceof Error ? err.constructor.name : "Unknown";
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const statusCode = (err as any)?.status || (err as any)?.statusCode || "";
+        const statusCode = err instanceof Error && "status" in err ? (err as Error & { status: number }).status : "";
         console.error(`Plan generation error [${errName}] (${statusCode}): ${errMsg}`);
         if (err instanceof Error && err.stack) console.error(err.stack);
         send({ type: "error", error: "Failed to generate plan. Please try again.", debug: `${errName}: ${errMsg}` });

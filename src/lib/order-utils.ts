@@ -1,4 +1,5 @@
 import { findVariant } from "@/lib/printful";
+import type Stripe from "stripe";
 
 export interface RawOrderItem {
   syncVariantId?: number;
@@ -101,12 +102,14 @@ export async function resolveVariants(
  * Extract shipping address and customer info from a Stripe checkout session.
  * Handles multiple Stripe API response formats.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function extractShipping(session: any): ExtractedShipping {
-  const shippingObj =
-    session.collected_information?.shipping_details ||
-    session.shipping_details ||
-    session.shipping;
+export function extractShipping(session: Stripe.Checkout.Session): ExtractedShipping {
+  // Stripe SDK types vary by version — use Record for fields that may not be in TS defs
+  const s = session as unknown as Record<string, unknown>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const shippingObj: any =
+    (s.collected_information as any)?.shipping_details ||
+    (s.shipping_details) ||
+    (s.shipping);
 
   const customerAddr = session.customer_details?.address;
 

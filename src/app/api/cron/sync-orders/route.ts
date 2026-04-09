@@ -53,8 +53,7 @@ export async function GET(req: NextRequest) {
       await resolveVariants(items, "Cron");
 
       // Get shipping — retrieve full session
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const fullSession = await stripe.checkout.sessions.retrieve(session.id) as any;
+      const fullSession = await stripe.checkout.sessions.retrieve(session.id);
       const shipping = extractShipping(fullSession);
 
       if (!shipping.address) {
