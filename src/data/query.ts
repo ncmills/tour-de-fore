@@ -36,6 +36,7 @@ interface FilterOptions {
   season?: Season;
   groupSize?: number;
   numberOfDays?: number;
+  roundsPerDay?: string;
   budget?: string;
   courseQuality?: string;
   activities?: string[];
@@ -45,6 +46,11 @@ interface FilterOptions {
   lodgingPref?: string;
   budgetPriorities?: string[];
   mustPlayCourses?: string;
+}
+
+function roundsPerDayMultiplier(roundsPerDay?: string): number {
+  if (roundsPerDay === "One (18)") return 1;
+  return 2; // "Two (36)", "Let AI decide", or default
 }
 
 function budgetToRange(budget: string): [number, number] {
@@ -164,14 +170,14 @@ function priceRangeToNumber(priceRange: string): number {
 
 // ── Compute price index for a destination ──
 
-function computePriceIndex(d: Destination, groupSize: number, numberOfDays: number = 3): number {
+function computePriceIndex(d: Destination, groupSize: number, numberOfDays: number = 3, roundsPerDay?: string): number {
   const avgGreenFee =
     d.courses.reduce((sum, c) => sum + (c.greenFeeRange[0] + c.greenFeeRange[1]) / 2, 0) /
     d.courses.length;
 
-  // Rounds = 2 per golf day (arrival day has no golf, so golf days = numberOfDays - 1)
+  // Rounds per golf day: 1 for "One (18)", 2 for "Two (36)" or default
   const golfDays = Math.max(numberOfDays - 1, 1);
-  const rounds = golfDays * 2;
+  const rounds = golfDays * roundsPerDayMultiplier(roundsPerDay);
   const nights = numberOfDays + 1; // arrive night before, leave after last day
 
   // Lodging: use actual group size for per-person split
@@ -240,7 +246,7 @@ function scoreDestination(d: Destination, options: FilterOptions): ScoreResult {
   }
 
   // ── Budget fit — gradient scoring instead of binary cliff ──
-  const estimatedPerPerson = computePriceIndex(d, options.groupSize || 12, options.numberOfDays || 3);
+  const estimatedPerPerson = computePriceIndex(d, options.groupSize || 12, options.numberOfDays || 3, options.roundsPerDay);
   if (budgetRange[1] < 99999) {
     const midBudget = (budgetRange[0] + budgetRange[1]) / 2;
     const distance = Math.abs(estimatedPerPerson - midBudget) / Math.max(midBudget, 1);
@@ -436,7 +442,7 @@ export function pickThreeDestinations(
   if (options.specificCity && primaryDestinations.length > 0) {
     const d = primaryDestinations[0];
     const { score, reasons } = scoreDestination(d, options);
-    const priceIndex = computePriceIndex(d, options.groupSize || 12, options.numberOfDays || 3);
+    const priceIndex = computePriceIndex(d, options.groupSize || 12, options.numberOfDays || 3, options.roundsPerDay);
     return [
       { destination: d, priceLevel: "budget" as PriceLevel, score, priceIndex, reasons },
       { destination: d, priceLevel: "mid" as PriceLevel, score, priceIndex, reasons },
@@ -450,7 +456,7 @@ export function pickThreeDestinations(
     return {
       destination: d,
       score,
-      priceIndex: computePriceIndex(d, options.groupSize || 12, options.numberOfDays || 3),
+      priceIndex: computePriceIndex(d, options.groupSize || 12, options.numberOfDays || 3, options.roundsPerDay),
       reasons,
     };
   });

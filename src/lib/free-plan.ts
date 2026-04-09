@@ -53,7 +53,8 @@ export function buildFreePreview(
 
   // Tier-aware pricing
   const golfDays = Math.max(state.numberOfDays - 1, 1);
-  const rounds = golfDays * 2;
+  const rpd = state.roundsPerDay === "One (18)" ? 1 : 2;
+  const rounds = golfDays * rpd;
   // For budget use low end of fees, premium use high end, mid use midpoint
   const feeSelector: Record<PriceLevel, (c: typeof selectedCourses[0]) => number> = {
     budget: (c) => c.greenFeeRange[0],

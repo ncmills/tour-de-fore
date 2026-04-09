@@ -73,9 +73,10 @@ function tryParseJSON(jsonStr: string): unknown | null {
 }
 
 /** Compute tier-specific price targets from destination data */
-function computePriceTargets(destination: Destination, groupSize: number, numberOfDays: number): PriceTargets {
+function computePriceTargets(destination: Destination, groupSize: number, numberOfDays: number, roundsPerDay?: string): PriceTargets {
   const golfDays = Math.max(numberOfDays - 1, 1);
-  const rounds = golfDays * 2;
+  const rpd = roundsPerDay === "One (18)" ? 1 : 2;
+  const rounds = golfDays * rpd;
   const nights = numberOfDays + 1;
   const gs = Math.max(groupSize, 2);
 
@@ -389,7 +390,7 @@ export async function POST(req: NextRequest) {
           uniqueCities.map(async (destId) => {
             const pick = picks.find(p => p.destination.id === destId)!;
             const context = buildDestinationContext(pick.destination);
-            const priceTargets = computePriceTargets(pick.destination, state.groupSize, state.numberOfDays);
+            const priceTargets = computePriceTargets(pick.destination, state.groupSize, state.numberOfDays, state.roundsPerDay);
             const plans = await generatePlansForDestination(client, state, context, priceTargets);
             // Enrich course data with imageUrl from destination database
             for (const plan of Object.values(plans)) {

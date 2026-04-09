@@ -288,6 +288,7 @@ export function getThreeDestinations(state: WizardState): PickedDestination[] {
     season: seasonFromWizardState(state),
     groupSize: state.groupSize,
     numberOfDays: state.numberOfDays,
+    roundsPerDay: state.roundsPerDay,
     budget: state.budget,
     courseQuality: state.courseQuality,
     activities: state.activities,

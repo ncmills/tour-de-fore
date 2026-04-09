@@ -28,7 +28,7 @@ export function validateWizardState(raw: unknown): WizardState {
 
   // Numbers with bounds
   const numberOfDays = clampInt(s.numberOfDays, 2, 7, 3);
-  const groupSize = clampInt(s.groupSize, 4, 32, 12);
+  const groupSize = clampInt(s.groupSize, 4, 20, 12);
 
   return {
     destinationType,
