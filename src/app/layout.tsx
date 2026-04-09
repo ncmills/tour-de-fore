@@ -117,6 +117,9 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GSC_VERIFICATION,
+  },
   openGraph: {
     title: "Tour de Fore",
     description: "An Annual Golf Odyssey",

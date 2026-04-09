@@ -44,6 +44,9 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "www.lexingtonky.gov" },
     ],
   },
+  rewrites: async () => [
+    { source: "/sitemap.xml", destination: "/api/sitemap-index" },
+  ],
   headers: async () => [
     {
       source: "/:all*(svg|jpg|jpeg|png|webp|avif|gif|ico|mp4|mp3|woff|woff2)",
