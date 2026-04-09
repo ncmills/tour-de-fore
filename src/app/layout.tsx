@@ -103,6 +103,7 @@ const blakaHollow = Blaka_Hollow({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://tourdefore.com"),
   title: "Tour de Fore | An Annual Golf Odyssey",
   description:
     "Six years of fairways, friendships, and questionable handicaps. The official home of Tour de Fore.",
@@ -121,6 +122,7 @@ export const metadata: Metadata = {
     google: process.env.NEXT_PUBLIC_GSC_VERIFICATION,
   },
   openGraph: {
+    siteName: "Tour de Fore",
     title: "Tour de Fore",
     description: "An Annual Golf Odyssey",
     type: "website",
@@ -142,8 +144,6 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tour de Fore",
-    description: "An Annual Golf Odyssey",
     images: ["https://tourdefore.com/icon-fancy.png"],
   },
 };
@@ -162,7 +162,6 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <link rel="dns-prefetch" href="https://us.i.posthog.com" />
-        <link rel="preload" href="/logo-full.webp" as="image" type="image/webp" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -173,6 +172,15 @@ export default function RootLayout({
               description: "An Annual Golf Odyssey — six years of fairways, friendships, and questionable handicaps.",
               url: "https://tourdefore.com",
               foundingDate: "2021",
+              logo: {
+                "@type": "ImageObject",
+                url: "https://tourdefore.com/icon-fancy.png",
+                width: 1024,
+                height: 1024,
+              },
+              sameAs: [
+                "https://www.instagram.com/tourdefore",
+              ],
             }),
           }}
         />

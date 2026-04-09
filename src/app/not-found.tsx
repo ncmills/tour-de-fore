@@ -3,6 +3,10 @@ import Link from "next/link";
 export const metadata = {
   title: "Page Not Found | Tour de Fore",
   description: "The page you're looking for doesn't exist. Find your next golf trip destination.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function NotFound() {
