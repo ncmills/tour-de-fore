@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 /**
  * Sitemap index — rewritten from /sitemap.xml via next.config.ts.
- * Points crawlers to all 10 sub-sitemaps.
+ * Served from /sitemap-index (not /api/) so robots.txt doesn't block it.
  */
 export async function GET() {
   const base = "https://tourdefore.com";

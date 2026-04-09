@@ -45,7 +45,7 @@ const nextConfig: NextConfig = {
     ],
   },
   rewrites: async () => [
-    { source: "/sitemap.xml", destination: "/api/sitemap-index" },
+    { source: "/sitemap.xml", destination: "/sitemap-index" },
   ],
   headers: async () => [
     {
