@@ -339,6 +339,9 @@ export default function ShopPageClient({ onBack }: { onBack?: () => void }) {
           <p className="neon-stats neon-stats-text" style={{ fontSize: "0.75rem", letterSpacing: "0.12em" }}>
             LOOK GOOD. PLAY BAD. DRINK WELL.
           </p>
+          <p style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.35)", marginTop: "1rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+            All sales are final. No returns, exchanges, or refunds.
+          </p>
         </motion.div>
       </div>
 
@@ -403,6 +406,9 @@ export default function ShopPageClient({ onBack }: { onBack?: () => void }) {
                     </motion.button>
                     <p style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.2)", textAlign: "center", marginTop: "0.8rem" }}>
                       Powered by Stripe · Secure checkout
+                    </p>
+                    <p style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.25)", textAlign: "center", marginTop: "0.5rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>
+                      All sales final — no refunds or exchanges
                     </p>
                   </div>
                 </>

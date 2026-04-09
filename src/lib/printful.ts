@@ -112,9 +112,14 @@ async function getShippingRate(catalogVariantId: number): Promise<number> {
   }
 }
 
-// Price = (production cost + shipping) × 1.10, rounded up to nearest dollar
-function costPlusShippingWithMargin(cost: number, shipping: number): number {
-  return Math.ceil((cost + shipping) * 1.10);
+// Price = (cost + shipping + Stripe fixed fee) / (1 - target margin - Stripe %)
+// Ensures 10% net profit AFTER Stripe takes 2.9% + $0.30
+const TARGET_MARGIN = 0.10;
+const STRIPE_PERCENT = 0.029;
+const STRIPE_FIXED = 0.30;
+
+function priceWithMarginAfterFees(cost: number, shipping: number): number {
+  return Math.ceil((cost + shipping + STRIPE_FIXED) / (1 - TARGET_MARGIN - STRIPE_PERCENT));
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -134,8 +139,8 @@ async function transformProduct(result: any): Promise<ShopProduct | null> {
     getShippingRate(catalogVariantId),
   ]);
 
-  // Price = (cost + shipping) × 1.10 — guaranteed 10% profit
-  const finalPrice = (cost > 0) ? costPlusShippingWithMargin(cost, shipping) : retailPrice;
+  // Price guarantees 10% net profit after Stripe fees (2.9% + $0.30) and all costs
+  const finalPrice = (cost > 0) ? priceWithMarginAfterFees(cost, shipping) : retailPrice;
   const priceCents = Math.round(finalPrice * 100);
 
   // Build variants, colors, sizes, and colorPreviews

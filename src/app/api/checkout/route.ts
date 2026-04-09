@@ -81,6 +81,15 @@ export async function POST(req: NextRequest) {
       shipping_address_collection: {
         allowed_countries: ["US"],
       },
+      automatic_tax: { enabled: true },
+      consent_collection: {
+        terms_of_service: "required",
+      },
+      custom_text: {
+        terms_of_service_acceptance: {
+          message: "All sales are final. No returns, exchanges, or refunds.",
+        },
+      },
       metadata: {
         site: "tdf",
         type: "shop",
