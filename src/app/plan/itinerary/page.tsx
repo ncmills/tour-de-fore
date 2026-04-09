@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { getPlan } from "@/lib/kv";
 import ItineraryClient from "@/components/ItineraryClient";
 import ErrorBoundary from "@/components/ErrorBoundary";
-import type { TripTier, PriceLevel } from "@/lib/plan-types";
+import type { TripTier, PriceLevel, ThreePlanResult } from "@/lib/plan-types";
 
 interface Props {
   searchParams: Promise<{ planId?: string; dest?: string; tier?: string }>;
@@ -26,9 +26,8 @@ export default async function ItineraryPage({ searchParams }: Props) {
   const rec = stored.destinations[destLevel];
   if (!rec) notFound();
 
-  const tierKey = tier === "demon-king" ? "demonKing" : tier;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const plan = (rec.plans as any)[tierKey];
+  const tierKey = (tier === "demon-king" ? "demonKing" : tier) as keyof ThreePlanResult;
+  const plan = rec.plans[tierKey];
   if (!plan) notFound();
 
   const selectedOptions = stored.selectedOptions || null;

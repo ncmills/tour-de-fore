@@ -57,9 +57,8 @@ export default async function BuildPage({ searchParams }: Props) {
   const rec = stored.destinations[destLevel];
   if (!rec) notFound();
 
-  const tierKey = tier === "demon-king" ? "demonKing" : tier;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const rawPlan = (rec.plans as any)[tierKey];
+  const tierKey = (tier === "demon-king" ? "demonKing" : tier) as keyof ThreePlanResult;
+  const rawPlan = rec.plans[tierKey];
   if (!rawPlan) notFound();
 
   // Sanitize plan data — Claude's JSON repair can produce partial objects

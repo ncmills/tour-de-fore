@@ -60,9 +60,10 @@ export async function POST(req: NextRequest) {
     }
 
     // Use mid destination's devil tier for emails (recommended combo)
-    const plan = stored.destinations
-      ? stored.destinations.mid.plans.devil
-      : stored.plans!.devil;
+    if (!stored.destinations) {
+      return NextResponse.json({ error: "Plan has no destination data" }, { status: 400 });
+    }
+    const plan = stored.destinations.mid.plans.devil;
     const destParam = dest || "mid";
     const tierParam = tier || "devil";
     const planUrl = `https://tourdefore.com/plan/result/${planId}?dest=${destParam}&tier=${tierParam}`;
