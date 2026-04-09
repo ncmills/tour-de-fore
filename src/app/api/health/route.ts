@@ -17,6 +17,21 @@ export async function GET(req: NextRequest) {
     checks.redis = `fail: ${e instanceof Error ? e.message : String(e)}`;
   }
 
+  // Printful API
+  if (process.env.PRINTFUL_API_TOKEN) {
+    try {
+      const res = await fetch("https://api.printful.com/store", {
+        headers: { Authorization: `Bearer ${process.env.PRINTFUL_API_TOKEN.trim()}` },
+        signal: AbortSignal.timeout(5000),
+      });
+      checks.printfulApi = res.ok ? "ok" : `fail: ${res.status}`;
+    } catch (e) {
+      checks.printfulApi = `fail: ${e instanceof Error ? e.message : String(e)}`;
+    }
+  } else {
+    checks.printfulApi = "NOT_SET";
+  }
+
   // Anthropic API key presence
   checks.anthropicKey = process.env.ANTHROPIC_API_KEY ? "set" : "MISSING";
 
@@ -38,6 +53,6 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  const allOk = Object.values(checks).every((v) => v === "ok" || v === "set");
+  const allOk = Object.values(checks).every((v) => v === "ok" || v === "set" || v === "NOT_SET");
   return NextResponse.json({ status: allOk ? "healthy" : "degraded", checks });
 }

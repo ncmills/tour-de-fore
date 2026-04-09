@@ -12,6 +12,25 @@ function getResend(): Resend {
 const FROM_ADDRESS = "Tour de Fore <noreply@tourdefore.com>";
 
 /**
+ * Record email failure in Redis for monitoring.
+ * Stores last 50 failures with 7-day TTL.
+ */
+async function recordEmailFailure(to: string, subject: string, error: string): Promise<void> {
+  try {
+    const { getRedis } = await import("./redis");
+    const r = getRedis();
+    const entry = JSON.stringify({ to, subject, error, at: new Date().toISOString() });
+    const pipe = r.pipeline();
+    pipe.lpush("email:failures", entry);
+    pipe.ltrim("email:failures", 0, 49); // keep last 50
+    pipe.expire("email:failures", 60 * 60 * 24 * 7); // 7 day TTL
+    await pipe.exec();
+  } catch {
+    // Don't let failure tracking break the caller
+  }
+}
+
+/**
  * Send an email via Resend. Non-critical by default (swallows errors).
  * Set `critical: true` to let errors propagate.
  */
@@ -30,6 +49,8 @@ export async function sendEmail(opts: {
       html: opts.html,
     });
   } catch (err) {
+    const errMsg = err instanceof Error ? err.message : String(err);
+    await recordEmailFailure(opts.to, opts.subject, errMsg);
     if (opts.critical) throw err;
     console.error("Email send failed (non-critical):", err);
   }

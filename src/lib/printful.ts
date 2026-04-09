@@ -40,7 +40,7 @@ async function printfulGet(path: string) {
   const res = await fetch(`${PRINTFUL_API}${path}`, {
     headers: { Authorization: `Bearer ${PRINTFUL_TOKEN}` },
     next: { revalidate: 300 },
-    signal: AbortSignal.timeout(8000), // 8s timeout — keeps webhook under Stripe's 3-min limit
+    signal: AbortSignal.timeout(12000), // 12s timeout — keeps webhook under Stripe's 3-min limit
   });
   if (!res.ok) throw new Error(`Printful ${res.status}: ${await res.text()}`);
   return res.json();
@@ -150,10 +150,16 @@ export async function fetchShopProducts(): Promise<ShopProduct[]> {
     const ids: number[] = (listData.result || []).map((p: { id: number }) => p.id);
 
     const products: ShopProduct[] = [];
-    // Fetch all product details in parallel
-    const details = await Promise.all(
-      ids.map((id) => printfulGet(`/store/products/${id}`).catch(() => null))
-    );
+    // Fetch product details with concurrency limit (5 at a time to avoid Printful rate limits)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const details: (any | null)[] = [];
+    for (let i = 0; i < ids.length; i += 5) {
+      const batch = ids.slice(i, i + 5);
+      const batchResults = await Promise.all(
+        batch.map((id) => printfulGet(`/store/products/${id}`).catch(() => null))
+      );
+      details.push(...batchResults);
+    }
 
     for (const detail of details) {
       if (!detail) continue;
@@ -251,15 +257,15 @@ export async function createPrintfulOrder(
     const { getRedis } = await import("./redis");
     const redis = getRedis();
     const lockKey = `order-lock:${externalId}`;
-    const acquired = await redis.set(lockKey, "1", "EX", 60, "NX");
+    const acquired = await redis.set(lockKey, "1", "EX", 30, "NX"); // 30s lock (reduced from 60)
     if (!acquired) {
       // Another process is creating this order — poll until it appears or timeout
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 5; i++) {
         const existing = await checkPrintfulOrderExists(externalId);
         if (existing) return existing;
         await new Promise((r) => setTimeout(r, 1000));
       }
-      console.warn(`Order lock timeout for ${externalId} — order not found after 10s`);
+      console.warn(`Order lock timeout for ${externalId} — order not found after 5s`);
       return null;
     }
   }
@@ -284,6 +290,7 @@ export async function createPrintfulOrder(
       recipient,
       items,
     }),
+    signal: AbortSignal.timeout(15000), // 15s timeout for order creation
   });
 
   if (!res.ok) {

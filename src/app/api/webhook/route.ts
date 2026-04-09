@@ -33,16 +33,15 @@ export async function POST(req: NextRequest) {
 
   console.log("Webhook received:", event.type, event.id);
 
-  // Idempotency: skip already-processed events
+  // Idempotency: atomic SET NX prevents race condition with concurrent webhook deliveries
   const { getRedis } = await import("@/lib/redis");
   const redis = getRedis();
   const idempotencyKey = `webhook:processed:${event.id}`;
-  const alreadyProcessed = await redis.get(idempotencyKey);
-  if (alreadyProcessed) {
+  const wasNew = await redis.set(idempotencyKey, "1", "EX", 60 * 60 * 48, "NX"); // 48h TTL
+  if (!wasNew) {
     console.log("Webhook already processed:", event.id);
     return NextResponse.json({ received: true });
   }
-  await redis.set(idempotencyKey, "1", "EX", 60 * 60 * 48); // 48h TTL
 
   // Handle checkout completion (one-time plan purchases — legacy)
   if (event.type === "checkout.session.completed") {
@@ -110,17 +109,25 @@ export async function POST(req: NextRequest) {
           const items = parseOrderItems(itemsJson);
           await resolveVariants(items, "Webhook");
 
-          // Check for unresolved variant IDs — don't partially fulfill
+          // Check for unresolved variant IDs
           const validItems = items.filter((i) => i.syncVariantId && i.syncVariantId > 0);
-          if (validItems.length < items.length) {
-            const droppedCount = items.length - validItems.length;
-            console.error(`Webhook: ${droppedCount} item(s) had unresolved syncVariantId`);
-            const droppedItems = items.filter((i) => !i.syncVariantId || i.syncVariantId <= 0);
+          const droppedItems = items.filter((i) => !i.syncVariantId || i.syncVariantId <= 0);
+          if (droppedItems.length > 0) {
+            console.error(`Webhook: ${droppedItems.length} item(s) had unresolved syncVariantId`);
             await sendEmail({
               to: "info@tourdefore.com",
-              subject: `ALERT: ${droppedCount} item(s) dropped from order — variant not found`,
-              html: `<p>Customer paid for items but variant IDs could not be resolved.</p><p><strong>Session:</strong> ${session.id}</p><p><strong>Customer:</strong> ${shipping.email}</p><p><strong>Dropped items:</strong></p><pre>${JSON.stringify(droppedItems, null, 2)}</pre><p>Manually fulfill or refund these items.</p>`,
+              subject: `ALERT: ${droppedItems.length} item(s) could not be resolved — manual fulfillment needed`,
+              html: `<p>Customer paid for items but variant IDs could not be resolved.</p><p><strong>Session:</strong> ${session.id}</p><p><strong>Customer:</strong> ${shipping.email}</p><p><strong>Unresolved items:</strong></p><pre>${JSON.stringify(droppedItems, null, 2)}</pre><p>${validItems.length > 0 ? "Resolved items are being fulfilled. Manually fulfill or refund the unresolved items." : "NO items could be resolved. Entire order needs manual fulfillment or refund."}</p>`,
+              critical: true,
             });
+            // Also notify the customer if ALL items failed
+            if (validItems.length === 0 && shipping.email) {
+              await sendEmail({
+                to: shipping.email,
+                subject: "Issue With Your TDF Pro Shop Order",
+                html: `<div style="font-family: -apple-system, sans-serif; max-width: 520px; margin: 0 auto; padding: 40px 30px; text-align: center;"><h1 style="font-size: 22px; color: #c87941;">Tour de Fore</h1><p style="color: #555; line-height: 1.6;">We received your payment but encountered an issue processing your order. Our team has been notified and will reach out shortly to resolve this.</p><p style="color: #999; font-size: 13px;">Questions? <a href="mailto:info@tourdefore.com" style="color: #c87941;">info@tourdefore.com</a></p></div>`,
+              });
+            }
           }
 
           // Create Printful order
@@ -144,6 +151,7 @@ export async function POST(req: NextRequest) {
               to: "info@tourdefore.com",
               subject: "ALERT: Printful order creation failed",
               html: `<p>A shop order was paid but Printful order creation failed.</p><p><strong>Session ID:</strong> ${session.id}</p><p><strong>Customer email:</strong> ${shipping.email || "unknown"}</p><p>Check logs and retry manually.</p>`,
+              critical: true,
             });
           }
 
@@ -194,6 +202,7 @@ export async function POST(req: NextRequest) {
           to: "info@tourdefore.com",
           subject: "CRITICAL: Shop order failed — paid but not fulfilled",
           html: `<p><strong>A customer paid but their order was NOT created in Printful.</strong></p><p><strong>Session:</strong> ${session.id}</p><p><strong>Customer:</strong> ${customerEmail}</p><p><strong>Items:</strong> ${session.metadata?.items || "unknown"}</p><p><strong>Error:</strong> ${errDetail}</p><p>Action required: manually create this order in Printful or refund the customer.</p>`,
+          critical: true,
         });
       }
     }
@@ -205,7 +214,7 @@ export async function POST(req: NextRequest) {
       try {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const sub = await stripe.subscriptions.retrieve(subId) as any;
-        const expiresAt = new Date((sub.current_period_end ?? sub.data?.current_period_end) * 1000);
+        const expiresAt = new Date((sub.current_period_end) * 1000);
         await setSubscription(email, subId, expiresAt);
         console.log(`Subscription activated for ${email} (${subId}) until ${expiresAt.toISOString()}`);
       } catch {
@@ -249,6 +258,25 @@ export async function POST(req: NextRequest) {
         }
       } catch { /* silent */ }
     }
+  }
+
+  // Handle failed charges — notify customer
+  if (event.type === "charge.failed") {
+    const charge = event.data.object as Stripe.Charge;
+    const email = charge.billing_details?.email || charge.receipt_email;
+    if (email) {
+      await sendEmail({
+        to: email,
+        subject: "Payment Failed — Tour de Fore",
+        html: `<div style="font-family: -apple-system, sans-serif; max-width: 520px; margin: 0 auto; padding: 40px 30px; text-align: center;"><h1 style="font-size: 22px; color: #c87941;">Tour de Fore</h1><p style="color: #555; line-height: 1.6;">Your payment could not be processed. Please try again or use a different payment method.</p><p style="color: #999; font-size: 13px;">If you believe this is an error, contact us at <a href="mailto:info@tourdefore.com" style="color: #c87941;">info@tourdefore.com</a>.</p></div>`,
+      });
+    }
+    await sendEmail({
+      to: "info@tourdefore.com",
+      subject: `Payment failed: ${email || "unknown customer"}`,
+      html: `<p><strong>Charge ID:</strong> ${charge.id}</p><p><strong>Customer:</strong> ${email || "unknown"}</p><p><strong>Failure reason:</strong> ${charge.failure_message || "unknown"}</p>`,
+      critical: true,
+    });
   }
 
   return NextResponse.json({ received: true });

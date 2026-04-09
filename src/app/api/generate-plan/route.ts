@@ -166,26 +166,42 @@ async function generateSingleTier(
   const parsed = tryParseJSON(rawText);
   if (parsed) {
     const plan = parsed as GeneratedPlan;
-    // Ensure critical fields exist — Claude's truncated JSON can omit them
-    plan.lodging = plan.lodging || { name: "Lodging TBD", type: "House", address: "", costPerNight: "$0", rationale: "" };
+
+    // Validate critical fields — retry on missing instead of silently filling defaults
+    const missingFields = [
+      !plan.lodging && "lodging",
+      !Array.isArray(plan.courses) && "courses",
+      !Array.isArray(plan.dining) && "dining",
+      !Array.isArray(plan.bars) && "bars",
+      !Array.isArray(plan.schedule) && "schedule",
+      !plan.estimatedBudget && "estimatedBudget",
+    ].filter(Boolean);
+
+    if (missingFields.length > 0 && attempt < 3) {
+      console.warn(`${tier} missing critical fields [${missingFields.join(", ")}], retrying (attempt ${attempt + 1})...`);
+      return generateSingleTier(client, state, destinationContext, tier, priceTargets, attempt + 1);
+    }
+
+    // Normalize array fields (safe defaults only for non-critical optional fields)
     plan.courses = Array.isArray(plan.courses) ? plan.courses : [];
     plan.dining = Array.isArray(plan.dining) ? plan.dining : [];
     plan.bars = Array.isArray(plan.bars) ? plan.bars : [];
     plan.schedule = Array.isArray(plan.schedule) ? plan.schedule : [];
     plan.proTips = Array.isArray(plan.proTips) ? plan.proTips : [];
+    plan.lodging = plan.lodging || { name: "Lodging TBD", type: "House", address: "", costPerNight: "$0", rationale: "" };
     plan.estimatedBudget = plan.estimatedBudget || { perPerson: "$0", breakdown: [] };
     plan.groupLogistics = plan.groupLogistics || { teeTimeStrategy: "", transport: "", packingList: [] };
     plan.numberOfDays = plan.numberOfDays || plan.schedule.length || 3;
     plan.groupSize = plan.groupSize || state.groupSize || 12;
 
-    // If courses, dining, or bars are completely empty after repair, retry — these are critical fields
+    // Retry if critical array fields are empty (truncated JSON produced empty arrays)
     if ((plan.courses.length === 0 || plan.dining.length === 0 || plan.bars.length === 0) && attempt < 3) {
-      const missing = [
+      const empty = [
         plan.courses.length === 0 && "courses",
         plan.dining.length === 0 && "dining",
         plan.bars.length === 0 && "bars",
       ].filter(Boolean).join(", ");
-      console.warn(`${tier} has empty [${missing}] after parse repair, retrying...`);
+      console.warn(`${tier} has empty [${empty}] after parse, retrying (attempt ${attempt + 1})...`);
       return generateSingleTier(client, state, destinationContext, tier, priceTargets, attempt + 1);
     }
     return plan;
@@ -384,29 +400,33 @@ export async function POST(req: NextRequest) {
         const uniqueCities = [...new Set(picks.map(p => p.destination.id))];
         send({ type: "status", message: `Building plans for ${[...new Set(picks.map(p => p.destination.city))].join(", ")}...` });
 
-        // Generate plans for each unique destination
+        // Generate plans for each unique destination (max 2 concurrent to avoid Claude rate limits)
         const planCache = new Map<string, ThreePlanResult>();
-        await Promise.all(
-          uniqueCities.map(async (destId) => {
-            const pick = picks.find(p => p.destination.id === destId)!;
-            const context = buildDestinationContext(pick.destination);
-            const priceTargets = computePriceTargets(pick.destination, state.groupSize, state.numberOfDays, state.roundsPerDay);
-            const plans = await generatePlansForDestination(client, state, context, priceTargets);
-            // Enrich course data with imageUrl from destination database
-            for (const plan of Object.values(plans)) {
-              if (!plan?.courses) continue;
-              for (const course of plan.courses) {
-                const dbCourse = pick.destination.courses.find(
-                  (c) => c.name.toLowerCase() === course.name.toLowerCase()
-                    || c.name.toLowerCase().includes(course.name.toLowerCase())
-                    || course.name.toLowerCase().includes(c.name.toLowerCase())
-                );
-                if (dbCourse?.imageUrl) course.imageUrl = dbCourse.imageUrl;
+        const MAX_CONCURRENT = 2;
+        for (let i = 0; i < uniqueCities.length; i += MAX_CONCURRENT) {
+          const batch = uniqueCities.slice(i, i + MAX_CONCURRENT);
+          await Promise.all(
+            batch.map(async (destId) => {
+              const pick = picks.find(p => p.destination.id === destId)!;
+              const context = buildDestinationContext(pick.destination);
+              const priceTargets = computePriceTargets(pick.destination, state.groupSize, state.numberOfDays, state.roundsPerDay);
+              const plans = await generatePlansForDestination(client, state, context, priceTargets);
+              // Enrich course data with imageUrl from destination database
+              for (const plan of Object.values(plans)) {
+                if (!plan?.courses) continue;
+                for (const course of plan.courses) {
+                  const dbCourse = pick.destination.courses.find(
+                    (c) => c.name.toLowerCase() === course.name.toLowerCase()
+                      || c.name.toLowerCase().includes(course.name.toLowerCase())
+                      || course.name.toLowerCase().includes(c.name.toLowerCase())
+                  );
+                  if (dbCourse?.imageUrl) course.imageUrl = dbCourse.imageUrl;
+                }
               }
-            }
-            planCache.set(destId, plans);
-          })
-        );
+              planCache.set(destId, plans);
+            })
+          );
+        }
 
         const recommendations = picks.map((pick) => ({
           destinationId: pick.destination.id,

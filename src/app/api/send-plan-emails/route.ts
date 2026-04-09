@@ -1,9 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getPlan, getAttendees, markEmailsSent } from "@/lib/kv";
 import { getResendClient, FROM_ADDRESS } from "@/lib/email";
+import { getSessionEmail } from "@/lib/auth";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
 
 export async function POST(req: NextRequest) {
   try {
+    const ip = getClientIp(req);
+    const rl = await rateLimit(`send-emails:${ip}`, 10, 3600);
+    if (!rl.allowed) {
+      return NextResponse.json({ error: "Too many email requests. Try again later." }, { status: 429, headers: { "Retry-After": String(rl.resetIn) } });
+    }
+
     const { planId, emails, tier, dest } = await req.json();
 
     if (!planId) {
@@ -13,6 +21,13 @@ export async function POST(req: NextRequest) {
     const stored = await getPlan(planId);
     if (!stored) {
       return NextResponse.json({ error: "Plan not found" }, { status: 404 });
+    }
+
+    // Ownership check — only the organizer can send plan emails
+    const sessionEmail = await getSessionEmail();
+    const organizerEmail = stored.inputs?.organizerEmail;
+    if (!sessionEmail || (organizerEmail && sessionEmail !== organizerEmail)) {
+      return NextResponse.json({ error: "Only the plan organizer can send emails" }, { status: 403 });
     }
 
     // Accept emails from request body, or fall back to stored attendees
@@ -51,7 +66,6 @@ export async function POST(req: NextRequest) {
     const destParam = dest || "mid";
     const tierParam = tier || "devil";
     const planUrl = `https://tourdefore.com/plan/result/${planId}?dest=${destParam}&tier=${tierParam}`;
-    const organizerEmail = stored.inputs.organizerEmail;
 
     // Send emails
     const resend = getResendClient();

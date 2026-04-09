@@ -4,6 +4,7 @@ import { getRedis } from "./redis";
 
 const SESSION_TTL = 60 * 60 * 24 * 30; // 30 days
 const TOKEN_TTL = 60 * 15; // 15 min for magic link
+const PROFILE_TTL = 60 * 60 * 24 * 365; // 1 year
 
 export async function createMagicToken(email: string, wizardState?: unknown): Promise<string> {
   const token = crypto.randomUUID();
@@ -175,8 +176,12 @@ export async function changeUserEmail(oldEmail: string, newEmail: string): Promi
     writePipe.expire(`user:${newEmail}:plans`, SESSION_TTL * 12);
     writePipe.del(`user:${oldEmail}:plans`);
   }
-  if (sub) {
-    writePipe.set(`user:${newEmail}:sub`, sub, "EX", subTtl > 0 ? subTtl : PROFILE_TTL);
+  if (sub && subTtl > 0) {
+    // Only migrate active subscriptions (subTtl > 0 means key hasn't expired)
+    const parsed = JSON.parse(sub);
+    if (new Date(parsed.expiresAt) > new Date()) {
+      writePipe.set(`user:${newEmail}:sub`, sub, "EX", subTtl);
+    }
     writePipe.del(`user:${oldEmail}:sub`);
   }
   if (attended && attended.length > 0) {
@@ -196,8 +201,6 @@ export async function changeUserEmail(oldEmail: string, newEmail: string): Promi
 }
 
 // ── Password Auth ──
-
-const PROFILE_TTL = 60 * 60 * 24 * 365; // 1 year
 
 export async function setPassword(email: string, password: string): Promise<void> {
   const hashed = await bcryptHash(password, 10);

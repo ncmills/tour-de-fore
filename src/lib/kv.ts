@@ -86,14 +86,30 @@ export async function recordDestinationSelect(
 }
 
 /**
- * Get popularity scores and view counts for all destinations that have signals
+ * Get popularity scores and view counts for all destinations that have signals.
+ * Uses a cached sorted set (popularity:cache) rebuilt every 5 minutes to avoid
+ * expensive SCAN on every plan generation request.
  */
 export async function getAllPopularityScores(): Promise<{ scores: Map<string, number>; viewCounts: Map<string, number> }> {
   const r = getRedis();
   const scores = new Map<string, number>();
   const viewCounts = new Map<string, number>();
 
-  // Scan for all view keys
+  const CACHE_KEY = "popularity:cache";
+  const CACHE_TTL = 300; // 5 min
+
+  // Try cached version first
+  const cached = await r.get(CACHE_KEY);
+  if (cached) {
+    const parsed: { destId: string; score: number; views: number }[] = JSON.parse(cached);
+    for (const entry of parsed) {
+      scores.set(entry.destId, entry.score);
+      viewCounts.set(entry.destId, entry.views);
+    }
+    return { scores, viewCounts };
+  }
+
+  // Cache miss — rebuild from SCAN (runs at most once every 5 min)
   const allKeys: string[] = [];
   let cursor = "0";
   do {
@@ -114,15 +130,21 @@ export async function getAllPopularityScores(): Promise<{ scores: Map<string, nu
   const results = await pipe.exec();
   if (!results) return { scores, viewCounts };
 
+  const cacheEntries: { destId: string; score: number; views: number }[] = [];
   for (let i = 0; i < allKeys.length; i++) {
     const destId = allKeys[i].replace("signal:views:", "");
     const views = parseInt((results[i * 2]?.[1] as string) || "0");
     const selects = parseInt((results[i * 2 + 1]?.[1] as string) || "0");
     if (views > 0) {
-      scores.set(destId, selects / views);
+      const score = selects / views;
+      scores.set(destId, score);
       viewCounts.set(destId, views);
+      cacheEntries.push({ destId, score, views });
     }
   }
+
+  // Cache the results (non-blocking)
+  r.set(CACHE_KEY, JSON.stringify(cacheEntries), "EX", CACHE_TTL).catch(() => {});
 
   return { scores, viewCounts };
 }

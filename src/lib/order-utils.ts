@@ -52,7 +52,17 @@ export interface PrintfulRecipient {
  * compressed key formats (productId/p, syncVariantId/s, etc.).
  */
 export function parseOrderItems(itemsJson: string): ParsedOrderItem[] {
-  const rawItems = JSON.parse(itemsJson) as RawOrderItem[];
+  let rawItems: RawOrderItem[];
+  try {
+    rawItems = JSON.parse(itemsJson) as RawOrderItem[];
+  } catch {
+    console.error("parseOrderItems: invalid JSON:", itemsJson?.slice(0, 200));
+    return [];
+  }
+  if (!Array.isArray(rawItems)) {
+    console.error("parseOrderItems: expected array, got:", typeof rawItems);
+    return [];
+  }
   return rawItems.map((i) => ({
     syncVariantId: i.syncVariantId ?? i.s ?? 0,
     quantity: i.quantity ?? i.q ?? 1,
@@ -123,6 +133,13 @@ export function extractShipping(session: any): ExtractedShipping {
         zip: rawAddress.postal_code || "",
       }
     : null;
+
+  // Validate required address fields — incomplete addresses will fail at Printful
+  if (address && (!address.line1 || !address.city || !address.state || !address.zip)) {
+    console.error("extractShipping: incomplete address — missing required fields", {
+      line1: !!address.line1, city: !!address.city, state: !!address.state, zip: !!address.zip,
+    });
+  }
 
   return {
     name:

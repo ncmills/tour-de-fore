@@ -24,8 +24,8 @@ export async function GET(req: NextRequest) {
   const results: { sessionId: string; status: string; detail?: string }[] = [];
 
   try {
-    // Look back 48 hours for any paid shop orders
-    const since = Math.floor(Date.now() / 1000) - 48 * 60 * 60;
+    // Look back 72 hours for any paid shop orders (extra buffer for cron failures)
+    const since = Math.floor(Date.now() / 1000) - 72 * 60 * 60;
     const stripe = getStripe();
     const sessions = await stripe.checkout.sessions.list({
       limit: 50,

@@ -1,9 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionEmail, verifyPassword, changeUserEmail, createSession } from "@/lib/auth";
 import { setSessionCookie } from "@/lib/shared-constants";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
 
 export async function POST(req: NextRequest) {
   try {
+    const ip = getClientIp(req);
+    const rl = await rateLimit(`change-email:${ip}`, 5, 3600);
+    if (!rl.allowed) {
+      return NextResponse.json({ error: "Too many attempts. Try again later." }, { status: 429, headers: { "Retry-After": String(rl.resetIn) } });
+    }
+
     const email = await getSessionEmail();
     if (!email) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });

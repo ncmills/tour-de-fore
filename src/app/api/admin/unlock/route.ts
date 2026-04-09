@@ -7,6 +7,7 @@ import { buildSystemPrompt, buildUserMessage } from "@/lib/planner-prompt";
 import { addPlanToUser } from "@/lib/auth";
 import type { PriceLevel, ThreePlanResult, DestinationRecommendation } from "@/lib/plan-types";
 import { verifyAdmin } from "@/lib/shared-constants";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
 
 /**
  * Admin endpoint to unlock a plan without payment (for testing).
@@ -14,6 +15,12 @@ import { verifyAdmin } from "@/lib/shared-constants";
  */
 export async function POST(req: NextRequest) {
   try {
+    const ip = getClientIp(req);
+    const rl = await rateLimit(`admin-unlock:${ip}`, 10, 3600);
+    if (!rl.allowed) {
+      return NextResponse.json({ error: "Too many attempts" }, { status: 429, headers: { "Retry-After": String(rl.resetIn) } });
+    }
+
     const { planId, dest, secret } = await req.json();
 
     if (!verifyAdmin(secret)) {

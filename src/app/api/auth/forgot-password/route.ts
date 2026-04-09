@@ -1,9 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createMagicToken, hasPassword } from "@/lib/auth";
 import { sendEmail } from "@/lib/email";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
 
 export async function POST(req: NextRequest) {
   try {
+    const ip = getClientIp(req);
+    const rl = await rateLimit(`forgot-pw:${ip}`, 5, 3600);
+    if (!rl.allowed) {
+      return NextResponse.json({ ok: true }); // Don't reveal rate limit to prevent enumeration
+    }
+
     const { email } = await req.json();
     if (!email || !email.includes("@")) {
       return NextResponse.json({ error: "Valid email required" }, { status: 400 });
