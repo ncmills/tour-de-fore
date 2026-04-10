@@ -42,6 +42,9 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "www.cherryblossomgolf.com" },
       { protocol: "https", hostname: "www.sunbrookgolf.com" },
       { protocol: "https", hostname: "www.lexingtonky.gov" },
+      { protocol: "https", hostname: "autumnridgegolfcourse.com" },
+      { protocol: "https", hostname: "kohlerwisconsin.com" },
+      { protocol: "https", hostname: "quitquiocgolf.com" },
     ],
   },
   rewrites: async () => [

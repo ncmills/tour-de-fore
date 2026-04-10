@@ -238,6 +238,161 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
         </motion.section>
       )}
 
+      {/* Section: Courses — full course details with images */}
+      {trip.courses.length > 0 && (
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          style={{ position: "relative", zIndex: 1, padding: "3rem clamp(1.5rem, 6vw, 6rem)" }}
+        >
+          <h2 style={sectionHeadingStyle}>The Courses</h2>
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(360px, 1fr))",
+            gap: isMobile ? "1.25rem" : "1.75rem",
+            maxWidth: "1200px",
+            margin: "0 auto",
+          }}>
+            {trip.courses.map((course, i) => {
+              const card = (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    background: "rgba(255,255,255,0.03)",
+                    border: "1px solid rgba(255,255,255,0.08)",
+                    borderRadius: "8px",
+                    overflow: "hidden",
+                    height: "100%",
+                    transition: "border-color 0.3s, transform 0.3s",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = "rgba(220,38,38,0.5)";
+                    e.currentTarget.style.transform = "translateY(-2px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+                    e.currentTarget.style.transform = "translateY(0)";
+                  }}
+                >
+                  {course.image && (
+                    <div style={{ position: "relative", width: "100%", aspectRatio: "16/9", background: "#111" }}>
+                      <Image
+                        src={course.image}
+                        alt={course.name}
+                        fill
+                        style={{ objectFit: "cover" }}
+                        sizes={isMobile ? "90vw" : "(max-width: 1200px) 50vw, 400px"}
+                      />
+                    </div>
+                  )}
+                  <div style={{ padding: "1.25rem 1.25rem 1.5rem", display: "flex", flexDirection: "column", gap: "0.6rem", flex: 1 }}>
+                    <h3 className="neon-stats-text" style={{
+                      fontSize: "1.15rem",
+                      letterSpacing: "0.04em",
+                      lineHeight: 1.25,
+                      margin: 0,
+                    }}>
+                      {course.name}
+                    </h3>
+                    {course.location && (
+                      <div style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.55)", fontFamily: "monospace" }}>
+                        📍 {course.location}
+                      </div>
+                    )}
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginTop: "0.1rem" }}>
+                      {typeof course.holes === "number" && (
+                        <span style={{
+                          fontSize: "0.7rem",
+                          padding: "0.25rem 0.55rem",
+                          borderRadius: "3px",
+                          background: "rgba(34,197,94,0.12)",
+                          border: "1px solid rgba(34,197,94,0.35)",
+                          color: "rgba(134,239,172,0.95)",
+                          fontFamily: "monospace",
+                          letterSpacing: "0.05em",
+                        }}>
+                          {course.holes} HOLES
+                        </span>
+                      )}
+                      {course.designer && (
+                        <span style={{
+                          fontSize: "0.7rem",
+                          padding: "0.25rem 0.55rem",
+                          borderRadius: "3px",
+                          background: "rgba(234,88,12,0.12)",
+                          border: "1px solid rgba(234,88,12,0.35)",
+                          color: "rgba(253,186,116,0.95)",
+                          fontFamily: "monospace",
+                          letterSpacing: "0.05em",
+                        }}>
+                          {course.designer}
+                        </span>
+                      )}
+                      {course.greenFee && (
+                        <span style={{
+                          fontSize: "0.7rem",
+                          padding: "0.25rem 0.55rem",
+                          borderRadius: "3px",
+                          background: "rgba(234,179,8,0.12)",
+                          border: "1px solid rgba(234,179,8,0.35)",
+                          color: "rgba(253,224,71,0.95)",
+                          fontFamily: "monospace",
+                          letterSpacing: "0.05em",
+                        }}>
+                          {course.greenFee}
+                        </span>
+                      )}
+                    </div>
+                    {course.description && (
+                      <p style={{
+                        fontSize: "0.88rem",
+                        lineHeight: 1.55,
+                        color: "rgba(255,255,255,0.72)",
+                        margin: "0.25rem 0 0",
+                      }}>
+                        {course.description}
+                      </p>
+                    )}
+                    {(course.amenities || course.notes) && (
+                      <div style={{
+                        fontSize: "0.78rem",
+                        color: "rgba(255,255,255,0.55)",
+                        marginTop: "0.15rem",
+                        lineHeight: 1.5,
+                      }}>
+                        {course.amenities && <div>✨ {course.amenities}</div>}
+                        {course.notes && <div>📝 {course.notes}</div>}
+                      </div>
+                    )}
+                    {course.phone && (
+                      <div style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.5)", fontFamily: "monospace" }}>
+                        📞 {course.phone}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+              return course.url ? (
+                <a
+                  key={i}
+                  href={course.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ textDecoration: "none", color: "inherit", display: "block" }}
+                >
+                  {card}
+                </a>
+              ) : (
+                <div key={i}>{card}</div>
+              );
+            })}
+          </div>
+        </motion.section>
+      )}
+
       {/* Section 3: Devils in the Details — Itinerary with inline images */}
       {trip.schedule.length > 0 && (
         <motion.section

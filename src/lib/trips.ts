@@ -18,6 +18,12 @@ export interface Course {
   image?: string;
   description?: string;
   holes?: number;
+  location?: string;
+  designer?: string;
+  phone?: string;
+  greenFee?: string;
+  amenities?: string;
+  notes?: string;
 }
 
 export interface Restaurant {
@@ -70,11 +76,74 @@ export const trips: Trip[] = [
     lodgingImage: "/photos/2026/kohler-lodging.png",
     heroImage: "/photos/2026/whistling-straits-hero.jpg",
     courses: [
-      { name: "Erin Hills", url: "https://erinhills.com", image: "https://erinhills.com/wp-content/smush-webp/2025/01/EH-Web-Images_Home-Golf-2-768x512.jpg.webp", description: "Former U.S. Open host set on dramatic glacial terrain with sweeping views of the Kettle Moraine.", holes: 18 },
-      { name: "Whistling Straits", url: "https://kohlerwisconsin.com", image: "/photos/2026/whistling-straits.jpg", description: "Iconic Pete Dye links course that hosted the Ryder Cup, perched along Lake Michigan cliffs.", holes: 18 },
-      { name: "Blackwolf Run", url: "https://kohlerwisconsin.com", image: "/photos/2026/blackwolf-run.jpg", description: "A challenging Pete Dye design winding through the Sheboygan River valley with dramatic elevation changes.", holes: 18 },
-      { name: "Quit Qui Oc", image: "https://golf-pass-brightspot.s3.amazonaws.com/80/9d/6542d1de0b2e9fe08f22713b5d4a/5836.jpg", description: "A fun, affordable local gem nestled among rolling hills and wetlands near Elkhart Lake.", holes: 18 },
-      { name: "The Bull at Pinehurst Farms", url: "https://golfthebull.com", image: "https://golfthebull.com/wp-content/uploads/hdr-golf-course-2025.jpg", description: "Jack Nicklaus-designed championship course with pristine conditioning and strategic bunkering.", holes: 18 },
+      {
+        name: "Blackwolf Run — Meadow Valleys",
+        url: "https://kohlerwisconsin.com/golf/blackwolf-run/the-meadow-valleys",
+        image: "/photos/2026/blackwolf-run.jpg",
+        description: "Open heathland, oak savannahs, and dramatic glacier-carved terrain. Rolling prairie with wide fairways and panoramic views across the Kohler landscape.",
+        holes: 18,
+        location: "1111 W. Riverside Drive, Kohler, WI 53044",
+        designer: "Pete Dye",
+        phone: "(866) 847-4856",
+        greenFee: "$400/player (cart included)",
+        amenities: "Cart included, on-site dining",
+      },
+      {
+        name: "Quit Qui Oc Golf Club",
+        url: "https://quitquiocgolf.com",
+        image: "https://golf-pass-brightspot.s3.amazonaws.com/80/9d/6542d1de0b2e9fe08f22713b5d4a/5836.jpg",
+        description: "Beautiful rolling terrain and friendly greens with a welcoming atmosphere. A fun, forgiving course perfect for afternoon rounds.",
+        holes: 18,
+        location: "500 Quit Qui Oc Lane, Elkhart Lake, WI 53020",
+        phone: "(920) 876-2833",
+        greenFee: "$100/player (cart included)",
+        amenities: "On-site restaurant, 27-hole facility",
+      },
+      {
+        name: "The Bull at Pinehurst Farms",
+        url: "https://golfthebull.com",
+        image: "https://golfthebull.com/wp-content/uploads/hdr-golf-course-2025.jpg",
+        description: "Dramatic elevation changes and strategic bunkering with demanding play throughout. Every shot matters on this challenging Jack Nicklaus signature layout.",
+        holes: 18,
+        location: "9425 Highway 32, Sheboygan Falls, WI 53085",
+        designer: "Jack Nicklaus (Signature Design)",
+        phone: "(920) 467-1500",
+        greenFee: "$200/player (cart included)",
+        notes: "Unforgiving greens, elevation drama",
+      },
+      {
+        name: "The Baths at Blackwolf Run",
+        url: "https://kohlerwisconsin.com/golf",
+        image: "/photos/2026/kohler-hero.jpg",
+        description: "A 10-hole par-3 layout designed for recreation and fun rather than competitive scoring. Features a 1-acre putting green, outdoor bar, and natural hot springs on-site.",
+        holes: 10,
+        location: "N8501 Lakeshore Road, Kohler, WI 53044",
+        phone: "(866) 847-4856",
+        greenFee: "$150/player (walking only)",
+        amenities: "Outdoor bar, natural hot springs, 1-acre putting green",
+      },
+      {
+        name: "Autumn Ridge Golf Club",
+        url: "https://autumnridgegolfcourse.com",
+        image: "https://autumnridgegolfcourse.com/wp-content/uploads/2022/10/home.jpg",
+        description: "Public course featuring bent grass fairways, challenging greens, and a relaxed public atmosphere. Named among Wisconsin's best public courses (Golf Digest 4-star).",
+        holes: 18,
+        location: "1 Straight Drive, Valders, WI 54245",
+        phone: "(920) 758-3333",
+        greenFee: "$80/player (cart included)",
+        notes: "Bent grass fairways, manicured greens",
+      },
+      {
+        name: "Whistling Straits — Irish Course",
+        url: "https://kohlerwisconsin.com/golf",
+        image: "/photos/2026/whistling-straits.jpg",
+        description: "Authentic links-inspired Pete Dye design without soul-crushing difficulty. Fescue rough, undulating fairways, and wind-exposed play while remaining playable. Ranked among the Top 50 courses in the United States.",
+        holes: 18,
+        location: "N8501 Lakeshore Road, Kohler, WI 53044",
+        designer: "Pete Dye",
+        phone: "(866) 847-4856",
+        greenFee: "$450/player (cart included, no caddie)",
+      },
     ],
     restaurants: [
       { name: "The Blind Horse", cuisine: "American", url: "https://theblindhorse.com", image: "https://fabulouswisconsin.com/wp-content/uploads/sites/3/2023/05/Blind-Horse-Restaurant-Winery-Kohler.jpg" },
@@ -101,8 +170,8 @@ export const trips: Trip[] = [
         day: "Thursday",
         date: "July 9",
         items: [
-          { time: "9:00 AM", activity: "Erin Hills", detail: "18 holes", type: "golf" },
-          { time: "2:00 PM", activity: "Quit Qui Oc", detail: "18 holes", type: "golf" },
+          { time: "9:00 AM", activity: "Blackwolf Run — Meadow Valleys", detail: "18 holes", type: "golf" },
+          { time: "2:00 PM", activity: "Quit Qui Oc Golf Club", detail: "18 holes", type: "golf" },
           { time: "8:00 PM", activity: "Private Chef @ House", detail: "Dinner", type: "dining", image: "https://s7d9.scene7.com/is/image/kohlerhospitality/zab44850_rgb?wid=800" },
         ],
       },
@@ -110,7 +179,7 @@ export const trips: Trip[] = [
         day: "Friday",
         date: "July 10",
         items: [
-          { time: "9:00 AM", activity: "Whistling Straits", detail: "18 holes", type: "golf" },
+          { time: "9:00 AM", activity: "Whistling Straits — Irish Course", detail: "18 holes", type: "golf" },
           { time: "2:00 PM", activity: "The Bull at Pinehurst Farms", detail: "18 holes", type: "golf" },
           { time: "8:00 PM", activity: "River Wildlife", detail: "Dinner", type: "dining", image: "https://s7d9.scene7.com/is/image/kohlerhospitality/aaf99614_rgb?wid=800" },
         ],
@@ -119,8 +188,8 @@ export const trips: Trip[] = [
         day: "Saturday",
         date: "July 11",
         items: [
-          { time: "9:03 AM", activity: "Blackwolf Run", detail: "18 holes", type: "golf" },
-          { time: "2:00 PM", activity: "Blackwolf Run", detail: "18 holes", type: "golf" },
+          { time: "9:00 AM", activity: "Autumn Ridge Golf Club", detail: "18 holes", type: "golf" },
+          { time: "2:00 PM", activity: "The Baths at Blackwolf Run", detail: "10 holes (par-3)", type: "golf" },
           { time: "8:00 PM", activity: "Private Chef @ House", detail: "Dinner", type: "dining", image: "https://s7d9.scene7.com/is/image/kohlerhospitality/zab44850_rgb?wid=800" },
         ],
       },
