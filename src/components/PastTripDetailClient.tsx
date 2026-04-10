@@ -410,10 +410,20 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
               <h3 className="neon-stats-text" style={{
                 fontSize: "1.1rem",
                 letterSpacing: "0.06em",
-                marginBottom: "0.5rem",
+                marginBottom: day.subtitle ? "0.25rem" : "0.5rem",
               }}>
                 {day.day} — {day.date}
               </h3>
+              {day.subtitle && (
+                <div style={{
+                  fontSize: "0.8rem",
+                  color: "rgba(255,255,255,0.5)",
+                  fontStyle: "italic",
+                  marginBottom: "0.75rem",
+                }}>
+                  {day.subtitle}
+                </div>
+              )}
               <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
                 {day.items.map((item, j) => {
                   const resolvedImage = item.image || imageMap[item.activity] || null;
@@ -430,6 +440,7 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
                     : isATV ? "🏎️"
                     : "🏌️";
                   const displayDetail = item.detail?.replace(/✈️\s*/g, "").trim() || null;
+                  const hasRichDetail = !!(item.description || item.cost || item.architect || item.driveTime || item.location || (item.facts && item.facts.length));
                   return (
                     <motion.div
                       key={j}
@@ -440,36 +451,95 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
                       style={{
                         display: "flex",
                         flexDirection: isMobile && resolvedImage ? "column" : "row",
-                        alignItems: isMobile ? "stretch" : "center",
+                        alignItems: isMobile ? "stretch" : "flex-start",
                         gap: isMobile ? "0.5rem" : "1rem",
-                        padding: isMobile ? "0.6rem 0.75rem" : "0.75rem 1rem",
+                        padding: isMobile ? "0.75rem 0.85rem" : "0.9rem 1.1rem",
                         background: "rgba(255,255,255,0.03)",
                         borderRadius: "6px",
                         borderLeft: `3px solid ${item.type === "golf" ? "rgba(34,197,94,0.6)" : item.type === "dining" ? "rgba(234,179,8,0.6)" : item.type === "nightlife" ? "rgba(168,85,247,0.6)" : "rgba(59,130,246,0.6)"}`,
                       }}
                     >
-                      <div style={{ display: "flex", alignItems: "center", gap: "1rem", flex: 1, minWidth: 0 }}>
-                        <span style={{ fontSize: "1.2rem", flexShrink: 0 }}>
+                      <div style={{ display: "flex", alignItems: "flex-start", gap: "1rem", flex: 1, minWidth: 0 }}>
+                        <span style={{ fontSize: "1.2rem", flexShrink: 0, lineHeight: 1.4 }}>
                           {emoji}
                         </span>
-                        <div>
-                          <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.35)", fontFamily: "monospace", marginRight: "0.75rem" }}>
-                            {item.time}
-                          </span>
-                          <span style={{ fontWeight: 600, color: "rgba(255,255,255,0.85)" }}>
-                            {item.activity}
-                          </span>
-                          {displayDetail && (
-                            <span style={{ color: "rgba(255,255,255,0.4)", marginLeft: "0.5rem", fontSize: "0.85rem" }}>
-                              — {displayDetail}
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <div>
+                            <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.45)", fontFamily: "monospace", marginRight: "0.75rem" }}>
+                              {item.time}
+                              {item.arriveTime && (
+                                <span style={{ color: "rgba(255,255,255,0.3)" }}> · {item.arriveTime}</span>
+                              )}
                             </span>
+                            <span style={{ fontWeight: 600, color: "rgba(255,255,255,0.9)" }}>
+                              {item.activity}
+                            </span>
+                            {displayDetail && (
+                              <span style={{ color: "rgba(255,255,255,0.45)", marginLeft: "0.5rem", fontSize: "0.85rem" }}>
+                                — {displayDetail}
+                              </span>
+                            )}
+                          </div>
+                          {(item.location || item.architect) && (
+                            <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.45)", marginTop: "0.25rem", letterSpacing: "0.02em" }}>
+                              {item.location && <span>📍 {item.location}</span>}
+                              {item.location && item.architect && <span style={{ margin: "0 0.5rem", opacity: 0.4 }}>·</span>}
+                              {item.architect && <span>✏️ {item.architect}</span>}
+                            </div>
                           )}
+                          {item.description && (
+                            <div style={{
+                              fontSize: "0.85rem",
+                              color: "rgba(255,255,255,0.65)",
+                              marginTop: "0.4rem",
+                              fontStyle: "italic",
+                              lineHeight: 1.5,
+                            }}>
+                              {item.description}
+                            </div>
+                          )}
+                          {item.facts && item.facts.length > 0 && (
+                            <ul style={{
+                              margin: "0.4rem 0 0",
+                              padding: 0,
+                              listStyle: "none",
+                              display: "flex",
+                              flexWrap: "wrap",
+                              gap: "0.35rem",
+                            }}>
+                              {item.facts.map((f, fi) => (
+                                <li key={fi} style={{
+                                  fontSize: "0.7rem",
+                                  color: "rgba(255,255,255,0.6)",
+                                  background: "rgba(255,255,255,0.05)",
+                                  padding: "0.2rem 0.5rem",
+                                  borderRadius: "3px",
+                                  border: "1px solid rgba(255,255,255,0.08)",
+                                }}>
+                                  {f}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                          {(item.cost || item.driveTime) && (
+                            <div style={{
+                              fontSize: "0.72rem",
+                              color: "rgba(255,255,255,0.5)",
+                              marginTop: "0.4rem",
+                              fontFamily: "monospace",
+                            }}>
+                              {item.driveTime && <span>🚗 {item.driveTime}</span>}
+                              {item.driveTime && item.cost && <span style={{ margin: "0 0.5rem", opacity: 0.4 }}>·</span>}
+                              {item.cost && <span>💵 {item.cost}</span>}
+                            </div>
+                          )}
+                          {!hasRichDetail && null}
                         </div>
                       </div>
                       {resolvedImage && (
                         <div style={{
                           position: "relative",
-                          width: isMobile ? "100%" : "120px",
+                          width: isMobile ? "100%" : "140px",
                           aspectRatio: "3/2",
                           borderRadius: "4px",
                           overflow: "hidden",
@@ -480,7 +550,7 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
                             alt={item.activity}
                             fill
                             style={{ objectFit: "cover" }}
-                            sizes={isMobile ? "90vw" : "120px"}
+                            sizes={isMobile ? "90vw" : "140px"}
                           />
                         </div>
                       )}
@@ -488,6 +558,20 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
                   );
                 })}
               </div>
+              {(day.dayTotal || day.perPerson) && (
+                <div style={{
+                  marginTop: "0.75rem",
+                  fontSize: "0.75rem",
+                  color: "rgba(255,255,255,0.55)",
+                  fontFamily: "monospace",
+                  textAlign: "right",
+                  letterSpacing: "0.04em",
+                }}>
+                  {day.dayTotal && <span>Day Total: {day.dayTotal}</span>}
+                  {day.dayTotal && day.perPerson && <span style={{ margin: "0 0.75rem", opacity: 0.4 }}>|</span>}
+                  {day.perPerson && <span>Per Person: {day.perPerson}</span>}
+                </div>
+              )}
             </div>
           ))}
         </motion.section>
