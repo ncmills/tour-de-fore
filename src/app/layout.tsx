@@ -126,6 +126,7 @@ export const metadata: Metadata = {
     title: "Tour de Fore",
     description: "An Annual Golf Odyssey",
     type: "website",
+    url: "https://tourdefore.com",
     images: [
       {
         url: "https://tourdefore.com/icon-fancy.png",

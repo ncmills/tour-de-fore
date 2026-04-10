@@ -6,6 +6,13 @@ export const metadata = {
   description:
     "AI-powered golf trip planner with 133 destinations across America. Plan the perfect group golf getaway — courses, lodging, nightlife, and activities all in one place.",
   alternates: { canonical: "https://tourdefore.com" },
+  openGraph: {
+    type: "website",
+    url: "https://tourdefore.com",
+    title: "Tour de Fore | Plan Your Epic Group Golf Trip",
+    description:
+      "AI-powered golf trip planner with 133 destinations across America. Plan the perfect group golf getaway — courses, lodging, nightlife, and activities all in one place.",
+  },
 };
 
 export default function Home() {

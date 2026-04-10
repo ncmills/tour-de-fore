@@ -4,6 +4,8 @@ import Link from "next/link";
 import { allDestinations } from "@/data";
 import MulliganButton from "@/components/MulliganButton";
 import HomeButton from "@/components/HomeButton";
+import { UnsplashHero } from "@/components/UnsplashHero";
+import unsplashCache from "@/data/unsplash-cache.json";
 import { slugify, metaDescription, tierColor, tierLabel } from "../../helpers";
 
 // Only generate for destinations with 3+ bars
@@ -30,7 +32,14 @@ export async function generateMetadata({
     title,
     description: metaDescription(description),
     alternates: { canonical: `https://tourdefore.com/golf-trips/${dest.id}/bachelor-party` },
-    openGraph: { title, description: metaDescription(description), images: ["/icon-fancy.png"] },
+    openGraph: {
+      type: "article",
+      url: `https://tourdefore.com/golf-trips/${dest.id}/bachelor-party`,
+      title,
+      description: metaDescription(description),
+      images: ["/icon-fancy.png"],
+    },
+    twitter: { card: "summary_large_image", title, description: metaDescription(description) },
   };
 }
 
@@ -71,6 +80,7 @@ export default async function BachelorPartyDestPage({
   const dest = bachelorDests.find((d) => d.id === slug);
   if (!dest) notFound();
 
+  const heroImage = unsplashCache.bachelorParty[dest.id as keyof typeof unsplashCache.bachelorParty] ?? null;
   const lateNightBars = dest.bars.filter((b) => b.lateNight);
   const groupLodging = dest.lodging.filter((l) => l.sleeps[1] >= 8);
   const topCourses = [...dest.courses].sort((a, b) => (b.googleRating || 0) - (a.googleRating || 0));
@@ -93,7 +103,9 @@ export default async function BachelorPartyDestPage({
       <MulliganButton href={`/golf-trips/${dest.id}`} />
       <HomeButton />
 
-      <div style={{ maxWidth: 800, margin: "0 auto", padding: "5rem 1.5rem 4rem" }}>
+      <UnsplashHero image={heroImage} alt={`${dest.city} bachelor party`} />
+
+      <div style={{ maxWidth: 800, margin: "0 auto", padding: heroImage ? "2rem 1.5rem 4rem" : "5rem 1.5rem 4rem" }}>
         <h1 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(1.8rem, 5vw, 2.8rem)", letterSpacing: "0.04em", lineHeight: 1.15, marginBottom: "0.75rem" }}>
           {dest.city} Bachelor Party Golf Trip
         </h1>

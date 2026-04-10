@@ -22,9 +22,16 @@ export async function generateMetadata({ params }: Props) {
     description: `Browse all ${label.toLowerCase()} tier golf courses in our database of 133+ destinations. Find the perfect course for your next group golf trip.`,
     alternates: { canonical: `https://tourdefore.com/golf-trips/courses/${tier}` },
     openGraph: {
+      type: "website",
+      url: `https://tourdefore.com/golf-trips/courses/${tier}`,
       title: `${label} Golf Courses Across America | Tour de Fore`,
       description: `Browse all ${label.toLowerCase()} tier golf courses in our database of 133+ destinations.`,
       images: ["/icon-fancy.png"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${label} Golf Courses Across America | Tour de Fore`,
+      description: `Browse all ${label.toLowerCase()} tier golf courses in our database of 133+ destinations.`,
     },
   };
 }

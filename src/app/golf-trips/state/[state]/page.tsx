@@ -40,7 +40,14 @@ export async function generateMetadata({
     alternates: {
       canonical: `https://tourdefore.com/golf-trips/state/${state}`,
     },
-    openGraph: { title, description: metaDescription(description), images: ["/icon-fancy.png"] },
+    openGraph: {
+      type: "website",
+      url: `https://tourdefore.com/golf-trips/state/${state}`,
+      title,
+      description: metaDescription(description),
+      images: ["/icon-fancy.png"],
+    },
+    twitter: { card: "summary_large_image", title, description: metaDescription(description) },
   };
 }
 

@@ -4,6 +4,8 @@ import Image from "next/image";
 import { allDestinations } from "@/data";
 import MulliganButton from "@/components/MulliganButton";
 import HomeButton from "@/components/HomeButton";
+import { UnsplashHero } from "@/components/UnsplashHero";
+import unsplashCache from "@/data/unsplash-cache.json";
 import Link from "next/link";
 import {
   tierLabel,
@@ -36,9 +38,16 @@ export async function generateMetadata({
     description,
     alternates: { canonical: `https://tourdefore.com/golf-trips/${dest.id}` },
     openGraph: {
+      type: "website",
+      url: `https://tourdefore.com/golf-trips/${dest.id}`,
       title,
       description,
       ...(dest.courses.find((c) => c.imageUrl) ? { images: [dest.courses.find((c) => c.imageUrl)!.imageUrl!] } : {}),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
     },
   };
 }
@@ -92,6 +101,7 @@ export default async function DestinationPage({
   const dest = allDestinations.find((d) => d.id === slug);
   if (!dest) notFound();
 
+  const heroImage = unsplashCache.destinations[dest.id as keyof typeof unsplashCache.destinations] ?? null;
   const regionSlugStr = regionSlug(dest.region);
   const stateSlugStr = stateSlug(dest.state);
   const stateName = STATE_NAMES[dest.state] || dest.state;
@@ -143,11 +153,13 @@ export default async function DestinationPage({
       <MulliganButton href="/golf-trips" />
       <HomeButton />
 
+      <UnsplashHero image={heroImage} alt={`${dest.city}, ${dest.state}`} />
+
       <div
         style={{
           maxWidth: 1100,
           margin: "0 auto",
-          padding: "5rem 1.5rem 4rem",
+          padding: heroImage ? "2rem 1.5rem 4rem" : "5rem 1.5rem 4rem",
         }}
       >
         {/* Hero */}
@@ -186,6 +198,27 @@ export default async function DestinationPage({
         >
           {dest.description}
         </p>
+
+        {/* Optional editorial prose — when populated, breaks template duplication */}
+        {dest.proseOverview && (
+          <div
+            style={{
+              maxWidth: 760,
+              fontSize: "1rem",
+              color: "#C9C9CF",
+              lineHeight: 1.8,
+              marginBottom: "2rem",
+              borderLeft: "3px solid #EA580C",
+              paddingLeft: "1.25rem",
+            }}
+          >
+            {dest.proseOverview.split(/\n\n+/).map((para, i) => (
+              <p key={i} style={{ marginBottom: "1rem" }}>
+                {para.trim()}
+              </p>
+            ))}
+          </div>
+        )}
 
         <p
           className="neon-stats neon-stats-text"
@@ -439,6 +472,61 @@ export default async function DestinationPage({
             </div>
           </>
         )}
+
+        {/* ── Related Destinations — same region, same state, top peers ── */}
+        {(() => {
+          const sameRegion = allDestinations
+            .filter((d) => d.region === dest.region && d.id !== dest.id)
+            .sort((a, b) => b.courses.length - a.courses.length)
+            .slice(0, 4);
+          const sameState = allDestinations.filter(
+            (d) => d.state === dest.state && d.id !== dest.id
+          );
+          const compareTarget =
+            sameState[0] ??
+            allDestinations.find(
+              (d) => d.region === dest.region && d.id !== dest.id
+            );
+          if (sameRegion.length === 0 && !compareTarget) return null;
+          return (
+            <section style={{ marginTop: "3rem", marginBottom: "2rem" }}>
+              <h2 style={sectionTitle}>Similar Golf Trip Destinations</h2>
+              <div style={grid}>
+                {sameRegion.map((d) => (
+                  <a
+                    key={d.id}
+                    href={`/golf-trips/${d.id}`}
+                    style={{ ...card, textDecoration: "none", color: "#fff", display: "block" }}
+                  >
+                    <h3 style={{ fontSize: "1rem", fontWeight: 700, marginBottom: "0.3rem" }}>
+                      {d.city}, {d.state}
+                    </h3>
+                    <p style={{ fontSize: "0.85rem", color: "#A1A1AA", marginBottom: "0.6rem" }}>
+                      {d.tagline}
+                    </p>
+                    <p style={{ fontSize: "0.75rem", color: "#EA580C" }}>
+                      {d.courses.length} courses · {d.bars.length} bars · {d.region}
+                    </p>
+                  </a>
+                ))}
+              </div>
+              {compareTarget && (
+                <div style={{ marginTop: "1.25rem" }}>
+                  <a
+                    href={`/golf-trips/compare/${dest.id}-vs-${compareTarget.id}`}
+                    style={{
+                      color: "#EA580C",
+                      textDecoration: "underline",
+                      fontSize: "0.9rem",
+                    }}
+                  >
+                    Compare {dest.city} vs {compareTarget.city} →
+                  </a>
+                </div>
+              )}
+            </section>
+          );
+        })()}
 
         {/* ── CTA ── */}
         <div style={{ textAlign: "center", margin: "3rem 0" }}>

@@ -122,6 +122,12 @@ export interface Destination {
   region: Region;
   tagline: string; // one-line pitch
   description: string; // 2-3 sentence sell
+  // OPTIONAL: 400–600 word unique editorial overview written for SEO depth.
+  // When present, rendered on the destination page after description as a
+  // multi-paragraph narrative that differentiates this city from peer cities.
+  // Without it, Google deduplicates the templated city pages — populate this
+  // field per destination to escape "Discovered – currently not indexed."
+  proseOverview?: string;
   population: "tiny" | "small" | "medium"; // <10k, 10-50k, 50-200k
   nearestAirport: Airport;
   bestSeasons: Season[];

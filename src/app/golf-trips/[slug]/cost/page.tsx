@@ -32,7 +32,14 @@ export async function generateMetadata({
     title,
     description: metaDescription(description),
     alternates: { canonical: `https://tourdefore.com/golf-trips/${dest.id}/cost` },
-    openGraph: { title, description: metaDescription(description), images: ["/icon-fancy.png"] },
+    openGraph: {
+      type: "article",
+      url: `https://tourdefore.com/golf-trips/${dest.id}/cost`,
+      title,
+      description: metaDescription(description),
+      images: ["/icon-fancy.png"],
+    },
+    twitter: { card: "summary_large_image", title, description: metaDescription(description) },
   };
 }
 
