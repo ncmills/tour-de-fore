@@ -25,6 +25,8 @@ const guides = [
   { slug: "desert-vs-coastal-vs-mountain-golf", title: "Desert vs Coastal vs Mountain Golf", desc: "Compare golf landscapes and find your style" },
   { slug: "golf-trip-packing-list", title: "The Ultimate Packing List", desc: "Everything you need, nothing you don't" },
   { slug: "first-time-golf-trip-mistakes", title: "12 First-Timer Mistakes", desc: "Avoid the traps that ruin trips" },
+  { slug: "best-golf-trips-near-airports", title: "Best Golf Trips Near Major Airports", desc: "Fly in, drive 30 min, tee off — minimize travel day waste" },
+  { slug: "best-fall-golf-trip-destinations", title: "Best Fall Golf Trip Destinations", desc: "Shoulder season deals, cooler temps, empty courses (Sep–Nov)" },
 ];
 
 export default function GuidesIndex() {

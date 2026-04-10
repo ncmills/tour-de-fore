@@ -4,6 +4,7 @@ import Link from "next/link";
 import { allDestinations } from "@/data";
 import MulliganButton from "@/components/MulliganButton";
 import HomeButton from "@/components/HomeButton";
+import { NetworkFooter } from "@/components/NetworkFooter";
 import { slugify, tierLabel, tierColor, seasonLabel, STATE_NAMES, REGION_SLUGS } from "../../golf-trips/helpers";
 import type { Region } from "@/data/types";
 
@@ -86,6 +87,20 @@ const GUIDES: Guide[] = [
     metaTitle: "12 Mistakes First-Time Golf Trip Planners Make | Tour de Fore",
     metaDescription: "Avoid the biggest golf trip planning mistakes: overbooking tee times, ignoring lodging logistics, skipping rest days, and 9 more that ruin trips.",
     intro: "After helping plan hundreds of golf trips, we've seen every mistake in the book. Here are the 12 that trip up first-timers — and how to avoid each one.",
+  },
+  {
+    slug: "best-golf-trips-near-airports",
+    title: "Best Golf Trips Near Major Airports",
+    metaTitle: "Best Golf Trips Near Major Airports — Short Drives, More Golf | Tour de Fore",
+    metaDescription: "Golf destinations within 45 minutes of a major airport. Skip the rental car marathon and spend more time on the course.",
+    intro: "Nobody wants to land at 11am and tee off at 5pm after a 2-hour rental-car slog. These destinations are all within a 45-minute drive of a major airport — fly in, check in, play 18. Ranked by how quickly you can go from wheels-down to tee box.",
+  },
+  {
+    slug: "best-fall-golf-trip-destinations",
+    title: "Best Fall Golf Trip Destinations",
+    metaTitle: "Best Fall Golf Trip Destinations — Shoulder Season Deals | Tour de Fore",
+    metaDescription: "The best US golf destinations for fall (September-November). Cooler temps, empty courses, peak foliage, and shoulder-season pricing.",
+    intro: "Fall is the experienced golfer's secret season — cooler temps, smaller crowds, gorgeous foliage, and meaningfully cheaper lodging at most destinations. Here are the top US spots to book between September and November.",
   },
 ];
 
@@ -476,6 +491,91 @@ function Mistakes() {
   );
 }
 
+function NearAirports() {
+  const dests = allDestinations
+    .filter((d) => d.nearestAirport && d.nearestAirport.driveMinutes <= 45 && d.courses.length >= 2)
+    .sort((a, b) => a.nearestAirport.driveMinutes - b.nearestAirport.driveMinutes);
+
+  return (
+    <>
+      <p style={{ ...prose, marginBottom: "1.5rem" }}>
+        {dests.length} destinations within a 45-minute drive of a major airport. Sorted shortest drive first.
+      </p>
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        {dests.map((d) => (
+          <Link key={d.id} href={`/golf-trips/${d.id}/guide`} style={{ ...card, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div>
+              <strong>{d.city}, {d.state}</strong>
+              <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.8rem", marginTop: "0.2rem" }}>
+                {d.courses.length} courses · {d.nearestAirport.code} ({d.nearestAirport.name})
+              </p>
+            </div>
+            <span style={{ color: "#EA580C", fontWeight: 700, fontSize: "0.9rem", flexShrink: 0 }}>{d.nearestAirport.driveMinutes} min</span>
+          </Link>
+        ))}
+      </div>
+      <h2 style={sectionTitle}>Why Airport Proximity Matters</h2>
+      <p style={prose}>
+        Every extra hour of rental-car drive is an hour not playing golf, not drinking beer, and not relaxing at the house.
+        On a 3-night trip, a destination that&rsquo;s 30 minutes from the airport gives you an extra round over one
+        that&rsquo;s 2+ hours away. It also means the &ldquo;travel day&rdquo; doesn&rsquo;t eat a full afternoon &mdash;
+        land at 11am, tee off by 2pm.
+      </p>
+      <h2 style={sectionTitle}>What to Look For</h2>
+      <p style={prose}>
+        Drive time beats airport size. A regional airport 20 minutes from your lodging is better than a hub 90 minutes away.
+        Check airline coverage from your city &mdash; some destinations on this list are one nonstop from everywhere,
+        others require a connection. Use the destination pages for full airport details.
+      </p>
+    </>
+  );
+}
+
+function FallDestinations() {
+  const dests = allDestinations
+    .filter((d) => d.bestSeasons.includes("fall") && d.lodging.length > 0)
+    .sort((a, b) => b.courses.length - a.courses.length)
+    .slice(0, 24);
+
+  return (
+    <>
+      <p style={{ ...prose, marginBottom: "1.5rem" }}>
+        {dests.length} top destinations that peak in September&ndash;November. Ranked by course count.
+      </p>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(280px, 100%), 1fr))", gap: "0.75rem" }}>
+        {dests.map((d) => (
+          <Link key={d.id} href={`/golf-trips/${d.id}`} style={card}>
+            <strong>{d.city}, {d.state}</strong>
+            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.8rem", marginTop: "0.2rem" }}>
+              {d.courses.length} courses · {d.lodging.length} lodging options · {seasonLabel(d.bestSeasons)}
+            </p>
+          </Link>
+        ))}
+      </div>
+      <h2 style={sectionTitle}>Why Fall Is the Best Golf Season</h2>
+      <p style={prose}>
+        Summer tourists are gone, kids are back in school, and courses that cost $200 in July drop to $120 in October.
+        Temperatures are cooler, which means you&rsquo;re not melting by hole 13. Mountain and Northeast destinations
+        add fall foliage on top of great golf. Humidity drops. Bugs disappear. Greens firm up. It&rsquo;s the most
+        underrated window of the year.
+      </p>
+      <h2 style={sectionTitle}>When to Book</h2>
+      <p style={prose}>
+        Fall rates typically drop the week after Labor Day at most destinations and hold through mid-November.
+        The sweet spot is late September through late October. Book lodging 6&ndash;8 weeks out for the best
+        house selection &mdash; group houses in popular destinations still move fast even in shoulder season.
+      </p>
+      <h2 style={sectionTitle}>What to Pack</h2>
+      <p style={prose}>
+        Layers. Morning tee times can start in the 50s and reach the 80s by afternoon in many regions. Bring
+        a quarter-zip, a lightweight rain jacket, and a knit hat for early rounds. See our{' '}
+        <Link href="/guides/golf-trip-packing-list" style={{ color: "#EA580C", textDecoration: "underline" }}>full packing list</Link>
+        {' '}for details.
+      </p>
+    </>
+  );
+}
+
 /* ── Route content by slug ── */
 const CONTENT_MAP: Record<string, () => React.ReactNode> = {
   "how-to-plan-a-group-golf-trip": HowToPlan,
@@ -488,6 +588,8 @@ const CONTENT_MAP: Record<string, () => React.ReactNode> = {
   "best-golf-destinations-for-large-groups": LargeGroups,
   "top-bucket-list-golf-courses": BucketListCourses,
   "first-time-golf-trip-mistakes": Mistakes,
+  "best-golf-trips-near-airports": NearAirports,
+  "best-fall-golf-trip-destinations": FallDestinations,
 };
 
 export default async function GuidePage({ params }: { params: Promise<{ slug: string }> }) {
@@ -540,6 +642,8 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
             ))}
           </div>
         </div>
+
+        <NetworkFooter currentDomain="tourdefore.com" />
       </div>
     </main>
   );
