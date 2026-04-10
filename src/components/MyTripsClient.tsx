@@ -214,23 +214,6 @@ export default function MyTripsClient({
 
   const canPlan = accountStatus?.canPlan ?? true;
 
-  const [upgrading, setUpgrading] = useState(false);
-  const handleUpgrade = async () => {
-    setUpgrading(true);
-    try {
-      const res = await fetch("/api/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ returnUrl: window.location.href }),
-      });
-      const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-      }
-    } catch { /* ignore */ }
-    setUpgrading(false);
-  };
-
   // ── Styles ──
   const inputStyle: React.CSSProperties = {
     background: "rgba(255,255,255,0.06)",
@@ -510,25 +493,14 @@ export default function MyTripsClient({
                 UNLIMITED
               </span>
             ) : !canPlan && (
-              <button
-                onClick={handleUpgrade}
-                disabled={upgrading}
-                style={{
-                  fontSize: "0.75rem",
-                  fontWeight: 600,
-                  color: "rgba(220,38,38,0.7)",
-                  background: "none",
-                  border: "none",
-                  cursor: upgrading ? "wait" : "pointer",
-                  fontFamily: "var(--font-inter), sans-serif",
-                  textDecoration: "underline",
-                  textUnderlineOffset: "2px",
-                  padding: 0,
-                  transition: "color 0.15s",
-                }}
-              >
-                {upgrading ? "..." : "Upgrade — $19.99/mo"}
-              </button>
+              <span style={{
+                fontSize: "0.7rem",
+                color: "rgba(255,255,255,0.4)",
+                fontFamily: "var(--font-inter), sans-serif",
+                fontStyle: "italic",
+              }}>
+                Resets on the 1st
+              </span>
             )}
           </motion.div>
         )}

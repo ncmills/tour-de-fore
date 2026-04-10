@@ -492,7 +492,7 @@ export default function PlanWizardClient() {
         try { data = JSON.parse(text); } catch { /* not JSON */ }
         if (data.limitReached) {
           setOverlayLimitReached(true);
-          setOverlayError((data.error as string) || "You've used your 3 free plans this week.");
+          setOverlayError((data.error as string) || "You've used your 3 free plans this month.");
           return;
         }
         throw new Error((data.error as string) || "Failed to generate plan");
@@ -562,10 +562,10 @@ export default function PlanWizardClient() {
               {overlayLimitReached ? (
                 <>
                   <p className="font-body text-base max-w-sm" style={{ color: "rgba(255,255,255,0.6)" }}>
-                    You&apos;ve used all 3 of your free plans this week.
+                    You&apos;ve used all 3 of your free plans this month.
                   </p>
                   <p className="font-body text-sm max-w-sm" style={{ color: "rgba(255,255,255,0.35)" }}>
-                    Your plans reset every Monday. Check back then to build more trips.
+                    Your plans reset on the 1st of the month. Check back then to build more trips.
                   </p>
                   <button
                     onClick={() => { window.location.href = "/?skip=1"; }}

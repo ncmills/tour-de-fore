@@ -94,12 +94,6 @@ export default function Footer() {
               >
                 View Pro Shop
               </Link>
-              <Link
-                href="/subscribe"
-                className="text-text-muted hover:text-accent transition-colors duration-300 text-sm font-body block"
-              >
-                Become a Devil
-              </Link>
             </div>
 
             <div className="opacity-30 hover:opacity-50 transition-opacity duration-500">
