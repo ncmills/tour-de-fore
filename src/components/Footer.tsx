@@ -4,6 +4,7 @@ import Link from "next/link";
 import { trips } from "@/lib/trips";
 import Logo from "./Logo";
 import USMap from "./USMap";
+import EmailCapture from "./EmailCapture";
 
 export default function Footer() {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
@@ -12,7 +13,12 @@ export default function Footer() {
 
   return (
     <footer className="bg-bg border-t border-border mt-0">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 pt-12 md:pt-16">
+        <div className="max-w-2xl mx-auto mb-12 md:mb-16">
+          <EmailCapture source="footer" />
+        </div>
+      </div>
+      <div className="max-w-7xl mx-auto px-6 md:px-12 pb-16 md:pb-24">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {/* Brand */}
           <div>
