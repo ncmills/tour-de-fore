@@ -6,8 +6,9 @@ import { midwestDestinations } from "./destinations-midwest";
 import { southeastDestinations } from "./destinations-southeast";
 import { northeastDestinations } from "./destinations-northeast";
 import { southCentralDestinations } from "./destinations-south-central";
+import { applyProseOverlay } from "./prose-overlay";
 
-export const allDestinations: Destination[] = [
+export const allDestinations: Destination[] = applyProseOverlay([
   ...southwestDestinations,
   ...pacificNWDestinations,
   ...mountainWestDestinations,
@@ -15,6 +16,6 @@ export const allDestinations: Destination[] = [
   ...southeastDestinations,
   ...northeastDestinations,
   ...southCentralDestinations,
-];
+]);
 
 export type { Destination } from "./types";

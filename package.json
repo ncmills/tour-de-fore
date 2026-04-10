@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "fetch:unsplash": "npx tsx scripts/fetch-unsplash-images.ts"
+    "fetch:unsplash": "npx tsx scripts/fetch-unsplash-images.ts",
+    "generate-prose": "set -a && source .env.local && set +a && npx tsx scripts/generate-prose.ts",
+    "indexnow": "npx tsx scripts/submit-indexnow.ts",
+    "deploy": "npx vercel --prod --yes && npx tsx scripts/submit-indexnow.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.80.0",
