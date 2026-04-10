@@ -1,0 +1,384 @@
+{
+  "destinations": {
+    "scottsdale-az": {
+      "url": "https://images.unsplash.com/photo-1708463139120-d0fce4e9a1c8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxTY290dHNkYWxlJTIwQVolMjBsYW5kc2NhcGV8ZW58MXwwfHx8MTc3NTg1NzkyM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "a large cactus in the middle of a desert",
+      "photographerName": "Danielle Higgins",
+      "photographerUrl": "https://unsplash.com/@daniellenicholephoto?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/a-large-cactus-in-the-middle-of-a-desert-qS4vyTkYyAU?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Scottsdale AZ landscape",
+      "fetchedAt": "2026-04-10T21:52:03.151Z"
+    },
+    "sedona-az": {
+      "url": "https://images.unsplash.com/photo-1696306282373-f5a51035c9fc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxTZWRvbmElMjBBWiUyMGxhbmRzY2FwZXxlbnwxfDB8fHwxNzc1ODU3OTI0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "a cactus in the desert with mountains in the background",
+      "photographerName": "Scott Gundersen",
+      "photographerUrl": "https://unsplash.com/@gundersen?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/a-cactus-in-the-desert-with-mountains-in-the-background-dOBN8IjambM?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Sedona AZ landscape",
+      "fetchedAt": "2026-04-10T21:52:04.385Z"
+    },
+    "tucson-az": {
+      "url": "https://images.unsplash.com/photo-1660867345196-4bd14e029c22?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxUdWNzb24lMjBBWiUyMGxhbmRzY2FwZXxlbnwxfDB8fHwxNzc1ODU3OTI1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "a landscape with trees and mountains in the background",
+      "photographerName": "Thomas Dewey",
+      "photographerUrl": "https://unsplash.com/@kellybrookme?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/a-landscape-with-trees-and-mountains-in-the-background-yKm6vhSytLY?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Tucson AZ landscape",
+      "fetchedAt": "2026-04-10T21:52:05.764Z"
+    },
+    "st-george-ut": {
+      "url": "https://images.unsplash.com/photo-1606112223481-0e15fe4e9edc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxTdC4lMjBHZW9yZ2UlMjBVVCUyMGxhbmRzY2FwZXxlbnwxfDB8fHwxNzc1ODU3OTI3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "green trees on mountain under blue sky during daytime",
+      "photographerName": "Paige Vondoersten",
+      "photographerUrl": "https://unsplash.com/@paigevon?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/green-trees-on-mountain-under-blue-sky-during-daytime-zsEpZ-nGDdI?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "St. George UT landscape",
+      "fetchedAt": "2026-04-10T21:52:07.042Z"
+    },
+    "santa-fe-nm": {
+      "url": "https://images.unsplash.com/photo-1617914373658-42e79e8db290?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxTYW50YSUyMEZlJTIwTk0lMjBsYW5kc2NhcGV8ZW58MXwwfHx8MTc3NTg1ODI3OXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "green trees under cloudy sky during daytime",
+      "photographerName": "Moriah Wolfe",
+      "photographerUrl": "https://unsplash.com/@moriahaslan?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/green-trees-under-cloudy-sky-during-daytime-vsfAJDoXu1A?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Santa Fe NM landscape",
+      "fetchedAt": "2026-04-10T21:57:59.384Z"
+    },
+    "flagstaff-az": {
+      "url": "https://images.unsplash.com/photo-1649519604460-5139b69e73b0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxGbGFnc3RhZmYlMjBBWiUyMGxhbmRzY2FwZXxlbnwxfDB8fHwxNzc1ODU4MjgwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "a long road with a cloudy sky in the background",
+      "photographerName": "Alex Holt",
+      "photographerUrl": "https://unsplash.com/@crtrstudio?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/a-long-road-with-a-cloudy-sky-in-the-background-YCxlN6lpfBc?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Flagstaff AZ landscape",
+      "fetchedAt": "2026-04-10T21:58:01.098Z"
+    },
+    "las-vegas-nv": {
+      "url": "https://images.unsplash.com/photo-1711604841563-c5835cfcb68a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxMYXMlMjBWZWdhcyUyME5WJTIwbGFuZHNjYXBlfGVufDF8MHx8fDE3NzU4NTgyODJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "a group of people standing on top of a field under a cloudy sky",
+      "photographerName": "Shanmu Wang",
+      "photographerUrl": "https://unsplash.com/@shanmu_10?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/a-group-of-people-standing-on-top-of-a-field-under-a-cloudy-sky-4cF1VWmAM3w?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Las Vegas NV landscape",
+      "fetchedAt": "2026-04-10T21:58:02.310Z"
+    },
+    "reno-nv": {
+      "url": "https://images.unsplash.com/photo-1669142902625-71b5b06839ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxSZW5vJTIwTlYlMjBsYW5kc2NhcGV8ZW58MXwwfHx8MTc3NTg1ODI4M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "a desert landscape with hills",
+      "photographerName": "Emmy Gaddy",
+      "photographerUrl": "https://unsplash.com/@emmygaddy?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/a-desert-landscape-with-hills-xlW6BalTOHw?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Reno NV landscape",
+      "fetchedAt": "2026-04-10T21:58:03.516Z"
+    },
+    "phoenix-mesa-az": {
+      "url": "https://images.unsplash.com/photo-1688066368560-8fa0e3eacfb0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxQaG9lbml4JTIwJTJGJTIwTWVzYSUyMEFaJTIwbGFuZHNjYXBlfGVufDF8MHx8fDE3NzU4NTgyODR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "a cactus garden with a mountain in the background",
+      "photographerName": "James A. Molnar",
+      "photographerUrl": "https://unsplash.com/@jamesamolnar?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/a-cactus-garden-with-a-mountain-in-the-background-5fQuKFodCeM?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Phoenix / Mesa AZ landscape",
+      "fetchedAt": "2026-04-10T21:58:04.717Z"
+    },
+    "albuquerque-nm": {
+      "url": "https://images.unsplash.com/photo-1600988192144-bf022cf7db01?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxBbGJ1cXVlcnF1ZSUyME5NJTIwbGFuZHNjYXBlfGVufDF8MHx8fDE3NzU4NTgyODV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "black metal window frame during daytime",
+      "photographerName": "Allen Perper",
+      "photographerUrl": "https://unsplash.com/@aperper?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/black-metal-window-frame-during-daytime-Ucy2clu9yFg?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Albuquerque NM landscape",
+      "fetchedAt": "2026-04-10T21:58:05.923Z"
+    },
+    "lake-havasu-city-az": {
+      "url": "https://images.unsplash.com/photo-1705127048505-15aa8ceb78f0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxMYWtlJTIwSGF2YXN1JTIwQ2l0eSUyMEFaJTIwbGFuZHNjYXBlfGVufDF8MHx8fDE3NzU4NTgyODd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "a view of a mountain range from a distance",
+      "photographerName": "Andrea Qoqonga",
+      "photographerUrl": "https://unsplash.com/@filmmakerandrea6?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/a-view-of-a-mountain-range-from-a-distance-adZxMNhJRh0?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Lake Havasu City AZ landscape",
+      "fetchedAt": "2026-04-10T21:58:07.242Z"
+    },
+    "laughlin-nv": {
+      "url": "https://images.unsplash.com/photo-1543855378-12bdc031b0fd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxMYXVnaGxpbiUyME5WJTIwbGFuZHNjYXBlfGVufDF8MHx8fDE3NzU4NTgyODh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "gray asphalt road beside green-leafed trees",
+      "photographerName": "Thomas Haas",
+      "photographerUrl": "https://unsplash.com/@thomashaas?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/gray-asphalt-road-beside-green-leafed-trees-S3-X3lA3_f8?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Laughlin NV landscape",
+      "fetchedAt": "2026-04-10T21:58:08.491Z"
+    },
+    "bend-or": {
+      "url": "https://images.unsplash.com/photo-1634590764920-00866b6a8e73?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxCZW5kJTIwT1IlMjBsYW5kc2NhcGV8ZW58MXwwfHx8MTc3NTg1ODI5MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "a river running through a forest filled with lots of trees",
+      "photographerName": "Chase Yi",
+      "photographerUrl": "https://unsplash.com/@chaseyi_?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/a-river-running-through-a-forest-filled-with-lots-of-trees-vEcsm1FduG4?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Bend OR landscape",
+      "fetchedAt": "2026-04-10T21:58:10.884Z"
+    },
+    "bandon-or": {
+      "url": "https://images.unsplash.com/photo-1674929154292-9e42e4791dac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxCYW5kb24lMjBPUiUyMGxhbmRzY2FwZXxlbnwxfDB8fHwxNzc1ODU4MjkyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "a lighthouse on top of a hill surrounded by tall grass",
+      "photographerName": "Karthik Sreenivas",
+      "photographerUrl": "https://unsplash.com/@karthik_sreenivas?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/a-lighthouse-on-top-of-a-hill-surrounded-by-tall-grass-eczCEzs8udc?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Bandon OR landscape",
+      "fetchedAt": "2026-04-10T21:58:12.153Z"
+    },
+    "sunriver-or": {
+      "url": "https://images.unsplash.com/photo-1700957952693-a9028dfa323c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxTdW5yaXZlciUyME9SJTIwbGFuZHNjYXBlfGVufDF8MHx8fDE3NzU4NTgyOTN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "a group of people riding skis across snow covered ground",
+      "photographerName": "Matt Busse",
+      "photographerUrl": "https://unsplash.com/@prbusse?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/a-group-of-people-riding-skis-across-snow-covered-ground-nhltCS68spc?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Sunriver OR landscape",
+      "fetchedAt": "2026-04-10T21:58:13.438Z"
+    },
+    "coeur-dalene-id": {
+      "url": "https://images.unsplash.com/photo-1763080713286-81aeaa584ef7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxDb2V1ciUyMGQlMjdBbGVuZSUyMElEJTIwbGFuZHNjYXBlfGVufDF8MHx8fDE3NzU4NTgyOTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "Castle-like building against a vibrant sunset sky",
+      "photographerName": "Benjamin Dahl",
+      "photographerUrl": "https://unsplash.com/@benjamindahl?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/castle-like-building-against-a-vibrant-sunset-sky-zXH-zoE6pcY?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Coeur d'Alene ID landscape",
+      "fetchedAt": "2026-04-10T21:58:14.751Z"
+    },
+    "boise-id": {
+      "url": "https://images.unsplash.com/photo-1661368120626-63ce17e84b4e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxCb2lzZSUyMElEJTIwbGFuZHNjYXBlfGVufDF8MHx8fDE3NzU4NTgyOTV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "a hill with trees and water below",
+      "photographerName": "Peter Robbins",
+      "photographerUrl": "https://unsplash.com/@prphotography262?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/a-hill-with-trees-and-water-below-uub1Y1GGzZg?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Boise ID landscape",
+      "fetchedAt": "2026-04-10T21:58:15.964Z"
+    },
+    "hood-river-or": {
+      "url": "https://images.unsplash.com/photo-1610872191677-74b4326e6954?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxIb29kJTIwUml2ZXIlMjBPUiUyMGxhbmRzY2FwZXxlbnwxfDB8fHwxNzc1ODU4Mjk3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "green trees and mountain under white clouds during daytime",
+      "photographerName": "Charlie Fair",
+      "photographerUrl": "https://unsplash.com/@bycharlieco?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/green-trees-and-mountain-under-white-clouds-during-daytime-ERpSOhmALdI?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Hood River OR landscape",
+      "fetchedAt": "2026-04-10T21:58:17.183Z"
+    },
+    "portland-or": {
+      "url": "https://images.unsplash.com/photo-1630439160046-ef2adfc5d08d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxQb3J0bGFuZCUyME9SJTIwbGFuZHNjYXBlfGVufDF8MHx8fDE3NzU4NTgyOTh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "green grass field near body of water during sunset",
+      "photographerName": "Ian Harber",
+      "photographerUrl": "https://unsplash.com/@ianharber?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/green-grass-field-near-body-of-water-during-sunset-bqfgYXdj64k?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Portland OR landscape",
+      "fetchedAt": "2026-04-10T21:58:18.389Z"
+    },
+    "seattle-wa": {
+      "url": "https://images.unsplash.com/photo-1668544948498-83f84ca871ee?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxTZWF0dGxlJTIwV0ElMjBsYW5kc2NhcGV8ZW58MXwwfHx8MTc3NTg1ODI5OXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "a body of water with buildings and mountains in the background",
+      "photographerName": "Graig Durant",
+      "photographerUrl": "https://unsplash.com/@theboywiththecamera?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/a-body-of-water-with-buildings-and-mountains-in-the-background-ZKDmBVWeGdU?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Seattle WA landscape",
+      "fetchedAt": "2026-04-10T21:58:19.612Z"
+    },
+    "spokane-wa": {
+      "url": "https://images.unsplash.com/photo-1726508670667-39e52fd5c5c8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxTcG9rYW5lJTIwV0ElMjBsYW5kc2NhcGV8ZW58MXwwfHx8MTc3NTg1ODMwMHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "A dirt road surrounded by trees under a blue sky",
+      "photographerName": "Kameron Simpson",
+      "photographerUrl": "https://unsplash.com/@kamerondesign?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/a-dirt-road-surrounded-by-trees-under-a-blue-sky-DNTrgJ2oJ9Q?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Spokane WA landscape",
+      "fetchedAt": "2026-04-10T21:58:20.829Z"
+    },
+    "sun-valley-id": {
+      "url": "https://images.unsplash.com/photo-1754875641466-4fe112925792?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxTdW4lMjBWYWxsZXklMjAlMkYlMjBLZXRjaHVtJTIwSUQlMjBsYW5kc2NhcGV8ZW58MXwwfHx8MTc3NTg1ODMwMXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "Empty road through snow-covered mountains at dusk",
+      "photographerName": "Fudo Jahic",
+      "photographerUrl": "https://unsplash.com/@fudojahic?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/empty-road-through-snow-covered-mountains-at-dusk-JuJiy1hlnnY?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Sun Valley / Ketchum ID landscape",
+      "fetchedAt": "2026-04-10T21:58:22.009Z"
+    },
+    "sandpoint-id": {
+      "url": "https://images.unsplash.com/photo-1567595746947-3f281458b289?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxTYW5kcG9pbnQlMjBJRCUyMGxhbmRzY2FwZXxlbnwxfDB8fHwxNzc1ODU4MzAzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "brown sand near beach",
+      "photographerName": "Mário Rui André",
+      "photographerUrl": "https://unsplash.com/@mruiandre?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/brown-sand-near-beach-9PWTV5ZcTpc?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Sandpoint ID landscape",
+      "fetchedAt": "2026-04-10T21:58:23.561Z"
+    },
+    "walla-walla-wa": {
+      "url": "https://images.unsplash.com/photo-1714529854301-0dbd0cdd1df8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxXYWxsYSUyMFdhbGxhJTIwV0ElMjBsYW5kc2NhcGV8ZW58MXwwfHx8MTc3NTg1ODMwNHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "a lush green hillside covered in lush green grass",
+      "photographerName": "April Jones",
+      "photographerUrl": "https://unsplash.com/@ajthejetsetter?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/a-lush-green-hillside-covered-in-lush-green-grass-y4LUnVDp5HI?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Walla Walla WA landscape",
+      "fetchedAt": "2026-04-10T21:58:24.850Z"
+    },
+    "eugene-or": {
+      "url": "https://images.unsplash.com/photo-1595350576575-e481a38122bd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxFdWdlbmUlMjBPUiUyMGxhbmRzY2FwZXxlbnwxfDB8fHwxNzc1ODU4MzA2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "green and brown trees under blue sky during daytime",
+      "photographerName": "Sinjin Thomas",
+      "photographerUrl": "https://unsplash.com/@sinjin_thomas?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/green-and-brown-trees-under-blue-sky-during-daytime-cfsl3CPQUlI?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Eugene OR landscape",
+      "fetchedAt": "2026-04-10T21:58:26.288Z"
+    },
+    "leavenworth-wa": {
+      "url": "https://images.unsplash.com/photo-1504303519022-0ee6b214e2c2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxMZWF2ZW53b3J0aCUyMFdBJTIwbGFuZHNjYXBlfGVufDF8MHx8fDE3NzU4NTgzMDd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "aerial view photography of brown mountains during daytime",
+      "photographerName": "John Cobb",
+      "photographerUrl": "https://unsplash.com/@johncobb?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/aerial-view-photography-of-brown-mountains-during-daytime-VHFaVGbsjVU?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Leavenworth WA landscape",
+      "fetchedAt": "2026-04-10T21:58:27.506Z"
+    },
+    "cannon-beach-or": {
+      "url": "https://images.unsplash.com/photo-1663289236676-a604d7c478f4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxDYW5ub24lMjBCZWFjaCUyMCUyRiUyMFNlYXNpZGUlMjBPUiUyMGxhbmRzY2FwZXxlbnwxfDB8fHwxNzc1ODU4MzA4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "a beach with rocks and water",
+      "photographerName": "Caleb Jack",
+      "photographerUrl": "https://unsplash.com/@hitthetrailjack?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/a-beach-with-rocks-and-water-lteLhjUtvLw?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Cannon Beach / Seaside OR landscape",
+      "fetchedAt": "2026-04-10T21:58:28.749Z"
+    },
+    "gig-harbor-wa": {
+      "url": "https://images.unsplash.com/photo-1662371256693-040cd35c0956?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxHaWclMjBIYXJib3IlMjBXQSUyMGxhbmRzY2FwZXxlbnwxfDB8fHwxNzc1ODU4MzA5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "a dock with boats on it",
+      "photographerName": "Zoi Palla",
+      "photographerUrl": "https://unsplash.com/@zoipalla92?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/a-dock-with-boats-on-it-mTfHqf1c4cA?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Gig Harbor WA landscape",
+      "fetchedAt": "2026-04-10T21:58:29.979Z"
+    },
+    "whitefish-mt": {
+      "url": "https://images.unsplash.com/photo-1570168212140-b8c68bbea166?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxXaGl0ZWZpc2glMjBNVCUyMGxhbmRzY2FwZXxlbnwxfDB8fHwxNzc1ODU4MzExfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "white and yellow cable car",
+      "photographerName": "Will Smith",
+      "photographerUrl": "https://unsplash.com/@willsmuth?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/white-and-yellow-cable-car-7hAAU_Ufvh4?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Whitefish MT landscape",
+      "fetchedAt": "2026-04-10T21:58:31.306Z"
+    },
+    "big-sky-mt": {
+      "url": "https://images.unsplash.com/photo-1670611554834-d7e6e48b7bc6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxCaWclMjBTa3klMjBNVCUyMGxhbmRzY2FwZXxlbnwxfDB8fHwxNzc1ODU4MzEyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "a snowy mountain range",
+      "photographerName": "Andrew Meehan",
+      "photographerUrl": "https://unsplash.com/@andrewmeehan?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/a-snowy-mountain-range-WvmrW1mYino?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Big Sky MT landscape",
+      "fetchedAt": "2026-04-10T21:58:32.641Z"
+    },
+    "steamboat-springs-co": {
+      "url": "https://images.unsplash.com/photo-1743350864347-d8e6a8dc0a06?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxTdGVhbWJvYXQlMjBTcHJpbmdzJTIwQ08lMjBsYW5kc2NhcGV8ZW58MXwwfHx8MTc3NTg1ODMxM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "An american flag waves proudly under a sunny sky.",
+      "photographerName": "Nicholas Fuentes",
+      "photographerUrl": "https://unsplash.com/@nickfuentes_?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/an-american-flag-waves-proudly-under-a-sunny-sky-Gl0TRhKDVVk?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Steamboat Springs CO landscape",
+      "fetchedAt": "2026-04-10T21:58:34.069Z"
+    },
+    "durango-co": {
+      "url": "https://images.unsplash.com/photo-1636401327869-ede8649e70d9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxEdXJhbmdvJTIwQ08lMjBsYW5kc2NhcGV8ZW58MXwwfHx8MTc3NTg1ODMxNXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "a mountain range with trees and clouds in the background",
+      "photographerName": "Angie Corbett-Kuiper",
+      "photographerUrl": "https://unsplash.com/@angiecorbettkuiper?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/a-mountain-range-with-trees-and-clouds-in-the-background-o66-BbpNahg?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Durango CO landscape",
+      "fetchedAt": "2026-04-10T21:58:35.501Z"
+    },
+    "park-city-ut": {
+      "url": "https://images.unsplash.com/photo-1623969391109-bc5bffbaad41?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxQYXJrJTIwQ2l0eSUyMFVUJTIwbGFuZHNjYXBlfGVufDF8MHx8fDE3NzU4NTgzMTZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "green trees on green mountain under blue sky during daytime",
+      "photographerName": "Scott Greer",
+      "photographerUrl": "https://unsplash.com/@sgreer?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/green-trees-on-green-mountain-under-blue-sky-during-daytime-L_-fauaLpS4?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Park City UT landscape",
+      "fetchedAt": "2026-04-10T21:58:36.712Z"
+    },
+    "jackson-hole-wy": {
+      "url": "https://images.unsplash.com/photo-1697730882899-67ecab8b380f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxKYWNrc29uJTIwV1klMjBsYW5kc2NhcGV8ZW58MXwwfHx8MTc3NTg1ODMxN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "a river running through a lush green forest",
+      "photographerName": "Andreas Miller",
+      "photographerUrl": "https://unsplash.com/@a9qx?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/a-river-running-through-a-lush-green-forest-Ki4IDyR2gTY?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Jackson WY landscape",
+      "fetchedAt": "2026-04-10T21:58:37.945Z"
+    },
+    "deadwood-sd": {
+      "url": "https://images.unsplash.com/photo-1761830139621-6dfca9c26d8a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxEZWFkd29vZCUyMFNEJTIwbGFuZHNjYXBlfGVufDF8MHx8fDE3NzU4NTgzMTl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "Historic town nestled in a valley with autumn trees.",
+      "photographerName": "Jon Sailer",
+      "photographerUrl": "https://unsplash.com/@jonmsailer?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/historic-town-nestled-in-a-valley-with-autumn-trees-diLKLRq8J5U?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Deadwood SD landscape",
+      "fetchedAt": "2026-04-10T21:58:39.292Z"
+    },
+    "mccall-id": {
+      "url": "https://images.unsplash.com/photo-1599663253423-7cad6e5fae1e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxNY0NhbGwlMjBJRCUyMGxhbmRzY2FwZXxlbnwxfDB8fHwxNzc1ODU4MzIwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "green trees beside river under white sky during daytime",
+      "photographerName": "Karsten Winegeart",
+      "photographerUrl": "https://unsplash.com/@karsten116?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/green-trees-beside-river-under-white-sky-during-daytime-BmITQhaDSw8?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "McCall ID landscape",
+      "fetchedAt": "2026-04-10T21:58:40.644Z"
+    },
+    "bozeman-mt": {
+      "url": "https://images.unsplash.com/photo-1609366314419-6f463a285a7a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxCb3plbWFuJTIwTVQlMjBsYW5kc2NhcGV8ZW58MXwwfHx8MTc3NTg1ODMyMXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "green trees on mountain under blue sky during daytime",
+      "photographerName": "Trevor Vannoy",
+      "photographerUrl": "https://unsplash.com/@tvannoy?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/green-trees-on-mountain-under-blue-sky-during-daytime-Z6kQOIqVUXU?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Bozeman MT landscape",
+      "fetchedAt": "2026-04-10T21:58:41.908Z"
+    },
+    "missoula-mt": {
+      "url": "https://images.unsplash.com/photo-1720416417043-02ad7bdb415a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxNaXNzb3VsYSUyME1UJTIwbGFuZHNjYXBlfGVufDF8MHx8fDE3NzU4NTgzMjN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "A view of a bridge over a river",
+      "photographerName": "Bryan White",
+      "photographerUrl": "https://unsplash.com/@crvscience?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/a-view-of-a-bridge-over-a-river-dr0ynhgOtmI?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Missoula MT landscape",
+      "fetchedAt": "2026-04-10T21:58:43.322Z"
+    },
+    "colorado-springs-co": {
+      "url": "https://images.unsplash.com/photo-1643084091752-571830d29d17?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxDb2xvcmFkbyUyMFNwcmluZ3MlMjBDTyUyMGxhbmRzY2FwZXxlbnwxfDB8fHwxNzc1ODU4MzI0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "a group of people standing on top of a lush green hillside",
+      "photographerName": "Marc Pineda",
+      "photographerUrl": "https://unsplash.com/@marcbjorn?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/a-group-of-people-standing-on-top-of-a-lush-green-hillside-k3CpLdHfnhs?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Colorado Springs CO landscape",
+      "fetchedAt": "2026-04-10T21:58:44.521Z"
+    },
+    "breckenridge-co": {
+      "url": "https://images.unsplash.com/photo-1661022297726-4fef98a46118?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxCcmVja2VucmlkZ2UlMjBDTyUyMGxhbmRzY2FwZXxlbnwxfDB8fHwxNzc1ODU4MzI1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "a mountain range with trees",
+      "photographerName": "Scott Greer",
+      "photographerUrl": "https://unsplash.com/@sgreer?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/a-mountain-range-with-trees-C0KkWQERIdY?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Breckenridge CO landscape",
+      "fetchedAt": "2026-04-10T21:58:45.948Z"
+    },
+    "vail-co": {
+      "url": "https://images.unsplash.com/photo-1661659711145-29652259ac20?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxWYWlsJTIwQ08lMjBsYW5kc2NhcGV8ZW58MXwwfHx8MTc3NTg1ODMyN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "a landscape with trees and mountains",
+      "photographerName": "Andres Molina",
+      "photographerUrl": "https://unsplash.com/@nomadicfitlust?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/a-landscape-with-trees-and-mountains-7Y1cDSjY0WI?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Vail CO landscape",
+      "fetchedAt": "2026-04-10T21:58:47.280Z"
+    },
+    "telluride-co": {
+      "url": "https://images.unsplash.com/photo-1610141432413-0936ed8e785a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxUZWxsdXJpZGUlMjBDTyUyMGxhbmRzY2FwZXxlbnwxfDB8fHwxNzc1ODU4MzI4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "brown and green mountains under white clouds during daytime",
+      "photographerName": "Joe Dudeck",
+      "photographerUrl": "https://unsplash.com/@joetography?utm_source=tour_de_fore&utm_medium=referral",
+      "unsplashUrl": "https://unsplash.com/photos/brown-and-green-mountains-under-white-clouds-during-daytime-0cW66WSTBPM?utm_source=tour_de_fore&utm_medium=referral",
+      "query": "Telluride CO landscape",
+      "fetchedAt": "2026-04-10T21:58:48.472Z"
+    }
+  },
+  "bachelorParty": {},
+  "guides": {}
+}

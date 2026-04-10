@@ -45,6 +45,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "autumnridgegolfcourse.com" },
       { protocol: "https", hostname: "kohlerwisconsin.com" },
       { protocol: "https", hostname: "quitquiocgolf.com" },
+      { protocol: "https", hostname: "images.unsplash.com" },
     ],
   },
   rewrites: async () => [
@@ -74,7 +75,12 @@ const nextConfig: NextConfig = {
             "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com https://js.stripe.com https://us.i.posthog.com https://us-assets.i.posthog.com",
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
             "font-src 'self' https://fonts.gstatic.com",
-            "img-src 'self' data: blob: https://images.squarespace-cdn.com https://cdn.printful.com https://files.cdn.printful.com https://*.s3.amazonaws.com https://tourdefore.com",
+            // img-src allows any HTTPS host because course/dining/bar images are
+            // loaded with `unoptimized` directly from third-party venue/CDN hosts
+            // (Troon, wixstatic, restaurant sites, etc.). These hosts are too
+            // numerous and volatile to enumerate, and the pages are public-only
+            // marketing content with no auth/PII risk from third-party imagery.
+            "img-src 'self' data: blob: https:",
             "media-src 'self' https://tourdefore.com blob:",
             "connect-src 'self' https://api.stripe.com https://checkout.stripe.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://us.i.posthog.com https://us-assets.i.posthog.com",
             "frame-src https://js.stripe.com",

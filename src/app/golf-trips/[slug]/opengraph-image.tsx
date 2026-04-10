@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { allDestinations } from "@/data";
+import unsplashCache from "@/data/unsplash-cache.json";
 
 export const alt = "Golf Trip Destination — Tour de Fore";
 export const size = { width: 1200, height: 630 };
@@ -25,6 +26,8 @@ export default async function Image({
 }) {
   const { slug } = await params;
   const label = formatSlug(slug);
+  const unsplash = unsplashCache.destinations[slug as keyof typeof unsplashCache.destinations];
+  const bgImage = unsplash?.url;
 
   return new ImageResponse(
     (
@@ -41,6 +44,33 @@ export default async function Image({
           position: "relative",
         }}
       >
+        {bgImage && (
+          <img
+            src={bgImage}
+            alt=""
+            width={1200}
+            height={630}
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              opacity: 0.55,
+            }}
+          />
+        )}
+        {bgImage && (
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background:
+                "linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.35) 50%, rgba(0,0,0,0.75) 100%)",
+              display: "flex",
+            }}
+          />
+        )}
         <div
           style={{
             position: "absolute",
