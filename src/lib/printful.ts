@@ -69,10 +69,17 @@ const HEADWEAR_CATEGORIES = new Set([40, 42, 46, 217]);
 // Accessories: drinkware, koozies, cards, etc.
 const ACCESSORIES_CATEGORIES = new Set([112, 238, 264, 292]);
 
-// ── Cost-aware pricing: fetch catalog cost + shipping, ensure 10% margin ──
+// ── Cost-aware pricing: fetch REAL decorated cost via estimate-costs, ensure 10% margin ──
+//
+// HISTORICAL BUG (fixed 2026-04-10): the previous implementation called
+// `/products/variant/{id}` which returns the BLANK CATALOG cost (unprinted item).
+// That ignored embroidery/print cost, digitization, and Printful tax — and priced
+// the trucker at $23 against a real $24.64 cost, losing money on every sale.
+// The fix is to call `/orders/estimate-costs` with the sync_variant_id, which
+// returns the full decorated cost Printful will actually charge.
 
-// Reference shipping address for rate estimation (rates are flat across US)
-const SHIPPING_REF_RECIPIENT = {
+// Reference recipient for cost estimation (Illinois is mid-range US tax)
+const COST_REF_RECIPIENT = {
   address1: "123 Main St",
   city: "Chicago",
   state_code: "IL",
@@ -80,48 +87,51 @@ const SHIPPING_REF_RECIPIENT = {
   zip: "60601",
 };
 
-async function getCatalogVariantCost(catalogVariantId: number): Promise<number> {
+/**
+ * Calls Printful /orders/estimate-costs for a single sync_variant and returns
+ * the full Printful cost (items + shipping + digitization + tax). This is the
+ * ONLY correct cost basis for retail pricing — the blank catalog cost from
+ * /products/variant/{id} ignores decoration and will underprice every embroidered item.
+ */
+async function estimateSyncVariantCost(syncVariantId: number): Promise<number> {
   try {
-    const data = await printfulGet(`/products/variant/${catalogVariantId}`);
-    return parseFloat(data.result?.variant?.price || "0");
-  } catch {
-    return 0;
-  }
-}
-
-async function getShippingRate(catalogVariantId: number): Promise<number> {
-  try {
-    const res = await fetch(`${PRINTFUL_API}/shipping/rates`, {
+    const res = await fetch(`${PRINTFUL_API}/orders/estimate-costs`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${PRINTFUL_TOKEN}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        recipient: SHIPPING_REF_RECIPIENT,
-        items: [{ variant_id: catalogVariantId, quantity: 1 }],
+        recipient: COST_REF_RECIPIENT,
+        items: [{ sync_variant_id: syncVariantId, quantity: 1 }],
       }),
-      signal: AbortSignal.timeout(8000),
+      signal: AbortSignal.timeout(10000),
     });
-    if (!res.ok) return 0;
+    if (!res.ok) {
+      console.error(`estimate-costs ${res.status} for sync_variant ${syncVariantId}`);
+      return 0;
+    }
     const data = await res.json();
-    const std = data.result?.find((r: { id: string }) => r.id === "STANDARD") || data.result?.[0];
-    return parseFloat(std?.rate || "0");
-  } catch {
+    const total = parseFloat(data.result?.costs?.total || "0");
+    return total;
+  } catch (err) {
+    console.error(`estimate-costs threw for sync_variant ${syncVariantId}:`, err);
     return 0;
   }
 }
 
-// Price = (totalCost + Stripe fixed fee) / (1 - target margin - Stripe %)
-// Ensures 10% net profit AFTER Stripe fees AND Printful overhead (tax, digitization, surcharges)
+// Price = (realCost + safetyBuffer + Stripe fixed fee) / (1 - target margin - Stripe %)
+// Guarantees TARGET_MARGIN net profit after Stripe fees on the representative cost.
+// The 5% safety buffer absorbs state-to-state tax variance (CA > IL by ~3%) and
+// Printful price bumps between cache refreshes.
 const TARGET_MARGIN = 0.10;
 const STRIPE_PERCENT = 0.029;
 const STRIPE_FIXED = 0.30;
-const PRINTFUL_OVERHEAD = 0.15; // 15% buffer for Printful sales tax (~8%) + digitization + surcharges
+const COST_SAFETY_BUFFER = 0.05; // 5% cushion on top of estimate-costs total
 
-function priceWithMarginAfterFees(cost: number, shipping: number): number {
-  const totalCost = (cost + shipping) * (1 + PRINTFUL_OVERHEAD);
-  return Math.ceil((totalCost + STRIPE_FIXED) / (1 - TARGET_MARGIN - STRIPE_PERCENT));
+function priceWithMarginAfterFees(realCost: number): number {
+  const paddedCost = realCost * (1 + COST_SAFETY_BUFFER);
+  return Math.ceil((paddedCost + STRIPE_FIXED) / (1 - TARGET_MARGIN - STRIPE_PERCENT));
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -134,15 +144,16 @@ async function transformProduct(result: any): Promise<ShopProduct | null> {
   const retailPrice = parseFloat(svs[0].retail_price || "0");
   if (retailPrice <= 0) return null;
 
-  // Fetch cost + shipping for first variant to determine price floor
-  const catalogVariantId = svs[0].variant_id;
-  const [cost, shipping] = await Promise.all([
-    getCatalogVariantCost(catalogVariantId),
-    getShippingRate(catalogVariantId),
-  ]);
+  // Fetch REAL decorated cost (items + shipping + digitization + tax) via
+  // /orders/estimate-costs. This is the ONLY correct cost basis — the blank
+  // catalog cost from /products/variant/{id} ignores embroidery and underprices.
+  const syncVariantId = svs[0].id;
+  const realCost = await estimateSyncVariantCost(syncVariantId);
 
-  // Price guarantees 10% net profit after Stripe fees (2.9% + $0.30) and all costs
-  const finalPrice = (cost > 0) ? priceWithMarginAfterFees(cost, shipping) : retailPrice;
+  // Price guarantees 10% net profit after Stripe fees on the real Printful cost.
+  // If estimate-costs failed (returned 0), fall back to whatever retail_price
+  // Nick set in Printful — that's better than underpricing at blank cost.
+  const finalPrice = (realCost > 0) ? priceWithMarginAfterFees(realCost) : retailPrice;
   const priceCents = Math.round(finalPrice * 100);
 
   // Build variants, colors, sizes, and colorPreviews
