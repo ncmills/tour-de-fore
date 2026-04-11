@@ -252,10 +252,13 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
   const [emailError, setEmailError] = useState("");
 
   const copyLink = () => {
-    const url = new URL(window.location.href);
-    if (dest) url.searchParams.set("dest", dest);
-    if (tier) url.searchParams.set("tier", tier);
-    navigator.clipboard.writeText(url.toString());
+    // 2026-04-11: copy the clean, shareable /plan/result/[id] URL — no
+    // ?dest=&tier= query params. A forwarded recipient should land on the
+    // destination picker (all 3 options) and pick for themselves, and the
+    // bare URL is what unfurls cleanly in iMessage/Slack/WhatsApp previews.
+    // Mirrors the email link produced by /api/send-plan-emails.
+    const url = `${window.location.origin}/plan/result/${planId}`;
+    navigator.clipboard.writeText(url);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };

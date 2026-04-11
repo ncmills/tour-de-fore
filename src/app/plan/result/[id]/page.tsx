@@ -1,10 +1,9 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import { getPlan, getAttendees } from "@/lib/kv";
-import { getSessionEmail, getUserPlans } from "@/lib/auth";
+import type { Metadata } from "next";
+import { getPlan } from "@/lib/kv";
 import PlanResultClient from "@/components/PlanResultClient";
 import PlanSelectionClient from "@/components/PlanSelectionClient";
-import PlanGate from "@/components/PlanGate";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import type {
   TripTier,
@@ -27,57 +26,88 @@ function getTierPlan(plans: ThreePlanResult, tier: string): GeneratedPlan | null
   }
 }
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const stored = await getPlan(id);
   if (!stored) return { title: "Plan Not Found | Tour de Fore" };
 
-  const preview = stored.freePreviews?.mid;
-  if (preview) {
-    return {
-      title: `${preview.city}, ${preview.state} Trip Plan | Tour de Fore`,
-      description: `Plan your golf trip to ${preview.city} — ${preview.groupSize} people, ${preview.numberOfDays} days.`,
-    };
-  }
+  // Pull the headline plan (mid destination, devil tier is the canonical
+  // "recommended combo"), falling back to whichever bucket has data.
+  const firstDest =
+    stored.destinations?.mid ??
+    stored.destinations?.budget ??
+    stored.destinations?.premium;
+  const headline =
+    firstDest?.plans?.devil ??
+    firstDest?.plans?.imp ??
+    firstDest?.plans?.demonKing;
+  const preview = stored.freePreviews?.mid ?? stored.freePreviews?.budget;
 
-  return { title: "Your Trip Plan | Tour de Fore" };
+  const tripName = headline?.tripName || "Your Golf Trip Plan";
+  const destination =
+    headline?.destination ||
+    (preview ? `${preview.city}${preview.state ? `, ${preview.state}` : ""}` : "");
+
+  // 2026-04-11: explicit Open Graph + Twitter cards so the shared link
+  // unfurls cleanly in iMessage / WhatsApp / Slack / email previews. The
+  // absolute image URL is required because iMessage doesn't resolve relative
+  // paths. Ported from the MOH /plan/result/[id] pattern — forwarded plan
+  // links are the main sharing surface, so the preview is non-negotiable.
+  const title = destination ? `${tripName} · ${destination}` : tripName;
+  const description = headline
+    ? `The full itinerary — courses, lodging, day-by-day schedule, and group logistics for ${destination || "your trip"}. Built with Tour de Fore.`
+    : "Your AI-planned golf trip — courses, lodging, day-by-day schedule, and group logistics. Built with Tour de Fore.";
+  const ogUrl = `https://tourdefore.com/plan/result/${id}`;
+  const ogImage = `https://tourdefore.com/plan/result/${id}/opengraph-image`;
+
+  return {
+    title: `${title} | Tour de Fore`,
+    description,
+    // Plans are unguessable-UUID links — don't let search engines index them
+    robots: { index: false, follow: false },
+    alternates: { canonical: ogUrl },
+    openGraph: {
+      title,
+      description,
+      url: ogUrl,
+      siteName: "Tour de Fore",
+      type: "website",
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImage],
+    },
+  };
 }
 
+/**
+ * /plan/result/[id]
+ *
+ * Publicly viewable by anyone holding the link. `planId` is a
+ * `crypto.randomUUID()` (128 bits of entropy) so the URL itself is the
+ * capability — this is what lets an organizer drop the link in their group
+ * chat and have every buddy open it without friction. Matches the MOH
+ * share-plan pattern shipped 2026-04-11.
+ *
+ * Behavior:
+ *   - no `dest` query → show the 3-destination selection grid
+ *   - `dest` + `tier` → show the full themed plan for that combo
+ */
 export default async function PlanResultPage({ params, searchParams }: Props) {
   const { id } = await params;
   const { dest, tier } = await searchParams;
   const stored = await getPlan(id);
   if (!stored) notFound();
-
-  // Check if user is authenticated
-  const sessionEmail = await getSessionEmail();
-  const authenticated = !!sessionEmail;
-
-  // If not authenticated, show gate
-  if (!authenticated) {
-    const preview = stored.freePreviews?.mid || stored.freePreviews?.budget;
-    return (
-      <Suspense>
-        <PlanGate
-          planId={id}
-          city={preview?.city || "your destination"}
-          state={preview?.state || ""}
-          prefillEmail={stored.inputs?.organizerEmail || ""}
-        />
-      </Suspense>
-    );
-  }
-
-  // Verify plan access — organizer, plan owner, or listed attendee
-  const isOrganizer = stored.inputs?.organizerEmail?.toLowerCase() === sessionEmail?.toLowerCase();
-  const userPlans = sessionEmail ? await getUserPlans(sessionEmail) : [];
-  const ownsThisPlan = isOrganizer || userPlans.includes(id);
-  let isAttendee = false;
-  if (!ownsThisPlan && sessionEmail) {
-    const attendees = await getAttendees(id);
-    isAttendee = attendees.some((a) => a.email.toLowerCase() === sessionEmail.toLowerCase());
-  }
-  const hasAccess = ownsThisPlan || isAttendee;
 
   // No dest: show destination cards (all plans are free — no paywall)
   if (!dest) {
@@ -87,7 +117,7 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
           planId={id}
           freePreviews={stored.freePreviews || null}
           paid={true}
-          legacyDestinations={hasAccess ? stored.destinations : undefined}
+          legacyDestinations={stored.destinations}
         />
       </Suspense>
     );
@@ -96,7 +126,7 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
   const destLevel = dest as PriceLevel;
 
   // Show full plan
-  if (hasAccess && stored.destinations?.[destLevel]) {
+  if (stored.destinations?.[destLevel]) {
     const rec = stored.destinations[destLevel];
     const selectedTier = tier || "devil";
     const plan = getTierPlan(rec.plans, selectedTier);
@@ -119,7 +149,7 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
   }
 
   // Legacy plans
-  if (hasAccess && stored.plans) {
+  if (stored.plans) {
     const selectedTier = tier || "devil";
     const plan = getTierPlan(stored.plans, selectedTier);
     if (!plan) notFound();

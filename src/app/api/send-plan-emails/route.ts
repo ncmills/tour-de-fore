@@ -59,14 +59,20 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Use mid destination's devil tier for emails (recommended combo)
+    // Use mid destination's devil tier for email copy (headline numbers)
     if (!stored.destinations) {
       return NextResponse.json({ error: "Plan has no destination data" }, { status: 400 });
     }
     const plan = stored.destinations.mid.plans.devil;
-    const destParam = dest || "mid";
-    const tierParam = tier || "devil";
-    const planUrl = `https://tourdefore.com/plan/result/${planId}?dest=${destParam}&tier=${tierParam}`;
+    // 2026-04-11: clean, forward-friendly link — no query params. The bare
+    // /plan/result/[id] route lands on the destination picker so a recipient
+    // forwarded from iMessage/Slack sees all 3 destinations, not a frozen
+    // snapshot of whatever view the organizer happened to be on. Matches the
+    // MOH share-plan pattern. Dropping the query params also makes the Open
+    // Graph preview unfurl cleanly in every client.
+    // (tier/dest params intentionally ignored here even if provided by the client)
+    void tier; void dest;
+    const planUrl = `https://tourdefore.com/plan/result/${planId}`;
 
     // Send emails
     const resend = getResendClient();
@@ -77,6 +83,7 @@ export async function POST(req: NextRequest) {
         from: FROM_ADDRESS,
         to: attendee.email,
         subject: `${plan.tripName} — Your Golf Trip Plan is Ready`,
+        replyTo: organizerEmail || undefined,
         html: `
           <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 600px; margin: 0 auto; background: #0a0a0a; color: #ece8e1; padding: 40px 30px;">
             <div style="text-align: center; margin-bottom: 30px;">
@@ -104,6 +111,13 @@ export async function POST(req: NextRequest) {
                 View Full Plan
               </a>
             </div>
+
+            <p style="color: #9a9590; font-size: 13px; text-align: center; margin: 24px 0 4px;">
+              Forward this email or drop the link in the group chat &mdash; anyone with it can view the plan.
+            </p>
+            <p style="word-break: break-all; text-align: center; margin: 0 0 32px;">
+              <a href="${planUrl}" style="color: #c87941; font-size: 12px; text-decoration: none;">${planUrl}</a>
+            </p>
 
             <p style="color: #5a5550; font-size: 12px; text-align: center; margin-top: 40px;">
               Sent via Tour de Fore AI Trip Planner &mdash; tourdefore.com
