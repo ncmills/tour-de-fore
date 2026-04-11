@@ -48,7 +48,7 @@ export default function HomeClient() {
   }, []);
 
   useEffect(() => {
-    fetch("/api/account-status").then(r => { if (r.ok) setIsLoggedIn(true); }).catch(() => {});
+    fetch("/api/profile").then(r => { if (r.ok) setIsLoggedIn(true); }).catch(() => {});
   }, []);
 
   // After text animations finish, show TV

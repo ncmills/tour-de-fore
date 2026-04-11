@@ -333,22 +333,18 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Free tier: 3 plans per month (subscribers get unlimited)
+  // Free tier: 3 plans per month (no paid tier right now)
   if (email && !isUnlimited) {
-    const { isSubscribed } = await import("@/lib/auth");
-    const subscribed = await isSubscribed(email);
-    if (!subscribed) {
-      const monthKey = getMonthKey();
-      const countRaw = await getRedis().get(`user:${email}:plans:${monthKey}`);
-      const count = countRaw ? parseInt(countRaw) : 0;
-      if (count >= 3) {
-        return NextResponse.json({
-          error: "You've used your 3 free plans this month. Upgrade for unlimited planning!",
-          limitReached: true,
-          plansUsed: count,
-          resetsAt: getNextMonthReset(),
-        }, { status: 429 });
-      }
+    const monthKey = getMonthKey();
+    const countRaw = await getRedis().get(`user:${email}:plans:${monthKey}`);
+    const count = countRaw ? parseInt(countRaw) : 0;
+    if (count >= 3) {
+      return NextResponse.json({
+        error: "You've used your 3 free plans this month. Try again next month.",
+        limitReached: true,
+        plansUsed: count,
+        resetsAt: getNextMonthReset(),
+      }, { status: 429 });
     }
   }
 

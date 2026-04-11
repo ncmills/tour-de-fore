@@ -87,25 +87,6 @@ export async function getUserName(email: string): Promise<string | null> {
   return await getRedis().get(`user:${email}:name`);
 }
 
-// ── Subscription ("Become a Devil") ──
-
-export async function setSubscription(email: string, stripeSubId: string, expiresAt: Date): Promise<void> {
-  const r = getRedis();
-  const ttl = Math.max(Math.floor((expiresAt.getTime() - Date.now()) / 1000), 86400);
-  await r.set(`user:${email}:sub`, JSON.stringify({ stripeSubId, expiresAt: expiresAt.toISOString() }), "EX", ttl);
-}
-
-export async function isSubscribed(email: string): Promise<boolean> {
-  const raw = await getRedis().get(`user:${email}:sub`);
-  if (!raw) return false;
-  const sub = JSON.parse(raw);
-  return new Date(sub.expiresAt) > new Date();
-}
-
-export async function cancelSubscription(email: string): Promise<void> {
-  await getRedis().del(`user:${email}:sub`);
-}
-
 // ── Free plan rate limiting (1 per month) ──
 
 export async function canGenerateFreePlan(email: string): Promise<boolean> {
@@ -143,8 +124,6 @@ export async function changeUserEmail(oldEmail: string, newEmail: string): Promi
   readPipe.get(`user:${oldEmail}:name`);
   readPipe.get(`user:${oldEmail}:password`);
   readPipe.smembers(`user:${oldEmail}:plans`);
-  readPipe.get(`user:${oldEmail}:sub`);
-  readPipe.ttl(`user:${oldEmail}:sub`);
   readPipe.smembers(`user:${oldEmail}:attended`);
   readPipe.get(`user:${oldEmail}:freeplans:${monthKey}`);
   readPipe.ttl(`user:${oldEmail}:freeplans:${monthKey}`);
@@ -154,11 +133,9 @@ export async function changeUserEmail(oldEmail: string, newEmail: string): Promi
   const name = results[0]?.[1] as string | null;
   const passwordHash = results[1]?.[1] as string | null;
   const plans = results[2]?.[1] as string[] | null;
-  const sub = results[3]?.[1] as string | null;
-  const subTtl = results[4]?.[1] as number;
-  const attended = results[5]?.[1] as string[] | null;
-  const freePlanCount = results[6]?.[1] as string | null;
-  const freeplanTtl = results[7]?.[1] as number;
+  const attended = results[3]?.[1] as string[] | null;
+  const freePlanCount = results[4]?.[1] as string | null;
+  const freeplanTtl = results[5]?.[1] as number;
 
   // Bulk write all migrations in one pipeline
   const writePipe = r.pipeline();
@@ -175,14 +152,6 @@ export async function changeUserEmail(oldEmail: string, newEmail: string): Promi
     writePipe.sadd(`user:${newEmail}:plans`, ...plans);
     writePipe.expire(`user:${newEmail}:plans`, SESSION_TTL * 12);
     writePipe.del(`user:${oldEmail}:plans`);
-  }
-  if (sub && subTtl > 0) {
-    // Only migrate active subscriptions (subTtl > 0 means key hasn't expired)
-    const parsed = JSON.parse(sub);
-    if (new Date(parsed.expiresAt) > new Date()) {
-      writePipe.set(`user:${newEmail}:sub`, sub, "EX", subTtl);
-    }
-    writePipe.del(`user:${oldEmail}:sub`);
   }
   if (attended && attended.length > 0) {
     writePipe.sadd(`user:${newEmail}:attended`, ...attended);

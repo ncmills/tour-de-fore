@@ -23,7 +23,8 @@ interface AccountStatus {
   plansUsed: number;
   plansLimit: number;
   unlimited: boolean;
-  subscribed?: boolean;
+  email?: string;
+  loggedIn?: boolean;
 }
 
 export default function MyTripsClient({
@@ -79,9 +80,9 @@ export default function MyTripsClient({
   const nameInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    fetch("/api/account-status")
-      .then((r) => r.json())
-      .then(setAccountStatus)
+    fetch("/api/profile")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => { if (data) setAccountStatus(data); })
       .catch(() => {});
   }, []);
 
@@ -204,7 +205,7 @@ export default function MyTripsClient({
     setDeletingTripId(null);
   };
 
-  const isUnlimited = accountStatus?.unlimited || accountStatus?.subscribed;
+  const isUnlimited = accountStatus?.unlimited ?? false;
 
   const remaining = accountStatus
     ? isUnlimited

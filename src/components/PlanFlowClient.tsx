@@ -9,7 +9,7 @@ export default function PlanFlowClient() {
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
-    fetch("/api/account-status")
+    fetch("/api/profile")
       .then((r) => {
         if (r.ok) setShowWizard(true);
       })
