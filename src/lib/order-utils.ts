@@ -179,7 +179,9 @@ export function buildRecipient(shipping: ExtractedShipping): PrintfulRecipient |
 
 /**
  * Build the external_id used for Printful dedup.
+ * Printful's external_id max is 32 chars — total = "tdf-" (4) + last 28 chars of session = 32.
+ * Stripe session IDs end in unique random chars, so the suffix is collision-safe.
  */
 export function buildExternalId(sessionId: string): string {
-  return `tdf-${sessionId.slice(-56)}`;
+  return `tdf-${sessionId.slice(-28)}`;
 }
