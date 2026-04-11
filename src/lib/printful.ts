@@ -237,10 +237,44 @@ export async function fetchShopProducts(): Promise<ShopProduct[]> {
       details.push(...batchResults);
     }
 
+    // Track products EXCLUDED due to guaranteed-loss pricing so we can alert Nick.
+    const excluded: Array<{ id: string; price: number; cost: number; netLoss: number }> = [];
+
     for (const detail of details) {
       if (!detail) continue;
       const product = await transformProduct(detail.result);
-      if (product) products.push(product);
+      if (!product) continue;
+
+      // SAFETY NET: never serve a product that would lose money.
+      // Recompute the expected net margin from the first variant's real cost.
+      const firstSync = (detail.result.sync_variants || [])[0];
+      if (firstSync?.id) {
+        const realCost = await estimateSyncVariantCost(firstSync.id);
+        if (realCost > 0) {
+          const retail = product.price / 100; // cents → dollars
+          const stripeFees = retail * STRIPE_PERCENT + STRIPE_FIXED;
+          const net = retail - realCost - stripeFees;
+          if (net <= 0) {
+            excluded.push({ id: product.id, price: retail, cost: realCost, netLoss: net });
+            continue; // DO NOT add to catalog — customers literally cannot buy a losing-money product
+          }
+        }
+      }
+
+      products.push(product);
+    }
+
+    // If anything was excluded, fire a critical alert email (non-blocking)
+    if (excluded.length > 0) {
+      import("./email").then(({ sendEmail }) => {
+        sendEmail({
+          to: "info@tourdefore.com",
+          subject: `CRITICAL: ${excluded.length} shop product(s) excluded — negative margin`,
+          html: `<p>The following shop products were HIDDEN from the catalog because their retail price is below Printful cost + Stripe fees:</p><pre>${JSON.stringify(excluded, null, 2)}</pre><p>Action required: raise retail prices or check Printful cost changes. The shop is still live but these items cannot be sold until fixed.</p>`,
+          critical: true,
+        }).catch(() => {});
+      }).catch(() => {});
+      console.error("Shop products excluded due to negative margin:", excluded);
     }
 
     // Sort: apparel → headwear → accessories, alphabetical within each group

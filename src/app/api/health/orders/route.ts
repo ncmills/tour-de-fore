@@ -55,8 +55,11 @@ export async function GET(req: NextRequest) {
         continue;
       }
       // 404 — no Printful order for this paid session
+      // Grace window: 3 min. The verify-order call from /shop/success runs within
+      // 1 second of payment; the 5-min cron is the fallback. 3 min is tight enough
+      // to catch real fulfillment breakage fast and loose enough to avoid flakes.
       const ageMinutes = Math.floor((Date.now() / 1000 - s.created) / 60);
-      if (ageMinutes < 10) continue; // too fresh to alert on
+      if (ageMinutes < 3) continue;
       gaps.push({
         sessionId: s.id,
         email: s.customer_details?.email,

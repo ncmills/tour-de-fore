@@ -3,6 +3,10 @@
     {
       "path": "/api/cron/sync-orders",
       "schedule": "*/5 * * * *"
+    },
+    {
+      "path": "/api/cron/check-margins",
+      "schedule": "0 13 * * *"
     }
   ]
 }
