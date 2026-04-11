@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getPlan } from "@/lib/kv";
+import { getSessionEmail } from "@/lib/auth";
 import PlanResultClient from "@/components/PlanResultClient";
 import PlanSelectionClient from "@/components/PlanSelectionClient";
 import ErrorBoundary from "@/components/ErrorBoundary";
@@ -109,6 +110,16 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
   const stored = await getPlan(id);
   if (!stored) notFound();
 
+  // Identify the viewer for UI affordances only — NOT for access control.
+  // Anyone holding the unguessable planId can view; the owner flag just
+  // hides owner-only controls (the "Send to the Crew" email form) from
+  // forwarded viewers so they don't hit a 403 on /api/send-plan-emails.
+  const sessionEmail = await getSessionEmail();
+  const organizerEmail = stored.inputs?.organizerEmail;
+  const isOwner = Boolean(
+    sessionEmail && organizerEmail && sessionEmail.toLowerCase() === organizerEmail.toLowerCase()
+  );
+
   // No dest: show destination cards (all plans are free — no paywall)
   if (!dest) {
     return (
@@ -142,6 +153,7 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
             tier={selectedTier as TripTier}
             dest={dest}
             paid={true}
+            isOwner={isOwner}
           />
         </Suspense>
       </ErrorBoundary>
@@ -155,7 +167,7 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
     if (!plan) notFound();
     return (
       <Suspense>
-        <PlanResultClient plan={plan} planId={id} tier={selectedTier as TripTier} dest={dest} paid={true} />
+        <PlanResultClient plan={plan} planId={id} tier={selectedTier as TripTier} dest={dest} paid={true} isOwner={isOwner} />
       </Suspense>
     );
   }

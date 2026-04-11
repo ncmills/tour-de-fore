@@ -241,9 +241,17 @@ interface PlanResultClientProps {
   dest?: string;
   paid?: boolean;
   subscribed?: boolean;
+  /**
+   * True only when the viewer's session email matches the plan's organizer.
+   * Forwarded viewers (anon or a different signed-in user) see a read-only
+   * itinerary — the "Send to the Crew" button is hidden so they don't run
+   * into a 403 from /api/send-plan-emails. They can still copy/forward the
+   * link manually. See project_tdf_share_links_0411 memory.
+   */
+  isOwner?: boolean;
 }
 
-export default function PlanResultClient({ plan, allPlans, planId, tier, dest, paid, subscribed }: PlanResultClientProps) {
+export default function PlanResultClient({ plan, allPlans, planId, tier, dest, paid, subscribed, isOwner }: PlanResultClientProps) {
   const [copied, setCopied] = useState(false);
   const [showEmailForm, setShowEmailForm] = useState(false);
   const [emailInput, setEmailInput] = useState("");
@@ -987,38 +995,40 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
             {copied ? "Copied!" : "Copy Link"}
           </button>
 
-          <button
-            onClick={() => setShowEmailForm(!showEmailForm)}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-              padding: "12px 24px",
-              background: tierColors[tier],
-              border: "none",
-              borderRadius: 8,
-              color: "#000",
-              fontSize: 14,
-              fontWeight: 600,
-              cursor: "pointer",
-              transition: "opacity 0.2s",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.85")}
-            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-          >
-            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-              />
-            </svg>
-            Send to the Crew
-          </button>
+          {isOwner && (
+            <button
+              onClick={() => setShowEmailForm(!showEmailForm)}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                padding: "12px 24px",
+                background: tierColors[tier],
+                border: "none",
+                borderRadius: 8,
+                color: "#000",
+                fontSize: 14,
+                fontWeight: 600,
+                cursor: "pointer",
+                transition: "opacity 0.2s",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.85")}
+              onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+            >
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                />
+              </svg>
+              Send to the Crew
+            </button>
+          )}
 
           {/* Email input form */}
-          {showEmailForm && (
+          {isOwner && showEmailForm && (
             <div style={{ width: "100%", maxWidth: 500, marginTop: "1rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
               <input
                 type="text"
