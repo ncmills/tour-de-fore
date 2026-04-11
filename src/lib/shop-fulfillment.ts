@@ -89,12 +89,12 @@ export async function fulfillShopOrder(
     };
   }
 
-  // 2. Fetch Stripe session.
+  // 2. Fetch Stripe session. Shipping is read from the base session object
+  // via extractShipping — no expand needed (and in recent Stripe SDK versions,
+  // `shipping_details` is not an expandable field and throws if passed).
   let session: Stripe.Checkout.Session;
   try {
-    session = await stripe.checkout.sessions.retrieve(sessionId, {
-      expand: ["shipping_details"],
-    });
+    session = await stripe.checkout.sessions.retrieve(sessionId);
   } catch (err) {
     return {
       status: "failed",
