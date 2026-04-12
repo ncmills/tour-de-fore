@@ -17,7 +17,7 @@ import type { Destination } from "../src/data/types";
 
 const OUTPUT_PATH = join(process.cwd(), "src/data/prose-overview.json");
 const MODEL = "claude-sonnet-4-6";
-const MAX_TOKENS = 1200;
+const MAX_TOKENS = 2000;
 const PARALLELISM = 4; // concurrent API calls
 
 const SYSTEM_PROMPT = `You are an editorial writer for a golf trip planning site. You write

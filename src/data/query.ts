@@ -436,7 +436,7 @@ export function pickThreeDestinations(
   options: FilterOptions
 ): PickedDestination[] {
   // Get primary region destinations
-  let primaryDestinations = filterDestinations(options);
+  const primaryDestinations = filterDestinations(options);
 
   // If specific city, return all 3 price tiers for that same destination
   if (options.specificCity && primaryDestinations.length > 0) {

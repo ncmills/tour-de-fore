@@ -42,6 +42,7 @@ export default function SwapDrawer({ planId, destLevel, category, currentName, o
 
   useEffect(() => {
     if (!open) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true);
     setError("");
     fetch("/api/swap", {

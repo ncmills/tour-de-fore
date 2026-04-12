@@ -107,6 +107,7 @@ export function extractShipping(session: Stripe.Checkout.Session): ExtractedShip
   const s = session as unknown as Record<string, unknown>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const shippingObj: any =
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (s.collected_information as any)?.shipping_details ||
     (s.shipping_details) ||
     (s.shipping);

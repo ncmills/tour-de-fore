@@ -146,6 +146,7 @@ export default function ExplosionGate({ pageKey: _pageKey, children }: Props) {
     if (skip) return;
 
     const built = buildSwatches(window.innerWidth, window.innerHeight);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     setSwatchData(built);
 
     const el = document.createElement("style");

@@ -1,6 +1,6 @@
 "use client";
 
-import { useReducer, useState, useEffect, useRef, useCallback } from "react";
+import { useReducer, useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import { WizardState, initialWizardState } from "@/lib/plan-types";
@@ -131,8 +131,8 @@ function DevilPinataScene() {
     return () => timers.forEach(clearTimeout);
   }, []);
 
-  // Generate burst particles with random trajectories
-  const particles = Array.from({ length: 8 }, (_, i) => {
+  // Generate burst particles with random trajectories — stable across re-renders
+  const particles = useMemo(() => Array.from({ length: 8 }, (_, i) => {
     const angle = (i / 8) * Math.PI * 2 + Math.random() * 0.5;
     const dist = 60 + Math.random() * 80;
     return {
@@ -141,7 +141,8 @@ function DevilPinataScene() {
       rot: Math.random() * 360,
       item: burstItems[i % burstItems.length],
     };
-  });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }), []);
 
   return (
     <div style={{ position: "relative", width: "min(300px, 80vw)", height: "220px", marginBottom: "2rem", overflow: "hidden" }}>
