@@ -42,12 +42,18 @@ export async function sendEmail(opts: {
 }): Promise<void> {
   try {
     if (!process.env.RESEND_API_KEY) return;
-    await getResend().emails.send({
+    const { data, error } = await getResend().emails.send({
       from: FROM_ADDRESS,
       to: opts.to,
       subject: opts.subject,
       html: opts.html,
     });
+    if (error) {
+      throw new Error(`Resend send failed: ${(error as { name?: string }).name || "unknown"} — ${error.message || String(error)}`);
+    }
+    if (!data?.id) {
+      throw new Error("Resend send returned no id");
+    }
   } catch (err) {
     const errMsg = err instanceof Error ? err.message : String(err);
     await recordEmailFailure(opts.to, opts.subject, errMsg);
