@@ -133,8 +133,10 @@ export default async function sitemap({ id }: { id: number | Promise<string | un
         changeFrequency: "monthly" as const,
         priority: 0.6,
       })),
-      // Themes
-      ...["bachelor-party", "budget", "bucket-list"].map((t) => ({
+      // Themes — routes live at `/golf-trips/bachelor-party`,
+      // `/golf-trips/budget-trips`, `/golf-trips/bucket-list-trips`. The
+      // `-trips` suffix is required on budget/bucket-list (missing suffix 404s).
+      ...["bachelor-party", "budget-trips", "bucket-list-trips"].map((t) => ({
         url: `${base}/golf-trips/${t}`,
         lastModified: LAST_MODIFIED,
         changeFrequency: "monthly" as const,

@@ -51,6 +51,14 @@ const nextConfig: NextConfig = {
   rewrites: async () => [
     { source: "/sitemap.xml", destination: "/sitemap-index" },
   ],
+  redirects: async () => [
+    {
+      source: "/:path*",
+      has: [{ type: "host", value: "www.tourdefore.com" }],
+      destination: "https://tourdefore.com/:path*",
+      permanent: true,
+    },
+  ],
   headers: async () => [
     {
       source: "/:all*(svg|jpg|jpeg|png|webp|avif|gif|ico|mp4|mp3|woff|woff2)",
