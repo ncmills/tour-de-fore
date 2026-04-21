@@ -64,7 +64,7 @@ All file:line references are against `main` as of 2026-04-22 post-commit `f48ad4
 |---|---|---|---|---|---|
 | `budget` | 4 options | HIGH | scoring (gradient) | `query.ts:56-71,249-260` | Gradient scoring: 20 - distance/midBudget * 30. Legacy audit-engine values preserved for backwards compat. |
 | `budgetPriorities` | string[] (max 2) | MEDIUM | scoring multipliers | `query.ts:221-223,242,302-307,391-397` | "Best courses" 1.4x course score. "Best dining" 2x + $$$$ bonus. "Best lodging" +4/+3. **"Keep balanced" intentionally neutral** — wizard allows but scoring no-op. |
-| `specialRequests` | free text (max 1000) | PROMPT-ONLY | LLM steering only | `planner-prompt.ts:257` (not present — actually not even in user message) | **Candidate gap.** Currently not surfaced to the LLM user message. Exists in `WizardState`, validated, but scoring path and prompt path both ignore. Either wire to prompt or cut. |
+| `specialRequests` | free text (max 1000) | PROMPT-ONLY | LLM steering | `planner-prompt.ts:277` | Conditionally inserted into user message when non-empty (`"- Special requests: {value}"`). No scoring. Legit free-text escape hatch — keep as-is. |
 
 ### Step 7 — q-roster (auth + generate)
 
@@ -83,7 +83,7 @@ None after the 2026-04-22 dead-input wire-through.
 
 ### LOW candidates (remove or upgrade)
 - **`tripYear`** — display-only, never affects scoring. Could derive from `new Date().getFullYear()` or just drop. Low priority.
-- **`specialRequests`** — currently in `WizardState` + validated but **not surfaced to the LLM user message** (verify at `planner-prompt.ts buildUserMessage`). Either add a `SPECIAL REQUESTS: {value}` line to the prompt or cut the field. Leaving it orphaned is worst of both worlds.
+- **(`specialRequests` was flagged in an earlier draft — retracted: it IS surfaced at `planner-prompt.ts:277` when non-empty. Keep as-is.)**
 
 ## Step consolidation proposals (parity with MOH/BESTMAN 9→5 refactor)
 
@@ -132,7 +132,7 @@ Features MOH/BESTMAN have post-audit that TDF does not:
 ## Recommended action set
 
 **Do now (low risk, high value):**
-- [ ] Option C: drop `tripYear`, decide on `specialRequests`
+- [ ] Option C: drop `tripYear` (`specialRequests` retracted — verified present at `planner-prompt.ts:277`)
 - [ ] Gap #1: `canAdvance` gates per step
 - [ ] Gap #4: quota pill above wizard (exists in route, just needs client plumbing)
 - [ ] Gap #6: "Edit selections" back CTA on plan result
