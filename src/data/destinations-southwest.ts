@@ -567,7 +567,7 @@ export const southwestDestinations: Destination[] = [
         name: "Devil's Bridge Hike",
         type: "hiking",
         duration: "2-3 hours",
-        pricePerPerson: [0, 0],
+        pricePerPerson: [0, 10],
         groupFriendly: true,
         highlight:
           "Iconic natural sandstone arch hike — moderate difficulty, elite photo op",
@@ -1645,7 +1645,7 @@ export const southwestDestinations: Destination[] = [
         name: "Canyon Road Art Galleries",
         type: "winery",
         duration: "2-3 hours",
-        pricePerPerson: [0, 0],
+        pricePerPerson: [0, 10],
         groupFriendly: true,
         highlight:
           "Half-mile stretch of 100+ art galleries and studios — free to browse and unexpectedly fun as a group",
@@ -2795,7 +2795,7 @@ export const southwestDestinations: Destination[] = [
         name: "Arizona Hiking — Camelback Mountain",
         type: "hiking",
         duration: "2-3 hours",
-        pricePerPerson: [0, 0],
+        pricePerPerson: [0, 10],
         groupFriendly: true,
         highlight:
           "Iconic Phoenix summit hike with 360-degree Valley views — bring water and start early",
@@ -3083,7 +3083,7 @@ export const southwestDestinations: Destination[] = [
         name: "Petroglyph National Monument",
         type: "hiking",
         duration: "2-3 hours",
-        pricePerPerson: [0, 0],
+        pricePerPerson: [0, 10],
         groupFriendly: true,
         highlight:
           "Volcanic escarpment with 24,000+ ancient petroglyphs and easy mesa-top trails",
@@ -3345,7 +3345,7 @@ export const southwestDestinations: Destination[] = [
         name: "London Bridge Walking Tour",
         type: "hiking",
         duration: "1-2 hours",
-        pricePerPerson: [0, 0],
+        pricePerPerson: [0, 10],
         groupFriendly: true,
         highlight:
           "Walk across the actual 1830s London Bridge relocated from England — weird and cool",
@@ -3827,7 +3827,7 @@ export const southwestDestinations: Destination[] = [
         name: "Mogollon Rim Overlook Hike",
         type: "hiking",
         duration: "2-3 hours",
-        pricePerPerson: [0, 0],
+        pricePerPerson: [0, 10],
         groupFriendly: true,
         highlight:
           "Walk to the edge of the 2,000-foot Mogollon Rim for jaw-dropping views across the Tonto Basin",

@@ -46,6 +46,73 @@ interface FilterOptions {
   lodgingPref?: string;
   budgetPriorities?: string[];
   mustPlayCourses?: string;
+  // Research-driven scoring inputs (formerly prompt-only, now wired)
+  skillMix?: string;
+  ageRange?: string;
+  walkingOrRiding?: string;
+}
+
+/**
+ * Precomputed per-destination signals, computed once per candidate to prevent
+ * double-counting drift when 10+ scoring factors read the same underlying
+ * fields. Pattern ported from BESTMAN v2.1 (`DestinationSignals`).
+ */
+interface DestinationSignals {
+  walkableBars: number;
+  lateNightBars: number;
+  walkableCourses: number;
+  steakhouseCount: number;
+  casualDiningCount: number;
+  upscaleDiningCount: number;
+  diningStyleCount: number;
+  tierSpread: number; // # of distinct CourseTier values — diversity proxy for mixed-skill groups
+  hasPoolOrTub: boolean;
+  hasResortLodging: boolean;
+  hasRentalLodging: boolean;
+  fitsGroup: boolean;
+  uniqueActivityTypes: number;
+  highIntensityRatio: number; // fraction of activities that are high-adrenaline (for ageRange)
+  arrivalDayActivities: number;
+  scenicSpaCount: number;
+}
+
+function computeSignals(d: Destination, groupSize: number): DestinationSignals {
+  const gs = Math.max(groupSize, 2);
+  const highIntensityTypes = new Set([
+    "atv", "rafting", "zipline", "mountain-biking", "skeet", "shooting", "paintball",
+  ]);
+  const scenicSpaTypes = new Set(["spa", "winery", "distillery", "horseback", "hiking"]);
+  const upscaleRanges = new Set(["$$$", "$$$$"]);
+  const casualRanges = new Set(["$", "$$"]);
+  const resortLodgingTypes = new Set(["resort-house", "lodge", "ranch"]);
+  const rentalLodgingTypes = new Set(["house", "cabin", "lakehouse", "resort-house"]);
+
+  const highIntensityCount = d.activities.filter((a) => highIntensityTypes.has(a.type)).length;
+
+  return {
+    walkableBars: d.bars.filter((b) => b.walkableFromDowntown).length,
+    lateNightBars: d.bars.filter((b) => b.lateNight).length,
+    walkableCourses: d.courses.filter((c) => c.walkable).length,
+    steakhouseCount: d.dining.filter((r) => r.style === "steakhouse").length,
+    casualDiningCount: d.dining.filter((r) => casualRanges.has(r.priceRange)).length,
+    upscaleDiningCount: d.dining.filter((r) => upscaleRanges.has(r.priceRange)).length,
+    diningStyleCount: new Set(d.dining.map((r) => r.style)).size,
+    tierSpread: new Set(d.courses.map((c) => c.tier)).size,
+    hasPoolOrTub: d.lodging.some((l) =>
+      l.amenities.some((a) => /pool|hot tub|jacuzzi/i.test(a))
+    ),
+    hasResortLodging: d.lodging.some((l) => resortLodgingTypes.has(l.type)),
+    hasRentalLodging: d.lodging.some((l) => rentalLodgingTypes.has(l.type)),
+    fitsGroup: d.lodging.some((l) => gs <= l.sleeps[1]),
+    uniqueActivityTypes: new Set(d.activities.map((a) => a.type)).size,
+    highIntensityRatio: d.activities.length > 0
+      ? highIntensityCount / d.activities.length
+      : 0,
+    arrivalDayActivities: d.activities.filter(
+      (a) => a.bestFor === "arrival day" && a.groupFriendly
+    ).length,
+    scenicSpaCount: d.activities.filter((a) => scenicSpaTypes.has(a.type)).length,
+  };
 }
 
 function roundsPerDayMultiplier(roundsPerDay?: string): number {
@@ -125,10 +192,11 @@ export function filterDestinations(options: FilterOptions): Destination[] {
     }
   }
 
-  // Filter by season
-  if (options.season) {
-    results = results.filter((d) => d.bestSeasons.includes(options.season!));
-  }
+  // Season: intentionally NOT a hard filter. Off-season cities stay visible;
+  // the scoring pass deprioritizes them via a soft penalty so the LLM still
+  // sees them if the primary region is thin. Hard-filtering here hid valid
+  // picks (MOH caught the same bug 2026-04-11 — "Miami in January" was
+  // silently returning zero).
 
   // Filter by group size (lodging can accommodate)
   if (options.groupSize) {
@@ -215,6 +283,7 @@ interface ScoreResult {
 function scoreDestination(d: Destination, options: FilterOptions): ScoreResult {
   const budgetRange = budgetToRange(options.budget || "");
   const desiredTiers = courseQualityToTiers(options.courseQuality || "");
+  const sig = computeSignals(d, options.groupSize || 12);
   let score = 0;
   const reasons: Array<{ pts: number; text: string }> = [];
 
@@ -263,45 +332,60 @@ function scoreDestination(d: Destination, options: FilterOptions): ScoreResult {
   if (d.courses.length >= 3) score += 8;
 
   // ── Bar/nightlife — adjusted by nightlife preference ──
-  const walkableBars = d.bars.filter((b) => b.walkableFromDowntown).length;
-  const lateNightBars = d.bars.filter((b) => b.lateNight).length;
   const nightlifePref = options.nightlife || "";
 
   if (nightlifePref === "In bed by 10") {
     // Zero bar scoring; bonus for lodging amenities instead
-    const hasPoolOrTub = d.lodging.some((l) =>
-      l.amenities.some((a) => /pool|hot tub|jacuzzi/i.test(a))
-    );
-    if (hasPoolOrTub) {
+    if (sig.hasPoolOrTub) {
       score += 5;
       reasons.push({ pts: 5, text: "Great lodging with pool/hot tub for relaxing" });
     }
   } else if (nightlifePref === "Going out every night") {
-    // Boosted bar scoring
-    score += Math.min(walkableBars, 3) * 5;
-    score += Math.min(lateNightBars, 2) * 4;
-    if (walkableBars >= 3) {
+    score += Math.min(sig.walkableBars, 3) * 5;
+    score += Math.min(sig.lateNightBars, 2) * 4;
+    if (sig.walkableBars >= 3) {
       score += 5;
-      reasons.push({ pts: 28, text: `Active nightlife scene with ${walkableBars} walkable bars` });
+      reasons.push({ pts: 28, text: `Active nightlife scene with ${sig.walkableBars} walkable bars` });
     }
   } else {
-    // Default bar scoring (Couple nights / Point us to a bar)
-    score += Math.min(walkableBars, 3) * 4;
-    score += Math.min(lateNightBars, 2) * 3;
-    if (walkableBars >= 2) {
-      reasons.push({ pts: walkableBars * 4, text: `${walkableBars} walkable bars for after-dinner drinks` });
+    score += Math.min(sig.walkableBars, 3) * 4;
+    score += Math.min(sig.lateNightBars, 2) * 3;
+    if (sig.walkableBars >= 2) {
+      reasons.push({ pts: sig.walkableBars * 4, text: `${sig.walkableBars} walkable bars for after-dinner drinks` });
     }
   }
 
-  // ── Dining options — weighted higher for dining-focused trips ──
+  // ── Dining options — weighted by dining preference + variety ──
   let diningScore = Math.min(d.dining.length, 4) * 3;
-  // Bonus for variety: steakhouse + at least 2 other styles
-  const hasSteak = d.dining.some((r) => r.style === "steakhouse");
-  const diningStyles = new Set(d.dining.map((r) => r.style));
-  if (hasSteak && diningStyles.size >= 3) diningScore += 5;
+  if (sig.steakhouseCount >= 1 && sig.diningStyleCount >= 3) diningScore += 5;
+
+  // Wire the `dining` wizard input — previously only "Private chef" scored.
+  const diningPref = options.dining || "";
+  if (diningPref === "Steakhouses") {
+    // TDF tradition — final-night steakhouse. Reward density.
+    if (sig.steakhouseCount >= 2) {
+      diningScore += 10;
+      reasons.push({ pts: 10, text: `${sig.steakhouseCount} steakhouses — final-night choice available` });
+    } else if (sig.steakhouseCount === 1) {
+      diningScore += 6;
+    }
+  } else if (diningPref === "Casual & local") {
+    if (sig.casualDiningCount >= 5) {
+      diningScore += 6;
+      reasons.push({ pts: 6, text: `Deep casual/local scene (${sig.casualDiningCount} spots)` });
+    } else if (sig.casualDiningCount >= 3) {
+      diningScore += 3;
+    }
+  } else if (diningPref === "Mix") {
+    if (sig.diningStyleCount >= 4) {
+      diningScore += 5;
+      reasons.push({ pts: 5, text: `${sig.diningStyleCount} dining styles for the mix` });
+    }
+  }
+
   if (hasBudgetPriority("Best dining")) {
     diningScore = Math.round(diningScore * 2);
-    if (d.dining.some((r) => r.priceRange === "$$$$")) {
+    if (sig.upscaleDiningCount >= 1) {
       diningScore += 6;
       reasons.push({ pts: diningScore, text: "Top-tier dining options available" });
     }
@@ -316,21 +400,20 @@ function scoreDestination(d: Destination, options: FilterOptions): ScoreResult {
   else if (d.nearestAirport.driveMinutes <= 60) score += 3;
 
   // ── Arrival day activities (TDF tradition — boosted) ──
-  const arrivalActivities = d.activities.filter((a) =>
-    a.bestFor === "arrival day" && a.groupFriendly
-  );
-  if (arrivalActivities.length > 0) {
+  if (sig.arrivalDayActivities > 0) {
     score += 8;
-    if (arrivalActivities.length >= 2) {
+    if (sig.arrivalDayActivities >= 2) {
       score += 3;
-      const names = arrivalActivities.slice(0, 2).map((a) => a.name);
+      const names = d.activities
+        .filter((a) => a.bestFor === "arrival day" && a.groupFriendly)
+        .slice(0, 2)
+        .map((a) => a.name);
       reasons.push({ pts: 11, text: `Great arrival-day options: ${names.join(", ")}` });
     }
   }
 
   // ── Activity type diversity ──
-  const uniqueActivityTypes = new Set(d.activities.map((a) => a.type));
-  score += Math.min(uniqueActivityTypes.size, 4) * 2;
+  score += Math.min(sig.uniqueActivityTypes, 4) * 2;
 
   // ── Activity match bonus (capped at 3) ──
   if (options.activities && options.activities.length > 0) {
@@ -379,6 +462,12 @@ function scoreDestination(d: Destination, options: FilterOptions): ScoreResult {
     }
   } else if (options.lodgingPref === "Split houses") {
     if (d.lodging.length >= 2) score += 3;
+  } else if (options.lodgingPref === "Hotel / Resort") {
+    if (sig.hasResortLodging) {
+      score += 5;
+      reasons.push({ pts: 5, text: "Resort-style lodging available" });
+    }
+    if (d.population === "medium") score += 3; // bigger cities = real hotel markets
   }
 
   // ── Best lodging priority ──
@@ -399,11 +488,60 @@ function scoreDestination(d: Destination, options: FilterOptions): ScoreResult {
   if (d.activities.length === 0) score -= 8;
   if (d.partyBuses.length === 0 && (options.groupSize || 12) >= 8) score -= 4;
 
-  // ── Popularity bonus — requires minimum impressions ──
+  // ── Season soft re-rank (replaces prior hard filter) ──
+  if (options.season && !d.bestSeasons.includes(options.season)) {
+    score -= 8;
+  }
+
+  // ── skillMix wiring (research: course fit to group skill drives trip enjoyment) ──
+  const skill = options.skillMix || "";
+  if (skill === "Mostly beginners") {
+    // Penalize all-bucket-list destinations — beginners on TPC = bad trip.
+    const bucketListHeavy = d.courses.filter((c) => c.tier === "bucket-list").length;
+    const solidBudget = d.courses.filter((c) => c.tier === "solid" || c.tier === "budget").length;
+    if (bucketListHeavy >= d.courses.length / 2) score -= 6;
+    if (solidBudget >= 2) score += 4;
+  } else if (skill === "Wide range") {
+    if (sig.tierSpread >= 3) {
+      score += 6;
+      reasons.push({ pts: 6, text: "Mixed course tiers match wide skill range" });
+    }
+  } else if (skill === "Here for the vibes") {
+    // Nightlife + group-friendly activities matter more than course tier fit.
+    if (sig.walkableBars >= 2) score += 4;
+    if (sig.arrivalDayActivities >= 1) score += 3;
+  }
+
+  // ── ageRange wiring ──
+  const age = options.ageRange || "";
+  if (age === "20s") {
+    if (sig.lateNightBars >= 1) score += 3;
+    score += Math.min(sig.walkableBars, 2) * 2;
+  } else if (age === "40s") {
+    if (sig.scenicSpaCount >= 2) score += 4;
+    if (sig.lateNightBars >= 4) score -= 2; // party-district overkill
+  } else if (age === "Mixed") {
+    if (sig.steakhouseCount >= 2 && sig.diningStyleCount >= 3) score += 3;
+  }
+
+  // ── walkingOrRiding wiring ──
+  if (options.walkingOrRiding === "Walking") {
+    score += Math.min(sig.walkableCourses, 3) * 4;
+    if (sig.walkableCourses >= 2) {
+      reasons.push({
+        pts: sig.walkableCourses * 4,
+        text: `${sig.walkableCourses} walkable courses for the walking crew`,
+      });
+    }
+  }
+
+  // ── Popularity bonus — requires minimum impressions, CAPPED at +10 ──
+  // Previously uncapped (popularity * 10 could swamp other signals, per
+  // BESTMAN v2.1 rule: no single factor should dominate the ranking).
   const popularity = _popularityScores.get(d.id) || 0;
   const viewCount = _viewCounts.get(d.id) || 0;
   if (viewCount >= 10) {
-    score += Math.round(popularity * 10);
+    score += Math.min(Math.round(popularity * 10), 10);
   }
 
   // ── Regional diversity bonus (when no region specified) ──

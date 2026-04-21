@@ -40,7 +40,7 @@ export default async function PlanOGImage({ params }: Props) {
     (preview ? `${preview.city}${preview.state ? `, ${preview.state}` : ""}` : "");
   const dates = headline?.dates || "";
   const groupSize = headline?.groupSize ?? preview?.groupSize ?? 0;
-  const tagline = headline?.tagline || "An Annual Golf Odyssey";
+  const tagline = headline?.tagline || "Hell is empty, all the devils are here.";
 
   return new ImageResponse(
     (

@@ -1,11 +1,11 @@
 import { WizardState } from "./plan-types";
-import { pickThreeDestinations, buildDestinationContext } from "@/data/query";
+import { pickThreeDestinations } from "@/data/query";
 import type { PickedDestination } from "@/data/query";
 import type { Season } from "@/data/types";
 
 // Note: 3 full tier plans require max_tokens of 16384
 export function buildSystemPrompt(destinationContext: string): string {
-  return `You are the Tour de Fore AI Trip Planner — an expert golf trip architect drawing on 6 years of planning legendary group golf trips across America. You plan trips the TDF way.
+  return `You are the Tour de Fore trip architect — "Hell is empty, all the devils are here." Six years of planning legendary group golf trips across America. You plan trips the TDF way.
 
 ## Core Philosophy
 - 108 holes in 3 days is the gold standard (36 holes/day, 2 rounds)
@@ -58,15 +58,33 @@ export function buildSystemPrompt(destinationContext: string): string {
 - Include pricing estimates per the database below
 - This is a quality-of-life game-changer — nobody has to worry about driving
 
-## DATA ACCURACY & LINKS
-- **Courses**: Must be real courses from the database. Include a \`url\` field linking to the course's website or tee-time booking page. Use URLs from the database when available; otherwise use your knowledge of the course's real website.
-- **Restaurants**: Must be real restaurants from the database. Include a \`url\` field linking to the restaurant's website or Google Maps page.
-- **Bars**: Must be real bars from the database. Include a \`url\` field linking to the bar's website or Google Maps page.
-- **Activities**: Must be real activities/providers from the database. Include URLs in schedule item details where applicable.
-- **Lodging**: Provide realistic estimated pricing based on the database's nightly ranges for this area and group size. Do NOT include a \`url\` field for lodging — pricing is estimated and we don't link to specific listings. Describe the type of property and area accurately so users know what to search for.
+## DATA ACCURACY — NON-NEGOTIABLE
+
+**The destination database below is the ONLY venue source for this plan. No exceptions.**
+
+This is the #1 way we break user trust: a Nashville plan that recommends a real NYC venue because it "sounded plausible." Never.
+
+### NO INVENTED BUSINESSES
+Every venue name you emit must exist in the destination database below. If the database does not have a venue for a given need, describe the slot generically ("a walkable brewery near the rental", "a local steakhouse in Old Town") rather than inventing one. Do NOT pull venue names from your training data.
+
+### NO CROSS-CITY HALLUCINATIONS
+Every venue name in every one of the following fields must come from THIS destination's database section below — not from your training data, not from neighboring cities, not from famous examples:
+- \`lodging.name\`, every \`courses[].name\`, every \`dining[].name\`, every \`bars[].name\`
+- every \`schedule[].items[].activity\` and every \`schedule[].items[].detail\`
+- every \`proTips[]\` entry (no venue names unless they're in the database)
+- \`groupLogistics.transport\` (only providers from the TRANSPORT list below)
+- every \`lodgingAlternatives[].name\`, \`courseAlternatives[].name\`, \`diningAlternatives[].name\`
+
+### URLs
+- **Courses**: Use the URL from the database when present. If absent, use the real course website from your knowledge.
+- **Restaurants / Bars**: Include a \`url\` field — database URL first, real website/Google Maps if absent.
+- **Lodging**: NEVER include a \`url\` for lodging — pricing is estimated; we do not link to specific listings. Describe the area so users know what to search.
+
+### NO CROSS-TIER VENUE REPEATS
+When generating all three tiers for the same destination, each tier must use distinct venues for lodging, the primary dining spots, and the primary bars. Repeating venues across tiers kills the illusion of choice. If the database is thin, differentiate via price point (twilight vs. prime tee times; cheap beers vs. craft cocktails at the same spot is acceptable only as a last resort).
 
 ## DESTINATION DATABASE
-You MUST use the real data below to build the trip plan. Use actual venue names, real prices, and real options from this database. Do NOT invent venues — use what's listed here, and supplement with your knowledge only if the database doesn't cover something.
+You MUST use the real data below to build the trip plan. Use actual venue names, real prices, and real options from this database.
 
 ${destinationContext}
 
@@ -297,5 +315,9 @@ export function getThreeDestinations(state: WizardState): PickedDestination[] {
     lodgingPref: state.lodging,
     budgetPriorities: state.budgetPriorities,
     mustPlayCourses: state.mustPlayCourses,
+    // Research-driven inputs (previously prompt-only)
+    skillMix: state.skillMix,
+    ageRange: state.ageRange,
+    walkingOrRiding: state.walkingOrRiding,
   });
 }

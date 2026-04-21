@@ -16,7 +16,7 @@ export interface NetworkSite {
 }
 
 export const NETWORK_SITES: NetworkSite[] = [
-  { domain: "tourdefore.com", label: "Tour de Fore", tagline: "Group golf trip planner" },
+  { domain: "tourdefore.com", label: "Tour de Fore", tagline: "Hell is empty, all the devils are here." },
   { domain: "whatpeptidesdo.com", label: "WPD", tagline: "Peptides, simplified" },
   { domain: "doppelwriter.com", label: "DoppelWriter", tagline: "AI that writes in your voice" },
   { domain: "bestmanhq.com", label: "BESTMAN HQ", tagline: "Bachelor party planner" },

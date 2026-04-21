@@ -185,7 +185,7 @@ export default function GolfTripsIndex() {
         {/* Crawlable intro */}
         <div style={{ marginTop: "4rem", borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "2rem" }}>
           <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.85rem", lineHeight: 1.8, maxWidth: 700 }}>
-            Tour de Fore&apos;s AI-powered golf trip planner covers 133 destinations across America. Browse courses, lodging, dining, nightlife, and activities — then build a custom itinerary for your crew. Plan your next group golf getaway in minutes.
+            Tour de Fore covers 133 destinations across America — every course, every lodging option, every bar, every bus. Browse, then build a custom itinerary for your crew. Hell is empty, all the devils are here.
           </p>
         </div>
       </div>

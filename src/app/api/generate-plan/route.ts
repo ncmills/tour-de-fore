@@ -139,20 +139,28 @@ async function generateSingleTier(
   priceTargets?: PriceTargets,
   attempt = 1
 ): Promise<GeneratedPlan> {
-  // On final attempt: increase tokens and drop temperature for more deterministic output
+  // On final attempt: more tokens + lower temperature for deterministic output.
+  // Bumped per MOH audit — 8k/10k was truncating. 11k/14k gives 30%+ headroom.
   const isLastAttempt = attempt >= 3;
   const message = await client.messages.create({
     model: "claude-haiku-4-5-20251001",
-    max_tokens: isLastAttempt ? 10000 : 8000,
+    max_tokens: isLastAttempt ? 14000 : 11000,
     temperature: isLastAttempt ? 0.1 : 0.3,
-    system: buildSystemPrompt(destinationContext),
+    // Structured system block with ephemeral cache_control — 5-min TTL, ~90%
+    // discount on cache-hit input tokens. Parallel tiers share the system
+    // prompt so tiers 2+3 are cache hits.
+    system: [
+      { type: "text", text: buildSystemPrompt(destinationContext), cache_control: { type: "ephemeral" } },
+    ],
     messages: [
       { role: "user", content: buildUserMessage(state, tier, priceTargets) },
       ...(attempt > 1 ? [{ role: "assistant" as const, content: "{" }] : []),
     ],
   });
 
-  console.log(`Claude [${tier}] attempt=${attempt}: model=${message.model} in=${message.usage.input_tokens} out=${message.usage.output_tokens} stop=${message.stop_reason}`);
+  const cacheRead = (message.usage as { cache_read_input_tokens?: number }).cache_read_input_tokens || 0;
+  const cacheWrite = (message.usage as { cache_creation_input_tokens?: number }).cache_creation_input_tokens || 0;
+  console.log(`Claude [${tier}] attempt=${attempt}: model=${message.model} in=${message.usage.input_tokens} out=${message.usage.output_tokens} stop=${message.stop_reason} cacheR=${cacheRead} cacheW=${cacheWrite}`);
 
   const textBlock = message.content.find((b) => b.type === "text");
   if (!textBlock || textBlock.type !== "text") throw new Error(`No text response for ${tier}`);
@@ -218,6 +226,21 @@ async function generateSingleTier(
   throw new Error(`Plan generation failed for ${tier} tier after ${attempt} attempts`);
 }
 
+/**
+ * Validate that a parsed plan has the minimum content needed to render.
+ * Any tier that fails this check triggers truncation-detection fallthrough.
+ */
+function planLooksComplete(p: GeneratedPlan, expectedDays: number): boolean {
+  return (
+    !!p.lodging &&
+    Array.isArray(p.courses) && p.courses.length >= 2 &&
+    Array.isArray(p.dining) && p.dining.length >= 3 &&
+    Array.isArray(p.bars) && p.bars.length >= 2 &&
+    Array.isArray(p.schedule) && p.schedule.length === expectedDays &&
+    !!p.estimatedBudget
+  );
+}
+
 async function generateAllTiersInOne(
   client: Anthropic,
   state: Parameters<typeof buildUserMessage>[0],
@@ -227,18 +250,26 @@ async function generateAllTiersInOne(
 ): Promise<ThreePlanResult | null> {
   const isLastAttempt = attempt >= 2;
   try {
-    const message = await client.messages.create({
+    // Use streaming API — non-streaming `.create()` silently throws when
+    // max_tokens ≥ 21333 (MOH audit 2026-04-11 caught this). Streaming also
+    // bypasses the 10-min timeout ceiling. Semantically identical output.
+    const stream = client.messages.stream({
       model: "claude-haiku-4-5-20251001",
-      max_tokens: isLastAttempt ? 20000 : 16000,
+      max_tokens: isLastAttempt ? 24000 : 20000,
       temperature: isLastAttempt ? 0.1 : 0.3,
-      system: buildSystemPrompt(destinationContext),
+      system: [
+        { type: "text", text: buildSystemPrompt(destinationContext), cache_control: { type: "ephemeral" } },
+      ],
       messages: [
         { role: "user", content: buildUserMessage(state, "allTiers", priceTargets) },
         ...(attempt > 1 ? [{ role: "assistant" as const, content: "[" }] : []),
       ],
     });
+    const message = await stream.finalMessage();
 
-    console.log(`Claude [allTiers] attempt=${attempt}: model=${message.model} in=${message.usage.input_tokens} out=${message.usage.output_tokens} stop=${message.stop_reason}`);
+    const cacheRead = (message.usage as { cache_read_input_tokens?: number }).cache_read_input_tokens || 0;
+    const cacheWrite = (message.usage as { cache_creation_input_tokens?: number }).cache_creation_input_tokens || 0;
+    console.log(`Claude [allTiers stream] attempt=${attempt}: model=${message.model} in=${message.usage.input_tokens} out=${message.usage.output_tokens} stop=${message.stop_reason} cacheR=${cacheRead} cacheW=${cacheWrite}`);
 
     const textBlock = message.content.find((b) => b.type === "text");
     if (!textBlock || textBlock.type !== "text") return null;
@@ -260,7 +291,29 @@ async function generateAllTiersInOne(
         numberOfDays: p.numberOfDays || p.schedule?.length || 3,
         groupSize: p.groupSize || state.groupSize || 12,
       });
-      return { imp: sanitize(parsed[0] as GeneratedPlan), devil: sanitize(parsed[1] as GeneratedPlan), demonKing: sanitize(parsed[2] as GeneratedPlan) };
+      const imp = sanitize(parsed[0] as GeneratedPlan);
+      const devil = sanitize(parsed[1] as GeneratedPlan);
+      const demonKing = sanitize(parsed[2] as GeneratedPlan);
+
+      // Truncation-detection fallthrough (MOH audit 2026-04-11): sanitize()
+      // can silently fill defaults when max_tokens truncates tail tiers.
+      // Validate every tier has minimum content before trusting the result.
+      const expectedDays = state.numberOfDays || 3;
+      const thinTiers = [
+        !planLooksComplete(imp, expectedDays) && "imp",
+        !planLooksComplete(devil, expectedDays) && "devil",
+        !planLooksComplete(demonKing, expectedDays) && "demonKing",
+      ].filter(Boolean);
+
+      if (thinTiers.length > 0) {
+        console.warn(`allTiers: thin tiers detected [${thinTiers.join(", ")}] — falling through`);
+        if (attempt < 2) {
+          return generateAllTiersInOne(client, state, destinationContext, priceTargets, attempt + 1);
+        }
+        return null; // fall through to per-tier path
+      }
+
+      return { imp, devil, demonKing };
     }
 
     if (attempt < 2) {
@@ -280,18 +333,24 @@ async function generatePlansForDestination(
   destinationContext: string,
   priceTargets?: PriceTargets
 ): Promise<ThreePlanResult> {
-  // Try generating all 3 tiers in a single call (saves ~60% input tokens)
-  const combined = await generateAllTiersInOne(client, state, destinationContext, priceTargets);
-  if (combined) return combined;
-
-  // Fallback: generate each tier individually in parallel
-  console.log("Falling back to individual tier generation...");
-  const [imp, devil, demonKing] = await Promise.all([
-    generateSingleTier(client, state, destinationContext, "imp", priceTargets),
-    generateSingleTier(client, state, destinationContext, "devil", priceTargets),
-    generateSingleTier(client, state, destinationContext, "demonKing", priceTargets),
-  ]);
-  return { imp, devil, demonKing };
+  // Parallel tiers is now the PRIMARY path — three 11k calls in parallel beat
+  // one 20k call for wall-clock latency (~60-90s vs ~3min) and truncate less
+  // often. The all-tiers batch is kept as the fallback for the rare case
+  // where parallel hits Claude concurrency limits. Same flip MOH made on
+  // 2026-04-21 (commit 20741c6).
+  try {
+    const [imp, devil, demonKing] = await Promise.all([
+      generateSingleTier(client, state, destinationContext, "imp", priceTargets),
+      generateSingleTier(client, state, destinationContext, "devil", priceTargets),
+      generateSingleTier(client, state, destinationContext, "demonKing", priceTargets),
+    ]);
+    return { imp, devil, demonKing };
+  } catch (err) {
+    console.warn("Parallel tiers failed, falling back to batched allTiers:", err);
+    const combined = await generateAllTiersInOne(client, state, destinationContext, priceTargets);
+    if (combined) return combined;
+    throw err;
+  }
 }
 
 export async function POST(req: NextRequest) {
@@ -308,6 +367,15 @@ export async function POST(req: NextRequest) {
       { status: 400 }
     );
   }
+
+  // Defense-in-depth array coercion (MOH audit 285ea23 — any request missing
+  // an array-shaped field threw `TypeError: Cannot read properties of
+  // undefined (reading 'length')` synchronously inside buildUserMessage).
+  // validateWizardState already handles this but scripts / legacy clients
+  // may bypass it — coerce here as a second line of defense.
+  state.activities = Array.isArray(state.activities) ? state.activities : [];
+  state.budgetPriorities = Array.isArray(state.budgetPriorities) ? state.budgetPriorities : [];
+  state.attendees = Array.isArray(state.attendees) ? state.attendees : [];
 
   // If login mode and no name, fetch from stored profile
   if (!state.organizerName && state.organizerEmail) {
@@ -382,8 +450,18 @@ export async function POST(req: NextRequest) {
   const encoder = new TextEncoder();
   const stream = new ReadableStream({
     async start(controller) {
+      // NDJSON terminalSent guard (MOH 9e26cea — stream ending without a
+      // `done` or `error` event silently flipped the client back to the
+      // wizard with no explanation). Every exit path must emit exactly one
+      // terminal event; the finally block below fills in if none fired.
+      let terminalSent = false;
       const send = (data: Record<string, unknown>) => {
-        controller.enqueue(encoder.encode(JSON.stringify(data) + "\n"));
+        try {
+          if (data.type === "done" || data.type === "error") terminalSent = true;
+          controller.enqueue(encoder.encode(JSON.stringify(data) + "\n"));
+        } catch {
+          // Controller already closed — swallow; next iteration will no-op.
+        }
       };
 
       // Send keepalive pings every 5s to prevent proxy/CDN timeouts
@@ -502,6 +580,20 @@ export async function POST(req: NextRequest) {
         send({ type: "error", error: "Failed to generate plan. Please try again.", debug: `${errName}: ${errMsg}` });
       } finally {
         clearInterval(keepalive);
+        // Terminal-event guarantee — if nothing fired (unexpected crash,
+        // Vercel function timeout kill, uncaught error past the catch
+        // boundary), emit a final error so the client doesn't silently
+        // revert to the wizard with no signal.
+        if (!terminalSent) {
+          try {
+            controller.enqueue(encoder.encode(JSON.stringify({
+              type: "error",
+              error: "Plan generation timed out or was interrupted. Try again.",
+            }) + "\n"));
+          } catch {
+            // Controller already closed — nothing to do.
+          }
+        }
         controller.close();
       }
     },

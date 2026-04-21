@@ -618,7 +618,7 @@ export const pacificNWDestinations: Destination[] = [
         name: "Bandon Dunes Punchbowl",
         type: "hiking",
         duration: "1-2 hours",
-        pricePerPerson: [0, 0],
+        pricePerPerson: [0, 10],
         groupFriendly: true,
         highlight:
           "Free par-3 putting course on-resort — perfect for friendly competitions",
@@ -4679,7 +4679,7 @@ export const pacificNWDestinations: Destination[] = [
         name: "Point Defiance Park (Tacoma)",
         type: "hiking",
         duration: "2-3 hours",
-        pricePerPerson: [0, 0],
+        pricePerPerson: [0, 10],
         groupFriendly: true,
         highlight:
           "760-acre park 15 min away with trails, a zoo, and stunning Puget Sound views",

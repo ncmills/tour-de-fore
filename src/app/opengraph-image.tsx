@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Tour de Fore — AI Golf Trip Planner";
+export const alt = "Tour de Fore — Hell is empty, all the devils are here.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -68,15 +68,18 @@ export default async function Image() {
           TOUR DE FORE
         </div>
 
-        {/* Subtitle */}
+        {/* Subtitle — the line */}
         <div
           style={{
-            fontSize: 28,
-            color: "rgba(255,255,255,0.7)",
-            letterSpacing: "0.12em",
+            fontSize: 26,
+            color: "rgba(255,255,255,0.78)",
+            letterSpacing: "0.08em",
+            fontStyle: "italic",
+            textAlign: "center",
+            maxWidth: 900,
           }}
         >
-          AI-POWERED GOLF TRIP PLANNER
+          HELL IS EMPTY, ALL THE DEVILS ARE HERE.
         </div>
 
         {/* Tagline */}

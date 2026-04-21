@@ -57,7 +57,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = destination ? `${tripName} · ${destination}` : tripName;
   const description = headline
     ? `The full itinerary — courses, lodging, day-by-day schedule, and group logistics for ${destination || "your trip"}. Built with Tour de Fore.`
-    : "Your AI-planned golf trip — courses, lodging, day-by-day schedule, and group logistics. Built with Tour de Fore.";
+    : "Hell is empty, all the devils are here. Courses, lodging, day-by-day schedule, and group logistics. Built with Tour de Fore.";
   const ogUrl = `https://tourdefore.com/plan/result/${id}`;
   const ogImage = `https://tourdefore.com/plan/result/${id}/opengraph-image`;
 

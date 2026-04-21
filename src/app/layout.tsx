@@ -104,9 +104,9 @@ const blakaHollow = Blaka_Hollow({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://tourdefore.com"),
-  title: "Tour de Fore | An Annual Golf Odyssey",
+  title: "Tour de Fore | Hell is empty, all the devils are here.",
   description:
-    "Six years of fairways, friendships, and questionable handicaps. The official home of Tour de Fore.",
+    "Hell is empty, all the devils are here. Six years of fairways, friendships, and questionable handicaps. The official home of Tour de Fore.",
   robots: {
     index: true,
     follow: true,
@@ -124,7 +124,7 @@ export const metadata: Metadata = {
   openGraph: {
     siteName: "Tour de Fore",
     title: "Tour de Fore",
-    description: "An Annual Golf Odyssey",
+    description: "Hell is empty, all the devils are here.",
     type: "website",
     url: "https://tourdefore.com",
     images: [
@@ -170,7 +170,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Organization",
               name: "Tour de Fore",
-              description: "An Annual Golf Odyssey — six years of fairways, friendships, and questionable handicaps.",
+              description: "Hell is empty, all the devils are here. Six years of fairways, friendships, and questionable handicaps.",
               url: "https://tourdefore.com",
               foundingDate: "2021",
               logo: {

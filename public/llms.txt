@@ -1,11 +1,11 @@
 # Tour de Fore
 
-> AI golf trip planner with 1,400+ destination guides covering bachelor parties, buddies trips, and golf vacations across the US.
+> Hell is empty, all the devils are here. 1,400+ destination guides covering bachelor parties, buddies trips, and golf vacations across the US.
 
-Tour de Fore generates personalized golf trip itineraries with real courses, lodging, dining, and budgets. The free AI engine collects detailed inputs (group size, skill level, budget, vibe, party type) and produces three-tier plans. Includes a pro shop with custom golf apparel via Printful dropship.
+Tour de Fore generates personalized golf trip itineraries with real courses, lodging, dining, and budgets. The free planner collects detailed inputs (group size, skill level, budget, vibe, party type) and produces three-tier plans. Includes a pro shop with custom golf apparel via Printful dropship.
 
 ## Key pages
-- [Plan a Trip](https://tourdefore.com/plan): The free AI golf trip planner
+- [Plan a Trip](https://tourdefore.com/plan): The free trip planner
 - [Golf Trips](https://tourdefore.com/golf-trips): Full destination directory
 - [Pro Shop](https://tourdefore.com/shop): Custom golf apparel
 - [Concierge](https://tourdefore.com/concierge): Full-service trip planning
