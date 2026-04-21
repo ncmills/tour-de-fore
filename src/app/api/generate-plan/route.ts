@@ -28,6 +28,7 @@ import { validateWizardState } from "@/lib/validate";
 import { addPlanToUser } from "@/lib/auth";
 import { getRedis } from "@/lib/redis";
 import { UNLIMITED_EMAILS, getMonthKey, getNextMonthReset } from "@/lib/shared-constants";
+import { logSignalServer } from "@/lib/signals";
 
 function tryParseJSON(jsonStr: string): unknown | null {
   // Strip markdown fences
@@ -554,6 +555,35 @@ export async function POST(req: NextRequest) {
         };
 
         await storePlan(storedPlan);
+
+        // Iterative-engine signal: record wizard inputs + selected destinations
+        // (PII stripped) for the cross-site learning loop. Fire-and-forget.
+        logSignalServer(req, "plan_inputs", {
+          brand: "tdf",
+          planId,
+          destinationType: state.destinationType,
+          region: state.destinationType === "region" ? state.region : undefined,
+          specificCity: state.destinationType === "specific" ? state.destination : undefined,
+          numberOfDays: state.numberOfDays,
+          groupSize: state.groupSize,
+          skillMix: state.skillMix,
+          ageRange: state.ageRange,
+          roundsPerDay: state.roundsPerDay,
+          courseQuality: state.courseQuality,
+          walkingOrRiding: state.walkingOrRiding,
+          lodging: state.lodging,
+          dining: state.dining,
+          nightlife: state.nightlife,
+          activities: state.activities,
+          budget: state.budget,
+          budgetPriorities: state.budgetPriorities,
+          flexible: state.flexible,
+          preferredSeason: state.preferredSeason,
+          tripMonth: state.tripMonth,
+          tripYear: state.tripYear,
+          pickedCities: picks.map((p) => ({ city: p.destination.city, state: p.destination.state, priceLevel: p.priceLevel })),
+        });
+
         // Store organizer + any attendees from the wizard
         const allAttendees = [
           { name: state.organizerName, email },
