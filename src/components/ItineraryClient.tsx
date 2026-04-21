@@ -505,7 +505,9 @@ export default function ItineraryClient({
                 {plan.lodging.rationale}
               </p>
             )}
-            {plan.lodging.url && <ExternalLink href={plan.lodging.url} label="View Listing" />}
+            {/* lodging.url intentionally NOT rendered — prices are estimated,
+                Claude-emitted URLs often 404 or point to wrong listings.
+                Server also strips plan.lodging.url post-parse. */}
           </div>
         </motion.section>
 

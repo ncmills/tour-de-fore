@@ -492,16 +492,37 @@ export async function POST(req: NextRequest) {
               const context = buildDestinationContext(pick.destination);
               const priceTargets = computePriceTargets(pick.destination, state.groupSize, state.numberOfDays, state.roundsPerDay);
               const plans = await generatePlansForDestination(client, state, context, priceTargets);
-              // Enrich course data with imageUrl from destination database
+              // Enrich course data with imageUrl from destination database.
+              // Name-normalize before match: lowercase, strip punctuation,
+              // drop noise words ("the", "golf", "club", "course", "resort",
+              // "links", "at"). Previous naive substring match was producing
+              // a 3% hit rate (per audit-sample-plan vs 25% DB coverage) —
+              // normalized match should recover most of the gap.
+              const normalize = (s: string) =>
+                s.toLowerCase()
+                  .replace(/[^\p{L}\p{N}\s]/gu, " ")
+                  .replace(/\b(the|golf|club|course|courses|resort|links|at)\b/g, "")
+                  .replace(/\s+/g, " ")
+                  .trim();
               for (const plan of Object.values(plans)) {
                 if (!plan?.courses) continue;
                 for (const course of plan.courses) {
-                  const dbCourse = pick.destination.courses.find(
-                    (c) => c.name.toLowerCase() === course.name.toLowerCase()
-                      || c.name.toLowerCase().includes(course.name.toLowerCase())
-                      || course.name.toLowerCase().includes(c.name.toLowerCase())
-                  );
+                  const nc = normalize(course.name);
+                  const dbCourse = pick.destination.courses.find((c) => {
+                    const nd = normalize(c.name);
+                    return nd === nc || nd.includes(nc) || nc.includes(nd);
+                  });
                   if (dbCourse?.imageUrl) course.imageUrl = dbCourse.imageUrl;
+                }
+              }
+
+              // Strip any `lodging.url` Claude hallucinated — prompt says
+              // never include it but 76% of stored plans (pre-audit) had
+              // one anyway. Belt + suspenders: prompt rule + post-parse
+              // sanitization so bogus URLs never reach the client.
+              for (const plan of Object.values(plans)) {
+                if (plan?.lodging && "url" in plan.lodging) {
+                  delete (plan.lodging as { url?: string }).url;
                 }
               }
               planCache.set(destId, plans);
