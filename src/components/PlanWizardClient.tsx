@@ -568,7 +568,12 @@ export default function PlanWizardClient() {
 
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 90000);
+      // Client abort must NOT fire before the server's maxDuration (300s).
+      // Parallel tiers typically land at ~60-90s but P95 can exceed 90s under
+      // Claude load — a 90s client abort would orphan an otherwise-successful
+      // generation server-side (plan lands in Redis, user sees failure).
+      // 305s gives the server its full window plus a small buffer.
+      const timeoutId = setTimeout(() => controller.abort(), 305_000);
 
       let res: Response;
       try {
