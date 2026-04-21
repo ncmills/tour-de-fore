@@ -228,7 +228,7 @@ export function buildUserMessage(state: WizardState, tier?: "imp" | "devil" | "d
 
   const timing = state.flexible
     ? `Flexible timing, preferred season: ${state.preferredSeason}`
-    : `Target dates: ${state.tripMonth} ${state.tripYear}`;
+    : `Target dates: ${state.tripMonth}`;
 
   // Build tier-specific price guidance
   let priceGuidance = "";
@@ -267,7 +267,7 @@ ${state.mustPlayCourses ? `- Must-play courses: ${state.mustPlayCourses}` : ""}
 
 OFF-COURSE:
 - Lodging preference: ${state.lodging}
-- Dining style: ${state.dining}
+- Dining style: ${(state.dining || []).length > 0 ? state.dining.join(", ") : "Mix of local spots"}${(state.dining || []).length >= 2 ? " (blend these — e.g. cook at the rental one night, hit the splurge dining another)" : ""}
 - Nightlife: ${state.nightlife}
 - Activities: ${state.activities.length > 0 ? state.activities.join(", ") : "None specified"}
 

@@ -35,7 +35,6 @@ export function validateWizardState(raw: unknown): WizardState {
     destination,
     region,
     tripMonth: sanitizeString(s.tripMonth, 20),
-    tripYear: sanitizeString(s.tripYear, 10),
     flexible: Boolean(s.flexible),
     preferredSeason: sanitizeString(s.preferredSeason, 20),
     numberOfDays,
@@ -47,7 +46,7 @@ export function validateWizardState(raw: unknown): WizardState {
     walkingOrRiding: sanitizeString(s.walkingOrRiding, 30) || "Riding",
     mustPlayCourses: sanitizeString(s.mustPlayCourses, 500),
     lodging: sanitizeString(s.lodging, 50) || "One big house",
-    dining: sanitizeString(s.dining, 50) || "Mix of local spots",
+    dining: sanitizeDining(s.dining),
     nightlife: sanitizeString(s.nightlife, 50) || "Bars after dinner",
     activities: sanitizeStringArray(s.activities, 20, 30),
     budget: sanitizeString(s.budget, 50) || "$1,000-$1,500/person",
@@ -70,6 +69,27 @@ function sanitizeEmail(val: unknown): string {
   const s = sanitizeString(val, 254);
   if (!s.includes("@") || !s.includes(".")) return "";
   return s.toLowerCase();
+}
+
+/**
+ * Dining accepts both the legacy single-string shape and the new array
+ * shape. Legacy clients (stored plans in Redis) emit "Mix of local spots"
+ * as a string; new wizard emits ["Steakhouses", "Private chef"]. Coerce
+ * both to string[] without losing data.
+ */
+function sanitizeDining(val: unknown): string[] {
+  if (Array.isArray(val)) {
+    return val
+      .filter((v): v is string => typeof v === "string")
+      .map((v) => v.slice(0, 50).trim())
+      .filter(Boolean)
+      .slice(0, 5);
+  }
+  if (typeof val === "string") {
+    const cleaned = val.slice(0, 50).trim();
+    return cleaned ? [cleaned] : [];
+  }
+  return [];
 }
 
 function sanitizeStringArray(val: unknown, maxItems: number, maxItemLen: number): string[] {

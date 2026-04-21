@@ -71,7 +71,7 @@ for (const month of MONTHS) {
   suites.push({
     name: `Month: ${month} → season=${season || "none"}`,
     suite: "Specific Months",
-    wizardOverrides: { flexible: false, tripMonth: month, tripYear: "2026", destinationType: "region", region: "" },
+    wizardOverrides: { flexible: false, tripMonth: month, destinationType: "region", region: "" },
     filterOptions: opts,
   });
 }

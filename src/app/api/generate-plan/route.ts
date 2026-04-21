@@ -580,7 +580,6 @@ export async function POST(req: NextRequest) {
           flexible: state.flexible,
           preferredSeason: state.preferredSeason,
           tripMonth: state.tripMonth,
-          tripYear: state.tripYear,
           pickedCities: picks.map((p) => ({ city: p.destination.city, state: p.destination.state, priceLevel: p.priceLevel })),
         });
 

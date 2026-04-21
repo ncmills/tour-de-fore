@@ -2,7 +2,8 @@
 
 import { motion } from "motion/react";
 import Link from "next/link";
-import { ThreeDestinationResult, ThreeFreePreview, PriceLevel, FreePreview } from "@/lib/plan-types";
+import { useRouter } from "next/navigation";
+import { ThreeDestinationResult, ThreeFreePreview, PriceLevel, FreePreview, WizardState } from "@/lib/plan-types";
 import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
 
@@ -194,18 +195,66 @@ export default function PlanSelectionClient({
   planId,
   freePreviews,
   legacyDestinations,
+  inputs,
+  isOwner,
 }: {
   planId: string;
   freePreviews: ThreeFreePreview | null;
   paid?: boolean;
   legacyDestinations?: ThreeDestinationResult;
+  inputs?: WizardState;
+  isOwner?: boolean;
 }) {
+  const router = useRouter();
+
+  const handleEditSelections = () => {
+    // Restore the wizard's sessionStorage from the stored inputs, then
+    // navigate back to /plan-a-trip. The wizard's mount-effect reads
+    // "tdf-wizard-state" and rehydrates every field. Pattern mirrors
+    // MOH ff82652 "Edit your selections" flow.
+    if (inputs) {
+      try {
+        sessionStorage.setItem("tdf-wizard-state", JSON.stringify(inputs));
+      } catch { /* ignore — storage may be full or blocked */ }
+    }
+    router.push("/plan-a-trip");
+  };
+
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff", padding: "clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 3rem)" }}>
       <MulliganButton />
       <HomeButton />
 
       <div style={{ textAlign: "center", marginBottom: "clamp(2rem, 5vw, 4rem)" }}>
+        {isOwner && inputs && (
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            onClick={handleEditSelections}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.4rem",
+              background: "none",
+              border: "none",
+              color: "rgba(255,255,255,0.45)",
+              fontSize: "0.78rem",
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              fontFamily: "var(--font-inter), sans-serif",
+              cursor: "pointer",
+              marginBottom: "1.25rem",
+              padding: "0.4rem 0.6rem",
+              transition: "color 0.2s",
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.85)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.45)"; }}
+            aria-label="Return to the wizard with your existing selections pre-filled"
+          >
+            ← Edit your selections
+          </motion.button>
+        )}
         <motion.p
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}

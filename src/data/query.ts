@@ -42,7 +42,7 @@ interface FilterOptions {
   activities?: string[];
   // Wizard preferences that influence scoring
   nightlife?: string;
-  dining?: string;
+  dining?: string[];
   lodgingPref?: string;
   budgetPriorities?: string[];
   mustPlayCourses?: string;
@@ -359,9 +359,11 @@ function scoreDestination(d: Destination, options: FilterOptions): ScoreResult {
   let diningScore = Math.min(d.dining.length, 4) * 3;
   if (sig.steakhouseCount >= 1 && sig.diningStyleCount >= 3) diningScore += 5;
 
-  // Wire the `dining` wizard input — previously only "Private chef" scored.
-  const diningPref = options.dining || "";
-  if (diningPref === "Steakhouses") {
+  // Wire the `dining` wizard input (multi-select) — previously only
+  // "Private chef" scored, now all four values contribute additively so a
+  // user who picks "Steakhouses + Private chef" gets both bonuses stacked.
+  const diningPrefs = options.dining || [];
+  if (diningPrefs.includes("Steakhouses")) {
     // TDF tradition — final-night steakhouse. Reward density.
     if (sig.steakhouseCount >= 2) {
       diningScore += 10;
@@ -369,14 +371,16 @@ function scoreDestination(d: Destination, options: FilterOptions): ScoreResult {
     } else if (sig.steakhouseCount === 1) {
       diningScore += 6;
     }
-  } else if (diningPref === "Casual & local") {
+  }
+  if (diningPrefs.includes("Casual & local")) {
     if (sig.casualDiningCount >= 5) {
       diningScore += 6;
       reasons.push({ pts: 6, text: `Deep casual/local scene (${sig.casualDiningCount} spots)` });
     } else if (sig.casualDiningCount >= 3) {
       diningScore += 3;
     }
-  } else if (diningPref === "Mix") {
+  }
+  if (diningPrefs.includes("Mix")) {
     if (sig.diningStyleCount >= 4) {
       diningScore += 5;
       reasons.push({ pts: 5, text: `${sig.diningStyleCount} dining styles for the mix` });
@@ -446,7 +450,7 @@ function scoreDestination(d: Destination, options: FilterOptions): ScoreResult {
   // ── Private chef scoring ──
   if (d.privateChefs.length > 0) {
     score += 4;
-    if (options.dining === "Private chef") {
+    if ((options.dining || []).includes("Private chef")) {
       score += 6;
       reasons.push({ pts: 10, text: "Private chef options match your dining preference" });
     }

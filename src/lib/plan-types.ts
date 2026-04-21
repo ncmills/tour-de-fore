@@ -6,7 +6,6 @@ export interface WizardState {
   destination: string;
   region: string;
   tripMonth: string;
-  tripYear: string;
   flexible: boolean;
   preferredSeason: string;
   numberOfDays: number;
@@ -24,7 +23,7 @@ export interface WizardState {
 
   // Step 4
   lodging: string;
-  dining: string;
+  dining: string[];
   nightlife: string;
   activities: string[];
 
@@ -53,7 +52,6 @@ export const initialWizardState: WizardState = {
   destination: "",
   region: "",
   tripMonth: "",
-  tripYear: "",
   flexible: false,
   preferredSeason: "",
   numberOfDays: 3,
@@ -65,7 +63,7 @@ export const initialWizardState: WizardState = {
   walkingOrRiding: "",
   mustPlayCourses: "",
   lodging: "One big house",
-  dining: "",
+  dining: [],
   nightlife: "",
   activities: [],
   budget: "",

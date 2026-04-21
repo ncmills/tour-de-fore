@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionEmail, setUserName, setUserPastTrips } from "@/lib/auth";
-import { UNLIMITED_EMAILS, getMonthKey } from "@/lib/shared-constants";
+import { UNLIMITED_EMAILS, getMonthKey, getNextMonthReset } from "@/lib/shared-constants";
 import { getRedis } from "@/lib/redis";
 
 const PLANS_PER_MONTH = 3;
@@ -22,8 +22,10 @@ export async function GET() {
     email,
     plansUsed,
     plansLimit: PLANS_PER_MONTH,
+    plansRemaining: Math.max(0, PLANS_PER_MONTH - plansUsed),
     canPlan: unlimited || plansUsed < PLANS_PER_MONTH,
     unlimited,
+    resetsAt: getNextMonthReset(),
   });
 }
 

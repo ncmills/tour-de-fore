@@ -129,6 +129,8 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
           freePreviews={stored.freePreviews || null}
           paid={true}
           legacyDestinations={stored.destinations}
+          inputs={stored.inputs}
+          isOwner={isOwner}
         />
       </Suspense>
     );

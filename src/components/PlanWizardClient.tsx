@@ -344,8 +344,32 @@ export default function PlanWizardClient() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showResumed, setShowResumed] = useState(false);
+  const [quota, setQuota] = useState<{ plansRemaining: number; plansLimit: number; resetsAt?: string; unlimited: boolean } | null>(null);
   const isScrolling = useRef(false);
   const typedSteps = useRef<Set<string>>(new Set());
+
+  // Fetch the user's remaining monthly plan quota so the wizard can surface
+  // "X of 3 trips remaining · resets Apr 30" up front — avoids the nasty
+  // surprise of hitting the cap mid-submit. Pattern ported from MOH/BESTMAN
+  // weekly-pill. Silent 401 (unauth) → no pill (fresh signup path).
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch("/api/profile");
+        if (!res.ok) return;
+        const data = await res.json();
+        if (cancelled) return;
+        setQuota({
+          plansRemaining: data.plansRemaining ?? Math.max(0, (data.plansLimit ?? 3) - (data.plansUsed ?? 0)),
+          plansLimit: data.plansLimit ?? 3,
+          resetsAt: data.resetsAt,
+          unlimited: !!data.unlimited,
+        });
+      } catch { /* ignore */ }
+    })();
+    return () => { cancelled = true; };
+  }, []);
 
   // Restore wizard state from sessionStorage on mount
   useEffect(() => {
@@ -390,12 +414,63 @@ export default function PlanWizardClient() {
 
   const scrollToQuestion = useCallback((_index: number) => {}, []);
 
+  // Per-step validation gates. Returns { ok, hint } — ok=false disables the
+  // Continue button + blocks advance. Pattern ported from MOH/BESTMAN
+  // canAdvance() — prevents users passing through empty steps and hitting
+  // server validation errors later.
+  const canAdvance = useCallback((step: number): { ok: boolean; hint?: string } => {
+    switch (step) {
+      case 0: // Where
+        if (!state.destinationType) return { ok: false, hint: "Pick a destination or region" };
+        if (state.destinationType === "specific" && !state.destination.trim())
+          return { ok: false, hint: "Enter a specific destination" };
+        if (state.destinationType === "region" && !state.region)
+          return { ok: false, hint: "Pick a region" };
+        return { ok: true };
+      case 1: // When
+        if (state.flexible && !state.preferredSeason)
+          return { ok: false, hint: "Pick a preferred season" };
+        if (!state.flexible && !state.tripMonth)
+          return { ok: false, hint: "Pick a month" };
+        if (!state.numberOfDays) return { ok: false, hint: "Pick a trip length" };
+        return { ok: true };
+      case 2: // Crew
+        if (!state.skillMix) return { ok: false, hint: "Pick a skill mix" };
+        if (!state.ageRange) return { ok: false, hint: "Pick an age range" };
+        return { ok: true };
+      case 3: // Golf
+        if (!state.roundsPerDay) return { ok: false, hint: "Pick rounds per day" };
+        if (!state.courseQuality) return { ok: false, hint: "Pick course quality" };
+        if (!state.walkingOrRiding) return { ok: false, hint: "Walking or riding?" };
+        return { ok: true };
+      case 4: // Off-course
+        if (!state.lodging) return { ok: false, hint: "Pick lodging" };
+        if (!state.dining || state.dining.length === 0) return { ok: false, hint: "Pick a dining style" };
+        if (!state.nightlife) return { ok: false, hint: "Pick a nightlife vibe" };
+        return { ok: true };
+      case 5: // Budget
+        if (!state.budget) return { ok: false, hint: "Pick a budget" };
+        return { ok: true };
+      case 6: // Roster — validated on submit (handleGenerate)
+        return { ok: true };
+      default:
+        return { ok: true };
+    }
+  }, [state]);
+
   const advance = useCallback((toIndex: number) => {
+    // Gate: don't advance past a step that fails its validation. The Continue
+    // button also consults canAdvance for its disabled state, but this guard
+    // catches auto-advance-on-pick flows too.
+    if (toIndex > currentQ) {
+      const gate = canAdvance(currentQ);
+      if (!gate.ok) return;
+    }
     if (toIndex + 1 > revealedCount) {
       setRevealedCount(toIndex + 1);
     }
     setCurrentQ(toIndex);
-  }, [revealedCount]);
+  }, [revealedCount, currentQ, canAdvance]);
 
   const setAndAdvance = (field: keyof WizardState, value: unknown) => {
     set(field, value);
@@ -672,39 +747,48 @@ export default function PlanWizardClient() {
   const inputClass = "wizard-input w-full bg-transparent border-b border-white/20 px-0 py-5 text-white font-body text-2xl placeholder:text-white/25 focus:border-white/60 focus:outline-none focus:ring-0 outline-none transition-colors text-center";
   const selectClass = "wizard-input bg-transparent border-b border-white/20 px-0 py-5 text-white font-body text-lg focus:border-white/60 focus:outline-none transition-colors appearance-none text-center w-full";
 
-  const ContinueBtn = ({ onClick, label = "Continue" }: { onClick: () => void; label?: string }) => (
-    <button
-      onClick={onClick}
-      style={{
-        marginTop: "3.5rem",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "0.6rem",
-        width: "auto",
-        margin: "3.5rem auto 0",
-        background: "none",
-        border: "2px solid rgba(255,255,255,0.3)",
-        borderRadius: "4px",
-        cursor: "pointer",
-        color: "rgba(255,255,255,0.5)",
-        fontSize: "0.86rem",
-        fontWeight: 700,
-        letterSpacing: "0.2em",
-        textTransform: "uppercase",
-        fontFamily: "var(--font-inter), sans-serif",
-        padding: "1rem 2.5rem",
-        transition: "color 0.2s, border-color 0.2s",
-      }}
-      onMouseEnter={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.9)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.7)"; }}
-      onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.5)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)"; }}
-    >
-      {label}
-      <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-      </svg>
-    </button>
-  );
+  const ContinueBtn = ({ onClick, label = "Continue" }: { onClick: () => void; label?: string }) => {
+    const gate = canAdvance(currentQ);
+    const disabled = !gate.ok;
+    return (
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.4rem", marginTop: "3.5rem" }}>
+        <button
+          onClick={disabled ? undefined : onClick}
+          disabled={disabled}
+          aria-disabled={disabled}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "0.6rem",
+            width: "auto",
+            background: "none",
+            border: disabled ? "2px solid rgba(255,255,255,0.12)" : "2px solid rgba(255,255,255,0.3)",
+            borderRadius: "4px",
+            cursor: disabled ? "not-allowed" : "pointer",
+            color: disabled ? "rgba(255,255,255,0.25)" : "rgba(255,255,255,0.5)",
+            fontSize: "0.86rem",
+            fontWeight: 700,
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            fontFamily: "var(--font-inter), sans-serif",
+            padding: "1rem 2.5rem",
+            transition: "color 0.2s, border-color 0.2s",
+          }}
+          onMouseEnter={(e) => { if (!disabled) { e.currentTarget.style.color = "rgba(255,255,255,0.9)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.7)"; } }}
+          onMouseLeave={(e) => { if (!disabled) { e.currentTarget.style.color = "rgba(255,255,255,0.5)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)"; } }}
+        >
+          {label}
+          <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </button>
+        {disabled && gate.hint && (
+          <p style={{ color: "rgba(255,255,255,0.32)", fontSize: "0.78rem", letterSpacing: "0.05em", margin: 0 }}>{gate.hint}</p>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div id="main-content" style={{ background: "transparent", height: "100vh", overflow: "hidden", position: "relative" }}>
@@ -733,6 +817,32 @@ export default function PlanWizardClient() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Monthly quota pill — hidden for unlimited accounts + unauthed users */}
+      {quota && !quota.unlimited && !showResumed && (
+        <div
+          style={{
+            position: "fixed",
+            top: 16,
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 51,
+            padding: "6px 16px",
+            borderRadius: 999,
+            background: quota.plansRemaining > 0 ? "rgba(234,88,12,0.12)" : "rgba(220,38,38,0.18)",
+            border: quota.plansRemaining > 0 ? "1px solid rgba(234,88,12,0.25)" : "1px solid rgba(220,38,38,0.45)",
+            color: quota.plansRemaining > 0 ? "rgba(255,255,255,0.62)" : "rgba(255,200,200,0.82)",
+            fontSize: "0.72rem",
+            letterSpacing: "0.04em",
+            fontFamily: "var(--font-inter), sans-serif",
+            whiteSpace: "nowrap",
+          }}
+          aria-live="polite"
+        >
+          {quota.plansRemaining} of {quota.plansLimit} trips remaining this month
+          {quota.resetsAt && ` · resets ${new Date(quota.resetsAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}`}
+        </div>
+      )}
 
       <MulliganButton onClick={() => {
         if (currentQ > 0) {
@@ -817,16 +927,10 @@ export default function PlanWizardClient() {
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-5" style={{ marginBottom: "3rem" }}>
+            <div className="grid grid-cols-1 gap-5" style={{ marginBottom: "3rem" }}>
               <select value={state.tripMonth} onChange={(e) => set("tripMonth", e.target.value)} className={selectClass}>
                 <option value="">Month</option>
                 {MONTHS.map((m) => <option key={m} value={m}>{m}</option>)}
-              </select>
-              <select value={state.tripYear} onChange={(e) => set("tripYear", e.target.value)} className={selectClass}>
-                <option value="">Year</option>
-                <option value="2026">2026</option>
-                <option value="2027">2027</option>
-                <option value="2028">2028</option>
               </select>
             </div>
           )}
@@ -914,10 +1018,23 @@ export default function PlanWizardClient() {
               <SelectionCard key={l.label} label={l.label} sublabel={l.sublabel} selected={state.lodging === l.label} onClick={() => set("lodging", l.label)} compact />
             ))}
           </div>
-          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>Dining</p>
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", letterSpacing: "0.08em", marginBottom: "0.4rem" }}>Dining</p>
+          <p style={{ color: "rgba(255,255,255,0.18)", fontSize: "0.75rem", letterSpacing: "0.05em", marginBottom: "1.2rem" }}>Pick any — combos welcome (cook one night, splurge another)</p>
           <div className="grid grid-cols-2 gap-5" style={{ marginBottom: "3rem" }}>
             {[{ label: "Steakhouses" }, { label: "Casual & local" }, { label: "Private chef", sublabel: tdfRec }, { label: "Mix" }].map((d) => (
-              <SelectionCard key={d.label} label={d.label} sublabel={d.sublabel} selected={state.dining === d.label} onClick={() => set("dining", d.label)} compact />
+              <SelectionCard
+                key={d.label}
+                label={d.label}
+                sublabel={d.sublabel}
+                selected={state.dining.includes(d.label)}
+                onClick={() => {
+                  const next = state.dining.includes(d.label)
+                    ? state.dining.filter((x) => x !== d.label)
+                    : [...state.dining, d.label];
+                  set("dining", next);
+                }}
+                compact
+              />
             ))}
           </div>
           <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>Nightlife</p>
