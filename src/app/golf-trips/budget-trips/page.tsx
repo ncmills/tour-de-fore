@@ -44,7 +44,7 @@ export default function BudgetTripsPage() {
           <p>
             Pro tip: budget destinations often have walkable courses (saving cart fees), BYOB-friendly rental houses
             (saving bar tabs), and shoulder-season windows where prices drop even further. Check each destination
-            page for specific pricing breakdowns and use our AI planner to build a trip around your group&apos;s budget.
+            page for specific pricing breakdowns and use the planner to build a trip around your group&apos;s budget.
           </p>
         </div>
 

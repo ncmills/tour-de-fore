@@ -154,12 +154,12 @@ function avg(arr: number[]) { return arr.length ? Math.round(arr.reduce((a, b) =
 function HowToPlan() {
   const steps = [
     { title: "Pick Your Dates", body: "Lock dates 3-6 months out. Shoulder seasons (late spring, early fall) offer the best combo of weather and pricing. Use our monthly guide to match your window to the right destination." },
-    { title: "Choose a Destination", body: `We have ${allDestinations.length} destinations across 7 regions. Filter by budget, course quality, nightlife, or activities. The AI trip planner handles this in 60 seconds.` },
+    { title: "Choose a Destination", body: `We have ${allDestinations.length} destinations across 7 regions. Filter by budget, course quality, nightlife, or activities. The planner handles this in 60 seconds.` },
     { title: "Set Your Budget", body: `Average golf trip costs $${avg(allDestinations.flatMap((d) => d.courses.map((c) => c.greenFeeRange[0])))}-$${avg(allDestinations.flatMap((d) => d.courses.map((c) => c.greenFeeRange[1])))}/round for green fees. Lodging runs $${avg(allDestinations.flatMap((d) => d.lodging.map((l) => l.nightlyRange[0])))}-$${avg(allDestinations.flatMap((d) => d.lodging.map((l) => l.nightlyRange[1])))}/night for a group house. Set a per-person target and work backwards.` },
     { title: "Book Lodging First", body: "Group-friendly houses (8-16 sleepers) book fast, especially in popular destinations. Lock this down before courses — tee times are easier to adjust than losing the perfect house." },
     { title: "Plan 2-3 Rounds, Not 4", body: "The biggest mistake is overbooking golf. Two rounds per day sounds fun until day 3. Leave afternoons open for activities, exploring town, or just recovering." },
     { title: "Assign a Trip Captain", body: "One person collects money, makes reservations, and sends the itinerary. Everyone else just shows up. Venmo requests > group texts about splitting costs." },
-    { title: "Build Your Itinerary", body: "Our AI planner builds a complete day-by-day itinerary with real courses, restaurants, and bars. Or use the destination guide pages for a DIY approach." },
+    { title: "Build Your Itinerary", body: "The planner builds a complete day-by-day itinerary with real courses, restaurants, and bars. Or use the destination guide pages for a DIY approach." },
   ];
 
   return (

@@ -241,7 +241,7 @@ export default async function PlanOGImage({ params }: Props) {
                 fontFamily: "sans-serif",
               }}
             >
-              AI Trip Planner
+              Tour de Fore
             </div>
           </div>
         </div>

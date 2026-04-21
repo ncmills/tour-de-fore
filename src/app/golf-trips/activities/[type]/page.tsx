@@ -92,7 +92,7 @@ export default async function ActivityPage({ params }: Props) {
           <p>
             Every destination below includes detailed course breakdowns, lodging options for groups, restaurant
             picks, and nightlife — plus specific {label.toLowerCase()} venues with pricing, duration, and what to expect.
-            Use our AI trip planner to build a complete itinerary around your group&apos;s priorities in under 60 seconds.
+            Hit the planner to build a complete itinerary around your group&apos;s priorities in under 60 seconds.
           </p>
         </div>
 

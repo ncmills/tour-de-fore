@@ -274,7 +274,7 @@ export default async function CostPage({
             {dest.privateChefs?.length > 0 && (
               <li>Hire a private chef for one night — often cheaper than a $$$$ restaurant for large groups, and the house becomes the venue.</li>
             )}
-            <li>Use our AI trip planner to compare different course/lodging combos and find the sweet spot for your budget.</li>
+            <li>Use the planner to compare different course/lodging combos and find the sweet spot for your budget.</li>
           </ul>
         </div>
 

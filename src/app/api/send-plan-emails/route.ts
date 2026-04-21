@@ -120,7 +120,7 @@ export async function POST(req: NextRequest) {
             </p>
 
             <p style="color: #5a5550; font-size: 12px; text-align: center; margin-top: 40px;">
-              Sent via Tour de Fore AI Trip Planner &mdash; tourdefore.com
+              Sent via Tour de Fore &mdash; tourdefore.com
             </p>
           </div>
         `,

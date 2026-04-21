@@ -44,7 +44,7 @@ export default function BachelorPartyPage() {
           <p>
             Each destination page breaks down the full picture: course-by-course details, the best group-friendly lodging
             (houses that sleep 8+), restaurant picks for group dinners, and every bar worth hitting.
-            Use our AI planner to build a complete bachelor party itinerary in 60 seconds flat.
+            Hit the planner and get a complete bachelor party itinerary in 60 seconds flat.
           </p>
         </div>
 
