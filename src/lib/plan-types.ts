@@ -5,6 +5,13 @@ export interface WizardState {
   destinationType: "specific" | "region";
   destination: string;
   region: string;
+  /**
+   * Optional state-level narrowing inside a chosen region. Empty array =
+   * use the whole region. Populated = restrict picks to this subset
+   * (uppercase 2-letter US codes, e.g. ["CA", "NV"]). Only meaningful
+   * when destinationType === "region".
+   */
+  states: string[];
   tripMonth: string;
   flexible: boolean;
   preferredSeason: string;
@@ -51,6 +58,7 @@ export const initialWizardState: WizardState = {
   destinationType: "specific",
   destination: "",
   region: "",
+  states: [],
   tripMonth: "",
   flexible: false,
   preferredSeason: "",

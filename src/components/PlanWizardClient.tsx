@@ -69,6 +69,19 @@ const REGION_NAMES = [
   "South Central",
 ];
 
+// Derived 2026-04-22 from allDestinations (scripts/audit-data-integrity.ts).
+// Lets users narrow a region pick to a state subset without loading all 133
+// destinations client-side. Regenerate if destinations data changes regions.
+const REGION_STATES: Record<string, string[]> = {
+  "Southwest": ["AZ", "NM", "NV", "UT"],
+  "Pacific NW": ["ID", "OR", "WA"],
+  "Mountain West": ["CO", "ID", "MT", "SD", "UT", "WY"],
+  "Midwest": ["IA", "IL", "IN", "MI", "MN", "MO", "NE", "OH", "WI"],
+  "Southeast": ["AL", "FL", "GA", "KY", "MS", "NC", "SC", "TN", "VA"],
+  "Northeast": ["CT", "MA", "MD", "ME", "NH", "NJ", "NY", "PA", "RI", "VA", "VT"],
+  "South Central": ["AR", "KY", "LA", "MO", "OK", "TX"],
+};
+
 const MONTHS = [
   "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December",
@@ -345,6 +358,7 @@ export default function PlanWizardClient() {
   const [isLoading, setIsLoading] = useState(false);
   const [showResumed, setShowResumed] = useState(false);
   const [quota, setQuota] = useState<{ plansRemaining: number; plansLimit: number; resetsAt?: string; unlimited: boolean } | null>(null);
+  const [progressPct, setProgressPct] = useState(0);
   const isScrolling = useRef(false);
   const typedSteps = useRef<Set<string>>(new Set());
 
@@ -536,10 +550,21 @@ export default function PlanWizardClient() {
     setIsGenerating(true);
     setIsLoading(true);
     setLoadingMsg(0);
+    setProgressPct(0);
 
     const interval = setInterval(() => {
       setLoadingMsg((prev) => (prev + 1) % LOADING_MESSAGES.length);
     }, 2500);
+
+    // Exponential decay creep between server milestones. Keeps the bar
+    // moving during long Claude waits instead of sitting flat. BESTMAN
+    // 4ceb116 pattern. Creeps from current pct toward 95%.
+    const progressInterval = setInterval(() => {
+      setProgressPct((prev) => {
+        if (prev >= 95) return prev;
+        return Math.min(95, prev + (95 - prev) * 0.02);
+      });
+    }, 300);
 
     try {
       const controller = new AbortController();
@@ -597,8 +622,14 @@ export default function PlanWizardClient() {
             const msg = JSON.parse(line);
             if (msg.type === "done") {
               result = msg;
+              setProgressPct(100);
             } else if (msg.type === "error") {
               throw new Error(msg.error || "Failed to generate plan");
+            } else if (msg.type === "progress" && typeof msg.pct === "number") {
+              // Server milestone — snap forward to it but never backward.
+              // Between milestones, a client-side interval creeps toward
+              // 95% to keep motion alive during long Claude waits.
+              setProgressPct((prev) => Math.max(prev, Math.min(99, msg.pct)));
             }
             // ping and status messages are ignored (keepalive)
           } catch (parseErr) {
@@ -623,6 +654,7 @@ export default function PlanWizardClient() {
       setOverlayError(err instanceof Error ? err.message : "Something went wrong. Try again.");
     } finally {
       clearInterval(interval);
+      clearInterval(progressInterval);
       setIsLoading(false);
     }
   };
@@ -728,13 +760,26 @@ export default function PlanWizardClient() {
               <p className="mt-3 text-xs text-text-dim opacity-50 text-center max-w-[280px]">
                 Building 3 destinations × 3 plans each — 9 custom itineraries just for your crew
               </p>
-              <div className="mt-4 w-48 h-px bg-border overflow-hidden">
+              {/* Progress bar — snaps to server milestones, creeps between them.
+                  Real progress signal replaces the pre-progress infinite shimmer. */}
+              <div
+                className="mt-4 w-56 h-1 bg-border overflow-hidden rounded-full"
+                role="progressbar"
+                aria-valuenow={Math.round(progressPct)}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-live="polite"
+              >
                 <motion.div
                   className="h-full bg-gradient-to-r from-accent to-gold"
-                  animate={{ x: ["-100%", "100%"] }}
-                  transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+                  animate={{ width: `${progressPct}%` }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  style={{ width: `${progressPct}%` }}
                 />
               </div>
+              <p className="mt-2 text-[10px] text-text-dim opacity-60 tabular-nums tracking-widest">
+                {Math.round(progressPct)}%
+              </p>
             </motion.div>
           )}
         </AnimatePresence>
@@ -885,17 +930,65 @@ export default function PlanWizardClient() {
               {state.destination && <ContinueBtn onClick={() => advance(revealedCount)} />}
             </>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {REGION_NAMES.map((r) => (
-                <SelectionCard
-                  key={r}
-                  label={r}
-                  sublabel={<RegionMapThumb region={r} selected={state.region === r} />}
-                  selected={state.region === r}
-                  onClick={() => { set("region", r); advance(revealedCount); }}
-                />
-              ))}
-            </div>
+            <>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {REGION_NAMES.map((r) => (
+                  <SelectionCard
+                    key={r}
+                    label={r}
+                    sublabel={<RegionMapThumb region={r} selected={state.region === r} />}
+                    selected={state.region === r}
+                    onClick={() => {
+                      set("region", r);
+                      // Clear states when region changes — different regions
+                      // have different state lists. User can opt into a subset
+                      // via the pills below (or keep empty = whole region).
+                      set("states", []);
+                    }}
+                  />
+                ))}
+              </div>
+              {state.region && REGION_STATES[state.region] && (
+                <div style={{ marginTop: "2rem" }}>
+                  <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.82rem", letterSpacing: "0.05em", marginBottom: "0.6rem", textAlign: "center" }}>
+                    Narrow it down? (optional — leave empty for the whole region)
+                  </p>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", justifyContent: "center", marginBottom: "1.5rem" }}>
+                    {REGION_STATES[state.region].map((st) => {
+                      const active = state.states.includes(st);
+                      return (
+                        <button
+                          key={st}
+                          onClick={() => {
+                            const next = active
+                              ? state.states.filter((x) => x !== st)
+                              : [...state.states, st];
+                            set("states", next);
+                          }}
+                          style={{
+                            padding: "0.5rem 0.9rem",
+                            borderRadius: 999,
+                            minHeight: 36,
+                            border: active ? "1px solid rgba(234,88,12,0.7)" : "1px solid rgba(255,255,255,0.18)",
+                            background: active ? "rgba(234,88,12,0.2)" : "transparent",
+                            color: active ? "#fff" : "rgba(255,255,255,0.55)",
+                            fontSize: "0.82rem",
+                            letterSpacing: "0.05em",
+                            cursor: "pointer",
+                            fontFamily: "var(--font-inter), sans-serif",
+                            transition: "all 0.2s",
+                          }}
+                          aria-pressed={active}
+                        >
+                          {st}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <ContinueBtn onClick={() => advance(revealedCount)} />
+                </div>
+              )}
+            </>
           )}
         </Question>
       )}

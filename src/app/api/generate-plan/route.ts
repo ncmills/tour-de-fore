@@ -472,12 +472,14 @@ export async function POST(req: NextRequest) {
 
       try {
         send({ type: "status", message: "Scouting destinations..." });
+        send({ type: "progress", pct: 8, stage: "scouting" });
 
         const client = getAnthropicClient();
 
         // Generate plans — deduplicate same-destination picks (specific city case)
         const uniqueCities = [...new Set(picks.map(p => p.destination.id))];
         send({ type: "status", message: `Building plans for ${[...new Set(picks.map(p => p.destination.city))].join(", ")}...` });
+        send({ type: "progress", pct: 18, stage: "generating" });
 
         // Generate plans for each unique destination (max 2 concurrent to avoid Claude rate limits)
         const planCache = new Map<string, ThreePlanResult>();
@@ -516,7 +518,9 @@ export async function POST(req: NextRequest) {
           plans: planCache.get(pick.destination.id)!,
         } satisfies DestinationRecommendation));
 
+        send({ type: "progress", pct: 82, stage: "enriching" });
         send({ type: "status", message: "Saving your trip..." });
+        send({ type: "progress", pct: 94, stage: "saving" });
 
         // Build destinations result
         const destByLevel: Record<PriceLevel, DestinationRecommendation | undefined> = {

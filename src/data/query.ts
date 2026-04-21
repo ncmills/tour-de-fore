@@ -32,6 +32,11 @@ for (const d of allDestinations) {
 
 interface FilterOptions {
   region?: string;
+  /**
+   * Optional state-level narrowing inside a region (empty = whole region).
+   * Uppercase 2-letter US codes. Pattern ported from MOH ff82652.
+   */
+  states?: string[];
   specificCity?: string;
   season?: Season;
   groupSize?: number;
@@ -190,6 +195,14 @@ export function filterDestinations(options: FilterOptions): Destination[] {
     if (region) {
       results = results.filter((d) => d.region === region);
     }
+  }
+
+  // Optional state-level narrowing (within the chosen region). Empty
+  // array = keep whole region. Match is case-insensitive.
+  if (options.states && options.states.length > 0) {
+    const allow = new Set(options.states.map((s) => s.toUpperCase()));
+    const narrowed = results.filter((d) => allow.has(d.state.toUpperCase()));
+    if (narrowed.length > 0) results = narrowed;
   }
 
   // Season: intentionally NOT a hard filter. Off-season cities stay visible;

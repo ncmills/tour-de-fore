@@ -34,6 +34,7 @@ export function validateWizardState(raw: unknown): WizardState {
     destinationType,
     destination,
     region,
+    states: sanitizeStringArray(s.states, 10, 4).map((v) => v.toUpperCase()),
     tripMonth: sanitizeString(s.tripMonth, 20),
     flexible: Boolean(s.flexible),
     preferredSeason: sanitizeString(s.preferredSeason, 20),

@@ -302,6 +302,7 @@ function seasonFromWizardState(state: WizardState): Season | undefined {
 export function getThreeDestinations(state: WizardState): PickedDestination[] {
   return pickThreeDestinations({
     region: state.destinationType === "region" ? state.region : undefined,
+    states: state.destinationType === "region" ? state.states : undefined,
     specificCity: state.destinationType === "specific" ? state.destination : undefined,
     season: seasonFromWizardState(state),
     groupSize: state.groupSize,

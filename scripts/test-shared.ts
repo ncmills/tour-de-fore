@@ -121,6 +121,7 @@ export function buildWizardState(overrides: Partial<WizardState> = {}): WizardSt
     destinationType: "region",
     destination: "",
     region: "Southeast",
+    states: [],
     tripMonth: "",
     flexible: true,
     preferredSeason: "Fall",
