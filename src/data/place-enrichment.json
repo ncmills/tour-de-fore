@@ -394,5 +394,9 @@
   "cooperstown-ny::dining::3": {
     "googleRating": 4.9,
     "reviewCount": 48
+  },
+  "cape-may-nj::dining::1": {
+    "googleRating": 4.5,
+    "reviewCount": 377
   }
 }
