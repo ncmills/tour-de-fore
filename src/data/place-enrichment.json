@@ -150,5 +150,17 @@
   "keystone-custer-sd::dining::1": {
     "googleRating": 4.7,
     "reviewCount": 3384
+  },
+  "traverse-city-mi::bars::2": {
+    "googleRating": 4.5,
+    "reviewCount": 1230
+  },
+  "traverse-city-mi::activities::0": {
+    "googleRating": 4.9,
+    "reviewCount": 56
+  },
+  "traverse-city-mi::activities::2": {
+    "googleRating": 4.8,
+    "reviewCount": 192
   }
 }
