@@ -258,5 +258,13 @@
   "charleston-sc::activities::1": {
     "googleRating": 4.8,
     "reviewCount": 20
+  },
+  "myrtle-beach-sc::bars::1": {
+    "googleRating": 4.2,
+    "reviewCount": 1542
+  },
+  "myrtle-beach-sc::activities::2": {
+    "googleRating": 4.4,
+    "reviewCount": 1801
   }
 }
