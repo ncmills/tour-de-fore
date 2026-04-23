@@ -426,5 +426,9 @@
   "austin-tx::activities::1": {
     "googleRating": 4.6,
     "reviewCount": 3550
+  },
+  "houston-tx::dining::0": {
+    "googleRating": 4.7,
+    "reviewCount": 2830
   }
 }
