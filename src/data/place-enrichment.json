@@ -434,5 +434,9 @@
   "new-orleans-la::bars::3": {
     "googleRating": 4.6,
     "reviewCount": 490
+  },
+  "louisville-ky::dining::2": {
+    "googleRating": 4.6,
+    "reviewCount": 1861
   }
 }
