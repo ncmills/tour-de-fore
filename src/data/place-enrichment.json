@@ -462,5 +462,9 @@
   "baton-rouge-la::dining::3": {
     "googleRating": 4.5,
     "reviewCount": 802
+  },
+  "lake-of-the-ozarks-mo::bars::1": {
+    "googleRating": 4.4,
+    "reviewCount": 1780
   }
 }
