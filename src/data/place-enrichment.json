@@ -46,5 +46,13 @@
   "boise-id::bars::4": {
     "googleRating": 4.4,
     "reviewCount": 1351
+  },
+  "portland-or::activities::3": {
+    "googleRating": 5,
+    "reviewCount": 62
+  },
+  "portland-or::activities::4": {
+    "googleRating": 4.9,
+    "reviewCount": 52
   }
 }
