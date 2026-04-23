@@ -102,5 +102,9 @@
   "gig-harbor-wa::dining::3": {
     "googleRating": 4.6,
     "reviewCount": 493
+  },
+  "steamboat-springs-co::activities::1": {
+    "googleRating": 4.3,
+    "reviewCount": 3819
   }
 }
