@@ -194,5 +194,9 @@
   "door-county-wi::bars::0": {
     "googleRating": 4.5,
     "reviewCount": 1862
+  },
+  "cincinnati-oh::activities::1": {
+    "googleRating": 4.4,
+    "reviewCount": 2879
   }
 }
