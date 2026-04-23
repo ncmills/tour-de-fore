@@ -182,5 +182,13 @@
   "harbor-springs-petoskey-mi::dining::2": {
     "googleRating": 4.3,
     "reviewCount": 2184
+  },
+  "grand-rapids-mi::dining::1": {
+    "googleRating": 4.5,
+    "reviewCount": 2938
+  },
+  "grand-rapids-mi::activities::3": {
+    "googleRating": 4.5,
+    "reviewCount": 1072
   }
 }
