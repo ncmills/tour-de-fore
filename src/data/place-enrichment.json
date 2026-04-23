@@ -438,5 +438,9 @@
   "louisville-ky::dining::2": {
     "googleRating": 4.6,
     "reviewCount": 1861
+  },
+  "oklahoma-city-ok::activities::1": {
+    "googleRating": 4.4,
+    "reviewCount": 1495
   }
 }
