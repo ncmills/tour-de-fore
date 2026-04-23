@@ -162,5 +162,13 @@
   "traverse-city-mi::activities::2": {
     "googleRating": 4.8,
     "reviewCount": 192
+  },
+  "galena-il::bars::2": {
+    "googleRating": 4.6,
+    "reviewCount": 397
+  },
+  "galena-il::activities::1": {
+    "googleRating": 4.5,
+    "reviewCount": 2743
   }
 }
