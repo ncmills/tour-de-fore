@@ -362,5 +362,9 @@
   "kennebunkport-me::dining::3": {
     "googleRating": 4.5,
     "reviewCount": 2970
+  },
+  "newport-ri::dining::0": {
+    "googleRating": 4.6,
+    "reviewCount": 4446
   }
 }
