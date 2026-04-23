@@ -2,5 +2,9 @@
   "sedona-az::activities::3": {
     "googleRating": 4.7,
     "reviewCount": 875
+  },
+  "tucson-az::bars::3": {
+    "googleRating": 4.7,
+    "reviewCount": 701
   }
 }
