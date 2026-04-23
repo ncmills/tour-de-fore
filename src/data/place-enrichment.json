@@ -22,5 +22,9 @@
   "phoenix-mesa-az::activities::4": {
     "googleRating": 4.7,
     "reviewCount": 1046
+  },
+  "lake-havasu-city-az::dining::3": {
+    "googleRating": 4.6,
+    "reviewCount": 1413
   }
 }
