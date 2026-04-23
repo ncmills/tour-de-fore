@@ -346,5 +346,9 @@
   "saratoga-springs-ny::bars::2": {
     "googleRating": 4.3,
     "reviewCount": 753
+  },
+  "finger-lakes-ny::bars::1": {
+    "googleRating": 4.7,
+    "reviewCount": 204
   }
 }
