@@ -122,5 +122,9 @@
   "vail-co::bars::1": {
     "googleRating": 4.4,
     "reviewCount": 347
+  },
+  "glenwood-springs-co::activities::1": {
+    "googleRating": 4.7,
+    "reviewCount": 66
   }
 }
