@@ -130,5 +130,21 @@
   "salida-co::bars::1": {
     "googleRating": 4.7,
     "reviewCount": 693
+  },
+  "rapid-city-sd::dining::0": {
+    "googleRating": 4.5,
+    "reviewCount": 845
+  },
+  "rapid-city-sd::dining::1": {
+    "googleRating": 4,
+    "reviewCount": 2717
+  },
+  "rapid-city-sd::bars::0": {
+    "googleRating": 4.3,
+    "reviewCount": 2749
+  },
+  "rapid-city-sd::bars::3": {
+    "googleRating": 4.7,
+    "reviewCount": 1259
   }
 }
