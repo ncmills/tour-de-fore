@@ -82,5 +82,9 @@
   "walla-walla-wa::dining::0": {
     "googleRating": 4.5,
     "reviewCount": 174
+  },
+  "eugene-or::bars::3": {
+    "googleRating": 4.7,
+    "reviewCount": 884
   }
 }
