@@ -382,5 +382,9 @@
   "ocean-city-md::bars::3": {
     "googleRating": 4.3,
     "reviewCount": 2441
+  },
+  "catskills-ny::dining::4": {
+    "googleRating": 4.2,
+    "reviewCount": 206
   }
 }
