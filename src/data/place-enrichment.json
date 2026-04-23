@@ -74,5 +74,9 @@
   "spokane-wa::activities::3": {
     "googleRating": 4.6,
     "reviewCount": 13801
+  },
+  "sandpoint-id::dining::0": {
+    "googleRating": 4.5,
+    "reviewCount": 1173
   }
 }
