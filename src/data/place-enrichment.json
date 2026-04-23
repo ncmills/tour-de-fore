@@ -42,5 +42,9 @@
   "coeur-dalene-id::bars::3": {
     "googleRating": 4.5,
     "reviewCount": 2258
+  },
+  "boise-id::bars::4": {
+    "googleRating": 4.4,
+    "reviewCount": 1351
   }
 }
