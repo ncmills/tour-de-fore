@@ -110,5 +110,9 @@
   "mccall-id::dining::3": {
     "googleRating": 4.6,
     "reviewCount": 1605
+  },
+  "breckenridge-co::dining::2": {
+    "googleRating": 4.4,
+    "reviewCount": 3469
   }
 }
