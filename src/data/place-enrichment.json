@@ -318,5 +318,9 @@
   "sea-island-ga::activities::4": {
     "googleRating": 4.7,
     "reviewCount": 1208
+  },
+  "reynolds-lake-oconee-ga::dining::3": {
+    "googleRating": 4.5,
+    "reviewCount": 528
   }
 }
