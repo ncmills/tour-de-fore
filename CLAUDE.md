@@ -1,5 +1,22 @@
 # Tour de Fore — Claude Code Instructions
 
+## Venue Social-Proof / Place Enrichment
+
+Per-venue `googleRating` and `reviewCount` for non-course categories (dining, bars,
+activities, lodging) live in `src/data/place-enrichment.json` (git-tracked,
+script-generated). The file is keyed by `${destinationId}::${category}::${index}`
+where category is one of `dining | bars | activities | lodging` and index is the
+0-based position in the destination's venue array.
+
+Run `npx tsx scripts/enrich-places.ts --help` for enrichment tooling.
+
+Golf courses already have `googleRating` / `reviewCount` / `hypeTag` / `rankNote`
+populated directly in the source data files — the script skips them by default.
+
+The overlay is wired at a single choke point in `src/data/query.ts` inside
+`buildDestinationContext` — the Claude prompt sees enriched venues automatically.
+When the JSON is empty (`{}`) every call is a no-op.
+
 ## Deploy Workflow
 
 As of 2026-04-10 this project is connected to GitHub via the Vercel GitHub App. A push to `main` auto-builds and auto-promotes `tour-de-fore` to production.

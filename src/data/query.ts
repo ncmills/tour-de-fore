@@ -1,5 +1,6 @@
 import { Destination, Region, Season, CourseTier, ActivityType } from "./types";
 import { allDestinations } from "./index";
+import { enrichVenue } from "./place-enrichment";
 import type { PriceLevel } from "@/lib/plan-types";
 
 // ── Simple deterministic hash for input-sensitive tie-breaking ──
@@ -754,43 +755,72 @@ export function pickThreeDestinations(
   return deduped;
 }
 
+// ── Build a compact social-proof suffix for any venue with populated proof fields ──
+
+function socialProofSuffix(v: {
+  googleRating?: number;
+  reviewCount?: number;
+  hypeTag?: string;
+  rankNote?: string;
+}): string {
+  const parts: string[] = [];
+  if (v.googleRating != null) {
+    const reviews =
+      v.reviewCount != null
+        ? `, ${v.reviewCount.toLocaleString()} reviews`
+        : "";
+    parts.push(`${v.googleRating}★${reviews}`);
+  }
+  if (v.hypeTag) parts.push(v.hypeTag);
+  if (v.rankNote) parts.push(v.rankNote);
+  return parts.length > 0 ? ` [${parts.join(" — ")}]` : "";
+}
+
 // ── Build context string for a single destination (for Claude prompt) ──
 
 export function buildDestinationContext(destination: Destination): string {
   const d = destination;
 
+  // Golf courses already have social-proof fields in source data; emit them
+  // directly without the overlay (courses are skipped by enrich-places.ts).
   const courseList = d.courses
     .map(
       (c) =>
-        `  - ${c.name} (${c.tier}) — $${c.greenFeeRange[0]}-${c.greenFeeRange[1]}/person, ${c.holes}h par ${c.par}, ${c.yardage}yd, ${c.style}${c.walkable ? ", walkable" : ""}, ${c.driveMinutes} min drive — ${c.highlight}${c.url ? ` | ${c.url}` : ""}`
+        `  - ${c.name} (${c.tier}) — $${c.greenFeeRange[0]}-${c.greenFeeRange[1]}/person, ${c.holes}h par ${c.par}, ${c.yardage}yd, ${c.style}${c.walkable ? ", walkable" : ""}, ${c.driveMinutes} min drive — ${c.highlight}${c.url ? ` | ${c.url}` : ""}${socialProofSuffix(c)}`
     )
     .join("\n");
 
+  // Non-course venues: enrich with place-enrichment overlay before formatting.
+  // enrichVenue is a no-op when src/data/place-enrichment.json is empty (default).
   const lodgingList = d.lodging
+    .map((l, i) => enrichVenue(d.id, "lodging", i, l))
     .map(
       (l) =>
-        `  - ${l.type} (sleeps ${l.sleeps[0]}-${l.sleeps[1]}) — $${l.nightlyRange[0]}-${l.nightlyRange[1]}/night — ${l.amenities.join(", ")} — ${l.areaDescription} — ${l.notes}${l.searchUrl ? ` | ${l.searchUrl}` : ""}`
+        `  - ${l.type} (sleeps ${l.sleeps[0]}-${l.sleeps[1]}) — $${l.nightlyRange[0]}-${l.nightlyRange[1]}/night — ${l.amenities.join(", ")} — ${l.areaDescription} — ${l.notes}${l.searchUrl ? ` | ${l.searchUrl}` : ""}${socialProofSuffix(l)}`
     )
     .join("\n");
 
   const diningList = d.dining
+    .map((r, i) => enrichVenue(d.id, "dining", i, r))
     .map(
       (r) =>
-        `  - ${r.name} (${r.style}, ${r.priceRange}) — ${r.highlight}${r.capacity === "large-group" ? " [handles 16+]" : ""}${r.reservationNeeded ? " [reservation needed]" : ""}`
+        `  - ${r.name} (${r.style}, ${r.priceRange}) — ${r.highlight}${r.capacity === "large-group" ? " [handles 16+]" : ""}${r.reservationNeeded ? " [reservation needed]" : ""}${socialProofSuffix(r)}`
     )
     .join("\n");
 
   const barList = d.bars
+    .map((b, i) => enrichVenue(d.id, "bars", i, b))
     .map(
       (b) =>
-        `  - ${b.name} (${b.vibe}) — ${b.highlight}${b.lateNight ? " [late night]" : ""}${b.walkableFromDowntown ? " [walkable from downtown]" : ""}`
+        `  - ${b.name} (${b.vibe}) — ${b.highlight}${b.lateNight ? " [late night]" : ""}${b.walkableFromDowntown ? " [walkable from downtown]" : ""}${socialProofSuffix(b)}`
     )
     .join("\n");
 
   const activityList = d.activities
+    .map((a, i) => enrichVenue(d.id, "activities", i, a))
     .map(
       (a) =>
-        `  - ${a.name} (${a.type}) — $${a.pricePerPerson[0]}-${a.pricePerPerson[1]}/person, ${a.duration} — ${a.highlight} [${a.bestFor}]${a.groupFriendly ? " [group-friendly]" : ""}${a.provider ? ` — Provider: ${a.provider}` : ""}`
+        `  - ${a.name} (${a.type}) — $${a.pricePerPerson[0]}-${a.pricePerPerson[1]}/person, ${a.duration} — ${a.highlight} [${a.bestFor}]${a.groupFriendly ? " [group-friendly]" : ""}${a.provider ? ` — Provider: ${a.provider}` : ""}${socialProofSuffix(a)}`
     )
     .join("\n");
 
