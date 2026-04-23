@@ -310,5 +310,13 @@
   "outer-banks-nc::activities::3": {
     "googleRating": 4.8,
     "reviewCount": 10008
+  },
+  "sea-island-ga::dining::1": {
+    "googleRating": 4.6,
+    "reviewCount": 3459
+  },
+  "sea-island-ga::activities::4": {
+    "googleRating": 4.7,
+    "reviewCount": 1208
   }
 }
