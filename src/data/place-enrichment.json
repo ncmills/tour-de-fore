@@ -230,5 +230,21 @@
   "savannah-ga::dining::2": {
     "googleRating": 4.8,
     "reviewCount": 3309
+  },
+  "lexington-ky::dining::2": {
+    "googleRating": 4.6,
+    "reviewCount": 2648
+  },
+  "lexington-ky::dining::4": {
+    "googleRating": 4.6,
+    "reviewCount": 1369
+  },
+  "lexington-ky::bars::1": {
+    "googleRating": 4.4,
+    "reviewCount": 338
+  },
+  "lexington-ky::bars::2": {
+    "googleRating": 4.7,
+    "reviewCount": 1752
   }
 }
