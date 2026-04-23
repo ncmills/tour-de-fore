@@ -366,5 +366,9 @@
   "newport-ri::dining::0": {
     "googleRating": 4.6,
     "reviewCount": 4446
+  },
+  "atlantic-city-nj::dining::4": {
+    "googleRating": 4.5,
+    "reviewCount": 431
   }
 }
