@@ -378,5 +378,9 @@
   "hershey-pa::activities::0": {
     "googleRating": 4.5,
     "reviewCount": 66799
+  },
+  "ocean-city-md::bars::3": {
+    "googleRating": 4.3,
+    "reviewCount": 2441
   }
 }
