@@ -398,5 +398,9 @@
   "cape-may-nj::dining::1": {
     "googleRating": 4.5,
     "reviewCount": 377
+  },
+  "mystic-ct::activities::1": {
+    "googleRating": 4.3,
+    "reviewCount": 24354
   }
 }
