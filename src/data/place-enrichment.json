@@ -106,5 +106,9 @@
   "steamboat-springs-co::activities::1": {
     "googleRating": 4.3,
     "reviewCount": 3819
+  },
+  "mccall-id::dining::3": {
+    "googleRating": 4.6,
+    "reviewCount": 1605
   }
 }
