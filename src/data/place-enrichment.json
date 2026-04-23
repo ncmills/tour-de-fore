@@ -386,5 +386,9 @@
   "catskills-ny::dining::4": {
     "googleRating": 4.2,
     "reviewCount": 206
+  },
+  "bar-harbor-me::bars::0": {
+    "googleRating": 4.4,
+    "reviewCount": 2900
   }
 }
