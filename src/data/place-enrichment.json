@@ -78,5 +78,9 @@
   "sandpoint-id::dining::0": {
     "googleRating": 4.5,
     "reviewCount": 1173
+  },
+  "walla-walla-wa::dining::0": {
+    "googleRating": 4.5,
+    "reviewCount": 174
   }
 }
