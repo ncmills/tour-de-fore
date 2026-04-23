@@ -54,5 +54,13 @@
   "portland-or::activities::4": {
     "googleRating": 4.9,
     "reviewCount": 52
+  },
+  "seattle-wa::dining::1": {
+    "googleRating": 4.4,
+    "reviewCount": 1734
+  },
+  "seattle-wa::activities::2": {
+    "googleRating": 4.9,
+    "reviewCount": 40
   }
 }
