@@ -370,5 +370,13 @@
   "atlantic-city-nj::dining::4": {
     "googleRating": 4.5,
     "reviewCount": 431
+  },
+  "hershey-pa::dining::3": {
+    "googleRating": 4.4,
+    "reviewCount": 1716
+  },
+  "hershey-pa::activities::0": {
+    "googleRating": 4.5,
+    "reviewCount": 66799
   }
 }
