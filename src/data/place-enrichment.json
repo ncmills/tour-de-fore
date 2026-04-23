@@ -270,5 +270,13 @@
   "nashville-tn::activities::0": {
     "googleRating": 5,
     "reviewCount": 8672
+  },
+  "chattanooga-tn::activities::3": {
+    "googleRating": 4.4,
+    "reviewCount": 481
+  },
+  "chattanooga-tn::activities::4": {
+    "googleRating": 4.8,
+    "reviewCount": 2342
   }
 }
