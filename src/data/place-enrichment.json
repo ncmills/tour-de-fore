@@ -358,5 +358,9 @@
   "stowe-vt::dining::1": {
     "googleRating": 4.6,
     "reviewCount": 1604
+  },
+  "kennebunkport-me::dining::3": {
+    "googleRating": 4.5,
+    "reviewCount": 2970
   }
 }
