@@ -210,5 +210,13 @@
   "marquette-mi::dining::3": {
     "googleRating": 4.6,
     "reviewCount": 1370
+  },
+  "omaha-ne::dining::2": {
+    "googleRating": 4.7,
+    "reviewCount": 2636
+  },
+  "omaha-ne::bars::3": {
+    "googleRating": 4.5,
+    "reviewCount": 766
   }
 }
