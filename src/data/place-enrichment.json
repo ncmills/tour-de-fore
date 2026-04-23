@@ -354,5 +354,9 @@
   "berkshires-ma::dining::4": {
     "googleRating": 4.8,
     "reviewCount": 360
+  },
+  "stowe-vt::dining::1": {
+    "googleRating": 4.6,
+    "reviewCount": 1604
   }
 }
