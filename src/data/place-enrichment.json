@@ -330,5 +330,13 @@
   "cape-cod-ma::bars::3": {
     "googleRating": 4.2,
     "reviewCount": 1812
+  },
+  "lake-placid-ny::bars::0": {
+    "googleRating": 4.2,
+    "reviewCount": 1066
+  },
+  "lake-placid-ny::activities::4": {
+    "googleRating": 4.5,
+    "reviewCount": 2602
   }
 }
