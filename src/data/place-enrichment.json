@@ -294,5 +294,17 @@
   "orlando-fl::bars::1": {
     "googleRating": 4.5,
     "reviewCount": 2458
+  },
+  "biloxi-ms::dining::2": {
+    "googleRating": 4.9,
+    "reviewCount": 214
+  },
+  "biloxi-ms::dining::3": {
+    "googleRating": 4.7,
+    "reviewCount": 4812
+  },
+  "biloxi-ms::bars::1": {
+    "googleRating": 4.5,
+    "reviewCount": 859
   }
 }
