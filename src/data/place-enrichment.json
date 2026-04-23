@@ -30,5 +30,13 @@
   "laughlin-nv::bars::0": {
     "googleRating": 4.1,
     "reviewCount": 17844
+  },
+  "bend-or::bars::1": {
+    "googleRating": 4.5,
+    "reviewCount": 202
+  },
+  "bend-or::bars::3": {
+    "googleRating": 4.1,
+    "reviewCount": 407
   }
 }
