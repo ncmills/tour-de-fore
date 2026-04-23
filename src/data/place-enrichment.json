@@ -250,5 +250,13 @@
   "destin-30a-fl::bars::2": {
     "googleRating": 4.3,
     "reviewCount": 1028
+  },
+  "charleston-sc::dining::0": {
+    "googleRating": 4.7,
+    "reviewCount": 1639
+  },
+  "charleston-sc::activities::1": {
+    "googleRating": 4.8,
+    "reviewCount": 20
   }
 }
