@@ -450,5 +450,17 @@
   "little-rock-ar::bars::3": {
     "googleRating": 4.4,
     "reviewCount": 1743
+  },
+  "baton-rouge-la::dining::1": {
+    "googleRating": 4.2,
+    "reviewCount": 165
+  },
+  "baton-rouge-la::dining::2": {
+    "googleRating": 4.5,
+    "reviewCount": 8481
+  },
+  "baton-rouge-la::dining::3": {
+    "googleRating": 4.5,
+    "reviewCount": 802
   }
 }
