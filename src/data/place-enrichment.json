@@ -226,5 +226,9 @@
   "hilton-head-sc::activities::2": {
     "googleRating": 4.6,
     "reviewCount": 450
+  },
+  "savannah-ga::dining::2": {
+    "googleRating": 4.8,
+    "reviewCount": 3309
   }
 }
