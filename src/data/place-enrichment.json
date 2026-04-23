@@ -202,5 +202,13 @@
   "columbus-oh::dining::1": {
     "googleRating": 4.5,
     "reviewCount": 1293
+  },
+  "marquette-mi::dining::1": {
+    "googleRating": 4.5,
+    "reviewCount": 1971
+  },
+  "marquette-mi::dining::3": {
+    "googleRating": 4.6,
+    "reviewCount": 1370
   }
 }
