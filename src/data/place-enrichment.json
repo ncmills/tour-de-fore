@@ -62,5 +62,17 @@
   "seattle-wa::activities::2": {
     "googleRating": 4.9,
     "reviewCount": 40
+  },
+  "spokane-wa::dining::0": {
+    "googleRating": 4.6,
+    "reviewCount": 1788
+  },
+  "spokane-wa::bars::1": {
+    "googleRating": 4.5,
+    "reviewCount": 1670
+  },
+  "spokane-wa::activities::3": {
+    "googleRating": 4.6,
+    "reviewCount": 13801
   }
 }
