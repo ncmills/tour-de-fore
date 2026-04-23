@@ -26,5 +26,9 @@
   "lake-havasu-city-az::dining::3": {
     "googleRating": 4.6,
     "reviewCount": 1413
+  },
+  "laughlin-nv::bars::0": {
+    "googleRating": 4.1,
+    "reviewCount": 17844
   }
 }
