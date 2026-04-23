@@ -406,5 +406,13 @@
   "horseshoe-bay-tx::activities::3": {
     "googleRating": 4.4,
     "reviewCount": 3228
+  },
+  "hot-springs-ar::bars::2": {
+    "googleRating": 4.4,
+    "reviewCount": 1970
+  },
+  "hot-springs-ar::activities::3": {
+    "googleRating": 4.5,
+    "reviewCount": 6489
   }
 }
