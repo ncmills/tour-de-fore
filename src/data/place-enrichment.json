@@ -286,5 +286,13 @@
   "naples-fl::dining::3": {
     "googleRating": 4.4,
     "reviewCount": 2310
+  },
+  "orlando-fl::dining::1": {
+    "googleRating": 4.6,
+    "reviewCount": 4072
+  },
+  "orlando-fl::bars::1": {
+    "googleRating": 4.5,
+    "reviewCount": 2458
   }
 }
