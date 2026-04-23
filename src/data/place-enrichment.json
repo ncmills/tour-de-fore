@@ -198,5 +198,9 @@
   "cincinnati-oh::activities::1": {
     "googleRating": 4.4,
     "reviewCount": 2879
+  },
+  "columbus-oh::dining::1": {
+    "googleRating": 4.5,
+    "reviewCount": 1293
   }
 }
