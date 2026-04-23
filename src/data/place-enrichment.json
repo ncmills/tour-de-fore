@@ -390,5 +390,9 @@
   "bar-harbor-me::bars::0": {
     "googleRating": 4.4,
     "reviewCount": 2900
+  },
+  "cooperstown-ny::dining::3": {
+    "googleRating": 4.9,
+    "reviewCount": 48
   }
 }
