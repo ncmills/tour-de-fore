@@ -146,5 +146,9 @@
   "rapid-city-sd::bars::3": {
     "googleRating": 4.7,
     "reviewCount": 1259
+  },
+  "keystone-custer-sd::dining::1": {
+    "googleRating": 4.7,
+    "reviewCount": 3384
   }
 }
