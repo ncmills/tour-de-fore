@@ -402,5 +402,9 @@
   "mystic-ct::activities::1": {
     "googleRating": 4.3,
     "reviewCount": 24354
+  },
+  "horseshoe-bay-tx::activities::3": {
+    "googleRating": 4.4,
+    "reviewCount": 3228
   }
 }
