@@ -126,5 +126,9 @@
   "glenwood-springs-co::activities::1": {
     "googleRating": 4.7,
     "reviewCount": 66
+  },
+  "salida-co::bars::1": {
+    "googleRating": 4.7,
+    "reviewCount": 693
   }
 }
