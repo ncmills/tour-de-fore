@@ -322,5 +322,13 @@
   "reynolds-lake-oconee-ga::dining::3": {
     "googleRating": 4.5,
     "reviewCount": 528
+  },
+  "cape-cod-ma::bars::1": {
+    "googleRating": 4.3,
+    "reviewCount": 1014
+  },
+  "cape-cod-ma::bars::3": {
+    "googleRating": 4.2,
+    "reviewCount": 1812
   }
 }
