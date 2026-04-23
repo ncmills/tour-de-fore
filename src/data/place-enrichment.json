@@ -10,5 +10,17 @@
   "mesquite-nv::bars::1": {
     "googleRating": 4.2,
     "reviewCount": 6865
+  },
+  "phoenix-mesa-az::dining::0": {
+    "googleRating": 4.7,
+    "reviewCount": 4410
+  },
+  "phoenix-mesa-az::activities::3": {
+    "googleRating": 4.5,
+    "reviewCount": 3159
+  },
+  "phoenix-mesa-az::activities::4": {
+    "googleRating": 4.7,
+    "reviewCount": 1046
   }
 }
