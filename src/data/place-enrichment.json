@@ -282,5 +282,9 @@
   "amelia-island-fl::bars::0": {
     "googleRating": 4.4,
     "reviewCount": 1176
+  },
+  "naples-fl::dining::3": {
+    "googleRating": 4.4,
+    "reviewCount": 2310
   }
 }
