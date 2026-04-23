@@ -41,3 +41,7 @@ yarn-error.log*
 next-env.d.ts
 .claude/worktrees/
 .env*.local
+
+# Google Places enrichment cache + runtime progress
+scripts/.places-cache/
+scripts/.places-progress.json
