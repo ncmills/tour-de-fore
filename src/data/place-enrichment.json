@@ -90,5 +90,9 @@
   "leavenworth-wa::dining::3": {
     "googleRating": 4.3,
     "reviewCount": 471
+  },
+  "cannon-beach-or::dining::3": {
+    "googleRating": 4.1,
+    "reviewCount": 2339
   }
 }
