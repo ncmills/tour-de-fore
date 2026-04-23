@@ -174,5 +174,9 @@
   "lake-geneva-wi::activities::3": {
     "googleRating": 4.6,
     "reviewCount": 72
+  },
+  "duluth-mn::bars::0": {
+    "googleRating": 4.8,
+    "reviewCount": 1110
   }
 }
