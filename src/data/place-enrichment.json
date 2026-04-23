@@ -418,5 +418,9 @@
   "branson-mo::bars::2": {
     "googleRating": 4.3,
     "reviewCount": 53
+  },
+  "san-antonio-tx::activities::4": {
+    "googleRating": 4.7,
+    "reviewCount": 17344
   }
 }
