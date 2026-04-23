@@ -338,5 +338,13 @@
   "lake-placid-ny::activities::4": {
     "googleRating": 4.5,
     "reviewCount": 2602
+  },
+  "saratoga-springs-ny::bars::1": {
+    "googleRating": 4.1,
+    "reviewCount": 416
+  },
+  "saratoga-springs-ny::bars::2": {
+    "googleRating": 4.3,
+    "reviewCount": 753
   }
 }
