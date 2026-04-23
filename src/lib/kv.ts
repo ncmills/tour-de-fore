@@ -1,7 +1,7 @@
 import { StoredPlan, Attendee, WizardState } from "./plan-types";
 import { getRedis } from "./redis";
 
-const PLAN_TTL = 60 * 60 * 24 * 90; // 90 days
+const PLAN_TTL = 60 * 60 * 24 * 21; // 21 days
 const SIGNAL_TTL = 60 * 60 * 24 * 365; // 1 year for learning signals
 
 // ── Plan storage ──
