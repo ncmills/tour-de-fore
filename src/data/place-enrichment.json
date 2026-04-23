@@ -170,5 +170,9 @@
   "galena-il::activities::1": {
     "googleRating": 4.5,
     "reviewCount": 2743
+  },
+  "lake-geneva-wi::activities::3": {
+    "googleRating": 4.6,
+    "reviewCount": 72
   }
 }
