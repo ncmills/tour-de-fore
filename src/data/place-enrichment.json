@@ -414,5 +414,9 @@
   "hot-springs-ar::activities::3": {
     "googleRating": 4.5,
     "reviewCount": 6489
+  },
+  "branson-mo::bars::2": {
+    "googleRating": 4.3,
+    "reviewCount": 53
   }
 }
