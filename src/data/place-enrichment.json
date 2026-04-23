@@ -266,5 +266,9 @@
   "myrtle-beach-sc::activities::2": {
     "googleRating": 4.4,
     "reviewCount": 1801
+  },
+  "nashville-tn::activities::0": {
+    "googleRating": 5,
+    "reviewCount": 8672
   }
 }
