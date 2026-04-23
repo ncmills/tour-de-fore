@@ -430,5 +430,9 @@
   "houston-tx::dining::0": {
     "googleRating": 4.7,
     "reviewCount": 2830
+  },
+  "new-orleans-la::bars::3": {
+    "googleRating": 4.6,
+    "reviewCount": 490
   }
 }
