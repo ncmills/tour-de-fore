@@ -6,5 +6,9 @@
   "tucson-az::bars::3": {
     "googleRating": 4.7,
     "reviewCount": 701
+  },
+  "mesquite-nv::bars::1": {
+    "googleRating": 4.2,
+    "reviewCount": 6865
   }
 }
