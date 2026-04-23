@@ -278,5 +278,9 @@
   "chattanooga-tn::activities::4": {
     "googleRating": 4.8,
     "reviewCount": 2342
+  },
+  "amelia-island-fl::bars::0": {
+    "googleRating": 4.4,
+    "reviewCount": 1176
   }
 }
