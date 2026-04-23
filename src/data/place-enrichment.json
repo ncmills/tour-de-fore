@@ -94,5 +94,13 @@
   "cannon-beach-or::dining::3": {
     "googleRating": 4.1,
     "reviewCount": 2339
+  },
+  "gig-harbor-wa::dining::1": {
+    "googleRating": 4.4,
+    "reviewCount": 4184
+  },
+  "gig-harbor-wa::dining::3": {
+    "googleRating": 4.6,
+    "reviewCount": 493
   }
 }
