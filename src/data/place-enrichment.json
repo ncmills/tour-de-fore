@@ -218,5 +218,13 @@
   "omaha-ne::bars::3": {
     "googleRating": 4.5,
     "reviewCount": 766
+  },
+  "hilton-head-sc::bars::3": {
+    "googleRating": 4.9,
+    "reviewCount": 1288
+  },
+  "hilton-head-sc::activities::2": {
+    "googleRating": 4.6,
+    "reviewCount": 450
   }
 }
