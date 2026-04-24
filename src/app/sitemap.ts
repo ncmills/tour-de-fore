@@ -69,8 +69,13 @@ function generateComparisonPairs(): string[] {
 
 const comparisonPairs = generateComparisonPairs();
 
-// Fixed build date — avoids telling Google "everything changed" on every deploy
-const LAST_MODIFIED = new Date("2026-04-04");
+// Build-time date so redeploys signal "something may have changed" to Google.
+// Previously hardcoded to 2026-04-04 "to avoid noise", but 1,481 URLs showing
+// 3-weeks-stale lastModified caused <1% indexing coverage in GSC. Better to
+// tell Google to recrawl on every deploy than to go silent. If Google starts
+// discounting the signal (low-trust lastModified), switch to per-URL real
+// data mtimes.
+const LAST_MODIFIED = new Date();
 
 export async function generateSitemaps() {
   return [
