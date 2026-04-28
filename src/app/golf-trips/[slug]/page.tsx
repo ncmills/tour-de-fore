@@ -45,16 +45,19 @@ export async function generateMetadata({
   const airport = dest.nearestAirport;
 
   const courseHook = (c: typeof ranked[number]) => {
+    // Strip "(Variant Name)" suffixes (e.g. "We-Ko-Pa Golf Club (Saguaro Course)" → "We-Ko-Pa")
+    const baseName = c.name.replace(/\s*\([^)]*\)\s*$/, "").replace(/\s+Golf\s+Club$/i, "");
     const tag = c.rankNote || (c.hypeTag ? c.hypeTag.toLowerCase().replace(/^./, (m) => m.toUpperCase()) : null);
-    return tag ? `${c.name} (${tag})` : c.name;
+    return tag ? `${baseName} (${tag})` : baseName;
   };
-  const topCourses = ranked.slice(0, 3).map(courseHook).join(", ");
-  const more = courseCount > 3 ? ` + ${courseCount - 3} more` : "";
+  const topCourses = ranked.slice(0, 2).map(courseHook).join(", ");
+  const more = courseCount > 2 ? ` +${courseCount - 2} more` : "";
+  const tagline = dest.tagline.replace(/[.!?]?$/, ".");
 
   const title = bucketCount > 0
     ? `${dest.city} Golf Trip (2026): ${bucketCount} Bucket-List, ${courseCount} Courses | TDF`
     : `${dest.city} Golf Trip (2026): ${courseCount} Courses, ${seasonStr} | TDF`;
-  const description = `${dest.tagline} Top: ${topCourses}${more}. ${airport.code} ${airport.driveMinutes}min. Best: ${seasonStr}.`;
+  const description = `${tagline} Top: ${topCourses}${more}. ${airport.code} ${airport.driveMinutes}min. Best: ${seasonStr}.`;
 
   return {
     title,
