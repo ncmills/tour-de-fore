@@ -31,8 +31,31 @@ export async function generateMetadata({
   const { slug } = await params;
   const dest = allDestinations.find((d) => d.id === slug);
   if (!dest) return {};
-  const title = `${dest.city} Golf Trip: Courses, Lodging, Nightlife & a Budget That Works | Tour de Fore`;
-  const description = metaDescription(dest.description);
+
+  const tierRank = { "bucket-list": 0, premium: 1, solid: 2, budget: 3 } as const;
+  const ranked = [...dest.courses].sort((a, b) => {
+    const t = (tierRank[a.tier] ?? 9) - (tierRank[b.tier] ?? 9);
+    return t !== 0 ? t : (b.googleRating ?? 0) - (a.googleRating ?? 0);
+  });
+  const bucketCount = dest.courses.filter((c) => c.tier === "bucket-list").length;
+  const courseCount = dest.courses.length;
+  const seasonStr = dest.bestSeasons
+    .map((s) => s[0].toUpperCase() + s.slice(1))
+    .join("/");
+  const airport = dest.nearestAirport;
+
+  const courseHook = (c: typeof ranked[number]) => {
+    const tag = c.rankNote || (c.hypeTag ? c.hypeTag.toLowerCase().replace(/^./, (m) => m.toUpperCase()) : null);
+    return tag ? `${c.name} (${tag})` : c.name;
+  };
+  const topCourses = ranked.slice(0, 3).map(courseHook).join(", ");
+  const more = courseCount > 3 ? ` + ${courseCount - 3} more` : "";
+
+  const title = bucketCount > 0
+    ? `${dest.city} Golf Trip (2026): ${bucketCount} Bucket-List, ${courseCount} Courses | TDF`
+    : `${dest.city} Golf Trip (2026): ${courseCount} Courses, ${seasonStr} | TDF`;
+  const description = `${dest.tagline} Top: ${topCourses}${more}. ${airport.code} ${airport.driveMinutes}min. Best: ${seasonStr}.`;
+
   return {
     title,
     description,
