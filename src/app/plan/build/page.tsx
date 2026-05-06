@@ -16,6 +16,7 @@ interface Props {
 export const metadata = {
   title: "Build Your Trip | Tour de Fore",
   description: "Customize your golf trip — pick lodging, courses, restaurants, and more.",
+  robots: { index: false, follow: false },
 };
 
 export default async function BuildPage({ searchParams }: Props) {

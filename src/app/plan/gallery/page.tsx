@@ -11,6 +11,7 @@ interface Props {
 export const metadata = {
   title: "Explore Your Destination | Tour de Fore",
   description: "Browse everything your destination has to offer — lodging, courses, dining, and nightlife.",
+  robots: { index: false, follow: false },
 };
 
 export default async function GalleryPage({ searchParams }: Props) {

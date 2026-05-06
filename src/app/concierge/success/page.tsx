@@ -2,6 +2,7 @@ import Link from "next/link";
 
 export const metadata = {
   title: "Booking Confirmed | Tour de Fore Concierge",
+  robots: { index: false, follow: false },
 };
 
 export default function ConciergeSuccessPage() {

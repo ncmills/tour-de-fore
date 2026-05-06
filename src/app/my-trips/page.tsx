@@ -6,6 +6,7 @@ import MyTripsClient from "@/components/MyTripsClient";
 export const metadata = {
   title: "My Account | Tour de Fore",
   description: "Your Tour de Fore account and saved trip plans.",
+  robots: { index: false, follow: false },
 };
 
 export default async function MyTripsPage() {

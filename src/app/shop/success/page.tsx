@@ -6,6 +6,7 @@ import OrderVerifier from "@/components/OrderVerifier";
 export const metadata = {
   title: "Order Confirmed | Tour de Fore",
   description: "Your Tour de Fore order has been confirmed.",
+  robots: { index: false, follow: false },
 };
 
 export default function ShopSuccessPage() {

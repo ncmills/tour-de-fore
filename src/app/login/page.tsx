@@ -6,6 +6,7 @@ import LoginClient from "@/components/LoginClient";
 export const metadata = {
   title: "Sign In | Tour de Fore",
   description: "Sign in to your Tour de Fore account to view and manage your planned golf trips.",
+  robots: { index: false, follow: false },
 };
 
 export default async function LoginPage({

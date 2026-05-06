@@ -58,6 +58,14 @@ const nextConfig: NextConfig = {
       destination: "https://tourdefore.com/:path*",
       permanent: true,
     },
+    // 2026-03-31 (6e46933) flow simplification removed /plan/auto-generate;
+    // 2026-04-09 (af56efb) paywall removal retired /subscribe (and the two
+    // post-checkout success pages that followed). MOH 404'd in GSC 7 days
+    // after a similar gap on 2026-05-05; shipping these proactively.
+    { source: "/plan/auto-generate", destination: "/plan-a-trip", permanent: true },
+    { source: "/subscribe", destination: "/", permanent: true },
+    { source: "/subscribe/success", destination: "/", permanent: true },
+    { source: "/plan/unlock-success", destination: "/", permanent: true },
   ],
   headers: async () => [
     {

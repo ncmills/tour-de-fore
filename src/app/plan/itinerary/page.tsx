@@ -12,6 +12,7 @@ interface Props {
 export const metadata = {
   title: "Your Itinerary | Tour de Fore",
   description: "Your complete golf trip itinerary — day-by-day schedule, pricing, and sharing.",
+  robots: { index: false, follow: false },
 };
 
 export default async function ItineraryPage({ searchParams }: Props) {
