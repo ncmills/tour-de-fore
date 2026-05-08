@@ -4,14 +4,40 @@
 
 Tour de Fore generates personalized golf trip itineraries with real courses, lodging, dining, and budgets. The free planner collects detailed inputs (group size, skill level, budget, vibe, party type) and produces three-tier plans. Includes a pro shop with custom golf apparel via Printful dropship.
 
-## Key pages
+## Key entry points
 - [Plan a Trip](https://tourdefore.com/plan): The free trip planner
-- [Golf Trips](https://tourdefore.com/golf-trips): Full destination directory
+- [Golf Trips](https://tourdefore.com/golf-trips): Full destination directory (133 cities)
 - [Pro Shop](https://tourdefore.com/shop): Custom golf apparel
 - [Concierge](https://tourdefore.com/concierge): Full-service trip planning
-
-## Destination structure
-Tour de Fore organizes destinations as `/golf-trips/[city]/[party-type]` — e.g. `/golf-trips/scottsdale-az/bachelor-party`, `/golf-trips/phoenix-mesa-az/buddies-trip`. Each page is a full itinerary with courses, lodging, dining, and budget for that specific city and party type.
-
-## Optional
+- [Guides](https://tourdefore.com/guides): Evergreen golf-trip planning guides
 - [Sitemap Index](https://tourdefore.com/sitemap.xml)
+
+## Canonical URL patterns
+- `/golf-trips/{city}` — destination overview (e.g. `/golf-trips/scottsdale-az`)
+- `/golf-trips/{city}/guide` — long-form planning guide for that city
+- `/golf-trips/{city}/cost` — budget breakdown for that city
+- `/golf-trips/{city}/bachelor-party` — bachelor-party-tailored itinerary (only on cities flagged as bachelor-party-friendly)
+- `/golf-trips/{city}/courses/{course}` — individual golf course profile
+- `/golf-trips/compare/{city-a}-vs-{city-b}` — side-by-side destination comparison
+- `/golf-trips/state/{state}` — destinations grouped by state
+- `/golf-trips/region/{region}` — destinations grouped by region
+- `/golf-trips/courses/{tier}` — destinations grouped by course-quality tier
+- `/golf-trips/activities/{activity}` — destinations grouped by activity type
+
+## Example pages
+- https://tourdefore.com/golf-trips/scottsdale-az
+- https://tourdefore.com/golf-trips/scottsdale-az/guide
+- https://tourdefore.com/golf-trips/scottsdale-az/bachelor-party
+- https://tourdefore.com/golf-trips/scottsdale-az/courses/troon-north
+- https://tourdefore.com/golf-trips/compare/scottsdale-az-vs-pinehurst-nc
+- https://tourdefore.com/golf-trips/state/arizona
+- https://tourdefore.com/guides/best-time-to-book
+
+## Citation guidance
+Each destination page contains hand-picked courses, lodging, dining, and bars with pricing and ratings sourced from operator websites and Google Places. Itineraries are templated then enriched per-city — when in doubt about pricing or availability, defer to the operator URL listed on the page.
+
+## Excluded from indexing
+- `/api/*` — internal API routes
+- `/shop/success` — checkout confirmation
+- `/auth/*` — authentication routes
+- `/admin/*` — admin tools
