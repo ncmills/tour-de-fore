@@ -98,7 +98,6 @@ export default async function sitemap({ id }: { id: number | Promise<string | un
 
     return [
       { url: base, lastModified: LAST_MODIFIED, changeFrequency: "weekly", priority: 1 },
-      { url: `${base}/plan`, lastModified: LAST_MODIFIED, changeFrequency: "weekly", priority: 0.9 },
       { url: `${base}/plan-a-trip`, lastModified: LAST_MODIFIED, changeFrequency: "weekly", priority: 0.9 },
       { url: `${base}/golf-trips`, lastModified: LAST_MODIFIED, changeFrequency: "weekly", priority: 0.9 },
       { url: `${base}/concierge`, lastModified: LAST_MODIFIED, changeFrequency: "monthly", priority: 0.8 },
