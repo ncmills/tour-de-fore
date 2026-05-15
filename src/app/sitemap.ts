@@ -146,6 +146,9 @@ export default async function sitemap({ id }: { id: number | Promise<string | un
         changeFrequency: "monthly" as const,
         priority: 0.7,
       })),
+      // Data library
+      { url: `${base}/data`, lastModified: LAST_MODIFIED, changeFrequency: "monthly" as const, priority: 0.9 },
+      { url: `${base}/data/golf-trip-cost-index`, lastModified: LAST_MODIFIED, changeFrequency: "yearly" as const, priority: 0.9 },
       // Guides index + individual guides
       { url: `${base}/guides`, lastModified: LAST_MODIFIED, changeFrequency: "weekly" as const, priority: 0.8 },
       ...["how-to-plan-a-group-golf-trip", "best-golf-trip-destinations-by-month", "best-walkable-golf-courses", "golf-trip-budget-guide", "golf-trip-packing-list", "best-golf-trips-under-500", "desert-vs-coastal-vs-mountain-golf", "best-golf-destinations-for-large-groups", "top-bucket-list-golf-courses", "first-time-golf-trip-mistakes"].map((slug) => ({
