@@ -17,6 +17,7 @@ import {
   metaDescription,
   STATE_NAMES,
   REGION_LABELS,
+  getComparePartners,
 } from "../helpers";
 
 export function generateStaticParams() {
@@ -505,15 +506,23 @@ export default async function DestinationPage({
             .filter((d) => d.region === dest.region && d.id !== dest.id)
             .sort((a, b) => b.courses.length - a.courses.length)
             .slice(0, 4);
-          const sameState = allDestinations.filter(
-            (d) => d.state === dest.state && d.id !== dest.id
-          );
-          const compareTarget =
-            sameState[0] ??
-            allDestinations.find(
-              (d) => d.region === dest.region && d.id !== dest.id
-            );
-          if (sameRegion.length === 0 && !compareTarget) return null;
+          // Expose up to 5 compare partners (was 1). Per 05-10 GSC memo,
+          // sitemap-only compare children were unindexed at low DA — they
+          // need crawl paths from indexed city hubs. Pulls only from
+          // pre-existing compare URLs (single source of truth in helpers).
+          const partnerIds = getComparePartners(dest.id);
+          const compareCandidates = partnerIds
+            .map((id) => allDestinations.find((d) => d.id === id))
+            .filter((d): d is NonNullable<typeof d> => Boolean(d))
+            .sort((a, b) => {
+              // Prefer same-state, then same-region, then by course count.
+              const aSame = a.state === dest.state ? 2 : a.region === dest.region ? 1 : 0;
+              const bSame = b.state === dest.state ? 2 : b.region === dest.region ? 1 : 0;
+              if (aSame !== bSame) return bSame - aSame;
+              return b.courses.length - a.courses.length;
+            })
+            .slice(0, 5);
+          if (sameRegion.length === 0 && compareCandidates.length === 0) return null;
           return (
             <section style={{ marginTop: "3rem", marginBottom: "2rem" }}>
               <h2 style={sectionTitle}>Similar Golf Trip Destinations</h2>
@@ -536,18 +545,27 @@ export default async function DestinationPage({
                   </a>
                 ))}
               </div>
-              {compareTarget && (
-                <div style={{ marginTop: "1.25rem" }}>
-                  <a
-                    href={`/golf-trips/compare/${dest.id}-vs-${compareTarget.id}`}
-                    style={{
-                      color: "#EA580C",
-                      textDecoration: "underline",
-                      fontSize: "0.9rem",
-                    }}
-                  >
-                    Compare {dest.city} vs {compareTarget.city} →
-                  </a>
+              {compareCandidates.length > 0 && (
+                <div style={{ marginTop: "1.5rem" }}>
+                  <h3 style={{ fontSize: "0.85rem", fontWeight: 700, color: "#A1A1AA", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "0.75rem" }}>
+                    Head-to-head comparisons
+                  </h3>
+                  <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                    {compareCandidates.map((d) => (
+                      <li key={d.id}>
+                        <a
+                          href={`/golf-trips/compare/${dest.id}-vs-${d.id}`}
+                          style={{
+                            color: "#EA580C",
+                            textDecoration: "none",
+                            fontSize: "0.95rem",
+                          }}
+                        >
+                          {dest.city} vs {d.city} →
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               )}
             </section>

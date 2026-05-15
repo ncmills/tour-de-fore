@@ -4,77 +4,10 @@ import Link from "next/link";
 import { allDestinations } from "@/data";
 import MulliganButton from "@/components/MulliganButton";
 import HomeButton from "@/components/HomeButton";
-import { metaDescription, REGION_SLUGS } from "../../helpers";
+import { metaDescription, REGION_SLUGS, generateComparePairs, getComparePartners } from "../../helpers";
 import type { Destination } from "@/data/types";
 
-// Generate top comparison pairs: same-region rivals + popular cross-region matchups
-function generatePairs(): { slug1: string; slug2: string }[] {
-  const pairs: { slug1: string; slug2: string }[] = [];
-  const seen = new Set<string>();
-
-  function addPair(s1: string, s2: string) {
-    const key = [s1, s2].sort().join("|");
-    if (!seen.has(key) && allDestinations.some((d) => d.id === s1) && allDestinations.some((d) => d.id === s2)) {
-      seen.add(key);
-      pairs.push({ slug1: s1, slug2: s2 });
-    }
-  }
-
-  // Popular destinations for cross-region matchups
-  const popular = [
-    "scottsdale-az", "myrtle-beach-sc", "pinehurst-nc", "kiawah-island-sc",
-    "bend-or", "bandon-or", "kohler-wi", "traverse-city-mi", "austin-tx",
-    "las-vegas-nv", "st-george-ut", "park-city-ut", "hilton-head-sc",
-    "napa-ca", "palm-springs-ca", "savannah-ga", "charleston-sc",
-    "boise-id", "steamboat-springs-co", "cape-cod-ma",
-  ];
-
-  // Cross-region popular matchups (~75 pairs)
-  for (let i = 0; i < popular.length; i++) {
-    for (let j = i + 1; j < popular.length; j++) {
-      addPair(popular[i], popular[j]);
-    }
-  }
-
-  // Same-region rivals: top 3 destinations per region paired with each other
-  const regionGroups = new Map<string, typeof allDestinations>();
-  for (const d of allDestinations) {
-    const r = d.region;
-    if (!regionGroups.has(r)) regionGroups.set(r, []);
-    regionGroups.get(r)!.push(d);
-  }
-
-  for (const [, dests] of regionGroups) {
-    // Sort by course count (proxy for popularity)
-    const top = dests.sort((a, b) => b.courses.length - a.courses.length).slice(0, 5);
-    for (let i = 0; i < top.length; i++) {
-      for (let j = i + 1; j < top.length; j++) {
-        addPair(top[i].id, top[j].id);
-      }
-    }
-  }
-
-  // Same-state rivals (e.g., Scottsdale vs Tucson vs Sedona)
-  const stateGroups = new Map<string, typeof allDestinations>();
-  for (const d of allDestinations) {
-    if (!stateGroups.has(d.state)) stateGroups.set(d.state, []);
-    stateGroups.get(d.state)!.push(d);
-  }
-
-  for (const [, dests] of stateGroups) {
-    if (dests.length < 2) continue;
-    const top = dests.sort((a, b) => b.courses.length - a.courses.length).slice(0, 4);
-    for (let i = 0; i < top.length; i++) {
-      for (let j = i + 1; j < top.length; j++) {
-        addPair(top[i].id, top[j].id);
-      }
-    }
-  }
-
-  return pairs;
-}
-
-const PAIRS = generatePairs();
+const PAIRS = generateComparePairs();
 
 export function generateStaticParams() {
   return PAIRS.map((p) => ({ matchup: `${p.slug1}-vs-${p.slug2}` }));
@@ -228,8 +161,67 @@ export default async function ComparePage({ params }: { params: Promise<{ matchu
           </Link>
         </div>
 
+        {/* See-also compare pages — surfaces sibling matchups so each
+            compare page acts as a crawl-graph hub. Per 05-10 GSC memo:
+            compare pages need internal-linking density to escape sitemap-
+            only purgatory at low domain authority. */}
+        {(() => {
+          const d1Partners = getComparePartners(dest1.id).filter((id) => id !== dest2.id);
+          const d2Partners = getComparePartners(dest2.id).filter((id) => id !== dest1.id);
+          const d1Picks = d1Partners.slice(0, 4).map((id) => allDestinations.find((d) => d.id === id)).filter(Boolean);
+          const d2Picks = d2Partners.slice(0, 4).map((id) => allDestinations.find((d) => d.id === id)).filter(Boolean);
+          if (d1Picks.length === 0 && d2Picks.length === 0) return null;
+          return (
+            <div style={{ borderTop: "1px solid #222", paddingTop: "2rem", marginTop: "2rem" }}>
+              <h3 style={{ fontSize: "0.85rem", fontWeight: 700, color: "#A1A1AA", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "1rem" }}>
+                Compare other golf trip destinations
+              </h3>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem 2rem" }}>
+                {d1Picks.length > 0 && (
+                  <div>
+                    <p style={{ fontSize: "0.8rem", color: "#A1A1AA", marginBottom: "0.5rem" }}>
+                      Other {dest1.city} matchups
+                    </p>
+                    <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                      {d1Picks.map((p) => (
+                        <li key={p!.id}>
+                          <Link
+                            href={`/golf-trips/compare/${dest1.id}-vs-${p!.id}`}
+                            style={{ color: "#EA580C", textDecoration: "none", fontSize: "0.9rem" }}
+                          >
+                            {dest1.city} vs {p!.city} →
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {d2Picks.length > 0 && (
+                  <div>
+                    <p style={{ fontSize: "0.8rem", color: "#A1A1AA", marginBottom: "0.5rem" }}>
+                      Other {dest2.city} matchups
+                    </p>
+                    <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                      {d2Picks.map((p) => (
+                        <li key={p!.id}>
+                          <Link
+                            href={`/golf-trips/compare/${dest2.id}-vs-${p!.id}`}
+                            style={{ color: "#EA580C", textDecoration: "none", fontSize: "0.9rem" }}
+                          >
+                            {dest2.city} vs {p!.city} →
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        })()}
+
         {/* Related */}
-        <div style={{ borderTop: "1px solid #222", paddingTop: "1.5rem", display: "flex", flexWrap: "wrap", gap: "1rem 1.5rem", fontSize: "0.9rem" }}>
+        <div style={{ borderTop: "1px solid #222", paddingTop: "1.5rem", marginTop: "2rem", display: "flex", flexWrap: "wrap", gap: "1rem 1.5rem", fontSize: "0.9rem" }}>
           <Link href={`/golf-trips/${dest1.id}`} style={{ color: "#EA580C", textDecoration: "none" }}>{dest1.city} Details &rarr;</Link>
           <Link href={`/golf-trips/${dest2.id}`} style={{ color: "#EA580C", textDecoration: "none" }}>{dest2.city} Details &rarr;</Link>
           <Link href="/golf-trips" style={{ color: "#A1A1AA", textDecoration: "none" }}>All Destinations</Link>

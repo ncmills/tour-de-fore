@@ -1,4 +1,80 @@
 import { Region } from "@/data/types";
+import { allDestinations } from "@/data";
+
+// ── Compare-page pair generation ──────────────────────────────────────────
+// Single source of truth for which /golf-trips/compare/[matchup] URLs exist.
+// Both the compare-page generator (generateStaticParams) and consumers like
+// /golf-trips/[slug] (which surface "head-to-head" links) must agree, or
+// city pages will link to 404 compare URLs.
+const POPULAR_COMPARE_DESTS = [
+  "scottsdale-az", "myrtle-beach-sc", "pinehurst-nc", "kiawah-island-sc",
+  "bend-or", "bandon-or", "kohler-wi", "traverse-city-mi", "austin-tx",
+  "las-vegas-nv", "st-george-ut", "park-city-ut", "hilton-head-sc",
+  "napa-ca", "palm-springs-ca", "savannah-ga", "charleston-sc",
+  "boise-id", "steamboat-springs-co", "cape-cod-ma",
+];
+
+export function generateComparePairs(): { slug1: string; slug2: string }[] {
+  const pairs: { slug1: string; slug2: string }[] = [];
+  const seen = new Set<string>();
+  function addPair(s1: string, s2: string) {
+    const key = [s1, s2].sort().join("|");
+    if (!seen.has(key) && allDestinations.some((d) => d.id === s1) && allDestinations.some((d) => d.id === s2)) {
+      seen.add(key);
+      pairs.push({ slug1: s1, slug2: s2 });
+    }
+  }
+  for (let i = 0; i < POPULAR_COMPARE_DESTS.length; i++) {
+    for (let j = i + 1; j < POPULAR_COMPARE_DESTS.length; j++) {
+      addPair(POPULAR_COMPARE_DESTS[i], POPULAR_COMPARE_DESTS[j]);
+    }
+  }
+  const regionGroups = new Map<string, typeof allDestinations>();
+  for (const d of allDestinations) {
+    if (!regionGroups.has(d.region)) regionGroups.set(d.region, []);
+    regionGroups.get(d.region)!.push(d);
+  }
+  for (const [, dests] of regionGroups) {
+    const top = [...dests].sort((a, b) => b.courses.length - a.courses.length).slice(0, 5);
+    for (let i = 0; i < top.length; i++) {
+      for (let j = i + 1; j < top.length; j++) {
+        addPair(top[i].id, top[j].id);
+      }
+    }
+  }
+  const stateGroups = new Map<string, typeof allDestinations>();
+  for (const d of allDestinations) {
+    if (!stateGroups.has(d.state)) stateGroups.set(d.state, []);
+    stateGroups.get(d.state)!.push(d);
+  }
+  for (const [, dests] of stateGroups) {
+    if (dests.length < 2) continue;
+    const top = [...dests].sort((a, b) => b.courses.length - a.courses.length).slice(0, 4);
+    for (let i = 0; i < top.length; i++) {
+      for (let j = i + 1; j < top.length; j++) {
+        addPair(top[i].id, top[j].id);
+      }
+    }
+  }
+  return pairs;
+}
+
+// Pre-computed once per build so per-destination lookups are O(1).
+const COMPARE_PARTNERS_BY_DEST: Map<string, string[]> = (() => {
+  const map = new Map<string, string[]>();
+  for (const { slug1, slug2 } of generateComparePairs()) {
+    if (!map.has(slug1)) map.set(slug1, []);
+    if (!map.has(slug2)) map.set(slug2, []);
+    map.get(slug1)!.push(slug2);
+    map.get(slug2)!.push(slug1);
+  }
+  return map;
+})();
+
+export function getComparePartners(destId: string): string[] {
+  return COMPARE_PARTNERS_BY_DEST.get(destId) ?? [];
+}
+
 
 export const REGION_SLUGS: Record<Region, string> = {
   Southwest: "southwest",
