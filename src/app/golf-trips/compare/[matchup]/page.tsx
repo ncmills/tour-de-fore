@@ -92,8 +92,14 @@ export async function generateMetadata({ params }: { params: Promise<{ matchup: 
   if (!slugs) return {};
   const [d1, d2] = slugs.map((s) => allDestinations.find((d) => d.id === s));
   if (!d1 || !d2) return {};
-  const title = `${d1.city} vs ${d2.city} Golf Trip — Side-by-Side Comparison | Tour de Fore`;
-  const description = `${d1.city} or ${d2.city} for your next golf trip? Compare courses, pricing, nightlife, lodging, and activities side by side.`;
+  // Pack real numbers into the snippet so it promises a specific
+  // verdict rather than a generic "compare side by side". GSC 2026-05-15:
+  // /golf-trips/compare/scottsdale-az-vs-myrtle-beach-sc was at pos 5.2 with
+  // 40 imp / 0 clk — page 1, no clicks → snippet bug, not ranking bug.
+  const d1Green = avg(d1.courses.map((c) => (c.greenFeeRange[0] + c.greenFeeRange[1]) / 2));
+  const d2Green = avg(d2.courses.map((c) => (c.greenFeeRange[0] + c.greenFeeRange[1]) / 2));
+  const title = `${d1.city} vs ${d2.city} Golf Trip: Courses, Cost & Verdict (2026)`;
+  const description = `${d1.city}: ${d1.courses.length} courses, $${d1Green} avg green fee. ${d2.city}: ${d2.courses.length} courses, $${d2Green} avg. Head-to-head on lodging, nightlife, and the verdict for your crew.`;
   return {
     title,
     description: metaDescription(description),
