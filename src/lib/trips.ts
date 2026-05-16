@@ -91,7 +91,7 @@ export const trips: Trip[] = [
     tagline: "Hell is empty, and all 16 devils are here.",
     dates: "July 7 \u2013 12, 2026",
     upcoming: true,
-    lodgingAddress: "1489 Shoreline Dr, Kohler, WI",
+    lodgingAddress: "1489 Lakeshore Drive, Cleveland, WI 53015",
     lodgingBookingUrl: "https://www.airbnb.com/trips/shared/874073c7-812c-457d-97c4-feec6f41e3e9",
     lodgingImage: "/photos/2026/kohler-lodging.png",
     heroImage: "/photos/2026/whistling-straits-hero.jpg",
