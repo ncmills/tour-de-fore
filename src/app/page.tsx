@@ -51,6 +51,15 @@ export default function Home() {
           <a href="/golf-trips/bend-or">Bend Golf Trip</a>
           <a href="/golf-trips/pinehurst-nc">Pinehurst Golf Trip</a>
           <a href="/golf-trips/kohler-wi">Kohler Golf Trip</a>
+          <a href="/golf-trips/state/arizona">Arizona Golf Trips (Cheaper Scottsdale Alternatives)</a>
+          <a href="/golf-trips/state/utah">Utah Golf Trips</a>
+          <a href="/golf-trips/state/nevada">Nevada Golf Trips</a>
+          <a href="/golf-trips/state/california">California Golf Trips</a>
+          <a href="/golf-trips/state/north-carolina">North Carolina Golf Trips</a>
+          <a href="/golf-trips/state/south-carolina">South Carolina Golf Trips</a>
+          <a href="/golf-trips/state/oregon">Oregon Golf Trips</a>
+          <a href="/golf-trips/compare/scottsdale-az-vs-tucson-az">Scottsdale vs Tucson</a>
+          <a href="/golf-trips/compare/scottsdale-az-vs-sedona-az">Scottsdale vs Sedona</a>
           <a href="/plan-a-trip">Plan a Golf Trip</a>
           <a href="/past-trips">Past Golf Trips</a>
           <a href="/shop">Pro Shop</a>
