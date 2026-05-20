@@ -109,6 +109,8 @@ export default async function sitemap({ id }: { id: number | Promise<string | un
       { url: `${base}/past-trips/2021`, lastModified: LAST_MODIFIED, changeFrequency: "yearly", priority: 0.5 },
       { url: `${base}/shop`, lastModified: LAST_MODIFIED, changeFrequency: "monthly", priority: 0.6 },
       { url: `${base}/site-map`, lastModified: LAST_MODIFIED, changeFrequency: "weekly", priority: 0.5 },
+      { url: `${base}/privacy`, lastModified: LAST_MODIFIED, changeFrequency: "yearly", priority: 0.3 },
+      { url: `${base}/terms`, lastModified: LAST_MODIFIED, changeFrequency: "yearly", priority: 0.3 },
       // Regions
       ...regionIds.map((slug) => ({
         url: `${base}/golf-trips/region/${slug}`,
