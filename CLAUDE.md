@@ -1,5 +1,8 @@
 # Tour de Fore — Claude Code Instructions
 
+## Cross-project inventory
+See `~/PROJECTS.md` for portfolio map and `~/.claude/CLAUDE.md` for file-routing convention (`~/work/<project>/...` for scratch, `~/work/handoffs/` for briefs, etc.).
+
 ## Venue Social-Proof / Place Enrichment
 
 Per-venue `googleRating` and `reviewCount` for non-course categories (dining, bars,
