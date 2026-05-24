@@ -42,6 +42,11 @@ function ProductCard({
         border: "1px solid rgba(212,168,67,0.15)",
         overflow: "hidden",
         boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
+        // Fill the grid cell so every card in a row is equal height — short cards
+        // (few colors) no longer leave dead space under them. CTA pins to bottom.
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
       {/* Product image from Printful — click to enlarge */}
@@ -66,7 +71,7 @@ function ProductCard({
       </div>
 
       {/* Product info */}
-      <div style={{ padding: "1.25rem 1.5rem" }}>
+      <div style={{ padding: "1.25rem 1.5rem", flex: 1, display: "flex", flexDirection: "column" }}>
         <h3 style={{
           fontFamily: "var(--font-shop-circus), serif",
           fontSize: "1.1rem",
@@ -136,8 +141,8 @@ function ProductCard({
           </div>
         )}
 
-        {/* Price + Add to cart */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        {/* Price + Add to cart — pinned to the bottom so CTAs align across a row */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "auto", paddingTop: "1rem" }}>
           <span style={{
             fontSize: "1.4rem",
             fontWeight: 800,
@@ -319,9 +324,9 @@ export default function ShopPageClient({ onBack }: { onBack?: () => void }) {
               }}>
                 {label}
               </h2>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: "2rem" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(280px, 100%), 1fr))", gap: "2rem", alignItems: "stretch" }}>
                 {catProducts.map((product, i) => (
-                  <motion.div key={product.id} transition={{ delay: 0.1 + i * 0.1 }}>
+                  <motion.div key={product.id} transition={{ delay: 0.1 + i * 0.1 }} style={{ height: "100%" }}>
                     <ProductCard
                       product={product}
                       onAdd={(color, size) => addToCart(product, color, size)}
