@@ -6,7 +6,8 @@
  *   npx tsx scripts/post-deploy-smoke.ts
  *
  * It asserts:
- *   1. /api/products returns >=10 products, each with net margin > 0, and each
+ *   1. /api/products returns >=10 products, each netting >=25% after Printful
+ *      cost + Stripe fees, and each
  *      product shows a DISTINCT preview image per color (no swatch falls back to
  *      a shared thumbnail, no two colors share an image).
  *   2. /api/health/orders returns 200 (all paid sessions reconcile)
@@ -23,6 +24,10 @@
 const BASE = "https://tourdefore.com";
 const STRIPE_PERCENT = 0.029;
 const STRIPE_FIXED = 0.30;
+// Policy floor: every product must net at least this after Printful cost + Stripe
+// fees. Catalog prices are computed to TARGET_MARGIN (0.25) in src/lib/printful.ts;
+// this gate enforces the same floor so prices can't silently drift below it.
+const MIN_NET_MARGIN = 0.25;
 
 // Brandon Bias's rescued order — fulfilled 2026-04-10, permanent as long as the
 // session exists in Stripe. Safe to use as a dedup probe forever.
@@ -146,12 +151,13 @@ async function main() {
       }
       const retail = p.price / 100;
       const net = retail - cost - (retail * STRIPE_PERCENT + STRIPE_FIXED);
-      const ok = net > 0;
+      const marginPct = net / retail;
+      const ok = marginPct >= MIN_NET_MARGIN;
       results.push({ id: p.id, retail, cost, net, ok });
       console.log(
-        `  ${ok ? "✓" : "✗"} ${p.id.padEnd(15)} retail $${retail.toFixed(2)}  cost $${cost.toFixed(2)}  net $${net.toFixed(2)}`
+        `  ${ok ? "✓" : "✗"} ${p.id.padEnd(15)} retail $${retail.toFixed(2)}  cost $${cost.toFixed(2)}  net $${net.toFixed(2)}  (${(marginPct * 100).toFixed(1)}%)`
       );
-      if (!ok) failures.push(`margin: ${p.id} retail $${retail} < cost+fees (net $${net.toFixed(2)})`);
+      if (!ok) failures.push(`margin: ${p.id} net margin ${(marginPct * 100).toFixed(1)}% < ${MIN_NET_MARGIN * 100}% floor (retail $${retail}, cost $${cost.toFixed(2)}, net $${net.toFixed(2)})`);
     }
   }
   console.log();

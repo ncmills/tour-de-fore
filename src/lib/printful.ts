@@ -63,13 +63,15 @@ function deriveDisplayName(name: string): string {
     .join(" ");
 }
 
-// Headwear Printful category IDs (hats, caps, beanies, headbands, truckers, etc.)
-const HEADWEAR_CATEGORIES = new Set([40, 42, 46, 217]);
+// Headwear Printful category IDs (hats, caps, beanies, headbands, truckers,
+// rope hats (41), visors (47), etc.)
+const HEADWEAR_CATEGORIES = new Set([40, 41, 42, 46, 47, 217]);
 
 // Accessories: drinkware, koozies, cards, etc.
 const ACCESSORIES_CATEGORIES = new Set([112, 238, 264, 292]);
 
-// ── Cost-aware pricing: fetch REAL decorated cost via estimate-costs, ensure 10% margin ──
+// ── Cost-aware pricing: fetch REAL decorated cost (incl. shipping + tax + digitization)
+//    via estimate-costs, then price to ensure TARGET_MARGIN (25%) net AFTER Stripe fees ──
 //
 // HISTORICAL BUG (fixed 2026-04-10): the previous implementation called
 // `/products/variant/{id}` which returns the BLANK CATALOG cost (unprinted item).
@@ -124,7 +126,7 @@ async function estimateSyncVariantCost(syncVariantId: number): Promise<number> {
 // Guarantees TARGET_MARGIN net profit after Stripe fees on the representative cost.
 // The 5% safety buffer absorbs state-to-state tax variance (CA > IL by ~3%) and
 // Printful price bumps between cache refreshes.
-const TARGET_MARGIN = 0.10;
+const TARGET_MARGIN = 0.25;
 const STRIPE_PERCENT = 0.029;
 const STRIPE_FIXED = 0.30;
 const COST_SAFETY_BUFFER = 0.05; // 5% cushion on top of estimate-costs total
