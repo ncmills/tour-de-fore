@@ -6,8 +6,8 @@
  *   npx tsx scripts/post-deploy-smoke.ts
  *
  * It asserts:
- *   1. /api/products returns >=10 products, each netting >=25% after Printful
- *      cost + Stripe fees, and each
+ *   1. /api/products returns >=10 products, each netting >=10% after Printful
+ *      cost (incl. shipping) + Stripe fees, and each
  *      product shows a DISTINCT preview image per color (no swatch falls back to
  *      a shared thumbnail, no two colors share an image).
  *   2. /api/health/orders returns 200 (all paid sessions reconcile)
@@ -24,10 +24,11 @@
 const BASE = "https://tourdefore.com";
 const STRIPE_PERCENT = 0.029;
 const STRIPE_FIXED = 0.30;
-// Policy floor: every product must net at least this after Printful cost + Stripe
-// fees. Catalog prices are computed to TARGET_MARGIN (0.25) in src/lib/printful.ts;
-// this gate enforces the same floor so prices can't silently drift below it.
-const MIN_NET_MARGIN = 0.25;
+// Policy floor: every product must net at least this after Printful cost (incl.
+// shipping) + Stripe fees — the "never lose money" guard. Catalog prices are
+// computed to TARGET_MARGIN (0.10) in src/lib/printful.ts; this gate enforces the
+// same floor so a cost change can't silently push a product underwater.
+const MIN_NET_MARGIN = 0.10;
 
 // Brandon Bias's rescued order — fulfilled 2026-04-10, permanent as long as the
 // session exists in Stripe. Safe to use as a dedup probe forever.

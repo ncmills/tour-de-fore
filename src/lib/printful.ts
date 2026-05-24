@@ -71,7 +71,9 @@ const HEADWEAR_CATEGORIES = new Set([40, 41, 42, 46, 47, 217]);
 const ACCESSORIES_CATEGORIES = new Set([112, 238, 264, 292]);
 
 // ── Cost-aware pricing: fetch REAL decorated cost (incl. shipping + tax + digitization)
-//    via estimate-costs, then price to ensure TARGET_MARGIN (25%) net AFTER Stripe fees ──
+//    via estimate-costs, then price to ensure TARGET_MARGIN (10%) net AFTER Stripe fees.
+//    Goal: never lose money. Shipping is in the cost basis, so it's baked into retail
+//    (customer pays it via the price — the shop advertises "free shipping included"). ──
 //
 // HISTORICAL BUG (fixed 2026-04-10): the previous implementation called
 // `/products/variant/{id}` which returns the BLANK CATALOG cost (unprinted item).
@@ -126,7 +128,7 @@ async function estimateSyncVariantCost(syncVariantId: number): Promise<number> {
 // Guarantees TARGET_MARGIN net profit after Stripe fees on the representative cost.
 // The 5% safety buffer absorbs state-to-state tax variance (CA > IL by ~3%) and
 // Printful price bumps between cache refreshes.
-const TARGET_MARGIN = 0.25;
+const TARGET_MARGIN = 0.10;
 const STRIPE_PERCENT = 0.029;
 const STRIPE_FIXED = 0.30;
 const COST_SAFETY_BUFFER = 0.05; // 5% cushion on top of estimate-costs total
