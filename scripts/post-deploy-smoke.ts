@@ -129,9 +129,21 @@ async function main() {
     for (const p of arr) {
       const sv = (p as unknown as { variants?: Array<{ syncVariantId: number }> }).variants?.[0]
         ?.syncVariantId;
-      if (!sv) continue;
+      if (!sv) {
+        console.log(`  ✗ ${p.id.padEnd(15)} no sync variant on first variant — cannot verify margin`);
+        failures.push(`margin: ${p.id} has no sync variant — cannot verify (broken product?)`);
+        continue;
+      }
       const cost = await estimateCost(sv, printfulToken);
-      if (cost <= 0) continue;
+      if (cost <= 0) {
+        // A failed estimate means the variant is unavailable/discontinued or
+        // estimate-costs errored — the margin was NOT verified. Skipping it here
+        // is the same false-pass class as skipping on missing env: a check that
+        // did not run is a FAILURE, not a pass.
+        console.log(`  ✗ ${p.id.padEnd(15)} cost estimate returned $${cost} — unfulfillable/unavailable variant, margin NOT verified`);
+        failures.push(`margin: ${p.id} cost estimate returned ${cost} — variant unavailable or estimate-costs error (unfulfillable product should be excluded from the catalog)`);
+        continue;
+      }
       const retail = p.price / 100;
       const net = retail - cost - (retail * STRIPE_PERCENT + STRIPE_FIXED);
       const ok = net > 0;

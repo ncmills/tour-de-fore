@@ -137,8 +137,15 @@ function priceWithMarginAfterFees(realCost: number): number {
 /* eslint-disable @typescript-eslint/no-explicit-any */
 async function transformProduct(result: any): Promise<ShopProduct | null> {
   const sp = result.sync_product;
-  const svs: any[] = result.sync_variants || [];
+  const allSvs: any[] = result.sync_variants || [];
 
+  // Only sell variants Printful can actually fulfill. `availability_status`
+  // catches restock gaps like "temporary_out_of_stock" (e.g. ROPE / Yellow-Navy)
+  // — a swatch the customer can select but Printful can't ship produces a failed
+  // order. Variants flagged anything other than "active" are dropped so the color
+  // never appears. (Catalog-level discontinuations report "active" but fail at
+  // estimate-costs — those are caught by the unfulfillable guard in fetchShopProducts.)
+  const svs = allSvs.filter((sv) => sv.availability_status === "active");
   if (svs.length === 0) return null;
 
   const retailPrice = parseFloat(svs[0].retail_price || "0");
@@ -237,27 +244,33 @@ export async function fetchShopProducts(): Promise<ShopProduct[]> {
       details.push(...batchResults);
     }
 
-    // Track products EXCLUDED due to guaranteed-loss pricing so we can alert Nick.
-    const excluded: Array<{ id: string; price: number; cost: number; netLoss: number }> = [];
+    // Track products EXCLUDED (negative margin OR unfulfillable) so we can alert Nick.
+    const excluded: Array<{ id: string; reason: string; price?: number; cost?: number; netLoss?: number }> = [];
 
     for (const detail of details) {
       if (!detail) continue;
       const product = await transformProduct(detail.result);
       if (!product) continue;
 
-      // SAFETY NET: never serve a product that would lose money.
-      // Recompute the expected net margin from the first variant's real cost.
-      const firstSync = (detail.result.sync_variants || [])[0];
-      if (firstSync?.id) {
-        const realCost = await estimateSyncVariantCost(firstSync.id);
-        if (realCost > 0) {
-          const retail = product.price / 100; // cents → dollars
-          const stripeFees = retail * STRIPE_PERCENT + STRIPE_FIXED;
-          const net = retail - realCost - stripeFees;
-          if (net <= 0) {
-            excluded.push({ id: product.id, price: retail, cost: realCost, netLoss: net });
-            continue; // DO NOT add to catalog — customers literally cannot buy a losing-money product
-          }
+      // SAFETY NET: never serve a product we can't fulfill or that loses money.
+      // Estimate the FIRST AVAILABLE variant (transformProduct already dropped
+      // out-of-stock ones). A failed estimate (cost 0) means the catalog variant
+      // is unavailable/discontinued even though the sync status reads "active"
+      // (e.g. BUCKET / Columbia Booney Hat) — selling it would produce an
+      // unfulfillable order, so it must NOT go live.
+      const firstSync = product.variants[0]?.syncVariantId;
+      if (firstSync) {
+        const realCost = await estimateSyncVariantCost(firstSync);
+        if (realCost <= 0) {
+          excluded.push({ id: product.id, reason: "unfulfillable — Printful cost estimate failed (discontinued/unavailable catalog variant)" });
+          continue; // DO NOT add — customers would place an order Printful cannot ship
+        }
+        const retail = product.price / 100; // cents → dollars
+        const stripeFees = retail * STRIPE_PERCENT + STRIPE_FIXED;
+        const net = retail - realCost - stripeFees;
+        if (net <= 0) {
+          excluded.push({ id: product.id, reason: "negative margin", price: retail, cost: realCost, netLoss: net });
+          continue; // DO NOT add — customers literally cannot buy a losing-money product
         }
       }
 
@@ -269,12 +282,12 @@ export async function fetchShopProducts(): Promise<ShopProduct[]> {
       import("./email").then(({ sendEmail }) => {
         sendEmail({
           to: "info@tourdefore.com",
-          subject: `CRITICAL: ${excluded.length} shop product(s) excluded — negative margin`,
-          html: `<p>The following shop products were HIDDEN from the catalog because their retail price is below Printful cost + Stripe fees:</p><pre>${JSON.stringify(excluded, null, 2)}</pre><p>Action required: raise retail prices or check Printful cost changes. The shop is still live but these items cannot be sold until fixed.</p>`,
+          subject: `CRITICAL: ${excluded.length} shop product(s) excluded (negative margin or unfulfillable)`,
+          html: `<p>The following shop products were HIDDEN from the catalog — either retail is below Printful cost + Stripe fees, or Printful cannot fulfill the variant (discontinued/out-of-stock catalog variant):</p><pre>${JSON.stringify(excluded, null, 2)}</pre><p>Action required: raise retail prices, or fix/replace the unavailable Printful variant (re-pick an in-stock product or color). The shop is still live but these items cannot be sold until fixed.</p>`,
           critical: true,
         }).catch(() => {});
       }).catch(() => {});
-      console.error("Shop products excluded due to negative margin:", excluded);
+      console.error("Shop products excluded (negative margin or unfulfillable):", excluded);
     }
 
     // Sort: apparel → headwear → accessories, alphabetical within each group
