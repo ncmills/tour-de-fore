@@ -6,14 +6,18 @@
  *   npx tsx scripts/post-deploy-smoke.ts
  *
  * It asserts:
- *   1. /api/products returns 10 products, each with net margin > 0
+ *   1. /api/products returns >=10 products, each with net margin > 0, and each
+ *      product shows a DISTINCT preview image per color (no swatch falls back to
+ *      a shared thumbnail, no two colors share an image).
  *   2. /api/health/orders returns 200 (all paid sessions reconcile)
  *   3. verify-order on a known session returns already_submitted
  *
  * Exits 0 on pass, 1 on any failure. Designed to be loud — if any check fails,
  * the deploy broke something and you should roll back immediately.
  *
- * Required env: ADMIN_SECRET (from .env.prod or Vercel env)
+ * Required env: PRINTFUL_API_TOKEN + ADMIN_SECRET (from .env.prod or Vercel env).
+ * A MISSING required var is treated as a FAILURE, not a skip — a check that did
+ * not run cannot be reported as a pass. Export them: `set -a && source .env.prod`.
  */
 
 const BASE = "https://tourdefore.com";
@@ -30,6 +34,9 @@ interface ProductCheck {
   id: string;
   price: number;
   syncVariantId: number;
+  previewUrl?: string;
+  colors?: string[];
+  colorPreviews?: Record<string, string>;
 }
 
 interface MarginResult {
@@ -84,7 +91,39 @@ async function main() {
   console.log(`  products returned: ${arr.length}`);
   if (arr.length < 10) failures.push(`products: expected >=10, got ${arr.length}`);
 
+  // Color-image distinctness: clicking a color swatch must show that color's hat.
+  // Each color needs its own preview; a missing preview falls back to the shared
+  // thumbnail (all swatches identical), and two colors sharing a URL is a dupe.
+  for (const p of arr) {
+    const colors = p.colors || [];
+    const cp = p.colorPreviews || {};
+    if (colors.length < 2) continue; // single-color products have nothing to switch
+    const missing = colors.filter((c) => !cp[c]);
+    const seen = new Map<string, string[]>();
+    for (const c of colors) {
+      if (!cp[c]) continue;
+      const list = seen.get(cp[c]) || [];
+      list.push(c);
+      seen.set(cp[c], list);
+    }
+    const dupes = [...seen.values()].filter((cs) => cs.length > 1);
+    const ok = missing.length === 0 && dupes.length === 0;
+    console.log(
+      `  ${ok ? "✓" : "✗"} ${p.id.padEnd(15)} ${colors.length} colors → ${new Set(colors.map((c) => cp[c] || "__fallback__")).size} distinct images`
+    );
+    if (missing.length) {
+      failures.push(`color-image: ${p.id} colors with no preview (fall back to thumbnail): ${missing.join(", ")}`);
+    }
+    for (const cs of dupes) {
+      failures.push(`color-image: ${p.id} colors share one image: ${cs.join(" = ")}`);
+    }
+  }
+
   const printfulToken = process.env.PRINTFUL_API_TOKEN;
+  if (!printfulToken) {
+    failures.push("PRINTFUL_API_TOKEN not set — margin check could NOT run (export it: set -a && source .env.prod)");
+    console.log("  ✗ PRINTFUL_API_TOKEN not set — margin check could not run (counts as FAILURE)");
+  }
   if (printfulToken) {
     const results: MarginResult[] = [];
     for (const p of arr) {
@@ -102,8 +141,6 @@ async function main() {
       );
       if (!ok) failures.push(`margin: ${p.id} retail $${retail} < cost+fees (net $${net.toFixed(2)})`);
     }
-  } else {
-    console.log("  PRINTFUL_API_TOKEN not set — skipping margin check");
   }
   console.log();
 
@@ -111,7 +148,8 @@ async function main() {
   console.log("[2/3] /api/health/orders");
   const adminSecret = process.env.ADMIN_SECRET;
   if (!adminSecret) {
-    console.log("  ADMIN_SECRET not set — skipping");
+    failures.push("ADMIN_SECRET not set — health/orders check could NOT run (export it: set -a && source .env.prod)");
+    console.log("  ✗ ADMIN_SECRET not set — health check could not run (counts as FAILURE)");
   } else {
     const res = await fetch(`${BASE}/api/health/orders`, {
       headers: { "x-admin-secret": adminSecret },
