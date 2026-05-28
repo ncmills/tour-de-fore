@@ -166,9 +166,9 @@ export const trips: Trip[] = [
       },
     ],
     restaurants: [
-      { name: "The Blind Horse", cuisine: "American", url: "https://theblindhorse.com", image: "https://fabulouswisconsin.com/wp-content/uploads/sites/3/2023/05/Blind-Horse-Restaurant-Winery-Kohler.jpg" },
-      { name: "River Wildlife", cuisine: "Rustic American", url: "https://www.americanclubresort.com/dining/river-wildlife", image: "https://s7d9.scene7.com/is/image/kohlerhospitality/aaf99614_rgb?wid=800" },
-      { name: "Private Chef @ House", cuisine: "Private Dining", note: "In-house private chef experience", image: "https://s7d9.scene7.com/is/image/kohlerhospitality/zab44850_rgb?wid=800" },
+      { name: "Sundance Saloon", cuisine: "Bar & Grill", url: "https://www.facebook.com/SundanceSaloonBarAndGrill/", note: "Wednesday — first-night burgers, beer, and live music in Sheboygan" },
+      { name: "Umi Sushi & Steak House", cuisine: "Sushi & Hibachi", note: "Friday — straight from the course, downtown Sheboygan" },
+      { name: "Chef Natalie — Nosh Custom Catering", cuisine: "Private Chef · Family Style", url: "https://www.noshcustomcatering.com/", note: "Thursday & Saturday — cooks our Lake Michigan catch at the lodge" },
     ],
     schedule: [
       {
@@ -182,33 +182,46 @@ export const trips: Trip[] = [
       {
         day: "Wednesday",
         date: "July 8",
-        subtitle: "Rest day — Lake Michigan charter & opening dinner",
+        subtitle: "Dawn charter · house & lake all day · Sundance Saloon and local bars at night — 🚗 rental cars today, no bus",
         items: [
           {
-            time: "9:00 AM",
+            time: "5:00 AM",
             activity: "Salmon & Trout Fishing Charter",
             detail: "Lake Michigan",
             type: "activity",
             image: "https://sheboygancharterfishing.com/wp-content/uploads/2025/02/2024salmonfishing.jpg",
             location: "Sheboygan, WI",
-            description: "Half-day out of Sheboygan trolling for king salmon, coho, and lake trout with a licensed charter captain.",
-            facts: ["Gear provided", "Up to 6 per boat", "Fish cleaned on return"],
+            description: "Pre-dawn launch out of Sheboygan, trolling for king salmon, coho, and lake trout with a licensed charter captain. We drive the rental cars to the harbor — no bus today. Whatever we land gets cleaned dockside and goes straight to Chef Natalie for Thursday's family-style dinner.",
+            facts: ["Gear provided", "Up to 6 per boat", "Catch cleaned dockside", "Goes to Chef Natalie"],
+          },
+          {
+            time: "11:00 AM",
+            activity: "House & Lake",
+            detail: "Swim, grill, recover",
+            type: "activity",
+            description: "Back to the lodge for the rest of the day — swim, lounge on the Lake Michigan shoreline, fire up the grill, and recover before the golf grind starts Thursday.",
           },
           {
             time: "7:00 PM",
-            activity: "The Blind Horse",
+            activity: "Sundance Saloon",
             detail: "Dinner",
             type: "dining",
-            image: "https://fabulouswisconsin.com/wp-content/uploads/sites/3/2023/05/Blind-Horse-Restaurant-Winery-Kohler.jpg",
-            location: "Kohler, WI",
-            description: "Farmhouse-chic Wisconsin dining with an on-site winery — steaks, lamb, and lake perch.",
+            location: "1509 S 12th St, Sheboygan, WI",
+            description: "Sheboygan bar-and-grill for an easy first night — burgers, comfort food, cold beer, and live music. No reservations, no dress code.",
+          },
+          {
+            time: "9:30 PM",
+            activity: "Local Bars",
+            detail: "Sheboygan",
+            type: "nightlife",
+            description: "Out into Sheboygan's bar scene from there to close out the rest day.",
           },
         ],
       },
       {
         day: "Thursday",
         date: "July 9",
-        subtitle: "Day 1 — Pete Dye's heathland + Elkhart Lake",
+        subtitle: "Day 1 — Pete Dye's heathland + Elkhart Lake — 🚌 bus to and from every stop",
         items: [
           {
             time: "7:10 AM",
@@ -236,11 +249,11 @@ export const trips: Trip[] = [
           },
           {
             time: "8:00 PM",
-            activity: "Private Chef @ House",
-            detail: "Dinner",
+            activity: "Chef Natalie — Nosh Custom Catering",
+            detail: "Dinner · family style",
             type: "dining",
-            image: "https://s7d9.scene7.com/is/image/kohlerhospitality/zab44850_rgb?wid=800",
-            description: "In-house private chef dinner back at the Shoreline Dr lodge — no drive, no wait, no menu.",
+            location: "At the lodge · Cleveland, WI",
+            description: "Chef Natalie of Nosh Custom Catering cooks Wednesday's catch and serves it family style at the lodge — no drive, no wait, no menu. The bus brings everyone back from Elkhart Lake straight to the table.",
           },
         ],
         dayTotal: "$9,000",
@@ -249,7 +262,7 @@ export const trips: Trip[] = [
       {
         day: "Friday",
         date: "July 10",
-        subtitle: "Day 2 — Nicklaus bull run + par-3 sunset at The Baths",
+        subtitle: "Day 2 — Nicklaus bull run + par-3 sunset at The Baths — 🚌 bus all day, straight to Umi after golf",
         items: [
           {
             time: "9:10 AM",
@@ -276,13 +289,12 @@ export const trips: Trip[] = [
             facts: ["Outdoor bar", "Natural hot springs", "1-acre putting green", "Walking only"],
           },
           {
-            time: "8:00 PM",
-            activity: "River Wildlife",
-            detail: "Dinner",
+            time: "8:30 PM",
+            activity: "Umi Sushi & Steak House",
+            detail: "Dinner · hibachi",
             type: "dining",
-            image: "https://s7d9.scene7.com/is/image/kohlerhospitality/aaf99614_rgb?wid=800",
-            location: "Kohler, WI",
-            description: "Rustic Kohler hunt-club dining — wild game, cast-iron cornbread, stone fireplace.",
+            location: "519 N 8th St, Sheboygan, WI",
+            description: "Straight from The Baths to downtown Sheboygan — the bus drops us at Umi for hibachi: teppanyaki chefs cooking at the table, plus a full sushi and steak menu. Late seating, so no rush off the par-3.",
           },
         ],
         dayTotal: "$6,300",
@@ -291,7 +303,7 @@ export const trips: Trip[] = [
       {
         day: "Saturday",
         date: "July 11",
-        subtitle: "Day 3 — Hidden gem sunrise + Top-50 Whistling Straits finale",
+        subtitle: "Day 3 — Hidden gem sunrise + Top-50 Whistling Straits finale — 🚌 bus to and from every stop",
         items: [
           {
             time: "8:00 AM",
@@ -319,11 +331,11 @@ export const trips: Trip[] = [
           },
           {
             time: "8:00 PM",
-            activity: "Private Chef @ House",
-            detail: "Dinner",
+            activity: "Chef Natalie — Nosh Custom Catering",
+            detail: "Dinner · family style",
             type: "dining",
-            image: "https://s7d9.scene7.com/is/image/kohlerhospitality/zab44850_rgb?wid=800",
-            description: "Closing night private chef dinner back at the lodge — trophies, cigars, and lies about the day's scores.",
+            location: "At the lodge · Cleveland, WI",
+            description: "Closing night — Chef Natalie back at the lodge with the last of the catch, served family style. Trophies, cigars, and lies about the day's scores.",
           },
         ],
         dayTotal: "$9,540",
