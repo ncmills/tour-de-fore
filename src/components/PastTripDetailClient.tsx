@@ -111,7 +111,9 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
       {trip.schedule.length > 0 && (
         <div style={{
           position: "sticky",
-          top: 0,
+          // On mobile the fixed mulligan/home buttons occupy the very top corners,
+          // so pin the day-pills bar just below them to avoid overlap.
+          top: isMobile ? "3.75rem" : 0,
           zIndex: 50,
           background: "rgba(0,0,0,0.85)",
           backdropFilter: "blur(10px)",

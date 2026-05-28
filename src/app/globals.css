@@ -332,6 +332,24 @@ body.menu-open {
     min-width: 44px !important;
     min-height: 44px !important;
   }
+  /* Raise mulligan into a compact top row that clears the day-pills bar */
+  .mulligan-wrap {
+    top: 0.7rem !important;
+  }
+
+  /* HomeButton — shrink to match mulligan + raise into the same top row.
+     Visuals shrink; the 44px tap target is preserved via inline min-width/height. */
+  .home-btn {
+    top: 0.7rem !important;
+    gap: 5px !important;
+  }
+  .home-btn .home-btn-text {
+    font-size: 0.8rem !important;
+  }
+  .home-btn svg {
+    width: 14px !important;
+    height: 18px !important;
+  }
 
   /* Bar scene buttons — position over drinks on mobile */
   .bar-btn-left {

@@ -4,6 +4,7 @@ export default function HomeButton({ side = "right" }: { side?: "left" | "right"
   return (
     <a
       href="/?skip=1"
+      className="home-btn"
       style={{
         position: "fixed",
         top: "1.2rem",
@@ -20,6 +21,7 @@ export default function HomeButton({ side = "right" }: { side?: "left" | "right"
       }}
     >
       <span
+        className="home-btn-text"
         style={{
           fontFamily: "var(--font-scrawl), cursive",
           fontSize: "1.15rem",
