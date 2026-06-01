@@ -42,6 +42,20 @@ export function generateComparePairs(): { slug1: string; slug2: string }[] {
       }
     }
   }
+  // Same-region density (2026-06-01): pair EVERY destination with its top-4
+  // region peers (by course count), not just the top-5 within each region. The
+  // top-5-combos-only graph left ~80% of the 133 cities with zero compare
+  // partners — so most city pages had no compare internal links and most compare
+  // URLs that could rank (the surface already hitting pos 1-5) never existed.
+  // Ported from BMHQ's generator per the 05-10 GSC memo: compare URLs need
+  // internal-link density to escape sitemap-only purgatory.
+  for (const [, dests] of regionGroups) {
+    const sorted = [...dests].sort((a, b) => b.courses.length - a.courses.length);
+    for (const d of sorted) {
+      const partners = sorted.filter((p) => p.id !== d.id).slice(0, 4);
+      for (const p of partners) addPair(d.id, p.id);
+    }
+  }
   const stateGroups = new Map<string, typeof allDestinations>();
   for (const d of allDestinations) {
     if (!stateGroups.has(d.state)) stateGroups.set(d.state, []);
