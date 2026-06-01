@@ -169,6 +169,7 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
+              "@id": "https://tourdefore.com/#org",
               name: "Tour de Fore",
               description: "Hell is empty, all the devils are here. Six years of fairways, friendships, and questionable handicaps.",
               url: "https://tourdefore.com",
@@ -182,6 +183,25 @@ export default function RootLayout({
               sameAs: [
                 "https://www.instagram.com/tourdefore",
               ],
+            }),
+          }}
+        />
+        {/* WebSite schema — pairs with Organization so Google models the site as a
+            named entity (helps a low-authority new domain establish identity).
+            Invisible; no SearchAction since there's no site-search endpoint. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "@id": "https://tourdefore.com/#website",
+              name: "Tour de Fore",
+              alternateName: "Tour de Fore — Golf Trip Planner",
+              description: "Golf trip planner covering 133 destinations across the US — every course, stay, bar, and bus, with custom day-by-day itineraries.",
+              url: "https://tourdefore.com",
+              publisher: { "@id": "https://tourdefore.com/#org" },
+              inLanguage: "en-US",
             }),
           }}
         />

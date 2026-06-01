@@ -1,15 +1,18 @@
 import { Suspense } from "react";
 import HomeClient from "@/components/HomeClient";
 
+// Title is keyword-led for search (the #1 on-page signal); the brand quote stays
+// in the description (still shows in SERP) and across the visible page + OG. This
+// is metadata only — the rendered homepage is unchanged. (SEO pass 2026-06-01.)
 export const metadata = {
-  title: "Tour de Fore | Hell is empty, all the devils are here.",
+  title: "Golf Trip Planner: 133 Destinations, Every Course & Stay | Tour de Fore",
   description:
-    "Hell is empty, all the devils are here. 133 destinations, every course, lodging, bar, and bus — built for the crew that takes golf trips seriously.",
+    "Hell is empty, all the devils are here. Plan a golf trip across 133 destinations — every course, stay, bar, and bus. Bachelor parties, buddy trips, and bucket-list runs for crews of 4 to 32.",
   alternates: { canonical: "https://tourdefore.com" },
   openGraph: {
     type: "website",
     url: "https://tourdefore.com",
-    title: "Tour de Fore | Hell is empty, all the devils are here.",
+    title: "Tour de Fore — Golf Trip Planner | 133 Destinations, Courses & Stays",
     description:
       "Hell is empty, all the devils are here. 133 destinations, every course, lodging, bar, and bus — built for the crew that takes golf trips seriously.",
   },
