@@ -1,5 +1,14 @@
 # Tour de Fore — Claude Code Instructions
 
+## Design system (read before any UI/copy/visual work)
+The brand is codified in **`docs/design-system.md`** (spec) with a rendered visual companion at
+**`docs/design-system.html`** (open in a browser for swatches, font specimens, live components).
+It documents the real tokens (`globals.css` `@theme`), the 12-font 3-tier hierarchy, component
+primitives, motion, and do/don't rules. **Reuse a primitive before inline-styling; ember
+`#EA580C` is the only accent.** It's descriptive of what already ships — update it when you change
+`globals.css` or `layout.tsx`. A viewable copy is synced to `~/Desktop/tdf-design-system/` for the
+Claude.ai app.
+
 ## Cross-project inventory
 See `~/PROJECTS.md` for portfolio map and `~/.claude/CLAUDE.md` for file-routing convention (`~/work/<project>/...` for scratch, `~/work/handoffs/` for briefs, etc.).
 
