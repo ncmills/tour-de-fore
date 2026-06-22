@@ -5,6 +5,7 @@ import { allDestinations } from "@/data";
 import MulliganButton from "@/components/MulliganButton";
 import HomeButton from "@/components/HomeButton";
 import { UnsplashHero } from "@/components/UnsplashHero";
+import ProseOverview from "@/components/ProseOverview";
 import unsplashCache from "@/data/unsplash-cache.json";
 import Link from "next/link";
 import {
@@ -81,8 +82,8 @@ export async function generateMetadata({
 
 /* ── Shared inline styles ── */
 const card: React.CSSProperties = {
-  background: "#111",
-  border: "1px solid #222",
+  background: "var(--color-bg-card)",
+  border: "1px solid var(--color-border)",
   borderRadius: 12,
   padding: "1.25rem",
 };
@@ -110,6 +111,7 @@ const grid: React.CSSProperties = {
   display: "grid",
   gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
   gap: "1rem",
+  alignItems: "start",
 };
 
 const label: React.CSSProperties = {
@@ -226,25 +228,10 @@ export default async function DestinationPage({
           {dest.description}
         </p>
 
-        {/* Optional editorial prose — when populated, breaks template duplication */}
+        {/* Optional editorial prose — when populated, breaks template duplication.
+            Collapsed by default so course data surfaces fast; full text stays in the DOM. */}
         {dest.proseOverview && (
-          <div
-            style={{
-              maxWidth: 760,
-              fontSize: "1rem",
-              color: "#C9C9CF",
-              lineHeight: 1.8,
-              marginBottom: "2rem",
-              borderLeft: "3px solid #EA580C",
-              paddingLeft: "1.25rem",
-            }}
-          >
-            {dest.proseOverview.split(/\n\n+/).map((para, i) => (
-              <p key={i} style={{ marginBottom: "1rem" }}>
-                {para.trim()}
-              </p>
-            ))}
-          </div>
+          <ProseOverview paragraphs={dest.proseOverview.split(/\n\n+/)} />
         )}
 
         <p
@@ -267,7 +254,7 @@ export default async function DestinationPage({
             color: "#A1A1AA",
             marginBottom: "3rem",
             paddingBottom: "1.5rem",
-            borderBottom: "1px solid #222",
+            borderBottom: "1px solid var(--color-border)",
           }}
         >
           <span>
@@ -390,8 +377,8 @@ export default async function DestinationPage({
                           key={a}
                           style={{
                             fontSize: "0.7rem",
-                            background: "#1a1a1a",
-                            border: "1px solid #333",
+                            background: "var(--color-bg)",
+                            border: "1px solid var(--color-border)",
                             borderRadius: 4,
                             padding: "2px 6px",
                             color: "#A1A1AA",
@@ -460,7 +447,7 @@ export default async function DestinationPage({
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.4rem" }}>
                       <h3 style={{ fontSize: "1rem", fontWeight: 600 }}>{b.name}</h3>
                       {b.lateNight && (
-                        <span style={badge("#7c3aed")}>Late Night</span>
+                        <span style={badge("var(--color-magenta)")}>Late Night</span>
                       )}
                     </div>
                     <span style={label}>{b.vibe.replace("-", " ")}</span>
@@ -596,7 +583,7 @@ export default async function DestinationPage({
         {/* ── Related Guides ── */}
         <div
           style={{
-            borderTop: "1px solid #222",
+            borderTop: "1px solid var(--color-border)",
             paddingTop: "1.5rem",
             display: "flex",
             flexWrap: "wrap",

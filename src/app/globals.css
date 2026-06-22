@@ -31,6 +31,11 @@
 
   --color-neon: #ff6a28;
 
+  /* Tag/category accents — sanctioned, brand-adjacent neon (see design-system.md §3).
+     Only for small category chips/badges; NOT general-purpose accents. */
+  --color-magenta: #db2777;
+  --color-amber: #f59e0b;
+
   --font-display: var(--font-space);
   --font-body: var(--font-inter);
   --font-accent: var(--font-instrument);
@@ -295,7 +300,9 @@ body.menu-open {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--color-neon, #ff6a28);
-  text-shadow: 0 0 7px rgba(255,106,40,0.9), 0 0 20px rgba(255,60,20,0.6), 0 0 40px rgba(255,40,10,0.3);
+  /* em-based so the glow scales with font-size — keeps big hero taglines glowing
+     while small marquee text (~0.85rem) stays crisp instead of muddy. */
+  text-shadow: 0 0 0.18em rgba(255,106,40,0.9), 0 0 0.5em rgba(255,60,20,0.6), 0 0 1em rgba(255,40,10,0.35);
 }
 
 /* ── Homepage nav links ── */

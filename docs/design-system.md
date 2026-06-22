@@ -95,9 +95,25 @@ All colors are `@theme inline` tokens in `globals.css`, consumable as Tailwind u
 | `--color-green` | `#2D5A3F` | Golf-course green — fairway/course accents. |
 | `--color-green-light` | `#3A7050` | Lighter course green. |
 
+### Tag/category accents (chips & badges ONLY)
+Trip-builder and destination pages tag venues/courses by category. These are the **only**
+sanctioned colors for those chips — brand-adjacent neon, *not* general-purpose accents. Never use
+them for buttons, links, or chrome.
+
+| Token | Hex | Used by |
+|-------|-----|---------|
+| `--color-magenta` | `#DB2777` | **Nightlife / "Late Night"** chips — neon dive-bar pink. (Replaced the off-brand `#7c3aed` purple, 2026-06-22.) |
+| `--color-amber` | `#F59E0B` | **"Balances Budget"** / value-signal chips. (Replaced the off-brand `#93c5fd` blue, 2026-06-22.) |
+
+Low-alpha chip text variants live in `TripBuilderClient.tsx` `TAG_COLORS` (`magenta` → `#f472b6`,
+`amber` → `#fbbf24`). Tier/notability chips reuse `gold`; value/walkable chips reuse `green`; the
+hero "pick" reuses `accent`/`red`.
+
 **Rules**
 - **Ember `#EA580C` is the only accent.** Don't introduce blues, purples, or a second "brand"
-  color. Gold/green are *secondary* and scene-specific, not general-purpose accents.
+  color. Gold/green are *secondary* and scene-specific, not general-purpose accents. The
+  `--color-magenta`/`--color-amber` tag tokens are the **sole** exception — small category chips
+  only, never chrome.
 - The three ember aliases (`accent` / `fire` / `ember`) are intentional synonyms — pick
   `--color-accent` for new work; the others exist for legacy call-sites.
 - `--color-surface` (cream) is the only light value — never use it as a general text color on dark.

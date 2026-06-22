@@ -399,7 +399,7 @@ export default async function GuidePage({
                 <div key={b.name} style={card}>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.3rem" }}>
                     <h3 style={{ fontSize: "0.95rem", fontWeight: 600 }}>{b.name}</h3>
-                    {b.lateNight && <span style={{ fontSize: "0.65rem", fontWeight: 700, padding: "2px 6px", borderRadius: 4, background: "#7c3aed", color: "#fff" }}>Late Night</span>}
+                    {b.lateNight && <span style={{ fontSize: "0.65rem", fontWeight: 700, padding: "2px 6px", borderRadius: 4, background: "var(--color-magenta)", color: "#fff" }}>Late Night</span>}
                   </div>
                   <span style={label}>{b.vibe.replace("-", " ")}</span>
                   <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.85rem", marginTop: "0.3rem" }}>{b.highlight}</p>

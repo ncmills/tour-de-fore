@@ -76,9 +76,9 @@ const TAG_COLORS: Record<string, { bg: string; text: string }> = {
   green:  { bg: "rgba(45,90,63,0.35)", text: "#6ee7b7" },
   gold:   { bg: "rgba(212,168,67,0.2)", text: "#D4A843" },
   orange: { bg: "rgba(234,88,12,0.15)", text: "#fb923c" },
-  blue:   { bg: "rgba(59,130,246,0.15)", text: "#93c5fd" },
+  amber:  { bg: "rgba(245,158,11,0.15)", text: "#fbbf24" },
   red:    { bg: "rgba(220,38,38,0.18)", text: "#EA580C" },
-  purple: { bg: "rgba(147,51,234,0.15)", text: "#c084fc" },
+  magenta:{ bg: "rgba(219,39,119,0.15)", text: "#f472b6" },
 };
 
 // ── Fallback golf course images (from courses with known good OG images) ──
@@ -633,8 +633,8 @@ export default function TripBuilderClient({
       // Insight-driven tags
       if (insights) {
         const ci = lookupCourse(insights, c.name);
-        if (ci?.hypeTag) t.push({ label: ci.hypeTag, color: "purple" });
-        if (ci?.rankNote) t.push({ label: "TOP 100 PUBLIC", color: "purple" });
+        if (ci?.hypeTag) t.push({ label: ci.hypeTag, color: "gold" });
+        if (ci?.rankNote) t.push({ label: "TOP 100 PUBLIC", color: "gold" });
         if (ci?.walkable) t.push({ label: "WALKABLE", color: "green" });
       }
       if (c.id === cheapest.id && parseDollars(c.price) > 0) t.push({ label: "BUDGET PICK", color: "green" });
@@ -642,7 +642,7 @@ export default function TripBuilderClient({
       if (lodgingIsExpensive && parseDollars(c.price) > 0) {
         const fee = parseDollars(c.price);
         const avg = allCourses.reduce((s, x) => s + parseDollars(x.price), 0) / allCourses.length;
-        if (fee < avg * 0.85) t.push({ label: "BALANCES BUDGET", color: "blue" });
+        if (fee < avg * 0.85) t.push({ label: "BALANCES BUDGET", color: "amber" });
       }
       if (t.length > 0) tags[c.id] = capTags(t);
     }
@@ -707,7 +707,7 @@ export default function TripBuilderClient({
       if (isTdf) t.push({ label: "TDF PICK", color: "red" });
       if (insights) {
         const bi = lookupBar(insights, b.name);
-        if (bi?.lateNight) t.push({ label: "LATE NIGHT", color: "purple" });
+        if (bi?.lateNight) t.push({ label: "LATE NIGHT", color: "magenta" });
         if (bi?.walkableFromDowntown) t.push({ label: "WALKABLE", color: "green" });
       }
       if (t.length > 0) tags[b.id] = capTags(t);
