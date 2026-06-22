@@ -78,6 +78,7 @@ All colors are `@theme inline` tokens in `globals.css`, consumable as Tailwind u
 | `--color-text` | `#FAFAFA` | Primary text. |
 | `--color-text-muted` | `#A1A1AA` | Secondary / supporting copy. |
 | `--color-text-dim` | `#71717A` | Tertiary / captions / disabled. |
+| `--color-text-prose` | `#C9C9CF` | Long-form editorial body (e.g. `ProseOverview`) — softer than `text`, brighter than `muted`. |
 
 ### Accent — **ember is the one true accent**
 | Token | Hex | Role |
@@ -94,6 +95,7 @@ All colors are `@theme inline` tokens in `globals.css`, consumable as Tailwind u
 | `--color-gold-dim` | `#B8922F` | Dimmer gold. |
 | `--color-green` | `#2D5A3F` | Golf-course green — fairway/course accents. |
 | `--color-green-light` | `#3A7050` | Lighter course green. |
+| `--color-success` | `#4ade80` | **Positive / value / money / confirmation** — distinct from the dark course greens. Prices, budget pills, RSVP-in, compare winners. The de-facto app-wide "good news" green; canonicalized as a token 2026-06-22 (≈18 files still hold the literal `#4ade80` — migrate opportunistically). |
 
 ### Tag/category accents (chips & badges ONLY)
 Trip-builder and destination pages tag venues/courses by category. These are the **only**
