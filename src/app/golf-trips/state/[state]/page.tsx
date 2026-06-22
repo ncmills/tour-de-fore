@@ -241,7 +241,7 @@ export default async function StatePage({
                       </div>
                       <div style={{ display: "flex", gap: "1.25rem", fontSize: "0.85rem", color: "#A1A1AA" }}>
                         <div>
-                          <div style={{ color: "#4ade80", fontWeight: 700, fontSize: "0.95rem" }}>
+                          <div style={{ color: "var(--color-success)", fontWeight: 700, fontSize: "0.95rem" }}>
                             ${delta} cheaper
                           </div>
                           <div style={{ fontSize: "0.7rem", color: "#71717A", textTransform: "uppercase", letterSpacing: "0.06em" }}>

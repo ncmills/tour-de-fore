@@ -55,9 +55,9 @@ function avg(arr: number[]) {
 function CompareRow({ label: rowLabel, left, right, winner }: { label: string; left: string; right: string; winner: "left" | "right" | "tie" }) {
   return (
     <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", gap: "1rem", padding: "0.75rem 0", borderBottom: "1px solid rgba(255,255,255,0.05)", alignItems: "center" }}>
-      <span style={{ color: winner === "left" ? "#4ade80" : "rgba(255,255,255,0.5)", fontSize: "0.9rem", fontWeight: winner === "left" ? 600 : 400 }}>{left}</span>
+      <span style={{ color: winner === "left" ? "var(--color-success)" : "rgba(255,255,255,0.5)", fontSize: "0.9rem", fontWeight: winner === "left" ? 600 : 400 }}>{left}</span>
       <span style={{ fontSize: "0.7rem", color: "#A1A1AA", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 700, textAlign: "center", minWidth: 120 }}>{rowLabel}</span>
-      <span style={{ color: winner === "right" ? "#4ade80" : "rgba(255,255,255,0.5)", fontSize: "0.9rem", fontWeight: winner === "right" ? 600 : 400, textAlign: "right" }}>{right}</span>
+      <span style={{ color: winner === "right" ? "var(--color-success)" : "rgba(255,255,255,0.5)", fontSize: "0.9rem", fontWeight: winner === "right" ? 600 : 400, textAlign: "right" }}>{right}</span>
     </div>
   );
 }

@@ -159,7 +159,7 @@ export default async function CostPage({
           <h2 style={sectionTitle}>Per-Person Estimate (3 Nights, 2 Rounds, Group of 8)</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "1rem" }}>
             {[
-              { label: "Budget", total: budgetTotal, green: cheapestGreen, lodging: Math.round((cheapestLodging * 3) / 8), food: 40 * 3, color: "#4ade80" },
+              { label: "Budget", total: budgetTotal, green: cheapestGreen, lodging: Math.round((cheapestLodging * 3) / 8), food: 40 * 3, color: "var(--color-success)" },
               { label: "Mid-Range", total: midTotal, green: midGreen, lodging: Math.round((midLodging * 3) / 8), food: 60 * 3, color: "#EA580C" },
               { label: "Premium", total: premiumTotal, green: topGreen, lodging: Math.round((topLodging * 3) / 8), food: 90 * 3, color: "#D4A843" },
             ].map((tier) => (
@@ -228,7 +228,7 @@ export default async function CostPage({
                       <td style={{ padding: "0.5rem", color: "rgba(255,255,255,0.7)" }}>{l.type.replace("-", " ")}</td>
                       <td style={{ padding: "0.5rem", textAlign: "right", color: "rgba(255,255,255,0.5)" }}>{l.sleeps[0]}–{l.sleeps[1]}</td>
                       <td style={{ padding: "0.5rem", textAlign: "right", color: "rgba(255,255,255,0.5)" }}>${l.nightlyRange[0]}–${l.nightlyRange[1]}</td>
-                      <td style={{ padding: "0.5rem", textAlign: "right", color: "#4ade80" }}>${l.perPerson4}/pp</td>
+                      <td style={{ padding: "0.5rem", textAlign: "right", color: "var(--color-success)" }}>${l.perPerson4}/pp</td>
                       <td style={{ padding: "0.5rem", textAlign: "right", color: "#EA580C" }}>${l.perPerson8}/pp</td>
                       <td style={{ padding: "0.5rem", textAlign: "right", color: "#D4A843" }}>${l.perPerson12}/pp</td>
                     </tr>

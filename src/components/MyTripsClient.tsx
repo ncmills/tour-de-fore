@@ -398,7 +398,7 @@ export default function MyTripsClient({
                     style={inputStyle}
                   />
                   {passwordError && <p style={{ color: "rgba(220,38,38,0.9)", fontSize: "0.8rem", margin: 0 }}>{passwordError}</p>}
-                  {passwordSuccess && <p style={{ color: "rgba(74,222,128,0.9)", fontSize: "0.8rem", margin: 0 }}>Password updated.</p>}
+                  {passwordSuccess && <p style={{ color: "color-mix(in srgb, var(--color-success) 90%, transparent)", fontSize: "0.8rem", margin: 0 }}>Password updated.</p>}
                   <div style={{ display: "flex", gap: "0.5rem" }}>
                     <button onClick={handleChangePassword} disabled={passwordSaving} style={primaryBtnStyle}>
                       {passwordSaving ? "Saving..." : "Update Password"}
@@ -442,13 +442,13 @@ export default function MyTripsClient({
               background: isUnlimited
                 ? "rgba(212,168,67,0.08)"
                 : canPlan
-                  ? "rgba(74,222,128,0.06)"
+                  ? "color-mix(in srgb, var(--color-success) 6%, transparent)"
                   : "rgba(220,38,38,0.06)",
               border: `1px solid ${
                 isUnlimited
                   ? "rgba(212,168,67,0.25)"
                   : canPlan
-                    ? "rgba(74,222,128,0.2)"
+                    ? "color-mix(in srgb, var(--color-success) 20%, transparent)"
                     : "rgba(220,38,38,0.25)"
               }`,
               display: "flex",
@@ -466,7 +466,7 @@ export default function MyTripsClient({
                 background: isUnlimited
                   ? "rgba(212,168,67,0.8)"
                   : canPlan
-                    ? "rgba(74,222,128,0.8)"
+                    ? "color-mix(in srgb, var(--color-success) 80%, transparent)"
                     : "rgba(220,38,38,0.8)",
                 display: "inline-block",
                 flexShrink: 0,

@@ -188,7 +188,7 @@ export default function ShareableTripClient({
             <motion.p
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              style={{ fontSize: "1.2rem", color: rsvp === "in" ? "#4ade80" : rsvp === "maybe" ? "#f97316" : "rgba(255,255,255,0.5)" }}
+              style={{ fontSize: "1.2rem", color: rsvp === "in" ? "var(--color-success)" : rsvp === "maybe" ? "#f97316" : "rgba(255,255,255,0.5)" }}
             >
               {rsvp === "in" ? "You're in! See you on the course." : rsvp === "maybe" ? "We'll keep your spot warm." : "Next time, devil."}
             </motion.p>

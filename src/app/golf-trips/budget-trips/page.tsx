@@ -54,7 +54,7 @@ export default function BudgetTripsPage() {
             <Link key={d.id} href={`/golf-trips/${d.id}`} style={{ display: "block", padding: "1.25rem", background: "#111", border: "1px solid #222", borderRadius: 10, textDecoration: "none", color: "#fff" }}>
               <strong style={{ fontSize: "0.95rem" }}>{d.city}, {d.state}</strong>
               <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.8rem", margin: "0.3rem 0" }}>{d.tagline}</p>
-              <div style={{ display: "flex", gap: "1rem", fontSize: "0.75rem", color: "#4ade80", marginTop: "0.5rem" }}>
+              <div style={{ display: "flex", gap: "1rem", fontSize: "0.75rem", color: "var(--color-success)", marginTop: "0.5rem" }}>
                 <span>Green fees from ${cheapestFee}</span>
                 <span>Lodging from ${cheapestLodging}/night</span>
               </div>

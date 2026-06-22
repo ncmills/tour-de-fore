@@ -167,7 +167,7 @@ export default function GolfTripsIndex() {
           <h2 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1.5rem", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "1.5rem" }}>Popular Collections</h2>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
             <a href="/golf-trips/bachelor-party" style={{ padding: "10px 24px", background: "rgba(234,88,12,0.08)", border: "1px solid rgba(234,88,12,0.3)", borderRadius: 8, textDecoration: "none", color: "#EA580C", fontSize: "0.9rem", fontWeight: 600 }}>Bachelor Party</a>
-            <a href="/golf-trips/budget-trips" style={{ padding: "10px 24px", background: "rgba(74,222,128,0.08)", border: "1px solid rgba(74,222,128,0.3)", borderRadius: 8, textDecoration: "none", color: "#4ade80", fontSize: "0.9rem", fontWeight: 600 }}>Budget Friendly</a>
+            <a href="/golf-trips/budget-trips" style={{ padding: "10px 24px", background: "color-mix(in srgb, var(--color-success) 8%, transparent)", border: "1px solid color-mix(in srgb, var(--color-success) 30%, transparent)", borderRadius: 8, textDecoration: "none", color: "var(--color-success)", fontSize: "0.9rem", fontWeight: 600 }}>Budget Friendly</a>
             <a href="/golf-trips/bucket-list-trips" style={{ padding: "10px 24px", background: "rgba(212,168,67,0.08)", border: "1px solid rgba(212,168,67,0.3)", borderRadius: 8, textDecoration: "none", color: "#D4A843", fontSize: "0.9rem", fontWeight: 600 }}>Bucket List</a>
           </div>
         </div>

@@ -284,7 +284,7 @@ function BudgetGuide() {
               <strong>{name}</strong>
               <div style={{ display: "flex", gap: "1.5rem", fontSize: "0.85rem", color: "rgba(255,255,255,0.5)" }}>
                 <span>Avg green fee: <strong style={{ color: "#EA580C" }}>${rGreenAvg}</strong></span>
-                <span>Lodging from: <strong style={{ color: "#4ade80" }}>${rLodgingAvg}/night</strong></span>
+                <span>Lodging from: <strong style={{ color: "var(--color-success)" }}>${rLodgingAvg}/night</strong></span>
               </div>
             </Link>
           );
@@ -357,7 +357,7 @@ function Under500() {
           <Link key={d.id} href={`/golf-trips/${d.id}/cost`} style={card}>
             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.3rem" }}>
               <strong>{d.city}, {d.state}</strong>
-              <span style={{ color: "#4ade80", fontWeight: 700 }}>${Math.round(estimate)}/pp</span>
+              <span style={{ color: "var(--color-success)", fontWeight: 700 }}>${Math.round(estimate)}/pp</span>
             </div>
             <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.8rem" }}>
               Green fees from ${cheapGreen} · Lodging from ${cheapLodging}/night · {d.courses.length} courses
@@ -373,7 +373,7 @@ function DesertVsCoastalVsMountain() {
   const styles = [
     { style: "desert", label: "Desert Golf", description: "Target golf through cacti and red rock. Dramatic elevation changes, firm fairways, and no rough — just sand. Best in spring and fall when temps are bearable.", color: "#EA580C" },
     { style: "coastal", label: "Coastal Golf", description: "Wind-swept links and ocean views. Firm, fast playing surfaces with natural contours. The closest thing to Scottish golf in America.", color: "#38bdf8" },
-    { style: "mountain", label: "Mountain Golf", description: "Elevation means distance — your 7-iron suddenly goes 165. Stunning mountain backdrops, cool summer temps, and courses carved through pine forests.", color: "#4ade80" },
+    { style: "mountain", label: "Mountain Golf", description: "Elevation means distance — your 7-iron suddenly goes 165. Stunning mountain backdrops, cool summer temps, and courses carved through pine forests.", color: "var(--color-success)" },
   ];
 
   return (

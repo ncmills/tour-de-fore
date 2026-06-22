@@ -1063,7 +1063,7 @@ export default function TripBuilderClient({
           gap: "1rem",
         }}>
           {autoSaved && (
-            <span style={{ fontSize: "0.75rem", color: "rgba(74,222,128,0.8)", fontFamily: "var(--font-inter), sans-serif", transition: "opacity 0.3s", whiteSpace: "nowrap" }}>
+            <span style={{ fontSize: "0.75rem", color: "color-mix(in srgb, var(--color-success) 80%, transparent)", fontFamily: "var(--font-inter), sans-serif", transition: "opacity 0.3s", whiteSpace: "nowrap" }}>
               Saved &#10003;
             </span>
           )}

@@ -98,7 +98,7 @@ export default async function CoursePage({ params }: Props) {
             </span>
           )}
           {course.walkable && (
-            <span style={{ background: "rgba(74,222,128,0.1)", color: "#4ade80", padding: "4px 12px", borderRadius: 4, fontSize: "0.75rem" }}>Walkable</span>
+            <span style={{ background: "color-mix(in srgb, var(--color-success) 10%, transparent)", color: "var(--color-success)", padding: "4px 12px", borderRadius: 4, fontSize: "0.75rem" }}>Walkable</span>
           )}
         </div>
 

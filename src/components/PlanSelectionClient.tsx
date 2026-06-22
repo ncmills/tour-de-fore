@@ -51,7 +51,7 @@ function DestinationCard({
     }
   };
 
-  const accentColor = priceKey === "budget" ? "#4ade80" : priceKey === "premium" ? "#ef4444" : "#f97316";
+  const accentColor = priceKey === "budget" ? "var(--color-success)" : priceKey === "premium" ? "#ef4444" : "#f97316";
   const isMid = priceKey === "mid";
 
   return (

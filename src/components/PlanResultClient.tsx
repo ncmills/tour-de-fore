@@ -55,7 +55,7 @@ const tierLabels: Record<TripTier, string> = {
 };
 
 const tierColors: Record<TripTier, string> = {
-  imp: "#4ade80",
+  imp: "var(--color-success)",
   devil: "#f97316",
   "demon-king": "#ef4444",
 };
@@ -142,7 +142,7 @@ function AlternativeCards({ items, isEstimate }: { items?: SectionAlternative[];
                   fontSize: 11,
                   textTransform: "uppercase",
                   letterSpacing: "0.1em",
-                  color: isUpgrade ? "#f97316" : "#4ade80",
+                  color: isUpgrade ? "#f97316" : "var(--color-success)",
                 }}
               >
                 {isUpgrade ? "Upgrade" : "Downgrade"}
@@ -158,7 +158,7 @@ function AlternativeCards({ items, isEstimate }: { items?: SectionAlternative[];
               style={{
                 fontSize: 14,
                 fontWeight: 600,
-                color: alt.costDelta.startsWith("-") ? "#4ade80" : "#f97316",
+                color: alt.costDelta.startsWith("-") ? "var(--color-success)" : "#f97316",
               }}
             >
               {alt.costDelta}
@@ -1069,7 +1069,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
                   <span style={{ color: "rgba(239,68,68,0.8)", fontSize: 12 }}>{emailError}</span>
                 )}
                 {emailSent && (
-                  <span style={{ color: "rgba(74,222,128,0.8)", fontSize: 12 }}>Plans sent to the crew!</span>
+                  <span style={{ color: "color-mix(in srgb, var(--color-success) 80%, transparent)", fontSize: 12 }}>Plans sent to the crew!</span>
                 )}
               </div>
             </div>
