@@ -95,7 +95,7 @@ All colors are `@theme inline` tokens in `globals.css`, consumable as Tailwind u
 | `--color-gold-dim` | `#B8922F` | Dimmer gold. |
 | `--color-green` | `#2D5A3F` | Golf-course green — fairway/course accents. |
 | `--color-green-light` | `#3A7050` | Lighter course green. |
-| `--color-success` | `#4ade80` | **Positive / value / money / confirmation** — distinct from the dark course greens. Prices, budget pills, RSVP-in, compare winners. The de-facto app-wide "good news" green; canonicalized as a token 2026-06-22 (≈18 files still hold the literal `#4ade80` — migrate opportunistically). |
+| `--color-success` | `#4ade80` | **Positive / value / money / confirmation** — distinct from the dark course greens. Prices, budget pills, RSVP-in, compare winners. The de-facto app-wide "good news" green; tokenized 2026-06-22 and **fully migrated** across all feature code (rgba tints use `color-mix(in srgb, var(--color-success) N%, transparent)`). Only two literals remain by design: this token def + the `PlanWizardClient` confetti gag. |
 
 ### Tag/category accents (chips & badges ONLY)
 Trip-builder and destination pages tag venues/courses by category. These are the **only**
