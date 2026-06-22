@@ -27,7 +27,7 @@ export default function ProseOverview({ paragraphs }: { paragraphs: string[] }) 
         style={{
           position: "relative",
           fontSize: "1rem",
-          color: "#C9C9CF",
+          color: "var(--color-text-prose)",
           lineHeight: 1.8,
           borderLeft: "3px solid var(--color-accent)",
           paddingLeft: "1.25rem",

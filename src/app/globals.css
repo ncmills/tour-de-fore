@@ -13,6 +13,7 @@
   --color-text: #FAFAFA;
   --color-text-muted: #A1A1AA;
   --color-text-dim: #71717A;
+  --color-text-prose: #C9C9CF; /* long-form editorial body — softer than text, brighter than muted */
 
   --color-accent: #EA580C;
   --color-accent-hover: #C2410C;
@@ -25,6 +26,11 @@
 
   --color-green: #2d5a3f;
   --color-green-light: #3a7050;
+
+  /* De-facto "positive / value / money / confirmation" green — distinct from the
+     dark course greens above. Used app-wide for prices, budget, RSVP-in, compare
+     winners (see design-system.md §3). */
+  --color-success: #4ade80;
 
   --color-ember: #EA580C;
   --color-ember-dim: #C2410C;

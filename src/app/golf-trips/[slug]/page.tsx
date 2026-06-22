@@ -96,14 +96,14 @@ const badge = (bg: string): React.CSSProperties => ({
   padding: "2px 8px",
   borderRadius: 4,
   background: bg,
-  color: "#fff",
+  color: "var(--color-text)",
 });
 
 const sectionTitle: React.CSSProperties = {
   fontFamily: "var(--font-plan-block), sans-serif",
   fontSize: "clamp(1.6rem, 4vw, 2.2rem)",
   letterSpacing: "0.04em",
-  color: "#EA580C",
+  color: "var(--color-accent)",
   marginBottom: "1rem",
 };
 
@@ -116,7 +116,7 @@ const grid: React.CSSProperties = {
 
 const label: React.CSSProperties = {
   fontSize: "0.75rem",
-  color: "#A1A1AA",
+  color: "var(--color-text-muted)",
   textTransform: "uppercase" as const,
   letterSpacing: "0.06em",
 };
@@ -164,8 +164,8 @@ export default async function DestinationPage({
     <main
       id="main-content"
       style={{
-        background: "#000",
-        color: "#fff",
+        background: "var(--color-bg)",
+        color: "var(--color-text)",
         fontFamily: "var(--font-inter), sans-serif",
         minHeight: "100vh",
         position: "relative",
@@ -208,7 +208,7 @@ export default async function DestinationPage({
           style={{
             fontFamily: "var(--font-instrument), serif",
             fontSize: "clamp(1.1rem, 2.5vw, 1.4rem)",
-            color: "#D4A843",
+            color: "var(--color-gold)",
             fontStyle: "italic",
             marginBottom: "1rem",
           }}
@@ -219,7 +219,7 @@ export default async function DestinationPage({
         <p
           style={{
             fontSize: "1rem",
-            color: "#A1A1AA",
+            color: "var(--color-text-muted)",
             lineHeight: 1.7,
             maxWidth: 720,
             marginBottom: "1.5rem",
@@ -251,29 +251,29 @@ export default async function DestinationPage({
             flexWrap: "wrap",
             gap: "1.5rem",
             fontSize: "0.9rem",
-            color: "#A1A1AA",
+            color: "var(--color-text-muted)",
             marginBottom: "3rem",
             paddingBottom: "1.5rem",
             borderBottom: "1px solid var(--color-border)",
           }}
         >
           <span>
-            <strong style={{ color: "#fff" }}>{dest.courses.length}</strong>{" "}
+            <strong style={{ color: "var(--color-text)" }}>{dest.courses.length}</strong>{" "}
             courses
           </span>
           <span>
-            <strong style={{ color: "#fff" }}>
+            <strong style={{ color: "var(--color-text)" }}>
               {seasonLabel(dest.bestSeasons)}
             </strong>
           </span>
           <span>
-            <strong style={{ color: "#fff" }}>
+            <strong style={{ color: "var(--color-text)" }}>
               {dest.nearestAirport.code}
             </strong>{" "}
             ({dest.nearestAirport.driveMinutes} min drive)
           </span>
           <span>
-            <strong style={{ color: "#fff" }}>
+            <strong style={{ color: "var(--color-text)" }}>
               {dest.population === "tiny"
                 ? "<10k"
                 : dest.population === "small"
@@ -291,7 +291,7 @@ export default async function DestinationPage({
             <Link
               key={c.name}
               href={`/golf-trips/${dest.id}/courses/${slugify(c.name)}`}
-              style={{ ...card, textDecoration: "none", color: "#fff", display: "block", padding: 0, overflow: "hidden" }}
+              style={{ ...card, textDecoration: "none", color: "var(--color-text)", display: "block", padding: 0, overflow: "hidden" }}
             >
               {c.imageUrl && (
                 <div style={{ position: "relative", width: "100%", aspectRatio: "16/9", overflow: "hidden" }}>
@@ -320,7 +320,7 @@ export default async function DestinationPage({
                   </h3>
                   <span style={badge(tierColor(c.tier))}>{tierLabel(c.tier)}</span>
                 </div>
-                <p style={{ fontSize: "0.85rem", color: "#A1A1AA", marginBottom: "0.75rem" }}>
+                <p style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", marginBottom: "0.75rem" }}>
                   {c.highlight}
                 </p>
                 <div
@@ -329,7 +329,7 @@ export default async function DestinationPage({
                     flexWrap: "wrap",
                     gap: "0.75rem",
                     fontSize: "0.8rem",
-                    color: "#71717A",
+                    color: "var(--color-text-dim)",
                   }}
                 >
                   <span>
@@ -340,10 +340,10 @@ export default async function DestinationPage({
                     Par {c.par} · {c.yardage.toLocaleString()} yds
                   </span>
                   {c.walkable && (
-                    <span style={{ color: "#3a7050" }}>Walkable</span>
+                    <span style={{ color: "var(--color-green-light)" }}>Walkable</span>
                   )}
                   {c.hypeTag && (
-                    <span style={{ color: "#D4A843" }}>{c.hypeTag}</span>
+                    <span style={{ color: "var(--color-gold)" }}>{c.hypeTag}</span>
                   )}
                 </div>
               </div>
@@ -360,14 +360,14 @@ export default async function DestinationPage({
                 <div key={i} style={card}>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
                     <span style={{ ...label }}>{l.type.replace("-", " ")}</span>
-                    <span style={{ fontSize: "0.8rem", color: "#71717A" }}>
+                    <span style={{ fontSize: "0.8rem", color: "var(--color-text-dim)" }}>
                       Sleeps {l.sleeps[0]}-{l.sleeps[1]}
                     </span>
                   </div>
                   <p style={{ fontSize: "0.95rem", fontWeight: 500, marginBottom: "0.35rem" }}>
                     ${l.nightlyRange[0]}-${l.nightlyRange[1]}/night
                   </p>
-                  <p style={{ fontSize: "0.85rem", color: "#A1A1AA", marginBottom: "0.5rem" }}>
+                  <p style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", marginBottom: "0.5rem" }}>
                     {l.areaDescription}
                   </p>
                   {l.amenities.length > 0 && (
@@ -381,7 +381,7 @@ export default async function DestinationPage({
                             border: "1px solid var(--color-border)",
                             borderRadius: 4,
                             padding: "2px 6px",
-                            color: "#A1A1AA",
+                            color: "var(--color-text-muted)",
                           }}
                         >
                           {a}
@@ -411,14 +411,14 @@ export default async function DestinationPage({
                   <div style={{ padding: "1.25rem" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.4rem" }}>
                       <h3 style={{ fontSize: "1rem", fontWeight: 600 }}>{d.name}</h3>
-                      <span style={{ fontSize: "0.85rem", color: "#D4A843" }}>{d.priceRange}</span>
+                      <span style={{ fontSize: "0.85rem", color: "var(--color-gold)" }}>{d.priceRange}</span>
                     </div>
                     <span style={label}>{d.style}</span>
-                    <p style={{ fontSize: "0.85rem", color: "#A1A1AA", marginTop: "0.4rem" }}>
+                    <p style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", marginTop: "0.4rem" }}>
                       {d.highlight}
                     </p>
                     {d.googleRating && (
-                      <span style={{ fontSize: "0.75rem", color: "#71717A", marginTop: "0.35rem", display: "block" }}>
+                      <span style={{ fontSize: "0.75rem", color: "var(--color-text-dim)", marginTop: "0.35rem", display: "block" }}>
                         {d.googleRating} stars
                         {d.reviewCount ? ` (${d.reviewCount.toLocaleString()} reviews)` : ""}
                       </span>
@@ -451,7 +451,7 @@ export default async function DestinationPage({
                       )}
                     </div>
                     <span style={label}>{b.vibe.replace("-", " ")}</span>
-                    <p style={{ fontSize: "0.85rem", color: "#A1A1AA", marginTop: "0.4rem" }}>
+                    <p style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", marginTop: "0.4rem" }}>
                       {b.highlight}
                     </p>
                   </div>
@@ -471,14 +471,14 @@ export default async function DestinationPage({
                   <h3 style={{ fontSize: "1rem", fontWeight: 600, marginBottom: "0.3rem" }}>
                     {a.name}
                   </h3>
-                  <div style={{ display: "flex", gap: "0.75rem", fontSize: "0.8rem", color: "#71717A", marginBottom: "0.4rem" }}>
+                  <div style={{ display: "flex", gap: "0.75rem", fontSize: "0.8rem", color: "var(--color-text-dim)", marginBottom: "0.4rem" }}>
                     <span>{a.type.replace("-", " ")}</span>
                     <span>{a.duration}</span>
                     <span>
                       ${a.pricePerPerson[0]}-${a.pricePerPerson[1]}/pp
                     </span>
                   </div>
-                  <p style={{ fontSize: "0.85rem", color: "#A1A1AA" }}>
+                  <p style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>
                     {a.highlight}
                   </p>
                 </div>
@@ -518,15 +518,15 @@ export default async function DestinationPage({
                   <a
                     key={d.id}
                     href={`/golf-trips/${d.id}`}
-                    style={{ ...card, textDecoration: "none", color: "#fff", display: "block" }}
+                    style={{ ...card, textDecoration: "none", color: "var(--color-text)", display: "block" }}
                   >
                     <h3 style={{ fontSize: "1rem", fontWeight: 700, marginBottom: "0.3rem" }}>
                       {d.city}, {d.state}
                     </h3>
-                    <p style={{ fontSize: "0.85rem", color: "#A1A1AA", marginBottom: "0.6rem" }}>
+                    <p style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", marginBottom: "0.6rem" }}>
                       {d.tagline}
                     </p>
-                    <p style={{ fontSize: "0.75rem", color: "#EA580C" }}>
+                    <p style={{ fontSize: "0.75rem", color: "var(--color-accent)" }}>
                       {d.courses.length} courses · {d.bars.length} bars · {d.region}
                     </p>
                   </a>
@@ -534,7 +534,7 @@ export default async function DestinationPage({
               </div>
               {compareCandidates.length > 0 && (
                 <div style={{ marginTop: "1.5rem" }}>
-                  <h3 style={{ fontSize: "0.85rem", fontWeight: 700, color: "#A1A1AA", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "0.75rem" }}>
+                  <h3 style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--color-text-muted)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "0.75rem" }}>
                     Head-to-head comparisons
                   </h3>
                   <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.4rem" }}>
@@ -543,7 +543,7 @@ export default async function DestinationPage({
                         <a
                           href={`/golf-trips/compare/${dest.id}-vs-${d.id}`}
                           style={{
-                            color: "#EA580C",
+                            color: "var(--color-accent)",
                             textDecoration: "none",
                             fontSize: "0.95rem",
                           }}
@@ -565,8 +565,8 @@ export default async function DestinationPage({
             href={`/plan-a-trip?dest=${dest.id}`}
             style={{
               display: "inline-block",
-              background: "#EA580C",
-              color: "#fff",
+              background: "var(--color-accent)",
+              color: "var(--color-text)",
               fontFamily: "var(--font-plan-block), sans-serif",
               fontSize: "1.3rem",
               letterSpacing: "0.06em",
@@ -593,20 +593,20 @@ export default async function DestinationPage({
         >
           <a
             href={`/golf-trips/${dest.id}/guide`}
-            style={{ padding: "10px 20px", background: "rgba(234,88,12,0.08)", border: "1px solid rgba(234,88,12,0.3)", borderRadius: 8, textDecoration: "none", color: "#EA580C", fontSize: "0.85rem", fontWeight: 600 }}
+            style={{ padding: "10px 20px", background: "color-mix(in srgb, var(--color-accent) 8%, transparent)", border: "1px solid color-mix(in srgb, var(--color-accent) 30%, transparent)", borderRadius: 8, textDecoration: "none", color: "var(--color-accent)", fontSize: "0.85rem", fontWeight: 600 }}
           >
             Planning Guide
           </a>
           <a
             href={`/golf-trips/${dest.id}/cost`}
-            style={{ padding: "10px 20px", background: "rgba(74,222,128,0.08)", border: "1px solid rgba(74,222,128,0.3)", borderRadius: 8, textDecoration: "none", color: "#4ade80", fontSize: "0.85rem", fontWeight: 600 }}
+            style={{ padding: "10px 20px", background: "color-mix(in srgb, var(--color-success) 8%, transparent)", border: "1px solid color-mix(in srgb, var(--color-success) 30%, transparent)", borderRadius: 8, textDecoration: "none", color: "var(--color-success)", fontSize: "0.85rem", fontWeight: 600 }}
           >
             Cost Breakdown
           </a>
           {dest.bars.length >= 3 && dest.population !== "tiny" && (
             <a
               href={`/golf-trips/${dest.id}/bachelor-party`}
-              style={{ padding: "10px 20px", background: "rgba(124,58,237,0.08)", border: "1px solid rgba(124,58,237,0.3)", borderRadius: 8, textDecoration: "none", color: "#a78bfa", fontSize: "0.85rem", fontWeight: 600 }}
+              style={{ padding: "10px 20px", background: "color-mix(in srgb, var(--color-magenta) 8%, transparent)", border: "1px solid color-mix(in srgb, var(--color-magenta) 30%, transparent)", borderRadius: 8, textDecoration: "none", color: "var(--color-magenta)", fontSize: "0.85rem", fontWeight: 600 }}
             >
               Bachelor Party
             </a>
@@ -625,19 +625,19 @@ export default async function DestinationPage({
         >
           <a
             href={`/golf-trips/region/${regionSlugStr}`}
-            style={{ color: "#EA580C", textDecoration: "none", padding: "10px 0", minHeight: 44, display: "inline-flex", alignItems: "center" }}
+            style={{ color: "var(--color-accent)", textDecoration: "none", padding: "10px 0", minHeight: 44, display: "inline-flex", alignItems: "center" }}
           >
             More {dest.region} trips &rarr;
           </a>
           <a
             href={`/golf-trips/state/${stateSlugStr}`}
-            style={{ color: "#EA580C", textDecoration: "none", padding: "10px 0", minHeight: 44, display: "inline-flex", alignItems: "center" }}
+            style={{ color: "var(--color-accent)", textDecoration: "none", padding: "10px 0", minHeight: 44, display: "inline-flex", alignItems: "center" }}
           >
             All {stateName} trips &rarr;
           </a>
           <a
             href="/golf-trips"
-            style={{ color: "#A1A1AA", textDecoration: "none", padding: "10px 0", minHeight: 44, display: "inline-flex", alignItems: "center" }}
+            style={{ color: "var(--color-text-muted)", textDecoration: "none", padding: "10px 0", minHeight: 44, display: "inline-flex", alignItems: "center" }}
           >
             All destinations
           </a>
