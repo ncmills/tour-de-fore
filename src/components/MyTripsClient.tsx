@@ -4,8 +4,11 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
+import { getTripCountdown, type TripTiming } from "@/lib/trip-dates";
+import type { WizardState } from "@/lib/plan-types";
 
 interface PlannedTrip {
   id: string;
@@ -16,6 +19,10 @@ interface PlannedTrip {
   groupSize: number;
   numberOfDays: number;
   tripName?: string;
+  /** Structured trip timing for the countdown (see lib/trip-dates.ts). */
+  timing?: TripTiming;
+  /** Full wizard inputs so "Duplicate this trip" can prefill a new wizard. */
+  inputs?: WizardState;
 }
 
 interface AccountStatus {
@@ -36,6 +43,7 @@ export default function MyTripsClient({
   name: string;
   plannedTrips: PlannedTrip[];
 }) {
+  const router = useRouter();
   const [name, setName] = useState(initialName);
   const [editingName, setEditingName] = useState(false);
   const [savingName, setSavingName] = useState(false);
@@ -203,6 +211,18 @@ export default function MyTripsClient({
     }
     setDeleteLoading(false);
     setDeletingTripId(null);
+  };
+
+  // Duplicate this trip → seed the wizard's sessionStorage with the saved
+  // inputs, then route to /plan-a-trip. The wizard's mount-effect reads
+  // "tdf-wizard-state" and rehydrates every field. Same restore path as the
+  // result page's "Edit your selections".
+  const duplicateTrip = (trip: PlannedTrip) => {
+    if (!trip.inputs) { router.push("/plan-a-trip"); return; }
+    try {
+      sessionStorage.setItem("tdf-wizard-state", JSON.stringify(trip.inputs));
+    } catch { /* ignore — storage may be full or blocked */ }
+    router.push("/plan-a-trip");
   };
 
   const isUnlimited = accountStatus?.unlimited ?? false;
@@ -584,6 +604,20 @@ export default function MyTripsClient({
               {trips.map((trip, i) => {
                 const isEditing = editingTripId === trip.id;
                 const tripName = tripNames[trip.id] || `${trip.city}${trip.state ? `, ${trip.state}` : ""} Trip`;
+                const countdown = getTripCountdown(trip.timing);
+                // Countdown badge palette: urgent (≤30d) = ember, future = white-dim,
+                // past = muted, TBD = muted.
+                const cdColor = countdown.urgent
+                  ? "rgba(234,88,12,0.95)"
+                  : countdown.past || countdown.tbd
+                    ? "rgba(255,255,255,0.4)"
+                    : "rgba(255,255,255,0.7)";
+                const cdBg = countdown.urgent
+                  ? "rgba(234,88,12,0.12)"
+                  : "rgba(255,255,255,0.05)";
+                const cdBorder = countdown.urgent
+                  ? "1px solid rgba(234,88,12,0.4)"
+                  : "1px solid rgba(255,255,255,0.1)";
 
                 return (
                   <motion.div key={trip.id} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.05 }}>
@@ -631,11 +665,49 @@ export default function MyTripsClient({
                               <span style={{ fontSize: "0.6em", color: "rgba(255,255,255,0.2)", marginLeft: "0.4em" }}>&#9998;</span>
                             </h3>
                           )}
-                          <p style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.8rem", fontFamily: "var(--font-inter), sans-serif" }}>
-                            {trip.groupSize} people &middot; {trip.numberOfDays} days &middot; {new Date(trip.createdAt).toLocaleDateString()}
+                          <p style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.8rem", fontFamily: "var(--font-inter), sans-serif", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "0.5rem" }}>
+                            <span>{trip.groupSize} people &middot; {trip.numberOfDays} days</span>
+                            {/* Trip countdown badge — derived from structured timing. */}
+                            <span
+                              title={countdown.tbd ? "No firm dates set yet" : "Time until your trip"}
+                              style={{
+                                fontSize: "0.68rem",
+                                fontWeight: 700,
+                                letterSpacing: "0.02em",
+                                padding: "2px 8px",
+                                borderRadius: 999,
+                                color: cdColor,
+                                background: cdBg,
+                                border: cdBorder,
+                                whiteSpace: "nowrap",
+                              }}
+                            >
+                              {countdown.urgent && countdown.days !== null && countdown.days <= 7 ? "🔥 " : ""}{countdown.label}
+                            </span>
                           </p>
                         </div>
                         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); duplicateTrip(trip); }}
+                            title="Start a new trip prefilled from this one"
+                            style={{
+                              fontSize: "0.75rem",
+                              color: "rgba(255,255,255,0.5)",
+                              background: "none",
+                              border: "1px solid rgba(255,255,255,0.12)",
+                              borderRadius: 6,
+                              cursor: "pointer",
+                              padding: "4px 10px",
+                              fontWeight: 600,
+                              fontFamily: "var(--font-inter), sans-serif",
+                              whiteSpace: "nowrap",
+                              transition: "all 0.15s",
+                            }}
+                            onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)"; e.currentTarget.style.color = "#fff"; }}
+                            onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"; e.currentTarget.style.color = "rgba(255,255,255,0.5)"; }}
+                          >
+                            Run it back
+                          </button>
                           <Link
                             href={`/plan/result/${trip.id}`}
                             style={{
@@ -670,6 +742,52 @@ export default function MyTripsClient({
                           </button>
                         </div>
                       </div>
+
+                      {/* "Lock it in" nudge — appears within 30 days of the trip
+                          and gets louder (copy + emphasis) as the day nears. */}
+                      {countdown.urgent && countdown.days !== null && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 6 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          style={{
+                            marginTop: "0.85rem",
+                            padding: "0.6rem 0.85rem",
+                            borderRadius: 8,
+                            background: "rgba(234,88,12,0.1)",
+                            border: "1px solid rgba(234,88,12,0.35)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            flexWrap: "wrap",
+                            gap: "0.5rem",
+                          }}
+                        >
+                          <span style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.85)", fontFamily: "var(--font-inter), sans-serif" }}>
+                            {countdown.days <= 7
+                              ? "It's go time — lock your tee times before they're gone."
+                              : countdown.days <= 14
+                                ? `Trip's in ${countdown.days} days — lock your tee times.`
+                                : `Trip's in about 3 weeks — lock your tee times before the good slots vanish.`}
+                          </span>
+                          <Link
+                            href={`/plan/result/${trip.id}`}
+                            style={{
+                              fontSize: "0.72rem",
+                              fontWeight: 700,
+                              color: "#fff",
+                              background: "rgba(234,88,12,0.9)",
+                              border: "none",
+                              borderRadius: 6,
+                              padding: "6px 14px",
+                              textDecoration: "none",
+                              whiteSpace: "nowrap",
+                              fontFamily: "var(--font-inter), sans-serif",
+                            }}
+                          >
+                            Lock it in &rarr;
+                          </Link>
+                        </motion.div>
+                      )}
                     </div>
                   </motion.div>
                 );

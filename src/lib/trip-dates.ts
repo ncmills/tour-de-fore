@@ -108,3 +108,59 @@ export function formatTripDates(timing?: TripTiming | null): string {
   // Anything else (no usable timing, or flexible with no season) → TBD.
   return "Flexible — dates TBD";
 }
+
+export interface TripCountdown {
+  /** Short human-readable countdown label, e.g. "32 days out", "This weekend!", "Past". */
+  label: string;
+  /** Whole days until the trip start. Negative once the start is behind us. null = no firm/soft date. */
+  days: number | null;
+  /** True when the trip is within 30 days and still in the future — the "lock it in" window. */
+  urgent: boolean;
+  /** True when the trip start has passed. */
+  past: boolean;
+  /** True when there's no usable date (flexible / no timing) — "Dates TBD". */
+  tbd: boolean;
+}
+
+/**
+ * Countdown label for a saved trip, derived from the SAME structured timing the
+ * dates string and .ics export use. A flexible/no-date trip → "Dates TBD".
+ *
+ * Note: for firm months we anchor to the 1st (resolveTripStart). A "suggested"
+ * season placeholder still produces a countdown but we soften the copy since
+ * the date isn't locked.
+ */
+export function getTripCountdown(timing?: TripTiming | null, now: Date = new Date()): TripCountdown {
+  const tbd: TripCountdown = { label: "Dates TBD", days: null, urgent: false, past: false, tbd: true };
+
+  // No usable date at all → TBD.
+  const hasFirmMonth = !!(timing && !timing.flexible && timing.tripMonth &&
+    MONTH_INDEX[timing.tripMonth.trim().toLowerCase()] !== undefined);
+  const hasSeason = !!(timing?.preferredSeason &&
+    SEASON_MONTH[timing.preferredSeason.trim().toLowerCase()] !== undefined);
+  if (!hasFirmMonth && !hasSeason) return tbd;
+
+  const { start, suggested } = resolveTripStart(timing);
+  const startMidnight = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const days = Math.round((startMidnight.getTime() - today.getTime()) / (24 * 60 * 60 * 1000));
+
+  if (days < 0) return { label: "Past", days, urgent: false, past: true, tbd: false };
+
+  const urgent = days <= 30;
+  let label: string;
+  if (days === 0) label = "Today!";
+  else if (days === 1) label = "Tomorrow!";
+  else if (days <= 3) label = "This weekend!";
+  else if (days <= 7) label = "This week!";
+  else if (days <= 30) label = `${days} days out`;
+  else if (suggested) {
+    // Soft season placeholder — don't imply a locked day count far out.
+    const months = Math.round(days / 30);
+    label = `~${months} month${months === 1 ? "" : "s"} out`;
+  } else {
+    label = `${days} days out`;
+  }
+
+  return { label, days, urgent, past: false, tbd: false };
+}

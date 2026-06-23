@@ -15,6 +15,7 @@ import {
 } from "@/lib/plan-types";
 import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
+import TierCompareTable from "./TierCompareTable";
 import { buildBookingLink, bookingLabel } from "@/lib/booking-links";
 import { getAnonPlanIds, claimAnonPlans } from "@/lib/anon-plans";
 import { formatTripDates, type TripTiming } from "@/lib/trip-dates";
@@ -854,6 +855,11 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
             </div>
           ))}
         </div>
+
+        {/* Side-by-side tier compare — augments the cards; renders STORED
+            numbers off allPlans (no recompute). Shown to read-only viewers too
+            since allPlans is always passed for non-legacy plans. */}
+        {allPlans && <TierCompareTable allPlans={allPlans} currentTier={tier} />}
 
       </motion.section>
 

@@ -36,6 +36,16 @@ export default async function MyTripsPage() {
         paid: plan.paid || false,
         groupSize: plan.inputs.groupSize,
         numberOfDays: plan.inputs.numberOfDays,
+        // Structured timing for the per-trip countdown (same source as the
+        // .ics export + result-header dates string — see lib/trip-dates.ts).
+        timing: {
+          tripMonth: plan.inputs.tripMonth,
+          preferredSeason: plan.inputs.preferredSeason,
+          flexible: plan.inputs.flexible,
+        },
+        // Full wizard inputs so "Duplicate this trip" can prefill the wizard
+        // via its sessionStorage state-restore path.
+        inputs: plan.inputs,
       };
     })
   );
