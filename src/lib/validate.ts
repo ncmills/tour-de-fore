@@ -64,6 +64,17 @@ export function validateWizardState(raw: unknown): WizardState {
   };
 }
 
+/**
+ * Validate an optional `notifyEmail` from the generate-plan payload.
+ * Returns a normalized email, or "" when absent/invalid (caller ignores empty).
+ * Intentionally lenient — a bad value must never block plan generation.
+ */
+export function validateNotifyEmail(raw: unknown): string {
+  if (!raw || typeof raw !== "object") return "";
+  const v = (raw as Record<string, unknown>).notifyEmail;
+  return sanitizeEmail(v); // "" when missing or malformed
+}
+
 function sanitizeString(val: unknown, maxLen: number): string {
   if (typeof val !== "string") return "";
   return val.slice(0, maxLen).trim();

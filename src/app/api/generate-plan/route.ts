@@ -24,7 +24,8 @@ import type { Destination } from "@/data/types";
 import { getAllPopularityScores } from "@/lib/kv";
 import { buildFreePreview } from "@/lib/free-plan";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
-import { validateWizardState } from "@/lib/validate";
+import { validateWizardState, validateNotifyEmail } from "@/lib/validate";
+import { sendEmail, buildPlanReadyEmail } from "@/lib/email";
 import { addPlanToUser } from "@/lib/auth";
 import { getRedis } from "@/lib/redis";
 import { UNLIMITED_EMAILS, getMonthKey, getNextMonthReset } from "@/lib/shared-constants";
@@ -359,9 +360,14 @@ export async function POST(req: NextRequest) {
 
   // Validate input
   let state;
+  let notifyEmail = "";
   try {
     const raw = await req.json();
     state = validateWizardState(raw);
+    // Optional "email me when it's done" address — independent of the
+    // organizer account email (anon users can request a notification without
+    // creating an account). Empty/invalid is ignored downstream.
+    notifyEmail = validateNotifyEmail(raw);
   } catch (err) {
     return NextResponse.json(
       { error: err instanceof Error ? err.message : "Invalid request" },
@@ -634,6 +640,22 @@ export async function POST(req: NextRequest) {
 
         for (const preview of previews) {
           await recordDestinationView(preview.destinationId, state);
+        }
+
+        // "Email me the plan when it's ready" — fire here, while the server
+        // function is alive, so it delivers even if the user closed the tab
+        // during the 60-250s generation. Best-effort & non-fatal: a Resend
+        // hiccup must NEVER break the stream or fail the generation. Sent at
+        // most once (this path runs once per successful generation). Only when
+        // the plan actually has destination data to render in the email.
+        if (notifyEmail && storedPlan.destinations) {
+          try {
+            const isOrganizer = !!email && notifyEmail === email;
+            const { subject, html } = buildPlanReadyEmail(storedPlan, { isOrganizer });
+            await sendEmail({ to: notifyEmail, subject, html }); // swallows its own errors
+          } catch (notifyErr) {
+            console.error("notifyEmail send failed (non-fatal):", notifyErr);
+          }
         }
 
         // Final result

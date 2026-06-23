@@ -371,6 +371,12 @@ export default function PlanWizardClient() {
   // final step. Closed by default so the primary path is "just generate".
   const [showAccount, setShowAccount] = useState(false);
   const [progressPct, setProgressPct] = useState(0);
+  // "Email me the plan when it's done" opt-in (final step). Kept OUT of
+  // WizardState so it never lands in the stored plan inputs / learning signals
+  // — it's a transient delivery preference, not trip data. Sent to the server
+  // alongside the generate payload as `notifyEmail`.
+  const [notifyMe, setNotifyMe] = useState(false);
+  const [notifyEmail, setNotifyEmail] = useState("");
   const isScrolling = useRef(false);
   const typedSteps = useRef<Set<string>>(new Set());
 
@@ -392,7 +398,10 @@ export default function PlanWizardClient() {
         const data = await res.json();
         if (cancelled) return;
         setIsLoggedIn(true);
-        if (data.email) dispatch({ type: "SET_FIELD", field: "organizerEmail", value: data.email });
+        if (data.email) {
+          dispatch({ type: "SET_FIELD", field: "organizerEmail", value: data.email });
+          setNotifyEmail(data.email); // prefill the "email me when ready" opt-in
+        }
         setQuota({
           plansRemaining: data.plansRemaining ?? Math.max(0, (data.plansLimit ?? 3) - (data.plansUsed ?? 0)),
           plansLimit: data.plansLimit ?? 3,
@@ -585,6 +594,17 @@ export default function PlanWizardClient() {
       ? { ...state, organizerEmail: "", authPassword: "" }
       : { ...state, authPassword: "" };
 
+    // "Email me the plan when it's ready" — only attach when the user opted in
+    // and gave a plausible address. Server re-validates & ignores bad values;
+    // this is just to avoid sending an empty field. Logged-in users default to
+    // their account email; anon users get the small inline input below.
+    const trimmedNotify = notifyEmail.trim();
+    const wantsNotify =
+      notifyMe && trimmedNotify.includes("@") && trimmedNotify.includes(".");
+    const genPayload = wantsNotify
+      ? { ...genState, notifyEmail: trimmedNotify }
+      : genState;
+
     setIsGenerating(true);
     setIsLoading(true);
     setLoadingMsg(0);
@@ -641,7 +661,7 @@ export default function PlanWizardClient() {
         res = await fetch("/api/generate-plan", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(genState),
+          body: JSON.stringify(genPayload),
           signal: controller.signal,
         });
       } catch (fetchErr) {
@@ -1369,6 +1389,48 @@ export default function PlanWizardClient() {
               </div>
             </motion.div>
           )}
+
+          {/* "Email me the plan when it's done" — optional, unobtrusive.
+              Generation runs 60-250s; this lets the user wander off and still
+              get the link. Logged-in: one-tap (prefilled account email). Anon:
+              checkbox reveals a small email input. */}
+          <div style={{ maxWidth: 400, margin: "0 auto 1.25rem", textAlign: "center" }}>
+            <label
+              htmlFor="tdf-notify-me"
+              style={{ display: "inline-flex", alignItems: "center", gap: "0.55rem", cursor: "pointer", fontFamily: "var(--font-inter), sans-serif", fontSize: "0.88rem", color: "rgba(255,255,255,0.55)", lineHeight: 1.3, textAlign: "left" }}
+            >
+              <input
+                id="tdf-notify-me"
+                type="checkbox"
+                checked={notifyMe}
+                onChange={(e) => setNotifyMe(e.target.checked)}
+                style={{ accentColor: "#EA580C", width: 16, height: 16, flexShrink: 0, cursor: "pointer" }}
+              />
+              <span>Email me the plan when it&apos;s done &mdash; no need to babysit the screen.</span>
+            </label>
+
+            {notifyMe && isLoggedIn !== true && (
+              <motion.input
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="wizard-input"
+                type="email"
+                placeholder="your@email.com"
+                aria-label="Email address for plan notification"
+                value={notifyEmail}
+                onChange={(e) => setNotifyEmail(e.target.value)}
+                autoComplete="email"
+                onKeyDown={(e) => { if (e.key === "Enter") handleGenerate(); }}
+                style={{ width: "100%", marginTop: "0.85rem", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.6rem 0", color: "#fff", fontSize: "1rem", outline: "none", textAlign: "center" }}
+              />
+            )}
+
+            {notifyMe && isLoggedIn === true && notifyEmail && (
+              <p style={{ marginTop: "0.55rem", fontSize: "0.8rem", color: "rgba(255,255,255,0.3)", fontFamily: "var(--font-inter), sans-serif" }}>
+                We&apos;ll send it to {notifyEmail}.
+              </p>
+            )}
+          </div>
 
           {error && (
             <motion.p initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} role="alert" style={{ color: "#f87171", fontSize: "0.95rem", fontFamily: "var(--font-inter), sans-serif", marginBottom: "1rem", textAlign: "center" }}>
