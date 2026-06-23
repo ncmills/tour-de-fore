@@ -15,6 +15,8 @@ import {
 } from "@/lib/plan-types";
 import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
+import CrewVotePanel from "./CrewVotePanel";
+import CrewTally from "./CrewTally";
 import TierCompareTable from "./TierCompareTable";
 import { buildBookingLink, bookingLabel } from "@/lib/booking-links";
 import { getAnonPlanIds, claimAnonPlans } from "@/lib/anon-plans";
@@ -1206,6 +1208,19 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
             Change Itinerary
           </Link>
         </div>
+        )}
+
+        {/* Crew vote + RSVP / tally.
+            - Owner: see the aggregated crew tally (votes by tier, RSVP counts,
+              who's in). Renders nothing until the crew responds.
+            - Non-owner (forwarded crew, logged-out or different account): the
+              vote+RSVP panel — name+email, no login. */}
+        {owner ? (
+          <CrewTally planId={planId} />
+        ) : (
+          <div style={{ marginTop: "2rem" }}>
+            <CrewVotePanel planId={planId} defaultTier={tier} />
+          </div>
         )}
 
         {/* Subscription CTA removed — plans are fully free */}

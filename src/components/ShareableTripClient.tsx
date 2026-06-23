@@ -1,35 +1,26 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
 import type { GeneratedPlan } from "@/lib/plan-types";
 import { formatTripDates, type TripTiming } from "@/lib/trip-dates";
+import CrewVotePanel from "./CrewVotePanel";
 
 export default function ShareableTripClient({
   plan,
   planId,
   selectedOptions,
   timing,
+  selectedTier = "devil",
 }: {
   plan: GeneratedPlan;
   planId: string;
   selectedOptions?: Record<string, string[]>;
   /** Structured timing — drives the dates string (same source as the .ics). */
   timing?: TripTiming | null;
+  /** Tier the share link landed on — pre-selects the crew vote. */
+  selectedTier?: string;
 }) {
-  const [rsvp, setRsvp] = useState<"none" | "in" | "out" | "maybe">("none");
-  const [rsvpName, setRsvpName] = useState("");
-
-  const handleRsvp = async (status: "in" | "out" | "maybe") => {
-    setRsvp(status);
-    await fetch("/api/track-selection", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ destinationId: `rsvp:${planId}`, tier: `${status}:${rsvpName}` }),
-    }).catch(() => {});
-  };
-
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff", padding: "clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 3rem)" }}>
       <div style={{ maxWidth: 800, margin: "0 auto" }}>
@@ -158,77 +149,8 @@ export default function ShareableTripClient({
           </div>
         </section>
 
-        {/* RSVP */}
-        <section style={{
-          textAlign: "center",
-          background: "rgba(220,38,38,0.06)",
-          border: "2px solid rgba(220,38,38,0.3)",
-          borderRadius: 16,
-          padding: "2.5rem 2rem",
-          marginBottom: "4rem",
-        }}>
-          <h2 style={{ fontFamily: "var(--font-plan-groovy), cursive", fontSize: "clamp(1.8rem, 4vw, 2.5rem)", marginBottom: "1rem" }}>
-            Are You In?
-          </h2>
-
-          {rsvp === "none" ? (
-            <>
-              <input
-                type="text"
-                placeholder="Your name"
-                value={rsvpName}
-                onChange={(e) => setRsvpName(e.target.value)}
-                style={{
-                  width: "100%",
-                  maxWidth: 300,
-                  padding: "10px 16px",
-                  background: "rgba(255,255,255,0.06)",
-                  border: "1px solid rgba(255,255,255,0.15)",
-                  borderRadius: 8,
-                  color: "#fff",
-                  fontSize: "1rem",
-                  textAlign: "center",
-                  marginBottom: "1.5rem",
-                  outline: "none",
-                }}
-              />
-              <div style={{ display: "flex", justifyContent: "center", gap: "0.75rem", flexWrap: "wrap" }}>
-                {[
-                  { label: "I'm In 🔥", status: "in" as const, bg: "rgba(220,38,38,0.9)" },
-                  { label: "Maybe 🤔", status: "maybe" as const, bg: "rgba(234,88,12,0.7)" },
-                  { label: "Can't Make It 💀", status: "out" as const, bg: "rgba(255,255,255,0.1)" },
-                ].map(({ label, status, bg }) => (
-                  <button
-                    key={status}
-                    onClick={() => handleRsvp(status)}
-                    disabled={!rsvpName.trim()}
-                    style={{
-                      padding: "10px 24px",
-                      background: bg,
-                      border: "none",
-                      borderRadius: 6,
-                      color: "#fff",
-                      fontSize: "0.85rem",
-                      fontWeight: 600,
-                      cursor: rsvpName.trim() ? "pointer" : "not-allowed",
-                      opacity: rsvpName.trim() ? 1 : 0.4,
-                    }}
-                  >
-                    {label}
-                  </button>
-                ))}
-              </div>
-            </>
-          ) : (
-            <motion.p
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              style={{ fontSize: "1.2rem", color: rsvp === "in" ? "var(--color-success)" : rsvp === "maybe" ? "#f97316" : "rgba(255,255,255,0.5)" }}
-            >
-              {rsvp === "in" ? "You're in! See you on the course." : rsvp === "maybe" ? "We'll keep your spot warm." : "Next time, devil."}
-            </motion.p>
-          )}
-        </section>
+        {/* Crew vote + RSVP — name+email, no login. Posts to /api/crew-response. */}
+        <CrewVotePanel planId={planId} defaultTier={selectedTier} />
 
         {/* Acquisition loop — turn each shared itinerary into top-of-funnel:
             a recipient who likes this can spin up their own trip for free. */}

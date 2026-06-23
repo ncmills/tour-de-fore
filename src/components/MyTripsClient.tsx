@@ -23,6 +23,14 @@ interface PlannedTrip {
   timing?: TripTiming;
   /** Full wizard inputs so "Duplicate this trip" can prefill a new wizard. */
   inputs?: WizardState;
+  /** Crew vote/RSVP rollup (owner-only) — null when nobody's responded yet. */
+  crew?: {
+    in: number;
+    maybe: number;
+    out: number;
+    topTier: string | null;
+    topTierVotes: number;
+  } | null;
 }
 
 interface AccountStatus {
@@ -685,6 +693,13 @@ export default function MyTripsClient({
                               {countdown.urgent && countdown.days !== null && countdown.days <= 7 ? "🔥 " : ""}{countdown.label}
                             </span>
                           </p>
+                          {/* Crew tally — owner-only rollup of votes + RSVPs. */}
+                          {trip.crew && (
+                            <p style={{ color: "rgba(234,88,12,0.9)", fontSize: "0.76rem", fontFamily: "var(--font-inter), sans-serif", marginTop: "0.35rem", fontWeight: 600 }}>
+                              Crew: {trip.crew.in} in · {trip.crew.maybe} maybe · {trip.crew.out} out
+                              {trip.crew.topTier ? ` · Top pick: ${trip.crew.topTier} (${trip.crew.topTierVotes})` : ""}
+                            </p>
+                          )}
                         </div>
                         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                           <button
