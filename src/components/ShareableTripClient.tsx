@@ -3,15 +3,19 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import type { GeneratedPlan } from "@/lib/plan-types";
+import { formatTripDates, type TripTiming } from "@/lib/trip-dates";
 
 export default function ShareableTripClient({
   plan,
   planId,
   selectedOptions,
+  timing,
 }: {
   plan: GeneratedPlan;
   planId: string;
   selectedOptions?: Record<string, string[]>;
+  /** Structured timing — drives the dates string (same source as the .ics). */
+  timing?: TripTiming | null;
 }) {
   const [rsvp, setRsvp] = useState<"none" | "in" | "out" | "maybe">("none");
   const [rsvpName, setRsvpName] = useState("");
@@ -49,7 +53,7 @@ export default function ShareableTripClient({
           </p>
           <div style={{ marginTop: "1rem", display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "1rem 2rem", fontSize: "0.85rem", color: "rgba(255,255,255,0.4)" }}>
             <span>📍 {plan.destination}</span>
-            <span>📅 {plan.dates}</span>
+            <span>📅 {formatTripDates(timing)}</span>
             <span>👥 {plan.groupSize} people</span>
           </div>
           <div style={{ marginTop: "0.5rem", fontSize: "1.2rem", fontWeight: 700, color: "rgba(220,38,38,0.9)" }}>

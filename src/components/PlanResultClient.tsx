@@ -17,6 +17,7 @@ import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
 import { buildBookingLink, bookingLabel } from "@/lib/booking-links";
 import { getAnonPlanIds, claimAnonPlans } from "@/lib/anon-plans";
+import { formatTripDates, type TripTiming } from "@/lib/trip-dates";
 
 const FALLBACK_GOLF_IMAGES = [
   "https://www.troonnorthgolf.com/wp-content/uploads/sites/8934/2023/06/home-main.jpg",
@@ -253,9 +254,16 @@ interface PlanResultClientProps {
   isOwner?: boolean;
   /** True when the viewer has any session (logged in), regardless of ownership. */
   isLoggedIn?: boolean;
+  /**
+   * Structured trip timing from the wizard inputs. The displayed dates string is
+   * DERIVED from this (same source as the .ics export) rather than from the
+   * LLM's free-text `plan.dates`, which drifts (firm months rendered "flexible",
+   * past years emitted). See src/lib/trip-dates.ts.
+   */
+  timing?: TripTiming | null;
 }
 
-export default function PlanResultClient({ plan, allPlans, planId, tier, dest, paid, subscribed, isOwner, isLoggedIn }: PlanResultClientProps) {
+export default function PlanResultClient({ plan, allPlans, planId, tier, dest, paid, subscribed, isOwner, isLoggedIn, timing }: PlanResultClientProps) {
   const [copied, setCopied] = useState(false);
   const [showEmailForm, setShowEmailForm] = useState(false);
   const [emailInput, setEmailInput] = useState("");
@@ -424,7 +432,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
           </span>
           <span style={{ color: "#ccc", fontSize: 15 }}>{plan.estimatedBudget.perPerson}/pp</span>
         </div>
-        <p style={{ color: "#999", fontSize: 18, margin: 0 }}>{plan.dates}</p>
+        <p style={{ color: "#999", fontSize: 18, margin: 0 }}>{formatTripDates(timing)}</p>
       </motion.section>
 
       {/* ─── 3. Lodging ─── */}

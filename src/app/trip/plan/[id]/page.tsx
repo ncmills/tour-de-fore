@@ -48,5 +48,5 @@ export default async function ShareableTripPage({ params, searchParams }: Props)
       ? rec.plans.demonKing
       : rec.plans.devil;
 
-  return <ShareableTripClient plan={plan} planId={id} selectedOptions={stored.selectedOptions} />;
+  return <ShareableTripClient plan={plan} planId={id} selectedOptions={stored.selectedOptions} timing={stored.inputs ? { tripMonth: stored.inputs.tripMonth, preferredSeason: stored.inputs.preferredSeason, flexible: stored.inputs.flexible } : null} />;
 }

@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { getPlan } from "@/lib/kv";
+import { formatTripDates } from "@/lib/trip-dates";
 
 // Tour de Fore — per-plan Open Graph image
 //
@@ -38,7 +39,15 @@ export default async function PlanOGImage({ params }: Props) {
   const destination =
     headline?.destination ||
     (preview ? `${preview.city}${preview.state ? `, ${preview.state}` : ""}` : "");
-  const dates = headline?.dates || "";
+  // Derive from structured timing (same source as the .ics export), not the
+  // LLM's free-text headline.dates which drifts. Empty when no timing captured.
+  const dates = stored?.inputs
+    ? formatTripDates({
+        tripMonth: stored.inputs.tripMonth,
+        preferredSeason: stored.inputs.preferredSeason,
+        flexible: stored.inputs.flexible,
+      })
+    : "";
   const groupSize = headline?.groupSize ?? preview?.groupSize ?? 0;
   const tagline = headline?.tagline || "Hell is empty, all the devils are here.";
 

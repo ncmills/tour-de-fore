@@ -159,6 +159,11 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
             paid={true}
             isOwner={isOwner}
             isLoggedIn={isLoggedIn}
+            timing={stored.inputs ? {
+              tripMonth: stored.inputs.tripMonth,
+              preferredSeason: stored.inputs.preferredSeason,
+              flexible: stored.inputs.flexible,
+            } : null}
           />
         </Suspense>
       </ErrorBoundary>
@@ -172,7 +177,7 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
     if (!plan) notFound();
     return (
       <Suspense>
-        <PlanResultClient plan={plan} planId={id} tier={selectedTier as TripTier} dest={dest} paid={true} isOwner={isOwner} isLoggedIn={isLoggedIn} />
+        <PlanResultClient plan={plan} planId={id} tier={selectedTier as TripTier} dest={dest} paid={true} isOwner={isOwner} isLoggedIn={isLoggedIn} timing={stored.inputs ? { tripMonth: stored.inputs.tripMonth, preferredSeason: stored.inputs.preferredSeason, flexible: stored.inputs.flexible } : null} />
       </Suspense>
     );
   }

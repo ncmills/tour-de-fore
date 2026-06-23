@@ -8,6 +8,7 @@ import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
 import PlanBreadcrumb from "./PlanBreadcrumb";
 import { buildBookingLink, bookingLabel, type BookingKind } from "@/lib/booking-links";
+import { resolveTripStart, type TripTiming } from "@/lib/trip-dates";
 
 const FALLBACK_GOLF_IMAGES = [
   "https://www.troonnorthgolf.com/wp-content/uploads/sites/8934/2023/06/home-main.jpg",
@@ -62,12 +63,6 @@ function formatDollars(n: number): string {
 }
 
 
-interface TripTiming {
-  tripMonth?: string;
-  preferredSeason?: string;
-  flexible?: boolean;
-}
-
 interface IcsDay {
   /** 1-based day number */
   day: number;
@@ -75,54 +70,6 @@ interface IcsDay {
   summary: string;
   /** Multi-line description (round / tee-time guidance) */
   description: string;
-}
-
-const MONTH_INDEX: Record<string, number> = {
-  january: 0, february: 1, march: 2, april: 3, may: 4, june: 5,
-  july: 6, august: 7, september: 8, october: 9, november: 10, december: 11,
-};
-
-// Representative month for each season in the Northern Hemisphere — the
-// midpoint, so a "suggested" Summer date lands in July, etc.
-const SEASON_MONTH: Record<string, number> = {
-  spring: 3, // April
-  summer: 6, // July
-  fall: 9,   // October
-  autumn: 9,
-  winter: 0, // January (next year handled below)
-};
-
-/**
- * Resolve a concrete start Date for the trip from the user's selected timing.
- * Returns the anchor date plus whether it's a firm month or a soft "suggested"
- * season placeholder. Falls back to a near-future date (~6 weeks out) when no
- * timing was captured.
- */
-function resolveTripStart(timing?: TripTiming | null): { start: Date; suggested: boolean } {
-  const now = new Date();
-
-  const pickMonth = (monthIdx: number): Date => {
-    // First of the month at a sensible arrival hour. Roll to next year if the
-    // target month is already in the past this year.
-    const year = monthIdx < now.getMonth() ? now.getFullYear() + 1 : now.getFullYear();
-    return new Date(year, monthIdx, 1);
-  };
-
-  if (timing) {
-    if (!timing.flexible && timing.tripMonth) {
-      const idx = MONTH_INDEX[timing.tripMonth.trim().toLowerCase()];
-      if (idx !== undefined) return { start: pickMonth(idx), suggested: false };
-    }
-    if (timing.preferredSeason) {
-      const idx = SEASON_MONTH[timing.preferredSeason.trim().toLowerCase()];
-      if (idx !== undefined) return { start: pickMonth(idx), suggested: true };
-    }
-  }
-
-  // No timing info — suggest a near-future date ~6 weeks out.
-  const fallback = new Date(now.getTime() + 42 * 24 * 60 * 60 * 1000);
-  fallback.setHours(0, 0, 0, 0);
-  return { start: fallback, suggested: true };
 }
 
 // Escape RFC 5545 special chars in TEXT values.

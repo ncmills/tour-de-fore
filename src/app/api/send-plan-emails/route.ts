@@ -3,6 +3,7 @@ import { getPlan, getAttendees, markEmailsSent } from "@/lib/kv";
 import { getResendClient, FROM_ADDRESS } from "@/lib/email";
 import { getSessionEmail } from "@/lib/auth";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
+import { formatTripDates } from "@/lib/trip-dates";
 
 export async function POST(req: NextRequest) {
   try {
@@ -64,6 +65,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Plan has no destination data" }, { status: 400 });
     }
     const plan = stored.destinations.mid.plans.devil;
+    // Derive the dates string from the user's STRUCTURED timing (same source as
+    // the .ics export) — not the LLM's free-text plan.dates, which drifts.
+    const tripDates = formatTripDates(stored.inputs ? {
+      tripMonth: stored.inputs.tripMonth,
+      preferredSeason: stored.inputs.preferredSeason,
+      flexible: stored.inputs.flexible,
+    } : null);
     // 2026-04-11: clean, forward-friendly link — no query params. The bare
     // /plan/result/[id] route lands on the destination picker so a recipient
     // forwarded from iMessage/Slack sees all 3 destinations, not a frozen
@@ -99,7 +107,7 @@ export async function POST(req: NextRequest) {
 
             <div style="background: #111111; border: 1px solid #1e1e1e; border-radius: 4px; padding: 20px; margin-bottom: 24px;">
               <p style="margin: 0 0 8px;"><strong style="color: #c87941;">Destination:</strong> ${plan.destination}</p>
-              <p style="margin: 0 0 8px;"><strong style="color: #c87941;">Dates:</strong> ${plan.dates}</p>
+              <p style="margin: 0 0 8px;"><strong style="color: #c87941;">Dates:</strong> ${tripDates}</p>
               <p style="margin: 0 0 8px;"><strong style="color: #c87941;">Group:</strong> ${plan.groupSize} people</p>
               <p style="margin: 0;"><strong style="color: #c87941;">Budget:</strong> ${plan.estimatedBudget.perPerson} per person</p>
             </div>
