@@ -804,7 +804,7 @@ export function buildDestinationContext(destination: Destination): string {
     .map((r, i) => enrichVenue(d.id, "dining", i, r))
     .map(
       (r) =>
-        `  - ${r.name} (${r.style}, ${r.priceRange}) — ${r.highlight}${r.capacity === "large-group" ? " [handles 16+]" : ""}${r.reservationNeeded ? " [reservation needed]" : ""}${socialProofSuffix(r)}`
+        `  - ${r.name} (${r.style}, ${r.priceRange}) — ${r.highlight}${r.capacity === "large-group" ? " [handles 16+]" : ""}${r.reservationNeeded ? " [reservation needed]" : ""}${r.url ? ` | ${r.url}` : ""}${socialProofSuffix(r)}`
     )
     .join("\n");
 
@@ -812,7 +812,7 @@ export function buildDestinationContext(destination: Destination): string {
     .map((b, i) => enrichVenue(d.id, "bars", i, b))
     .map(
       (b) =>
-        `  - ${b.name} (${b.vibe}) — ${b.highlight}${b.lateNight ? " [late night]" : ""}${b.walkableFromDowntown ? " [walkable from downtown]" : ""}${socialProofSuffix(b)}`
+        `  - ${b.name} (${b.vibe}) — ${b.highlight}${b.lateNight ? " [late night]" : ""}${b.walkableFromDowntown ? " [walkable from downtown]" : ""}${b.url ? ` | ${b.url}` : ""}${socialProofSuffix(b)}`
     )
     .join("\n");
 

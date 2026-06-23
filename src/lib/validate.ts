@@ -46,6 +46,8 @@ export function validateWizardState(raw: unknown): WizardState {
     courseQuality: sanitizeString(s.courseQuality, 50) || "Mix of public & resort",
     walkingOrRiding: sanitizeString(s.walkingOrRiding, 30) || "Riding",
     mustPlayCourses: sanitizeString(s.mustPlayCourses, 500),
+    handicap: sanitizeString(s.handicap, 60), // optional — empty string when not provided
+
     lodging: sanitizeString(s.lodging, 50) || "One big house",
     dining: sanitizeDining(s.dining),
     nightlife: sanitizeString(s.nightlife, 50) || "Bars after dinner",

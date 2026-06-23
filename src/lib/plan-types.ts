@@ -27,6 +27,14 @@ export interface WizardState {
   courseQuality: string;
   walkingOrRiding: string;
   mustPlayCourses: string;
+  /**
+   * Optional group handicap / skill range, captured on the Golf step. Empty
+   * string = not provided (never blocks Next). Threaded into the planner
+   * prompt so the AI can personalize tee box, pairings, and course-difficulty
+   * guidance. Stored as a free-ish label, e.g. "Scratch–10", "10–20",
+   * "20+ / mostly bogey golf", "Mixed bag".
+   */
+  handicap: string;
 
   // Step 4
   lodging: string;
@@ -70,6 +78,7 @@ export const initialWizardState: WizardState = {
   courseQuality: "",
   walkingOrRiding: "",
   mustPlayCourses: "",
+  handicap: "",
   lodging: "One big house",
   dining: [],
   nightlife: "",

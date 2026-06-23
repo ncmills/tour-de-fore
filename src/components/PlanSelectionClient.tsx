@@ -23,6 +23,7 @@ function DestinationCard({
   preview,
   legacyDest,
   index,
+  isOwner,
 }: {
   planId: string;
   priceKey: PriceLevel;
@@ -33,6 +34,7 @@ function DestinationCard({
   preview: FreePreview | null;
   legacyDest?: { city?: string; state?: string; tagline?: string; destinationId?: string; plans?: { devil?: { estimatedBudget?: { perPerson?: string }; courses?: { name: string }[]; lodging?: { type?: string } } } };
   index: number;
+  isOwner?: boolean;
 }) {
   const city = preview?.city || legacyDest?.city || "";
   const state = preview?.state || legacyDest?.state || "";
@@ -53,6 +55,15 @@ function DestinationCard({
 
   const accentColor = priceKey === "budget" ? "var(--color-success)" : priceKey === "premium" ? "#ef4444" : "#f97316";
   const isMid = priceKey === "mid";
+
+  // Owners go to the gallery (browse + build their trip — login-gated, which is
+  // fine for them). Forwarded crew members (non-owners) get the read-only plan
+  // view instead, since /plan/gallery would bounce them to /login. Both land on
+  // the same destination; recipients just can't enter the edit/build flow.
+  const ctaHref = isOwner
+    ? `/plan/gallery?planId=${planId}&dest=${priceKey}&tier=devil`
+    : `/plan/result/${planId}?dest=${priceKey}&tier=devil`;
+  const ctaLabel = isOwner ? "View All Options →" : "View This Plan →";
 
   return (
     <motion.div
@@ -168,7 +179,7 @@ function DestinationCard({
         )}
 
         <Link
-          href={`/plan/gallery?planId=${planId}&dest=${priceKey}&tier=devil`}
+          href={ctaHref}
           onClick={trackClick}
           style={{
             display: "block",
@@ -184,7 +195,7 @@ function DestinationCard({
             letterSpacing: "0.03em",
           }}
         >
-          View All Options →
+          {ctaLabel}
         </Link>
       </div>
     </motion.div>
@@ -299,6 +310,7 @@ export default function PlanSelectionClient({
             preview={freePreviews?.[key] || null}
             legacyDest={legacyDestinations?.[key]}
             index={i}
+            isOwner={isOwner}
           />
         ))}
       </div>

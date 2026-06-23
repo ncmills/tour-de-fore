@@ -1123,6 +1123,26 @@ export default function PlanWizardClient() {
               <SelectionCard key={w} label={w} selected={state.walkingOrRiding === w} onClick={() => set("walkingOrRiding", w)} compact />
             ))}
           </div>
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", letterSpacing: "0.08em", marginBottom: "0.4rem" }}>Group handicap range <span style={{ color: "rgba(255,255,255,0.18)" }}>(optional)</span></p>
+          <p style={{ color: "rgba(255,255,255,0.18)", fontSize: "0.75rem", letterSpacing: "0.05em", marginBottom: "1.2rem" }}>Helps us pick tee boxes, set pairings, and dial course difficulty</p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-5" style={{ marginBottom: "3rem" }}>
+            {[
+              { label: "Scratch–10", sublabel: "Sticks" },
+              { label: "10–20", sublabel: "Solid" },
+              { label: "20+", sublabel: "Bogey golf" },
+              { label: "Mixed bag", sublabel: "All levels" },
+            ].map((h) => (
+              <SelectionCard
+                key={h.label}
+                label={h.label}
+                sublabel={h.sublabel}
+                selected={state.handicap === h.label}
+                // Toggle off if re-tapped so it stays truly optional
+                onClick={() => set("handicap", state.handicap === h.label ? "" : h.label)}
+                compact
+              />
+            ))}
+          </div>
           <input
             type="text"
             placeholder="Must-play courses? (e.g. Bandon Dunes — or leave blank)"

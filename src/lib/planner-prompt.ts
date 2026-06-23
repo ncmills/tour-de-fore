@@ -277,6 +277,7 @@ GOLF:
 - Total rounds: ${totalRounds}
 - Course quality: ${state.courseQuality}
 - Walking vs riding: ${state.walkingOrRiding}
+${state.handicap ? `- Group handicap / skill range: ${state.handicap} (use this to personalize tee box recommendations, suggested pairings/foursomes, and how aggressively to lean into tough championship layouts vs. forgiving resort tracks — call this out in proTips and groupLogistics where relevant)` : ""}
 ${state.mustPlayCourses ? `- Must-play courses: ${state.mustPlayCourses}` : ""}${roundsConstraint}
 
 OFF-COURSE:

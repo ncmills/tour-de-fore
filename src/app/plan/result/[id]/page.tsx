@@ -177,7 +177,7 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
   // Fallback — show selection
   return (
     <Suspense>
-      <PlanSelectionClient planId={id} freePreviews={stored.freePreviews || null} paid={true} />
+      <PlanSelectionClient planId={id} freePreviews={stored.freePreviews || null} paid={true} isOwner={isOwner} />
     </Suspense>
   );
 }

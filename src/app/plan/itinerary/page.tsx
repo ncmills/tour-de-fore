@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { getPlan } from "@/lib/kv";
+import { getSessionEmail } from "@/lib/auth";
 import ItineraryClient from "@/components/ItineraryClient";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import type { TripTier, PriceLevel, ThreePlanResult } from "@/lib/plan-types";
@@ -33,8 +34,18 @@ export default async function ItineraryPage({ searchParams }: Props) {
 
   const selectedOptions = stored.selectedOptions || null;
 
+  // Read-only public view: anyone with the link sees the finished itinerary.
+  // Identify the organizer only to decide which owner-only controls to show
+  // (Share with Crew / Edit Selections). NOT an access gate — recipients are
+  // meant to see this page. Owner mutations stay enforced server-side.
+  const sessionEmail = await getSessionEmail();
+  const organizerEmail = stored.inputs?.organizerEmail;
+  const isOwner = Boolean(
+    sessionEmail && organizerEmail && sessionEmail.toLowerCase() === organizerEmail.toLowerCase()
+  );
+
   return (
-    <ErrorBoundary fallbackHref={`/plan/build?planId=${planId}&dest=${dest}&tier=${tier}`}>
+    <ErrorBoundary fallbackHref={`/plan/result/${planId}`}>
       <Suspense>
         <ItineraryClient
           plan={plan}
@@ -42,6 +53,7 @@ export default async function ItineraryPage({ searchParams }: Props) {
           planId={planId}
           tier={tier as TripTier}
           dest={dest}
+          isOwner={isOwner}
           timing={stored.inputs ? {
             tripMonth: stored.inputs.tripMonth,
             preferredSeason: stored.inputs.preferredSeason,

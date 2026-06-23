@@ -7,6 +7,7 @@ import type { GeneratedPlan, TripTier, PlanCourse, PlanDining, PlanBar, PlanSche
 import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
 import PlanBreadcrumb from "./PlanBreadcrumb";
+import { buildBookingLink, bookingLabel, type BookingKind } from "@/lib/booking-links";
 
 const FALLBACK_GOLF_IMAGES = [
   "https://www.troonnorthgolf.com/wp-content/uploads/sites/8934/2023/06/home-main.jpg",
@@ -242,13 +243,30 @@ const scheduleIcons: Record<string, string> = {
   lodging: "🏠",
 };
 
+// Map a schedule item type to a bookable-link category. Travel/lodging items
+// get no booking CTA (you don't "reserve" an airport transfer from here).
+const BOOKABLE_KIND: Partial<Record<PlanScheduleItem["type"], BookingKind>> = {
+  golf: "golf",
+  dining: "dining",
+  nightlife: "nightlife",
+  activity: "activity",
+};
+
 function ScheduleItemCard({ item, plan }: { item: PlanScheduleItem; plan: GeneratedPlan }) {
-  // Try to find matching course/dining/bar for URL links
+  // Try to find the matching course/dining/bar so we can use its REAL url when
+  // the data carries one. The matched venue's name is also a cleaner search
+  // key than the schedule line (which may read "Round 1 at Pronghorn").
   const courseMatch = item.type === "golf" ? plan.courses.find((c) => item.activity.includes(c.name)) : null;
   const diningMatch = item.type === "dining" ? plan.dining.find((d) => item.activity.includes(d.name)) : null;
   const barMatch = item.type === "nightlife" ? plan.bars.find((b) => item.activity.includes(b.name)) : null;
-  const url = courseMatch?.url || diningMatch?.url || barMatch?.url;
-  const linkLabel = item.type === "golf" ? "Tee Times & Info" : item.type === "dining" ? "View Menu" : item.type === "nightlife" ? "Check it Out" : "View";
+
+  const kind = BOOKABLE_KIND[item.type];
+  const matchedUrl = courseMatch?.url || diningMatch?.url || barMatch?.url;
+  const venueName = courseMatch?.name || diningMatch?.name || barMatch?.name || item.activity;
+  // Always produce a direct link for bookable items — buildBookingLink falls
+  // back to a course-scoped GolfNow / OpenTable / Maps place link, never a bare
+  // keyword web search and never an empty href.
+  const href = kind ? buildBookingLink(kind, venueName, matchedUrl, plan.destination) : null;
 
   return (
     <ItineraryCard icon={scheduleIcons[item.type] || "📌"} label={item.time}>
@@ -261,7 +279,7 @@ function ScheduleItemCard({ item, plan }: { item: PlanScheduleItem; plan: Genera
           💡 {item.proTip}
         </p>
       )}
-      {url && <ExternalLink href={url} label={linkLabel} />}
+      {href && kind && <ExternalLink href={href} label={bookingLabel(kind)} />}
     </ItineraryCard>
   );
 }
@@ -335,6 +353,7 @@ export default function ItineraryClient({
   tier,
   dest,
   timing,
+  isOwner = false,
 }: {
   plan: GeneratedPlan;
   selectedOptions: Record<string, string[]> | null;
@@ -342,6 +361,14 @@ export default function ItineraryClient({
   tier: TripTier;
   dest: string;
   timing?: TripTiming | null;
+  /**
+   * True only when the viewer's session matches the plan organizer. Forwarded
+   * crew members get a read-only itinerary: the content, print, and add-to-
+   * calendar all work, but the owner-only "Share with Crew" (send-emails) and
+   * "Edit Selections" (→ /plan/build, login-gated) controls are hidden so they
+   * never bounce to /login. Owner mutations stay gated server-side regardless.
+   */
+  isOwner?: boolean;
 }) {
   const [showEmailForm, setShowEmailForm] = useState(false);
   const [emailInput, setEmailInput] = useState("");
@@ -802,8 +829,8 @@ export default function ItineraryClient({
             marginBottom: "3rem",
           }}
         >
-          {/* Share with Crew */}
-          {!showEmailForm ? (
+          {/* Share with Crew — owner only (send-plan-emails is 403 for non-owners) */}
+          {isOwner && (!showEmailForm ? (
             <button
               onClick={() => setShowEmailForm(true)}
               style={{
@@ -923,7 +950,7 @@ export default function ItineraryClient({
                 </>
               )}
             </div>
-          )}
+          ))}
 
 
           {/* Print Itinerary */}
@@ -986,7 +1013,8 @@ export default function ItineraryClient({
             Add to Calendar
           </button>
 
-          {/* Edit Selections */}
+          {/* Edit Selections — owner only (build flow is login + ownership gated) */}
+          {isOwner && (
           <a
             href={`/plan/build?planId=${planId}&dest=${dest}&tier=${tier}`}
             style={{
@@ -1008,6 +1036,7 @@ export default function ItineraryClient({
           >
             Edit Selections
           </a>
+          )}
         </motion.div>
 
       </div>

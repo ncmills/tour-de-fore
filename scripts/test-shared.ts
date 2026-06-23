@@ -133,6 +133,7 @@ export function buildWizardState(overrides: Partial<WizardState> = {}): WizardSt
     courseQuality: "Mix of public & resort",
     walkingOrRiding: "Riding",
     mustPlayCourses: "",
+    handicap: "",
     lodging: "One big house",
     dining: ["Mix"],
     nightlife: "Couple nights",

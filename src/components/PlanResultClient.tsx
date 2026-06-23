@@ -15,6 +15,7 @@ import {
 } from "@/lib/plan-types";
 import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
+import { buildBookingLink, bookingLabel } from "@/lib/booking-links";
 
 const FALLBACK_GOLF_IMAGES = [
   "https://www.troonnorthgolf.com/wp-content/uploads/sites/8934/2023/06/home-main.jpg",
@@ -530,7 +531,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
                   <p style={{ color: "#888", fontSize: 13, lineHeight: 1.6, margin: 0, flex: 1 }}>
                     {course.whyThisCourse}
                   </p>
-                  {course.url && <ExternalLink href={course.url} label="Tee Times & Info" />}
+                  <ExternalLink href={buildBookingLink("golf", course.name, course.url, plan.destination)} label={bookingLabel("golf")} />
                 </div>
               </HoverCard>
             </motion.div>
@@ -586,7 +587,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
                   <p style={{ color: "#888", fontSize: 13, lineHeight: 1.6, margin: 0 }}>
                     {bar.description}
                   </p>
-                  {bar.url && <ExternalLink href={bar.url} label="Check it Out" />}
+                  <ExternalLink href={buildBookingLink("nightlife", bar.name, bar.url, plan.destination)} label={bookingLabel("nightlife")} />
                 </HoverCard>
               </motion.div>
             ))}
@@ -648,7 +649,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
                   <p style={{ color: "#888", fontSize: 13, lineHeight: 1.6, margin: 0 }}>
                     {spot.description}
                   </p>
-                  {spot.url && <ExternalLink href={spot.url} label="View Menu" />}
+                  <ExternalLink href={buildBookingLink("dining", spot.name, spot.url, plan.destination)} label={bookingLabel("dining")} />
                 </HoverCard>
               </motion.div>
             ))}
@@ -1080,7 +1081,10 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
           )}
         </div>
 
-        {/* Change Itinerary CTA */}
+        {/* Change Itinerary CTA — owner only. Forwarded viewers don't get the
+            build/edit entry point (it's login + ownership gated and would just
+            bounce them to /login); they see the plan read-only. */}
+        {isOwner && (
         <div style={{
           display: "flex",
           justifyContent: "center",
@@ -1111,6 +1115,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
             Change Itinerary
           </Link>
         </div>
+        )}
 
         {/* Subscription CTA removed — plans are fully free */}
       </div>

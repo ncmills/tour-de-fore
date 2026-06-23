@@ -596,6 +596,7 @@ export async function POST(req: NextRequest) {
           roundsPerDay: state.roundsPerDay,
           courseQuality: state.courseQuality,
           walkingOrRiding: state.walkingOrRiding,
+          handicap: state.handicap || undefined,
           lodging: state.lodging,
           dining: state.dining,
           nightlife: state.nightlife,
