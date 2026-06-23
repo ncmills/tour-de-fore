@@ -74,9 +74,14 @@ export default function PlanLandingClient({ onFirstTime }: { onFirstTime: () => 
         <p className="neon-stats neon-stats-text" style={{ fontSize: "clamp(0.8rem, 2vw, 1rem)", marginBottom: "0.5rem" }}>
           Stop planning in a group chat. Start planning like a devil.
         </p>
-        <h1 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "1.5rem" }}>
+        <h1 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "0.75rem" }}>
           Plan a Trip
         </h1>
+        {/* Entry value line — sets time / free / scale expectation right by the
+            primary CTA so first-timers know what they're getting into. */}
+        <p style={{ fontFamily: "var(--font-inter), sans-serif", fontSize: "clamp(0.78rem, 2vw, 0.95rem)", color: "rgba(255,255,255,0.5)", letterSpacing: "0.02em", marginBottom: "1.5rem", lineHeight: 1.5 }}>
+          133 destinations · 3 price tiers · ~2 minutes · free — no card.
+        </p>
 
         {mode === "choose" && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ display: "flex", flexDirection: "column", gap: "1rem", maxWidth: 360, margin: "0 auto" }}>

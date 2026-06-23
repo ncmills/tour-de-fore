@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion } from "motion/react";
 import type { GeneratedPlan } from "@/lib/plan-types";
 import { formatTripDates, type TripTiming } from "@/lib/trip-dates";
@@ -32,6 +33,36 @@ export default function ShareableTripClient({
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff", padding: "clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 3rem)" }}>
       <div style={{ maxWidth: 800, margin: "0 auto" }}>
+        {/* Shared-with-you banner — this is the read-only crew viewer. Nudges
+            recipients to sign in so they can weigh in (suggest a swap / vote). */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "0.6rem 1rem",
+            marginBottom: "2rem",
+            padding: "0.75rem 1rem",
+            borderRadius: 10,
+            background: "rgba(234,88,12,0.08)",
+            border: "1px solid rgba(234,88,12,0.3)",
+            textAlign: "center",
+          }}
+        >
+          <span style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.65)" }}>
+            🔥 Shared with you
+          </span>
+          <Link
+            href={`/login?returnTo=${encodeURIComponent(`/trip/plan/${planId}`)}`}
+            style={{ fontSize: "0.85rem", fontWeight: 600, color: "#EA580C", textDecoration: "underline" }}
+          >
+            Sign in to suggest a swap or vote →
+          </Link>
+        </motion.div>
+
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -198,6 +229,45 @@ export default function ShareableTripClient({
             </motion.p>
           )}
         </section>
+
+        {/* Acquisition loop — turn each shared itinerary into top-of-funnel:
+            a recipient who likes this can spin up their own trip for free. */}
+        <motion.section
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          style={{
+            textAlign: "center",
+            borderTop: "1px solid rgba(255,255,255,0.08)",
+            paddingTop: "2.5rem",
+            marginBottom: "2rem",
+          }}
+        >
+          <p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.6)", marginBottom: "1.25rem" }}>
+            Planning your own golf trip?
+          </p>
+          <Link
+            href="/plan-a-trip"
+            style={{
+              display: "inline-block",
+              padding: "0.9rem 2rem",
+              background: "rgba(220,38,38,0.9)",
+              color: "#fff",
+              borderRadius: 8,
+              fontFamily: "var(--font-plan-block), sans-serif",
+              fontSize: "0.95rem",
+              fontWeight: 700,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              textDecoration: "none",
+            }}
+          >
+            Start free →
+          </Link>
+          <p style={{ marginTop: "0.85rem", fontSize: "0.78rem", color: "rgba(255,255,255,0.3)" }}>
+            133 destinations · 3 price tiers · ~2 minutes · no card.
+          </p>
+        </motion.section>
       </div>
     </main>
   );

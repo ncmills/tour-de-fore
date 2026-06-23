@@ -94,6 +94,87 @@ const ACTIVITIES = [
   "Fishing", "ATV", "Casino", "Spa", "Brewery", "Shooting", "Water Sports", "None",
 ];
 
+// ── Option pools for the inline-rendered wizard fields ──
+// Mirrors the literal option arrays used in each step's JSX so the one-click
+// "Plan it all for me" auto-pick can only ever produce values that clear
+// validateWizardState + every per-step canAdvance gate. Keep in sync with the
+// rendered <SelectionCard> labels below.
+const SKILL_MIX_OPTIONS = ["All similar", "Wide range", "Mostly beginners", "Here for the vibes"];
+const AGE_RANGE_OPTIONS = ["20s", "30s", "40s", "Mixed"];
+const ROUNDS_PER_DAY_OPTIONS = ["One (18)", "Two (36)", "Let AI decide"];
+const COURSE_QUALITY_OPTIONS = ["Cheap & fun", "Mix of public & resort", "Bucket list only", "Whatever fits budget"];
+const WALKING_OPTIONS = ["Walking", "Riding", "Mix / Don't care"];
+const HANDICAP_OPTIONS = ["Scratch–10", "10–20", "20+", "Mixed bag"];
+const LODGING_OPTIONS = ["One big house", "Hotel / Resort", "Split houses", "Don't care"];
+const DINING_OPTIONS = ["Steakhouses", "Casual & local", "Private chef", "Mix"];
+const NIGHTLIFE_OPTIONS = ["Going out every night", "Couple nights", "In bed by 10", "Point us to a bar"];
+const BUDGET_OPTIONS = ["$2K per person", "$4K per person", "$6K per person", "Fat pockets"];
+const BUDGET_PRIORITY_OPTIONS = ["Best courses", "Best lodging", "Best dining", "Keep balanced"];
+const NUMBER_OF_DAYS_OPTIONS = [3, 4, 5];
+// US-state catalog by region (mirrors REGION_STATES, used only for region picks).
+
+function pickOne<T>(arr: readonly T[]): T {
+  return arr[Math.floor(Math.random() * arr.length)]!;
+}
+
+// Pick `min`..`max` unique items (count varies run-to-run) from a pool.
+function pickSome<T>(arr: readonly T[], min: number, max: number): T[] {
+  const pool = [...arr];
+  const hi = Math.min(max, pool.length);
+  const lo = Math.min(min, hi);
+  const count = lo + Math.floor(Math.random() * (hi - lo + 1));
+  const out: T[] = [];
+  for (let i = 0; i < count && pool.length > 0; i++) {
+    const idx = Math.floor(Math.random() * pool.length);
+    out.push(pool.splice(idx, 1)[0]!);
+  }
+  return out;
+}
+
+// Build a complete, VARIED, always-valid wizard payload in one shot. Every
+// value is drawn from the option pools above (the same ones the per-step
+// pickers render), so the result clears validateWizardState AND every
+// canAdvance gate. Activities exclude "None" so the trio reads coherent.
+// handicap stays optional (sometimes empty). Picks vary run-to-run.
+function buildGlobalAutoPick(): Partial<WizardState> {
+  const flexible = Math.random() < 0.5;
+  // Lead with a specific destination so step 0 always validates without a
+  // region/state round-trip; vary across a small pool of golf-trip towns.
+  const SPECIFIC_DESTINATIONS = [
+    "Scottsdale, AZ", "Pinehurst, NC", "Bandon, OR", "Myrtle Beach, SC",
+    "Palm Springs, CA", "Austin, TX", "Sea Island, GA", "Scottsdale, AZ",
+    "Kohler, WI", "Streamsong, FL", "Pebble Beach, CA", "Las Vegas, NV",
+  ];
+  const realActivities = ACTIVITIES.filter((a) => a !== "None");
+
+  return {
+    destinationType: "specific",
+    destination: pickOne(SPECIFIC_DESTINATIONS),
+    region: "",
+    states: [],
+    flexible,
+    preferredSeason: flexible ? pickOne(SEASONS) : "",
+    tripMonth: flexible ? "" : pickOne(MONTHS),
+    numberOfDays: pickOne(NUMBER_OF_DAYS_OPTIONS),
+    groupSize: 8 + Math.floor(Math.random() * 9), // 8–16
+    skillMix: pickOne(SKILL_MIX_OPTIONS),
+    ageRange: pickOne(AGE_RANGE_OPTIONS),
+    roundsPerDay: pickOne(ROUNDS_PER_DAY_OPTIONS),
+    courseQuality: pickOne(COURSE_QUALITY_OPTIONS),
+    walkingOrRiding: pickOne(WALKING_OPTIONS),
+    // Optional — leave empty ~40% of runs so it reads as genuinely optional.
+    handicap: Math.random() < 0.6 ? pickOne(HANDICAP_OPTIONS) : "",
+    mustPlayCourses: "",
+    lodging: pickOne(LODGING_OPTIONS),
+    dining: pickSome(DINING_OPTIONS, 1, 2),
+    nightlife: pickOne(NIGHTLIFE_OPTIONS),
+    activities: pickSome(realActivities, 1, 3),
+    budget: pickOne(BUDGET_OPTIONS),
+    budgetPriorities: pickSome(BUDGET_PRIORITY_OPTIONS, 1, 2),
+    specialRequests: "",
+  };
+}
+
 const LOADING_MESSAGES = [
   "Burning the corpses...",
   "Deleting the text thread...",
@@ -364,7 +445,7 @@ export default function PlanWizardClient() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showResumed, setShowResumed] = useState(false);
-  const [quota, setQuota] = useState<{ plansRemaining: number; plansLimit: number; resetsAt?: string; unlimited: boolean } | null>(null);
+  const [quota, setQuota] = useState<{ plansRemaining: number; plansLimit: number; plansUsed: number; resetsAt?: string; unlimited: boolean } | null>(null);
   // null = unknown (profile fetch in flight), true/false once resolved.
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
   // Generate-first: logged-out users can optionally attach an account on the
@@ -379,6 +460,13 @@ export default function PlanWizardClient() {
   const [notifyEmail, setNotifyEmail] = useState("");
   const isScrolling = useRef(false);
   const typedSteps = useRef<Set<string>>(new Set());
+
+  // "Plan it all for me" — one-click full auto-pick. When fired, fills every
+  // required field with valid varied picks, shows a recap of the headline
+  // choices, then jumps to the final step (never skips the account/generate
+  // gate). Pattern ported from BMHQ/MOH PartyWizardClient.
+  const [globalPickSummary, setGlobalPickSummary] = useState<string[]>([]);
+  const [autoPicked, setAutoPicked] = useState(false);
 
   // Fetch the user's remaining monthly plan quota so the wizard can surface
   // "X of 3 trips remaining · resets Apr 30" up front — avoids the nasty
@@ -405,6 +493,7 @@ export default function PlanWizardClient() {
         setQuota({
           plansRemaining: data.plansRemaining ?? Math.max(0, (data.plansLimit ?? 3) - (data.plansUsed ?? 0)),
           plansLimit: data.plansLimit ?? 3,
+          plansUsed: data.plansUsed ?? 0,
           resetsAt: data.resetsAt,
           unlimited: !!data.unlimited,
         });
@@ -518,6 +607,38 @@ export default function PlanWizardClient() {
     set(field, value);
     setTimeout(() => advance(revealedCount), 200);
   };
+
+  // ── "Plan it all for me" — one-click full auto-pick ──
+  // Fills every required field with valid, varied, on-brand picks (drawn from
+  // the wizard's own option pools so they always clear validateWizardState),
+  // surfaces a recap of the headline choices, reveals all steps, and jumps to
+  // the final roster/generate step. Never skips the account/generate gate —
+  // anonymous users still see the "See My Trip" CTA there.
+  const planItAllForMe = useCallback(() => {
+    const picks = buildGlobalAutoPick();
+    const merged: WizardState = { ...state, ...picks };
+    dispatch({ type: "RESTORE_STATE", state: merged });
+    saveToSession(merged);
+    setAutoPicked(true);
+
+    // Human-readable recap of the headline choices for the banner.
+    const timing = picks.flexible
+      ? `${picks.preferredSeason} trip`
+      : `${picks.tripMonth} trip`;
+    setGlobalPickSummary([
+      picks.destination ? String(picks.destination) : "",
+      `${picks.numberOfDays} days`,
+      `${picks.groupSize} golfers`,
+      timing,
+      picks.roundsPerDay ? String(picks.roundsPerDay) : "",
+      picks.budget ? String(picks.budget) : "",
+    ].filter(Boolean));
+
+    // Reveal all steps so the progress bar is full, then land on the final
+    // step. Defer one tick so the merged state commits before the step swap.
+    setRevealedCount(totalQuestions);
+    setTimeout(() => setCurrentQ(totalQuestions - 1), 0);
+  }, [state, saveToSession, totalQuestions]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -960,30 +1081,58 @@ export default function PlanWizardClient() {
         )}
       </AnimatePresence>
 
-      {/* Monthly quota pill — hidden for unlimited accounts + unauthed users */}
+      {/* Monthly quota pill — hidden for unlimited accounts + unauthed users.
+          Pre-generation (plansUsed === 0) shows positive "first plan free"
+          framing instead of a "3 of 3 remaining" count, which read as a
+          paywall before the user got any value. The count only appears once
+          the user has at least one generation under their belt. */}
       {quota && !quota.unlimited && !showResumed && (
-        <div
-          style={{
-            position: "fixed",
-            top: 16,
-            left: "50%",
-            transform: "translateX(-50%)",
-            zIndex: 51,
-            padding: "6px 16px",
-            borderRadius: 999,
-            background: quota.plansRemaining > 0 ? "rgba(234,88,12,0.12)" : "rgba(220,38,38,0.18)",
-            border: quota.plansRemaining > 0 ? "1px solid rgba(234,88,12,0.25)" : "1px solid rgba(220,38,38,0.45)",
-            color: quota.plansRemaining > 0 ? "rgba(255,255,255,0.62)" : "rgba(255,200,200,0.82)",
-            fontSize: "0.72rem",
-            letterSpacing: "0.04em",
-            fontFamily: "var(--font-inter), sans-serif",
-            whiteSpace: "nowrap",
-          }}
-          aria-live="polite"
-        >
-          {quota.plansRemaining} of {quota.plansLimit} trips remaining this month
-          {quota.resetsAt && ` · resets ${new Date(quota.resetsAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}`}
-        </div>
+        quota.plansUsed === 0 ? (
+          <div
+            style={{
+              position: "fixed",
+              top: 16,
+              left: "50%",
+              transform: "translateX(-50%)",
+              zIndex: 51,
+              padding: "6px 16px",
+              borderRadius: 999,
+              background: "rgba(234,88,12,0.12)",
+              border: "1px solid rgba(234,88,12,0.25)",
+              color: "rgba(255,255,255,0.62)",
+              fontSize: "0.72rem",
+              letterSpacing: "0.04em",
+              fontFamily: "var(--font-inter), sans-serif",
+              whiteSpace: "nowrap",
+            }}
+            aria-live="polite"
+          >
+            Your first plan is free — no card needed
+          </div>
+        ) : (
+          <div
+            style={{
+              position: "fixed",
+              top: 16,
+              left: "50%",
+              transform: "translateX(-50%)",
+              zIndex: 51,
+              padding: "6px 16px",
+              borderRadius: 999,
+              background: quota.plansRemaining > 0 ? "rgba(234,88,12,0.12)" : "rgba(220,38,38,0.18)",
+              border: quota.plansRemaining > 0 ? "1px solid rgba(234,88,12,0.25)" : "1px solid rgba(220,38,38,0.45)",
+              color: quota.plansRemaining > 0 ? "rgba(255,255,255,0.62)" : "rgba(255,200,200,0.82)",
+              fontSize: "0.72rem",
+              letterSpacing: "0.04em",
+              fontFamily: "var(--font-inter), sans-serif",
+              whiteSpace: "nowrap",
+            }}
+            aria-live="polite"
+          >
+            {quota.plansRemaining} of {quota.plansLimit} trips remaining this month
+            {quota.resetsAt && ` · resets ${new Date(quota.resetsAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}`}
+          </div>
+        )
       )}
 
       <MulliganButton onClick={() => {
@@ -999,6 +1148,41 @@ export default function PlanWizardClient() {
       {/* STEP 1: WHERE — Destination + Region/City */}
       {currentQ === 0 && (
         <Question number={1} total={totalQuestions} title="Where's the crew headed?" subtitle="Destination" id={questionIds[0]} typedSteps={typedSteps}>
+          {/* ── "Plan it all for me" — one-click full auto-pick ──
+              Short-on-time escape hatch: fills the whole wizard with valid,
+              varied picks and jumps to the final step where the generate gate
+              takes over. Primary, prominent, but clearly an alternative to the
+              step-by-step flow below. */}
+          <motion.button
+            type="button"
+            onClick={planItAllForMe}
+            whileHover={{ scale: 1.01, y: -2 }}
+            whileTap={{ scale: 0.99 }}
+            aria-label="Plan it all for me — auto-pick every choice and skip to the end"
+            style={{
+              display: "block",
+              width: "100%",
+              marginBottom: "1rem",
+              padding: "1.2rem 1.5rem",
+              borderRadius: 8,
+              border: "none",
+              cursor: "pointer",
+              background: "linear-gradient(135deg, #EA580C, #DC2626)",
+              color: "#fff",
+              boxShadow: "0 6px 24px rgba(234,88,12,0.35)",
+              textAlign: "center",
+            }}
+          >
+            <span style={{ display: "block", fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1.15rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em" }}>
+              ⚡ Plan it all for me
+            </span>
+            <span style={{ display: "block", marginTop: "0.35rem", fontSize: "0.82rem", opacity: 0.92, fontFamily: "var(--font-inter), sans-serif", lineHeight: 1.35 }}>
+              No time? One tap picks a killer trip — review &amp; tweak before we build it.
+            </span>
+          </motion.button>
+          <p style={{ textAlign: "center", marginBottom: "2.5rem", fontSize: "0.72rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", fontFamily: "var(--font-inter), sans-serif" }}>
+            Or build it step by step
+          </p>
           <div className="grid grid-cols-2 gap-5" style={{ marginBottom: "3rem" }}>
             <SelectionCard
               label="Specific place"
@@ -1316,6 +1500,29 @@ export default function PlanWizardClient() {
       {/* STEP 7: Account + Generate */}
       {currentQ === 6 && (
         <Question number={7} total={totalQuestions} title="Your annual tradition starts now" subtitle="Let's Plan" id={questionIds[6]} typedSteps={typedSteps}>
+          {/* "Plan it all for me" recap — shows what was auto-picked so the
+              user can see the choices before generating (or back up to edit). */}
+          {autoPicked && globalPickSummary.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              style={{ maxWidth: 460, margin: "0 auto 1.75rem", padding: "0.9rem 1rem", borderRadius: 10, background: "rgba(234,88,12,0.08)", border: "1px solid rgba(234,88,12,0.3)", textAlign: "center" }}
+            >
+              <p style={{ fontFamily: "var(--font-inter), sans-serif", fontSize: "0.82rem", fontWeight: 600, color: "rgba(255,255,255,0.7)", marginBottom: "0.6rem" }}>
+                We picked the fun stuff. Back up to tweak anything, or build it.
+              </p>
+              <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "0.4rem" }}>
+                {globalPickSummary.map((chip) => (
+                  <span
+                    key={chip}
+                    style={{ display: "inline-flex", alignItems: "center", padding: "0.2rem 0.6rem", borderRadius: 999, fontSize: "0.72rem", fontWeight: 600, fontFamily: "var(--font-inter), sans-serif", color: "rgba(255,255,255,0.75)", background: "rgba(234,88,12,0.14)", border: "1px solid rgba(234,88,12,0.35)" }}
+                  >
+                    {chip}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          )}
           {/* ── Generate-first ──
               Primary CTA generates immediately and shows the full trip. No
               account required. Logged-out users can optionally open the account

@@ -222,6 +222,12 @@ export default function PlanSelectionClient({
 }) {
   const router = useRouter();
 
+  // Default the nested picker: lead with ONE recommended hero (the mid "Sweet
+  // Spot" destination, devil tier) and tuck the other two destinations behind
+  // an expander so the upfront choice is 1 clear default + drill-down, not a
+  // 9-way (3 dest × 3 tier) decision.
+  const [showOtherDests, setShowOtherDests] = useState(false);
+
   // Generate-first: the anon creator of this plan (it's in their localStorage)
   // gets a save prompt; a logged-in non-owner who holds it locally is
   // auto-claimed on arrival.
@@ -299,7 +305,7 @@ export default function PlanSelectionClient({
           transition={{ delay: 0.1 }}
           style={{ fontFamily: "var(--font-plan-groovy), cursive", fontSize: "clamp(2.5rem, 7vw, 5rem)", color: "#fff", marginBottom: "0.5rem" }}
         >
-          Pick Your Battleground
+          Here&apos;s Our Pick
         </motion.h1>
         <motion.p
           initial={{ opacity: 0 }}
@@ -307,7 +313,7 @@ export default function PlanSelectionClient({
           transition={{ delay: 0.4 }}
           style={{ fontSize: "clamp(0.9rem, 2vw, 1.1rem)", color: "rgba(255,255,255,0.5)", maxWidth: 600, margin: "0 auto" }}
         >
-          Three destinations at three price points — each with a full AI-generated trip plan.
+          The sweet spot for your crew — full AI-generated trip plan. Want to compare? Two more destinations below.
         </motion.p>
 
         {showSavePrompt && (
@@ -337,29 +343,90 @@ export default function PlanSelectionClient({
         )}
       </div>
 
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(min(320px, 100%), 1fr))",
-        gap: "1.5rem",
-        maxWidth: "1200px",
-        margin: "0 auto",
-      }}>
-        {destinationTiers.map(({ key, icon, label, subtitle, badge }, i) => (
-          <DestinationCard
-            key={key}
-            planId={planId}
-            priceKey={key}
-            icon={icon}
-            label={label}
-            subtitle={subtitle}
-            badge={badge}
-            preview={freePreviews?.[key] || null}
-            legacyDest={legacyDestinations?.[key]}
-            index={i}
-            isOwner={isOwner}
-          />
-        ))}
-      </div>
+      {/* Hero — the recommended "Sweet Spot" (mid) destination, devil tier. */}
+      {(() => {
+        const hero = destinationTiers.find((t) => t.key === "mid")!;
+        const others = destinationTiers.filter((t) => t.key !== "mid");
+        return (
+          <>
+            <div style={{ maxWidth: 460, margin: "0 auto" }}>
+              <DestinationCard
+                planId={planId}
+                priceKey={hero.key}
+                icon={hero.icon}
+                label={hero.label}
+                subtitle={hero.subtitle}
+                badge={hero.badge}
+                preview={freePreviews?.[hero.key] || null}
+                legacyDest={legacyDestinations?.[hero.key]}
+                index={0}
+                isOwner={isOwner}
+              />
+            </div>
+
+            {/* Drill-down — the other two destinations / price tiers. */}
+            <div style={{ textAlign: "center", marginTop: "2rem" }}>
+              {!showOtherDests ? (
+                <button
+                  onClick={() => setShowOtherDests(true)}
+                  aria-expanded={false}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    padding: "0.7rem 1.5rem",
+                    background: "rgba(255,255,255,0.05)",
+                    border: "1px solid rgba(255,255,255,0.15)",
+                    borderRadius: 8,
+                    color: "rgba(255,255,255,0.7)",
+                    fontSize: "0.85rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.04em",
+                    cursor: "pointer",
+                    fontFamily: "var(--font-inter), sans-serif",
+                  }}
+                >
+                  See other destinations &amp; tiers ↓
+                </button>
+              ) : (
+                <>
+                  <motion.div
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4 }}
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "repeat(auto-fit, minmax(min(320px, 100%), 1fr))",
+                      gap: "1.5rem",
+                      maxWidth: "1200px",
+                      margin: "0 auto",
+                    }}
+                  >
+                    {others.map(({ key, icon, label, subtitle, badge }, i) => (
+                      <DestinationCard
+                        key={key}
+                        planId={planId}
+                        priceKey={key}
+                        icon={icon}
+                        label={label}
+                        subtitle={subtitle}
+                        badge={badge}
+                        preview={freePreviews?.[key] || null}
+                        legacyDest={legacyDestinations?.[key]}
+                        index={i}
+                        isOwner={isOwner}
+                      />
+                    ))}
+                  </motion.div>
+                  <p style={{ marginTop: "1rem", fontSize: "0.78rem", color: "rgba(255,255,255,0.35)", fontFamily: "var(--font-inter), sans-serif" }}>
+                    Each destination has Imp, Devil &amp; Demon King tiers — pick one to see all three.
+                  </p>
+                </>
+              )}
+            </div>
+          </>
+        );
+      })()}
     </main>
   );
 }
