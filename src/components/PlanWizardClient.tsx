@@ -323,6 +323,12 @@ function Question({
       style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "flex-start", padding: "clamp(3rem, 8vh, 5rem) clamp(1rem, 5vw, 2.5rem) 4.5rem", textAlign: "center", overflow: "auto" }}
     >
       <div style={{ maxWidth: 620, margin: "0 auto", width: "100%" }}>
+        {/* Step counter — clear numeric position in the flow */}
+        <div style={{ marginBottom: subtitle ? "0.7rem" : "2.4rem", textAlign: "center" }}>
+          <span style={{ fontFamily: "var(--font-inter), sans-serif", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>
+            Step {number} of {total}
+          </span>
+        </div>
         {/* Category label */}
         {subtitle && (
           <div style={{ marginBottom: "2.4rem", textAlign: "center" }}>
@@ -783,10 +789,10 @@ export default function PlanWizardClient() {
                 </motion.p>
               </AnimatePresence>
               <p className="mt-4 text-sm text-text-muted opacity-40 text-center">
-                This usually takes 30–45 seconds
+                Usually about 1–2 minutes
               </p>
               <p className="mt-3 text-xs text-text-dim opacity-50 text-center max-w-[280px]">
-                Building 3 destinations × 3 plans each — 9 custom itineraries just for your crew
+                Building 9 itineraries — 3 destinations × 3 tiers — custom for your crew. Good golf takes a minute.
               </p>
               {/* Progress bar — snaps to server milestones, creeps between them.
                   Real progress signal replaces the pre-progress infinite shimmer. */}
@@ -1029,7 +1035,6 @@ export default function PlanWizardClient() {
       {/* STEP 2: WHEN — Timing + Days */}
       {currentQ === 1 && (
         <Question number={2} total={totalQuestions} title="When and how long?" subtitle="Timing" id={questionIds[1]} typedSteps={typedSteps}>
-          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>Timing</p>
           <div className="grid grid-cols-2 gap-5" style={{ marginBottom: "3rem" }}>
             <SelectionCard
               label="Flexible"
@@ -1313,7 +1318,7 @@ export default function PlanWizardClient() {
             {isLoading ? "Generating..." : "Unleash the Devils"}
           </motion.button>
           <p style={{ fontSize: "0.84rem", color: "rgba(255,255,255,0.25)", textAlign: "center", marginTop: "1rem" }}>
-            {state.authMode === "login" ? "Sign in to generate your trip." : "3 free plans per week."}
+            {state.authMode === "login" ? "Sign in to generate your trip." : "3 free plans per month."}
           </p>
         </Question>
       )}

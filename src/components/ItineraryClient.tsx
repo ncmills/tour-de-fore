@@ -61,28 +61,125 @@ function formatDollars(n: number): string {
 }
 
 
-function generateICSFile(tripName: string, destination: string, numDays: number) {
-  const now = new Date();
-  const uid = `tdf-${Date.now()}@tourdefore.com`;
-  const formatDate = (d: Date) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
-  const startDate = formatDate(now);
-  const endDate = formatDate(new Date(now.getTime() + numDays * 24 * 60 * 60 * 1000));
+interface TripTiming {
+  tripMonth?: string;
+  preferredSeason?: string;
+  flexible?: boolean;
+}
 
-  const ics = [
+interface IcsDay {
+  /** 1-based day number */
+  day: number;
+  /** Short human label, e.g. "Day 1 — Arrival + Pronghorn (AM)" */
+  summary: string;
+  /** Multi-line description (round / tee-time guidance) */
+  description: string;
+}
+
+const MONTH_INDEX: Record<string, number> = {
+  january: 0, february: 1, march: 2, april: 3, may: 4, june: 5,
+  july: 6, august: 7, september: 8, october: 9, november: 10, december: 11,
+};
+
+// Representative month for each season in the Northern Hemisphere — the
+// midpoint, so a "suggested" Summer date lands in July, etc.
+const SEASON_MONTH: Record<string, number> = {
+  spring: 3, // April
+  summer: 6, // July
+  fall: 9,   // October
+  autumn: 9,
+  winter: 0, // January (next year handled below)
+};
+
+/**
+ * Resolve a concrete start Date for the trip from the user's selected timing.
+ * Returns the anchor date plus whether it's a firm month or a soft "suggested"
+ * season placeholder. Falls back to a near-future date (~6 weeks out) when no
+ * timing was captured.
+ */
+function resolveTripStart(timing?: TripTiming | null): { start: Date; suggested: boolean } {
+  const now = new Date();
+
+  const pickMonth = (monthIdx: number): Date => {
+    // First of the month at a sensible arrival hour. Roll to next year if the
+    // target month is already in the past this year.
+    const year = monthIdx < now.getMonth() ? now.getFullYear() + 1 : now.getFullYear();
+    return new Date(year, monthIdx, 1);
+  };
+
+  if (timing) {
+    if (!timing.flexible && timing.tripMonth) {
+      const idx = MONTH_INDEX[timing.tripMonth.trim().toLowerCase()];
+      if (idx !== undefined) return { start: pickMonth(idx), suggested: false };
+    }
+    if (timing.preferredSeason) {
+      const idx = SEASON_MONTH[timing.preferredSeason.trim().toLowerCase()];
+      if (idx !== undefined) return { start: pickMonth(idx), suggested: true };
+    }
+  }
+
+  // No timing info — suggest a near-future date ~6 weeks out.
+  const fallback = new Date(now.getTime() + 42 * 24 * 60 * 60 * 1000);
+  fallback.setHours(0, 0, 0, 0);
+  return { start: fallback, suggested: true };
+}
+
+// Escape RFC 5545 special chars in TEXT values.
+function icsEscape(s: string): string {
+  return s.replace(/\\/g, "\\\\").replace(/[;,]/g, (m) => "\\" + m).replace(/\n/g, "\\n");
+}
+
+function generateICSFile(
+  tripName: string,
+  destination: string,
+  numDays: number,
+  days: IcsDay[],
+  timing?: TripTiming | null
+) {
+  const { start, suggested } = resolveTripStart(timing);
+  const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+  // All-day events use DATE values (YYYYMMDD), DTEND is exclusive (next day).
+  const fmtDate = (d: Date) =>
+    `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, "0")}${String(d.getDate()).padStart(2, "0")}`;
+
+  const lines: string[] = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
     "PRODID:-//Tour de Fore//Golf Trip Planner//EN",
-    "BEGIN:VEVENT",
-    `UID:${uid}`,
-    `DTSTART:${startDate}`,
-    `DTEND:${endDate}`,
-    `SUMMARY:${tripName || "Golf Trip"} - ${destination}`,
-    `DESCRIPTION:Golf trip to ${destination} (${numDays} days). Plan your trip at tourdefore.com`,
-    `LOCATION:${destination}`,
-    "STATUS:TENTATIVE",
-    "END:VEVENT",
-    "END:VCALENDAR",
-  ].join("\r\n");
+    "CALSCALE:GREGORIAN",
+  ];
+
+  const suggestedNote = suggested
+    ? "Suggested dates — pick the exact week that works for the crew, then shift these events to match."
+    : "";
+
+  // One all-day event per trip day, anchored to the chosen timing.
+  for (let i = 0; i < numDays; i++) {
+    const dayDate = new Date(start.getTime() + i * 24 * 60 * 60 * 1000);
+    const nextDate = new Date(dayDate.getTime() + 24 * 60 * 60 * 1000);
+    const info = days[i];
+    const summaryBase = info?.summary || `Day ${i + 1}`;
+    const summary = suggested ? `${summaryBase} (suggested)` : summaryBase;
+    const descParts = [info?.description || `Golf trip to ${destination}.`];
+    if (suggestedNote) descParts.push(suggestedNote);
+    descParts.push("Plan your trip at tourdefore.com");
+
+    lines.push(
+      "BEGIN:VEVENT",
+      `UID:tdf-${Date.now()}-d${i + 1}@tourdefore.com`,
+      `DTSTAMP:${stamp}`,
+      `DTSTART;VALUE=DATE:${fmtDate(dayDate)}`,
+      `DTEND;VALUE=DATE:${fmtDate(nextDate)}`,
+      `SUMMARY:${icsEscape(`${tripName || "Golf Trip"} — ${summary}`)}`,
+      `DESCRIPTION:${icsEscape(descParts.join("\n\n"))}`,
+      `LOCATION:${icsEscape(destination)}`,
+      "STATUS:TENTATIVE",
+      "END:VEVENT"
+    );
+  }
+
+  lines.push("END:VCALENDAR");
+  const ics = lines.join("\r\n");
 
   const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
   const url = URL.createObjectURL(blob);
@@ -237,12 +334,14 @@ export default function ItineraryClient({
   planId,
   tier,
   dest,
+  timing,
 }: {
   plan: GeneratedPlan;
   selectedOptions: Record<string, string[]> | null;
   planId: string;
   tier: TripTier;
   dest: string;
+  timing?: TripTiming | null;
 }) {
   const [showEmailForm, setShowEmailForm] = useState(false);
   const [emailInput, setEmailInput] = useState("");
@@ -304,6 +403,37 @@ export default function ItineraryClient({
     }
     return days;
   }, [plan, numDays, selectedCourseNames, selectedDiningNames, selectedBarNames, selectedOptions]);
+
+  // Per-day events for the .ics export — round + tee-time guidance baked in.
+  const icsDays: IcsDay[] = useMemo(() => {
+    const teeTip = plan.groupLogistics?.teeTimeStrategy || "";
+    return dayItineraries.map((day) => {
+      const rounds: string[] = [];
+      if (day.morning) rounds.push(`AM round: ${day.morning.name}${day.morning.greenFee ? ` (${day.morning.greenFee})` : ""}`);
+      if (day.afternoon) rounds.push(`PM round: ${day.afternoon.name}${day.afternoon.greenFee ? ` (${day.afternoon.greenFee})` : ""}`);
+      if (day.afternoonActivity) rounds.push(`PM: ${day.afternoonActivity}`);
+
+      const headline =
+        day.morning?.name ||
+        day.afternoon?.name ||
+        day.afternoonActivity ||
+        "Free day";
+      const summary = `Day ${day.day} — ${headline}`;
+
+      const descLines: string[] = [];
+      if (rounds.length) descLines.push(rounds.join("\n"));
+      if (day.dinner) descLines.push(`Dinner: ${day.dinner.name}`);
+      if (day.bar) descLines.push(`Drinks: ${day.bar.name}`);
+      if (day.morning || day.afternoon) {
+        descLines.push(
+          teeTip
+            ? `Tee times: ${teeTip}`
+            : "Tee times: book group tee times well ahead — large groups fill blocks fast."
+        );
+      }
+      return { day: day.day, summary, description: descLines.join("\n\n") || `Golf trip to ${plan.destination}.` };
+    });
+  }, [dayItineraries, plan.groupLogistics, plan.destination]);
 
   // Lodging info
   const lodgingName = selectedLodgingName;
@@ -829,7 +959,7 @@ export default function ItineraryClient({
           {/* Add to Calendar */}
           <button
             data-print-hide
-            onClick={() => generateICSFile(plan.tripName || "Golf Trip", plan.destination, numDays)}
+            onClick={() => generateICSFile(plan.tripName || "Golf Trip", plan.destination, numDays, icsDays, timing)}
             style={{
               padding: "14px 32px",
               background: "#111",

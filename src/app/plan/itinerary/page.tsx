@@ -42,6 +42,11 @@ export default async function ItineraryPage({ searchParams }: Props) {
           planId={planId}
           tier={tier as TripTier}
           dest={dest}
+          timing={stored.inputs ? {
+            tripMonth: stored.inputs.tripMonth,
+            preferredSeason: stored.inputs.preferredSeason,
+            flexible: stored.inputs.flexible,
+          } : null}
         />
       </Suspense>
     </ErrorBoundary>

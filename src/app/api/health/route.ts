@@ -9,9 +9,15 @@ export async function GET(req: NextRequest) {
 
   const checks: Record<string, string> = {};
 
-  // Redis
+  // Redis — write-probe, not just PING. A full-memory instance still answers
+  // PING but rejects writes (OOM), so a tiny SET (auto-expiring) + DEL is the
+  // only way to detect that the cache can actually accept data.
   try {
-    await getRedis().ping();
+    const r = getRedis();
+    const probeKey = `health:probe:${Date.now()}`;
+    const setRes = await r.set(probeKey, "1", "EX", 30);
+    if (setRes !== "OK") throw new Error(`SET returned ${setRes ?? "null"}`);
+    await r.del(probeKey);
     checks.redis = "ok";
   } catch (e) {
     checks.redis = `fail: ${e instanceof Error ? e.message : String(e)}`;

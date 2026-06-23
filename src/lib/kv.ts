@@ -2,7 +2,9 @@ import { StoredPlan, Attendee, WizardState } from "./plan-types";
 import { getRedis } from "./redis";
 
 const PLAN_TTL = 60 * 60 * 24 * 21; // 21 days
-const SIGNAL_TTL = 60 * 60 * 24 * 365; // 1 year for learning signals
+// Learning signals are aggregate popularity/view counts — recent data carries
+// the signal, and stale rows just bloat the shared 30MB Redis. Cap at ~30 days.
+const SIGNAL_TTL = 60 * 60 * 24 * 30; // 30 days for learning signals
 
 // ── Plan storage ──
 
@@ -161,7 +163,10 @@ export interface ShopOrder {
   createdAt: string;
 }
 
-const ORDER_TTL = 60 * 60 * 24 * 365; // 1 year
+// Orders are real purchase records — keep them around long enough for
+// fulfillment lookups, support, and refund windows, but still bound them so
+// they don't accumulate forever in the shared 30MB Redis. ~180 days.
+const ORDER_TTL = 60 * 60 * 24 * 180; // 180 days
 
 export async function storeOrder(order: ShopOrder): Promise<void> {
   const r = getRedis();
