@@ -230,6 +230,18 @@ export function buildUserMessage(state: WizardState, tier?: "imp" | "devil" | "d
     ? `Flexible timing, preferred season: ${state.preferredSeason}`
     : `Target dates: ${state.tripMonth}`;
 
+  // ── Deterministic golf-round count ──
+  // The exact total rounds is golfDays × roundsPerDay, where golfDays =
+  // numberOfDays - 1 (last day is travel/checkout). This MUST match
+  // computePriceTargets() in route.ts and the per-day schedule length, or
+  // Claude guesses a round count that disagrees with the trip length
+  // (observed: 5d/Two → "10 rounds" when it should be 8; 4d/Two → "4" when
+  // it should be 6). Inject the exact numbers so the itinerary states them.
+  const golfDays = Math.max(state.numberOfDays - 1, 1);
+  const roundsPerDayNum = state.roundsPerDay === "One (18)" ? 1 : 2;
+  const totalRounds = golfDays * roundsPerDayNum;
+  const roundsConstraint = `\n\nGOLF ROUND COUNT (MANDATORY — use these EXACT numbers): This trip has ${golfDays} golf day${golfDays === 1 ? "" : "s"} at ${roundsPerDayNum} round${roundsPerDayNum === 1 ? "" : "s"} per day = ${totalRounds} total rounds of golf. Every plan MUST schedule exactly ${totalRounds} rounds across ${golfDays} golf day${golfDays === 1 ? "" : "s"}, and any reference to round count (e.g. the estimatedBudget.breakdown golf line item) MUST say "${totalRounds} rounds". Do NOT invent a different number.`;
+
   // Build tier-specific price guidance
   let priceGuidance = "";
   if (priceTargets) {
@@ -261,9 +273,11 @@ GROUP:
 
 GOLF:
 - Rounds per day: ${state.roundsPerDay}
+- Golf days: ${golfDays} (excludes travel/checkout day)
+- Total rounds: ${totalRounds}
 - Course quality: ${state.courseQuality}
 - Walking vs riding: ${state.walkingOrRiding}
-${state.mustPlayCourses ? `- Must-play courses: ${state.mustPlayCourses}` : ""}
+${state.mustPlayCourses ? `- Must-play courses: ${state.mustPlayCourses}` : ""}${roundsConstraint}
 
 OFF-COURSE:
 - Lodging preference: ${state.lodging}

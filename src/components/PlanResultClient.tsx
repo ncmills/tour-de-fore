@@ -477,7 +477,11 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
         >
           {plan.courses.map((course: PlanCourse, i: number) => (
             <motion.div
-              key={course.name}
+              // Multi-round trips legitimately repeat a course on different
+              // days (e.g. Pinehurst No. 2 twice), so course.name alone is a
+              // non-unique React key — triggered "two children with the same
+              // key" warnings + risked dropped/duplicated cards. Suffix index.
+              key={`${course.name}-${i}`}
               variants={fadeVariants}
               initial="hidden"
               whileInView="visible"

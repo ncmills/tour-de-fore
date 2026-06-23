@@ -556,15 +556,38 @@ export default function PlanWizardClient() {
       setLoadingMsg((prev) => (prev + 1) % LOADING_MESSAGES.length);
     }, 2500);
 
-    // Exponential decay creep between server milestones. Keeps the bar
-    // moving during long Claude waits instead of sitting flat. BESTMAN
-    // 4ceb116 pattern. Creeps from current pct toward 95%.
+    // ── Smooth, always-moving progress ramp ──
+    // The server only emits four milestones (8 → 18 → 82 → 94) with a long
+    // Claude-generation gap (30–90s, P95 >90s) between 18 and 82. The old
+    // exponential-decay creep (prev + (95-prev)*0.02) slowed to a crawl near
+    // the top — from ~85% at 30s it took another ~60s to reach ~95%, which
+    // reads as "stuck" exactly during the longest wait.
+    //
+    // Replacement: a time-anchored linear ramp. Each tick we compute the
+    // floor the bar should be at for the elapsed time (steady ~0.9%/tick =
+    // ~3%/s up to a soft 92% knee, then a slow linear crawl 92→95). We take
+    // the max of (current, time-floor, +minStep) so the bar ALWAYS advances
+    // by at least a visible amount every tick and never decelerates to a
+    // visual halt. Server milestones still snap it forward via the stream
+    // handler's Math.max; this only governs motion *between* milestones.
+    const rampStart = Date.now();
     const progressInterval = setInterval(() => {
+      const elapsed = (Date.now() - rampStart) / 1000; // seconds
       setProgressPct((prev) => {
         if (prev >= 95) return prev;
-        return Math.min(95, prev + (95 - prev) * 0.02);
+        // Linear ~3%/s to a 92% knee (reaches 92% at ~30s — the typical
+        // completion window), then a slow 0.05%/s crawl 92 → 95 so it keeps
+        // inching up during the long tail without ever sitting flat.
+        const timeFloor =
+          elapsed <= 30
+            ? Math.min(92, elapsed * 3)
+            : Math.min(95, 92 + (elapsed - 30) * 0.05);
+        // Guarantee a minimum forward step every tick so the bar is never
+        // visually frozen, even past the 95% ceiling approach.
+        const minStep = Math.min(95, prev + 0.25);
+        return Math.min(95, Math.max(prev, timeFloor, minStep));
       });
-    }, 300);
+    }, 200);
 
     try {
       const controller = new AbortController();
@@ -778,7 +801,12 @@ export default function PlanWizardClient() {
                 <motion.div
                   className="h-full bg-gradient-to-r from-accent to-gold"
                   animate={{ width: `${progressPct}%` }}
-                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  // Linear transition slightly longer than the 200ms ramp tick
+                  // so each step blends into the next as continuous motion —
+                  // ease-out made every increment look like it was braking,
+                  // reinforcing the "stuck" impression. The 100% snap on done
+                  // gets a quick linear close-out too.
+                  transition={{ duration: 0.25, ease: "linear" }}
                   style={{ width: `${progressPct}%` }}
                 />
               </div>
