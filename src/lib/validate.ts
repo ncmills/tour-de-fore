@@ -11,11 +11,12 @@ export function validateWizardState(raw: unknown): WizardState {
 
   const s = raw as Record<string, unknown>;
 
-  // Required strings
+  // Organizer name/email are OPTIONAL — "generate-first" lets anonymous users
+  // (no account) complete the wizard and see a full plan. organizerEmail is
+  // only present when the user is logged in or chose to attach an account;
+  // when absent the plan is stored unowned and can be claimed later on signup.
   const organizerName = sanitizeString(s.organizerName, 100);
-  const organizerEmail = sanitizeEmail(s.organizerEmail);
-
-  if (!organizerEmail) throw new Error("Valid organizer email is required");
+  const organizerEmail = sanitizeEmail(s.organizerEmail); // "" when anonymous
 
   // Enum validations
   const destinationType = s.destinationType === "specific" ? "specific" : "region";

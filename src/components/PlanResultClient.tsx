@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import Image from "next/image";
@@ -16,6 +16,7 @@ import {
 import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
 import { buildBookingLink, bookingLabel } from "@/lib/booking-links";
+import { getAnonPlanIds, claimAnonPlans } from "@/lib/anon-plans";
 
 const FALLBACK_GOLF_IMAGES = [
   "https://www.troonnorthgolf.com/wp-content/uploads/sites/8934/2023/06/home-main.jpg",
@@ -250,15 +251,49 @@ interface PlanResultClientProps {
    * link manually. See project_tdf_share_links_0411 memory.
    */
   isOwner?: boolean;
+  /** True when the viewer has any session (logged in), regardless of ownership. */
+  isLoggedIn?: boolean;
 }
 
-export default function PlanResultClient({ plan, allPlans, planId, tier, dest, paid, subscribed, isOwner }: PlanResultClientProps) {
+export default function PlanResultClient({ plan, allPlans, planId, tier, dest, paid, subscribed, isOwner, isLoggedIn }: PlanResultClientProps) {
   const [copied, setCopied] = useState(false);
   const [showEmailForm, setShowEmailForm] = useState(false);
   const [emailInput, setEmailInput] = useState("");
   const [sendingEmails, setSendingEmails] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
   const [emailError, setEmailError] = useState("");
+  // Owner can become true after a client-side claim (anon user who just signed
+  // in lands back here and we claim their plan). Mirrors the server `isOwner`.
+  const [claimedOwner, setClaimedOwner] = useState(false);
+  const owner = isOwner || claimedOwner;
+  // True only for the anon creator of THIS plan (it's in their localStorage) —
+  // not a random forwarded recipient. Used to show "Save to My Trips".
+  const [holdsLocally, setHoldsLocally] = useState(false);
+  useEffect(() => { setHoldsLocally(getAnonPlanIds().includes(planId)); }, [planId]);
+  // Show the save/share prompt only to the logged-out creator of this plan.
+  const showSavePrompt = !isLoggedIn && !owner && holdsLocally;
+
+  // Claim-on-arrival: a logged-in viewer who isn't yet the owner but DOES have
+  // this planId tracked locally (they generated it anonymously, then signed
+  // in) gets it associated with their account automatically.
+  useEffect(() => {
+    if (!isLoggedIn || isOwner) return;
+    if (!getAnonPlanIds().includes(planId)) return;
+    let cancelled = false;
+    (async () => {
+      const n = await claimAnonPlans();
+      if (!cancelled && n > 0) setClaimedOwner(true);
+    })();
+    return () => { cancelled = true; };
+  }, [isLoggedIn, isOwner, planId]);
+
+  // Anon (logged-out) viewer wanting to save/share → send them to auth with a
+  // returnTo back here. The planId is already in localStorage, so the
+  // claim-on-arrival effect above fires when they come back signed in.
+  const promptAuthToSave = () => {
+    const returnTo = `/plan/result/${planId}${dest ? `?dest=${dest}&tier=${tier}` : ""}`;
+    window.location.href = `/login?returnTo=${encodeURIComponent(returnTo)}`;
+  };
 
   const copyLink = () => {
     // 2026-04-11: copy the clean, shareable /plan/result/[id] URL — no
@@ -1000,7 +1035,49 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
             {copied ? "Copied!" : "Copy Link"}
           </button>
 
-          {isOwner && (
+          {/* Anon creator: prompt auth to save & share (generate-first) */}
+          {showSavePrompt && (
+            <>
+              <button
+                onClick={promptAuthToSave}
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: 8,
+                  padding: "12px 24px", background: tierColors[tier], border: "none",
+                  borderRadius: 8, color: "#000", fontSize: 14, fontWeight: 600, cursor: "pointer",
+                  transition: "opacity 0.2s",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.85")}
+                onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+              >
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 5a2 2 0 012-2h8.586a1 1 0 01.707.293l2.414 2.414a1 1 0 01.293.707V19a2 2 0 01-2 2H7a2 2 0 01-2-2V5z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 3v4h6V3M9 21v-6h6v6" />
+                </svg>
+                Save to My Trips
+              </button>
+              <button
+                onClick={promptAuthToSave}
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: 8,
+                  padding: "12px 24px", background: "transparent", border: "1px solid #333",
+                  borderRadius: 8, color: "#ccc", fontSize: 14, cursor: "pointer",
+                  transition: "border-color 0.2s, color 0.2s",
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#666"; e.currentTarget.style.color = "#fff"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#333"; e.currentTarget.style.color = "#ccc"; }}
+              >
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                Email to the Crew
+              </button>
+              <p style={{ width: "100%", textAlign: "center", color: "rgba(255,255,255,0.3)", fontSize: 12, marginTop: 4 }}>
+                Create a free account to save this trip and email it to your group.
+              </p>
+            </>
+          )}
+
+          {owner && (
             <button
               onClick={() => setShowEmailForm(!showEmailForm)}
               style={{
@@ -1033,7 +1110,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
           )}
 
           {/* Email input form */}
-          {isOwner && showEmailForm && (
+          {owner && showEmailForm && (
             <div style={{ width: "100%", maxWidth: 500, marginTop: "1rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
               <input
                 type="text"
@@ -1084,7 +1161,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
         {/* Change Itinerary CTA — owner only. Forwarded viewers don't get the
             build/edit entry point (it's login + ownership gated and would just
             bounce them to /login); they see the plan read-only. */}
-        {isOwner && (
+        {owner && (
         <div style={{
           display: "flex",
           justifyContent: "center",

@@ -119,6 +119,7 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
   const isOwner = Boolean(
     sessionEmail && organizerEmail && sessionEmail.toLowerCase() === organizerEmail.toLowerCase()
   );
+  const isLoggedIn = Boolean(sessionEmail);
 
   // No dest: show destination cards (all plans are free — no paywall)
   if (!dest) {
@@ -131,6 +132,7 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
           legacyDestinations={stored.destinations}
           inputs={stored.inputs}
           isOwner={isOwner}
+          isLoggedIn={isLoggedIn}
         />
       </Suspense>
     );
@@ -156,6 +158,7 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
             dest={dest}
             paid={true}
             isOwner={isOwner}
+            isLoggedIn={isLoggedIn}
           />
         </Suspense>
       </ErrorBoundary>
@@ -169,7 +172,7 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
     if (!plan) notFound();
     return (
       <Suspense>
-        <PlanResultClient plan={plan} planId={id} tier={selectedTier as TripTier} dest={dest} paid={true} isOwner={isOwner} />
+        <PlanResultClient plan={plan} planId={id} tier={selectedTier as TripTier} dest={dest} paid={true} isOwner={isOwner} isLoggedIn={isLoggedIn} />
       </Suspense>
     );
   }
@@ -177,7 +180,7 @@ export default async function PlanResultPage({ params, searchParams }: Props) {
   // Fallback — show selection
   return (
     <Suspense>
-      <PlanSelectionClient planId={id} freePreviews={stored.freePreviews || null} paid={true} isOwner={isOwner} />
+      <PlanSelectionClient planId={id} freePreviews={stored.freePreviews || null} paid={true} isOwner={isOwner} isLoggedIn={isLoggedIn} />
     </Suspense>
   );
 }

@@ -390,14 +390,26 @@ export async function POST(req: NextRequest) {
   const isAdminHeader = req.headers.get("x-admin-secret") === process.env.ADMIN_SECRET;
   const isUnlimited = isAdminHeader || (!!email && UNLIMITED_EMAILS.includes(email));
 
-  // Rate limit: 5 plans per IP per hour (bypass for admin / unlimited emails)
+  // IP rate limit applies to EVERY non-unlimited request — this is the only
+  // cost/abuse guard on the "generate-first" anonymous path (no account → no
+  // monthly cap below). Logged-in users get both this AND the monthly cap.
+  //   - 5 / IP / hour  (burst guard, unchanged)
+  //   - 15 / IP / day  (sustained-spam guard — caps an anon IP that drips
+  //     generations across hours; ~3 hours of full bursts)
   if (!isUnlimited) {
     const ip = getClientIp(req);
-    const rl = await rateLimit(`generate:${ip}`, 5, 3600);
-    if (!rl.allowed) {
+    const hourly = await rateLimit(`generate:${ip}`, 5, 3600);
+    if (!hourly.allowed) {
       return NextResponse.json(
         { error: "Too many plans generated. Try again later." },
-        { status: 429, headers: { "Retry-After": String(rl.resetIn) } }
+        { status: 429, headers: { "Retry-After": String(hourly.resetIn) } }
+      );
+    }
+    const daily = await rateLimit(`generate-day:${ip}`, 15, 86400);
+    if (!daily.allowed) {
+      return NextResponse.json(
+        { error: "Daily plan limit reached for this network. Try again tomorrow." },
+        { status: 429, headers: { "Retry-After": String(daily.resetIn) } }
       );
     }
   }

@@ -60,6 +60,42 @@ export async function getUserPlans(email: string): Promise<string[]> {
   return await getRedis().smembers(`user:${email}:plans`);
 }
 
+/**
+ * Claim an anonymous (unowned) plan for a user.
+ *
+ * "Generate-first" lets anyone create a plan without an account. Such plans
+ * are stored with an empty `inputs.organizerEmail`. When the user later signs
+ * up / signs in we associate those plans with their account: stamp the
+ * organizer email onto the stored plan (so ownership checks for
+ * email/share/build pass) and add it to their My-Trips set.
+ *
+ * Returns `true` only when a plan was actually claimed. A plan is claimable
+ * only if it exists AND is currently unowned (empty organizer email). A plan
+ * already owned by THIS user counts as success (idempotent re-claim); one
+ * owned by a DIFFERENT user is rejected.
+ */
+export async function claimPlanForUser(email: string, planId: string): Promise<boolean> {
+  // Lazy import to avoid a circular dependency (kv -> plan-types only).
+  const { getPlan, storePlan } = await import("./kv");
+  const plan = await getPlan(planId);
+  if (!plan) return false;
+
+  const owner = plan.inputs?.organizerEmail?.toLowerCase().trim() || "";
+  if (owner && owner !== email.toLowerCase().trim()) {
+    // Owned by someone else — never steal.
+    return false;
+  }
+
+  if (!owner) {
+    // Stamp ownership onto the previously-anonymous plan.
+    plan.inputs = { ...plan.inputs, organizerEmail: email };
+    await storePlan(plan);
+  }
+
+  await addPlanToUser(email, planId);
+  return true;
+}
+
 // Past trip attendance: store which TDF years a user attended
 export async function setUserPastTrips(email: string, years: number[]): Promise<void> {
   const r = getRedis();

@@ -3,9 +3,11 @@
 import { motion } from "motion/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { ThreeDestinationResult, ThreeFreePreview, PriceLevel, FreePreview, WizardState } from "@/lib/plan-types";
 import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
+import { getAnonPlanIds, claimAnonPlans } from "@/lib/anon-plans";
 
 const destinationTiers: { key: PriceLevel; icon: string; label: string; subtitle: string; badge?: string }[] = [
   { key: "budget", icon: "", label: "The Bargain", subtitle: "Budget" },
@@ -208,6 +210,7 @@ export default function PlanSelectionClient({
   legacyDestinations,
   inputs,
   isOwner,
+  isLoggedIn,
 }: {
   planId: string;
   freePreviews: ThreeFreePreview | null;
@@ -215,8 +218,25 @@ export default function PlanSelectionClient({
   legacyDestinations?: ThreeDestinationResult;
   inputs?: WizardState;
   isOwner?: boolean;
+  isLoggedIn?: boolean;
 }) {
   const router = useRouter();
+
+  // Generate-first: the anon creator of this plan (it's in their localStorage)
+  // gets a save prompt; a logged-in non-owner who holds it locally is
+  // auto-claimed on arrival.
+  const [holdsLocally, setHoldsLocally] = useState(false);
+  useEffect(() => { setHoldsLocally(getAnonPlanIds().includes(planId)); }, [planId]);
+  useEffect(() => {
+    if (!isLoggedIn || isOwner) return;
+    if (!getAnonPlanIds().includes(planId)) return;
+    claimAnonPlans().catch(() => {});
+  }, [isLoggedIn, isOwner, planId]);
+  const showSavePrompt = !isLoggedIn && !isOwner && holdsLocally;
+
+  const promptAuthToSave = () => {
+    window.location.href = `/login?returnTo=${encodeURIComponent(`/plan/result/${planId}`)}`;
+  };
 
   const handleEditSelections = () => {
     // Restore the wizard's sessionStorage from the stored inputs, then
@@ -289,6 +309,32 @@ export default function PlanSelectionClient({
         >
           Three destinations at three price points — each with a full AI-generated trip plan.
         </motion.p>
+
+        {showSavePrompt && (
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            onClick={promptAuthToSave}
+            style={{
+              marginTop: "1.5rem",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              padding: "10px 22px",
+              background: "rgba(220,38,38,0.9)",
+              border: "none",
+              borderRadius: 8,
+              color: "#fff",
+              fontSize: 14,
+              fontWeight: 600,
+              cursor: "pointer",
+              fontFamily: "var(--font-inter), sans-serif",
+            }}
+          >
+            Save this trip &amp; email the crew →
+          </motion.button>
+        )}
       </div>
 
       <div style={{

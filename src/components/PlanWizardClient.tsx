@@ -10,6 +10,7 @@ import Link from "next/link";
 import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
 import RegionMapThumb from "./RegionMap";
+import { addAnonPlanId, claimAnonPlans } from "@/lib/anon-plans";
 
 type Action =
   | { type: "SET_FIELD"; field: keyof WizardState; value: unknown }
@@ -364,6 +365,11 @@ export default function PlanWizardClient() {
   const [isLoading, setIsLoading] = useState(false);
   const [showResumed, setShowResumed] = useState(false);
   const [quota, setQuota] = useState<{ plansRemaining: number; plansLimit: number; resetsAt?: string; unlimited: boolean } | null>(null);
+  // null = unknown (profile fetch in flight), true/false once resolved.
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+  // Generate-first: logged-out users can optionally attach an account on the
+  // final step. Closed by default so the primary path is "just generate".
+  const [showAccount, setShowAccount] = useState(false);
   const [progressPct, setProgressPct] = useState(0);
   const isScrolling = useRef(false);
   const typedSteps = useRef<Set<string>>(new Set());
@@ -377,9 +383,16 @@ export default function PlanWizardClient() {
     (async () => {
       try {
         const res = await fetch("/api/profile");
-        if (!res.ok) return;
+        if (cancelled) return;
+        if (!res.ok) {
+          // 401 → anonymous (the generate-first default path).
+          setIsLoggedIn(false);
+          return;
+        }
         const data = await res.json();
         if (cancelled) return;
+        setIsLoggedIn(true);
+        if (data.email) dispatch({ type: "SET_FIELD", field: "organizerEmail", value: data.email });
         setQuota({
           plansRemaining: data.plansRemaining ?? Math.max(0, (data.plansLimit ?? 3) - (data.plansUsed ?? 0)),
           plansLimit: data.plansLimit ?? 3,
@@ -512,46 +525,65 @@ export default function PlanWizardClient() {
     return () => window.removeEventListener("keydown", handler);
   }, [isGenerating, revealedCount, totalQuestions, advance]);
 
+  // Whether the user is attaching/using an account for this generation:
+  // already logged in, OR a logged-out user who opened the optional account
+  // panel. Anonymous "generate-first" = logged out AND panel closed.
+  const usingAccount = isLoggedIn === true || (isLoggedIn === false && showAccount);
+  const anonymous = !usingAccount;
+
   const handleGenerate = async () => {
-    const authMode = state.authMode;
-    const password = state.authPassword;
-
-    if (!state.organizerEmail) {
-      setError("Please enter your email.");
-      return;
-    }
-    if (authMode !== "login" && !state.organizerName) {
-      setError("Please enter your name.");
-      return;
-    }
-    if (!password || password.length < 8) {
-      setError("Password must be at least 8 characters.");
-      return;
-    }
-
     setError("");
 
-    // Authenticate first
-    try {
-      const endpoint = authMode === "login" ? "/api/auth/login" : "/api/auth/register";
-      const body = authMode === "login"
-        ? { email: state.organizerEmail.toLowerCase().trim(), password }
-        : { email: state.organizerEmail.toLowerCase().trim(), password, name: state.organizerName };
+    // ── Optional account step (logged-out users who chose to attach one) ──
+    // Logged-in users skip this entirely; their session is already valid.
+    if (isLoggedIn === false && showAccount) {
+      const authMode = state.authMode;
+      const password = state.authPassword;
 
-      const authRes = await fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      if (!authRes.ok) {
-        const data = await authRes.json().catch(() => ({}));
-        setError(data.error || (authMode === "login" ? "Invalid email or password." : "Failed to create account."));
+      if (!state.organizerEmail) {
+        setError("Please enter your email.");
         return;
       }
-    } catch {
-      setError("Authentication failed. Please try again.");
-      return;
+      if (authMode !== "login" && !state.organizerName) {
+        setError("Please enter your name.");
+        return;
+      }
+      if (!password || password.length < 8) {
+        setError("Password must be at least 8 characters.");
+        return;
+      }
+
+      try {
+        const endpoint = authMode === "login" ? "/api/auth/login" : "/api/auth/register";
+        const body = authMode === "login"
+          ? { email: state.organizerEmail.toLowerCase().trim(), password }
+          : { email: state.organizerEmail.toLowerCase().trim(), password, name: state.organizerName };
+
+        const authRes = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+        if (!authRes.ok) {
+          const data = await authRes.json().catch(() => ({}));
+          setError(data.error || (authMode === "login" ? "Invalid email or password." : "Failed to create account."));
+          return;
+        }
+        // Now signed in — claim any plans this person generated anonymously
+        // earlier in the session before generating the new one.
+        await claimAnonPlans().catch(() => {});
+      } catch {
+        setError("Authentication failed. Please try again.");
+        return;
+      }
     }
+
+    // ── Build the generation payload ──
+    // Anonymous path: never send an organizerEmail so the plan is stored
+    // unowned (claimable later). Account/logged-in path: keep it.
+    const genState: WizardState = anonymous
+      ? { ...state, organizerEmail: "", authPassword: "" }
+      : { ...state, authPassword: "" };
 
     setIsGenerating(true);
     setIsLoading(true);
@@ -609,7 +641,7 @@ export default function PlanWizardClient() {
         res = await fetch("/api/generate-plan", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(state),
+          body: JSON.stringify(genState),
           signal: controller.signal,
         });
       } catch (fetchErr) {
@@ -678,6 +710,12 @@ export default function PlanWizardClient() {
 
       if (!result?.planId) {
         throw new Error("Failed to generate plan. Please try again.");
+      }
+
+      // Anonymous plans have no server-side owner — remember the planId
+      // locally so it can be claimed into My Trips if the user signs up later.
+      if (anonymous) {
+        addAnonPlanId(result.planId);
       }
 
       try { sessionStorage.removeItem("tdf-wizard-state"); } catch { /* ignore */ }
@@ -1258,69 +1296,79 @@ export default function PlanWizardClient() {
       {/* STEP 7: Account + Generate */}
       {currentQ === 6 && (
         <Question number={7} total={totalQuestions} title="Your annual tradition starts now" subtitle="Let's Plan" id={questionIds[6]} typedSteps={typedSteps}>
-          {/* Toggle: New Account vs Sign In */}
-          <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", marginBottom: "2rem" }}>
-            <button
-              onClick={() => set("authMode", "new")}
-              style={{
-                padding: "8px 20px", borderRadius: 4, fontSize: "0.8rem", fontWeight: 600, letterSpacing: "0.04em",
-                background: state.authMode !== "login" ? "#EA580C" : "rgba(255,255,255,0.05)",
-                color: state.authMode !== "login" ? "#fff" : "rgba(255,255,255,0.4)",
-                border: state.authMode !== "login" ? "none" : "1px solid rgba(255,255,255,0.1)",
-                cursor: "pointer",
-              }}
-            >
-              New Account
-            </button>
-            <button
-              onClick={() => set("authMode", "login")}
-              style={{
-                padding: "8px 20px", borderRadius: 4, fontSize: "0.8rem", fontWeight: 600, letterSpacing: "0.04em",
-                background: state.authMode === "login" ? "#EA580C" : "rgba(255,255,255,0.05)",
-                color: state.authMode === "login" ? "#fff" : "rgba(255,255,255,0.4)",
-                border: state.authMode === "login" ? "none" : "1px solid rgba(255,255,255,0.1)",
-                cursor: "pointer",
-              }}
-            >
-              Sign In
-            </button>
-          </div>
+          {/* ── Generate-first ──
+              Primary CTA generates immediately and shows the full trip. No
+              account required. Logged-out users can optionally open the account
+              panel to save & share; logged-in users skip it entirely. */}
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "2rem", maxWidth: 400, margin: "0 auto 2rem" }}>
-            {state.authMode !== "login" && (
-              <input
-                className="wizard-input"
-                type="text"
-                placeholder="Your name"
-                aria-label="Your name"
-                value={state.organizerName}
-                onChange={(e) => set("organizerName", e.target.value)}
-                autoComplete="name"
-                style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.75rem 0", color: "#fff", fontSize: "1.1rem", outline: "none", textAlign: "center" }}
-              />
-            )}
-            <input
-              className="wizard-input"
-              type="email"
-              placeholder="Email"
-              aria-label="Email address"
-              value={state.organizerEmail}
-              onChange={(e) => set("organizerEmail", e.target.value)}
-              autoComplete="email"
-              style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.75rem 0", color: "#fff", fontSize: "1.1rem", outline: "none", textAlign: "center" }}
-            />
-            <input
-              className="wizard-input"
-              type="password"
-              placeholder={state.authMode === "login" ? "Password" : "Create password (min 8 chars)"}
-              aria-label={state.authMode === "login" ? "Password" : "Create password"}
-              value={state.authPassword}
-              onChange={(e) => set("authPassword", e.target.value)}
-              autoComplete={state.authMode === "login" ? "current-password" : "new-password"}
-              onKeyDown={(e) => { if (e.key === "Enter") handleGenerate(); }}
-              style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.75rem 0", color: "#fff", fontSize: "1.1rem", outline: "none", textAlign: "center" }}
-            />
-          </div>
+          {/* Optional account panel — only for logged-out users who opt in */}
+          {isLoggedIn === false && showAccount && (
+            <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} style={{ overflow: "hidden", marginBottom: "1.5rem" }}>
+              {/* Toggle: New Account vs Sign In */}
+              <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", marginBottom: "1.5rem" }}>
+                <button
+                  onClick={() => set("authMode", "new")}
+                  style={{
+                    padding: "8px 20px", borderRadius: 4, fontSize: "0.8rem", fontWeight: 600, letterSpacing: "0.04em",
+                    background: state.authMode !== "login" ? "#EA580C" : "rgba(255,255,255,0.05)",
+                    color: state.authMode !== "login" ? "#fff" : "rgba(255,255,255,0.4)",
+                    border: state.authMode !== "login" ? "none" : "1px solid rgba(255,255,255,0.1)",
+                    cursor: "pointer",
+                  }}
+                >
+                  New Account
+                </button>
+                <button
+                  onClick={() => set("authMode", "login")}
+                  style={{
+                    padding: "8px 20px", borderRadius: 4, fontSize: "0.8rem", fontWeight: 600, letterSpacing: "0.04em",
+                    background: state.authMode === "login" ? "#EA580C" : "rgba(255,255,255,0.05)",
+                    color: state.authMode === "login" ? "#fff" : "rgba(255,255,255,0.4)",
+                    border: state.authMode === "login" ? "none" : "1px solid rgba(255,255,255,0.1)",
+                    cursor: "pointer",
+                  }}
+                >
+                  Sign In
+                </button>
+              </div>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: "1rem", maxWidth: 400, margin: "0 auto" }}>
+                {state.authMode !== "login" && (
+                  <input
+                    className="wizard-input"
+                    type="text"
+                    placeholder="Your name"
+                    aria-label="Your name"
+                    value={state.organizerName}
+                    onChange={(e) => set("organizerName", e.target.value)}
+                    autoComplete="name"
+                    style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.75rem 0", color: "#fff", fontSize: "1.1rem", outline: "none", textAlign: "center" }}
+                  />
+                )}
+                <input
+                  className="wizard-input"
+                  type="email"
+                  placeholder="Email"
+                  aria-label="Email address"
+                  value={state.organizerEmail}
+                  onChange={(e) => set("organizerEmail", e.target.value)}
+                  autoComplete="email"
+                  style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.75rem 0", color: "#fff", fontSize: "1.1rem", outline: "none", textAlign: "center" }}
+                />
+                <input
+                  className="wizard-input"
+                  type="password"
+                  placeholder={state.authMode === "login" ? "Password" : "Create password (min 8 chars)"}
+                  aria-label={state.authMode === "login" ? "Password" : "Create password"}
+                  value={state.authPassword}
+                  onChange={(e) => set("authPassword", e.target.value)}
+                  autoComplete={state.authMode === "login" ? "current-password" : "new-password"}
+                  onKeyDown={(e) => { if (e.key === "Enter") handleGenerate(); }}
+                  style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.75rem 0", color: "#fff", fontSize: "1.1rem", outline: "none", textAlign: "center" }}
+                />
+              </div>
+            </motion.div>
+          )}
 
           {error && (
             <motion.p initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} role="alert" style={{ color: "#f87171", fontSize: "0.95rem", fontFamily: "var(--font-inter), sans-serif", marginBottom: "1rem", textAlign: "center" }}>
@@ -1328,17 +1376,48 @@ export default function PlanWizardClient() {
             </motion.p>
           )}
 
+          {/* Primary CTA — generates immediately, account or not */}
           <motion.button
             onClick={handleGenerate}
-            disabled={isLoading}
-            whileHover={isLoading ? {} : { scale: 1.01 }}
-            whileTap={isLoading ? {} : { scale: 0.99 }}
-            style={{ width: "auto", padding: "1.3rem 3rem", background: isLoading ? "rgba(220,38,38,0.4)" : "rgba(220,38,38,0.9)", color: "#fff", border: "none", borderRadius: 4, fontSize: "1rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: isLoading ? "not-allowed" : "pointer", fontFamily: "var(--font-plan-block), sans-serif", margin: "0 auto", display: "block", opacity: isLoading ? 0.6 : 1, transition: "opacity 0.3s, background 0.3s" }}
+            disabled={isLoading || isLoggedIn === null}
+            whileHover={(isLoading || isLoggedIn === null) ? {} : { scale: 1.01 }}
+            whileTap={(isLoading || isLoggedIn === null) ? {} : { scale: 0.99 }}
+            style={{ width: "auto", padding: "1.3rem 3rem", background: (isLoading || isLoggedIn === null) ? "rgba(220,38,38,0.4)" : "rgba(220,38,38,0.9)", color: "#fff", border: "none", borderRadius: 4, fontSize: "1rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: (isLoading || isLoggedIn === null) ? "not-allowed" : "pointer", fontFamily: "var(--font-plan-block), sans-serif", margin: "0 auto", display: "block", opacity: (isLoading || isLoggedIn === null) ? 0.6 : 1, transition: "opacity 0.3s, background 0.3s" }}
           >
-            {isLoading ? "Generating..." : "Unleash the Devils"}
+            {isLoading
+              ? "Generating..."
+              : (isLoggedIn === false && showAccount)
+                ? (state.authMode === "login" ? "Sign In & See My Trip" : "Create Account & See My Trip")
+                : "See My Trip"}
           </motion.button>
+
+          {/* Secondary, clearly-subordinate account path (logged-out only) */}
+          {isLoggedIn === false && (
+            <div style={{ textAlign: "center", marginTop: "1.1rem" }}>
+              {!showAccount ? (
+                <button
+                  onClick={() => setShowAccount(true)}
+                  style={{ background: "none", border: "none", color: "rgba(255,255,255,0.4)", fontSize: "0.85rem", textDecoration: "underline", cursor: "pointer", fontFamily: "var(--font-inter), sans-serif", padding: "0.4rem" }}
+                >
+                  or create an account to save &amp; share
+                </button>
+              ) : (
+                <button
+                  onClick={() => { setShowAccount(false); setError(""); }}
+                  style={{ background: "none", border: "none", color: "rgba(255,255,255,0.3)", fontSize: "0.8rem", textDecoration: "underline", cursor: "pointer", fontFamily: "var(--font-inter), sans-serif", padding: "0.4rem" }}
+                >
+                  skip — just show my trip
+                </button>
+              )}
+            </div>
+          )}
+
           <p style={{ fontSize: "0.84rem", color: "rgba(255,255,255,0.25)", textAlign: "center", marginTop: "1rem" }}>
-            {state.authMode === "login" ? "Sign in to generate your trip." : "3 free plans per month."}
+            {isLoggedIn === true
+              ? "Saved to your trips when it's done."
+              : showAccount
+                ? "Save your trip and email it to the crew."
+                : "No account needed. Save &amp; share later."}
           </p>
         </Question>
       )}

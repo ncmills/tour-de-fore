@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
+import { claimAnonPlans } from "@/lib/anon-plans";
 
 type Mode = "signin" | "register";
 
@@ -45,6 +46,8 @@ export default function LoginClient({ returnTo = "/my-trips" }: { returnTo?: str
         const data = await res.json().catch(() => ({}));
         throw new Error(data.error || "Login failed");
       }
+      // Claim any plans generated anonymously before this sign-in.
+      await claimAnonPlans().catch(() => {});
       window.location.href = returnTo;
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong.");
@@ -68,6 +71,8 @@ export default function LoginClient({ returnTo = "/my-trips" }: { returnTo?: str
         const data = await res.json().catch(() => ({}));
         throw new Error(data.error || "Registration failed");
       }
+      // Claim any plans generated anonymously before this sign-up.
+      await claimAnonPlans().catch(() => {});
       window.location.href = returnTo;
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong.");
