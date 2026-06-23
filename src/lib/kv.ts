@@ -1,5 +1,8 @@
 import { StoredPlan, Attendee, WizardState } from "./plan-types";
 import { getRedis } from "./redis";
+import { supabase } from "./supabase";
+
+const SITE = "tdf";
 
 const PLAN_TTL = 60 * 60 * 24 * 21; // 21 days
 // Learning signals are aggregate popularity/view counts — recent data carries
@@ -168,7 +171,50 @@ export interface ShopOrder {
 // they don't accumulate forever in the shared 30MB Redis. ~180 days.
 const ORDER_TTL = 60 * 60 * 24 * 180; // 180 days
 
+// Extract a top-level integer amount-in-cents from an order object if present.
+// ShopOrder doesn't carry one today, but future/back-filled rows may include
+// `amountCents` / `amount_cents`; we persist it to the dedicated Supabase column.
+function extractAmountCents(order: ShopOrder): number | null {
+  const o = order as unknown as Record<string, unknown>;
+  const v = o.amountCents ?? o.amount_cents ?? o.amount_total ?? null;
+  return typeof v === "number" && Number.isFinite(v) ? Math.round(v) : null;
+}
+
+function extractCurrency(order: ShopOrder): string | null {
+  const o = order as unknown as Record<string, unknown>;
+  const v = o.currency;
+  return typeof v === "string" && v ? v : null;
+}
+
+// Mirror a single order into Supabase. Idempotent upsert keyed on (id).
+// Non-fatal: Supabase is the durable store but Redis remains a live write path,
+// so a Supabase blip must never break fulfillment. Logs and swallows errors.
+export async function upsertOrderToSupabase(order: ShopOrder): Promise<void> {
+  if (!supabase) return;
+  try {
+    const { error } = await supabase.from("orders").upsert(
+      {
+        id: order.id,
+        site: SITE,
+        email: order.email || null,
+        status: order.status || null,
+        amount_cents: extractAmountCents(order),
+        currency: extractCurrency(order),
+        data: order,
+      },
+      { onConflict: "id" }
+    );
+    if (error) console.error("[supabase orders upsert]", error.message);
+  } catch (err) {
+    console.error("[supabase orders upsert]", err instanceof Error ? err.message : String(err));
+  }
+}
+
 export async function storeOrder(order: ShopOrder): Promise<void> {
+  // Durable source of truth first (idempotent upsert), then keep the Redis
+  // dual-write so the fast path / fallback stays warm and nothing breaks.
+  await upsertOrderToSupabase(order);
+
   const r = getRedis();
   const pipe = r.pipeline();
   pipe.set(`order:${order.id}`, JSON.stringify(order), "EX", ORDER_TTL);
@@ -180,7 +226,68 @@ export async function storeOrder(order: ShopOrder): Promise<void> {
 }
 
 export async function getOrder(id: string): Promise<ShopOrder | null> {
+  // Read Supabase FIRST (durable source of truth); fall back to Redis on miss
+  // so in-flight orders not yet mirrored, or a Supabase blip, still resolve.
+  if (supabase) {
+    try {
+      const { data, error } = await supabase
+        .from("orders")
+        .select("data")
+        .eq("site", SITE)
+        .eq("id", id)
+        .maybeSingle();
+      if (!error && data?.data) return data.data as ShopOrder;
+    } catch (err) {
+      console.error("[supabase getOrder]", err instanceof Error ? err.message : String(err));
+    }
+  }
+
   const raw = await getRedis().get(`order:${id}`);
   if (!raw) return null;
   return JSON.parse(raw);
+}
+
+/**
+ * All orders for a user, newest first. Reads Supabase FIRST (durable source of
+ * truth), falling back to the Redis `user:<email>:orders` set on miss/error so
+ * nothing breaks if Supabase is unavailable or an order isn't mirrored yet.
+ */
+export async function getUserOrders(email: string): Promise<ShopOrder[]> {
+  if (!email) return [];
+
+  if (supabase) {
+    try {
+      const { data, error } = await supabase
+        .from("orders")
+        .select("data, created_at")
+        .eq("site", SITE)
+        .eq("email", email)
+        .order("created_at", { ascending: false });
+      if (!error && data && data.length > 0) {
+        return data.map((row) => row.data as ShopOrder);
+      }
+    } catch (err) {
+      console.error("[supabase getUserOrders]", err instanceof Error ? err.message : String(err));
+    }
+  }
+
+  // Redis fallback: resolve the id set, then fetch each order JSON.
+  const r = getRedis();
+  const ids = await r.smembers(`user:${email}:orders`);
+  if (ids.length === 0) return [];
+  const pipe = r.pipeline();
+  for (const id of ids) pipe.get(`order:${id}`);
+  const results = await pipe.exec();
+  if (!results) return [];
+  const orders: ShopOrder[] = [];
+  for (const [, raw] of results) {
+    if (typeof raw === "string") {
+      try {
+        orders.push(JSON.parse(raw) as ShopOrder);
+      } catch {
+        /* skip corrupt entry */
+      }
+    }
+  }
+  return orders.sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || ""));
 }

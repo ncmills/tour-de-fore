@@ -1,10 +1,56 @@
 import { cookies } from "next/headers";
 import { hash as bcryptHash, compare as bcryptCompare } from "bcryptjs";
 import { getRedis } from "./redis";
+import { supabase } from "./supabase";
 
 const SESSION_TTL = 60 * 60 * 24 * 30; // 30 days
 const TOKEN_TTL = 60 * 15; // 15 min for magic link
 const PROFILE_TTL = 60 * 60 * 24 * 365; // 1 year
+const SITE = "tdf";
+
+/**
+ * Mirror an account into the shared Supabase `accounts` table.
+ *
+ * IMPORTANT: Supabase is a MIRROR only — Redis remains the live READ path for
+ * all auth/session/profile reads. This re-reads the canonical Redis state for
+ * the email and upserts a single consolidated row (idempotent on (site,email)).
+ *
+ * Non-fatal by design: any Supabase error is logged and swallowed so a mirror
+ * blip can never break registration, login, or profile updates.
+ */
+export async function mirrorAccountToSupabase(email: string): Promise<void> {
+  if (!supabase || !email) return;
+  try {
+    const r = getRedis();
+    const pipe = r.pipeline();
+    pipe.get(`user:${email}:name`);
+    pipe.get(`user:${email}:password`);
+    pipe.smembers(`user:${email}:plans`);
+    pipe.smembers(`user:${email}:attended`);
+    const results = await pipe.exec();
+    if (!results) return;
+
+    const name = (results[0]?.[1] as string | null) ?? null;
+    const passwordHash = (results[1]?.[1] as string | null) ?? null;
+    const plans = (results[2]?.[1] as string[] | null) ?? [];
+    const attended = (results[3]?.[1] as string[] | null) ?? [];
+
+    const { error } = await supabase.from("accounts").upsert(
+      {
+        site: SITE,
+        email,
+        name,
+        password_hash: passwordHash,
+        data: { plans, attended },
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: "site,email" }
+    );
+    if (error) console.error("[supabase accounts upsert]", error.message);
+  } catch (err) {
+    console.error("[supabase accounts mirror]", err instanceof Error ? err.message : String(err));
+  }
+}
 
 export async function createMagicToken(email: string, wizardState?: unknown): Promise<string> {
   const token = crypto.randomUUID();
@@ -54,6 +100,7 @@ export async function addPlanToUser(email: string, planId: string): Promise<void
   pipe.sadd(key, planId);
   pipe.expire(key, SESSION_TTL * 12); // 1 year
   await pipe.exec();
+  await mirrorAccountToSupabase(email);
 }
 
 export async function getUserPlans(email: string): Promise<string[]> {
@@ -107,6 +154,7 @@ export async function setUserPastTrips(email: string, years: number[]): Promise<
     pipe.expire(key, SESSION_TTL * 12);
   }
   await pipe.exec();
+  await mirrorAccountToSupabase(email);
 }
 
 export async function getUserPastTrips(email: string): Promise<number[]> {
@@ -117,6 +165,7 @@ export async function getUserPastTrips(email: string): Promise<number[]> {
 // User display name
 export async function setUserName(email: string, name: string): Promise<void> {
   await getRedis().set(`user:${email}:name`, name, "EX", SESSION_TTL * 12);
+  await mirrorAccountToSupabase(email);
 }
 
 export async function getUserName(email: string): Promise<string | null> {
@@ -203,6 +252,22 @@ export async function changeUserEmail(oldEmail: string, newEmail: string): Promi
   writePipe.del(`user:${oldEmail}:email_verified`);
 
   await writePipe.exec();
+
+  // Mirror to Supabase: upsert the new-email account row, then drop the old one.
+  // Non-fatal — Redis above already moved the live data.
+  await mirrorAccountToSupabase(newEmail);
+  if (supabase) {
+    try {
+      const { error } = await supabase
+        .from("accounts")
+        .delete()
+        .eq("site", SITE)
+        .eq("email", oldEmail);
+      if (error) console.error("[supabase accounts delete old email]", error.message);
+    } catch (err) {
+      console.error("[supabase accounts delete old email]", err instanceof Error ? err.message : String(err));
+    }
+  }
 }
 
 // ── Password Auth ──
@@ -210,6 +275,7 @@ export async function changeUserEmail(oldEmail: string, newEmail: string): Promi
 export async function setPassword(email: string, password: string): Promise<void> {
   const hashed = await bcryptHash(password, 10);
   await getRedis().set(`user:${email}:password`, hashed, "EX", PROFILE_TTL);
+  await mirrorAccountToSupabase(email);
 }
 
 export async function verifyPassword(email: string, password: string): Promise<boolean> {
