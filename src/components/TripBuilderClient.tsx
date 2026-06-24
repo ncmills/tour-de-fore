@@ -143,11 +143,11 @@ function OptionCard({ option, selected, onSelect, disabled, tags, useFallbackIma
         )}
         {/* Content */}
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span style={{ fontWeight: 600, fontSize: "0.9rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{option.name}</span>
-            <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexShrink: 0 }}>
-              {option.rating && <span style={{ color: "#D4A843", fontSize: "0.75rem" }}>{option.rating}★{option.reviewCount ? ` (${formatReviewCount(option.reviewCount)})` : ""}</span>}
-              {option.price && <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.75rem" }}>{option.price}</span>}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "0.5rem" }}>
+            <span style={{ fontWeight: 600, fontSize: "0.9rem", flex: "1 1 auto", minWidth: 0, overflowWrap: "anywhere" }}>{option.name}</span>
+            <div style={{ display: "flex", gap: "0.5rem", alignItems: "flex-start", flexWrap: "wrap", justifyContent: "flex-end", flexShrink: 1, minWidth: 0, maxWidth: "52%" }}>
+              {option.rating && <span style={{ color: "#D4A843", fontSize: "0.75rem", whiteSpace: "nowrap" }}>{option.rating}★{option.reviewCount ? ` (${formatReviewCount(option.reviewCount)})` : ""}</span>}
+              {option.price && <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.75rem", overflowWrap: "anywhere", textAlign: "right" }}>{option.price}</span>}
               {selected && <span style={{ color: "#EA580C", fontSize: "0.9rem" }}>✓</span>}
             </div>
           </div>
