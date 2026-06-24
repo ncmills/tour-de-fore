@@ -136,12 +136,12 @@ function DestinationCard({
             <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
               {preview.coursePreview.map((c, ci) => (
                 <div key={ci} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "0.75rem", padding: "0.4rem 0", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: "rgba(255,255,255,0.6)" }}>
-                    <span>⛳</span>
-                    <span>{c.name}</span>
-                    {c.hypeTag && <span style={{ fontSize: "0.5rem", padding: "1px 4px", background: "rgba(234,88,12,0.15)", border: "1px solid rgba(234,88,12,0.3)", borderRadius: 3, color: "rgba(234,88,12,0.8)" }}>🏆</span>}
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: "rgba(255,255,255,0.6)", flex: "1 1 auto", minWidth: 0 }}>
+                    <span style={{ flexShrink: 0 }}>⛳</span>
+                    <span style={{ minWidth: 0, overflowWrap: "anywhere" }}>{c.name}</span>
+                    {c.hypeTag && <span style={{ fontSize: "0.5rem", padding: "1px 4px", background: "rgba(234,88,12,0.15)", border: "1px solid rgba(234,88,12,0.3)", borderRadius: 3, color: "rgba(234,88,12,0.8)", flexShrink: 0 }}>🏆</span>}
                   </div>
-                  <span style={{ color: "rgba(255,255,255,0.3)", whiteSpace: "nowrap" }}>${c.greenFeeRange[0]}-${c.greenFeeRange[1]}</span>
+                  <span style={{ color: "rgba(255,255,255,0.3)", whiteSpace: "nowrap", flexShrink: 0 }}>${c.greenFeeRange[0]}-${c.greenFeeRange[1]}</span>
                 </div>
               ))}
             </div>
