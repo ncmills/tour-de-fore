@@ -54,6 +54,16 @@ export interface Restaurant {
   note?: string;
 }
 
+export interface Bar {
+  name: string;
+  /** City, e.g. "Sheboygan" / "Kohler" */
+  location?: string;
+  /** Short vibe tag, e.g. "Cocktails · till midnight" */
+  vibe?: string;
+  description: string;
+  url?: string;
+}
+
 export interface MenuCourse {
   /** e.g. "Starters", "Mains", "Sides", "Dessert" */
   heading: string;
@@ -116,6 +126,8 @@ export interface Trip {
   lodgingGuidebookUrl?: string;
   /** Private chef / catered dinners with full menus */
   privateDining?: PrivateDiningMenu[];
+  /** Nightlife / bar options */
+  bars?: Bar[];
 }
 
 const SQ = "https://images.squarespace-cdn.com/content/v1/62cb87cca6b36f353a2575d5";
@@ -297,6 +309,38 @@ export const trips: Trip[] = [
         serviceFee: "$200",
       },
     ],
+    bars: [
+      {
+        name: "GM's",
+        location: "Sheboygan",
+        vibe: "Downtown · the popular one",
+        description: "Sheboygan's go-to night out — the bar everyone ends up at, the kind of place locals pile into after a wedding. The path of least resistance for getting fifteen guys in one room with a beer in hand.",
+      },
+      {
+        name: "Urbane",
+        location: "Sheboygan",
+        vibe: "Cocktails · open till midnight",
+        description: "The classier downtown option — a proper cocktail bar open till midnight. The civilized first stop for a good drink before the night picks a direction of its own.",
+      },
+      {
+        name: "Limelight",
+        location: "Sheboygan",
+        vibe: "Local favorite · small",
+        description: "A small neighborhood favorite a little off the main downtown drag — more local's pick than scene. Worth the detour if you want a tighter, lower-key room.",
+      },
+      {
+        name: "Rewind",
+        location: "Sheboygan",
+        vibe: "Dive · gets loose",
+        description: "The no-frills throwback dive for when the night goes sideways and nobody's ready to call it. Exactly the energy you'd expect from the last bar standing.",
+      },
+      {
+        name: "Olive & Ash",
+        location: "Kohler",
+        vibe: "Cigar lounge · open late",
+        description: "Cigar bar and lounge right in Kohler, open late — the closest nightcap to the lodge and the move for anyone who wants to end the night with a smoke instead of a shot.",
+      },
+    ],
     schedule: [
       {
         day: "Tuesday",
@@ -341,7 +385,7 @@ export const trips: Trip[] = [
             activity: "Local Bars",
             detail: "Sheboygan",
             type: "nightlife",
-            description: "Out into Sheboygan's bar scene from there to close out the rest day.",
+            description: "Out into Sheboygan's bar scene from there — GM's, Urbane, and the rest of the Last Call lineup — to close out the rest day.",
           },
         ],
       },

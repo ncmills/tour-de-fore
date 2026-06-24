@@ -643,6 +643,62 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
         </motion.section>
       )}
 
+      {/* Section 3.6: Last Call — nightlife / bars */}
+      {trip.bars && trip.bars.length > 0 && (
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          style={{ position: "relative", zIndex: 1, padding: "3rem clamp(1.5rem, 6vw, 6rem)" }}
+        >
+          <h2 style={sectionHeadingStyle}>Last Call</h2>
+          <p style={{ textAlign: "center", color: "rgba(255,255,255,0.6)", fontSize: "0.95rem", maxWidth: "640px", margin: "-1rem auto 2.5rem", lineHeight: 1.6 }}>
+            The Sheboygan + Kohler after-hours lineup — scouted by a local, ranked from the civilized cocktail to the dive that closes the place down.
+          </p>
+
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "1rem", maxWidth: "1000px", margin: "0 auto" }}>
+            {trip.bars.map((bar) => {
+              const card = (
+                <>
+                  <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.75rem", flexWrap: "wrap" }}>
+                    <h3 style={{ fontFamily: "var(--font-slab-cold), serif", fontSize: "clamp(1.25rem, 3vw, 1.6rem)", color: "#fff", margin: 0, textTransform: "uppercase" }}>
+                      {bar.name}
+                    </h3>
+                    {bar.location && <span style={{ fontSize: "0.72rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.45)", fontWeight: 700 }}>📍 {bar.location}</span>}
+                  </div>
+                  {bar.vibe && <div style={{ fontSize: "0.74rem", letterSpacing: "0.06em", textTransform: "uppercase", color: "#EA580C", fontWeight: 700, marginTop: "0.4rem" }}>{bar.vibe}</div>}
+                  <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.9rem", lineHeight: 1.6, marginTop: "0.6rem", marginBottom: 0 }}>{bar.description}</p>
+                </>
+              );
+              const baseStyle: React.CSSProperties = {
+                display: "block",
+                border: "1px solid rgba(255,255,255,0.1)",
+                borderRadius: "10px",
+                background: "rgba(255,255,255,0.02)",
+                padding: "1.5rem clamp(1.25rem, 3vw, 1.75rem)",
+                textDecoration: "none",
+              };
+              return bar.url ? (
+                <a
+                  key={bar.name}
+                  href={bar.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={baseStyle}
+                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(234,88,12,0.5)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }}
+                >
+                  {card}
+                </a>
+              ) : (
+                <div key={bar.name} style={baseStyle}>{card}</div>
+              );
+            })}
+          </div>
+        </motion.section>
+      )}
+
       {/* Section 4: Lodging — single front-of-house image */}
       {lodgingImage && (
         <motion.section
