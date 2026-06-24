@@ -54,6 +54,14 @@ export interface Restaurant {
   note?: string;
 }
 
+export interface TripTransport {
+  name: string;
+  contact?: string;
+  vehicle?: string;
+  phones?: string[];
+  address?: string;
+}
+
 export interface Bar {
   name: string;
   /** City, e.g. "Sheboygan" / "Kohler" */
@@ -128,6 +136,8 @@ export interface Trip {
   privateDining?: PrivateDiningMenu[];
   /** Nightlife / bar options */
   bars?: Bar[];
+  /** Ground transportation / driver contact */
+  transport?: TripTransport;
 }
 
 const SQ = "https://images.squarespace-cdn.com/content/v1/62cb87cca6b36f353a2575d5";
@@ -346,6 +356,13 @@ export const trips: Trip[] = [
         url: "https://www.google.com/maps/search/?api=1&query=Olive%20%26%20Ash%20Kohler%20WI",
       },
     ],
+    transport: {
+      name: "Santana's Limo",
+      contact: "Santana",
+      vehicle: "20-passenger minibus",
+      phones: ["920-912-6940", "920-698-6082", "920-917-4546"],
+      address: "2724 Main Avenue, Sheboygan, WI 53083",
+    },
     schedule: [
       {
         day: "Tuesday",

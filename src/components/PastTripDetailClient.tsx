@@ -844,6 +844,34 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
                     )}
                   </div>
                 )}
+
+                {/* Transportation */}
+                {trip.transport && (
+                  <div style={{ gridColumn: isMobile ? "auto" : "1 / -1", padding: "1.1rem 1.25rem", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.03)" }}>
+                    <div style={{ fontSize: "0.72rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", fontWeight: 700, marginBottom: "0.5rem" }}>🚐 Transportation</div>
+                    <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: "0.4rem 0.85rem", marginBottom: "0.7rem" }}>
+                      <span style={{ color: "#fff", fontSize: "1.05rem", fontWeight: 700 }}>{trip.transport.name}</span>
+                      {trip.transport.vehicle && <span style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.85rem" }}>{trip.transport.vehicle}</span>}
+                      {trip.transport.contact && <span style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.85rem" }}>· ask for {trip.transport.contact}</span>}
+                    </div>
+                    {trip.transport.phones && trip.transport.phones.length > 0 && (
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.55rem" }}>
+                        {trip.transport.phones.map((p) => (
+                          <a
+                            key={p}
+                            href={`tel:+1${p.replace(/[^0-9]/g, "")}`}
+                            style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem", color: "#EA580C", fontWeight: 600, fontSize: "0.9rem", textDecoration: "none", border: "1px solid rgba(234,88,12,0.4)", borderRadius: "6px", padding: "0.4rem 0.7rem", transition: "background 0.3s" }}
+                            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(234,88,12,0.12)"; }}
+                            onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
+                          >
+                            📞 {p}
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                    {trip.transport.address && <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.78rem", marginTop: "0.65rem" }}>{trip.transport.address}</div>}
+                  </div>
+                )}
               </div>
 
               <p style={{ textAlign: "center", color: "rgba(255,255,255,0.4)", fontSize: "0.78rem", marginTop: "1.25rem" }}>
