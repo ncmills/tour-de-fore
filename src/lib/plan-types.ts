@@ -292,4 +292,13 @@ export interface StoredPlan {
   paidAt?: string;
   // User selections (trip builder)
   selectedOptions?: Record<string, string[]>; // category → selected option IDs
+
+  // ── Lead-gen (A4, 2026-06-24) ──
+  /**
+   * Scoreable lead scalars derived at generation from the wizard inputs
+   * (see src/lib/derive.ts — local port of shared-engine deriveLeadFields).
+   * Additive + read-only: stored so the capture path can read it back by
+   * planId/vid without recomputing. Not yet consumed by any selling path.
+   */
+  derived?: import("./derive").DerivedLeadFields;
 }

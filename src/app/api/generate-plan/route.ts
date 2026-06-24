@@ -11,7 +11,9 @@ import {
   StoredPlan,
   PriceLevel,
   GeneratedPlan,
+  WizardState,
 } from "@/lib/plan-types";
+import { deriveLeadFields, type DeriveInput } from "@/lib/derive";
 import { storePlan, storeAttendees, recordDestinationView } from "@/lib/kv";
 import {
   getThreeDestinations,
@@ -30,6 +32,53 @@ import { addPlanToUser } from "@/lib/auth";
 import { getRedis } from "@/lib/redis";
 import { UNLIMITED_EMAILS, getMonthKey, getNextMonthReset } from "@/lib/shared-constants";
 import { logSignalServer } from "@/lib/signals";
+
+/**
+ * Parse TDF's freeform per-person budget label → a per-person USD ceiling.
+ * TDF (unlike BMHQ/MOH's budget ids) stores labels like "$2K per person" /
+ * "Fat pockets". Returns null for unknown / unbounded so est_spend_usd stays
+ * null rather than multiplying a sentinel.
+ */
+function parseTdfPerPersonBudget(budget: string | undefined | null): number | null {
+  if (!budget) return null;
+  const s = budget.toLowerCase();
+  // "$2K per person", "$4k", "$6K per person" → 2000/4000/6000.
+  const k = s.match(/\$?\s*(\d+(?:\.\d+)?)\s*k\b/);
+  if (k) return Math.round(parseFloat(k[1]) * 1000);
+  // Plain dollar amount, e.g. "$2,500 per person".
+  const dollars = s.match(/\$\s*([\d,]+)/);
+  if (dollars) {
+    const n = parseInt(dollars[1].replace(/,/g, ""), 10);
+    if (Number.isFinite(n) && n > 0) return n;
+  }
+  // "Fat pockets" / "sky's the limit" → unbounded → unknown.
+  return null;
+}
+
+/**
+ * Map a TDF WizardState → the brand-agnostic DeriveInput consumed by
+ * deriveLeadFields (A4). TDF has no tripYear (month only) and golf-specific
+ * off-course fields; course quality / rounds / must-plays feed golfTokens.
+ */
+function wizardToDeriveInput(state: WizardState): DeriveInput {
+  return {
+    eventMonth: state.tripMonth || null,
+    eventYear: null, // TDF wizard captures month only
+    season: state.preferredSeason || null,
+    groupSize: state.groupSize ?? null,
+    perPersonBudgetUsd: parseTdfPerPersonBudget(state.budget),
+    activityTokens: state.activities ?? [],
+    lodgingTokens: state.lodging ? [state.lodging] : [],
+    nightlifeTokens: state.nightlife ? [state.nightlife] : [],
+    diningTokens: state.dining ?? [],
+    golfTokens: [
+      ...(state.courseQuality ? [state.courseQuality] : []),
+      ...(state.roundsPerDay ? [state.roundsPerDay] : []),
+      ...(state.mustPlayCourses ? [state.mustPlayCourses] : []),
+      ...(state.walkingOrRiding ? [state.walkingOrRiding] : []),
+    ],
+  };
+}
 
 function tryParseJSON(jsonStr: string): unknown | null {
   // Strip markdown fences
@@ -587,6 +636,15 @@ export async function POST(req: NextRequest) {
 
         // Store plan — all plans are fully unlocked (no paywall)
         const planId = crypto.randomUUID();
+        // A4: derive scoreable lead scalars from the wizard inputs so the
+        // (later) capture path can read them back by planId/vid. Additive +
+        // best-effort — a derivation slip must never void a generated plan.
+        let derived: StoredPlan["derived"];
+        try {
+          derived = deriveLeadFields(wizardToDeriveInput(state), new Date());
+        } catch (err) {
+          console.warn("[leadgen] deriveLeadFields failed (non-fatal):", err);
+        }
         const storedPlan: StoredPlan = {
           id: planId,
           freePreviews,
@@ -595,6 +653,7 @@ export async function POST(req: NextRequest) {
           createdAt: new Date().toISOString(),
           emailsSent: false,
           paid: true, // all plans are fully unlocked
+          ...(derived ? { derived } : {}),
         };
 
         await storePlan(storedPlan);
