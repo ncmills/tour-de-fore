@@ -145,12 +145,12 @@ export default function SwapDrawer({ planId, destLevel, category, currentName, o
                       ) : null;
                     })()}
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.3rem" }}>
-                        <span style={{ fontWeight: 600, fontSize: "0.95rem" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "0.5rem", marginBottom: "0.3rem" }}>
+                        <span style={{ fontWeight: 600, fontSize: "0.95rem", flex: "1 1 auto", minWidth: 0, overflowWrap: "anywhere" }}>
                           {(item.name || item.type || `Option ${i + 1}`) as string}
                         </span>
                         {item.googleRating ? (
-                          <span style={{ color: "#D4A843", fontSize: "0.8rem" }}>
+                          <span style={{ color: "#D4A843", fontSize: "0.8rem", flexShrink: 0, whiteSpace: "nowrap" }}>
                             {String(item.googleRating)}★
                           </span>
                         ) : null}
