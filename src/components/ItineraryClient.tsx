@@ -675,8 +675,8 @@ export default function ItineraryClient({
                     <div style={{ flexShrink: 0, width: 48, height: 48, borderRadius: 6, overflow: "hidden", position: "relative", border: "1px solid rgba(255,255,255,0.1)" }}>
                       <Image src={day.morning.imageUrl || getFallbackImage(day.morning.name)} alt={day.morning.name} fill sizes="48px" style={{ objectFit: "cover" }} unoptimized />
                     </div>
-                    <div>
-                      <p style={{ fontSize: "1.05rem", fontWeight: 600, marginBottom: "0.2rem" }}>{day.morning.name}</p>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <p style={{ fontSize: "1.05rem", fontWeight: 600, marginBottom: "0.2rem", overflowWrap: "anywhere" }}>{day.morning.name}</p>
                       <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)" }}>Green fee: {day.morning.greenFee}/pp</p>
                       {day.morning.whyThisCourse && <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)", marginTop: "0.3rem", fontStyle: "italic" }}>{day.morning.whyThisCourse}</p>}
                     </div>
@@ -689,8 +689,8 @@ export default function ItineraryClient({
                     <div style={{ flexShrink: 0, width: 48, height: 48, borderRadius: 6, overflow: "hidden", position: "relative", border: "1px solid rgba(255,255,255,0.1)" }}>
                       <Image src={day.afternoon.imageUrl || getFallbackImage(day.afternoon.name)} alt={day.afternoon.name} fill sizes="48px" style={{ objectFit: "cover" }} unoptimized />
                     </div>
-                    <div>
-                      <p style={{ fontSize: "1.05rem", fontWeight: 600, marginBottom: "0.2rem" }}>{day.afternoon.name}</p>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <p style={{ fontSize: "1.05rem", fontWeight: 600, marginBottom: "0.2rem", overflowWrap: "anywhere" }}>{day.afternoon.name}</p>
                       <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)" }}>Green fee: {day.afternoon.greenFee}/pp</p>
                     </div>
                   </div>
