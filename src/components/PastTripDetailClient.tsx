@@ -19,9 +19,112 @@ const sectionHeadingStyle: React.CSSProperties = {
   textShadow: "0 0 7px rgba(255,60,20,0.5), 0 0 20px rgba(255,60,20,0.25), 0 0 40px rgba(255,30,10,0.1)",
 };
 
+function ChevronIcon({ open }: { open: boolean }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="22"
+      height="22"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      aria-hidden="true"
+      style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.3s", color: "#EA580C", flexShrink: 0 }}
+    >
+      <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function AccordionSection({
+  title,
+  order,
+  isOpen,
+  onToggle,
+  anchorId,
+  children,
+}: {
+  title: string;
+  order: number;
+  isOpen: boolean;
+  onToggle: () => void;
+  anchorId?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section id={anchorId} style={{ order, position: "relative", zIndex: 1, borderTop: "1px solid rgba(255,255,255,0.1)", scrollMarginTop: "70px" }}>
+      <button
+        onClick={onToggle}
+        aria-expanded={isOpen}
+        style={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "1rem",
+          background: isOpen ? "rgba(255,255,255,0.02)" : "transparent",
+          border: "none",
+          cursor: "pointer",
+          padding: "clamp(1.3rem, 3.5vw, 2.1rem) clamp(2.75rem, 8vw, 6rem)",
+          position: "relative",
+          transition: "background 0.3s",
+        }}
+      >
+        <h2 style={{ ...sectionHeadingStyle, marginBottom: 0 }}>{title}</h2>
+        <span style={{ position: "absolute", right: "clamp(1.1rem, 5vw, 3rem)", display: "inline-flex" }}>
+          <ChevronIcon open={isOpen} />
+        </span>
+      </button>
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            key="body"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.35, ease: "easeInOut" }}
+            style={{ overflow: "hidden" }}
+          >
+            <div style={{ padding: "0 clamp(1.5rem, 6vw, 6rem) clamp(2.5rem, 5vw, 3.5rem)" }}>{children}</div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
+  );
+}
+
+function SummaryFact({ label, value, sub, mono }: { label: string; value: string; sub?: string; mono?: boolean }) {
+  return (
+    <div style={{ padding: "0.95rem 1.1rem", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.03)" }}>
+      <div style={{ fontSize: "0.7rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", fontWeight: 700, marginBottom: "0.3rem" }}>{label}</div>
+      <div style={{ color: "#fff", fontSize: mono ? "1.3rem" : "0.9rem", fontWeight: mono ? 700 : 500, lineHeight: 1.45, fontFamily: mono ? "var(--font-mono, monospace)" : undefined, letterSpacing: mono ? "0.15em" : undefined }}>{value}</div>
+      {sub && <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.78rem", marginTop: "0.2rem" }}>{sub}</div>}
+    </div>
+  );
+}
+
 export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isLive?: boolean }) {
   const [isMobile, setIsMobile] = useState(false);
   const [activeDay, setActiveDay] = useState(0);
+  // Accordion: every section collapsed on first load except the Summary.
+  const [open, setOpen] = useState<Set<string>>(() => new Set(["summary"]));
+  const isOpen = (k: string) => open.has(k);
+  const toggle = (k: string) =>
+    setOpen((prev) => {
+      const next = new Set(prev);
+      if (next.has(k)) next.delete(k);
+      else next.add(k);
+      return next;
+    });
+  const openSection = (k: string) =>
+    setOpen((prev) => (prev.has(k) ? prev : new Set(prev).add(k)));
+  const jumpTo = (k: string, anchorId: string) => {
+    const wasOpen = open.has(k);
+    openSection(k);
+    setTimeout(() => {
+      document.getElementById(anchorId)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, wasOpen ? 0 : 380);
+  };
 
   // 3-panel gallery: each panel cycles at a different cadence
   const galleryImages = useMemo(() => trip.gallery.filter((s) => !/\.(mp4|mov|webm)$/i.test(s)), [trip.gallery]);
@@ -64,6 +167,16 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
 
   // Resolve lodging image
   const lodgingImage = trip.lodgingImage || trip.photoSections?.[0]?.images?.[0] || null;
+
+  // Sections available for the Summary "jump to" links (in display order).
+  const jumpTargets = [
+    lodgingImage && { key: "command", anchor: "sec-command", label: "Command Center" },
+    trip.courses.length > 0 && { key: "courses", anchor: "sec-courses", label: "The Courses" },
+    trip.schedule.length > 0 && { key: "schedule", anchor: "sec-schedule", label: "Itinerary" },
+    trip.privateDining && trip.privateDining.length > 0 && { key: "chef", anchor: "sec-chef", label: "The Chef's Table" },
+    trip.bars && trip.bars.length > 0 && { key: "bars", anchor: "sec-bars", label: "Last Call" },
+    galleryImages.length >= 3 && { key: "gallery", anchor: "sec-gallery", label: "Lads on Tour" },
+  ].filter(Boolean) as { key: string; anchor: string; label: string }[];
 
   return (
     <main style={{ minHeight: "100vh", background: "#000", color: "#fff", position: "relative" }}>
@@ -132,7 +245,11 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
               key={i}
               onClick={() => {
                 setActiveDay(i);
-                document.getElementById(`day-${i}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+                openSection("schedule");
+                // Wait for the accordion expand animation before scrolling to the day.
+                setTimeout(() => {
+                  document.getElementById(`day-${i}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+                }, isOpen("schedule") ? 0 : 380);
               }}
               style={{
                 fontFamily: "monospace",
@@ -168,16 +285,52 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
         <USMap singleTrip={trip.year} compact />
       </motion.section>
 
+      {/* ── Collapsible accordion sections (CSS `order` controls display order) ── */}
+      <div style={{ display: "flex", flexDirection: "column", position: "relative", zIndex: 1 }}>
+
+      {/* Summary — open by default; everything else collapsed */}
+      <AccordionSection title="Summary" order={0} anchorId="sec-summary" isOpen={isOpen("summary")} onToggle={() => toggle("summary")}>
+        {trip.tagline && (
+          <p style={{ textAlign: "center", fontFamily: "var(--font-scrawl), cursive", fontSize: "clamp(1.1rem, 2.5vw, 1.5rem)", color: "rgba(255,255,255,0.7)", margin: "-0.25rem auto 1.75rem", maxWidth: "640px" }}>
+            {trip.tagline}
+          </p>
+        )}
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(240px, 1fr))", gap: "0.85rem", maxWidth: "1000px", margin: "0 auto" }}>
+          <SummaryFact label="📅 Dates" value={trip.dates} />
+          <SummaryFact label="📍 Where" value={`${trip.location}, ${trip.state}`} />
+          {(trip.lodgingName || trip.lodgingAddress) && (
+            <SummaryFact label="🏠 Lodging" value={trip.lodgingName || trip.lodgingAddress || "—"} sub={trip.lodgingName ? trip.lodgingAddress : undefined} />
+          )}
+          {trip.lodgingDoorCode && <SummaryFact label="🔢 Door Code" value={trip.lodgingDoorCode} mono />}
+          {trip.lodgingWifiNetwork && <SummaryFact label="📶 WiFi" value={trip.lodgingWifiNetwork} sub={trip.lodgingWifiPassword ? `pw: ${trip.lodgingWifiPassword}` : undefined} />}
+          {trip.courses.length > 0 && <SummaryFact label={`⛳ Golf · ${trip.courses.length} courses`} value={trip.courses.map((c) => c.name).join(" · ")} />}
+          {(trip.restaurants.length > 0 || (trip.privateDining && trip.privateDining.length > 0)) && (
+            <SummaryFact label="🍽️ Dining" value={[...(trip.privateDining?.map((m) => m.title) || []), ...trip.restaurants.map((r) => r.name)].join(" · ")} />
+          )}
+          {trip.bars && trip.bars.length > 0 && <SummaryFact label={`🌙 Nightlife · ${trip.bars.length}`} value={trip.bars.map((b) => b.name).join(" · ")} />}
+          {trip.transport && <SummaryFact label="🚐 Ride" value={trip.transport.name} sub={trip.transport.phones?.[0]} />}
+        </div>
+        {jumpTargets.length > 0 && (
+          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "0.5rem", marginTop: "1.75rem" }}>
+            <span style={{ width: "100%", textAlign: "center", fontSize: "0.72rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "0.4rem" }}>Jump to detail</span>
+            {jumpTargets.map((t) => (
+              <button
+                key={t.key}
+                onClick={() => jumpTo(t.key, t.anchor)}
+                style={{ fontFamily: "monospace", fontSize: "0.72rem", letterSpacing: "0.05em", textTransform: "uppercase", padding: "0.5rem 0.85rem", minHeight: "40px", borderRadius: "4px", border: "1px solid rgba(234,88,12,0.4)", background: "transparent", color: "rgba(253,186,116,0.95)", cursor: "pointer", transition: "background 0.2s" }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(234,88,12,0.12)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
+              >
+                {t.label} →
+              </button>
+            ))}
+          </div>
+        )}
+      </AccordionSection>
+
       {/* Section 2: Lads on Tour — 3-panel dissolving gallery */}
       {galleryImages.length >= 3 && (
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          style={{ position: "relative", zIndex: 1, padding: "0.6rem clamp(1.5rem, 6vw, 6rem) 3rem" }}
-        >
-          <h2 style={sectionHeadingStyle}>Lads on Tour</h2>
+        <AccordionSection title="Lads on Tour" order={6} anchorId="sec-gallery" isOpen={isOpen("gallery")} onToggle={() => toggle("gallery")}>
           <div style={{
             position: "relative",
             height: isMobile ? "auto" : "clamp(320px, 40vw, 500px)",
@@ -237,19 +390,12 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
               );
             })}
           </div>
-        </motion.section>
+        </AccordionSection>
       )}
 
       {/* Section: Courses — full course details with images */}
       {trip.courses.length > 0 && (
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          style={{ position: "relative", zIndex: 1, padding: "3rem clamp(1.5rem, 6vw, 6rem)" }}
-        >
-          <h2 style={sectionHeadingStyle}>The Courses</h2>
+        <AccordionSection title="The Courses" order={2} anchorId="sec-courses" isOpen={isOpen("courses")} onToggle={() => toggle("courses")}>
           <div style={{
             display: "grid",
             gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(360px, 1fr))",
@@ -392,19 +538,12 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
               );
             })}
           </div>
-        </motion.section>
+        </AccordionSection>
       )}
 
       {/* Section 3: Devils in the Details — Itinerary with inline images */}
       {trip.schedule.length > 0 && (
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          style={{ position: "relative", zIndex: 1, padding: "3rem clamp(1.5rem, 6vw, 6rem)" }}
-        >
-          <h2 style={sectionHeadingStyle}>Devils&apos; Details</h2>
+        <AccordionSection title="Devils&apos; Details" order={3} anchorId="sec-schedule" isOpen={isOpen("schedule")} onToggle={() => toggle("schedule")}>
 
           {/* Day sections */}
           {trip.schedule.map((day, i) => (
@@ -576,19 +715,12 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
               )}
             </div>
           ))}
-        </motion.section>
+        </AccordionSection>
       )}
 
       {/* Section 3.5: The Chef's Table — private dining menus */}
       {trip.privateDining && trip.privateDining.length > 0 && (
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          style={{ position: "relative", zIndex: 1, padding: "3rem clamp(1.5rem, 6vw, 6rem)" }}
-        >
-          <h2 style={sectionHeadingStyle}>The Chef&apos;s Table</h2>
+        <AccordionSection title="The Chef&apos;s Table" order={4} anchorId="sec-chef" isOpen={isOpen("chef")} onToggle={() => toggle("chef")}>
           <p style={{ textAlign: "center", color: "rgba(255,255,255,0.6)", fontSize: "0.95rem", maxWidth: "640px", margin: "-1rem auto 2.5rem", lineHeight: 1.6 }}>
             Two nights, Chef Natalie cooks family-style at the lodge — once over steak, once over the catch we haul off Lake Michigan.
           </p>
@@ -640,19 +772,12 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
               </div>
             ))}
           </div>
-        </motion.section>
+        </AccordionSection>
       )}
 
       {/* Section 3.6: Last Call — nightlife / bars */}
       {trip.bars && trip.bars.length > 0 && (
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          style={{ position: "relative", zIndex: 1, padding: "3rem clamp(1.5rem, 6vw, 6rem)" }}
-        >
-          <h2 style={sectionHeadingStyle}>Last Call</h2>
+        <AccordionSection title="Last Call" order={5} anchorId="sec-bars" isOpen={isOpen("bars")} onToggle={() => toggle("bars")}>
           <p style={{ textAlign: "center", color: "rgba(255,255,255,0.6)", fontSize: "0.95rem", maxWidth: "640px", margin: "-1rem auto 2.5rem", lineHeight: 1.6 }}>
             The Sheboygan + Kohler after-hours lineup — scouted by a local, ranked from the civilized cocktail to the dive that closes the place down.
           </p>
@@ -702,19 +827,12 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
               );
             })}
           </div>
-        </motion.section>
+        </AccordionSection>
       )}
 
       {/* Section 4: Lodging — single front-of-house image */}
       {lodgingImage && (
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          style={{ position: "relative", zIndex: 1, padding: "3rem clamp(1.5rem, 6vw, 6rem)" }}
-        >
-          <h2 style={sectionHeadingStyle}>Command Center</h2>
+        <AccordionSection title="Command Center" order={1} anchorId="sec-command" isOpen={isOpen("command")} onToggle={() => toggle("command")}>
 
           {trip.lodgingBookingUrl ? (
             <a href={trip.lodgingBookingUrl} target="_blank" rel="noopener noreferrer" style={{ display: "block", maxWidth: "800px", margin: "0 auto" }}>
@@ -879,8 +997,10 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
               </p>
             </div>
           )}
-        </motion.section>
+        </AccordionSection>
       )}
+
+      </div>
     </main>
   );
 }
