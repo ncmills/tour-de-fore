@@ -381,13 +381,15 @@ export default function GalleryClient({
                       transition: "border-color 0.3s, box-shadow 0.3s",
                     }}
                   >
-                    {/* Type icon top-right */}
+                    {/* Type icon top-right — clearance >= card border-radius (12) so the
+                        emoji glyph (paints taller than its CSS box on macOS) clears the corner. */}
                     <span
                       style={{
                         position: "absolute",
-                        top: 12,
-                        right: 14,
-                        fontSize: "1.4rem",
+                        top: 16,
+                        right: 16,
+                        fontSize: "1.25rem",
+                        lineHeight: 1,
                         opacity: 0.7,
                       }}
                       title={typeLabels[card.type]}
