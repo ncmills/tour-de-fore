@@ -6,6 +6,7 @@ import {
   stripPII,
   type SignalTable,
 } from "@/lib/signals";
+import { readVid, isValidVid } from "@/lib/vid";
 
 /**
  * Signal capture endpoint — receives logSignal() emits (client + server),
@@ -80,6 +81,13 @@ export async function POST(req: Request) {
   }
 
   const cleanPayload = stripPII(payload as Record<string, unknown>);
+  // vid is the lead-gen join key — NOT PII (opaque UUID). stripPII preserves
+  // it when the client includes it; backfill from the cookie otherwise so
+  // every signal row is joinable to a visitor.
+  const vid = isValidVid((payload as { vid?: unknown }).vid)
+    ? (payload as { vid: string }).vid
+    : readVid(req.headers.get("cookie"));
+  if (vid) cleanPayload.vid = vid;
   try {
     await supabase.from(resolveSignalTableName(table as SignalTable)).insert({
       session_id: sessionId,
