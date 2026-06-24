@@ -21,6 +21,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description,
     alternates: { canonical: `https://tourdefore.com/trip/${slug}` },
     openGraph: { title, description, images: ["/icon-fancy.png"] },
+    // Live/upcoming trip pages carry guest arrival info (door code, WiFi, guest-portal
+    // link) — keep them out of search indexes. Reachable by direct link only.
+    ...(trip.upcoming ? { robots: { index: false, follow: false } } : {}),
   };
 }
 

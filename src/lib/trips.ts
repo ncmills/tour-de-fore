@@ -54,6 +54,29 @@ export interface Restaurant {
   note?: string;
 }
 
+export interface MenuCourse {
+  /** e.g. "Starters", "Mains", "Sides", "Dessert" */
+  heading: string;
+  items: { name: string; detail?: string }[];
+}
+
+export interface PrivateDiningMenu {
+  /** Menu name, e.g. "Steak Night" */
+  title: string;
+  /** Human date, e.g. "Thursday, July 9" */
+  date: string;
+  /** Caterer / chef line */
+  caterer?: string;
+  catererUrl?: string;
+  courses: MenuCourse[];
+  pricePerPerson?: string;
+  serviceFee?: string;
+  gratuity?: string;
+  total?: string;
+  /** Footnote, e.g. deposit / card-fee terms */
+  terms?: string;
+}
+
 export interface PhotoSection {
   label: string;
   images: string[];
@@ -77,6 +100,22 @@ export interface Trip {
   lodgingAddress?: string;
   lodgingBookingUrl?: string;
   lodgingImage?: string;
+  /** Property name shown in the arrival panel, e.g. "Malibu House" */
+  lodgingName?: string;
+  /** Check-in / check-out window, e.g. "07 Jul 2026 → 12 Jul 2026" */
+  lodgingStayDates?: string;
+  /** Hostaway (or similar) guest portal — reservation details + exact address */
+  lodgingGuestPortalUrl?: string;
+  /** Door / smart-lock access code for check-in */
+  lodgingDoorCode?: string;
+  /** WiFi SSID */
+  lodgingWifiNetwork?: string;
+  /** WiFi password */
+  lodgingWifiPassword?: string;
+  /** Digital guidebook (how-to videos, house rules, local recs) */
+  lodgingGuidebookUrl?: string;
+  /** Private chef / catered dinners with full menus */
+  privateDining?: PrivateDiningMenu[];
 }
 
 const SQ = "https://images.squarespace-cdn.com/content/v1/62cb87cca6b36f353a2575d5";
@@ -94,6 +133,13 @@ export const trips: Trip[] = [
     lodgingAddress: "1489 Lakeshore Drive, Cleveland, WI 53015",
     lodgingBookingUrl: "https://www.airbnb.com/trips/shared/874073c7-812c-457d-97c4-feec6f41e3e9",
     lodgingImage: "/photos/2026/kohler-lodging.png",
+    lodgingName: "Malibu House",
+    lodgingStayDates: "07 Jul 2026 → 12 Jul 2026",
+    lodgingGuestPortalUrl: "https://guest-portal.hostaway.com/44557834/XhbT-V5X",
+    lodgingDoorCode: "4891",
+    lodgingWifiNetwork: "Wisconsin Getaways",
+    lodgingWifiPassword: "Vacation!",
+    lodgingGuidebookUrl: "https://bit.ly/themalibuhouse",
     heroImage: "/photos/2026/whistling-straits-hero.jpg",
     courses: [
       {
@@ -169,6 +215,87 @@ export const trips: Trip[] = [
       { name: "Sundance Saloon", cuisine: "Bar & Grill", url: "https://www.facebook.com/SundanceSaloonBarAndGrill/", note: "Wednesday — first-night burgers, beer, and live music in Sheboygan" },
       { name: "Umi Sushi & Steak House", cuisine: "Sushi & Hibachi", note: "Friday — straight from the course, downtown Sheboygan" },
       { name: "Chef Natalie — Nosh Custom Catering", cuisine: "Private Chef · Family Style", url: "https://www.noshcustomcatering.com/", note: "Thursday & Saturday — cooks our Lake Michigan catch at the lodge" },
+    ],
+    privateDining: [
+      {
+        title: "Steak Night",
+        date: "Thursday, July 9",
+        caterer: "NOSH Private Dining · Chef Natalie",
+        catererUrl: "https://www.noshcustomcatering.com/",
+        courses: [
+          {
+            heading: "Starters / Amuse Bouche",
+            items: [
+              { name: "Brat Meatball", detail: "Sheboygan County's infamous brat turned into a meatball, served on stone ground mustard with haystack onion garnish" },
+            ],
+          },
+          {
+            heading: "Mains",
+            items: [
+              { name: "Pan Seared Ribeye Steaks", detail: "Kerrygold butter, maldon sea salt, + fresh herbs (cooked to medium rare unless otherwise requested). Chimichurri + house steak sauce served on side" },
+              { name: "Filet Mignon", detail: "Pan seared filets with Kerrygold butter, maldon sea salt, + fresh herbs. Served with a whiskey peppercorn sauce (cooked to medium rare unless otherwise requested)" },
+              { name: "Bread Service", detail: "House brioche rolls, foccacia, + sourdough served with house compound butter, house whipped honey butter, and balsamic + olive oil" },
+            ],
+          },
+          {
+            heading: "Sides",
+            items: [
+              { name: "Truffle Mashed Potatoes", detail: "Truffle infused mashed potatoes with rosemary, pecorino Romano, roasted garlic + finished with crispy shallots" },
+              { name: "Baked French Onion Mac + Cheese", detail: "Caramelized onions in a fontina, Parmesan, + Gruyère cream sauce with cavatappi noodles. Topped with brown butter toasted breadcrumbs + more Gruyère cheese + broiled until golden brown" },
+              { name: "Sautéed Mushrooms + Onions", detail: "Cremini + Oyster mushrooms sautéed with sweet vidalia onion, garlic, butter + fresh herbs" },
+            ],
+          },
+          {
+            heading: "Dessert",
+            items: [
+              { name: "Brown Butter Cake", detail: "Chef Natalie's infamous ooey gooey brown butter cake served warm with bourbon vanilla bean whipped mascarpone + topped with fresh macerated peaches + candied pecans" },
+            ],
+          },
+        ],
+        pricePerPerson: "$150",
+        serviceFee: "$200",
+        gratuity: "$650",
+        total: "$3,250",
+        terms: "50% deposit due upon booking · Square charges a 3% fee for card transactions",
+      },
+      {
+        title: "Wisconsin Fish Fry Night",
+        date: "Saturday, July 11",
+        caterer: "NOSH Private Dining · Chef Natalie",
+        catererUrl: "https://www.noshcustomcatering.com/",
+        courses: [
+          {
+            heading: "Starters",
+            items: [
+              { name: "Charcuterie Board", detail: "Locally sourced artisanal meats + cheeses with assorted nuts, artisan crackers, dips + spreads" },
+            ],
+          },
+          {
+            heading: "Mains",
+            items: [
+              { name: "Grilled Market Fish", detail: "Prepared according to what you bring back from the fishing trip" },
+              { name: "Beer Battered Walleye Fish Fry", detail: "Large walleye filets in a house Blue Moon beer batter + deep fried until perfectly crispy" },
+              { name: "Panko Breaded Perch Fish Fry", detail: "Local perch filets breaded with a house seasoned panko breading + fried until golden perfection" },
+            ],
+          },
+          {
+            heading: "Sides",
+            items: [
+              { name: "Hand Cut French Fries", detail: "Fried until golden brown and served with a trio of dipping sauces" },
+              { name: "Bacon Baked Beans", detail: "Thick cut smoked bacon with sweet and tangy baked beans" },
+              { name: "Corn on the Cob", detail: "Locally harvested sweet corn grilled and served with butter" },
+            ],
+          },
+          {
+            heading: "Dessert",
+            items: [
+              { name: "Apple Pie Cheesecake", detail: "An entire apple pie baked into a cheesecake. Served with house whipped cream, salted caramel sauce, + streusel topping" },
+            ],
+          },
+        ],
+        pricePerPerson: "$125",
+        serviceFee: "$200",
+      },
     ],
     schedule: [
       {

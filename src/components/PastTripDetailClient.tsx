@@ -579,6 +579,70 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
         </motion.section>
       )}
 
+      {/* Section 3.5: The Chef's Table — private dining menus */}
+      {trip.privateDining && trip.privateDining.length > 0 && (
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          style={{ position: "relative", zIndex: 1, padding: "3rem clamp(1.5rem, 6vw, 6rem)" }}
+        >
+          <h2 style={sectionHeadingStyle}>The Chef&apos;s Table</h2>
+          <p style={{ textAlign: "center", color: "rgba(255,255,255,0.6)", fontSize: "0.95rem", maxWidth: "640px", margin: "-1rem auto 2.5rem", lineHeight: 1.6 }}>
+            Two nights, Chef Natalie cooks family-style at the lodge — once over steak, once over the catch we haul off Lake Michigan.
+          </p>
+
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "1.5rem", maxWidth: "1000px", margin: "0 auto", alignItems: "start" }}>
+            {trip.privateDining.map((menu) => (
+              <div
+                key={menu.title}
+                style={{
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  borderRadius: "10px",
+                  background: "rgba(255,255,255,0.02)",
+                  padding: "1.75rem clamp(1.25rem, 3vw, 2rem)",
+                }}
+              >
+                <div style={{ textAlign: "center", borderBottom: "1px solid rgba(234,88,12,0.3)", paddingBottom: "1rem", marginBottom: "1.25rem" }}>
+                  <div style={{ fontSize: "0.72rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "#EA580C", fontWeight: 700 }}>{menu.date}</div>
+                  <h3 style={{ fontFamily: "var(--font-slab-cold), serif", fontSize: "clamp(1.4rem, 3vw, 1.9rem)", color: "#fff", margin: "0.35rem 0 0", textTransform: "uppercase" }}>{menu.title}</h3>
+                  {menu.caterer && (
+                    <div style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)", marginTop: "0.4rem" }}>
+                      {menu.catererUrl ? (
+                        <a href={menu.catererUrl} target="_blank" rel="noopener noreferrer" style={{ color: "rgba(255,255,255,0.55)", textDecoration: "underline", textUnderlineOffset: "2px" }}>{menu.caterer}</a>
+                      ) : menu.caterer}
+                    </div>
+                  )}
+                </div>
+
+                {menu.courses.map((course) => (
+                  <div key={course.heading} style={{ marginBottom: "1.25rem" }}>
+                    <div style={{ fontSize: "0.72rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.45)", fontWeight: 700, textAlign: "center", marginBottom: "0.75rem" }}>{course.heading}</div>
+                    {course.items.map((item) => (
+                      <div key={item.name} style={{ marginBottom: "0.7rem" }}>
+                        <div style={{ color: "#fff", fontWeight: 600, fontSize: "0.95rem" }}>{item.name}</div>
+                        {item.detail && <div style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.83rem", lineHeight: 1.55, marginTop: "0.15rem" }}>{item.detail}</div>}
+                      </div>
+                    ))}
+                  </div>
+                ))}
+
+                {(menu.pricePerPerson || menu.total) && (
+                  <div style={{ borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "1rem", marginTop: "0.5rem", fontSize: "0.82rem", color: "rgba(255,255,255,0.6)" }}>
+                    {menu.pricePerPerson && <div style={{ display: "flex", justifyContent: "space-between", padding: "0.15rem 0" }}><span>Per person</span><span style={{ color: "#fff" }}>{menu.pricePerPerson}</span></div>}
+                    {menu.serviceFee && <div style={{ display: "flex", justifyContent: "space-between", padding: "0.15rem 0" }}><span>Delivery, set-up + service</span><span style={{ color: "#fff" }}>{menu.serviceFee}</span></div>}
+                    {menu.gratuity && <div style={{ display: "flex", justifyContent: "space-between", padding: "0.15rem 0" }}><span>Gratuity</span><span style={{ color: "#fff" }}>{menu.gratuity}</span></div>}
+                    {menu.total && <div style={{ display: "flex", justifyContent: "space-between", padding: "0.4rem 0 0", marginTop: "0.3rem", borderTop: "1px solid rgba(255,255,255,0.08)", color: "#EA580C", fontWeight: 700 }}><span>Total</span><span>{menu.total}</span></div>}
+                    {menu.terms && <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.35)", marginTop: "0.6rem", textAlign: "center" }}>{menu.terms}</div>}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </motion.section>
+      )}
+
       {/* Section 4: Lodging — single front-of-house image */}
       {lodgingImage && (
         <motion.section
@@ -643,6 +707,86 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
                 style={{ objectFit: "cover" }}
                 sizes="(max-width: 768px) 90vw, 800px"
               />
+            </div>
+          )}
+
+          {trip.lodgingGuestPortalUrl && (
+            <div style={{ maxWidth: "800px", margin: "2.5rem auto 0" }}>
+              {(trip.lodgingName || trip.lodgingStayDates) && (
+                <p style={{ textAlign: "center", color: "rgba(255,255,255,0.7)", fontSize: "0.95rem", marginBottom: "1.75rem", lineHeight: 1.6 }}>
+                  Thrilled to welcome you to{" "}
+                  {trip.lodgingName && <strong style={{ color: "#fff" }}>{trip.lodgingName}</strong>}
+                  {trip.lodgingStayDates && <> for your stay <strong style={{ color: "#fff" }}>{trip.lodgingStayDates}</strong></>}.
+                  {" "}Everything you need for a smooth arrival is right here.
+                </p>
+              )}
+
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "0.85rem" }}>
+                {/* Guest Portal */}
+                <a
+                  href={trip.lodgingGuestPortalUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: "block", padding: "1.1rem 1.25rem", borderRadius: "8px",
+                    border: "1px solid rgba(234,88,12,0.4)", background: "rgba(234,88,12,0.06)",
+                    textDecoration: "none", transition: "border-color 0.3s, background 0.3s",
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(234,88,12,0.8)"; e.currentTarget.style.background = "rgba(234,88,12,0.12)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(234,88,12,0.4)"; e.currentTarget.style.background = "rgba(234,88,12,0.06)"; }}
+                >
+                  <div style={{ fontSize: "0.72rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "#EA580C", fontWeight: 700, marginBottom: "0.35rem" }}>🔗 Guest Portal</div>
+                  <div style={{ color: "#fff", fontSize: "0.95rem", fontWeight: 600 }}>Reservation details + exact address →</div>
+                  <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.78rem", marginTop: "0.3rem" }}>Open before you leave for the airport</div>
+                </a>
+
+                {/* Digital Guidebook */}
+                {trip.lodgingGuidebookUrl && (
+                  <a
+                    href={trip.lodgingGuidebookUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: "block", padding: "1.1rem 1.25rem", borderRadius: "8px",
+                      border: "1px solid rgba(234,88,12,0.4)", background: "rgba(234,88,12,0.06)",
+                      textDecoration: "none", transition: "border-color 0.3s, background 0.3s",
+                    }}
+                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(234,88,12,0.8)"; e.currentTarget.style.background = "rgba(234,88,12,0.12)"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(234,88,12,0.4)"; e.currentTarget.style.background = "rgba(234,88,12,0.06)"; }}
+                  >
+                    <div style={{ fontSize: "0.72rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "#EA580C", fontWeight: 700, marginBottom: "0.35rem" }}>📘 Digital Guidebook</div>
+                    <div style={{ color: "#fff", fontSize: "0.95rem", fontWeight: 600 }}>Required reading — share with your group →</div>
+                    <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.78rem", marginTop: "0.3rem" }}>How-to videos, house rules, local recs, safety</div>
+                  </a>
+                )}
+
+                {/* Door Code */}
+                {trip.lodgingDoorCode && (
+                  <div style={{ padding: "1.1rem 1.25rem", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.03)" }}>
+                    <div style={{ fontSize: "0.72rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", fontWeight: 700, marginBottom: "0.35rem" }}>🔢 Door Code</div>
+                    <div style={{ color: "#fff", fontSize: "1.5rem", fontWeight: 700, fontFamily: "var(--font-mono, monospace)", letterSpacing: "0.15em" }}>{trip.lodgingDoorCode}</div>
+                  </div>
+                )}
+
+                {/* WiFi */}
+                {trip.lodgingWifiNetwork && (
+                  <div style={{ padding: "1.1rem 1.25rem", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.03)" }}>
+                    <div style={{ fontSize: "0.72rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", fontWeight: 700, marginBottom: "0.35rem" }}>📶 WiFi</div>
+                    <div style={{ color: "#fff", fontSize: "0.95rem" }}>
+                      <span style={{ color: "rgba(255,255,255,0.5)" }}>Network</span> {trip.lodgingWifiNetwork}
+                    </div>
+                    {trip.lodgingWifiPassword && (
+                      <div style={{ color: "#fff", fontSize: "0.95rem", marginTop: "0.2rem" }}>
+                        <span style={{ color: "rgba(255,255,255,0.5)" }}>Password</span> {trip.lodgingWifiPassword}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              <p style={{ textAlign: "center", color: "rgba(255,255,255,0.4)", fontSize: "0.78rem", marginTop: "1.25rem" }}>
+                We&apos;ll also text the guidebook link before check-in for easy access.
+              </p>
             </div>
           )}
         </motion.section>
