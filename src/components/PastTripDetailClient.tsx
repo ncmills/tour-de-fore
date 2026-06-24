@@ -669,6 +669,12 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
                   </div>
                   {bar.vibe && <div style={{ fontSize: "0.74rem", letterSpacing: "0.06em", textTransform: "uppercase", color: "#EA580C", fontWeight: 700, marginTop: "0.4rem" }}>{bar.vibe}</div>}
                   <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.9rem", lineHeight: 1.6, marginTop: "0.6rem", marginBottom: 0 }}>{bar.description}</p>
+                  {bar.url && (
+                    <div style={{ marginTop: "0.85rem", fontSize: "0.78rem", color: "#EA580C", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+                      View on Google Maps ↗
+                    </div>
+                  )}
                 </>
               );
               const baseStyle: React.CSSProperties = {
