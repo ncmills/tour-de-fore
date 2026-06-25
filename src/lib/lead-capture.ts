@@ -33,6 +33,13 @@ export interface CaptureLeadArgs {
   /** The exact consent-checkbox label shown to the user (stored verbatim). */
   consentText?: string | null;
   phone?: string | null;
+  /**
+   * Global Privacy Control signal was present on the capture request
+   * (`Sec-GPC: 1`). When true this is a binding opt-out: consent_share can
+   * NEVER be set true on this write (even if consent===true), and
+   * do_not_sell is forced true. The route reads the header and passes this in.
+   */
+  gpc?: boolean;
 }
 
 /** Max signal rows pulled per table for a vid (recent-first). */
@@ -182,7 +189,7 @@ function collectPlanIds(rows: SignalRow[]): string[] {
  * Best-effort rich-lead capture into wp_leads (brand 'tdf'). NEVER throws.
  */
 export async function captureLead(args: CaptureLeadArgs): Promise<{ upserted: boolean }> {
-  const { email, brand, vid, source, consent, consentText, phone } = args;
+  const { email, brand, vid, source, consent, consentText, phone, gpc } = args;
   if (!supabase) {
     console.warn("[lead-capture] supabase unavailable — profile not persisted");
     return { upserted: false };
@@ -248,8 +255,13 @@ export async function captureLead(args: CaptureLeadArgs): Promise<{ upserted: bo
       if (derived.spend_tier != null) row.spend_tier = derived.spend_tier;
     }
 
-    // CONSENT — set true ONLY on explicit consent===true. Never otherwise.
-    if (consent === true) {
+    // GPC — a binding opt-out. If the browser sent Sec-GPC:1 we force the row
+    // non-sellable regardless of any checked consent box on the same request.
+    if (gpc === true) {
+      row.do_not_sell = true;
+      row.consent_share = false;
+    } else if (consent === true) {
+      // CONSENT — set true ONLY on explicit consent===true AND no GPC opt-out.
       row.consent_share = true;
       row.consent_text = consentText ?? null;
       row.consent_at = new Date().toISOString();

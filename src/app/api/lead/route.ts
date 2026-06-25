@@ -49,8 +49,10 @@ export async function POST(request: Request) {
   const consent = body.consent === true;
   const consentText = typeof body.consentText === "string" ? body.consentText.slice(0, 500) : null;
   const phone = typeof body.phone === "string" ? body.phone.slice(0, 40) : null;
+  // Global Privacy Control — a binding browser opt-out. Honor on the server.
+  const gpc = headersList.get("sec-gpc") === "1";
 
-  console.log("[tdf-lead]", JSON.stringify({ email, source, groupSize, tripState, vid: !!vid, consent, ip }));
+  console.log("[tdf-lead]", JSON.stringify({ email, source, groupSize, tripState, vid: !!vid, consent, gpc, ip }));
 
   // Legacy dual-write — kept for one release in case other code reads
   // tdf_subscribers. The new canonical store is wp_leads (brand 'tdf') via
@@ -71,7 +73,7 @@ export async function POST(request: Request) {
 
   // Rich capture (B2) → wp_leads (brand 'tdf'). Joins the vid's behavior +
   // explicit + derived into a profile. Best-effort, never throws.
-  await captureLead({ email, brand: "tdf", vid, source, consent, consentText, phone });
+  await captureLead({ email, brand: "tdf", vid, source, consent, consentText, phone, gpc });
 
   if (process.env.RESEND_API_KEY) {
     try {

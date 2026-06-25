@@ -133,6 +133,7 @@ export default function Footer() {
             <p className="text-text-dim text-xs tracking-[0.15em] font-body">Est. 2021 &mdash; Present</p>
             <Link href="/privacy" className="text-text-dim text-xs tracking-[0.15em] font-body hover:text-accent transition-colors">Privacy</Link>
             <Link href="/terms" className="text-text-dim text-xs tracking-[0.15em] font-body hover:text-accent transition-colors">Terms</Link>
+            <Link href="/do-not-sell" className="text-text-dim text-xs tracking-[0.15em] font-body hover:text-accent transition-colors">Do Not Sell</Link>
           </div>
         </div>
         <div className="mt-6 text-center">
