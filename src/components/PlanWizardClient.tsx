@@ -11,6 +11,18 @@ import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
 import RegionMapThumb from "./RegionMap";
 import { addAnonPlanId, claimAnonPlans } from "@/lib/anon-plans";
+import { logSelection, logAcquisition } from "@/lib/signals-client";
+
+// Leadgen A3 — wizard fields whose changes are meaningful "selections" worth
+// logging. Free-text + PII fields (destination text, organizer, attendees,
+// special requests) are intentionally excluded — they're not categorical
+// picks and may carry identity. Array fields diff to add/remove below.
+const LOGGED_SELECTION_FIELDS = new Set<keyof WizardState>([
+  "destinationType", "region", "states", "flexible", "preferredSeason",
+  "tripMonth", "numberOfDays", "groupSize", "skillMix", "ageRange",
+  "roundsPerDay", "courseQuality", "walkingOrRiding", "lodging", "dining",
+  "nightlife", "budget",
+]);
 
 type Action =
   | { type: "SET_FIELD"; field: keyof WizardState; value: unknown }
@@ -460,6 +472,8 @@ export default function PlanWizardClient() {
   const [notifyEmail, setNotifyEmail] = useState("");
   const isScrolling = useRef(false);
   const typedSteps = useRef<Set<string>>(new Set());
+  // Leadgen A3 — per-step dwell. Reset on each forward transition.
+  const stepEnteredAtRef = useRef<number>(Date.now());
 
   // "Plan it all for me" — one-click full auto-pick. When fired, fills every
   // required field with valid varied picks, shows a recap of the headline
@@ -527,6 +541,19 @@ export default function PlanWizardClient() {
     dispatch({ type: "SET_FIELD", field, value });
     const updated = { ...state, [field]: value };
     saveToSession(updated);
+    // Leadgen A3 — fire-and-forget behavioral signal for categorical picks.
+    if (LOGGED_SELECTION_FIELDS.has(field)) {
+      const prev = state[field];
+      if (Array.isArray(value) && Array.isArray(prev)) {
+        // Array field (states, dining) — diff to detect the single add/remove.
+        const added = (value as string[]).filter((x) => !(prev as string[]).includes(x));
+        const removed = (prev as string[]).filter((x) => !(value as string[]).includes(x));
+        for (const id of added) logSelection("tdf", { slot: field, optionId: id, action: "add" });
+        for (const id of removed) logSelection("tdf", { slot: field, optionId: id, action: "remove" });
+      } else if (value !== prev) {
+        logSelection("tdf", { slot: field, optionId: String(value), action: "add" });
+      }
+    }
   };
 
   const tdfRec = "tdf-endorsed";
@@ -596,6 +623,13 @@ export default function PlanWizardClient() {
     if (toIndex > currentQ) {
       const gate = canAdvance(currentQ);
       if (!gate.ok) return;
+      // Leadgen A3 — co-emit per-step dwell on the completed step, then reset.
+      logSelection("tdf", {
+        slot: `step-${currentQ}`,
+        action: "add",
+        dwellMs: Date.now() - stepEnteredAtRef.current,
+      });
+      stepEnteredAtRef.current = Date.now();
     }
     if (toIndex + 1 > revealedCount) {
       setRevealedCount(toIndex + 1);
@@ -1442,11 +1476,13 @@ export default function PlanWizardClient() {
               <button
                 key={a}
                 onClick={() => {
+                  const had = state.activities.includes(a);
                   dispatch({ type: "TOGGLE_ACTIVITY", activity: a });
-                  const activities = state.activities.includes(a)
+                  const activities = had
                     ? state.activities.filter((x) => x !== a)
                     : [...state.activities, a];
                   saveToSession({ ...state, activities });
+                  logSelection("tdf", { slot: "activities", optionId: a, action: had ? "remove" : "add" });
                 }}
                 style={{
                   padding: "0.85rem 1.5rem", borderRadius: 4, minHeight: 48,
@@ -1475,13 +1511,18 @@ export default function PlanWizardClient() {
           <div className="grid grid-cols-2 gap-5" style={{ marginBottom: "3rem" }}>
             {["Best courses", "Best lodging", "Best dining", "Keep balanced"].map((p) => (
               <SelectionCard key={p} label={p} selected={state.budgetPriorities.includes(p)} onClick={() => {
+                const had = state.budgetPriorities.includes(p);
                 dispatch({ type: "TOGGLE_PRIORITY", priority: p });
-                const budgetPriorities = state.budgetPriorities.includes(p)
+                const budgetPriorities = had
                   ? state.budgetPriorities.filter((x) => x !== p)
                   : state.budgetPriorities.length < 2
                     ? [...state.budgetPriorities, p]
                     : state.budgetPriorities;
                 saveToSession({ ...state, budgetPriorities });
+                // Only emit when the toggle actually changed state (cap respected).
+                if (budgetPriorities.length !== state.budgetPriorities.length) {
+                  logSelection("tdf", { slot: "budget_priority", optionId: p, action: had ? "remove" : "add" });
+                }
               }} compact />
             ))}
           </div>

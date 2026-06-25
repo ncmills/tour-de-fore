@@ -49,3 +49,12 @@ export function readVid(cookieHeader: string | null | undefined): string | null 
   }
   return null;
 }
+
+/**
+ * Client-side read of the `vid` cookie. Returns null on the server or when the
+ * cookie is absent/malformed. Mirrors shared-engine's `getVid` (BMHQ/MOH) so
+ * the client emit helpers can auto-attach the visitor id.
+ */
+export function getVid(): string | null {
+  return typeof document === "undefined" ? null : readVid(document.cookie);
+}

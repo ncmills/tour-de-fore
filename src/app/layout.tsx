@@ -5,6 +5,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import DrunkMode from "@/components/DrunkMode";
 import GlobalFire from "@/components/GlobalFire";
 import PostHogProvider from "@/components/PostHogProvider";
+import AcquisitionBeacon from "@/components/AcquisitionBeacon";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -213,6 +214,7 @@ export default function RootLayout({
           Skip to content
         </a>
         <PostHogProvider>
+          <AcquisitionBeacon />
           <GlobalFire />
           {children}
           <DrunkMode />
