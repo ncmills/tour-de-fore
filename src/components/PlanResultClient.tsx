@@ -15,6 +15,7 @@ import {
 } from "@/lib/plan-types";
 import MulliganButton from "./MulliganButton";
 import HomeButton from "./HomeButton";
+import EmailCapture from "./EmailCapture";
 import CrewVotePanel from "./CrewVotePanel";
 import CrewTally from "./CrewTally";
 import TierCompareTable from "./TierCompareTable";
@@ -1224,6 +1225,18 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
         )}
 
         {/* Subscription CTA removed — plans are fully free */}
+
+        {/* Save-this-plan lead capture (B3) — every post-generation surface
+            gets an email/save prompt. Posts {email, vid, consent, consentText}
+            to /api/lead → wp_leads (brand 'tdf'). Consent checkbox lives in
+            EmailCapture, unchecked by default. */}
+        <div style={{ marginTop: "2.5rem", maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>
+          <EmailCapture
+            source="plan-result"
+            headline="Want this plan in your inbox?"
+            subtext="We'll email you this trip plan plus the destination guide and early-bird pricing on the next group trip drop."
+          />
+        </div>
       </div>
 
     </div>

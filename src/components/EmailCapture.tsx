@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 import posthog from "posthog-js";
+import { getVid } from "@/lib/vid";
+
+const CONSENT_LABEL =
+  "I agree Tour de Fore may share my trip details and contact info with relevant vendors and partners. See our Privacy Policy.";
 
 interface Props {
   source: string;
@@ -15,6 +19,7 @@ export default function EmailCapture({
   subtext = "Get the Tour de Fore destination guide + early-bird pricing on our next group trip drop.",
 }: Props) {
   const [email, setEmail] = useState("");
+  const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -27,7 +32,13 @@ export default function EmailCapture({
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, source }),
+        body: JSON.stringify({
+          email,
+          source,
+          vid: getVid(),
+          consent,
+          consentText: CONSENT_LABEL,
+        }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
@@ -75,6 +86,22 @@ export default function EmailCapture({
           {status === "loading" ? "Sending…" : "Send It"}
         </button>
       </form>
+      <label className="mt-3 flex items-start gap-2.5 cursor-pointer text-xs leading-snug text-white/50">
+        <input
+          type="checkbox"
+          checked={consent}
+          onChange={(e) => setConsent(e.target.checked)}
+          className="mt-0.5 shrink-0 h-4 w-4 accent-accent"
+        />
+        <span>
+          I agree Tour de Fore may share my trip details and contact info with
+          relevant vendors and partners.{" "}
+          <a href="/privacy" className="underline text-accent hover:opacity-80">
+            See our Privacy Policy
+          </a>
+          .
+        </span>
+      </label>
       {status === "error" && <p className="mt-2 text-xs text-red-400">{errorMsg}</p>}
     </div>
   );
