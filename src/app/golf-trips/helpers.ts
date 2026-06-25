@@ -98,6 +98,8 @@ export const REGION_SLUGS: Record<Region, string> = {
   Southeast: "southeast",
   Northeast: "northeast",
   "South Central": "south-central",
+  California: "california",
+  International: "international",
 };
 
 export const REGION_LABELS: Record<string, string> = {
@@ -108,6 +110,8 @@ export const REGION_LABELS: Record<string, string> = {
   southeast: "Southeast",
   northeast: "Northeast",
   "south-central": "South Central",
+  california: "California",
+  international: "International",
 };
 
 export const STATE_NAMES: Record<string, string> = {

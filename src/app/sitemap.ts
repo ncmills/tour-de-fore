@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { allDestinations } from "@/data";
+import { GOLF_ATLAS } from "@/data/golf-atlas";
 import { REGION_SLUGS, stateSlug, slugify } from "./golf-trips/helpers";
 
 /**
@@ -144,6 +145,14 @@ export default async function sitemap({ id }: { id: number | Promise<string | un
       // `-trips` suffix is required on budget/bucket-list (missing suffix 404s).
       ...["bachelor-party", "budget-trips", "bucket-list-trips"].map((t) => ({
         url: `${base}/golf-trips/${t}`,
+        lastModified: LAST_MODIFIED,
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
+      })),
+      // Golf Atlas — curated best-of collection
+      { url: `${base}/atlas`, lastModified: LAST_MODIFIED, changeFrequency: "weekly" as const, priority: 0.9 },
+      ...GOLF_ATLAS.map((p) => ({
+        url: `${base}/atlas/${p.slug}`,
         lastModified: LAST_MODIFIED,
         changeFrequency: "monthly" as const,
         priority: 0.7,

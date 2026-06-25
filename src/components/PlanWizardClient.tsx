@@ -80,6 +80,8 @@ const REGION_NAMES = [
   "Southeast",
   "Northeast",
   "South Central",
+  "California",
+  "International",
 ];
 
 // Derived 2026-04-22 from allDestinations (scripts/audit-data-integrity.ts).
@@ -93,6 +95,8 @@ const REGION_STATES: Record<string, string[]> = {
   "Southeast": ["AL", "FL", "GA", "KY", "MS", "NC", "SC", "TN", "VA"],
   "Northeast": ["CT", "MA", "MD", "ME", "NH", "NJ", "NY", "PA", "RI", "VA", "VT"],
   "South Central": ["AR", "KY", "LA", "MO", "OK", "TX"],
+  "California": ["CA"],
+  "International": ["Scotland", "Ireland", "Northern Ireland", "Mexico", "Dominican Republic", "Bahamas", "Portugal", "Spain"],
 };
 
 const MONTHS = [

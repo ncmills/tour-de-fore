@@ -166,7 +166,7 @@ function wizardActivityToType(activity: string): ActivityType | null {
   return map[activity] || null;
 }
 
-const VALID_REGIONS = new Set<Region>(["Southwest", "Pacific NW", "Midwest", "Southeast", "Northeast", "Mountain West", "South Central"]);
+const VALID_REGIONS = new Set<Region>(["Southwest", "Pacific NW", "Midwest", "Southeast", "Northeast", "Mountain West", "South Central", "California", "International"]);
 
 function regionLabelToRegion(label: string): Region | null {
   return VALID_REGIONS.has(label as Region) ? (label as Region) : null;

@@ -7,7 +7,9 @@ export type Region =
   | "Midwest"
   | "Southeast"
   | "Northeast"
-  | "South Central";
+  | "South Central"
+  | "California"
+  | "International";
 
 export type CourseTier = "bucket-list" | "premium" | "solid" | "budget";
 export type CourseStyle = "links" | "parkland" | "desert" | "mountain" | "resort" | "coastal" | "heathland";
