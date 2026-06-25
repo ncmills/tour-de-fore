@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { Resend } from "resend";
 import { supabase } from "@/lib/supabase";
 import { rateLimit } from "@/lib/rate-limit";
+import { captureLead } from "@/lib/lead-capture";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -11,6 +12,10 @@ interface LeadBody {
   source?: string;
   groupSize?: number;
   tripState?: string;
+  vid?: string;
+  consent?: boolean;
+  consentText?: string;
+  phone?: string;
 }
 
 export async function POST(request: Request) {
@@ -40,9 +45,16 @@ export async function POST(request: Request) {
   const source = body.source?.slice(0, 60) || null;
   const groupSize = typeof body.groupSize === "number" ? Math.min(body.groupSize, 1000) : null;
   const tripState = body.tripState?.slice(0, 2)?.toUpperCase() || null;
+  const vid = typeof body.vid === "string" ? body.vid.slice(0, 64) : null;
+  const consent = body.consent === true;
+  const consentText = typeof body.consentText === "string" ? body.consentText.slice(0, 500) : null;
+  const phone = typeof body.phone === "string" ? body.phone.slice(0, 40) : null;
 
-  console.log("[tdf-lead]", JSON.stringify({ email, source, groupSize, tripState, ip }));
+  console.log("[tdf-lead]", JSON.stringify({ email, source, groupSize, tripState, vid: !!vid, consent, ip }));
 
+  // Legacy dual-write — kept for one release in case other code reads
+  // tdf_subscribers. The new canonical store is wp_leads (brand 'tdf') via
+  // captureLead below; once nothing reads tdf_subscribers this can be dropped.
   if (supabase) {
     try {
       const { error } = await supabase.from("tdf_subscribers").upsert(
@@ -56,6 +68,10 @@ export async function POST(request: Request) {
       console.error("[tdf-lead] supabase exception:", err);
     }
   }
+
+  // Rich capture (B2) → wp_leads (brand 'tdf'). Joins the vid's behavior +
+  // explicit + derived into a profile. Best-effort, never throws.
+  await captureLead({ email, brand: "tdf", vid, source, consent, consentText, phone });
 
   if (process.env.RESEND_API_KEY) {
     try {
