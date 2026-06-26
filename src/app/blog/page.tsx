@@ -6,6 +6,9 @@ import HomeButton from '@/components/HomeButton';
 
 const SITE_URL = 'https://tourdefore.com';
 
+// Escape </script> in JSON-LD to prevent breaking on LLM-generated content
+const jsonLd = (o: unknown) => JSON.stringify(o).replace(/</g, '\\u003c');
+
 export const metadata: Metadata = {
   title: 'Golf Trip Blog — Destination Guides, Course Reviews & Trip Reports | Tour de Fore',
   description:
@@ -96,7 +99,7 @@ export default function BlogIndexPage() {
     >
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(blogSchema) }}
       />
       <MulliganButton href="/?skip=1" />
       <HomeButton />

@@ -9,6 +9,9 @@ import HomeButton from '@/components/HomeButton';
 
 const SITE_URL = 'https://tourdefore.com';
 
+// Escape </script> in JSON-LD to prevent breaking on LLM-generated content
+const jsonLd = (o: unknown) => JSON.stringify(o).replace(/</g, '\\u003c');
+
 const PUBLISHER = {
   '@type': 'Organization',
   name: 'Tour de Fore',
@@ -190,16 +193,16 @@ export default async function BlogPostPage({
       {/* JSON-LD */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(articleSchema) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(breadcrumbSchema) }}
       />
       {faqSchema && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+          dangerouslySetInnerHTML={{ __html: jsonLd(faqSchema) }}
         />
       )}
 
