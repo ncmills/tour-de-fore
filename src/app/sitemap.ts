@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { allDestinations } from "@/data";
 import { GOLF_ATLAS } from "@/data/golf-atlas";
 import { REGION_SLUGS, stateSlug, slugify } from "./golf-trips/helpers";
+import { getAllPosts } from "@/lib/blog";
 
 /**
  * Sitemap index: splits 1400+ URLs into multiple sitemaps for faster Google processing.
@@ -84,6 +85,7 @@ export async function generateSitemaps() {
     ...regionIds.map((_, i) => ({ id: i + 1 })), // 1-7: regions
     { id: 8 }, // guide + cost pages
     { id: 9 }, // bachelor party + comparison pages
+    { id: 10 }, // blog index + posts
   ];
 }
 
@@ -232,6 +234,21 @@ export default async function sitemap({ id }: { id: number | Promise<string | un
         changeFrequency: "monthly" as const,
         priority: 0.6,
       })),
+    ];
+  }
+
+  // Sitemap 10: blog index + published posts
+  if (numId === 10) {
+    const posts = getAllPosts();
+    const blog = posts.map((p) => ({
+      url: `${base}/blog/${p.slug}`,
+      lastModified: new Date(p.dateModified ?? p.datePublished),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    }));
+    return [
+      { url: `${base}/blog`, lastModified: LAST_MODIFIED, changeFrequency: "weekly" as const, priority: 0.8 },
+      ...blog,
     ];
   }
 
