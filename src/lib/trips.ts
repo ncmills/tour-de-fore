@@ -149,7 +149,7 @@ export const trips: Trip[] = [
     location: "Kohler",
     state: "Wisconsin",
     stateAbbr: "WI",
-    tagline: "Hell is empty, and all 16 devils are here.",
+    tagline: "Hell is empty, and all 18 devils are here.",
     dates: "July 7 \u2013 12, 2026",
     upcoming: true,
     lodgingAddress: "1489 Lakeshore Drive, Cleveland, WI 53015",

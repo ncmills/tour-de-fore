@@ -12,6 +12,9 @@ import HomeButton from "./HomeButton";
 const sectionHeadingStyle: React.CSSProperties = {
   fontFamily: "var(--font-slab-cold), serif",
   fontSize: "clamp(2rem, 5vw, 3.5rem)",
+  // Alfa Slab One's glyph ink overflows its default `line-height: normal` (1.2)
+  // box, so the bottom serifs + glow get clipped at the line box. Give it room.
+  lineHeight: 1.4,
   color: "#fff",
   marginBottom: "2rem",
   textAlign: "center",
@@ -738,7 +741,7 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
               >
                 <div style={{ textAlign: "center", borderBottom: "1px solid rgba(234,88,12,0.3)", paddingBottom: "1rem", marginBottom: "1.25rem" }}>
                   <div style={{ fontSize: "0.72rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "#EA580C", fontWeight: 700 }}>{menu.date}</div>
-                  <h3 style={{ fontFamily: "var(--font-slab-cold), serif", fontSize: "clamp(1.4rem, 3vw, 1.9rem)", color: "#fff", margin: "0.35rem 0 0", textTransform: "uppercase" }}>{menu.title}</h3>
+                  <h3 style={{ fontFamily: "var(--font-slab-cold), serif", fontSize: "clamp(1.4rem, 3vw, 1.9rem)", lineHeight: 1.3, color: "#fff", margin: "0.35rem 0 0", textTransform: "uppercase" }}>{menu.title}</h3>
                   {menu.caterer && (
                     <div style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)", marginTop: "0.4rem" }}>
                       {menu.catererUrl ? (
@@ -787,7 +790,7 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
               const card = (
                 <>
                   <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.75rem", flexWrap: "wrap" }}>
-                    <h3 style={{ fontFamily: "var(--font-slab-cold), serif", fontSize: "clamp(1.25rem, 3vw, 1.6rem)", color: "#fff", margin: 0, textTransform: "uppercase" }}>
+                    <h3 style={{ fontFamily: "var(--font-slab-cold), serif", fontSize: "clamp(1.25rem, 3vw, 1.6rem)", lineHeight: 1.3, color: "#fff", margin: 0, textTransform: "uppercase" }}>
                       {bar.name}
                     </h3>
                     {bar.location && <span style={{ fontSize: "0.72rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.45)", fontWeight: 700 }}>📍 {bar.location}</span>}
