@@ -77,7 +77,7 @@ function CarouselRow({ children }: { children: React.ReactNode }) {
     <div style={{ position: "relative" }}>
       <button
         onClick={() => scroll(-1)}
-        style={{ ...arrowStyle, left: "clamp(0.25rem, 2vw, 1.5rem)" }}
+        style={{ ...arrowStyle, left: "calc(clamp(1.5rem, 6vw, 6rem) - 20px)" }}
         onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.15)"; e.currentTarget.style.color = "#fff"; }}
         onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(0,0,0,0.7)"; e.currentTarget.style.color = "rgba(255,255,255,0.7)"; }}
         aria-label="Scroll left"
@@ -102,7 +102,7 @@ function CarouselRow({ children }: { children: React.ReactNode }) {
       </div>
       <button
         onClick={() => scroll(1)}
-        style={{ ...arrowStyle, right: "clamp(0.25rem, 2vw, 1.5rem)" }}
+        style={{ ...arrowStyle, right: "calc(clamp(1.5rem, 6vw, 6rem) - 20px)" }}
         onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.15)"; e.currentTarget.style.color = "#fff"; }}
         onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(0,0,0,0.7)"; e.currentTarget.style.color = "rgba(255,255,255,0.7)"; }}
         aria-label="Scroll right"
@@ -312,7 +312,7 @@ export default function GalleryClient({
       </motion.div>
 
       {/* Category sections */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "2rem", paddingBottom: "1rem" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "2rem", paddingBottom: "1rem" }}>
         {categoryOrder.map((catType) => {
           const cards = cardsByType[catType];
           if (cards.length === 0) return null;
