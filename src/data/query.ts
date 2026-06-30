@@ -56,6 +56,9 @@ interface FilterOptions {
   skillMix?: string;
   ageRange?: string;
   walkingOrRiding?: string;
+  // Group handicap / skill band. Was prompt-only (cosmetic) — now load-bearing
+  // in scoreDestination so course difficulty actually fits the group.
+  handicap?: string;
 }
 
 /**
@@ -553,6 +556,54 @@ function scoreDestination(d: Destination, options: FilterOptions): ScoreResult {
     }
   }
 
+  // ── handicap wiring (research: course penalty-fit to the group's skill band
+  // shapes the trip — low handicaps want the teeth, high handicaps want a
+  // playable round). Kept deliberately light (±2–5) so it nudges the per-tier
+  // course pick without dominating, and complements rather than double-counts
+  // the skillMix block above. Was previously prompt-only — zero effect on which
+  // destinations/tiers got surfaced. ──
+  const handicap = options.handicap || "";
+  if (handicap) {
+    const bucketHeavyShare = d.courses.length > 0
+      ? d.courses.filter((c) => c.tier === "bucket-list").length / d.courses.length
+      : 0;
+    const forgivingCount = d.courses.filter(
+      (c) => c.tier === "solid" || c.tier === "budget" || c.walkable
+    ).length;
+    // Avg slope only where populated (~11% of courses) — soft secondary signal.
+    const slopes = d.courses
+      .map((c) => c.slope)
+      .filter((s): s is number => typeof s === "number");
+    const avgSlope = slopes.length > 0 ? slopes.reduce((a, b) => a + b, 0) / slopes.length : null;
+
+    if (handicap === "Scratch–10") {
+      // Strong players — surface the tougher bucket-list/championship tracks.
+      if (bucketHeavyShare >= 0.34) score += 4;
+      const toughTracks = d.courses.filter(
+        (c) => c.tier === "bucket-list" || c.tier === "premium"
+      ).length;
+      score += Math.min(toughTracks, 2) * 2;
+      if (avgSlope !== null && avgSlope >= 135) score += 2;
+    } else if (handicap === "20+") {
+      // Higher handicaps — favor forgiving/walkable, ease off all-bucket-list.
+      if (bucketHeavyShare >= 0.5) score -= 5;
+      score += Math.min(forgivingCount, 3) * 2;
+      if (avgSlope !== null && avgSlope >= 140) score -= 2;
+    } else if (handicap === "10–20") {
+      // Mid band — reward a little tier variety (a stretch course + a breather)
+      // without a hard lean either way.
+      if (sig.tierSpread >= 3) score += 3;
+    } else if (handicap === "Mixed bag") {
+      // Wide spread of abilities — reward a destination that fits everyone.
+      if (sig.tierSpread >= 3) {
+        score += 5;
+        reasons.push({ pts: 5, text: "Range of course difficulty fits a mixed-handicap crew" });
+      } else {
+        score += Math.min(forgivingCount, 2); // at least make sure nobody drowns
+      }
+    }
+  }
+
   // ── Popularity bonus — requires minimum impressions, CAPPED at +10 ──
   // Previously uncapped (popularity * 10 could swamp other signals, per
   // BESTMAN v2.1 rule: no single factor should dominate the ranking).
@@ -594,7 +645,16 @@ export function pickThreeDestinations(
   // Get primary region destinations
   const primaryDestinations = filterDestinations(options);
 
-  // If specific city, return all 3 price tiers for that same destination
+  // If specific city, return all 3 price tiers for that same destination.
+  //
+  // TODO(data-gap): moab-ut has 1 course, can't ladder 3 tiers (Imp/Devil/
+  // Demon King) from a single destination. Same gap for the 5 two-course
+  // towns — flagstaff-az, nassau-bahamas, crested-butte-co, sheridan-wy,
+  // taos-nm — which can fill at most 2 distinct course tiers. Left INERT on
+  // purpose: these still rank + render (downstream free-plan/prompt reuse the
+  // available course(s) across tiers and differentiate on green-fee/lodging
+  // price point). Do NOT remove the towns. Fix is adding real courses to the
+  // shared-data records, not code.
   if (options.specificCity && primaryDestinations.length > 0) {
     const d = primaryDestinations[0];
     const { score, reasons } = scoreDestination(d, options);

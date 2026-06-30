@@ -4,6 +4,7 @@ import { useReducer, useState, useEffect, useRef, useCallback, useMemo } from "r
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import { WizardState, initialWizardState } from "@/lib/plan-types";
+import { REGION_NAMES, REGION_STATES } from "@/data/regions";
 import SelectionCard from "./SelectionCard";
 import Logo from "./Logo";
 import Link from "next/link";
@@ -72,32 +73,11 @@ function reducer(state: WizardState, action: Action): WizardState {
   }
 }
 
-const REGION_NAMES = [
-  "Southwest",
-  "Pacific NW",
-  "Mountain West",
-  "Midwest",
-  "Southeast",
-  "Northeast",
-  "South Central",
-  "California",
-  "International",
-];
-
-// Derived 2026-04-22 from allDestinations (scripts/audit-data-integrity.ts).
-// Lets users narrow a region pick to a state subset without loading all 133
-// destinations client-side. Regenerate if destinations data changes regions.
-const REGION_STATES: Record<string, string[]> = {
-  "Southwest": ["AZ", "NM", "NV", "UT"],
-  "Pacific NW": ["ID", "OR", "WA"],
-  "Mountain West": ["CO", "ID", "MT", "SD", "UT", "WY"],
-  "Midwest": ["IA", "IL", "IN", "MI", "MN", "MO", "NE", "OH", "WI"],
-  "Southeast": ["AL", "FL", "GA", "KY", "MS", "NC", "SC", "TN", "VA"],
-  "Northeast": ["CT", "MA", "MD", "ME", "NH", "NJ", "NY", "PA", "RI", "VA", "VT"],
-  "South Central": ["AR", "KY", "LA", "MO", "OK", "TX"],
-  "California": ["CA"],
-  "International": ["Scotland", "Ireland", "Northern Ireland", "Mexico", "Dominican Republic", "Bahamas", "Portugal", "Spain"],
-};
+// REGION_NAMES + REGION_STATES are imported from src/data/regions.ts (the
+// single source of truth, kept in sync with the data by
+// scripts/audit-region-reachability.ts). Previously hardcoded here and drifted
+// behind the 234-destination expansion — KS/ND/SD/WV were data-only and
+// unreachable via the state chips.
 
 const MONTHS = [
   "January", "February", "March", "April", "May", "June",

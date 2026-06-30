@@ -1,5 +1,6 @@
 import type { Destination } from "@/data/types";
 import type { WizardState, FreePreview, PriceLevel } from "./plan-types";
+import { toTdfVoice } from "./tdf-voice";
 
 /**
  * Build a free preview from database data alone — no Claude API call.
@@ -160,8 +161,10 @@ export function buildFreePreview(
     destinationId: destination.id,
     city: destination.city,
     state: destination.state,
-    tagline: destination.tagline,
-    description: destination.description,
+    // Re-register the shared SEO copy into TDF voice instead of passing the
+    // raw brochure strings straight to the selection card (no LLM in this path).
+    tagline: toTdfVoice(destination.tagline),
+    description: toTdfVoice(destination.description),
     priceLevel,
     reasons,
     lodgingPreview: {
