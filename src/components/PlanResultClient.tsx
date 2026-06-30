@@ -23,19 +23,17 @@ import { buildBookingLink, bookingLabel } from "@/lib/booking-links";
 import { getAnonPlanIds, claimAnonPlans } from "@/lib/anon-plans";
 import { formatTripDates, type TripTiming } from "@/lib/trip-dates";
 
+// Generic golf-course photos pulled from the shared image cache (ncmills/
+// shared-image-cache → tdf/guides/*). These are NOT specific named courses —
+// they back a clearly-LABELED placeholder (the course name is overlaid), so a
+// course without its own photo reads as "fairway preview", never a confidently-
+// wrong claim that the photo IS that course. (Replaced 12 hotlinked club photos
+// that rendered the wrong course's hero under ~75% of course names.)
 const FALLBACK_GOLF_IMAGES = [
-  "https://www.troonnorthgolf.com/wp-content/uploads/sites/8934/2023/06/home-main.jpg",
-  "https://balihaigolfclub.com/wp-content/uploads/2024/07/bali-hai-og.jpg",
-  "https://chambersbaygolf.com/wp-content/uploads/2025/05/cb-homescreen.jpg",
-  "https://tamarackidaho.com/wp-content/uploads/2024/04/SH.2023.6.29_Golfing-157-scaled.jpg",
-  "https://falconridgegolfclub.com/wp-content/uploads/HOLE-18-FALCON-RIDGE-0098.jpg",
-  "https://www.wolfrungolfclub.com/wp-content/uploads/sites/8583/2022/09/home-full-1.jpg",
-  "https://www.sandiagolf.com/wp-content/uploads/sites/8959/2023/06/21.jpg",
-  "https://tetherow.com/wp-content/uploads/2018/12/tetherow-lodge-hero-3000.jpg",
-  "https://www.reservegolf.com/wp-content/uploads/sites/9325/2024/01/IMG_5043.jpg",
-  "https://newcastlegolf.com/wp-content/uploads/2024/01/DJI_0055-Enhanced-NR.jpg",
-  "https://casablanca.playmesquite.com/wp-content/uploads/2025/01/200808_nevada_palmsgolf_033.jpg",
-  "https://azhideawaycollection.com/wp-content/uploads/2024/12/sedona_home_hero-1024x728.webp",
+  "https://images.unsplash.com/photo-1768396747921-5a18367415d2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjI5ODF8MHwxfHNlYXJjaHwxfHxnb2xmJTIwY291cnNlJTIwc2Vhc29uc3xlbnwxfDB8fHwxNzc3MjEzNzA4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "https://images.unsplash.com/photo-1735730370413-9bc7f3807543?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjEyODl8MHwxfHNlYXJjaHwxfHxsaW5rcyUyMGdvbGYlMjB3YWxraW5nfGVufDF8MHx8fDE3NzcyMTM3MTB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "https://images.unsplash.com/photo-1693163575378-ac9f465ce03c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjI5ODB8MHwxfHNlYXJjaHwxfHxnb2xmJTIwYmFnJTIwZmFpcndheXxlbnwxfDB8fHwxNzc3MjEzNzExfDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "https://images.unsplash.com/photo-1760866737149-af7d3e2ab57e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjI5ODB8MHwxfHNlYXJjaHwxfHxncm91cCUyMGdvbGYlMjBmcmllbmRzfGVufDF8MHx8fDE3NzcyMTM3MDd8MA&ixlib=rb-4.1.0&q=80&w=1080",
 ];
 
 function getFallbackImage(name: string): string {
@@ -541,13 +539,55 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
                 <div style={{ position: "relative", width: "100%", aspectRatio: "16/9", overflow: "hidden" }}>
                   <Image
                     src={course.imageUrl || getFallbackImage(course.name)}
-                    alt={course.name}
+                    alt={course.imageUrl ? course.name : `${course.name} — fairway preview`}
                     fill
                     sizes="(max-width: 768px) 100vw, 350px"
                     style={{ objectFit: "cover" }}
                     unoptimized
                   />
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%)" }} />
+                  {!course.imageUrl && (
+                    // No course-specific photo: render a clearly-labeled placeholder
+                    // (the course name over a generic golf photo) instead of letting a
+                    // generic image masquerade as this exact course.
+                    <div
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        textAlign: "center",
+                        padding: "0 1rem",
+                        background: "rgba(24,24,27,0.46)",
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontSize: "0.58rem",
+                          letterSpacing: "0.2em",
+                          textTransform: "uppercase",
+                          color: "#EA580C",
+                          fontWeight: 700,
+                          marginBottom: 6,
+                        }}
+                      >
+                        Fairway preview
+                      </span>
+                      <span
+                        style={{
+                          fontSize: "1.02rem",
+                          fontWeight: 800,
+                          lineHeight: 1.18,
+                          color: "#F5F0E8",
+                          textShadow: "0 2px 14px rgba(0,0,0,0.85)",
+                        }}
+                      >
+                        {course.name}
+                      </span>
+                    </div>
+                  )}
                 </div>
                 <div style={{ padding: "1.25rem 1.5rem", flex: 1, display: "flex", flexDirection: "column" }}>
                   <div
