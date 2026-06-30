@@ -665,6 +665,16 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
                               ))}
                             </ul>
                           )}
+                          {item.bus && (
+                            <div style={{
+                              fontSize: "0.72rem",
+                              color: "rgba(234,88,12,0.85)",
+                              marginTop: "0.4rem",
+                              fontFamily: "monospace",
+                            }}>
+                              🚌 {item.bus}
+                            </div>
+                          )}
                           {(item.cost || item.driveTime) && (
                             <div style={{
                               fontSize: "0.72rem",

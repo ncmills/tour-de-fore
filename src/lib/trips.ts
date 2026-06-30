@@ -14,6 +14,8 @@ export interface ScheduleItem {
   architect?: string;
   /** e.g. "~30 min drive from Meadow Valleys" */
   driveTime?: string;
+  /** Charter-bus leg for this stop, e.g. "5:45 AM lodge pickup → arrive 6:15 AM" */
+  bus?: string;
   /** Location / city */
   location?: string;
   /** Bullet facts (amenities, quirks) */
@@ -205,7 +207,7 @@ export const trips: Trip[] = [
         image: "/photos/2026/kohler-hero.jpg",
         description: "Opened in 2021 on 27 acres tucked between the first and eleventh holes of Meadow Valleys, this 10-hole par-3 by Dye disciple Chris Lutzke is a condensed tour of Golden Age green templates most Midwest golfers have only read about — a Punchbowl at 4, a Dell modeled after Lahinch's famous fifth at 6, and a fully blind Alps at 8 that Herb Kohler himself called the hole he was most excited to see. Holes 60 to 160 yards, a figure-eight routing you can play in 3-, 6-, or 10-hole loops, and clay-lined swimming holes alongside the fairways make this feel less like a warm-up and more like a standalone destination. Walking only, and it routinely books out before the championship courses do.",
         holes: 10,
-        location: "N8501 Lakeshore Road, Kohler, WI 53044",
+        location: "1111 W. Riverside Drive, Kohler, WI 53044",
         phone: "(866) 847-4856",
         greenFee: "$150/player (walking only)",
         amenities: "Outdoor bar, natural hot springs, 1-acre putting green",
@@ -227,7 +229,7 @@ export const trips: Trip[] = [
         image: "/photos/2026/whistling-straits.jpg",
         description: "Pete and Alice Dye opened the Irish in 2000 as the inland companion to the Straits, and while it doesn't have holes along Lake Michigan, the 11th on the back nine delivers panoramic lake views and sits at the start of what reviewers consistently call the best four-hole stretch on the property. The 13th — \"Blind Man's Bluff\" — is styled after the Dell at Lahinch: 183 yards from an elevated tee to the course's largest green, ringed by more than a dozen bunkers and barely visible until you crest the sand hills. Scottish Blackface sheep roam the rough, the clubhouse bathrooms are labeled \"Lads\" and \"Lassies,\" and it's considerably more approachable than the Straits — the right play the day before you tackle 1,012 bunkers next door.",
         holes: 18,
-        location: "N8501 Lakeshore Road, Kohler, WI 53044",
+        location: "N8501 Lakeshore Road, Sheboygan, WI 53083",
         designer: "Pete Dye",
         phone: "(866) 847-4856",
         greenFee: "$450/player (cart included, no caddie)",
@@ -414,11 +416,11 @@ export const trips: Trip[] = [
       {
         day: "Thursday",
         date: "July 9",
-        subtitle: "Day 1 — Pete Dye's heathland + Elkhart Lake — 🚌 bus to and from every stop",
+        subtitle: "Day 1 — Pete Dye's heathland + Elkhart Lake — 🚌 5:45 AM bus from the lodge, home by 7:15 PM",
         items: [
           {
             time: "7:10 AM",
-            arriveTime: "arrive 6:30 AM",
+            arriveTime: "arrive 6:15 AM",
             activity: "Blackwolf Run — Meadow Valleys",
             detail: "18 holes",
             type: "golf",
@@ -426,27 +428,29 @@ export const trips: Trip[] = [
             architect: "Pete Dye",
             description: "Pete Dye stitched the original Blackwolf front nine to a new nine and forged something different — the front plays open prairie, then the back drops into glacier-carved ravines and dense north woods where the Sheboygan River hijacks the closing stretch. The 14th is the standout, a left-to-right dogleg where the river runs the entire length before spilling under a train car bridge to a near-peninsular green. Golf Digest ranks it 74th among U.S. public courses, and the back nine alone — culminating in a forced carry over the Sheboygan at 18 — earns its place on any Wisconsin trip.",
             cost: "$400/player × 18 = $7,200",
+            bus: "5:45 AM lodge pickup → arrive 6:15 AM",
             facts: ["Cart included", "On-site dining", "Lunch at Blackwolf facility after round"],
           },
           {
             time: "2:30 PM",
-            arriveTime: "arrive 2:00 PM",
+            arriveTime: "arrive 12:45 PM",
             activity: "Quit Qui Oc Golf Club",
             detail: "18 holes",
             type: "golf",
             location: "Elkhart Lake, WI",
             description: "Tom Bendelow laid out the original 1923 routing on the rolling Northern Kettle Moraine and the Wiese family added a third nine in 2001 that leans into the glacial terrain explicitly. It plays tighter than anything at Kohler — small bent-grass greens framed hard by mature trees, abundant bunkers, and a par-4 15th with a full blind tee shot past a wall of oaks to an elevated green. Best bang-for-dollar stop between the Kohler resorts and the Road America crowds that fill Elkhart Lake on race weekends.",
             cost: "$100/player × 18 = $1,800",
-            driveTime: "~30 min drive from Meadow Valleys",
+            bus: "12:15 PM pickup at Blackwolf → arrive 12:45 PM",
             facts: ["27-hole facility", "On-site restaurant"],
           },
           {
-            time: "8:00 PM",
+            time: "7:30 PM",
             activity: "Chef Natalie — Nosh Custom Catering",
             detail: "Dinner · family style",
             type: "dining",
             location: "At the lodge · Cleveland, WI",
             description: "Chef Natalie of Nosh Custom Catering cooks Wednesday's catch and serves it family style at the lodge — no drive, no wait, no menu. The bus brings everyone back from Elkhart Lake straight to the table.",
+            bus: "6:45 PM pickup at Quit Qui Oc → home 7:15 PM",
           },
         ],
         dayTotal: "$9,000",
@@ -455,7 +459,7 @@ export const trips: Trip[] = [
       {
         day: "Friday",
         date: "July 10",
-        subtitle: "Day 2 — Nicklaus bull run + par-3 sunset at The Baths — 🚌 bus all day, straight to Umi after golf",
+        subtitle: "Day 2 — Nicklaus bull run + par-3 sunset at The Baths — 🚌 7:45 AM bus from the lodge, Umi after, home by 11 PM",
         items: [
           {
             time: "9:10 AM",
@@ -467,6 +471,7 @@ export const trips: Trip[] = [
             architect: "Jack Nicklaus (Signature Design)",
             description: "Wisconsin's only Nicklaus Signature design opened in 2003 on a former cattle ranch and has cracked Golf Digest's top 100 public courses in the country. The ravine holes are the draw — the par-4 5th demands a tee shot over a ravine followed by an approach across wetlands to a buttressed green hanging over the Onion River valley, and the par-3 6th drops through timber to a tiered green with a ravine lurking short-left. WiscoGolfAddict called the 5th \"one of the most demanding and dramatic par fours in the whole state.\"",
             cost: "$200/player × 18 = $3,600",
+            bus: "7:45 AM lodge pickup → arrive 8:30 AM",
             facts: ["Unforgiving greens", "Elevation drama"],
           },
           {
@@ -478,7 +483,7 @@ export const trips: Trip[] = [
             location: "Kohler, WI",
             description: "Opened in 2021 on 27 acres between holes 1 and 11 of Meadow Valleys, this 10-hole par-3 by Dye disciple Chris Lutzke is a condensed tour of Golden Age green templates — a Punchbowl at 4, a Dell modeled after Lahinch's fifth at 6, and a fully blind Alps at 8 that Herb Kohler himself called the hole he was most excited to see. Holes run 60 to 160 yards, the figure-eight routing lets you play 3, 6, or 10 holes, and clay-lined swimming holes run alongside the fairways. Walking only, and it routinely books out before the championship courses do.",
             cost: "$150/player × 18 = $2,700",
-            driveTime: "~20 min drive from The Bull",
+            bus: "3:30 PM pickup at The Bull → arrive 4:00 PM",
             facts: ["Outdoor bar", "Natural hot springs", "1-acre putting green", "Walking only"],
           },
           {
@@ -488,6 +493,7 @@ export const trips: Trip[] = [
             type: "dining",
             location: "519 N 8th St, Sheboygan, WI",
             description: "Straight from The Baths to downtown Sheboygan — the bus drops us at Umi for hibachi: teppanyaki chefs cooking at the table, plus a full sushi and steak menu. Late seating, so no rush off the par-3.",
+            bus: "8:00 PM pickup at The Baths → arrive 8:30 PM · 10:30 PM back to the lodge → home 11:00 PM",
           },
         ],
         dayTotal: "$6,300",
@@ -496,7 +502,7 @@ export const trips: Trip[] = [
       {
         day: "Saturday",
         date: "July 11",
-        subtitle: "Day 3 — Hidden gem sunrise + Top-50 Whistling Straits finale — 🚌 bus to and from every stop",
+        subtitle: "Day 3 — Hidden gem sunrise + Top-50 Whistling Straits finale — 🚌 7:00 AM bus from the lodge, home by 9:15 PM",
         items: [
           {
             time: "8:00 AM",
@@ -507,6 +513,7 @@ export const trips: Trip[] = [
             location: "Valders, WI",
             description: "Ernie Schrock's 1996 design earns a Golf Digest 4-star on a par-70 that runs only 6,027 yards but plays harder than the numbers suggest — narrow bent-grass fairways, blind approaches off elevation changes, and greens GolfPass reviewers consistently note \"seem to play uphill\" no matter which way you're headed. Sits 15 minutes north of Destination Kohler, which makes it the ideal finisher for a trip that already paid Whistling Straits rates twice. Country-club conditions for public prices — what locals play when they're tired of watching out-of-towners discover their backyard.",
             cost: "$80/player × 18 = $1,440",
+            bus: "7:00 AM lodge pickup → arrive 7:30 AM",
             facts: ["Bent grass fairways", "Golf Digest 4-star"],
           },
           {
@@ -515,20 +522,21 @@ export const trips: Trip[] = [
             activity: "Whistling Straits — Irish Course",
             detail: "18 holes",
             type: "golf",
-            location: "Kohler, WI",
+            location: "Sheboygan, WI",
             architect: "Pete Dye (Links-Inspired)",
             description: "Pete and Alice Dye opened the Irish in 2000 as the inland companion to the Straits, and while it has no Lake Michigan holes, the 11th on the back nine delivers panoramic lake views at the start of what reviewers call the best four-hole stretch on the property. The 13th — \"Blind Man's Bluff\" — is styled after the Dell at Lahinch: 183 yards from an elevated tee to the largest green on the course, ringed by a dozen bunkers and barely visible until you crest the sand hills. Scottish Blackface sheep roam the rough, and it's considerably more approachable than the Straits — the right play the day before you tackle 1,012 bunkers next door.",
             cost: "$450/player × 18 = $8,100",
-            driveTime: "~30 min drive from Autumn Ridge",
+            bus: "2:00 PM pickup at Autumn Ridge → arrive 2:30 PM",
             facts: ["Top 50 in U.S.", "Cart included", "No caddie required"],
           },
           {
-            time: "8:00 PM",
+            time: "9:00 PM",
             activity: "Chef Natalie — Nosh Custom Catering",
             detail: "Dinner · family style",
             type: "dining",
             location: "At the lodge · Cleveland, WI",
-            description: "Closing night — Chef Natalie back at the lodge with the last of the catch, served family style. Trophies, cigars, and lies about the day's scores.",
+            description: "Closing night — the bus rolls back from Whistling Straits, then Chef Natalie's waiting at the lodge with the last of the catch, served family style. Trophies, cigars, and lies about the day's scores.",
+            bus: "8:45 PM pickup at Whistling Straits → home 9:15 PM",
           },
         ],
         dayTotal: "$9,540",
