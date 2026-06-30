@@ -1,13 +1,10 @@
 /**
- * Canonical list of Nick's network of sites.
+ * Cross-site footer links — EVENTS / GROUP-TRIP CLUSTER (funnel).
  *
- * Used for cross-site footer links on blog/guide pages.
- *
- * To add a new site: add an entry below, THEN copy this file's NETWORK_SITES array
- * to the sibling projects' src/lib/network-sites.ts (peptide-stack, doppelwriter, tour-de-fore,
- * and any other project that renders a network footer).
- *
- * Order roughly reflects topical relevance / content quality.
+ * Network footers are siloed by topic so links stay topically relevant and don't
+ * read as a cross-niche link scheme. Equity funnels UPSTREAM toward higher-priority
+ * sites only. Cluster priority: offsiteoutpost > bestmanhq > maidofhonorhq > tourdefore.
+ * This site (tourdefore, priority 4 / lowest) links to all sites above it.
  */
 export interface NetworkSite {
   domain: string; // bare domain, no protocol
@@ -16,13 +13,9 @@ export interface NetworkSite {
 }
 
 export const NETWORK_SITES: NetworkSite[] = [
-  { domain: "tourdefore.com", label: "Tour de Fore", tagline: "Hell is empty, all the devils are here." },
-  { domain: "whatpeptidesdo.com", label: "WPD", tagline: "Peptides, simplified" },
-  { domain: "doppelwriter.com", label: "DoppelWriter", tagline: "AI that writes in your voice" },
+  { domain: "offsiteoutpost.com", label: "Offsite Outpost", tagline: "Corporate retreats & team offsites" },
   { domain: "bestmanhq.com", label: "BESTMAN HQ", tagline: "Bachelor party planner" },
   { domain: "maidofhonorhq.com", label: "Maid of Honor HQ", tagline: "Bachelorette party planner" },
-  { domain: "idonthaveawill.com", label: "I Don't Have a Will", tagline: "Free will drafting tool" },
-  { domain: "imfrustrated.org", label: "I'm Frustrated", tagline: "Legal self-help directory" },
 ];
 
 /** Returns sites excluding the current domain (prevents self-linking). */
