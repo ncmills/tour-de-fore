@@ -222,7 +222,7 @@ function ScheduleItemCard({ item, plan }: { item: PlanScheduleItem; plan: Genera
         <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.5 }}>{item.detail}</p>
       )}
       {item.proTip && (
-        <p style={{ fontSize: "0.75rem", color: "rgba(249,115,22,0.7)", fontStyle: "italic", marginTop: "0.3rem" }}>
+        <p style={{ fontSize: "0.75rem", color: "rgba(249,115,22,0.92)", fontStyle: "italic", marginTop: "0.3rem" }}>
           💡 {item.proTip}
         </p>
       )}
@@ -249,7 +249,7 @@ function ItineraryCard({ icon, label, children }: { icon: string; label: string;
         <span style={{ fontSize: "1.1rem" }}>{icon}</span>
         <span style={{
           fontSize: "0.65rem",
-          color: "rgba(255,255,255,0.35)",
+          color: "rgba(255,255,255,0.62)",
           letterSpacing: "0.1em",
           textTransform: "uppercase",
           fontFamily: "var(--font-plan-block), sans-serif",
@@ -546,7 +546,7 @@ export default function ItineraryClient({
             padding: "1rem 2rem",
           }}
         >
-          <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.35)", letterSpacing: "0.1em", textTransform: "uppercase", display: "block", marginBottom: "0.25rem" }}>
+          <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.62)", letterSpacing: "0.1em", textTransform: "uppercase", display: "block", marginBottom: "0.25rem" }}>
             Estimated Total
           </span>
           <span style={{
@@ -558,7 +558,7 @@ export default function ItineraryClient({
           }}>
             {formatDollars(grandTotal)}
           </span>
-          <span style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.4)", marginLeft: "0.35rem" }}>/ person</span>
+          <span style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.62)", marginLeft: "0.35rem" }}>/ person</span>
         </motion.div>
       </div>
 
@@ -592,20 +592,20 @@ export default function ItineraryClient({
             <p style={{ fontSize: "1.1rem", fontWeight: 600, marginBottom: "0.35rem" }}>{lodgingName}</p>
             <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.5)", marginBottom: "0.15rem" }}>{plan.lodging.type}</p>
             {plan.lodging.address && (
-              <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.3)", marginBottom: "0.5rem" }}>{plan.lodging.address}</p>
+              <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.62)", marginBottom: "0.5rem" }}>{plan.lodging.address}</p>
             )}
             <div style={{ display: "flex", gap: "1.5rem", marginTop: "0.5rem" }}>
               <div>
-                <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.08em", display: "block" }}>Per Night</span>
+                <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.62)", textTransform: "uppercase", letterSpacing: "0.08em", display: "block" }}>Per Night</span>
                 <span style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1rem", color: "#fff" }}>{plan.lodging.costPerNight}</span>
               </div>
               <div>
-                <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.08em", display: "block" }}>Total ({numNights} night{numNights !== 1 ? "s" : ""})</span>
+                <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.62)", textTransform: "uppercase", letterSpacing: "0.08em", display: "block" }}>Total ({numNights} night{numNights !== 1 ? "s" : ""})</span>
                 <span style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1rem", color: "#fff" }}>{formatDollars(lodgingTotal)}</span>
               </div>
             </div>
             {plan.lodging.rationale && (
-              <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)", marginTop: "0.6rem", fontStyle: "italic" }}>
+              <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.62)", marginTop: "0.6rem", fontStyle: "italic" }}>
                 {plan.lodging.rationale}
               </p>
             )}
@@ -678,7 +678,7 @@ export default function ItineraryClient({
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <p style={{ fontSize: "1.05rem", fontWeight: 600, marginBottom: "0.2rem", overflowWrap: "anywhere" }}>{day.morning.name}</p>
                       <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)" }}>Green fee: {day.morning.greenFee}/pp</p>
-                      {day.morning.whyThisCourse && <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)", marginTop: "0.3rem", fontStyle: "italic" }}>{day.morning.whyThisCourse}</p>}
+                      {day.morning.whyThisCourse && <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.62)", marginTop: "0.3rem", fontStyle: "italic" }}>{day.morning.whyThisCourse}</p>}
                     </div>
                   </div>
                 </ItineraryCard>
@@ -1029,7 +1029,7 @@ function ProTipsSection({ plan }: { plan: GeneratedPlan }) {
         }}>
           Pro Tips & Logistics
         </span>
-        <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "1.2rem", transition: "transform 0.2s", transform: open ? "rotate(180deg)" : "rotate(0deg)" }}>
+        <span style={{ color: "rgba(255,255,255,0.62)", fontSize: "1.2rem", transition: "transform 0.2s", transform: open ? "rotate(180deg)" : "rotate(0deg)" }}>
           ▾
         </span>
       </button>
@@ -1069,19 +1069,19 @@ function ProTipsSection({ plan }: { plan: GeneratedPlan }) {
               </h3>
               {plan.groupLogistics.teeTimeStrategy && (
                 <div style={{ marginBottom: "0.75rem" }}>
-                  <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.25rem" }}>Tee Time Strategy</p>
+                  <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.62)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.25rem" }}>Tee Time Strategy</p>
                   <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.5 }}>{plan.groupLogistics.teeTimeStrategy}</p>
                 </div>
               )}
               {plan.groupLogistics.transport && (
                 <div style={{ marginBottom: "0.75rem" }}>
-                  <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.25rem" }}>Transport</p>
+                  <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.62)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.25rem" }}>Transport</p>
                   <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.5 }}>{plan.groupLogistics.transport}</p>
                 </div>
               )}
               {plan.groupLogistics.packingList?.length > 0 && (
                 <div>
-                  <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.25rem" }}>Packing List</p>
+                  <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.62)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.25rem" }}>Packing List</p>
                   <ul style={{ margin: 0, paddingLeft: "1.2rem", display: "flex", flexDirection: "column", gap: "0.3rem" }}>
                     {plan.groupLogistics.packingList.map((item, i) => (
                       <li key={i} style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.4 }}>{item}</li>

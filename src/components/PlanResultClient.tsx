@@ -167,7 +167,7 @@ function AlternativeCards({ items, isEstimate }: { items?: SectionAlternative[];
               }}
             >
               {alt.costDelta}
-              {isEstimate && <span style={{ color: "#666", fontSize: 11, fontWeight: 400, marginLeft: 4 }}>(est.)</span>}
+              {isEstimate && <span style={{ color: "#9a9a9a", fontSize: 11, fontWeight: 400, marginLeft: 4 }}>(est.)</span>}
             </span>
           </motion.div>
         );
@@ -462,7 +462,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
               </h3>
               <p
                 style={{
-                  color: "#777",
+                  color: "#a5a5a5",
                   fontSize: 12,
                   textTransform: "uppercase",
                   letterSpacing: "0.1em",
@@ -476,7 +476,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
               <span style={{ fontSize: 26, fontWeight: 700, color: tierColors[tier] }}>
                 {plan.lodging.costPerNight}
               </span>
-              <span style={{ display: "block", color: "#666", fontSize: 13 }}>/night <span style={{ fontSize: 11 }}>(est.)</span></span>
+              <span style={{ display: "block", color: "#9a9a9a", fontSize: 13 }}>/night <span style={{ fontSize: 11 }}>(est.)</span></span>
             </div>
           </div>
           <p style={{ color: "#aaa", lineHeight: 1.7, margin: 0, fontSize: 15 }}>
@@ -560,7 +560,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
                         justifyContent: "center",
                         textAlign: "center",
                         padding: "0 1rem",
-                        background: "rgba(24,24,27,0.46)",
+                        background: "rgba(24,24,27,0.72)",
                       }}
                     >
                       <span
@@ -571,6 +571,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
                           color: "#EA580C",
                           fontWeight: 700,
                           marginBottom: 6,
+                          textShadow: "0 1px 8px rgba(0,0,0,0.9)",
                         }}
                       >
                         Fairway preview
@@ -728,7 +729,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
                     >
                       {spot.type}
                     </span>
-                    <span style={{ color: "#666", fontSize: 13 }}>{spot.priceRange}</span>
+                    <span style={{ color: "#9a9a9a", fontSize: 13 }}>{spot.priceRange}</span>
                   </div>
                   <h3 style={{ fontSize: 18, fontWeight: 700, margin: "0 0 10px" }}>
                     {spot.name}
@@ -811,14 +812,14 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
                         <span style={{ fontSize: 15, fontWeight: 500 }}>{item.activity}</span>
                       </div>
                       {item.detail && (
-                        <p style={{ color: "#777", fontSize: 13, margin: "4px 0 0", lineHeight: 1.5 }}>
+                        <p style={{ color: "#a5a5a5", fontSize: 13, margin: "4px 0 0", lineHeight: 1.5 }}>
                           {item.detail}
                         </p>
                       )}
                       {item.proTip && (
                         <p
                           style={{
-                            color: "rgba(249,115,22,0.7)",
+                            color: "rgba(249,115,22,0.92)",
                             fontSize: 13,
                             fontStyle: "italic",
                             margin: "4px 0 0",
@@ -891,7 +892,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
               <span style={{ color: "#999", fontSize: 14 }}>
                 {item.category}
                 {item.category.toLowerCase().includes("lodging") && (
-                  <span style={{ color: "#666", fontSize: 11, marginLeft: 6 }}>(est.)</span>
+                  <span style={{ color: "#9a9a9a", fontSize: 11, marginLeft: 6 }}>(est.)</span>
                 )}
               </span>
               <span style={{ fontWeight: 600, fontSize: 15 }}>{item.perPerson}</span>
@@ -1128,7 +1129,7 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
                 </svg>
                 Email to the Crew
               </button>
-              <p style={{ width: "100%", textAlign: "center", color: "rgba(255,255,255,0.3)", fontSize: 12, marginTop: 4 }}>
+              <p style={{ width: "100%", textAlign: "center", color: "rgba(255,255,255,0.62)", fontSize: 12, marginTop: 4 }}>
                 Create a free account to save this trip and email it to your group.
               </p>
             </>

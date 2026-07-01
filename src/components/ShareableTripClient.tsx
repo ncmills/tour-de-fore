@@ -60,7 +60,7 @@ export default function ShareableTripClient({
           animate={{ opacity: 1, y: 0 }}
           style={{ textAlign: "center", marginBottom: "3rem" }}
         >
-          <p style={{ fontSize: "0.75rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: "0.75rem" }}>
+          <p style={{ fontSize: "0.75rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.62)", marginBottom: "0.75rem" }}>
             You&apos;re Invited
           </p>
           <h1 style={{
@@ -73,7 +73,7 @@ export default function ShareableTripClient({
           <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "1rem", fontStyle: "italic" }}>
             &ldquo;{plan.tagline}&rdquo;
           </p>
-          <div style={{ marginTop: "1rem", display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "1rem 2rem", fontSize: "0.85rem", color: "rgba(255,255,255,0.4)" }}>
+          <div style={{ marginTop: "1rem", display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "1rem 2rem", fontSize: "0.85rem", color: "rgba(255,255,255,0.62)" }}>
             <span>📍 {plan.destination}</span>
             <span>📅 {formatTripDates(timing)}</span>
             <span>👥 {plan.groupSize} people</span>
@@ -96,7 +96,7 @@ export default function ShareableTripClient({
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 {day.items.map((item, j) => (
                   <div key={j} style={{ display: "flex", gap: "1rem", fontSize: "0.85rem" }}>
-                    <span style={{ color: "rgba(255,255,255,0.3)", minWidth: 65 }}>{item.time}</span>
+                    <span style={{ color: "rgba(255,255,255,0.62)", minWidth: 65 }}>{item.time}</span>
                     <span style={{ color: "rgba(255,255,255,0.7)" }}>{item.activity}</span>
                   </div>
                 ))}
@@ -114,7 +114,7 @@ export default function ShareableTripClient({
             {plan.courses.map((c, i) => (
               <div key={i} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 10, padding: "1rem 1.25rem" }}>
                 <div style={{ fontWeight: 600, marginBottom: "0.25rem" }}>{c.name}</div>
-                <div style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.4)" }}>
+                <div style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.62)" }}>
                   Day {c.day} {c.session} · {c.greenFee}/person
                 </div>
               </div>
@@ -130,7 +130,7 @@ export default function ShareableTripClient({
           <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 10, padding: "1.25rem" }}>
             <div style={{ fontWeight: 600, marginBottom: "0.25rem" }}>{plan.lodging.name}</div>
             <div style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.5)" }}>{plan.lodging.type} · {plan.lodging.costPerNight}/night</div>
-            <div style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.35)", marginTop: "0.5rem" }}>{plan.lodging.rationale}</div>
+            <div style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.62)", marginTop: "0.5rem" }}>{plan.lodging.rationale}</div>
           </div>
         </section>
 
@@ -186,7 +186,7 @@ export default function ShareableTripClient({
           >
             Start free →
           </Link>
-          <p style={{ marginTop: "0.85rem", fontSize: "0.78rem", color: "rgba(255,255,255,0.3)" }}>
+          <p style={{ marginTop: "0.85rem", fontSize: "0.78rem", color: "rgba(255,255,255,0.62)" }}>
             133 destinations · 3 price tiers · ~2 minutes · no card.
           </p>
         </motion.section>
