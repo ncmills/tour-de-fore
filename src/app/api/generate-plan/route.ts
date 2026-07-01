@@ -561,7 +561,6 @@ export async function POST(req: NextRequest) {
               const pick = picks.find(p => p.destination.id === destId)!;
               const context = buildDestinationContext(pick.destination);
               const priceTargets = computePriceTargets(pick.destination, state.groupSize, state.numberOfDays, state.roundsPerDay);
-              const plans = await generatePlansForDestination(client, state, context, priceTargets);
               // Enrich course data with imageUrl from destination database.
               // Name-normalize before match: lowercase, strip punctuation,
               // drop noise words ("the", "golf", "club", "course", "resort",
@@ -594,77 +593,108 @@ export async function POST(req: NextRequest) {
               // Every course/dining/bar the LLM names must exist in THIS
               // destination's DB list — drop the ones that don't, and enrich
               // surviving courses with the DB imageUrl on the same pass.
-              const dbDiningNames = pick.destination.dining.map((r) => r.name);
-              const dbBarNames = pick.destination.bars.map((b) => b.name);
-              for (const plan of Object.values(plans)) {
-                if (!plan) continue;
-                if (Array.isArray(plan.courses)) {
-                  plan.courses = plan.courses.filter((course: PlanCourse) => {
-                    const nc = normalize(course.name);
-                    const dbCourse = pick.destination.courses.find((c) => {
-                      const nd = normalize(c.name);
-                      return !!nc && (nd === nc || nd.includes(nc) || nc.includes(nd));
+              const applyGuardsAndFixups = (plans: ThreePlanResult) => {
+                const dbDiningNames = pick.destination.dining.map((r) => r.name);
+                const dbBarNames = pick.destination.bars.map((b) => b.name);
+                for (const plan of Object.values(plans)) {
+                  if (!plan) continue;
+                  if (Array.isArray(plan.courses)) {
+                    plan.courses = plan.courses.filter((course: PlanCourse) => {
+                      const nc = normalize(course.name);
+                      const dbCourse = pick.destination.courses.find((c) => {
+                        const nd = normalize(c.name);
+                        return !!nc && (nd === nc || nd.includes(nc) || nc.includes(nd));
+                      });
+                      if (!dbCourse && nc) {
+                        console.warn(`[venue-guard] dropped out-of-DB course "${course.name}" from ${pick.destination.id}`);
+                        return false;
+                      }
+                      if (dbCourse?.imageUrl) course.imageUrl = dbCourse.imageUrl;
+                      return true;
                     });
-                    if (!dbCourse && nc) {
-                      console.warn(`[venue-guard] dropped out-of-DB course "${course.name}" from ${pick.destination.id}`);
-                      return false;
-                    }
-                    if (dbCourse?.imageUrl) course.imageUrl = dbCourse.imageUrl;
-                    return true;
-                  });
-                }
-                if (Array.isArray(plan.dining)) {
-                  plan.dining = plan.dining.filter((d: PlanDining) => {
-                    const ok = dbNameMatch(d.name, dbDiningNames);
-                    if (!ok) console.warn(`[venue-guard] dropped out-of-DB dining "${d.name}" from ${pick.destination.id}`);
-                    return ok;
-                  });
-                }
-                if (Array.isArray(plan.bars)) {
-                  plan.bars = plan.bars.filter((b: PlanBar) => {
-                    const ok = dbNameMatch(b.name, dbBarNames);
-                    if (!ok) console.warn(`[venue-guard] dropped out-of-DB bar "${b.name}" from ${pick.destination.id}`);
-                    return ok;
-                  });
-                }
-              }
-
-              // Strip any `lodging.url` Claude hallucinated — prompt says
-              // never include it but 76% of stored plans (pre-audit) had
-              // one anyway. Belt + suspenders: prompt rule + post-parse
-              // sanitization so bogus URLs never reach the client.
-              for (const plan of Object.values(plans)) {
-                if (plan?.lodging && "url" in plan.lodging) {
-                  delete (plan.lodging as { url?: string }).url;
-                }
-              }
-
-              // Budget-range normalizer (audit: LLM emitted inverted ranges
-              // like "$250–$150" in the estimatedBudget breakdown). Deterministic
-              // swap so every "$A–$B" reads low→high. Line-item ↔ headline
-              // reconciliation is left to the LLM (price targets already anchor
-              // it); this only fixes the safe, unambiguous inversion.
-              const fixRange = (s: string): string =>
-                s.replace(
-                  /\$\s*([\d,]+)\s*[–-]\s*\$?\s*([\d,]+)/g,
-                  (whole, a: string, b: string) => {
-                    const na = parseInt(a.replace(/,/g, ""), 10);
-                    const nb = parseInt(b.replace(/,/g, ""), 10);
-                    if (Number.isFinite(na) && Number.isFinite(nb) && na > nb) {
-                      return `$${b}–$${a}`;
-                    }
-                    return whole;
                   }
+                  if (Array.isArray(plan.dining)) {
+                    plan.dining = plan.dining.filter((d: PlanDining) => {
+                      const ok = dbNameMatch(d.name, dbDiningNames);
+                      if (!ok) console.warn(`[venue-guard] dropped out-of-DB dining "${d.name}" from ${pick.destination.id}`);
+                      return ok;
+                    });
+                  }
+                  if (Array.isArray(plan.bars)) {
+                    plan.bars = plan.bars.filter((b: PlanBar) => {
+                      const ok = dbNameMatch(b.name, dbBarNames);
+                      if (!ok) console.warn(`[venue-guard] dropped out-of-DB bar "${b.name}" from ${pick.destination.id}`);
+                      return ok;
+                    });
+                  }
+                }
+
+                // Strip any `lodging.url` Claude hallucinated — prompt says
+                // never include it but 76% of stored plans (pre-audit) had
+                // one anyway. Belt + suspenders: prompt rule + post-parse
+                // sanitization so bogus URLs never reach the client.
+                for (const plan of Object.values(plans)) {
+                  if (plan?.lodging && "url" in plan.lodging) {
+                    delete (plan.lodging as { url?: string }).url;
+                  }
+                }
+
+                // Budget-range normalizer (audit: LLM emitted inverted ranges
+                // like "$250–$150" in the estimatedBudget breakdown). Deterministic
+                // swap so every "$A–$B" reads low→high. Line-item ↔ headline
+                // reconciliation is left to the LLM (price targets already anchor
+                // it); this only fixes the safe, unambiguous inversion.
+                const fixRange = (s: string): string =>
+                  s.replace(
+                    /\$\s*([\d,]+)\s*[–-]\s*\$?\s*([\d,]+)/g,
+                    (whole, a: string, b: string) => {
+                      const na = parseInt(a.replace(/,/g, ""), 10);
+                      const nb = parseInt(b.replace(/,/g, ""), 10);
+                      if (Number.isFinite(na) && Number.isFinite(nb) && na > nb) {
+                        return `$${b}–$${a}`;
+                      }
+                      return whole;
+                    }
+                  );
+                for (const plan of Object.values(plans)) {
+                  const eb = plan?.estimatedBudget;
+                  if (!eb) continue;
+                  if (typeof eb.perPerson === "string") eb.perPerson = fixRange(eb.perPerson);
+                  if (Array.isArray(eb.breakdown)) {
+                    for (const li of eb.breakdown) {
+                      if (li && typeof li.perPerson === "string") li.perPerson = fixRange(li.perPerson);
+                    }
+                  }
+                }
+              };
+
+              // Course-count of the thinnest tier after the venue-guard runs.
+              // planLooksComplete requires courses.length >= 2; keep this in sync.
+              const MIN_TIER_COURSES = 2;
+              const thinnestTierCourses = (plans: ThreePlanResult) =>
+                Math.min(
+                  ...Object.values(plans).map((p) => (Array.isArray(p?.courses) ? p.courses.length : 0))
                 );
-              for (const plan of Object.values(plans)) {
-                const eb = plan?.estimatedBudget;
-                if (!eb) continue;
-                if (typeof eb.perPerson === "string") eb.perPerson = fixRange(eb.perPerson);
-                if (Array.isArray(eb.breakdown)) {
-                  for (const li of eb.breakdown) {
-                    if (li && typeof li.perPerson === "string") li.perPerson = fixRange(li.perPerson);
-                  }
-                }
+
+              // Edge case [fix/tdf-venue-guard-thin]: the completeness check
+              // (planLooksComplete, courses.length >= 2) runs DURING generation,
+              // BEFORE the venue-guard below drops out-of-DB (cross-city)
+              // courses. A mostly-hallucinated tier can therefore PASS
+              // completeness and then be thinned below the minimum by the
+              // guard, rendering a thin plan. Belt-and-suspenders: after the
+              // guard, if any tier fell below MIN_TIER_COURSES, regenerate once
+              // (reusing the existing retry path) and keep whichever generation
+              // left the thinnest tier fullest. Not observed in practice (real
+              // DB courses dominate) — this is defensive.
+              let plans = await generatePlansForDestination(client, state, context, priceTargets);
+              applyGuardsAndFixups(plans);
+              if (thinnestTierCourses(plans) < MIN_TIER_COURSES) {
+                console.warn(`[venue-guard] ${pick.destination.id}: a tier fell to ${thinnestTierCourses(plans)} course(s) after guard (min ${MIN_TIER_COURSES}) — regenerating once`);
+                const retry = await generatePlansForDestination(client, state, context, priceTargets);
+                applyGuardsAndFixups(retry);
+                // Graceful fallback: prefer whichever run left more courses in
+                // its thinnest tier (retry may also thin, or thin worse).
+                if (thinnestTierCourses(retry) > thinnestTierCourses(plans)) plans = retry;
               }
               planCache.set(destId, plans);
             })
