@@ -238,6 +238,36 @@ export function filterDestinations(options: FilterOptions): Destination[] {
     }
   }
 
+  // ── Must-play guard (dominant signal) ──
+  // The activities / group-size narrowing above can drop the very destination
+  // that hosts the user's must-play course. When it does, the teaser cards
+  // (built from these DB picks) advertise one city while the LLM plan anchors
+  // to the must-play's real location — the audit repro where a "Palm Springs"
+  // card opened a Monterey/Pebble Beach plan (California + Casino + Pebble
+  // Beach dropped Monterey before force-inclusion could seat it). Re-admit any
+  // in-region destination whose course matches the must-play so
+  // pickThreeDestinations can force-include it and the card == the plan.
+  if (options.mustPlayCourses) {
+    const query = options.mustPlayCourses.toLowerCase();
+    const present = new Set(results.map((d) => d.id));
+    let scope = allDestinations;
+    if (options.region) {
+      const region = regionLabelToRegion(options.region);
+      if (region) scope = scope.filter((d) => d.region === region);
+    }
+    if (options.states && options.states.length > 0) {
+      const allow = new Set(options.states.map((s) => s.toUpperCase()));
+      const narrowed = scope.filter((d) => allow.has(d.state.toUpperCase()));
+      if (narrowed.length > 0) scope = narrowed;
+    }
+    const readmit = scope.filter(
+      (d) =>
+        !present.has(d.id) &&
+        d.courses.some((c) => c.name.toLowerCase().includes(query))
+    );
+    if (readmit.length > 0) results = [...results, ...readmit];
+  }
+
   return results;
 }
 

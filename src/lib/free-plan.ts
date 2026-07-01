@@ -47,9 +47,20 @@ export function buildFreePreview(
       const bFee = (b.greenFeeRange[0] + b.greenFeeRange[1]) / 2;
       return priceLevel === "premium" ? bFee - aFee : aFee - bFee;
     });
+  // Fallback fill when a tier has <3 preferred-tier courses. Order by PRICE in
+  // the tier's direction (cheapest first for budget/mid, priciest first for
+  // premium) — NOT by rating. Rating-desc pulled a destination's bucket-list
+  // tracks (e.g. Pebble Beach) into the budget tier, out-pricing the mid tier
+  // and inverting the ladder (audit: The Imp $2,050–2,750 > The Devil
+  // $1,600–2,200 at Monterey). Price-directional fill keeps Imp ≤ Devil ≤
+  // Demon King monotonic.
   const otherCourses = destination.courses
     .filter((c) => !preferredTiers.includes(c.tier))
-    .sort((a, b) => (b.googleRating || 4.5) - (a.googleRating || 4.5));
+    .sort((a, b) => {
+      const aFee = (a.greenFeeRange[0] + a.greenFeeRange[1]) / 2;
+      const bFee = (b.greenFeeRange[0] + b.greenFeeRange[1]) / 2;
+      return priceLevel === "premium" ? bFee - aFee : aFee - bFee;
+    });
   const selectedCourses = [...coursesForTier, ...otherCourses].slice(0, 3);
 
   // Tier-aware pricing

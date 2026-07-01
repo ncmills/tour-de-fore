@@ -12,6 +12,9 @@ import {
   PriceLevel,
   GeneratedPlan,
   WizardState,
+  PlanCourse,
+  PlanDining,
+  PlanBar,
 } from "@/lib/plan-types";
 import { deriveLeadFields, type DeriveInput } from "@/lib/derive";
 import { storePlan, storeAttendees, recordDestinationView } from "@/lib/kv";
@@ -571,15 +574,58 @@ export async function POST(req: NextRequest) {
                   .replace(/\b(the|golf|club|course|courses|resort|links|at)\b/g, "")
                   .replace(/\s+/g, " ")
                   .trim();
+              // Fuzzy name match against a DB venue list (same normalization
+              // the imageUrl enrichment uses). Empty normalized names (venue
+              // was all noise words) fail closed to "matched" so we never drop
+              // on a normalization artifact.
+              const dbNameMatch = (name: string, dbNames: string[]): boolean => {
+                const n = normalize(name);
+                if (!n) return true;
+                return dbNames.some((raw) => {
+                  const nd = normalize(raw);
+                  return !!nd && (nd === n || nd.includes(n) || n.includes(nd));
+                });
+              };
+
+              // Deterministic geographic-hallucination guard (audit: a Monterey
+              // plan listed Torrey Pines — a San Diego course ~330 mi away — as
+              // "45 min south," with a fabricated drive-time itinerary). The
+              // prompt already forbids cross-city venues; enforce it in CODE.
+              // Every course/dining/bar the LLM names must exist in THIS
+              // destination's DB list — drop the ones that don't, and enrich
+              // surviving courses with the DB imageUrl on the same pass.
+              const dbDiningNames = pick.destination.dining.map((r) => r.name);
+              const dbBarNames = pick.destination.bars.map((b) => b.name);
               for (const plan of Object.values(plans)) {
-                if (!plan?.courses) continue;
-                for (const course of plan.courses) {
-                  const nc = normalize(course.name);
-                  const dbCourse = pick.destination.courses.find((c) => {
-                    const nd = normalize(c.name);
-                    return nd === nc || nd.includes(nc) || nc.includes(nd);
+                if (!plan) continue;
+                if (Array.isArray(plan.courses)) {
+                  plan.courses = plan.courses.filter((course: PlanCourse) => {
+                    const nc = normalize(course.name);
+                    const dbCourse = pick.destination.courses.find((c) => {
+                      const nd = normalize(c.name);
+                      return !!nc && (nd === nc || nd.includes(nc) || nc.includes(nd));
+                    });
+                    if (!dbCourse && nc) {
+                      console.warn(`[venue-guard] dropped out-of-DB course "${course.name}" from ${pick.destination.id}`);
+                      return false;
+                    }
+                    if (dbCourse?.imageUrl) course.imageUrl = dbCourse.imageUrl;
+                    return true;
                   });
-                  if (dbCourse?.imageUrl) course.imageUrl = dbCourse.imageUrl;
+                }
+                if (Array.isArray(plan.dining)) {
+                  plan.dining = plan.dining.filter((d: PlanDining) => {
+                    const ok = dbNameMatch(d.name, dbDiningNames);
+                    if (!ok) console.warn(`[venue-guard] dropped out-of-DB dining "${d.name}" from ${pick.destination.id}`);
+                    return ok;
+                  });
+                }
+                if (Array.isArray(plan.bars)) {
+                  plan.bars = plan.bars.filter((b: PlanBar) => {
+                    const ok = dbNameMatch(b.name, dbBarNames);
+                    if (!ok) console.warn(`[venue-guard] dropped out-of-DB bar "${b.name}" from ${pick.destination.id}`);
+                    return ok;
+                  });
                 }
               }
 
@@ -590,6 +636,34 @@ export async function POST(req: NextRequest) {
               for (const plan of Object.values(plans)) {
                 if (plan?.lodging && "url" in plan.lodging) {
                   delete (plan.lodging as { url?: string }).url;
+                }
+              }
+
+              // Budget-range normalizer (audit: LLM emitted inverted ranges
+              // like "$250–$150" in the estimatedBudget breakdown). Deterministic
+              // swap so every "$A–$B" reads low→high. Line-item ↔ headline
+              // reconciliation is left to the LLM (price targets already anchor
+              // it); this only fixes the safe, unambiguous inversion.
+              const fixRange = (s: string): string =>
+                s.replace(
+                  /\$\s*([\d,]+)\s*[–-]\s*\$?\s*([\d,]+)/g,
+                  (whole, a: string, b: string) => {
+                    const na = parseInt(a.replace(/,/g, ""), 10);
+                    const nb = parseInt(b.replace(/,/g, ""), 10);
+                    if (Number.isFinite(na) && Number.isFinite(nb) && na > nb) {
+                      return `$${b}–$${a}`;
+                    }
+                    return whole;
+                  }
+                );
+              for (const plan of Object.values(plans)) {
+                const eb = plan?.estimatedBudget;
+                if (!eb) continue;
+                if (typeof eb.perPerson === "string") eb.perPerson = fixRange(eb.perPerson);
+                if (Array.isArray(eb.breakdown)) {
+                  for (const li of eb.breakdown) {
+                    if (li && typeof li.perPerson === "string") li.perPerson = fixRange(li.perPerson);
+                  }
                 }
               }
               planCache.set(destId, plans);
