@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
 import { sendEmail } from "@/lib/email";
 import { fulfillShopOrder, type FulfillResult } from "@/lib/shop-fulfillment";
+import { heartbeat } from "@/lib/heartbeat";
 
 // Runs every 5 minutes via vercel.json cron. Also callable manually with
 // Authorization: Bearer $CRON_SECRET for debugging.
@@ -34,6 +35,7 @@ export async function GET(req: NextRequest) {
       flat.push({ sessionId: session.id, ...result });
     }
   } catch (err) {
+    await heartbeat("tour-de-fore", "/api/cron/sync-orders", { ok: false, error: err });
     return NextResponse.json(
       { error: err instanceof Error ? err.message : "Sync failed" },
       { status: 500 }
@@ -58,6 +60,11 @@ export async function GET(req: NextRequest) {
   }
 
   const rescued = flat.filter((r) => r.status === "rescued" || r.status === "submitted").length;
+
+  await heartbeat("tour-de-fore", "/api/cron/sync-orders", {
+    ok: failures.length === 0,
+    error: failures.length ? `${failures.length} order(s) need attention` : undefined,
+  });
 
   return NextResponse.json({
     checked: flat.length,

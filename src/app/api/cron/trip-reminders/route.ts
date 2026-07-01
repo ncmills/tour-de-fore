@@ -9,6 +9,7 @@ import {
   optoutKey,
   dedupeTtlSeconds,
 } from "@/lib/reengage";
+import { heartbeat } from "@/lib/heartbeat";
 
 // ── Returning-user re-engagement cron ──
 //
@@ -147,5 +148,11 @@ export async function GET(req: NextRequest) {
     fired,
   };
   console.log("[trip-reminders]", JSON.stringify(summary));
+
+  await heartbeat("tour-de-fore", "/api/cron/trip-reminders", {
+    ok: failed === 0,
+    error: failed ? `${failed} reminder send(s) failed` : undefined,
+  });
+
   return NextResponse.json(summary);
 }

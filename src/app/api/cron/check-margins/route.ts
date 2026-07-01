@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { fetchShopProducts } from "@/lib/printful";
 import { sendEmail } from "@/lib/email";
+import { heartbeat } from "@/lib/heartbeat";
 
 // Runs daily. Recomputes real Printful cost for every product via estimate-costs
 // and alerts if any product's net margin drops below 5% (fatal) or 10% (warn).
@@ -27,6 +28,7 @@ export async function GET(req: NextRequest) {
 
   const printfulToken = process.env.PRINTFUL_API_TOKEN;
   if (!printfulToken) {
+    await heartbeat("tour-de-fore", "/api/cron/check-margins", { ok: false, error: "PRINTFUL_API_TOKEN not set" });
     return NextResponse.json({ ok: false, error: "PRINTFUL_API_TOKEN not set" }, { status: 500 });
   }
 
@@ -100,6 +102,11 @@ export async function GET(req: NextRequest) {
       critical: criticals.length > 0,
     });
   }
+
+  await heartbeat("tour-de-fore", "/api/cron/check-margins", {
+    ok: criticals.length === 0,
+    error: criticals.length ? `${criticals.length} product(s) below 5% margin` : undefined,
+  });
 
   return NextResponse.json({ checked: report.length, report });
 }
