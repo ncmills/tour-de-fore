@@ -190,6 +190,15 @@ export default function Nav() {
           </Link>
 
           <Link
+            href="/about"
+            className={`font-body text-sm transition-colors duration-300 ${
+              isActive("/about") ? "text-accent" : "text-white/60 hover:text-white"
+            }`}
+          >
+            About
+          </Link>
+
+          <Link
             href="/plan"
             className={`font-body text-sm px-6 py-2.5 rounded-lg transition-all duration-300 ${
               isActive("/plan")
@@ -330,6 +339,13 @@ export default function Nav() {
                 className="font-body text-sm text-accent hover:text-accent-hover transition-colors"
               >
                 Shop
+              </Link>
+              <Link
+                href="/about"
+                onClick={() => setMobileOpen(false)}
+                className="font-body text-sm text-accent hover:text-accent-hover transition-colors"
+              >
+                About
               </Link>
             </motion.div>
           </motion.div>
