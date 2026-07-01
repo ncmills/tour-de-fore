@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo, useRef, useEffect } from "react";
+import { useState, useCallback, useMemo, useRef, useEffect, type ReactNode } from "react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import type { GeneratedPlan, ThreePlanResult, TripTier } from "@/lib/plan-types";
@@ -107,13 +107,17 @@ function getFallbackImage(name: string): string {
 
 // ── Small Option Card ──
 
-function OptionCard({ option, selected, onSelect, disabled, tags, useFallbackImage }: { option: Option; selected: boolean; onSelect: () => void; disabled?: boolean; tags?: Tag[]; useFallbackImage?: boolean }) {
+function OptionCard({ option, selected, onSelect, disabled, tags, useFallbackImage, duplicateLabel }: { option: Option; selected: boolean; onSelect: () => void; disabled?: boolean; tags?: Tag[]; useFallbackImage?: boolean; duplicateLabel?: string | null }) {
   const hasFlame = tags?.some((t) => t.label === "TDF PICK");
   const imgSrc = option.imageUrl || (useFallbackImage ? getFallbackImage(option.name) : null);
+  // Soft-flag a duplicate: this option is already chosen in another slot. We dim
+  // it and label where, but keep it selectable — the user isn't trapped.
+  const isDuplicate = !selected && !disabled && !!duplicateLabel;
   return (
     <button
       onClick={disabled ? undefined : onSelect}
       className={hasFlame ? "flame-glow" : undefined}
+      title={isDuplicate ? `Already picked for ${duplicateLabel}` : undefined}
       style={{
         textAlign: "left",
         padding: "0.75rem 1rem",
@@ -121,7 +125,7 @@ function OptionCard({ option, selected, onSelect, disabled, tags, useFallbackIma
         border: selected ? "1px solid rgba(220,38,38,0.5)" : "1px solid rgba(255,255,255,0.08)",
         borderRadius: 8,
         cursor: disabled ? "not-allowed" : "pointer",
-        opacity: disabled ? 0.4 : 1,
+        opacity: disabled ? 0.4 : isDuplicate ? 0.5 : 1,
         color: "#fff",
         width: "100%",
         transition: "all 0.15s",
@@ -183,6 +187,11 @@ function OptionCard({ option, selected, onSelect, disabled, tags, useFallbackIma
               {option.detail && <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.35)" }}>{option.detail}</span>}
             </div>
           )}
+          {isDuplicate && (
+            <div style={{ fontSize: "0.68rem", color: "#EA580C", marginTop: "0.35rem", fontWeight: 600, letterSpacing: "0.02em" }}>
+              ↑ Already picked · {duplicateLabel}
+            </div>
+          )}
         </div>
       </div>
     </button>
@@ -224,17 +233,110 @@ function SlotModeToggle({ mode, onChange }: { mode: SlotMode; onChange: (m: Slot
   );
 }
 
-function SlotSection({ label, options, selectedId, onSelect, tagMap }: { label: string; options: Option[]; selectedId: string; onSelect: (id: string) => void; tagMap?: Record<string, Tag[]> }) {
+/**
+ * CollapsibleSlot — a time-of-day slot header (label + current pick + chevron)
+ * that expands to its body on tap. Collapsed by default so an expanded day reads
+ * as a compact list of picks rather than a wall of option cards. `anchorId` lets
+ * the live summary panel scroll/jump here; `headerRight` renders an inline
+ * control (e.g. the golf/activity mode toggle) beside the header.
+ */
+function CollapsibleSlot({ label, pickText, anchorId, headerRight, children }: { label: string; pickText: string | null; anchorId?: string; headerRight?: ReactNode; children: ReactNode }) {
+  const [open, setOpen] = useState(false);
   return (
-    <div style={{ marginBottom: "1.5rem" }}>
-      <p style={{ fontSize: "1.125rem", color: "#fff", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.5rem", fontFamily: "var(--font-plan-block), sans-serif" }}>
-        {label}
-      </p>
+    <div id={anchorId} style={{ marginBottom: "1.5rem", borderBottom: "1px solid rgba(255,255,255,0.06)", paddingBottom: "1rem", scrollMarginTop: "1.5rem" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+        <button
+          onClick={() => setOpen((v) => !v)}
+          style={{ background: "none", border: "none", cursor: "pointer", flex: 1, minWidth: 0, textAlign: "left", padding: "0.25rem 0", color: "#fff" }}
+        >
+          <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.6rem", width: "100%" }}>
+            <span style={{ fontSize: "1.125rem", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "var(--font-plan-block), sans-serif", flexShrink: 0 }}>
+              {label}
+            </span>
+            <span style={{ fontSize: "0.82rem", color: pickText ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.4)", fontStyle: pickText ? "normal" : "italic", textAlign: "right", flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              {pickText || "Open — tap to choose"}
+            </span>
+            <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.85rem", transform: open ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s", flexShrink: 0 }}>&#9660;</span>
+          </div>
+        </button>
+        {headerRight && <div style={{ flexShrink: 0 }}>{headerRight}</div>}
+      </div>
+      {open && <div style={{ marginTop: "0.75rem" }}>{children}</div>}
+    </div>
+  );
+}
+
+function SlotSection({ label, options, selectedId, onSelect, tagMap, anchorId, getDuplicateLabel }: { label: string; options: Option[]; selectedId: string; onSelect: (id: string) => void; tagMap?: Record<string, Tag[]>; anchorId?: string; getDuplicateLabel?: (optionId: string) => string | null }) {
+  const selected = options.find((o) => o.id === selectedId);
+  return (
+    <CollapsibleSlot label={label} pickText={selected?.name ?? null} anchorId={anchorId}>
       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
         {options.map((o) => (
-          <OptionCard key={o.id} option={o} selected={selectedId === o.id} onSelect={() => onSelect(o.id)} tags={tagMap?.[o.id]} />
+          <OptionCard key={o.id} option={o} selected={selectedId === o.id} onSelect={() => onSelect(o.id)} tags={tagMap?.[o.id]} duplicateLabel={getDuplicateLabel ? getDuplicateLabel(o.id) : null} />
         ))}
       </div>
+    </CollapsibleSlot>
+  );
+}
+
+// ── Live plan summary ──
+// Always-visible overview of every slot: what's filled with what, what's open,
+// and the running per-person total. Rendered as a sticky right rail on desktop
+// and a fixed bottom sheet on mobile. Each row jumps to its slot in the builder.
+type SummaryItem = { label: string; value: string | null; onJump: () => void };
+type SummaryGroup = { title: string; items: SummaryItem[] };
+
+function nameOf(opts: Option[], id: string): string | null {
+  return opts.find((o) => o.id === id)?.name ?? null;
+}
+
+function PlanSummaryPanel({ groups, totalPerPerson, aiEstimate, filled, total }: { groups: SummaryGroup[]; totalPerPerson: number; aiEstimate: number; filled: number; total: number }) {
+  const pct = total > 0 ? Math.round((filled / total) * 100) : 0;
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
+      <div>
+        <div style={{ fontSize: "0.62rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "0.15rem" }}>
+          Your trip so far
+        </div>
+        <div style={{ display: "flex", alignItems: "baseline", gap: "0.4rem" }}>
+          <span style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1.75rem", fontWeight: 700, letterSpacing: "0.02em" }}>
+            ${totalPerPerson.toLocaleString()}
+          </span>
+          <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.4)" }}>/ pp</span>
+        </div>
+        {aiEstimate > 0 && (
+          <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.3)" }}>AI est: ${aiEstimate.toLocaleString()}</div>
+        )}
+      </div>
+      <div>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.7rem", color: "rgba(255,255,255,0.4)", marginBottom: "0.3rem" }}>
+          <span>{filled} of {total} slots filled</span><span>{pct}%</span>
+        </div>
+        <div style={{ height: 4, borderRadius: 2, background: "rgba(255,255,255,0.1)", overflow: "hidden" }}>
+          <div style={{ height: "100%", width: `${pct}%`, background: "linear-gradient(90deg, rgba(220,38,38,0.9), #EA580C)", borderRadius: 2, transition: "width 0.35s ease" }} />
+        </div>
+      </div>
+      {groups.map((g, gi) => (
+        <div key={gi}>
+          <div style={{ fontSize: "0.62rem", letterSpacing: "0.16em", textTransform: "uppercase", color: "#EA580C", marginBottom: "0.3rem" }}>
+            {g.title}
+          </div>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            {g.items.map((it, ii) => (
+              <button
+                key={ii}
+                onClick={it.onJump}
+                style={{ display: "flex", justifyContent: "space-between", gap: "0.6rem", alignItems: "baseline", background: "none", border: "none", cursor: "pointer", textAlign: "left", padding: "0.28rem 0", color: "#fff", width: "100%" }}
+              >
+                <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.4)", flexShrink: 0 }}>{it.label}</span>
+                <span style={{ fontSize: "0.78rem", textAlign: "right", flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: it.value ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.35)", fontStyle: it.value ? "normal" : "italic" }}>
+                  {it.value || "Open"}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
@@ -769,6 +871,87 @@ export default function TripBuilderClient({
     }));
   }, [tdfPicks, touchedSlots, lodging, transport]);
 
+  // ── Live summary + duplicate flagging ──
+  const [summaryOpen, setSummaryOpen] = useState(false);
+
+  // Which slots currently hold each option, per shared pool — powers the
+  // duplicate soft-flag. Lodging/transport are single-select so excluded.
+  const courseUse = useMemo(() => {
+    const m = new Map<string, string[]>();
+    days.forEach((d, i) => {
+      if (d.round1Mode === "golf" && d.round1) { const a = m.get(d.round1) ?? []; a.push(`Day ${i + 1} Round 1`); m.set(d.round1, a); }
+      if (d.round2Mode === "golf" && d.round2) { const a = m.get(d.round2) ?? []; a.push(`Day ${i + 1} Round 2`); m.set(d.round2, a); }
+    });
+    return m;
+  }, [days]);
+  const activityUse = useMemo(() => {
+    const m = new Map<string, string[]>();
+    days.forEach((d, i) => {
+      if (d.round1Mode === "activity" && d.round1Activity) { const a = m.get(d.round1Activity) ?? []; a.push(`Day ${i + 1} Morning`); m.set(d.round1Activity, a); }
+      if (d.round2Mode === "activity" && d.activity) { const a = m.get(d.activity) ?? []; a.push(`Day ${i + 1} Afternoon`); m.set(d.activity, a); }
+    });
+    return m;
+  }, [days]);
+  const diningUse = useMemo(() => {
+    const m = new Map<string, string[]>();
+    days.forEach((d, i) => { if (d.dinner) { const a = m.get(d.dinner) ?? []; a.push(`Day ${i + 1} Dinner`); m.set(d.dinner, a); } });
+    return m;
+  }, [days]);
+  const barUse = useMemo(() => {
+    const m = new Map<string, string[]>();
+    days.forEach((d, i) => { if (d.bar) { const a = m.get(d.bar) ?? []; a.push(`Day ${i + 1} Nightlife`); m.set(d.bar, a); } });
+    return m;
+  }, [days]);
+  const dupFor = (use: Map<string, string[]>, selfLabel: string) => (optionId: string): string | null => {
+    const labels = use.get(optionId);
+    if (!labels) return null;
+    return labels.find((l) => l !== selfLabel) ?? null;
+  };
+
+  const jumpTo = useCallback((anchorId: string, day?: number) => {
+    if (day !== undefined) setExpandedDay(day);
+    setSummaryOpen(false);
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        document.getElementById(anchorId)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      })
+    );
+  }, []);
+
+  const roundValue = (mode: SlotMode, golfId: string, activityId: string): string | null => {
+    if (mode === "rest") return "Rest";
+    if (mode === "activity") return activityId || null;
+    return nameOf(allCourses, golfId);
+  };
+
+  const summaryGroups: SummaryGroup[] = useMemo(() => {
+    const groups: SummaryGroup[] = [
+      {
+        title: "Stay & Travel",
+        items: [
+          { label: "Lodging", value: nameOf(allLodging, lodging), onJump: () => jumpTo("slot-lodging") },
+          { label: "Transport", value: nameOf(transportOptions, transport), onJump: () => jumpTo("slot-transport") },
+        ],
+      },
+    ];
+    days.forEach((d, i) => {
+      groups.push({
+        title: `Day ${i + 1}`,
+        items: [
+          { label: "Round 1", value: roundValue(d.round1Mode, d.round1, d.round1Activity), onJump: () => jumpTo(`slot-d${i}-round1`, i) },
+          { label: "Round 2", value: roundValue(d.round2Mode, d.round2, d.activity), onJump: () => jumpTo(`slot-d${i}-round2`, i) },
+          { label: "Dinner", value: nameOf(allDining, d.dinner), onJump: () => jumpTo(`slot-d${i}-dinner`, i) },
+          { label: "Nightlife", value: nameOf(allBars, d.bar), onJump: () => jumpTo(`slot-d${i}-bar`, i) },
+        ],
+      });
+    });
+    return groups;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [days, lodging, transport, allLodging, allCourses, allDining, allBars, transportOptions, jumpTo]);
+
+  const filledCount = useMemo(() => summaryGroups.reduce((n, g) => n + g.items.filter((it) => it.value).length, 0), [summaryGroups]);
+  const totalCount = useMemo(() => summaryGroups.reduce((n, g) => n + g.items.length, 0), [summaryGroups]);
+
   return (
     <>
     {/* ── Sticky Price Bar ── */}
@@ -787,6 +970,9 @@ export default function TripBuilderClient({
         </motion.h1>
         <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.95rem" }}>{plan.destination} · {numDays} Days</p>
       </div>
+
+      <div className="flex flex-col lg:flex-row lg:gap-6 lg:items-start" style={{ maxWidth: 1080, margin: "0 auto" }}>
+        <div className="w-full lg:flex-1 lg:min-w-0">
 
       {/* Price estimate */}
       <div style={{
@@ -861,7 +1047,7 @@ export default function TripBuilderClient({
       <div style={{ maxWidth: 700, margin: "0 auto" }}>
 
         {/* ── Lodging (whole trip) ── */}
-        <section style={{ marginBottom: "3rem" }}>
+        <section id="slot-lodging" style={{ marginBottom: "3rem", scrollMarginTop: "1.5rem" }}>
           <h2 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1.5rem", textTransform: "uppercase", letterSpacing: "0.06em", color: "#fff", marginBottom: "1rem" }}>
             Lodging
           </h2>
@@ -873,7 +1059,7 @@ export default function TripBuilderClient({
         </section>
 
         {/* ── Transportation ── */}
-        <section style={{ marginBottom: "3rem" }}>
+        <section id="slot-transport" style={{ marginBottom: "3rem", scrollMarginTop: "1.5rem" }}>
           <h2 style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1.5rem", textTransform: "uppercase", letterSpacing: "0.06em", color: "#fff", marginBottom: "1rem" }}>
             Transportation
           </h2>
@@ -927,24 +1113,23 @@ export default function TripBuilderClient({
               {isExpanded && (
                 <>
                   {/* Round 1 — Morning */}
-                  <div style={{ marginBottom: "1.5rem" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
-                      <p style={{ fontSize: "1.125rem", color: "#fff", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "var(--font-plan-block), sans-serif" }}>
-                        {day.round1Mode === "golf" ? "Round 1 — Morning" : day.round1Mode === "activity" ? "Activity — Morning" : "Rest — Morning"}
-                      </p>
-                      <SlotModeToggle mode={day.round1Mode} onChange={(m) => updateDay(di, "round1Mode", m)} />
-                    </div>
+                  <CollapsibleSlot
+                    anchorId={`slot-d${di}-round1`}
+                    label={day.round1Mode === "golf" ? "Round 1 — Morning" : day.round1Mode === "activity" ? "Activity — Morning" : "Rest — Morning"}
+                    pickText={day.round1Mode === "rest" ? "Rest" : day.round1Mode === "activity" ? (day.round1Activity || null) : nameOf(allCourses, day.round1)}
+                    headerRight={<SlotModeToggle mode={day.round1Mode} onChange={(m) => updateDay(di, "round1Mode", m)} />}
+                  >
                     {day.round1Mode === "golf" && (
                       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                         {allCourses.map((o) => (
-                          <OptionCard key={o.id} option={o} selected={day.round1 === o.id} onSelect={() => updateDay(di, "round1", o.id)} tags={courseTagMap[o.id]} useFallbackImage />
+                          <OptionCard key={o.id} option={o} selected={day.round1 === o.id} onSelect={() => updateDay(di, "round1", o.id)} tags={courseTagMap[o.id]} useFallbackImage duplicateLabel={dupFor(courseUse, `Day ${di + 1} Round 1`)(o.id)} />
                         ))}
                       </div>
                     )}
                     {day.round1Mode === "activity" && (
                       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                         {activityOptions.map((o) => (
-                          <OptionCard key={o.id} option={o} selected={day.round1Activity === o.id} onSelect={() => updateDay(di, "round1Activity", o.id)} />
+                          <OptionCard key={o.id} option={o} selected={day.round1Activity === o.id} onSelect={() => updateDay(di, "round1Activity", o.id)} duplicateLabel={dupFor(activityUse, `Day ${di + 1} Morning`)(o.id)} />
                         ))}
                       </div>
                     )}
@@ -953,23 +1138,22 @@ export default function TripBuilderClient({
                         Sleep in, hit the pool, or just chill.
                       </p>
                     )}
-                  </div>
+                  </CollapsibleSlot>
 
                   {/* Round 2 — Afternoon */}
-                  <div style={{ marginBottom: "1.5rem" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
-                      <p style={{ fontSize: "1.125rem", color: "#fff", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "var(--font-plan-block), sans-serif" }}>
-                        {day.round2Mode === "golf" ? "Round 2 — Afternoon" : day.round2Mode === "activity" ? "Activity — Afternoon" : "Rest — Afternoon"}
-                      </p>
-                      <SlotModeToggle mode={day.round2Mode} onChange={(m) => { updateDay(di, "round2Mode", m); updateDay(di, "round2IsActivity", m === "activity"); }} />
-                    </div>
+                  <CollapsibleSlot
+                    anchorId={`slot-d${di}-round2`}
+                    label={day.round2Mode === "golf" ? "Round 2 — Afternoon" : day.round2Mode === "activity" ? "Activity — Afternoon" : "Rest — Afternoon"}
+                    pickText={day.round2Mode === "rest" ? "Rest" : day.round2Mode === "activity" ? (day.activity || null) : nameOf(allCourses, day.round2)}
+                    headerRight={<SlotModeToggle mode={day.round2Mode} onChange={(m) => { updateDay(di, "round2Mode", m); updateDay(di, "round2IsActivity", m === "activity"); }} />}
+                  >
                     {day.round2Mode === "golf" && (
                       <>
                         <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                           {allCourses.map((o) => {
                             const r2Tags = getRound2TagMap(day.round1);
                             return (
-                              <OptionCard key={o.id} option={o} selected={day.round2 === o.id} onSelect={() => updateDay(di, "round2", o.id)} tags={r2Tags[o.id]} useFallbackImage />
+                              <OptionCard key={o.id} option={o} selected={day.round2 === o.id} onSelect={() => updateDay(di, "round2", o.id)} tags={r2Tags[o.id]} useFallbackImage duplicateLabel={dupFor(courseUse, `Day ${di + 1} Round 2`)(o.id)} />
                             );
                           })}
                         </div>
@@ -983,7 +1167,7 @@ export default function TripBuilderClient({
                     {day.round2Mode === "activity" && (
                       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                         {activityOptions.map((o) => (
-                          <OptionCard key={o.id} option={o} selected={day.activity === o.id} onSelect={() => updateDay(di, "activity", o.id)} />
+                          <OptionCard key={o.id} option={o} selected={day.activity === o.id} onSelect={() => updateDay(di, "activity", o.id)} duplicateLabel={dupFor(activityUse, `Day ${di + 1} Afternoon`)(o.id)} />
                         ))}
                       </div>
                     )}
@@ -992,24 +1176,28 @@ export default function TripBuilderClient({
                         Take the afternoon off — recharge for tonight.
                       </p>
                     )}
-                  </div>
+                  </CollapsibleSlot>
 
                   {/* Dinner */}
                   <SlotSection
                     label={`Dinner — Day ${di + 1}`}
+                    anchorId={`slot-d${di}-dinner`}
                     options={allDining}
                     selectedId={day.dinner}
                     onSelect={(id) => updateDay(di, "dinner", id)}
                     tagMap={diningTagMap}
+                    getDuplicateLabel={dupFor(diningUse, `Day ${di + 1} Dinner`)}
                   />
 
                   {/* Bar */}
                   <SlotSection
                     label={`Nightlife — Day ${di + 1}`}
+                    anchorId={`slot-d${di}-bar`}
                     options={allBars}
                     selectedId={day.bar}
                     onSelect={(id) => updateDay(di, "bar", id)}
                     tagMap={barTagMap}
+                    getDuplicateLabel={dupFor(barUse, `Day ${di + 1} Nightlife`)}
                   />
 
                   {/* Inline insight hints for this day */}
@@ -1048,8 +1236,8 @@ export default function TripBuilderClient({
           </p>
         </section>
 
-        {/* ── Bottom CTA ── */}
-        <div style={{
+        {/* ── Bottom CTA (desktop only — mobile uses the fixed summary bar) ── */}
+        <div className="hidden lg:flex" style={{
           position: "sticky",
           bottom: "1rem",
           background: "rgba(0,0,0,0.9)",
@@ -1057,7 +1245,6 @@ export default function TripBuilderClient({
           border: "1px solid rgba(255,255,255,0.1)",
           borderRadius: 12,
           padding: "1rem 1.5rem",
-          display: "flex",
           justifyContent: "center",
           alignItems: "center",
           gap: "1rem",
@@ -1086,6 +1273,43 @@ export default function TripBuilderClient({
             }}
           >
             {saving ? "Saving..." : "View Itinerary & Pricing"}
+          </button>
+        </div>
+      </div>
+        </div>{/* /left column */}
+
+        {/* Desktop: sticky live summary rail */}
+        <aside className="hidden lg:block" style={{ width: 320, flexShrink: 0, position: "sticky", top: "1.5rem" }}>
+          <div style={{ border: "1px solid rgba(220,38,38,0.35)", borderRadius: 12, padding: "1.25rem", background: "rgba(255,255,255,0.03)" }}>
+            <PlanSummaryPanel groups={summaryGroups} totalPerPerson={currentPricePerPerson} aiEstimate={aiEstimate} filled={filledCount} total={totalCount} />
+          </div>
+        </aside>
+      </div>{/* /flex layout */}
+
+      {/* Mobile: fixed summary bar that expands into a full checklist sheet */}
+      <div className="lg:hidden" style={{ height: "5.5rem" }} />
+      <div className="lg:hidden" style={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 50 }}>
+        {summaryOpen && (
+          <>
+            <div onClick={() => setSummaryOpen(false)} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.55)", zIndex: -1 }} />
+            <div style={{ background: "#0a0a0a", borderTop: "1px solid rgba(220,38,38,0.5)", borderTopLeftRadius: 16, borderTopRightRadius: 16, maxHeight: "68vh", overflowY: "auto", padding: "1.1rem 1.25rem 1rem", boxShadow: "0 -8px 30px rgba(0,0,0,0.5)" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.75rem" }}>
+                <span style={{ fontSize: "0.68rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>Your trip</span>
+                <button onClick={() => setSummaryOpen(false)} aria-label="Close summary" style={{ background: "none", border: "none", fontSize: "1.1rem", cursor: "pointer", color: "rgba(255,255,255,0.4)" }}>✕</button>
+              </div>
+              <PlanSummaryPanel groups={summaryGroups} totalPerPerson={currentPricePerPerson} aiEstimate={aiEstimate} filled={filledCount} total={totalCount} />
+            </div>
+          </>
+        )}
+        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", background: "rgba(0,0,0,0.95)", backdropFilter: "blur(12px)", borderTop: "1px solid rgba(220,38,38,0.4)", padding: "0.7rem 1rem" }}>
+          <button onClick={() => setSummaryOpen((v) => !v)} style={{ flex: 1, minWidth: 0, textAlign: "left", background: "none", border: "none", cursor: "pointer", color: "#fff", display: "flex", flexDirection: "column", gap: "0.1rem" }}>
+            <span style={{ fontFamily: "var(--font-plan-block), sans-serif", fontSize: "1.15rem", fontWeight: 700, letterSpacing: "0.02em" }}>
+              ${currentPricePerPerson.toLocaleString()} <span style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.4)", fontWeight: 400 }}>/ pp</span>
+            </span>
+            <span style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.4)" }}>{filledCount}/{totalCount} slots · tap for details {summaryOpen ? "▾" : "▴"}</span>
+          </button>
+          <button onClick={saveAndView} disabled={saving} style={{ padding: "11px 18px", background: "rgba(220,38,38,0.9)", border: "none", borderRadius: 6, color: "#fff", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", fontFamily: "var(--font-plan-block), sans-serif", cursor: saving ? "wait" : "pointer", opacity: saving ? 0.6 : 1, whiteSpace: "nowrap", flexShrink: 0 }}>
+            {saving ? "Saving…" : "View →"}
           </button>
         </div>
       </div>
