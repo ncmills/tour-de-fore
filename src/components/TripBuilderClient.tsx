@@ -240,13 +240,13 @@ function SlotModeToggle({ mode, onChange }: { mode: SlotMode; onChange: (m: Slot
  * the live summary panel scroll/jump here; `headerRight` renders an inline
  * control (e.g. the golf/activity mode toggle) beside the header.
  */
-function CollapsibleSlot({ label, pickText, anchorId, headerRight, children }: { label: string; pickText: string | null; anchorId?: string; headerRight?: ReactNode; children: ReactNode }) {
+function CollapsibleSlot({ label, pickText, anchorId, headerRight, slotKey, onActivate, children }: { label: string; pickText: string | null; anchorId?: string; headerRight?: ReactNode; slotKey?: string; onActivate?: (key: string) => void; children: ReactNode }) {
   const [open, setOpen] = useState(false);
   return (
     <div id={anchorId} style={{ marginBottom: "1.5rem", borderBottom: "1px solid rgba(255,255,255,0.06)", paddingBottom: "1rem", scrollMarginTop: "1.5rem" }}>
       <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
         <button
-          onClick={() => setOpen((v) => !v)}
+          onClick={() => setOpen((v) => { if (!v && slotKey && onActivate) onActivate(slotKey); return !v; })}
           style={{ background: "none", border: "none", cursor: "pointer", flex: 1, minWidth: 0, textAlign: "left", padding: "0.25rem 0", color: "#fff" }}
         >
           <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.6rem", width: "100%" }}>
@@ -266,13 +266,13 @@ function CollapsibleSlot({ label, pickText, anchorId, headerRight, children }: {
   );
 }
 
-function SlotSection({ label, options, selectedId, onSelect, tagMap, anchorId, getDuplicateLabel }: { label: string; options: Option[]; selectedId: string; onSelect: (id: string) => void; tagMap?: Record<string, Tag[]>; anchorId?: string; getDuplicateLabel?: (optionId: string) => string | null }) {
+function SlotSection({ label, options, selectedId, onSelect, tagMap, anchorId, getDuplicateLabel, slotKey, onActivate }: { label: string; options: Option[]; selectedId: string; onSelect: (id: string) => void; tagMap?: Record<string, Tag[]>; anchorId?: string; getDuplicateLabel?: (optionId: string) => string | null; slotKey?: string; onActivate?: (key: string) => void }) {
   const selected = options.find((o) => o.id === selectedId);
   return (
-    <CollapsibleSlot label={label} pickText={selected?.name ?? null} anchorId={anchorId}>
+    <CollapsibleSlot label={label} pickText={selected?.name ?? null} anchorId={anchorId} slotKey={slotKey} onActivate={onActivate}>
       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
         {options.map((o) => (
-          <OptionCard key={o.id} option={o} selected={selectedId === o.id} onSelect={() => onSelect(o.id)} tags={tagMap?.[o.id]} duplicateLabel={getDuplicateLabel ? getDuplicateLabel(o.id) : null} />
+          <OptionCard key={o.id} option={o} selected={selectedId === o.id} onSelect={() => { onSelect(o.id); if (slotKey && onActivate) onActivate(slotKey); }} tags={tagMap?.[o.id]} duplicateLabel={getDuplicateLabel ? getDuplicateLabel(o.id) : null} />
         ))}
       </div>
     </CollapsibleSlot>
@@ -283,14 +283,14 @@ function SlotSection({ label, options, selectedId, onSelect, tagMap, anchorId, g
 // Always-visible overview of every slot: what's filled with what, what's open,
 // and the running per-person total. Rendered as a sticky right rail on desktop
 // and a fixed bottom sheet on mobile. Each row jumps to its slot in the builder.
-type SummaryItem = { label: string; value: string | null; onJump: () => void };
+type SummaryItem = { key: string; label: string; value: string | null; onJump: () => void };
 type SummaryGroup = { title: string; items: SummaryItem[] };
 
 function nameOf(opts: Option[], id: string): string | null {
   return opts.find((o) => o.id === id)?.name ?? null;
 }
 
-function PlanSummaryPanel({ groups, totalPerPerson, aiEstimate, filled, total }: { groups: SummaryGroup[]; totalPerPerson: number; aiEstimate: number; filled: number; total: number }) {
+function PlanSummaryPanel({ groups, totalPerPerson, aiEstimate, filled, total, activeKey }: { groups: SummaryGroup[]; totalPerPerson: number; aiEstimate: number; filled: number; total: number; activeKey?: string | null }) {
   const pct = total > 0 ? Math.round((filled / total) * 100) : 0;
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
@@ -322,18 +322,21 @@ function PlanSummaryPanel({ groups, totalPerPerson, aiEstimate, filled, total }:
             {g.title}
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            {g.items.map((it, ii) => (
+            {g.items.map((it, ii) => {
+              const isActive = !!activeKey && it.key === activeKey;
+              return (
               <button
                 key={ii}
                 onClick={it.onJump}
-                style={{ display: "flex", justifyContent: "space-between", gap: "0.6rem", alignItems: "baseline", background: "none", border: "none", cursor: "pointer", textAlign: "left", padding: "0.28rem 0", color: "#fff", width: "100%" }}
+                ref={isActive ? (el) => el?.scrollIntoView({ block: "nearest" }) : undefined}
+                style={{ display: "flex", justifyContent: "space-between", gap: "0.6rem", alignItems: "baseline", border: "none", borderLeft: isActive ? "2px solid #EA580C" : "2px solid transparent", cursor: "pointer", textAlign: "left", padding: "0.28rem 0.4rem", marginLeft: "-0.4rem", borderRadius: 4, color: "#fff", width: "100%", background: isActive ? "rgba(220,38,38,0.16)" : "none", transition: "background 0.2s" }}
               >
-                <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.4)", flexShrink: 0 }}>{it.label}</span>
+                <span style={{ fontSize: "0.72rem", color: isActive ? "#EA580C" : "rgba(255,255,255,0.4)", fontWeight: isActive ? 700 : 400, flexShrink: 0 }}>{it.label}</span>
                 <span style={{ fontSize: "0.78rem", textAlign: "right", flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: it.value ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.35)", fontStyle: it.value ? "normal" : "italic" }}>
                   {it.value || "Open"}
                 </span>
               </button>
-            ))}
+            );})}
           </div>
         </div>
       ))}
@@ -873,6 +876,9 @@ export default function TripBuilderClient({
 
   // ── Live summary + duplicate flagging ──
   const [summaryOpen, setSummaryOpen] = useState(false);
+  // The slot the user is currently working in — highlights the matching row in
+  // the summary panel so they can track where their selection lands.
+  const [activeSlotKey, setActiveSlotKey] = useState<string | null>(null);
 
   // Which slots currently hold each option, per shared pool — powers the
   // duplicate soft-flag. Lodging/transport are single-select so excluded.
@@ -908,7 +914,8 @@ export default function TripBuilderClient({
     return labels.find((l) => l !== selfLabel) ?? null;
   };
 
-  const jumpTo = useCallback((anchorId: string, day?: number) => {
+  const jumpTo = useCallback((anchorId: string, key: string, day?: number) => {
+    setActiveSlotKey(key);
     if (day !== undefined) setExpandedDay(day);
     setSummaryOpen(false);
     requestAnimationFrame(() =>
@@ -929,8 +936,8 @@ export default function TripBuilderClient({
       {
         title: "Stay & Travel",
         items: [
-          { label: "Lodging", value: nameOf(allLodging, lodging), onJump: () => jumpTo("slot-lodging") },
-          { label: "Transport", value: nameOf(transportOptions, transport), onJump: () => jumpTo("slot-transport") },
+          { key: "lodging", label: "Lodging", value: nameOf(allLodging, lodging), onJump: () => jumpTo("slot-lodging", "lodging") },
+          { key: "transport", label: "Transport", value: nameOf(transportOptions, transport), onJump: () => jumpTo("slot-transport", "transport") },
         ],
       },
     ];
@@ -938,10 +945,10 @@ export default function TripBuilderClient({
       groups.push({
         title: `Day ${i + 1}`,
         items: [
-          { label: "Round 1", value: roundValue(d.round1Mode, d.round1, d.round1Activity), onJump: () => jumpTo(`slot-d${i}-round1`, i) },
-          { label: "Round 2", value: roundValue(d.round2Mode, d.round2, d.activity), onJump: () => jumpTo(`slot-d${i}-round2`, i) },
-          { label: "Dinner", value: nameOf(allDining, d.dinner), onJump: () => jumpTo(`slot-d${i}-dinner`, i) },
-          { label: "Nightlife", value: nameOf(allBars, d.bar), onJump: () => jumpTo(`slot-d${i}-bar`, i) },
+          { key: `d${i}-round1`, label: "Round 1", value: roundValue(d.round1Mode, d.round1, d.round1Activity), onJump: () => jumpTo(`slot-d${i}-round1`, `d${i}-round1`, i) },
+          { key: `d${i}-round2`, label: "Round 2", value: roundValue(d.round2Mode, d.round2, d.activity), onJump: () => jumpTo(`slot-d${i}-round2`, `d${i}-round2`, i) },
+          { key: `d${i}-dinner`, label: "Dinner", value: nameOf(allDining, d.dinner), onJump: () => jumpTo(`slot-d${i}-dinner`, `d${i}-dinner`, i) },
+          { key: `d${i}-bar`, label: "Nightlife", value: nameOf(allBars, d.bar), onJump: () => jumpTo(`slot-d${i}-bar`, `d${i}-bar`, i) },
         ],
       });
     });
@@ -1053,7 +1060,7 @@ export default function TripBuilderClient({
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
             {allLodging.map((o) => (
-              <OptionCard key={o.id} option={o} selected={lodging === o.id} onSelect={() => setLodging(o.id)} tags={lodgingTagMap[o.id]} />
+              <OptionCard key={o.id} option={o} selected={lodging === o.id} onSelect={() => { setLodging(o.id); setActiveSlotKey("lodging"); }} tags={lodgingTagMap[o.id]} />
             ))}
           </div>
         </section>
@@ -1065,7 +1072,7 @@ export default function TripBuilderClient({
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
             {transportOptions.map((o) => (
-              <OptionCard key={o.id} option={o} selected={transport === o.id} onSelect={() => setTransport(o.id)} />
+              <OptionCard key={o.id} option={o} selected={transport === o.id} onSelect={() => { setTransport(o.id); setActiveSlotKey("transport"); }} />
             ))}
           </div>
         </section>
@@ -1115,6 +1122,8 @@ export default function TripBuilderClient({
                   {/* Round 1 — Morning */}
                   <CollapsibleSlot
                     anchorId={`slot-d${di}-round1`}
+                    slotKey={`d${di}-round1`}
+                    onActivate={setActiveSlotKey}
                     label={day.round1Mode === "golf" ? "Round 1 — Morning" : day.round1Mode === "activity" ? "Activity — Morning" : "Rest — Morning"}
                     pickText={day.round1Mode === "rest" ? "Rest" : day.round1Mode === "activity" ? (day.round1Activity || null) : nameOf(allCourses, day.round1)}
                     headerRight={<SlotModeToggle mode={day.round1Mode} onChange={(m) => updateDay(di, "round1Mode", m)} />}
@@ -1122,14 +1131,14 @@ export default function TripBuilderClient({
                     {day.round1Mode === "golf" && (
                       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                         {allCourses.map((o) => (
-                          <OptionCard key={o.id} option={o} selected={day.round1 === o.id} onSelect={() => updateDay(di, "round1", o.id)} tags={courseTagMap[o.id]} useFallbackImage duplicateLabel={dupFor(courseUse, `Day ${di + 1} Round 1`)(o.id)} />
+                          <OptionCard key={o.id} option={o} selected={day.round1 === o.id} onSelect={() => { updateDay(di, "round1", o.id); setActiveSlotKey(`d${di}-round1`); }} tags={courseTagMap[o.id]} useFallbackImage duplicateLabel={dupFor(courseUse, `Day ${di + 1} Round 1`)(o.id)} />
                         ))}
                       </div>
                     )}
                     {day.round1Mode === "activity" && (
                       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                         {activityOptions.map((o) => (
-                          <OptionCard key={o.id} option={o} selected={day.round1Activity === o.id} onSelect={() => updateDay(di, "round1Activity", o.id)} duplicateLabel={dupFor(activityUse, `Day ${di + 1} Morning`)(o.id)} />
+                          <OptionCard key={o.id} option={o} selected={day.round1Activity === o.id} onSelect={() => { updateDay(di, "round1Activity", o.id); setActiveSlotKey(`d${di}-round1`); }} duplicateLabel={dupFor(activityUse, `Day ${di + 1} Morning`)(o.id)} />
                         ))}
                       </div>
                     )}
@@ -1143,6 +1152,8 @@ export default function TripBuilderClient({
                   {/* Round 2 — Afternoon */}
                   <CollapsibleSlot
                     anchorId={`slot-d${di}-round2`}
+                    slotKey={`d${di}-round2`}
+                    onActivate={setActiveSlotKey}
                     label={day.round2Mode === "golf" ? "Round 2 — Afternoon" : day.round2Mode === "activity" ? "Activity — Afternoon" : "Rest — Afternoon"}
                     pickText={day.round2Mode === "rest" ? "Rest" : day.round2Mode === "activity" ? (day.activity || null) : nameOf(allCourses, day.round2)}
                     headerRight={<SlotModeToggle mode={day.round2Mode} onChange={(m) => { updateDay(di, "round2Mode", m); updateDay(di, "round2IsActivity", m === "activity"); }} />}
@@ -1153,7 +1164,7 @@ export default function TripBuilderClient({
                           {allCourses.map((o) => {
                             const r2Tags = getRound2TagMap(day.round1);
                             return (
-                              <OptionCard key={o.id} option={o} selected={day.round2 === o.id} onSelect={() => updateDay(di, "round2", o.id)} tags={r2Tags[o.id]} useFallbackImage duplicateLabel={dupFor(courseUse, `Day ${di + 1} Round 2`)(o.id)} />
+                              <OptionCard key={o.id} option={o} selected={day.round2 === o.id} onSelect={() => { updateDay(di, "round2", o.id); setActiveSlotKey(`d${di}-round2`); }} tags={r2Tags[o.id]} useFallbackImage duplicateLabel={dupFor(courseUse, `Day ${di + 1} Round 2`)(o.id)} />
                             );
                           })}
                         </div>
@@ -1167,7 +1178,7 @@ export default function TripBuilderClient({
                     {day.round2Mode === "activity" && (
                       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                         {activityOptions.map((o) => (
-                          <OptionCard key={o.id} option={o} selected={day.activity === o.id} onSelect={() => updateDay(di, "activity", o.id)} duplicateLabel={dupFor(activityUse, `Day ${di + 1} Afternoon`)(o.id)} />
+                          <OptionCard key={o.id} option={o} selected={day.activity === o.id} onSelect={() => { updateDay(di, "activity", o.id); setActiveSlotKey(`d${di}-round2`); }} duplicateLabel={dupFor(activityUse, `Day ${di + 1} Afternoon`)(o.id)} />
                         ))}
                       </div>
                     )}
@@ -1182,6 +1193,8 @@ export default function TripBuilderClient({
                   <SlotSection
                     label={`Dinner — Day ${di + 1}`}
                     anchorId={`slot-d${di}-dinner`}
+                    slotKey={`d${di}-dinner`}
+                    onActivate={setActiveSlotKey}
                     options={allDining}
                     selectedId={day.dinner}
                     onSelect={(id) => updateDay(di, "dinner", id)}
@@ -1193,6 +1206,8 @@ export default function TripBuilderClient({
                   <SlotSection
                     label={`Nightlife — Day ${di + 1}`}
                     anchorId={`slot-d${di}-bar`}
+                    slotKey={`d${di}-bar`}
+                    onActivate={setActiveSlotKey}
                     options={allBars}
                     selectedId={day.bar}
                     onSelect={(id) => updateDay(di, "bar", id)}
@@ -1279,9 +1294,9 @@ export default function TripBuilderClient({
         </div>{/* /left column */}
 
         {/* Desktop: sticky live summary rail */}
-        <aside className="hidden lg:block" style={{ width: 320, flexShrink: 0, position: "sticky", top: "1.5rem" }}>
+        <aside className="hidden lg:block" style={{ width: 320, flexShrink: 0, position: "sticky", top: "1.5rem", maxHeight: "calc(100vh - 3rem)", overflowY: "auto" }}>
           <div style={{ border: "1px solid rgba(220,38,38,0.35)", borderRadius: 12, padding: "1.25rem", background: "rgba(255,255,255,0.03)" }}>
-            <PlanSummaryPanel groups={summaryGroups} totalPerPerson={currentPricePerPerson} aiEstimate={aiEstimate} filled={filledCount} total={totalCount} />
+            <PlanSummaryPanel groups={summaryGroups} totalPerPerson={currentPricePerPerson} aiEstimate={aiEstimate} filled={filledCount} total={totalCount} activeKey={activeSlotKey} />
           </div>
         </aside>
       </div>{/* /flex layout */}
@@ -1297,7 +1312,7 @@ export default function TripBuilderClient({
                 <span style={{ fontSize: "0.68rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>Your trip</span>
                 <button onClick={() => setSummaryOpen(false)} aria-label="Close summary" style={{ background: "none", border: "none", fontSize: "1.1rem", cursor: "pointer", color: "rgba(255,255,255,0.4)" }}>✕</button>
               </div>
-              <PlanSummaryPanel groups={summaryGroups} totalPerPerson={currentPricePerPerson} aiEstimate={aiEstimate} filled={filledCount} total={totalCount} />
+              <PlanSummaryPanel groups={summaryGroups} totalPerPerson={currentPricePerPerson} aiEstimate={aiEstimate} filled={filledCount} total={totalCount} activeKey={activeSlotKey} />
             </div>
           </>
         )}
