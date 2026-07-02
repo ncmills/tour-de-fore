@@ -14,7 +14,7 @@
 - **Deploy = push to `main`** (Vercel GitHub App auto-builds + promotes). Do NOT run `vercel --prod` manually unless a build is stuck.
 - **handicaphq has NO shop / NO Stripe / NO Printful.** Strip all of it.
 - **Keep internal tag `tdf`** for data/engine/image-cache continuity. Do NOT rename it. (Brand/domain identity changes; the tag is a functional key.)
-- **Stripe concierge `metadata.site` must be a NEW distinct value** (e.g. `"hqcx"`), not `"tdf"` — avoids collision with the tourdefore shop's `site:"tdf"` in order reconciliation.
+- **~~Stripe concierge tag~~ — N/A.** Concierge (Stripe) was dropped in B1; handicaphq is fully payment-free. No Stripe metadata step remains.
 - **Palette guardrails (FAIL-FIRST):** ban fairway-green (`#008854` family) and navy+gold as primaries. Clay `#A6552E` is the ONLY hero accent.
 - **Self-canonical only.** Every handicaphq page canonicals to `https://handicaphq.com/...`. NO 301s from tourdefore yet (that's Phase 2).
 - **Palette:** Bone `#EDE7D9`, Fescue `#C9B78E`, Pine ink `#1E3A2F`, Graphite `#2A2A28`, Clay `#A6552E`.
@@ -241,9 +241,7 @@ Set `sitemap.ts` `base = "https://handicaphq.com"`; `robots.ts` sitemap → `htt
 
 In `next.config.ts`: change the www redirect source to `www.handicaphq.com` → `https://handicaphq.com`; update CSP `media-src` to `https://handicaphq.com`; remove any shop-only redirects; keep planner legacy redirects.
 
-- [ ] **Step 3: New Stripe concierge tag**
-
-In `api/concierge-checkout/route.ts:74`, change `metadata.site` from `"tdf"` to `"hqcx"` (planner concierge on handicaphq; distinct from tourdefore shop).
+- [x] **Step 3: New Stripe concierge tag — N/A (concierge + Stripe removed in B1).**
 
 - [ ] **Step 4: New IndexNow key**
 
