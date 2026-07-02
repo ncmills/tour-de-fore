@@ -918,52 +918,61 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
                 initial={prefersReducedMotion ? false : { opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
-                style={{ display: "flex", flexDirection: "column", gap: "1rem", overflow: "hidden" }}
+                // Box grid \u2014 the day's items render as themed cards, 2-up when
+                // the column is wide enough and 1-col on mobile (auto-fill, no
+                // overflow at 390px). Mirrors the sister-site DayScheduleSection.
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(min(300px, 100%), 1fr))",
+                  gap: "1rem",
+                  alignItems: "stretch",
+                  overflow: "hidden",
+                }}
               >
                 {day.items.map((item, j) => (
-                  <div key={j} style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
-                    <span style={{ fontSize: 18, marginTop: -2 }}>
-                      {typeIcons[item.type] || "\ud83d\udccc"}
-                    </span>
-                    <div>
-                      <div
+                  <div
+                    key={j}
+                    style={{
+                      ...cardStyle,
+                      padding: "1.1rem 1.25rem",
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+                      <span style={{ fontSize: 18 }}>
+                        {typeIcons[item.type] || "\ud83d\udccc"}
+                      </span>
+                      <span
                         style={{
-                          display: "flex",
-                          flexWrap: "wrap",
-                          alignItems: "baseline",
-                          gap: "0.75rem",
+                          fontSize: 11,
+                          color: tierColors[tier],
+                          textTransform: "uppercase",
+                          letterSpacing: "0.1em",
                         }}
                       >
-                        <span
-                          style={{
-                            fontSize: 11,
-                            color: tierColors[tier],
-                            textTransform: "uppercase",
-                            letterSpacing: "0.1em",
-                          }}
-                        >
-                          {item.time}
-                        </span>
-                        <span style={{ fontSize: 15, fontWeight: 500 }}>{item.activity}</span>
-                      </div>
-                      {item.detail && (
-                        <p style={{ color: "#a5a5a5", fontSize: 13, margin: "4px 0 0", lineHeight: 1.5 }}>
-                          {item.detail}
-                        </p>
-                      )}
-                      {item.proTip && (
-                        <p
-                          style={{
-                            color: "rgba(249,115,22,0.92)",
-                            fontSize: 13,
-                            fontStyle: "italic",
-                            margin: "4px 0 0",
-                          }}
-                        >
-                          {"\ud83d\udca1"} {item.proTip}
-                        </p>
-                      )}
+                        {item.time}
+                      </span>
                     </div>
+                    <span style={{ fontSize: 15, fontWeight: 600 }}>{item.activity}</span>
+                    {item.detail && (
+                      <p style={{ color: "#a5a5a5", fontSize: 13, margin: "6px 0 0", lineHeight: 1.5 }}>
+                        {item.detail}
+                      </p>
+                    )}
+                    {item.proTip && (
+                      <p
+                        style={{
+                          color: "rgba(249,115,22,0.92)",
+                          fontSize: 13,
+                          fontStyle: "italic",
+                          margin: "6px 0 0",
+                        }}
+                      >
+                        {"\ud83d\udca1"} {item.proTip}
+                      </p>
+                    )}
                   </div>
                 ))}
               </motion.div>

@@ -270,7 +270,7 @@ function DayJumpNav({
   );
 }
 
-function ScheduleItemCard({ item, plan }: { item: PlanScheduleItem; plan: GeneratedPlan }) {
+function ScheduleItemCard({ item, plan, fill }: { item: PlanScheduleItem; plan: GeneratedPlan; fill?: boolean }) {
   // Try to find the matching course/dining/bar so we can use its REAL url when
   // the data carries one. The matched venue's name is also a cleaner search
   // key than the schedule line (which may read "Round 1 at Pronghorn").
@@ -287,7 +287,7 @@ function ScheduleItemCard({ item, plan }: { item: PlanScheduleItem; plan: Genera
   const href = kind ? buildBookingLink(kind, venueName, matchedUrl, plan.destination) : null;
 
   return (
-    <ItineraryCard icon={scheduleIcons[item.type] || "📌"} label={item.time}>
+    <ItineraryCard icon={scheduleIcons[item.type] || "📌"} label={item.time} fill={fill}>
       <p style={{ fontSize: "1.05rem", fontWeight: 600, marginBottom: "0.2rem" }}>{item.activity}</p>
       {item.detail && (
         <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.5 }}>{item.detail}</p>
@@ -302,7 +302,7 @@ function ScheduleItemCard({ item, plan }: { item: PlanScheduleItem; plan: Genera
   );
 }
 
-function ItineraryCard({ icon, label, children }: { icon: string; label: string; children: React.ReactNode }) {
+function ItineraryCard({ icon, label, children, fill }: { icon: string; label: string; children: React.ReactNode; fill?: boolean }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
@@ -313,7 +313,12 @@ function ItineraryCard({ icon, label, children }: { icon: string; label: string;
         border: "1px solid #222",
         borderRadius: 10,
         padding: "1rem 1.25rem",
-        marginBottom: "0.75rem",
+        // In the box grid each card fills its cell height and gap handles the
+        // spacing; standalone (fallback branch) keeps the stacked bottom margin.
+        marginBottom: fill ? 0 : "0.75rem",
+        height: fill ? "100%" : undefined,
+        display: fill ? "flex" : undefined,
+        flexDirection: fill ? "column" : undefined,
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.35rem" }}>
@@ -772,9 +777,21 @@ export default function ItineraryClient({
                 transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
                 style={{ overflow: "hidden" }}
               >
-                {day.items.map((item, j) => (
-                  <ScheduleItemCard key={j} item={item} plan={plan} />
-                ))}
+                {/* Box grid — day's schedule items as themed cards, 2-up on
+                    wider screens, 1-col on mobile (auto-fill, no overflow at
+                    390px). Mirrors the sister-site DayScheduleSection layout. */}
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fill, minmax(min(300px, 100%), 1fr))",
+                    gap: "0.75rem",
+                    alignItems: "stretch",
+                  }}
+                >
+                  {day.items.map((item, j) => (
+                    <ScheduleItemCard key={j} item={item} plan={plan} fill />
+                  ))}
+                </div>
               </motion.div>
               )}
             </motion.section>
