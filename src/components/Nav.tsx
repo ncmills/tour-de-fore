@@ -188,17 +188,6 @@ export default function Nav() {
           >
             Shop
           </Link>
-
-          <Link
-            href="/plan"
-            className={`font-body text-sm px-6 py-2.5 rounded-lg transition-all duration-300 ${
-              isActive("/plan")
-                ? "bg-accent text-white shadow-md"
-                : "bg-accent text-white hover:bg-accent-hover shadow-md hover:shadow-lg"
-            }`}
-          >
-            Plan a Trip
-          </Link>
         </div>
 
         <button
@@ -246,23 +235,8 @@ export default function Nav() {
               Tour de Fore
             </Link>
             <p className="neon-stats neon-stats-text" style={{ fontSize: "0.75rem", marginBottom: "3rem" }}>
-              We planned ours. Now we&apos;ll plan yours.
+              Hell is empty, all the devils are here.
             </p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0, duration: 0.4 }}
-              className="mb-8"
-            >
-              <Link
-                href="/plan"
-                onClick={() => setMobileOpen(false)}
-                className="inline-block font-body text-sm text-white bg-accent hover:bg-accent-hover px-8 py-3 rounded-lg transition-all duration-300 shadow-md"
-              >
-                Plan a Trip
-              </Link>
-            </motion.div>
 
             <div className="text-xs tracking-[0.2em] uppercase text-accent font-body font-medium mb-4">
               Upcoming

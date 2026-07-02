@@ -4,7 +4,6 @@ import Link from "next/link";
 import { trips } from "@/lib/trips";
 import Logo from "./Logo";
 import USMap from "./USMap";
-import EmailCapture from "./EmailCapture";
 
 export default function Footer() {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
@@ -13,12 +12,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-bg border-t border-border mt-0">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 pt-12 md:pt-16">
-        <div className="max-w-2xl mx-auto mb-12 md:mb-16">
-          <EmailCapture source="footer" />
-        </div>
-      </div>
-      <div className="max-w-7xl mx-auto px-6 md:px-12 pb-16 md:pb-24">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 pt-16 md:pt-24 pb-16 md:pb-24">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {/* Brand */}
           <div>
@@ -76,20 +70,8 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Plan & Shop + Map */}
+          {/* Shop + Map */}
           <div>
-            <h4 className="text-xs tracking-[0.15em] uppercase text-accent mb-6 font-body font-medium">
-              Plan
-            </h4>
-            <div className="space-y-3 mb-8">
-              <Link href="/plan" className="text-text-muted hover:text-accent transition-colors duration-300 text-sm font-body block">
-                Plan a Trip
-              </Link>
-              <Link href="/my-trips" className="text-text-muted hover:text-accent transition-colors duration-300 text-sm font-body block">
-                My Trips
-              </Link>
-            </div>
-
             <h4 className="text-xs tracking-[0.15em] uppercase text-accent mb-6 font-body font-medium">
               Shop
             </h4>
