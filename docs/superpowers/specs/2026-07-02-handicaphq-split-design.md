@@ -65,11 +65,14 @@ Semantic aliases: `--bg`, `--surface`, `--surface-warm`, `--ink`, `--text`, `--t
 
 ## Route map
 
-**PLANNER routes → move to handicaphq.com** (`src/app/`): `atlas/`, `blog/`, `concierge/`, `data/`, `golf-trips/**` (all pSEO), `guides/`, `my-trips/`, `plan/`, `plan-a-trip/`, `trip/`, `login/`, `set-password/`, `site-map/`, `sitemap-index/`, `sitemap.ts`, `robots.ts`, `opengraph-image.tsx`, and most of `api/` (`generate-plan`, `concierge-checkout`, `lead`, `auth/*`, `unsubscribe`, `indexnow`, `cron/trip-reminders`).
+**PLANNER routes → move to handicaphq.com** (`src/app/`): `atlas/`, `blog/`, `data/`, `golf-trips/**` (all pSEO), `guides/`, `my-trips/`, `plan/`, `plan-a-trip/`, `trip/plan/[id]` (generated-plan share — NOT `trip/[slug]`), `login/`, `set-password/`, `site-map/`, `sitemap-index/`, `sitemap.ts`, `robots.ts`, `opengraph-image.tsx`, and most of `api/` (`generate-plan`, `lead`, `auth/*`, `unsubscribe`, `indexnow`, `cron/trip-reminders`).
+
+> **Corrections during build (2026-07-02):** (1) `concierge/` + `concierge-checkout` **dropped entirely** — handicaphq is fully Stripe-free (see Decisions). (2) **`trip/[slug]` is PERSONAL** (reads `lib/trips` = Nick's real 2021–2026 trips) — it is body-of-work content, NOT planner output; it moves to the residual list below. Only `trip/plan/[id]` (the generated-plan share) is planner.
 
 **RESIDUAL routes → stay on tourdefore.com:**
 - `page.tsx` (home) — **currently 100% planner-branded; needs light rewrite** to a personal intro/home (drop `GeneratorShowcase` + planner funnel; keep TubeTv/ExplosionGate/RotatingTagline/Tempest brand).
 - `past-trips/` (+ `[year]/`) — **this IS "body of work"** (OG title literally *"Body of Work — Past Golf Trips"*). Keep.
+- `trip/[slug]` + `components/{TripPageClient,PastTripDetailClient}` + `lib/trips.ts` — the **personal trip detail pages** (year-based, incl. the live-trip guest portal). Keep on tourdefore; removed from handicaphq in build task B2b.
 - `shop/` — **the "pro shop."** Keep. Depends on `api/checkout`, `api/verify-order`, `api/cron/{sync-orders,check-margins}`, `lib/{printful,shop-fulfillment}.ts` — all stay.
 - Legal: `privacy/`, `terms/`, `do-not-sell/` — needed on both.
 - **Intro:** no `intro` route exists. Use the `ExplosionGate` splash as intro (or a thin new route).
