@@ -1,5 +1,7 @@
 import { Suspense } from "react";
 import HomeClient from "@/components/HomeClient";
+import GeneratorShowcase from "@/components/home/GeneratorShowcase";
+import { pickShowcasePlans } from "@/components/home/showcase-plan";
 
 // Title is keyword-led for search (the #1 on-page signal); the brand quote stays
 // in the description (still shows in SERP) and across the visible page + OG. This
@@ -19,11 +21,87 @@ export const metadata = {
 };
 
 export default function Home() {
+  const showcasePlans = pickShowcasePlans();
   return (
     <>
       <Suspense>
         <HomeClient />
       </Suspense>
+
+      {/* ── Generator product-shot: a real, tiered sample of what the wizard
+          builds. Additive second section below the immersive hero. ── */}
+      <section
+        style={{
+          background: "var(--color-bg, #18181B)",
+          borderTop: "1px solid var(--color-border, #3F3F46)",
+          padding: "clamp(3rem, 8vw, 6rem) clamp(1.25rem, 5vw, 4rem)",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1080px",
+            margin: "0 auto",
+            display: "grid",
+            gap: "clamp(2rem, 5vw, 3.5rem)",
+            gridTemplateColumns: "minmax(0, 1fr)",
+            alignItems: "center",
+          }}
+          className="tdf-showcase-grid"
+        >
+          <div>
+            <p
+              style={{
+                fontFamily: "var(--font-plan-block, sans-serif)",
+                fontSize: "0.72rem",
+                letterSpacing: "0.22em",
+                textTransform: "uppercase",
+                color: "#EA580C",
+                marginBottom: "0.9rem",
+              }}
+            >
+              What the devils would book
+            </p>
+            <h2
+              style={{
+                fontFamily: "var(--font-display, sans-serif)",
+                fontSize: "clamp(1.9rem, 4.5vw, 3rem)",
+                lineHeight: 1.15,
+                color: "#fff",
+                margin: 0,
+              }}
+            >
+              One wizard.
+              <br />
+              Three tiers of trouble.
+            </h2>
+            <p
+              style={{
+                marginTop: "1.1rem",
+                maxWidth: "34ch",
+                fontSize: "clamp(1rem, 2vw, 1.1rem)",
+                lineHeight: 1.6,
+                color: "rgba(255,255,255,0.62)",
+              }}
+            >
+              From a $600 buddy weekend to a bucket-list run north of $3k — every
+              course, stay, and bar is a real pick from our atlas, priced
+              honestly. Toggle a tier to swap the whole trip.
+            </p>
+          </div>
+
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <GeneratorShowcase plans={showcasePlans} />
+          </div>
+        </div>
+
+        <style>{`
+          @media (min-width: 860px) {
+            .tdf-showcase-grid {
+              grid-template-columns: minmax(0, 1fr) minmax(0, 440px);
+            }
+          }
+        `}</style>
+      </section>
 
       {/* Hidden SEO content — crawlable by Google, invisible to users */}
       <section
