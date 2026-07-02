@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -89,6 +89,79 @@ const fadeVariants = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0, 0, 0.2, 1] as [number, number, number, number] } },
 };
+
+/* ── itinerary jump-to-day nav ── */
+
+function DayJumpNav({
+  days,
+  accent,
+  onJump,
+}: {
+  days: { day: number; label: string }[];
+  accent: string;
+  onJump: (n: number) => void;
+}) {
+  if (days.length <= 1) return null;
+  return (
+    <>
+      <style>{`.tdf-jumpnav::-webkit-scrollbar{display:none}`}</style>
+      <div
+        style={{
+          position: "sticky",
+          top: 0,
+          zIndex: 30,
+          margin: "0 0 1.5rem",
+          background: "rgba(0,0,0,0.72)",
+          backdropFilter: "blur(10px)",
+          WebkitBackdropFilter: "blur(10px)",
+          borderBottom: "1px solid #222",
+          padding: "0.6rem 0",
+        }}
+      >
+        <div
+          className="tdf-jumpnav"
+          style={{
+            display: "flex",
+            gap: "0.5rem",
+            overflowX: "auto",
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+          }}
+        >
+          {days.map((d) => (
+            <button
+              key={d.day}
+              onClick={() => onJump(d.day)}
+              style={{
+                flex: "0 0 auto",
+                cursor: "pointer",
+                padding: "6px 14px",
+                borderRadius: 999,
+                fontSize: 12,
+                fontWeight: 600,
+                whiteSpace: "nowrap",
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid rgba(255,255,255,0.12)",
+                color: "#fff",
+                transition: "border-color 0.2s, color 0.2s, background 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = accent;
+                e.currentTarget.style.color = accent;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
+                e.currentTarget.style.color = "#fff";
+              }}
+            >
+              Day {d.day}
+            </button>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}
 
 /* ── sub-components ── */
 
@@ -272,6 +345,27 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
   const [sendingEmails, setSendingEmails] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
   const [emailError, setEmailError] = useState("");
+  // Itinerary usability: collapsible day sections + jump-to-day nav. Default
+  // expanded (empty set = nothing collapsed) so the read-through is unchanged.
+  const prefersReducedMotion = useReducedMotion();
+  const [collapsedDays, setCollapsedDays] = useState<Set<number>>(new Set());
+  const toggleDay = (n: number) =>
+    setCollapsedDays((prev) => {
+      const next = new Set(prev);
+      if (next.has(n)) next.delete(n);
+      else next.add(n);
+      return next;
+    });
+  const jumpToDay = (n: number) => {
+    setCollapsedDays((prev) => {
+      if (!prev.has(n)) return prev;
+      const next = new Set(prev);
+      next.delete(n);
+      return next;
+    });
+    const el = document.getElementById(`itin-day-${n}`);
+    if (el) el.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
+  };
   // Owner can become true after a client-side claim (anon user who just signed
   // in lands back here and we claim their plan). Mirrors the server `isOwner`.
   const [claimedOwner, setClaimedOwner] = useState(false);
@@ -765,10 +859,14 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
         >
           The Itinerary
         </h2>
+        <DayJumpNav days={plan.schedule} accent={tierColors[tier]} onJump={jumpToDay} />
         <div>
-          {plan.schedule.map((day, i) => (
+          {plan.schedule.map((day, i) => {
+            const collapsed = collapsedDays.has(day.day);
+            return (
             <motion.div
               key={day.day}
+              id={`itin-day-${day.day}`}
               variants={fadeVariants}
               initial="hidden"
               whileInView="visible"
@@ -781,10 +879,47 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
                 display: "grid",
                 gridTemplateColumns: "clamp(100px, 30vw, 180px) 1fr",
                 gap: "clamp(1rem, 3vw, 2rem)",
+                scrollMarginTop: 90,
               }}
             >
-              <div style={{ fontWeight: 700, fontSize: 17 }}>{day.label}</div>
-              <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <button
+                onClick={() => toggleDay(day.day)}
+                aria-expanded={!collapsed}
+                style={{
+                  background: "none",
+                  border: "none",
+                  padding: 0,
+                  margin: 0,
+                  cursor: "pointer",
+                  textAlign: "left",
+                  color: "inherit",
+                  fontWeight: 700,
+                  fontSize: 17,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  alignSelf: "start",
+                }}
+              >
+                <span>{day.label}</span>
+                <span
+                  style={{
+                    fontSize: 13,
+                    color: tierColors[tier],
+                    transition: "transform 0.2s",
+                    transform: collapsed ? "rotate(-90deg)" : "rotate(0deg)",
+                  }}
+                >
+                  {"▾"}
+                </span>
+              </button>
+              {!collapsed && (
+              <motion.div
+                initial={prefersReducedMotion ? false : { opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
+                style={{ display: "flex", flexDirection: "column", gap: "1rem", overflow: "hidden" }}
+              >
                 {day.items.map((item, j) => (
                   <div key={j} style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
                     <span style={{ fontSize: 18, marginTop: -2 }}>
@@ -831,9 +966,11 @@ export default function PlanResultClient({ plan, allPlans, planId, tier, dest, p
                     </div>
                   </div>
                 ))}
-              </div>
+              </motion.div>
+              )}
             </motion.div>
-          ))}
+            );
+          })}
           <div style={{ borderTop: "1px solid #222" }} />
         </div>
 

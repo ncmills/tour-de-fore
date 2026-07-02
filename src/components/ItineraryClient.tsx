@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
 import type { GeneratedPlan, TripTier, PlanCourse, PlanDining, PlanBar, PlanScheduleItem } from "@/lib/plan-types";
 import MulliganButton from "./MulliganButton";
@@ -199,6 +199,77 @@ const BOOKABLE_KIND: Partial<Record<PlanScheduleItem["type"], BookingKind>> = {
   activity: "activity",
 };
 
+function DayJumpNav({
+  days,
+  accent,
+  onJump,
+}: {
+  days: { day: number; label: string }[];
+  accent: string;
+  onJump: (n: number) => void;
+}) {
+  if (days.length <= 1) return null;
+  return (
+    <>
+      <style>{`.tdf-jumpnav::-webkit-scrollbar{display:none}`}</style>
+      <div
+        style={{
+          position: "sticky",
+          top: 0,
+          zIndex: 30,
+          margin: "0 0 1.5rem",
+          background: "rgba(0,0,0,0.72)",
+          backdropFilter: "blur(10px)",
+          WebkitBackdropFilter: "blur(10px)",
+          borderBottom: "1px solid rgba(255,255,255,0.08)",
+          padding: "0.6rem 0",
+        }}
+      >
+        <div
+          className="tdf-jumpnav"
+          style={{
+            display: "flex",
+            gap: "0.5rem",
+            overflowX: "auto",
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+          }}
+        >
+          {days.map((d) => (
+            <button
+              key={d.day}
+              onClick={() => onJump(d.day)}
+              style={{
+                flex: "0 0 auto",
+                cursor: "pointer",
+                padding: "6px 14px",
+                borderRadius: 999,
+                fontSize: 12,
+                fontWeight: 600,
+                whiteSpace: "nowrap",
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid rgba(255,255,255,0.12)",
+                color: "#fff",
+                transition: "border-color 0.2s, color 0.2s, background 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = accent;
+                e.currentTarget.style.color = accent;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
+                e.currentTarget.style.color = "#fff";
+              }}
+            >
+              Day {d.day}
+            </button>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}
+
 function ScheduleItemCard({ item, plan }: { item: PlanScheduleItem; plan: GeneratedPlan }) {
   // Try to find the matching course/dining/bar so we can use its REAL url when
   // the data carries one. The matched venue's name is also a cleaner search
@@ -323,6 +394,27 @@ export default function ItineraryClient({
   const [sendingEmails, setSendingEmails] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
   const [emailError, setEmailError] = useState("");
+  // Full Schedule usability: collapsible day sections + jump-to-day nav. Default
+  // expanded (empty set = nothing collapsed) so the read-through is unchanged.
+  const prefersReducedMotion = useReducedMotion();
+  const [collapsedDays, setCollapsedDays] = useState<Set<number>>(new Set());
+  const toggleDay = (n: number) =>
+    setCollapsedDays((prev) => {
+      const next = new Set(prev);
+      if (next.has(n)) next.delete(n);
+      else next.add(n);
+      return next;
+    });
+  const jumpToDay = (n: number) => {
+    setCollapsedDays((prev) => {
+      if (!prev.has(n)) return prev;
+      const next = new Set(prev);
+      next.delete(n);
+      return next;
+    });
+    const el = document.getElementById(`itin-day-${n}`);
+    if (el) el.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
+  };
 
   const numDays = plan.schedule?.length || plan.numberOfDays || 3;
   const numNights = numDays + 2; // arrival night + activity days + departure night
@@ -616,10 +708,16 @@ export default function ItineraryClient({
         </motion.section>
 
         {/* ── Full Schedule (all days from AI) ── */}
+        {plan.schedule?.length > 1 && (
+          <DayJumpNav days={plan.schedule} accent="#EA580C" onJump={jumpToDay} />
+        )}
         {plan.schedule?.length > 0 ? (
-          plan.schedule.map((day, di) => (
+          plan.schedule.map((day, di) => {
+            const collapsed = collapsedDays.has(day.day);
+            return (
             <motion.section
               key={day.day}
+              id={`itin-day-${day.day}`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 * di + 0.3 }}
@@ -627,24 +725,61 @@ export default function ItineraryClient({
                 marginBottom: "2.5rem",
                 borderTop: di > 0 ? "1px solid rgba(255,255,255,0.06)" : "none",
                 paddingTop: di > 0 ? "2rem" : 0,
+                scrollMarginTop: 90,
               }}
             >
-              <h2 style={{
-                fontFamily: "var(--font-plan-block), sans-serif",
-                fontSize: "clamp(1.8rem, 4vw, 2.5rem)",
-                textTransform: "uppercase",
-                letterSpacing: "0.08em",
-                color: "#EA580C",
-                marginBottom: "1.25rem",
-              }}>
-                {day.label}
-              </h2>
+              <button
+                onClick={() => toggleDay(day.day)}
+                aria-expanded={!collapsed}
+                style={{
+                  background: "none",
+                  border: "none",
+                  padding: 0,
+                  margin: 0,
+                  cursor: "pointer",
+                  width: "100%",
+                  textAlign: "left",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.75rem",
+                  marginBottom: collapsed ? 0 : "1.25rem",
+                }}
+              >
+                <h2 style={{
+                  fontFamily: "var(--font-plan-block), sans-serif",
+                  fontSize: "clamp(1.8rem, 4vw, 2.5rem)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                  color: "#EA580C",
+                  margin: 0,
+                }}>
+                  {day.label}
+                </h2>
+                <span style={{
+                  color: "#EA580C",
+                  fontSize: "1.2rem",
+                  transition: "transform 0.2s",
+                  transform: collapsed ? "rotate(-90deg)" : "rotate(0deg)",
+                }}>
+                  {"▾"}
+                </span>
+              </button>
 
-              {day.items.map((item, j) => (
-                <ScheduleItemCard key={j} item={item} plan={plan} />
-              ))}
+              {!collapsed && (
+              <motion.div
+                initial={prefersReducedMotion ? false : { opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
+                style={{ overflow: "hidden" }}
+              >
+                {day.items.map((item, j) => (
+                  <ScheduleItemCard key={j} item={item} plan={plan} />
+                ))}
+              </motion.div>
+              )}
             </motion.section>
-          ))
+            );
+          })
         ) : (
           /* Fallback: use constructed dayItineraries if no schedule */
           dayItineraries.map((day, di) => (
