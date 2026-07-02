@@ -8,10 +8,6 @@
     {
       "path": "/api/cron/check-margins",
       "schedule": "0 13 * * *"
-    },
-    {
-      "path": "/api/cron/trip-reminders",
-      "schedule": "0 15 * * *"
     }
   ]
 }

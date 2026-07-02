@@ -49,9 +49,6 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "images.unsplash.com" },
     ],
   },
-  rewrites: async () => [
-    { source: "/sitemap.xml", destination: "/sitemap-index" },
-  ],
   redirects: async () => [
     {
       source: "/:path*",
@@ -59,14 +56,40 @@ const nextConfig: NextConfig = {
       destination: "https://tourdefore.com/:path*",
       permanent: true,
     },
-    // 2026-03-31 (6e46933) flow simplification removed /plan/auto-generate;
-    // 2026-04-09 (af56efb) paywall removal retired /subscribe (and the two
-    // post-checkout success pages that followed). MOH 404'd in GSC 7 days
-    // after a similar gap on 2026-05-05; shipping these proactively.
-    { source: "/plan/auto-generate", destination: "/plan-a-trip", permanent: true },
-    { source: "/subscribe", destination: "/", permanent: true },
-    { source: "/subscribe/success", destination: "/", permanent: true },
-    { source: "/plan/unlock-success", destination: "/", permanent: true },
+
+    // ── Legacy planner redirects (kept; retargeted to handicaphq). These must
+    //    stay ABOVE the /plan/:path* catch-all so they win by first-match. ──
+    { source: "/plan/auto-generate", destination: "https://handicaphq.com/plan-a-trip", permanent: true },
+    { source: "/plan/unlock-success", destination: "https://handicaphq.com/", permanent: true },
+    { source: "/subscribe", destination: "https://handicaphq.com/", permanent: true },
+    { source: "/subscribe/success", destination: "https://handicaphq.com/", permanent: true },
+
+    // ── 2026-07-02 split: the golf-trip PLANNER moved to handicaphq.com.
+    //    301 all old planner / SEO / wizard / blog URLs to their handicaphq
+    //    equivalents so no search equity or bookmark leaks. tourdefore.com is
+    //    now a personal site (home, past-trips, personal trip pages, pro shop). ──
+    { source: "/plan", destination: "https://handicaphq.com/plan", permanent: true },
+    { source: "/plan/:path*", destination: "https://handicaphq.com/plan/:path*", permanent: true },
+    { source: "/plan-a-trip", destination: "https://handicaphq.com/plan-a-trip", permanent: true },
+    { source: "/golf-trips", destination: "https://handicaphq.com/golf-trips", permanent: true },
+    { source: "/golf-trips/:path*", destination: "https://handicaphq.com/golf-trips/:path*", permanent: true },
+    { source: "/atlas", destination: "https://handicaphq.com/atlas", permanent: true },
+    { source: "/atlas/:path*", destination: "https://handicaphq.com/atlas/:path*", permanent: true },
+    { source: "/guides", destination: "https://handicaphq.com/guides", permanent: true },
+    { source: "/guides/:path*", destination: "https://handicaphq.com/guides/:path*", permanent: true },
+    { source: "/blog", destination: "https://handicaphq.com/blog", permanent: true },
+    { source: "/blog/:path*", destination: "https://handicaphq.com/blog/:path*", permanent: true },
+    { source: "/data", destination: "https://handicaphq.com/data", permanent: true },
+    { source: "/data/:path*", destination: "https://handicaphq.com/data/:path*", permanent: true },
+    { source: "/my-trips", destination: "https://handicaphq.com/my-trips", permanent: true },
+    { source: "/trip/plan", destination: "https://handicaphq.com/trip/plan", permanent: true },
+    { source: "/trip/plan/:path*", destination: "https://handicaphq.com/trip/plan/:path*", permanent: true },
+    { source: "/login", destination: "https://handicaphq.com/login", permanent: true },
+    { source: "/set-password", destination: "https://handicaphq.com/set-password", permanent: true },
+    { source: "/site-map", destination: "https://handicaphq.com/site-map", permanent: true },
+    // Concierge was dropped on handicaphq (planner-only, no Stripe) — send to home.
+    { source: "/concierge", destination: "https://handicaphq.com/", permanent: true },
+    { source: "/concierge/:path*", destination: "https://handicaphq.com/", permanent: true },
   ],
   headers: async () => [
     {

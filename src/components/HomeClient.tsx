@@ -35,7 +35,6 @@ export default function HomeClient() {
   const [logoVisible, setLogoVisible] = useState(skip);
   const [logoUninverted, setLogoUninverted] = useState(skip);
   const [isMobile, setIsMobile] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   // hoveredSubtitle/typedText removed — using permanent tagline
   const [ambientOn, setAmbientOn] = useState(false);
   const ambientAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -45,10 +44,6 @@ export default function HomeClient() {
     check();
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
-  }, []);
-
-  useEffect(() => {
-    fetch("/api/profile").then(r => { if (r.ok) setIsLoggedIn(true); }).catch(() => {});
   }, []);
 
   // After text animations finish, show TV
@@ -214,30 +209,6 @@ export default function HomeClient() {
         </motion.div>
       </div>
 
-      {/* Login / My Account icon top-right */}
-      {showLinks && (
-        <motion.a
-          href={isLoggedIn ? "/my-trips" : "/login"}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 0.8 }}
-          style={{
-            position: "fixed",
-            top: "1.2rem",
-            right: "clamp(1rem, 4vw, 2rem)",
-            zIndex: 50,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "0",
-            textDecoration: "none",
-          }}
-        >
-          <Image src="/devil-mascot.webp" alt="Tour de Fore member login" width={isMobile ? 50 : 80} height={isMobile ? 50 : 80} style={{ height: "auto" }} />
-          <span style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.9)", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "var(--font-inter), sans-serif", marginTop: "-8px" }}>{isLoggedIn ? "My Account" : "Login"}</span>
-        </motion.a>
-      )}
-
       {/* ── CENTER: links (same position as original) ── */}
       <AnimatePresence>
         {showLinks && (
@@ -264,7 +235,6 @@ export default function HomeClient() {
             {[
               { label: "Pro Shop", href: "/shop", blood: false },
               { label: "Body of Work", href: "/past-trips", blood: false },
-              { label: "Plan a Trip", href: "/plan-a-trip", blood: false },
             ].flatMap(({ label, href, blood }, i, arr) => [
               <Link
                 key={label}
