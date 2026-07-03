@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export const metadata = {
   title: "Page Not Found | Tour de Fore",
-  description: "The page you're looking for doesn't exist. Find your next golf trip destination.",
+  description: "The page you're looking for doesn't exist. Head back to the clubhouse.",
   robots: {
     index: false,
     follow: false,
@@ -23,11 +23,11 @@ export default function NotFound() {
         <Link href="/" style={{ display: "inline-block", background: "rgba(200,121,65,0.9)", borderRadius: 8, padding: "12px 28px", color: "#fff", fontSize: 15, fontWeight: 600, letterSpacing: "0.04em", textDecoration: "none", textTransform: "uppercase" }}>
           Home
         </Link>
-        <Link href="/golf-trips" style={{ display: "inline-block", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 8, padding: "12px 28px", color: "#fff", fontSize: 15, fontWeight: 600, letterSpacing: "0.04em", textDecoration: "none", textTransform: "uppercase" }}>
-          Browse Destinations
+        <Link href="/past-trips" style={{ display: "inline-block", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 8, padding: "12px 28px", color: "#fff", fontSize: 15, fontWeight: 600, letterSpacing: "0.04em", textDecoration: "none", textTransform: "uppercase" }}>
+          Body of Work
         </Link>
-        <Link href="/plan-a-trip" style={{ display: "inline-block", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 8, padding: "12px 28px", color: "#fff", fontSize: 15, fontWeight: 600, letterSpacing: "0.04em", textDecoration: "none", textTransform: "uppercase" }}>
-          Plan a Trip
+        <Link href="/shop" style={{ display: "inline-block", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 8, padding: "12px 28px", color: "#fff", fontSize: 15, fontWeight: 600, letterSpacing: "0.04em", textDecoration: "none", textTransform: "uppercase" }}>
+          Pro Shop
         </Link>
       </div>
     </main>

@@ -21,11 +21,12 @@ export default function DoNotSellPage() {
         </h1>
 
         <p style={{ marginBottom: "1.5rem" }}>
-          Tour de Fore may share or sell personal information (name, email,
-          phone, and your trip profile) with relevant vendors and partners. You
-          can opt out at any time. Enter the email you used and we&rsquo;ll flag
-          every record tied to it as do-not-sell and do-not-share — across Tour
-          de Fore and our sister sites.
+          Tour de Fore is a personal golf site and pro shop, and we don&rsquo;t
+          sell or share your personal information for anyone else&rsquo;s
+          marketing. This page is here as a courtesy: if you interacted with the
+          older trip planner while it lived on this site, enter the email you
+          used and we&rsquo;ll flag every record tied to it as do-not-sell and
+          do-not-share.
         </p>
 
         <DoNotSellClient />

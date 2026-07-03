@@ -16,47 +16,45 @@ export default function PrivacyPage() {
         <h1 style={{ fontFamily: "var(--font-plan-groovy), cursive", fontSize: "clamp(2rem, 5vw, 3.5rem)", color: "#fff", marginBottom: "2rem" }}>
           Privacy Policy
         </h1>
-        <p style={{ color: "rgba(255,255,255,0.3)", marginBottom: "2rem" }}>Last updated: March 30, 2026</p>
+        <p style={{ color: "rgba(255,255,255,0.3)", marginBottom: "2rem" }}>Last updated: July 3, 2026</p>
+
+        <p style={{ marginBottom: "1rem" }}>Tour de Fore is a personal golf site and pro shop. The only time we collect your personal information is when you place a pro-shop order. (The AI trip planner that used to live here moved to <a href="https://handicaphq.com" style={{ color: "rgba(220,38,38,0.9)" }}>Handicap HQ</a> — its data practices are covered by its own privacy policy.)</p>
 
         <h2 style={{ color: "#fff", fontSize: "1.1rem", marginTop: "2rem", marginBottom: "0.5rem" }}>What We Collect</h2>
-        <p>When you use Tour de Fore, we collect:</p>
+        <p>When you check out from the pro shop, we collect:</p>
         <ul style={{ paddingLeft: "1.5rem", marginBottom: "1rem" }}>
-          <li><strong style={{ color: "#fff" }}>Name and email</strong> — provided when you generate a trip plan or sign in.</li>
-          <li><strong style={{ color: "#fff" }}>Trip preferences</strong> — destination, group size, budget, and other wizard inputs used to generate your plan.</li>
+          <li><strong style={{ color: "#fff" }}>Name and email</strong> — to confirm your order and email you a receipt and shipping updates.</li>
+          <li><strong style={{ color: "#fff" }}>Shipping address</strong> — to produce and deliver your merch.</li>
           <li><strong style={{ color: "#fff" }}>Payment info</strong> — processed securely by Stripe. We never see or store your card number.</li>
-          <li><strong style={{ color: "#fff" }}>Usage data</strong> — which destinations you view and select, used to improve recommendations.</li>
         </ul>
+        <p>Browsing the site otherwise — the home page, past trips, the shop — doesn&rsquo;t require an account and doesn&rsquo;t collect personal information beyond standard hosting analytics.</p>
 
         <h2 style={{ color: "#fff", fontSize: "1.1rem", marginTop: "2rem", marginBottom: "0.5rem" }}>How We Use It</h2>
         <ul style={{ paddingLeft: "1.5rem", marginBottom: "1rem" }}>
-          <li>Generate personalized trip plans based on your preferences.</li>
-          <li>Send you your trip plan and attendee invites via email.</li>
-          <li>Improve our recommendation engine based on aggregate usage patterns.</li>
-          <li>Process payments for premium plan features.</li>
+          <li>Process your payment and produce your order.</li>
+          <li>Ship your merch and email you a receipt and tracking.</li>
+          <li>Handle any damage, loss, or support issue with your order.</li>
         </ul>
-
-        <h2 style={{ color: "#fff", fontSize: "1.1rem", marginTop: "2rem", marginBottom: "0.5rem" }}>How We Store It</h2>
-        <p>Your data is stored in encrypted cloud databases (Redis Cloud) with automatic expiration. Trip plans are retained for 90 days. Account data is retained for 1 year of inactivity.</p>
+        <p>That&rsquo;s the whole list. We use your order information to fill your order — nothing else.</p>
 
         <h2 style={{ color: "#fff", fontSize: "1.1rem", marginTop: "2rem", marginBottom: "0.5rem" }}>Third Parties</h2>
+        <p>We share order information with the vendors that make checkout and fulfillment work, and only for that purpose:</p>
         <ul style={{ paddingLeft: "1.5rem", marginBottom: "1rem" }}>
           <li><strong style={{ color: "#fff" }}>Stripe</strong> — payment processing</li>
+          <li><strong style={{ color: "#fff" }}>Printful</strong> — made-to-order production and drop-shipping of your merch</li>
           <li><strong style={{ color: "#fff" }}>Resend</strong> — transactional email delivery</li>
-          <li><strong style={{ color: "#fff" }}>Anthropic (Claude)</strong> — AI-powered trip plan generation</li>
           <li><strong style={{ color: "#fff" }}>Vercel</strong> — hosting and analytics</li>
         </ul>
-        <h2 style={{ color: "#fff", fontSize: "1.1rem", marginTop: "2rem", marginBottom: "0.5rem" }}>Sharing and Selling Your Information</h2>
+
+        <h2 style={{ color: "#fff", fontSize: "1.1rem", marginTop: "2rem", marginBottom: "0.5rem" }}>We Don&rsquo;t Sell Your Information</h2>
         <p style={{ marginBottom: "1rem" }}>
-          When you give us explicit consent at an email-capture point — by checking the share box at the form — we may share or sell your personal information to relevant vendors and partners so they can follow up with offers for your trip. The categories that may be shared or sold are your identifiers (name, email, phone) and your trip profile (destination, dates, group size, budget, the courses and preferences you selected, and the behavioral signals we recorded while you used the planner). We do not share or sell anything without that explicit consent — the box is unchecked by default, and a lead captured without it is used only to run the product for you.
-        </p>
-        <p style={{ marginBottom: "1rem" }}>
-          Under the CCPA/CPRA and similar laws, this consent-based sharing is treated as a &ldquo;sale&rdquo; or &ldquo;sharing&rdquo; of personal information, and you have the right to opt out. You can opt out at any time at our{" "}
+          We do not sell or share your personal information for anyone else&rsquo;s marketing. Your order details go only to the vendors above, only to fulfill your order. If you interacted with the older trip planner while it lived on this site and want any record opted out of sale or sharing, you can do that at our{" "}
           <a href="/do-not-sell" style={{ color: "rgba(220,38,38,0.9)" }}>Do Not Sell or Share My Personal Information</a>{" "}
-          page — or, if your browser sends a Global Privacy Control (GPC) signal, we treat that as an opt-out automatically.
+          page. We also honor a Global Privacy Control (GPC) signal automatically.
         </p>
 
         <h2 style={{ color: "#fff", fontSize: "1.1rem", marginTop: "2rem", marginBottom: "0.5rem" }}>Your Rights</h2>
-        <p>You can request deletion of your data at any time by emailing <a href="mailto:info@tourdefore.com" style={{ color: "rgba(220,38,38,0.9)" }}>info@tourdefore.com</a>. You also have the right to opt out of the sale or sharing of your personal information — exercise it at <a href="/do-not-sell" style={{ color: "rgba(220,38,38,0.9)" }}>/do-not-sell</a> or via a Global Privacy Control signal.</p>
+        <p>You can request deletion of your data at any time by emailing <a href="mailto:info@tourdefore.com" style={{ color: "rgba(220,38,38,0.9)" }}>info@tourdefore.com</a>. We don&rsquo;t sell or share your information, but if you&rsquo;d like to be certain no legacy record is ever sold or shared, you can opt out at <a href="/do-not-sell" style={{ color: "rgba(220,38,38,0.9)" }}>/do-not-sell</a> or via a Global Privacy Control signal.</p>
 
         <h2 style={{ color: "#fff", fontSize: "1.1rem", marginTop: "2rem", marginBottom: "0.5rem" }}>Contact</h2>
         <p>Questions about this policy? Email <a href="mailto:info@tourdefore.com" style={{ color: "rgba(220,38,38,0.9)" }}>info@tourdefore.com</a>.</p>
