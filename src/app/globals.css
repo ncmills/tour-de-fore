@@ -554,3 +554,183 @@ body.menu-open {
     color: #666 !important;
   }
 }
+
+/* ══════════════════════════ /about — "THE LORE" ══════════════════════════ */
+/* All .lore-* scoped to the About page. Palette: ember + ExplosionGate glitch triad. */
+
+.lore-scan {
+  position: fixed; inset: 0; z-index: 20; pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0px,
+    rgba(0,0,0,0) 2px,
+    rgba(0,0,0,0.28) 3px,
+    rgba(0,0,0,0.28) 3px
+  );
+  mix-blend-mode: multiply;
+  animation: lore-flicker 5s steps(60) infinite;
+}
+.lore-vignette {
+  position: fixed; inset: 0; z-index: 19; pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 40%, transparent 55%, rgba(0,0,0,0.78) 100%);
+}
+@keyframes lore-flicker {
+  0%,100% { opacity: 0.85; }
+  50% { opacity: 1; }
+  52% { opacity: 0.7; }
+  53% { opacity: 0.95; }
+}
+
+/* chyron ticker */
+.lore-chyron {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 15;
+  height: 30px; overflow: hidden;
+  background: rgba(5,3,2,0.92);
+  border-bottom: 1px solid rgba(234,88,12,0.55);
+  box-shadow: 0 0 22px rgba(234,88,12,0.28);
+  display: flex; align-items: center;
+}
+.lore-chyron-track { display: flex; width: max-content; animation: lore-marquee linear infinite; }
+.lore-chyron-inner { display: flex; }
+.lore-chyron-item {
+  font-family: var(--font-inter), monospace;
+  font-size: 0.66rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(255,255,255,0.72); white-space: nowrap; padding: 0 1.4rem; font-weight: 600;
+}
+@keyframes lore-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* eyebrows + roman numerals */
+.lore-eyebrow {
+  font-family: var(--font-inter), monospace;
+  font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: #EA580C; margin: 0 0 1rem; display: flex; align-items: center; gap: 0.7rem;
+}
+.lore-numeral {
+  font-family: var(--font-slab-cold), serif; font-size: 1.15rem; letter-spacing: 0;
+  color: #B8FF00; text-shadow: 0 0 10px rgba(184,255,0,0.6);
+  border: 1px solid rgba(184,255,0,0.4); border-radius: 3px; padding: 0 0.45rem; line-height: 1.4;
+}
+
+/* masthead — Blaka Hollow glitch */
+.lore-masthead {
+  position: relative; margin: 0.2rem 0 1.8rem;
+  font-size: clamp(3.4rem, 15vw, 9rem); line-height: 0.92; letter-spacing: 0.02em;
+  text-transform: uppercase; color: #fff;
+  text-shadow: 0 0 18px rgba(255,106,40,0.5);
+}
+.lore-masthead::before, .lore-masthead::after {
+  content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%;
+  overflow: hidden; pointer-events: none;
+}
+.lore-masthead::before { color: #FF2D78; animation: lore-glitch-a 2.6s infinite steps(2); clip-path: inset(0 0 62% 0); }
+.lore-masthead::after  { color: #00CFFF; animation: lore-glitch-b 3.1s infinite steps(2); clip-path: inset(58% 0 0 0); }
+@keyframes lore-glitch-a { 0%,92%,100% { transform: translate(0,0); } 93% { transform: translate(-4px,2px); } 96% { transform: translate(3px,-2px); } }
+@keyframes lore-glitch-b { 0%,90%,100% { transform: translate(0,0); } 91% { transform: translate(4px,-1px); } 95% { transform: translate(-3px,2px); } }
+
+/* display headings — Bebas w/ chromatic aberration driven by --ca */
+.lore-h1, .lore-h2 {
+  font-family: var(--font-plan-block), sans-serif; text-transform: uppercase;
+  color: #fff; line-height: 1.28; letter-spacing: 0.01em; margin: 0 0 1.2rem;
+  word-break: break-word;
+}
+.lore-h1 { font-size: clamp(2.6rem, 8vw, 5rem); }
+.lore-h2 { font-size: clamp(1.9rem, 5vw, 3.1rem); }
+
+/* sacred copy */
+.lore-lede {
+  font-family: var(--font-instrument), serif; font-style: italic;
+  font-size: clamp(1.25rem, 3vw, 1.9rem); line-height: 1.5;
+  color: rgba(255,255,255,0.85); margin: 0 0 2.4rem; max-width: 40ch;
+}
+.lore-body {
+  font-family: var(--font-inter), sans-serif;
+  font-size: clamp(1rem, 1.6vw, 1.15rem); line-height: 1.75;
+  color: rgba(255,255,255,0.68); margin: 0 0 1.4rem;
+}
+.lore-link {
+  color: #FF6A28; text-decoration: none; font-weight: 600;
+  background-image: linear-gradient(#EA580C,#EA580C);
+  background-size: 100% 1px; background-position: 0 100%; background-repeat: no-repeat;
+  transition: background-size 0.2s, color 0.2s, text-shadow 0.2s;
+}
+.lore-link:hover { color: #FFB088; text-shadow: 0 0 12px rgba(255,106,40,0.8); background-size: 100% 2px; }
+
+/* clear relocation banner — legible on purpose, no glitch */
+.lore-relocate {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 0.6rem 1.1rem;
+  margin: 0 0 0.4rem; padding: 1rem 1.2rem; border-radius: 8px;
+  border: 1px solid rgba(234,88,12,0.6); background: rgba(234,88,12,0.08);
+  text-decoration: none; transition: background 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+.lore-relocate:hover { background: rgba(234,88,12,0.16); border-color: #EA580C; box-shadow: 0 0 26px rgba(234,88,12,0.35); }
+.lore-relocate-tag {
+  font-family: var(--font-plan-block), sans-serif; text-transform: uppercase; letter-spacing: 0.1em;
+  font-size: 1rem; color: #FF6A28; white-space: nowrap;
+}
+.lore-relocate-msg {
+  font-family: var(--font-inter), sans-serif; font-size: 0.98rem; line-height: 1.5;
+  color: rgba(255,255,255,0.9); flex: 1 1 240px;
+}
+.lore-relocate-msg strong { color: #fff; }
+.lore-relocate-go {
+  font-family: var(--font-plan-block), sans-serif; text-transform: uppercase; letter-spacing: 0.08em;
+  font-size: 0.95rem; color: #fff; background: #EA580C; padding: 0.5rem 1rem; border-radius: 3px;
+  white-space: nowrap; transition: background 0.2s;
+}
+.lore-relocate:hover .lore-relocate-go { background: #FF6A28; }
+
+.lore-chapter { margin: 0 0 3.4rem; }
+.lore-rule { width: 100%; height: 1px; background: linear-gradient(90deg, #EA580C, transparent); margin: 2.6rem 0 3.2rem; }
+.lore-signoff {
+  font-family: var(--font-instrument), serif; font-style: italic;
+  font-size: clamp(1.1rem, 2.4vw, 1.5rem); color: rgba(255,255,255,0.72); margin: 0 0 2.6rem;
+}
+
+/* CTAs */
+.lore-ctas { display: flex; flex-wrap: wrap; gap: 1rem; }
+.lore-cta {
+  font-family: var(--font-plan-block), sans-serif; text-transform: uppercase;
+  letter-spacing: 0.08em; font-size: 1.1rem; padding: 0.85rem 1.7rem; border-radius: 2px;
+  text-decoration: none; color: #fff; transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+}
+.lore-cta--solid { background: #EA580C; box-shadow: 0 0 0 rgba(234,88,12,0); }
+.lore-cta--solid:hover { background: #FF6A28; box-shadow: 0 0 26px rgba(255,106,40,0.7); transform: translateY(-2px); }
+.lore-cta--ghost { background: transparent; border: 1px solid rgba(255,255,255,0.28); }
+.lore-cta--ghost:hover { border-color: #B8FF00; color: #B8FF00; box-shadow: 0 0 22px rgba(184,255,0,0.35); transform: translateY(-2px); }
+
+/* ── SIGNATURE: CRANK THE LORE meter ── */
+.lore-meter {
+  position: fixed; right: clamp(0.8rem, 2vw, 1.6rem); bottom: clamp(0.8rem, 2vw, 1.6rem); z-index: 25;
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  padding: 0.8rem 0.7rem; border-radius: 8px;
+  background: rgba(8,5,3,0.82); border: 1px solid rgba(234,88,12,0.5);
+  box-shadow: 0 0 30px rgba(234,88,12,0.3); backdrop-filter: blur(6px);
+}
+.lore-meter-label {
+  display: flex; flex-direction: column; align-items: center; line-height: 1;
+  font-family: var(--font-plan-block), sans-serif; letter-spacing: 0.14em; font-size: 0.72rem;
+  color: rgba(255,255,255,0.85); text-align: center;
+}
+.lore-meter-slider {
+  writing-mode: vertical-lr; direction: rtl; width: 8px; height: 120px; cursor: ns-resize;
+}
+.lore-meter-read {
+  font-family: var(--font-slab-cold), serif; font-size: 1.15rem; line-height: 1;
+  text-shadow: 0 0 12px currentColor;
+}
+
+@media (max-width: 640px) {
+  .lore-meter { flex-direction: row; bottom: 0.7rem; right: 0.7rem; padding: 0.5rem 0.7rem; gap: 0.6rem; }
+  .lore-meter-slider { writing-mode: horizontal-tb; direction: ltr; width: 90px; height: 8px; cursor: ew-resize; }
+  .lore-meter-label { font-size: 0.6rem; }
+}
+
+/* draggable artifacts are a fine-pointer toy — hide on touch to protect scrolling */
+@media (pointer: coarse), (max-width: 640px) {
+  .lore-artifacts { display: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lore-scan, .lore-chyron-track, .lore-masthead::before, .lore-masthead::after { animation: none !important; }
+  .lore-scan { opacity: 0.5; }
+}
