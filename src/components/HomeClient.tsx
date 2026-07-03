@@ -235,6 +235,7 @@ export default function HomeClient() {
             {[
               { label: "Pro Shop", href: "/shop", blood: false },
               { label: "Body of Work", href: "/past-trips", blood: false },
+              { label: "The Story", href: "/about", blood: false },
             ].flatMap(({ label, href, blood }, i, arr) => [
               <Link
                 key={label}
