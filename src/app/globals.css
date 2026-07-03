@@ -715,7 +715,7 @@ body.menu-open {
   writing-mode: vertical-lr; direction: rtl; width: 8px; height: 120px; cursor: ns-resize;
 }
 .lore-meter-read {
-  font-family: var(--font-slab-cold), serif; font-size: 1.15rem; line-height: 1;
+  font-family: var(--font-slab-cold), serif; font-size: 1.15rem; line-height: 1.3;
   text-shadow: 0 0 12px currentColor;
 }
 
