@@ -16,7 +16,7 @@ const YEAR_HERO: Record<number, string> = {
   2023: "/photos/2023/DSC01476.jpeg",
   2024: "/photos/2024/IMG_6034.jpeg",
   2025: "/photos/2025/IMG_5751.jpeg",
-  2026: "/photos/2026/IMG_4399.jpeg",
+  2026: "/photos/2026/cover-does-it-get-better.jpg",
   2027: "/photos/2027/traverse-city.jpg",
 };
 

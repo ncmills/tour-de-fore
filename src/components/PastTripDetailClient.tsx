@@ -289,7 +289,10 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
       </motion.section>
 
       {/* ── Collapsible accordion sections (CSS `order` controls display order) ── */}
-      <div style={{ display: "flex", flexDirection: "column", position: "relative", zIndex: 1 }}>
+      {/* paddingBottom gives the last accordion breathing room — this component is
+          rendered standalone (no Footer) at /past-trips/[year] and /trip/[slug]
+          (live), so without it the final section butts flush against the page edge. */}
+      <div style={{ display: "flex", flexDirection: "column", position: "relative", zIndex: 1, paddingBottom: "clamp(3.5rem, 9vw, 7rem)" }}>
 
       {/* Summary — open by default; everything else collapsed */}
       <AccordionSection title="Summary" order={0} anchorId="sec-summary" isOpen={isOpen("summary")} onToggle={() => toggle("summary")}>
