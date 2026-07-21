@@ -18,7 +18,8 @@ const tripLocations: {
   { year: 2023, city: "Lexington", state: "Kentucky", slug: "2023", x: 650, y: 305 },
   { year: 2024, city: "Bend", state: "Oregon", slug: "2024", x: 160, y: 175 },
   { year: 2025, city: "Deadwood", state: "South Dakota", slug: "2025", x: 410, y: 195 },
-  { year: 2026, city: "Kohler", state: "Wisconsin", slug: "2026", upcoming: true, x: 560, y: 195 },
+  { year: 2026, city: "Kohler", state: "Wisconsin", slug: "2026", x: 560, y: 195 },
+  { year: 2027, city: "Traverse City", state: "Michigan", slug: "2027", upcoming: true, x: 632, y: 168 },
 ];
 
 export default function USMap({ compact, singleTrip }: { compact?: boolean; singleTrip?: number }) {

@@ -16,7 +16,8 @@ const YEAR_HERO: Record<number, string> = {
   2023: "/photos/2023/DSC01476.jpeg",
   2024: "/photos/2024/IMG_6034.jpeg",
   2025: "/photos/2025/IMG_5751.jpeg",
-  2026: "/photos/2026/kohler-hero.jpg",
+  2026: "/photos/2026/IMG_4399.jpeg",
+  2027: "/photos/2027/traverse-city.jpg",
 };
 
 export default function PastTripsClient() {
@@ -189,7 +190,7 @@ export default function PastTripsClient() {
           margin: "0 auto",
           lineHeight: 1.8,
         }}>
-          The trips that built the planner.
+          Hell was empty, all the devils were here.
         </p>
       </motion.div>
 

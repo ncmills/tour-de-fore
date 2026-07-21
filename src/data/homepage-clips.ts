@@ -1,6 +1,7 @@
 // Auto-generated clip manifest for homepage video grid
-// 54 clips compressed to 720p, no audio, max 12s each
-const TOTAL_CLIPS = 50;
+// Clips compressed to 720p, no audio, max 12s each.
+// 51–65 added from the 2026 Kohler trip (2026-07-20).
+const TOTAL_CLIPS = 65;
 
 export const homepageClips: string[] = Array.from(
   { length: TOTAL_CLIPS },

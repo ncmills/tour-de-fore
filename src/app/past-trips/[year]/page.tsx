@@ -3,7 +3,9 @@ import { trips } from "@/lib/trips";
 import { notFound } from "next/navigation";
 import PastTripDetailClient from "@/components/PastTripDetailClient";
 
-const VALID_YEARS = [2021, 2022, 2023, 2024, 2025];
+// Derived from the trip data so a newly-past trip (upcoming flag removed) gets a
+// /past-trips/<year> page automatically — no hardcoded year list to update.
+const VALID_YEARS = trips.filter((t) => !t.upcoming).map((t) => t.year);
 
 export function generateStaticParams() {
   return VALID_YEARS.map((y) => ({ year: String(y) }));
