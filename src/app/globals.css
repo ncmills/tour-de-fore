@@ -734,3 +734,56 @@ body.menu-open {
   .lore-scan, .lore-chyron-track, .lore-masthead::before, .lore-masthead::after { animation: none !important; }
   .lore-scan { opacity: 0.5; }
 }
+
+/* ── The Traditions — the only three laws (lore page) ────────────────────── */
+.lore-trads { display: grid; gap: 1.1rem; margin: 0 0 1.4rem; }
+.lore-trad {
+  position: relative; display: grid; grid-template-columns: auto 1fr; gap: 1.1rem 1.3rem;
+  align-items: start; padding: 1.45rem 1.45rem 1.55rem;
+  border: 1px solid rgba(184,255,0,0.22); border-radius: 10px;
+  background: linear-gradient(180deg, rgba(184,255,0,0.055), rgba(0,0,0,0.4));
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+.lore-trad:hover {
+  border-color: rgba(184,255,0,0.55);
+  box-shadow: 0 0 32px rgba(184,255,0,0.18);
+  transform: translateY(-2px);
+}
+.lore-trad-num {
+  font-family: var(--font-slab-cold), serif;
+  font-size: clamp(2rem, 6.5vw, 3rem); line-height: 1.1; padding: 0.3rem 0.75rem;
+  color: #B8FF00; text-shadow: 0 0 16px rgba(184,255,0,0.55);
+  border: 1px solid rgba(184,255,0,0.35); border-radius: 6px;
+  min-width: 3.4rem; text-align: center; align-self: start;
+}
+.lore-trad-tag {
+  font-family: var(--font-inter), monospace; font-weight: 700;
+  font-size: 0.68rem; letter-spacing: 0.26em; text-transform: uppercase;
+  color: #EA580C; margin: 0 0 0.45rem;
+}
+.lore-trad-title {
+  font-family: var(--font-plan-block), sans-serif; text-transform: uppercase;
+  font-size: clamp(1.35rem, 3.8vw, 1.95rem); line-height: 1.16; letter-spacing: 0.01em;
+  color: #fff; margin: 0 0 0.55rem;
+}
+.lore-trad-body {
+  font-family: var(--font-inter), sans-serif;
+  font-size: clamp(0.98rem, 1.5vw, 1.06rem); line-height: 1.68;
+  color: rgba(255,255,255,0.7); margin: 0;
+}
+.lore-trad-when {
+  display: inline-block; margin-top: 0.8rem;
+  font-family: var(--font-inter), monospace; font-weight: 600;
+  font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(184,255,0,0.9); border: 1px solid rgba(184,255,0,0.32);
+  border-radius: 999px; padding: 0.3rem 0.75rem;
+}
+.lore-trad-seal {
+  font-family: var(--font-inter), monospace;
+  font-size: 0.72rem; letter-spacing: 0.24em; text-transform: uppercase;
+  color: rgba(255,255,255,0.42); text-align: center; margin: 1.2rem 0 0;
+}
+@media (max-width: 640px) {
+  .lore-trad { grid-template-columns: 1fr; gap: 0.8rem; padding: 1.2rem; }
+  .lore-trad-num { justify-self: start; }
+}

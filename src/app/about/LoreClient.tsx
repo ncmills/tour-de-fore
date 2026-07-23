@@ -169,6 +169,29 @@ const TICKER = [
   "ONE BAD IDEA, REPEATED ANNUALLY", "BROWN BUTTER CAKE", "MORE MEMORIES THAN MOST MAKE IN A LIFETIME",
 ];
 
+/* The only three. Everything else is a bit; these are law. Deliberately kept
+   here and NOWHERE else — trip pages don't carry them. */
+const TRADITIONS = [
+  {
+    n: "I",
+    title: "Rookies play in skirts",
+    body: "The first eighteen holes a rookie ever plays on this trip, he plays in a skirt. Not the front nine, not a bit for the tee box — all eighteen, the whole way round, in front of whoever else has a tee time that morning. It’s the cheapest initiation available and it has never once failed to work.",
+    when: "First 18 he plays",
+  },
+  {
+    n: "II",
+    title: "Sophomores confess, then shotgun",
+    body: "At the first dinner a sophomore sits down to, he tells the table about the worst sex he has ever had. All of it. Then he shotguns a beer, which by that point is the easy half. One year of standing there watching buys you exactly one year of having to talk.",
+    when: "First dinner he's at",
+  },
+  {
+    n: "III",
+    title: "Seniors hand out the names",
+    body: "Anyone still walking around without a nickname gets one at Friday's hibachi dinner, issued by the seniors, one apiece, delivered to your face while a stranger sets an onion on fire. You do not get a vote. You do not get an appeal. The name outlives the trip, and in most cases the friendship that produced it.",
+    when: "Friday · hibachi",
+  },
+];
+
 function chromatic(px: number): string {
   return `${px}px 0 ${CYAN}, -${px}px 0 ${MAGENTA}, 0 0 ${8 + px * 3}px rgba(255,106,40,0.6)`;
 }
@@ -248,10 +271,10 @@ export default function LoreClient() {
         <section className="lore-chapter">
           <p className="lore-eyebrow"><span className="lore-numeral">I</span> How it started</p>
           <h3 className="lore-h2" style={{ textShadow: chromatic(ca) }}>
-            <Scramble text="Six friends. One bad idea. Repeated annually." active={fx} />
+            <Scramble text="Eighteen friends. One bad idea. Repeated annually." active={fx} />
           </h3>
           <p className="lore-body">
-            In 2021 a handful of us decided a normal weekend wasn&rsquo;t enough and booked a golf
+            In 2021 eighteen of us decided a normal weekend wasn&rsquo;t enough and booked a golf
             trip with roughly the planning discipline of a fraternity formal. Something about 108
             holes in three days, zero adult supervision, and a fish fry that ended in a chef&rsquo;s
             brown butter cake made us do it again. And again.
@@ -263,9 +286,71 @@ export default function LoreClient() {
           </p>
         </section>
 
-        {/* Chapter II */}
+        {/* Chapter II — the photographic record */}
         <section className="lore-chapter">
-          <p className="lore-eyebrow"><span className="lore-numeral">II</span> What this is</p>
+          <p className="lore-eyebrow"><span className="lore-numeral">II</span> The evidence</p>
+          <h3 className="lore-h2" style={{ textShadow: chromatic(ca) }}>
+            <Scramble text="The camera roll does not flatter anyone." active={fx} />
+          </h3>
+          <p className="lore-body">
+            Six years of photographs and almost none of them are of golf. There&rsquo;s a man reclining
+            in the open trunk of a Suburban on fifteen cases of Bud Light like a pharaoh on a barge,
+            somewhere outside St. George in 2021. A fairway played in ski goggles for reasons
+            nobody has ever explained. Pink cowboy hats, indoors, at an hour that didn&rsquo;t call for
+            them. A poker table in a rented living room in Lexington carrying more chips than
+            the buy-in justified, and a blackjack dealer in Deadwood who watched four grown men make
+            the same mistake in sequence.
+          </p>
+          <p className="lore-body">
+            Somebody packed a blood-pressure cuff to Bend, took a reading mid-trip, and photographed
+            the number. That&rsquo;s either diligence or a confession. In Sheboygan we hung the
+            morning&rsquo;s salmon on a board at the marina and stood behind them like we&rsquo;d
+            invented fishing. And there is one frame from 2026 of a man face-down on a lawn beside two
+            carts, mid-afternoon, full sun, which needs no caption and has never been given one.
+          </p>
+          <p className="lore-body">
+            The photographs are the tame part. There have been hospital visits. Plural. There have
+            been lakes entered fully clothed at hours when no reasonable person enters a lake, and at
+            least one entered on a dare that nobody remembers issuing. Every year somebody does
+            something that would end a normal friendship and instead becomes the thing we lead with
+            at dinner the following June.
+          </p>
+          <p className="lore-body">
+            That&rsquo;s the record. Nobody has ever asked for it to be edited.
+          </p>
+        </section>
+
+        {/* Chapter III — the only three traditions */}
+        <section className="lore-chapter">
+          <p className="lore-eyebrow"><span className="lore-numeral">III</span> The only traditions</p>
+          <h3 className="lore-h2" style={{ textShadow: chromatic(ca) }}>
+            <Scramble text="Three laws. No amendments." active={fx} />
+          </h3>
+          <p className="lore-body">
+            Everything about this trip is negotiable — the courses, the house, the tee times, whether
+            anyone is actually going to play the back nine. Three things are not.
+          </p>
+
+          <div className="lore-trads">
+            {TRADITIONS.map((t) => (
+              <article key={t.n} className="lore-trad">
+                <div className="lore-trad-num" aria-hidden>{t.n}</div>
+                <div>
+                  <p className="lore-trad-tag">Tradition {t.n}</p>
+                  <h4 className="lore-trad-title">{t.title}</h4>
+                  <p className="lore-trad-body">{t.body}</p>
+                  <span className="lore-trad-when">{t.when}</span>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <p className="lore-trad-seal">Ratified by nobody · enforced by everybody</p>
+        </section>
+
+        {/* Chapter III */}
+        <section className="lore-chapter">
+          <p className="lore-eyebrow"><span className="lore-numeral">IV</span> What this is</p>
           <h3 className="lore-h2" style={{ textShadow: chromatic(ca) }}>
             <Scramble text="The clubhouse, not the concierge." active={fx} />
           </h3>
@@ -282,9 +367,33 @@ export default function LoreClient() {
           </p>
         </section>
 
-        {/* Chapter III */}
+        {/* Chapter V — why it holds */}
         <section className="lore-chapter">
-          <p className="lore-eyebrow"><span className="lore-numeral">III</span> Want your own?</p>
+          <p className="lore-eyebrow"><span className="lore-numeral">V</span> Why it holds</p>
+          <h3 className="lore-h2" style={{ textShadow: chromatic(ca) }}>
+            <Scramble text="The golf is the invoice, not the purchase." active={fx} />
+          </h3>
+          <p className="lore-body">
+            One hundred and eight holes in three days sounds like the point. It isn&rsquo;t. It&rsquo;s the
+            invoice. The thing that gets eighteen grown men with jobs and mortgages and small children
+            to block the same five days every year without anyone having to say out loud that
+            they&rsquo;d like to see each other.
+          </p>
+          <p className="lore-body">
+            Ask anybody what he shot in 2023 and you&rsquo;ll get a shrug. Ask about the poker table
+            and you&rsquo;ll lose forty minutes. Nobody has broken par and nobody is going to, which
+            has never once come up as a problem.
+          </p>
+          <p className="lore-body">
+            Put a hard obligation on the calendar, make it expensive enough to be real, and the
+            friendship takes care of itself. Six years in, that&rsquo;s the only thing we&rsquo;ve
+            actually figured out.
+          </p>
+        </section>
+
+        {/* Chapter VI */}
+        <section className="lore-chapter">
+          <p className="lore-eyebrow"><span className="lore-numeral">VI</span> Want your own?</p>
           <h3 className="lore-h2" style={{ textShadow: chromatic(ca) }}>
             <Scramble text="We built a robot for that. It moved out." active={fx} />
           </h3>
