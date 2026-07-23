@@ -47,6 +47,11 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "kohlerwisconsin.com" },
       { protocol: "https", hostname: "quitquiocgolf.com" },
       { protocol: "https", hostname: "images.unsplash.com" },
+      // 2027 (Boyne Mountain) — official course/activity photography.
+      // BOYNE Resorts (boynegolf.com / boynemountain.com) serves all imagery
+      // from Sanity; Treetops serves Threetops photos from its own WP uploads.
+      { protocol: "https", hostname: "cdn.sanity.io" },
+      { protocol: "https", hostname: "www.treetops.com" },
     ],
   },
   redirects: async () => [

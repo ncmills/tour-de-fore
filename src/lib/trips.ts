@@ -162,18 +162,15 @@ export const trips: Trip[] = [
     lodgingAddress: "3610 Megeve Court, Boyne Falls, MI 49713",
     lodgingStayDates: "06 Jul 2027 → 12 Jul 2027",
     lodgingBookingUrl: "https://www.airbnb.com/rooms/1501827961526165846",
-    // No house photo yet — until a `lodgingImage` (or a photoSections entry) exists,
-    // the Command Center panel stays hidden and the Airbnb link only lives here.
-    // Drop a shot at /photos/2027/reserve-boyne.jpg and set lodgingImage to surface it.
-    //
-    // Placeholder scenic for the trip card — northern-Michigan lake country, but shot
-    // in autumn, not July. Swap for a real trip photo (or a Boyne press asset) before
-    // the trip. The live page renders the glowing year, not this image.
-    heroImage: "/photos/2027/traverse-city.jpg",
+    lodgingImage: "/photos/2027/house-exterior.jpg",
+    // House + area photos are the listing's own, pulled from the Airbnb listing above.
+    // Shot in autumn, not July — swap for our own once we're there.
+    heroImage: "/photos/2027/boyne-aerial.jpg",
     courses: [
       {
         name: "Bay Harbor Golf Club — Links/Quarry",
         url: "https://boynegolf.com/eleven-courses/links-quarry",
+        image: "https://cdn.sanity.io/images/5wbxmhco/boyne-resorts-global-content/7d98c031fd876196816f393937450062a1fa7394-1800x1260.jpg",
         description: "Arthur Hills got handed a defunct shale quarry and four miles of Lake Michigan shoreline and built the thing Bay Harbor itself calls \"the Pebble Beach of the Midwest\" — a claim that would be insufferable if the Links nine didn't play across towering bluffs and windblown dunes with the water on your shoulder the whole way. The Links runs 3,449 yards at par 36; the third is the fan favorite, a split-level fairway hanging over the lake that gives you two honest ways to play it and punishes you for wanting both. The Quarry nine is the other personality: 3,396 yards routed inside the pit itself, past 40-foot gorges, stone cliffs, natural ponds, and a waterfall. Round one of the week, and the bar is set high on purpose.",
         holes: 18,
         location: "5800 Coastal Ridge Drive, Bay Harbor, MI 49770",
@@ -184,6 +181,7 @@ export const trips: Trip[] = [
       {
         name: "Crooked Tree Golf Club",
         url: "https://boynegolf.com/eleven-courses/crooked-tree-golf-club",
+        image: "https://cdn.sanity.io/images/5wbxmhco/boyne-resorts-global-content/24a5f1c77fccdcf0ffd391f5d78204d756574655-5000x3500.jpg",
         description: "Five minutes up the hill from Bay Harbor and a completely different round. Crooked Tree is perched on the bluffs high above Little Traverse Bay and carved through stands of centuries-old hardwood — the first nine threads old-growth timber that frames every sightline, and the greens are undulating enough that par is a putting problem, not a driving one. It plays 6,640 yards to a par 71 from the Browns, which is to say it's short on the card and long in practice. The 17th looks back out over Lake Michigan into the sunsets Petoskey is famous for. We'll be teeing off at 1:45, so we get the light without having to earn it.",
         holes: 18,
         location: "Petoskey, MI",
@@ -192,6 +190,7 @@ export const trips: Trip[] = [
       {
         name: "The Heather — The Highlands",
         url: "https://boynegolf.com/eleven-courses/the-heather",
+        image: "https://cdn.sanity.io/images/5wbxmhco/boyne-resorts-global-content/583cdbbcc5931d9f54701ba7054c70089dfa7c59-5000x3500.jpg",
         description: "The one everything else here descends from. Robert Trent Jones Sr. opened The Heather in 1966 as the first BOYNE course, and sixty years later it's still the flagship: 7,143 yards, par 72 from the Browns, 2019 National Golf Course of the Year and 2018 Michigan Golf Course of the Year, with Michigan Amateurs, AJGA Championships and the Michigan State Pro-Am on its résumé. Classic Jones — the trouble is in front of you, the misses are your own fault, and the 18th makes you carry water to finish. It has been testing better golfers than us since before anyone on the bus was born.",
         holes: 18,
         location: "600 Highlands Drive, Harbor Springs, MI 49740",
@@ -201,6 +200,7 @@ export const trips: Trip[] = [
       {
         name: "The Moor — The Highlands",
         url: "https://boynegolf.com/eleven-courses/the-moor",
+        image: "https://cdn.sanity.io/images/5wbxmhco/boyne-resorts-global-content/d140a2c7e41d091b29de62d89501c63e07f447ad-4467x3427.jpg",
         description: "Same property as The Heather, zero transfer, entirely different disposition. The Moor is the members' favorite — 6,850 yards, par 72, laid through marshes and water holes with doglegs stacked through the front nine that reward a right-handed power fade and quietly ruin everyone else. It's billed as a true but fair test, which in northern Michigan means it will take exactly what you give it. The 18th is a checklist: water twice, wetlands, trees, bunkers, and a couple of doglegs for good measure. New tour bunker sand throughout. The afternoon half of a 36-hole day, which is the part where the week starts telling the truth about who packed a short game.",
         holes: 18,
         location: "600 Highlands Drive, Harbor Springs, MI 49740",
@@ -209,6 +209,7 @@ export const trips: Trip[] = [
       {
         name: "The Alpine — Boyne Mountain",
         url: "https://boynegolf.com/eleven-courses/the-alpine",
+        image: "https://cdn.sanity.io/images/5wbxmhco/boyne-resorts-global-content/d8efdd9bc9b31eefa5e5b56fb7814cfc3ef02157-5000x3500.jpg",
         description: "Out the front door. The Alpine trends down the mountain from elevated tee boxes with panoramic views toward Deer Lake and the Jordan Valley, and the fourth is the one that costs people strokes — the view off that tee is expansive enough that nobody remembers to pick a target. Par 72 over 5,053 to 7,045 yards depending on how brave the group feels at breakfast, and it's the forgiving one of the pair: open off the tee, confidence-building greens, a course that rewards a solid drive rather than punishing a loose one. It hosts Michigan's Tournament of Champions annually and has picked up a Golf Digest Editors' Choice and a USA Today 10Best. Zero bus. Zero excuse to be late.",
         holes: 18,
         location: "Boyne Falls, MI",
@@ -217,6 +218,7 @@ export const trips: Trip[] = [
       {
         name: "The Monument — Boyne Mountain",
         url: "https://boynegolf.com/eleven-courses/the-monument",
+        image: "https://cdn.sanity.io/images/5wbxmhco/boyne-resorts-global-content/46f79d4887d2de6c9e7164baf83e37d569226285-5000x3500.jpg",
         description: "The Alpine's meaner sibling, also out the front door. The Monument is a tribute course — holes drawn from Donald Ross, Alister MacKenzie, Robert Trent Jones, George Fazio and Pete Dye, each dedicated to someone who mattered to the game — which sounds like a gimmick until you're standing on a demanding fairway with an undulating green in front of you and realize it wants a complete game rather than a favorite shot. Par 72 across six tee boxes from 4,879 to 6,964 yards, slope running as high as 141. The 16th is dedicated to Everett Kircher and features a fairway bunker mound whose construction material BOYNE declines to disclose, which is either charming or ominous. Golf Digest Editors' Choice, USA Today 10Best.",
         holes: 18,
         location: "Boyne Falls, MI",
@@ -225,6 +227,7 @@ export const trips: Trip[] = [
       {
         name: "Threetops at Treetops",
         url: "https://www.treetops.com/golf/threetops/",
+        image: "https://www.treetops.com/wp-content/uploads/2024/03/par-3-golf-course-michigan-threetops-overview.jpg",
         description: "The finale, and the reason Saturday runs long. Rick Smith opened Threetops in 1992 — nine par-3s from 78 to 219 yards, one of them dropping 145 feet from tee to green and another 90, which is enough air time to reconsider your club twice on the way down. It hosted the ESPN Par-3 Shootout for eight years, and in 2001 Lee Trevino stood on the 7th — \"High Five\" — hit it long, spun it back into the cup, and walked off with $1,090,000 for one swing. Links Magazine files it under the baddest par 3s in the country. We tee off at 7:30 PM with sunset around 9:20, which means the trophy gets decided on Trevino's hole in the last good light of the week. There is no version of this that ends quietly.",
         holes: 9,
         location: "3962 Wilkinson Road, Gaylord, MI 49735",
@@ -233,9 +236,38 @@ export const trips: Trip[] = [
       },
     ],
     restaurants: [
-      { name: "Hibachi at the House", cuisine: "Private chef · teppanyaki", note: "Friday — the chef comes to us. Vendor TBD." },
-      { name: "Ordered-In Feasts ×3", cuisine: "Delivery · family style", note: "Wednesday, Thursday, Saturday — at the house, no drive, no wait." },
+      {
+        name: "Hibachi Connect — Petoskey",
+        url: "https://hibachiconnect.com/locations/michigan/petoskey",
+        cuisine: "Private chef · teppanyaki at the house",
+        note: "Friday hibachi. $60/adult, $600 event minimum, 10-guest minimum — 16 of us clears it. Two chef stations over 25 guests, so one is plenty. Covers Boyne City, Harbor Springs and the Emmet/Charlevoix corridor. 90–120 min show, full setup and cleanup. Book 3–4 weeks out — July fills first. (201) 565-3878.",
+      },
+      {
+        name: "Stiggs Brewery & Kitchen — Boyne City",
+        url: "https://www.stiggsbrewingcompany.com/catering",
+        cuisine: "Slow-smoked BBQ · catering & carryout",
+        note: "The lead option for the ordered-in feasts. Smoked meats by the pound, sides and finger foods à la carte for carryout or delivery, or full off-site catering if we want it served. 15 minutes from the house. 112 S. Park Street, Boyne City · (231) 497-6100.",
+      },
+      {
+        name: "Mighty Fine Pizza — Petoskey",
+        url: "https://www.mightyfinepizza.com/",
+        cuisine: "Pizza · pickup or delivery",
+        note: "The low-effort feast. Homemade dough, scratch sauce, pickup or delivery, also on DoorDash. The order nobody has to think about after 36 holes. 222 E. Mitchell St., Petoskey · (231) 347-3255.",
+      },
+      {
+        name: "Boyne Mountain resort dining",
+        url: "https://www.boynemountain.com/resort-dining",
+        cuisine: "On-property · walkable",
+        note: "The zero-effort fallback — everything on the mountain is a walk from the house. Worth having in the pocket for the night nobody wants to make a decision.",
+      },
     ],
+    transport: {
+      name: "Sunset Premier Shuttle",
+      contact: "airport transfers · golf outings",
+      vehicle: "Local Petoskey operator — confirm capacity for 16",
+      phones: ["231-497-1182"],
+      address: "825 Charlevoix Ave, Petoskey, MI 49770",
+    },
     schedule: [
       {
         day: "Tuesday",
@@ -249,6 +281,7 @@ export const trips: Trip[] = [
             type: "activity" as const,
             location: "Pellston / Traverse City, MI",
             description: "Two airports, two bus waves. Pellston is the short hop at 45 minutes out; Traverse City is an hour but usually the cheaper ticket. Whichever you book, you're on a wave — nobody drives themselves to Boyne Falls.",
+            facts: ["Ride options: Sunset Premier Shuttle (Petoskey, 231-497-1182) — local, does airport runs and golf outings", "Charter Bus Rental — Petoskey coaches, covers Boyne Falls / Harbor Springs / Pellston", "National Charter Bus — 1-844-755-0510, runs Boyne Mountain groups", "One operator for the whole week beats booking each leg"],
           },
           {
             time: "2:30 PM",
@@ -264,8 +297,8 @@ export const trips: Trip[] = [
             detail: "8BR · sleeps 22",
             type: "activity",
             location: "3610 Megeve Court, Boyne Falls, MI",
-            description: "Eight bedrooms, fifteen beds, a bunk loft that sleeps eight, five baths, and Deer Lake out the back. Hot tub, sauna, fire pit, and a basement bar with a pool table and ping pong that will settle more arguments this week than the golf does.",
-            facts: ["Sleeps 22", "8BR · 15 beds + bunk loft (8)", "5 baths", "Hot tub · sauna · fire pit", "Basement bar · pool table · ping pong", "Deer Lake views"],
+            description: "Eight bedrooms, fifteen beds, a bunk loft that sleeps eight, five baths, and Deer Lake out the back. Hot tub and a barrel sauna out back, a covered patio with the ping-pong table, and a basement game room — foosball, air hockey, arcade hoops — that will settle more arguments this week than the golf does.",
+            facts: ["Sleeps 22", "8BR · 15 beds + bunk loft (8)", "5 baths", "Hot tub · sauna · fire pit", "Basement game room · foosball, air hockey, arcade hoops", "Deer Lake views"],
           },
           {
             time: "7:00 PM",
@@ -290,6 +323,7 @@ export const trips: Trip[] = [
             detail: "10 lines · ~2 hrs",
             type: "activity",
             location: "Adventure Center · on property",
+            image: "https://cdn.sanity.io/images/ud45da4u/boyne-mountain/18e122ce055195c80e644e057a17f814f6d10718-2100x1400.jpg",
             description: "Ten lines running 20 to 25 mph, up to 50 feet off the deck, the longest stretching 780 feet across the Boyne Valley. It's a walk from the house — the only day this week with no transport at all. The ticket now includes same-day access to SkyBridge Michigan, the world's longest timber-towered suspension bridge, 118 feet up, which is worth the detour for anyone who wants to be scared standing still.",
             cost: "From $84/person",
             facts: ["10 ziplines · up to 780 ft", "SkyBridge Michigan included", "60–250 lbs · closed-toe shoes", "Arrive 30 min early · book online"],
@@ -308,8 +342,13 @@ export const trips: Trip[] = [
             detail: "Side-by-sides · state ORV trails",
             type: "activity",
             location: "Indian River / Wolverine, MI",
-            description: "Side-by-sides on the state ORV trails through the Indian River corridor. Roughly two hours of dust, then back on the bus. Outfitter to be confirmed.",
-            facts: ["Side-by-sides", "State ORV trail system", "Outfitter TBD"],
+            description: "Side-by-sides on the state ORV trails. Roughly two hours of dust, then back on the bus. Outfitter still to be booked — Snowbelt Motorsports in Gaylord rents two- and four-seat side-by-sides by the 4- or 8-hour block and is the closest operation with a real booking system; Ride Indian River is the hub for the Cheboygan County trail network if we'd rather ride the Indian River / Wolverine corridor as planned.",
+            facts: [
+              "Snowbelt Motorsports, Gaylord — 2- and 4-seat side-by-sides, 4hr/8hr/overnight, 989-448-8628",
+              "Ride Indian River — the ORV trail network hub, hundreds of miles",
+              "County Wide Adventures (Gaylord + Harbor Springs) — worth a call for a guided group run",
+              "16 men = 4 four-seaters; book early, July is peak",
+            ],
           },
           {
             time: "4:15 PM",
@@ -325,8 +364,8 @@ export const trips: Trip[] = [
             detail: "Senior testimony",
             type: "dining",
             location: "At the house",
-            description: "First of three feasts at the house. The seniors give the worst-first-date testimony, under oath, with no right of appeal.",
-            facts: ["Senior worst-first-date testimony"],
+            description: "First of three feasts at the house. Stiggs out of Boyne City is the lead — slow-smoked BBQ by the pound with sides, picked up or delivered, fifteen minutes away. The seniors give the worst-first-date testimony, under oath, with no right of appeal.",
+            facts: ["Stiggs Brewery & Kitchen, Boyne City — (231) 497-6100", "Mighty Fine Pizza, Petoskey — (231) 347-3255", "Boyne Mountain resort dining — walkable fallback", "Senior worst-first-date testimony"],
           },
         ],
       },
@@ -362,8 +401,8 @@ export const trips: Trip[] = [
             detail: "Cash fines settled",
             type: "dining",
             location: "At the house",
-            description: "Second feast at the house, and the night the ledger gets squared. Cash fines settled in full — the commissioner does not accept Venmo, promises, or arguments.",
-            facts: ["Cash fines settled"],
+            description: "Second feast at the house, and the night the ledger gets squared. Pizza night is the honest call after 36 holes — Mighty Fine out of Petoskey, pickup or delivery, nobody has to think. Cash fines settled in full; the commissioner does not accept Venmo, promises, or arguments.",
+            facts: ["Mighty Fine Pizza, Petoskey — (231) 347-3255", "Stiggs BBQ carryout — the upgrade if anyone has energy", "Cash fines settled"],
           },
         ],
       },
@@ -399,8 +438,9 @@ export const trips: Trip[] = [
             detail: "Chef at the house",
             type: "dining",
             location: "At the house",
-            description: "A teppanyaki chef comes to us — knives, onion volcano, the whole performance, in a rented kitchen in Boyne Falls. The vets give the worst-of testimony afterward; the category rotates annually and is announced by the commissioner without warning.",
-            facts: ["Private teppanyaki chef", "Vet testimony · category rotates annually", "Vendor TBD"],
+            description: "A teppanyaki chef comes to us — knives, onion volcano, the whole performance, in a rented kitchen in Boyne Falls. Hibachi Connect is the pick: certified chef, two proteins a man, fried rice, vegetables, every sauce, full setup and cleanup, 90 to 120 minutes of show. The vets give the worst-of testimony afterward; the category rotates annually and is announced by the commissioner without warning.",
+            cost: "$60/adult · $600 event minimum",
+            facts: ["Hibachi Connect — (201) 565-3878", "Covers Boyne City / Harbor Springs / Emmet + Charlevoix", "10-guest minimum · one chef station up to 25", "Book 3–4 weeks out — July fills first", "Vet testimony · category rotates annually"],
           },
         ],
       },
@@ -446,8 +486,8 @@ export const trips: Trip[] = [
             detail: "Trophy · superlatives",
             type: "dining",
             location: "At the house",
-            description: "Last feast, last night with anything at stake. The belt goes to whoever earned it at Threetops, and the superlatives are handed out by commissioner decree — no nominations, no vote, no recourse.",
-            facts: ["Belt & trophy presentation", "Superlatives by commissioner decree"],
+            description: "Last feast, last night with anything at stake — we roll in from Gaylord near midnight, so this one gets ordered before we leave for Threetops and eaten cold if it has to be. The belt goes to whoever earned it, and the superlatives are handed out by commissioner decree: no nominations, no vote, no recourse.",
+            facts: ["Order before the Threetops bus leaves", "Stiggs BBQ — travels and reheats best", "Belt & trophy presentation", "Superlatives by commissioner decree"],
           },
         ],
       },
@@ -486,7 +526,20 @@ export const trips: Trip[] = [
       },
     ],
     photoSections: [],
-    gallery: [],
+    // The house, from the Airbnb listing. Renders in the 3-panel dissolve — titled
+    // "The House" while the trip is upcoming, "Lads on Tour" once we have our own.
+    gallery: [
+      "/photos/2027/house-exterior.jpg",
+      "/photos/2027/house-kitchen-great-room.jpg",
+      "/photos/2027/house-living-room.jpg",
+      "/photos/2027/house-hottub-sauna.jpg",
+      "/photos/2027/house-game-room.jpg",
+      "/photos/2027/house-deck-grill.jpg",
+      "/photos/2027/house-bunk-room.jpg",
+      "/photos/2027/house-bedroom.jpg",
+      "/photos/2027/house-ski-lodge-bedroom.jpg",
+      "/photos/2027/boyne-aerial.jpg",
+    ],
   },
   {
     year: 2026,

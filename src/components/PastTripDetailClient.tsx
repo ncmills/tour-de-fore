@@ -178,7 +178,7 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
     trip.schedule.length > 0 && { key: "schedule", anchor: "sec-schedule", label: "Itinerary" },
     trip.privateDining && trip.privateDining.length > 0 && { key: "chef", anchor: "sec-chef", label: "The Chef's Table" },
     trip.bars && trip.bars.length > 0 && { key: "bars", anchor: "sec-bars", label: "Last Call" },
-    galleryImages.length >= 3 && { key: "gallery", anchor: "sec-gallery", label: "Lads on Tour" },
+    galleryImages.length >= 3 && { key: "gallery", anchor: "sec-gallery", label: trip.upcoming ? "The House" : "Lads on Tour" },
   ].filter(Boolean) as { key: string; anchor: string; label: string }[];
 
   return (
@@ -336,7 +336,7 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
 
       {/* Section 2: Lads on Tour — 3-panel dissolving gallery */}
       {galleryImages.length >= 3 && (
-        <AccordionSection title="Lads on Tour" order={6} anchorId="sec-gallery" isOpen={isOpen("gallery")} onToggle={() => toggle("gallery")}>
+        <AccordionSection title={trip.upcoming ? "The House" : "Lads on Tour"} order={6} anchorId="sec-gallery" isOpen={isOpen("gallery")} onToggle={() => toggle("gallery")}>
           <div style={{
             position: "relative",
             height: isMobile ? "auto" : "clamp(320px, 40vw, 500px)",
