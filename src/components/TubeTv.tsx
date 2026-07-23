@@ -101,14 +101,15 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
               onClick={trigger}
               style={{
                 fontFamily: "var(--font-scrawl), cursive",
-                fontSize: "clamp(9px, 1.1vw, 13px)",
+                fontSize: "clamp(13px, 2.6vw, 14px)",
                 fontWeight: 900,
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
                 color: "#fff",
                 background: "rgba(220,38,38,0.7)",
                 border: "2px solid rgba(220,38,38,0.9)",
-                padding: "clamp(5px, 0.65vw, 8px) clamp(13px, 1.6vw, 21px)",
+                padding: "clamp(12px, 0.65vw, 13px) clamp(20px, 1.6vw, 24px)",
+                minHeight: "44px",
                 borderRadius: "5px",
                 cursor: "pointer",
                 transition: "all 0.2s",
@@ -222,7 +223,8 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
                     background: "rgba(0,0,0,0.7)",
                     border: "1px solid rgba(255,255,255,0.4)",
                     borderRadius: "6px",
-                    padding: "6px 12px",
+                    padding: "10px 12px",
+                    minHeight: 44,
                     cursor: "pointer",
                     color: "#fff",
                     display: "flex",
@@ -240,7 +242,7 @@ export default function TubeTv({ videoSrc, onExplodeStart, onComplete }: TubeTvP
                   </svg>
                   <span style={{
                     fontFamily: "monospace",
-                    fontSize: "clamp(9px, 1.2vw, 12px)",
+                    fontSize: "clamp(12px, 2.4vw, 12px)",
                     letterSpacing: "0.1em",
                     textTransform: "uppercase",
                   }}>Unmute</span>

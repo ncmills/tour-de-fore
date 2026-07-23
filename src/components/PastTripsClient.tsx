@@ -135,7 +135,7 @@ export default function PastTripsClient() {
                       <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
                       <line x1="23" y1="9" x2="17" y2="15" /><line x1="17" y1="9" x2="23" y2="15" />
                     </svg>
-                    <span style={{ fontFamily: "monospace", fontSize: "clamp(9px, 1.2vw, 12px)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Unmute</span>
+                    <span style={{ fontFamily: "monospace", fontSize: "clamp(12px, 2.4vw, 12px)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Unmute</span>
                   </button>
                 )}
               </div>
@@ -185,7 +185,7 @@ export default function PastTripsClient() {
           Body of Work
         </h1>
         <p className="neon-stats neon-stats-text" style={{
-          fontSize: "clamp(0.7rem, 1.4vw, 0.95rem)",
+          fontSize: "clamp(0.85rem, 3.2vw, 0.95rem)",
           maxWidth: "600px",
           margin: "0 auto",
           lineHeight: 1.8,
@@ -246,16 +246,17 @@ export default function PastTripsClient() {
               </div>
 
               <div className="trip-text" style={{ order: isMobile ? 1 : (i % 2 === 0 ? 1 : 0) }}>
-                <p style={{ fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: "0.8rem", fontFamily: "monospace" }}>
+                <p style={{ fontSize: isMobile ? "0.82rem" : "0.7rem", letterSpacing: isMobile ? "0.12em" : "0.18em", textTransform: "uppercase", color: isMobile ? "rgba(255,255,255,0.55)" : "rgba(255,255,255,0.3)", marginBottom: "0.8rem", fontFamily: "monospace" }}>
                   {trip.dates}
                 </p>
                 <h2 style={{
                   fontFamily: "var(--font-scrawl), cursive",
                   fontSize: "clamp(2.5rem, 6vw, 5rem)",
                   fontWeight: 400,
-                  lineHeight: 0.95,
+                  lineHeight: 1.08,
                   letterSpacing: "0.02em",
                   marginBottom: "0.6rem",
+                  paddingBottom: "0.06em",
                   color: "#fff",
                   textShadow: "0 0 7px rgba(255,60,20,0.6), 0 0 20px rgba(255,60,20,0.3), 0 0 40px rgba(255,30,10,0.15)",
                 }}>
@@ -263,7 +264,7 @@ export default function PastTripsClient() {
                 </h2>
                 <p style={{
                   fontFamily: "var(--font-scrawl), cursive",
-                  fontSize: "clamp(1rem, 2vw, 1.4rem)",
+                  fontSize: "clamp(1.15rem, 4.5vw, 1.4rem)",
                   fontWeight: 400,
                   color: "rgba(255,255,255,0.85)",
                   marginBottom: "0.5rem",
@@ -271,7 +272,7 @@ export default function PastTripsClient() {
                   {trip.location}, {trip.state}
                 </p>
                 {trip.courses.length > 0 && (
-                  <p style={{ fontSize: "0.75rem", letterSpacing: "0.06em", color: "rgba(255,255,255,0.45)", lineHeight: 1.8, fontFamily: "monospace" }}>
+                  <p style={{ fontSize: isMobile ? "0.86rem" : "0.75rem", letterSpacing: isMobile ? "0.02em" : "0.06em", color: isMobile ? "rgba(255,255,255,0.62)" : "rgba(255,255,255,0.45)", lineHeight: isMobile ? 1.65 : 1.8, fontFamily: "monospace" }}>
                     {trip.courses.map((c) => c.name).join("  ·  ")}
                   </p>
                 )}

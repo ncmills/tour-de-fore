@@ -196,7 +196,10 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
             fontFamily: "var(--font-scrawl), cursive",
             fontSize: "clamp(4rem, 12vw, 8rem)",
             fontWeight: 400,
-            lineHeight: 0.9,
+            // Display faces need lead ABOVE 1 — the scrawl face plus the neon
+            // glow both bleed past the em box, and lh < 1 shears the ink off.
+            lineHeight: 1.06,
+            paddingBottom: "0.06em",
             letterSpacing: "0.02em",
             color: "#fff",
             textShadow: "0 0 10px rgba(255,80,20,0.8), 0 0 30px rgba(255,60,10,0.5), 0 0 60px rgba(255,40,0,0.3), 0 0 100px rgba(255,30,0,0.15)",
@@ -323,7 +326,7 @@ export default function PastTripDetailClient({ trip, isLive }: { trip: Trip; isL
               <button
                 key={t.key}
                 onClick={() => jumpTo(t.key, t.anchor)}
-                style={{ fontFamily: "monospace", fontSize: "0.72rem", letterSpacing: "0.05em", textTransform: "uppercase", padding: "0.5rem 0.85rem", minHeight: "40px", borderRadius: "4px", border: "1px solid rgba(234,88,12,0.4)", background: "transparent", color: "rgba(253,186,116,0.95)", cursor: "pointer", transition: "background 0.2s" }}
+                style={{ fontFamily: "monospace", fontSize: "0.72rem", letterSpacing: "0.05em", textTransform: "uppercase", padding: "0.5rem 0.85rem", minHeight: "44px", borderRadius: "4px", border: "1px solid rgba(234,88,12,0.4)", background: "transparent", color: "rgba(253,186,116,0.95)", cursor: "pointer", transition: "background 0.2s" }}
                 onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(234,88,12,0.12)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
               >

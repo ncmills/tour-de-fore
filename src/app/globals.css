@@ -614,7 +614,7 @@ body.menu-open {
 /* masthead — Blaka Hollow glitch */
 .lore-masthead {
   position: relative; margin: 0.2rem 0 1.8rem;
-  font-size: clamp(3.4rem, 15vw, 9rem); line-height: 0.92; letter-spacing: 0.02em;
+  font-size: clamp(3.4rem, 15vw, 9rem); line-height: 1.04; padding-bottom: 0.05em; letter-spacing: 0.02em;
   text-transform: uppercase; color: #fff;
   text-shadow: 0 0 18px rgba(255,106,40,0.5);
 }
