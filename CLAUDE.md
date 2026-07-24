@@ -12,22 +12,16 @@ Claude.ai app.
 ## Cross-project inventory
 See `~/PROJECTS.md` for portfolio map and `~/.claude/CLAUDE.md` for file-routing convention (`~/work/<project>/...` for scratch, `~/work/handoffs/` for briefs, etc.).
 
-## Venue Social-Proof / Place Enrichment
+## Site identity (post-split, 2026-07-02)
 
-Per-venue `googleRating` and `reviewCount` for non-course categories (dining, bars,
-activities, lodging) live in `src/data/place-enrichment.json` (git-tracked,
-script-generated). The file is keyed by `${destinationId}::${category}::${index}`
-where category is one of `dining | bars | activities | lodging` and index is the
-0-based position in the destination's venue array.
-
-Run `npx tsx scripts/enrich-places.ts --help` for enrichment tooling.
-
-Golf courses already have `googleRating` / `reviewCount` / `hypeTag` / `rankNote`
-populated directly in the source data files — the script skips them by default.
-
-The overlay is wired at a single choke point in `src/data/query.ts` inside
-`buildDestinationContext` — the Claude prompt sees enriched venues automatically.
-When the JSON is empty (`{}`) every call is a no-op.
+tourdefore.com is Nick's **personal** golf site + pro shop — home / body-of-work
+(past trips + the upcoming one) / lore / merch (Stripe + Printful). It is NOT a
+golf-trip planner: the AI wizard/planner and its destination catalog split out to
+**Handicap HQ** (handicaphq.com, `~/handicap-hq`) on 2026-07-02. Any planner-era
+residue on this site — "trip planner" / "N destinations" copy, destination prose,
+the `query.ts` / `place-enrichment.json` / `prose-overview.json` / `unsplash-cache.json`
+data layer — is dead and should be removed, not maintained. Preview/meta/schema copy
+must describe the personal site, not the planner.
 
 ## Deploy Workflow
 

@@ -91,7 +91,7 @@ export default async function Image() {
             letterSpacing: "0.1em",
           }}
         >
-          133 DESTINATIONS · COURSES · LODGING · NIGHTLIFE
+          AN ANNUAL GOLF TRIP · SIX TRIPS DEEP · THE SEVENTH IS BOOKED
         </div>
       </div>
     ),
