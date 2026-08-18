@@ -6,12 +6,14 @@
  *   npx tsx scripts/post-deploy-smoke.ts
  *
  * It asserts:
- *   1. /api/products returns >=10 products, each netting >=10% after Printful
+ *   1. Homepage renders >=300 chars of real visible text without JS (no
+ *      blank-page-for-no-JS-clients regression — see 2026-08-18 fix)
+ *   2. /api/products returns >=10 products, each netting >=10% after Printful
  *      cost (incl. shipping) + Stripe fees, and each
  *      product shows a DISTINCT preview image per color (no swatch falls back to
  *      a shared thumbnail, no two colors share an image).
- *   2. /api/health/orders returns 200 (all paid sessions reconcile)
- *   3. verify-order on a known session returns already_submitted
+ *   3. /api/health/orders returns 200 (all paid sessions reconcile)
+ *   4. verify-order on a known session returns already_submitted
  *
  * Exits 0 on pass, 1 on any failure. Designed to be loud — if any check fails,
  * the deploy broke something and you should roll back immediately.
@@ -83,12 +85,48 @@ async function estimateCost(syncVariantId: number, token: string): Promise<numbe
   return parseFloat(data.result?.costs?.total || "0");
 }
 
+// Homepage-blank regression (2026-08-18): HomeClient reads useSearchParams(),
+// which forces Next to bail the whole subtree to client-side-only rendering
+// during static generation. Without a real Suspense fallback, no-JS clients
+// (curl, some crawlers, print) got NOTHING past "Skip to content" — a
+// completely blank page. Strips <script>/<style> content (not just tags) so
+// JSON-LD in <head> can't mask a blank <body> the way a naive tag-only strip
+// does. See feedback_scroll_reveal_invisible_no_js_print.
+const MIN_VISIBLE_TEXT_CHARS = 300;
+
+async function checkHomepageRendersWithoutJs(base: string): Promise<string[]> {
+  const failures: string[] = [];
+  const res = await fetch(`${base}/`);
+  const html = await res.text();
+  const visibleText = html
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .replace(/Skip to content/gi, "")
+    .trim();
+  console.log(`  status: ${res.status}  visible text (excl. skip link): ${visibleText.length} chars`);
+  console.log(`  first 120 chars: "${visibleText.slice(0, 120)}"`);
+  if (res.status !== 200) failures.push(`homepage: expected 200, got ${res.status}`);
+  if (visibleText.length < MIN_VISIBLE_TEXT_CHARS) {
+    failures.push(
+      `homepage: only ${visibleText.length} chars of visible text without JS (need >=${MIN_VISIBLE_TEXT_CHARS}) — page renders blank for no-JS clients/curl/crawlers`
+    );
+  }
+  return failures;
+}
+
 async function main() {
   const failures: string[] = [];
   console.log("── TDF post-deploy smoke test ──\n");
 
+  // 0. Homepage renders real content without JS
+  console.log("[1/4] homepage renders visible text (no-JS)");
+  failures.push(...(await checkHomepageRendersWithoutJs(BASE)));
+  console.log();
+
   // 1. Products endpoint + margin check
-  console.log("[1/3] /api/products + margin check");
+  console.log("[2/4] /api/products + margin check");
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const products = (await fetchJson<any>(`${BASE}/api/products`)) as ProductCheck[] & any[];
   const arr: ProductCheck[] = Array.isArray(products)
@@ -164,7 +202,7 @@ async function main() {
   console.log();
 
   // 2. /api/health/orders
-  console.log("[2/3] /api/health/orders");
+  console.log("[3/4] /api/health/orders");
   const adminSecret = process.env.ADMIN_SECRET;
   if (!adminSecret) {
     failures.push("ADMIN_SECRET not set — health/orders check could NOT run (export it: set -a && source .env.prod)");
@@ -182,7 +220,7 @@ async function main() {
   console.log();
 
   // 3. verify-order dedup probe on known fulfilled session
-  console.log("[3/3] /api/verify-order dedup probe");
+  console.log("[4/4] /api/verify-order dedup probe");
   const res = await fetch(`${BASE}/api/verify-order`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
