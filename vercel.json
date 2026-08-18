@@ -9,5 +9,8 @@
       "path": "/api/cron/check-margins",
       "schedule": "0 13 * * *"
     }
-  ]
+  ],
+  "github": {
+    "silent": true
+  }
 }
