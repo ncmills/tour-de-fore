@@ -9,24 +9,38 @@ import { heartbeat } from "@/lib/heartbeat";
 // This is the safety net for shop fulfillment — if a customer closes their
 // browser before the success page runs OrderVerifier, this catches the gap.
 export async function GET(req: NextRequest) {
-  const cronSecret = req.headers.get("authorization")?.replace("Bearer ", "");
-  const isCron =
-    // `x-vercel-cron` carries "1", not "true", so this branch has never matched a
-    // real invocation. Nothing broke: Vercel sends `Authorization: Bearer
-    // $CRON_SECRET` automatically when CRON_SECRET is set (it is, Production, 54d)
-    // and the fallback below is what has been authenticating these runs. This is
-    // hygiene — the branch that is supposed to hold if the secret is ever unset.
-    //
-    // WHERE "1" COMES FROM, since it is not where you would expect: Vercel's cron
-    // docs (last updated 2026-08-11) document `x-vercel-cron-schedule` and the
-    // CRON_SECRET/Bearer check, and do NOT document `x-vercel-cron` at all — no
-    // name, no value. "1" rests on an observed invocation recorded in Nick's own
-    // notes, not on the docs. That is also the argument for the documented
-    // Bearer check below being the real guard rather than this line.
-    req.headers.get("x-vercel-cron") === "1" ||
-    (!!process.env.CRON_SECRET && cronSecret === process.env.CRON_SECRET);
+  // THE BEARER IS THE ONLY CREDENTIAL (2026-08-30).
+  //
+  // This route used to read `x-vercel-cron === "true"` OR the bearer. Vercel never sends
+  // "true", so the header branch could admit NO ONE and the bearer was the whole gate. PR #8
+  // "fixed" the dead literal to "1" — the value Vercel does send — and in doing so turned a
+  // branch that admitted nobody into one that admits anybody who can set the header, on a route
+  // that syncs Stripe orders and calls Printful. Restoring a dead branch restored a bypass.
+  //
+  // Whether Vercel strips an inbound `x-vercel-cron` is NOT MEASURED, and deliberately so:
+  // finding out means sending a forged header at a live money route, which is the one thing the
+  // fence forbids. This shape is correct in BOTH worlds — if the platform strips it the header
+  // was worthless as a credential, and if it does not the header was a bypass.
+  //
+  // So: `Authorization: Bearer $CRON_SECRET` decides, and nothing else. Vercel sends it
+  // automatically when CRON_SECRET is set, which is the mechanism its own docs prescribe. The
+  // cron header is read for the LOG only — it never appears in a condition.
+  const secret = process.env.CRON_SECRET;
+  const bearer = req.headers.get("authorization")?.replace("Bearer ", "");
+  const vercelCron = req.headers.get("x-vercel-cron"); // logged, never a condition
 
-  if (!isCron) {
+  if (!secret) {
+    // NO SECRET IS A 401 IN PRODUCTION, not an open door. The old code's `!!process.env
+    // .CRON_SECRET &&` meant an unset secret fell through to the header branch; with the header
+    // gone there is nothing to fall through to, and failing closed is the only safe reading.
+    if (process.env.NODE_ENV === "production") {
+      console.error("[cron] CRON_SECRET is not set — refusing the run", { vercelCron });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    // The one named escape: local development, where there is no secret to send.
+    console.warn("[cron] CRON_SECRET unset — allowed because NODE_ENV is not production");
+  } else if (bearer !== secret) {
+    console.warn("[cron] rejected: bearer absent or wrong", { vercelCron });
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
