@@ -48,7 +48,7 @@ export default async function TripPage({ params }: { params: Promise<{ slug: str
   return (
     <>
       <Nav />
-      <div id="main-content">
+      <div>
         <TripPageClient trip={trip} prevTrip={prevTrip} nextTrip={nextTrip} />
       </div>
       <Footer />

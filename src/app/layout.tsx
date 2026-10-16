@@ -214,7 +214,11 @@ export default function RootLayout({
         </a>
         <PostHogProvider>
           <GlobalFire />
-          {children}
+          {/* SURFACE-SWEEP 2026-10-16: the skip link above needs a target on every page; only
+              /trip/[slug] had one. A div, not <main>: pages render their own <main>. */}
+          <div id="main-content" tabIndex={-1} className="focus:outline-none">
+            {children}
+          </div>
           <DrunkMode />
         </PostHogProvider>
         <Analytics />
