@@ -41,23 +41,8 @@ export async function GET(req: NextRequest) {
   // Anthropic API key presence
   checks.anthropicKey = process.env.ANTHROPIC_API_KEY ? "set" : "MISSING";
 
-  // Anthropic API quick test
-  if (process.env.ANTHROPIC_API_KEY) {
-    try {
-      const { getAnthropicHealthClient } = await import("@/lib/anthropic");
-      const client = getAnthropicHealthClient();
-      const msg = await client.messages.create({
-        model: "claude-haiku-4-5-20251001",
-        max_tokens: 5,
-        messages: [{ role: "user", content: "Say ok" }],
-      });
-      checks.anthropicApi = "ok";
-      checks.anthropicModel = msg.model;
-      checks.anthropicTokens = `in:${msg.usage.input_tokens} out:${msg.usage.output_tokens}`;
-    } catch (e) {
-      checks.anthropicApi = `fail: ${e instanceof Error ? e.message : String(e)}`;
-    }
-  }
+  // No live Anthropic call here (SN SITE-MODELS 10-08): every hit spent API money, and key
+  // presence above is the config check. A real model failure shows up on the routes that use it.
 
   const allOk = Object.values(checks).every((v) => v === "ok" || v === "set" || v === "NOT_SET");
   return NextResponse.json({ status: allOk ? "healthy" : "degraded", checks });
