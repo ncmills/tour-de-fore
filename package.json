@@ -11,6 +11,7 @@
     "fetch:images": "bash scripts/fetch-images.sh",
     "generate-prose": "set -a && source .env.local && set +a && npx tsx scripts/generate-prose.ts",
     "indexnow": "npx tsx scripts/submit-indexnow.ts",
+    "check:image-dupes": "node scripts/image-dupes.js",
     "deploy": "npx vercel --prod --yes && npx tsx scripts/submit-indexnow.ts"
   },
   "dependencies": {
