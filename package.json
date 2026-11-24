@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "test": "node --test scripts/health-route.test.mjs",
     "sync:images": "npx tsx scripts/sync-image-cache.ts",
     "fetch:images": "bash scripts/fetch-images.sh",
     "generate-prose": "set -a && source .env.local && set +a && npx tsx scripts/generate-prose.ts",
