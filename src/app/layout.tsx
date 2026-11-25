@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter, Instrument_Serif, Caveat, Permanent_Marker, Lilita_One, Bebas_Neue, Pacifico, Rye, Lobster, Alfa_Slab_One, Blaka_Hollow } from "next/font/google";
+import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import DrunkMode from "@/components/DrunkMode";
@@ -7,97 +7,116 @@ import GlobalFire from "@/components/GlobalFire";
 import PostHogProvider from "@/components/PostHogProvider";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
+// Self-hosted (src/fonts) so builds never fetch from Google.
+const spaceGrotesk = localFont({
+  src: [
+    { path: "../fonts/space-grotesk/space-grotesk-variable.woff2", weight: "500", style: "normal" },
+    { path: "../fonts/space-grotesk/space-grotesk-variable.woff2", weight: "600", style: "normal" },
+    { path: "../fonts/space-grotesk/space-grotesk-variable.woff2", weight: "700", style: "normal" },
+  ],
   variable: "--font-space",
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
   display: "swap",
 });
 
-const inter = Inter({
+const inter = localFont({
+  src: [
+    { path: "../fonts/inter/inter-variable.woff2", weight: "400", style: "normal" },
+    { path: "../fonts/inter/inter-variable.woff2", weight: "500", style: "normal" },
+    { path: "../fonts/inter/inter-variable.woff2", weight: "600", style: "normal" },
+    { path: "../fonts/inter/inter-variable.woff2", weight: "700", style: "normal" },
+  ],
   variable: "--font-inter",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
-const caveat = Caveat({
+const caveat = localFont({
+  src: [
+    { path: "../fonts/caveat/caveat-variable.woff2", weight: "400", style: "normal" },
+    { path: "../fonts/caveat/caveat-variable.woff2", weight: "700", style: "normal" },
+  ],
   variable: "--font-script",
-  subsets: ["latin"],
-  weight: ["400", "700"],
   display: "swap",
   preload: false,
 });
 
-const instrumentSerif = Instrument_Serif({
+const instrumentSerif = localFont({
+  src: [
+    { path: "../fonts/instrument-serif/instrument-serif-normal.woff2", weight: "400", style: "normal" },
+    { path: "../fonts/instrument-serif/instrument-serif-italic.woff2", weight: "400", style: "italic" },
+  ],
   variable: "--font-instrument",
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
   display: "swap",
   preload: false,
 });
 
-const permanentMarker = Permanent_Marker({
+const permanentMarker = localFont({
+  src: [
+    { path: "../fonts/permanent-marker/permanent-marker.woff2", weight: "400", style: "normal" },
+  ],
   variable: "--font-scrawl",
-  subsets: ["latin"],
-  weight: ["400"],
   display: "swap",
   preload: false,
 });
 
-const lilitaOne = Lilita_One({
+const lilitaOne = localFont({
+  src: [
+    { path: "../fonts/lilita-one/lilita-one.woff2", weight: "400", style: "normal" },
+  ],
   variable: "--font-plan-groovy",
-  subsets: ["latin"],
-  weight: ["400"],
   display: "swap",
   preload: false,
 });
 
-const bebasNeue = Bebas_Neue({
+const bebasNeue = localFont({
+  src: [
+    { path: "../fonts/bebas-neue/bebas-neue.woff2", weight: "400", style: "normal" },
+  ],
   variable: "--font-plan-block",
-  subsets: ["latin"],
-  weight: ["400"],
   display: "swap",
   preload: false,
 });
 
-const pacifico = Pacifico({
+const pacifico = localFont({
+  src: [
+    { path: "../fonts/pacifico/pacifico.woff2", weight: "400", style: "normal" },
+  ],
   variable: "--font-plan-script",
-  subsets: ["latin"],
-  weight: ["400"],
   display: "swap",
   preload: false,
 });
 
-const rye = Rye({
+const rye = localFont({
+  src: [
+    { path: "../fonts/rye/rye.woff2", weight: "400", style: "normal" },
+  ],
   variable: "--font-shop-circus",
-  subsets: ["latin"],
-  weight: ["400"],
   display: "swap",
   preload: false,
 });
 
-const lobster = Lobster({
+const lobster = localFont({
+  src: [
+    { path: "../fonts/lobster/lobster.woff2", weight: "400", style: "normal" },
+  ],
   variable: "--font-shop-script",
-  subsets: ["latin"],
-  weight: ["400"],
   display: "swap",
   preload: false,
 });
 
-const alfaSlabOne = Alfa_Slab_One({
+const alfaSlabOne = localFont({
+  src: [
+    { path: "../fonts/alfa-slab-one/alfa-slab-one.woff2", weight: "400", style: "normal" },
+  ],
   variable: "--font-slab-cold",
-  subsets: ["latin"],
-  weight: ["400"],
   display: "swap",
   preload: false,
 });
 
-const blakaHollow = Blaka_Hollow({
+const blakaHollow = localFont({
+  src: [
+    { path: "../fonts/blaka-hollow/blaka-hollow.woff2", weight: "400", style: "normal" },
+  ],
   variable: "--font-blackletter",
-  subsets: ["latin"],
-  weight: ["400"],
   display: "swap",
   preload: false,
 });
