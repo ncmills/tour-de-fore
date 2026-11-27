@@ -3,10 +3,13 @@
  * Duplicate-image check over the content photos listed in
  * public/photos/manifest.json: sha256 of each photo (same bytes under a
  * different name) plus a difference hash (dHash) of the full image AND its
- * centre 60% crop, compared pairwise (distance > 10 = not a dupe), so a
- * tight crop of a wide shot still matches. Includes a positive control
- * (crop a real photo and confirm the check fires) so a silently-broken
- * hash can't pass by never triggering.
+ * centre 60% crop, compared pairwise (distance > 10 = not a dupe). A crop
+ * is only caught when it is near a 20% margin (the centre crop is 20%-80%):
+ * measured on a real photo, a 10% margin gives distance 15 and a 30% margin
+ * gives 21, both over the threshold of 10. No multi-scale matching. Includes
+ * a positive control: a synthetic 20%-margin crop of a real photo is run
+ * through the same pair-compare code as the catalog and must be reported,
+ * so a silently-broken hash or loop can't pass by never triggering.
  *
  * No new dependency: sharp ships with next (its image optimizer).
  */
@@ -49,6 +52,26 @@ function resolveFile(key) {
   return path.join(ROOT, "public", key);
 }
 
+const THRESHOLD = 10;
+
+// The one pair-compare used by both the catalog scan and the control.
+function findPairs(list) {
+  const out = [];
+  for (let i = 0; i < list.length; i++) {
+    for (let j = i + 1; j < list.length; j++) {
+      const a = list[i];
+      const b = list[j];
+      const d = Math.min(
+        bits(a.full_hash ^ b.full_hash),
+        bits(a.full_hash ^ b.centre_hash),
+        bits(a.centre_hash ^ b.full_hash),
+      );
+      if (d <= THRESHOLD) out.push({ a, b, d });
+    }
+  }
+  return out;
+}
+
 async function main() {
   const manifest = JSON.parse(fs.readFileSync(MANIFEST_PATH, "utf8"));
   const keys = Object.keys(manifest).sort();
@@ -88,28 +111,17 @@ async function main() {
   }
 
   // 2. Perceptual duplicates / re-crops (dHash distance <= 10).
-  const THRESHOLD = 10;
-  for (let i = 0; i < entries.length; i++) {
-    for (let j = i + 1; j < entries.length; j++) {
-      const a = entries[i];
-      const b = entries[j];
-      const d = Math.min(
-        bits(a.full_hash ^ b.full_hash),
-        bits(a.full_hash ^ b.centre_hash),
-        bits(a.centre_hash ^ b.full_hash),
-      );
-      if (d <= THRESHOLD) {
-        failures.push({
-          type: "perceptual-duplicate",
-          files: [a.key, b.key],
-          detail: `dHash distance ${d} (threshold > ${THRESHOLD})`,
-        });
-      }
-    }
+  for (const p of findPairs(entries)) {
+    failures.push({
+      type: "perceptual-duplicate",
+      files: [p.a.key, p.b.key],
+      detail: `dHash distance ${p.d} (threshold > ${THRESHOLD})`,
+    });
   }
 
-  // 3. Positive control: crop a real photo and confirm the check fires on
-  // the crop vs the original (proves the check isn't silently inert).
+  // 3. Positive control: add a synthetic centre crop of a real photo as an
+  // extra entry and run it through the SAME pair-compare (findPairs) as the
+  // catalog; the control passes only if that loop reports the pair.
   const controlEntry = entries.find((e) => /\.(jpe?g)$/i.test(e.key));
   let controlPassed = false;
   let controlDistance = null;
@@ -125,9 +137,16 @@ async function main() {
       })
       .jpeg()
       .toBuffer();
-    const cropFull = await dhash(crop, false);
-    controlDistance = bits(controlEntry.centre_hash ^ cropFull);
-    controlPassed = controlDistance <= THRESHOLD;
+    const synthetic = {
+      key: "__control-centre-crop__",
+      full_hash: await dhash(crop, false),
+      centre_hash: await dhash(crop, true),
+    };
+    const reported = findPairs([controlEntry, synthetic]).find(
+      (p) => p.a === controlEntry && p.b === synthetic,
+    );
+    controlPassed = Boolean(reported);
+    controlDistance = reported ? reported.d : null;
   }
 
   console.log("");
@@ -144,7 +163,7 @@ async function main() {
   console.log(
     controlPassed
       ? `Positive control OK: a re-crop of ${controlEntry.key} was correctly flagged (distance ${controlDistance}).`
-      : `Positive control FAILED: a re-crop of ${controlEntry ? controlEntry.key : "n/a"} was NOT flagged (distance ${controlDistance}) - the check cannot be trusted.`,
+      : `Positive control FAILED: a re-crop of ${controlEntry ? controlEntry.key : "n/a"} was NOT reported by the pair loop - the check cannot be trusted.`,
   );
 
   if (!controlPassed) {
