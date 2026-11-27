@@ -13,6 +13,20 @@ import { resolve } from "node:path";
 
 const CACHE_URL =
   "https://raw.githubusercontent.com/ncmills/shared-image-cache/main/cache.json";
+
+// Plan 7a (G28): shared-image-cache is going private. When GH_SHARED_READ_TOKEN is
+// set the raw fetch logs in with it; unset, the fetch stays anonymous, which works
+// only while the repo is public. A 401/404 with no token names the fix.
+function authHeaders(env: NodeJS.ProcessEnv = process.env): Record<string, string> {
+  const token = env.GH_SHARED_READ_TOKEN;
+  return token ? { Authorization: `token ${token}` } : {};
+}
+
+function privateHint(status: number, env: NodeJS.ProcessEnv = process.env): string {
+  return (status === 401 || status === 404) && !env.GH_SHARED_READ_TOKEN
+    ? " (shared-image-cache may be private; set GH_SHARED_READ_TOKEN)"
+    : "";
+}
 const OUT_PATH = resolve(__dirname, "..", "src", "data", "unsplash-cache.json");
 
 interface CacheEntry {
@@ -36,7 +50,7 @@ async function main() {
   console.log(`[sync-image-cache] fetching ${CACHE_URL}`);
   let res: Response;
   try {
-    res = await fetch(CACHE_URL, { cache: "no-store" });
+    res = await fetch(CACHE_URL, { cache: "no-store", headers: authHeaders() });
   } catch (err) {
     console.warn(
       `[sync-image-cache] network error — keeping existing cache: ${err instanceof Error ? err.message : err}`,
@@ -45,7 +59,7 @@ async function main() {
   }
   if (!res.ok) {
     console.warn(
-      `[sync-image-cache] HTTP ${res.status} — keeping existing cache`,
+      `[sync-image-cache] HTTP ${res.status}${privateHint(res.status)} — keeping existing cache`,
     );
     return;
   }
